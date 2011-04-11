@@ -1,0 +1,38 @@
+﻿@model PostViewModel
+@{
+}
+
+<div class="post">
+    <h1>@Model.Post.Title</h1>
+    
+    <div>
+        <ul>
+            @if (Model.PreviousPost != null) { 
+                <li><a href="@Url.Action("Post", new { Id = Model.PreviousPost.Id, Alias = Model.PreviousPost.Alias })">@Model.PreivousPost.Title</a></li>
+            }
+        
+            @if (Model.NextPost != null)
+            { 
+                <li><a href="@Url.Action("Post", new { Id = Model.NextPost.Id, Alias = Model.NextPost.Alias })">@Model.NextPost.Title</a></li>
+            }
+        </ul>
+    </div>
+
+    <div class="post_body">
+        @Model.Post.Body
+    </div>
+
+    <div class="post_time">Posted at @Model.PostedDate.ToString("r")</div>
+
+    <div>
+        @foreach (var comment in Model.Comments)
+        {
+            <div>
+                <h2>@comment.Title</h2>
+                <div><a href="@comment.OwnerWebsite">@comment.PostedBy</a></div>
+                <div>@comment.Body</div>
+                <div>Posted date: @comment.PostedDate</div>
+            </div>
+        }
+    </div>
+</div>

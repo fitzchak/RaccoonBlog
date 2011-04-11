@@ -1,0 +1,17 @@
+﻿@model PostsViewModel
+@{
+    
+}
+
+@foreach (var post in Model.Posts)
+{
+    <div class="post">
+        <h1>@post.Title</h1>
+        
+        <div class="post_body">
+            @post.Body
+        </div>
+
+        <div class="post_time">Posted at @post.PostedDate.ToString("r") | | Feedback (@post.CommentsCount)</div>
+    </div>
+}
