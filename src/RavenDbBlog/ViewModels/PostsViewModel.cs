@@ -11,7 +11,7 @@ namespace RavenDbBlog.ViewModels
         public class PostSummary
         {
             public int Id { get; set; }
-            public string Title { get; set; }
+            public MvcHtmlString Title { get; set; }
             public MvcHtmlString Body { get; set; }
             public string Slug { get; set; }
             public ICollection<string> Tags { get; set; }

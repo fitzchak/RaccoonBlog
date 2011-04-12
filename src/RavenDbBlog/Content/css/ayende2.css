@@ -108,6 +108,9 @@ h5
 	margin-bottom: 2px;
 }
 
+blockquote {
+    margin: 1em 40px;
+}
 
 select, input, textarea
 {

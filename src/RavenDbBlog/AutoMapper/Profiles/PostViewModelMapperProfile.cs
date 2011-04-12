@@ -12,10 +12,13 @@ namespace RavenDbBlog.AutoMapper
             Mapper.CreateMap<Post, PostViewModel.PostDetails>()
                 .ForMember(x => x.Id, o => o.MapFrom(m => RavenIdResolver.Resolve(m.Id)))
                 .ForMember(x => x.PublishedAt, o => o.MapFrom(m => m.PublishAt))
+                .ForMember(x => x.Title, o => o.MapFrom(m => MvcHtmlString.Create(m.Title)))
                 .ForMember(x => x.Body, o => o.MapFrom(m => MvcHtmlString.Create(m.Body)));
 
             Mapper.CreateMap<CommentsCollection.Comment, PostViewModel.Comment>()
-                .ForMember(x => x.Body, o => o.MapFrom(m => MvcHtmlString.Create(m.Body)));
+                .ForMember(x => x.Body, o => o.MapFrom(m => MvcHtmlString.Create(m.Body)))
+                .ForMember(x => x.EmailHash, o => o.MapFrom(m => EmailHashResolver.Resolve(m.Email)))
+                ;
         }
     }
 }

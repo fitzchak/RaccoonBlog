@@ -5,7 +5,7 @@
 
 @foreach (var post in Model.Posts)
 {
-    <article>
+    <article class="postSummery">
         <header>
             <h1><a href="@Url.Action("Show", new { post.Id, post.Slug })">@post.Title</a></h1>
         </header>

@@ -65,9 +65,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoMapper\AutoMapperConfiguration.cs" />
+    <Compile Include="AutoMapper\Profiles\Resolvers\EmailHashResolver.cs" />
     <Compile Include="AutoMapper\Profiles\PostsViewModelMapperProfile.cs" />
     <Compile Include="AutoMapper\Profiles\PostViewModelMapperProfile.cs" />
-    <Compile Include="AutoMapper\RavenIdResolver.cs" />
+    <Compile Include="AutoMapper\Profiles\Resolvers\RavenIdResolver.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -82,6 +83,7 @@
   <ItemGroup>
     <Content Include="Content\css\ayende.css" />
     <Content Include="Content\css\ayende2.css" />
+    <Content Include="Content\css\images\printer.png" />
     <Content Include="Content\css\main.css" />
     <Content Include="Content\css\ResetCss.css" />
     <Content Include="Global.asax" />
