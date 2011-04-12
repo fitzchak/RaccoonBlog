@@ -7,7 +7,7 @@
 {
     <article>
         <header>
-            <h1><a href="@Url.Action("Post", new { Id = post.Id, Slug = post.Slug })">@post.Title</a></h1>
+            <h1><a href="@Url.Action("Show", new { post.Id, post.Slug })">@post.Title</a></h1>
         </header>
         
         <div class="post_body">

@@ -10,34 +10,33 @@
     <nav>
         <ul>
             @if (Model.PreviousPost != null) { 
-                <li><a href="@Url.Action("Post", new { Id = Model.PreviousPost.Id, Alias = Model.PreviousPost.Alias })">@Model.PreivousPost.Title</a></li>
+                <li><a href="@Url.Action("Post", new { Model.PreviousPost.Id, Model.PreviousPost.Slug })">@Model.PreviousPost.Title</a></li>
             }
         
             @if (Model.NextPost != null)
             { 
-                <li><a href="@Url.Action("Post", new { Id = Model.NextPost.Id, Alias = Model.NextPost.Alias })">@Model.NextPost.Title</a></li>
+                <li><a href="@Url.Action("Post", new { Model.NextPost.Id, Model.NextPost.Slug })">@Model.NextPost.Title</a></li>
             }
         </ul>
     </nav>
 
     <div class="post_body">
-        @post.Body
+        @Model.Post.Body
     </div>
 
     <footer>
-        Posted at <time pubdate>@Model.Post.PostedDate.ToString("r")</time>
+        Posted at <time pubdate>@Model.Post.CreatedAt.ToString("r")</time>
     </footer>
 
     <section>
         @foreach (var comment in Model.Comments)
         {
             <article>
-                <h2>@comment.Title</h2>
                 <address>
-                    <a title="Comment by @comment.PostedBy" href="@comment.OwnerWebsite">@comment.PostedBy</a>
+                    <a title="Comment by @comment.Author" href="@comment.Url">@comment.Author</a>
                 </address>
                 <div>@comment.Body</div>
-                <div>Posted date: @comment.PostedDate</div>
+                <div>Posted date: @comment.CreatedAt</div>
             </article>
         }
     </section>

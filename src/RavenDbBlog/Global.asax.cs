@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using AutoMapper;
+using RavenDbBlog.AutoMapper;
 using RavenDbBlog.Infrastructure;
 
 namespace RavenDbBlog
@@ -27,14 +29,14 @@ namespace RavenDbBlog
 
             routes.MapRoute(
                "post",
-               "{action}/{id}/{slug}",
-               new { controller = "Home", action = "Post" },
-               new { action = "Post", id = MatchPositiveInteger }
+               "posts/{id}/{slug}",
+               new { controller = "Home", action = "Show", slug = UrlParameter.Optional },
+               new { id = MatchPositiveInteger,  }
            );
 
             routes.MapRoute(
                 "Default", // Route name
-                "{controller}/{action}/{id}", // URL with parameters
+                "{controller}/{action}/{*id}", // URL with parameters
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
 
@@ -46,6 +48,8 @@ namespace RavenDbBlog
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+
+            AutoMapperConfiguration.Configure();
         }
     }
 }

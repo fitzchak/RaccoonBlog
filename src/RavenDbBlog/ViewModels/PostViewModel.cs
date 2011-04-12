@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace RavenDbBlog.ViewModels
 {
@@ -8,27 +9,27 @@ namespace RavenDbBlog.ViewModels
         public PostReference PreviousPost { get; set; }
         public PostReference NextPost { get; set; }
 
-        public PostInternalViewModel Post { get; set; }
+        public PostDetails Post { get; set; }
         public IList<Comment> Comments { get; set; }
 
         public bool IsCommentClosed { get; set; }
 
         public class Comment
         {
-            public string Title { get; set; }
-            public string Body { get; set; }
-            public string PostedBy { get; set; }
-            public string OwnerWebsite { get; set; }    // Look for HTML injection.
-            public DateTimeOffset PostedAt { get; set; }
+            public MvcHtmlString Body { get; set; }
+            public string Author { get; set; }
+            public string Url { get; set; }    // Look for HTML injection.
+            public DateTimeOffset CreatedAt { get; set; }
         }
 
-        public class PostInternalViewModel
+        public class PostDetails
         {
+            public string Id { get; set; }
             public string Title { get; set; }
             public string Slug { get; set; }
-            public string Body { get; set; }
+            public MvcHtmlString Body { get; set; }
 
-            public DateTimeOffset PostedAt { get; set; }
+            public DateTimeOffset CreatedAt { get; set; }
             public DateTimeOffset PublishedAt { get; set; }
 
             public ICollection<string> Tags { get; set; }
@@ -36,6 +37,7 @@ namespace RavenDbBlog.ViewModels
 
         public class PostReference
         {
+            public string Id { get; set; }
             public string Slug { get; set; }
             public string Title { get; set; }
         }

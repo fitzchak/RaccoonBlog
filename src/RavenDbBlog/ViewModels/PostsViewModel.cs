@@ -6,9 +6,9 @@ namespace RavenDbBlog.ViewModels
 {
     public class PostsViewModel
     {
-        public IList<PostInternalViewModel> Posts { get; set; }
+        public IList<PostSummary> Posts { get; set; }
 
-        public class PostInternalViewModel
+        public class PostSummary
         {
             public int Id { get; set; }
             public string Title { get; set; }
