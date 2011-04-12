@@ -21,10 +21,9 @@ namespace RavenDbBlog.Controllers
                 .Take(30)
                 .ToList();
 
-
             return View(new PostsViewModel
                             {
-                                Posts = posts.Select(post => new PostsViewModel.Post
+                                Posts = posts.Select(post => new PostsViewModel.PostInternalViewModel
                                                                  {
                                                                      Body = MvcHtmlString.Create(post.Body),
                                                                      CommentsCount = post.CommentsCount,

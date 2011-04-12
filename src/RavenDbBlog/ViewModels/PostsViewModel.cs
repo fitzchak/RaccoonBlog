@@ -6,10 +6,11 @@ namespace RavenDbBlog.ViewModels
 {
     public class PostsViewModel
     {
-        public IList<Post> Posts { get; set; }
+        public IList<PostInternalViewModel> Posts { get; set; }
 
-        public class Post
+        public class PostInternalViewModel
         {
+            public int Id { get; set; }
             public string Title { get; set; }
             public MvcHtmlString Body { get; set; }
             public string Slug { get; set; }

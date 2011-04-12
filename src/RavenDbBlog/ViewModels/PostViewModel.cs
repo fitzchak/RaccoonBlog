@@ -8,7 +8,7 @@ namespace RavenDbBlog.ViewModels
         public PostReference PreviousPost { get; set; }
         public PostReference NextPost { get; set; }
 
-        public IList<Post> Posts { get; set; }
+        public PostInternalViewModel Post { get; set; }
         public IList<Comment> Comments { get; set; }
 
         public bool IsCommentClosed { get; set; }
@@ -22,9 +22,10 @@ namespace RavenDbBlog.ViewModels
             public DateTimeOffset PostedAt { get; set; }
         }
 
-        public class Post
+        public class PostInternalViewModel
         {
             public string Title { get; set; }
+            public string Slug { get; set; }
             public string Body { get; set; }
 
             public DateTimeOffset PostedAt { get; set; }

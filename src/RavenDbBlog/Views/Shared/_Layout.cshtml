@@ -2,35 +2,35 @@
 <html>
 <head>
     <title>@ViewBag.Title</title>
-    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
-    <script src="@Url.Content("~/Scripts/jquery-1.4.4.min.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/Content/css/ResetCss.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/main.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Content/js/jquery-1.4.4.min.js")" type="text/javascript"></script>
 </head>
-
 <body>
-    <div class="page">
+    <div class="containter page">
+        <header id="headermain">
+			<div id="logoarea">
+				<div id="logoimage"><a href="@Url.Action("Index", "Home")"><img alt="Ayende's Logo" class="topLogo" src="http://www.ayende.com/Images/logo.jpg"></a></div>
+				<h1>Ayende @@ Rahien</h1>
+				<h2>Technology, life, .Net and all the rest...</h2>
+			</div>
+		</header>
+        <div id="mainBody">
+            <div id="sidebar">
+                <aside class="section">
+                    <h1>NHibernate Course</h1>
+                    <p>Advanced NHibernate Course, March 7 - 9, 2011. Dallas, Texas.</p>
+		            <p><a href="http://www.eventbee.com/view/dallas-nhibernate">Register NOW for early bird pricing</a></p>
+                </aside>
 
-        <div id="header">
-            <div id="title">
-                <h1>My MVC Application</h1>
+                <aside class="section">
+                    <h1>Post Tags</h1>
+                    @*@{Html.RenderAction("PostTags");}*@
+                </aside>
+
             </div>
-
-            <div id="logindisplay">
-                @Html.Partial("_LogOnPartial")
-            </div>
-
-            <div id="menucontainer">
-
-                <ul id="menu">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                </ul>
-
-            </div>
-        </div>
-
-        <div id="main">
-            @RenderBody()
-            <div id="footer">
+            <div id="content">
+                @RenderBody()
             </div>
         </div>
     </div>

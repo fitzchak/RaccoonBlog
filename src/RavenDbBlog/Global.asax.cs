@@ -27,7 +27,7 @@ namespace RavenDbBlog
 
             routes.MapRoute(
                "post",
-               "{action}/{id}",
+               "{action}/{id}/{slug}",
                new { controller = "Home", action = "Post" },
                new { action = "Post", id = MatchPositiveInteger }
            );
