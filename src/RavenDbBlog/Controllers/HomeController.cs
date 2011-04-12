@@ -51,6 +51,9 @@ namespace RavenDbBlog.Controllers
             if(results.Length > 1)
                 comments = (CommentsCollection) results[1];
 
+            if(post.PublishAt > DateTimeOffset.Now)
+                return HttpNotFound();
+
             if (post.Slug != slug)
                 return RedirectPermanent("/posts/" + id + "/" + post.Slug); // TODO: do this properly
 

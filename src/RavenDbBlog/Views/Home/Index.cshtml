@@ -1,13 +1,14 @@
 ﻿@model PostsViewModel
 @{
-    
+    ViewBag.Title = "Ayende @ Rahien blog";
 }
 
 @foreach (var post in Model.Posts)
 {
+    ViewBag.PostUrl = Url.Action("Show", new { post.Id, post.Slug });
     <article class="postSummery">
         <header>
-            <h1><a href="@Url.Action("Show", new { post.Id, post.Slug })">@post.Title</a></h1>
+            <h1><a href="@ViewBag.PostUrl">@post.Title</a></h1>
         </header>
         
         <div class="post_body">
@@ -15,7 +16,7 @@
         </div>
 
         <footer>
-            Posted at <time pubdate>@post.CreatedAt.ToString("r")</time> | Feedback (@post.CommentsCount)
+            Posted @@ <time pubdate>@post.CreatedAt.ToString("r")</time> | <a href="@ViewBag.PostUrl#feedback">Feedback (@post.CommentsCount)</a>
         </footer>
     </article>
 }

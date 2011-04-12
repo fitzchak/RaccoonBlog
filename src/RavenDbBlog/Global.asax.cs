@@ -28,18 +28,23 @@ namespace RavenDbBlog
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-               "post",
-               "posts/{id}/{slug}",
-               new { controller = "Home", action = "Show", slug = UrlParameter.Optional },
-               new { id = MatchPositiveInteger,  }
-           );
+                "post-details",
+                "posts/{id}/{slug}",
+                new {controller = "Home", action = "Show", slug = UrlParameter.Optional},
+                new {id = MatchPositiveInteger}
+                );
+
+            routes.MapRoute(
+                "post-list",
+                "posts",
+                new {controller = "Home", action = "Index"}
+                );
 
             routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{*id}", // URL with parameters
-                new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
-            );
-
+                new {controller = "Home", action = "Index", id = UrlParameter.Optional} // Parameter defaults
+                );
         }
 
         protected void Application_Start()
