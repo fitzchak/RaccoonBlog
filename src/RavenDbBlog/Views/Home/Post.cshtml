@@ -2,10 +2,12 @@
 @{
 }
 
-<div class="post">
-    <h1>@Model.Post.Title</h1>
+<article>
+    <header>
+        <h1>@Model.Post.Title</h1>
+    </header>
     
-    <div>
+    <nav>
         <ul>
             @if (Model.PreviousPost != null) { 
                 <li><a href="@Url.Action("Post", new { Id = Model.PreviousPost.Id, Alias = Model.PreviousPost.Alias })">@Model.PreivousPost.Title</a></li>
@@ -16,23 +18,27 @@
                 <li><a href="@Url.Action("Post", new { Id = Model.NextPost.Id, Alias = Model.NextPost.Alias })">@Model.NextPost.Title</a></li>
             }
         </ul>
-    </div>
+    </nav>
 
     <div class="post_body">
-        @Model.Post.Body
+        @post.Body
     </div>
 
-    <div class="post_time">Posted at @Model.PostedDate.ToString("r")</div>
+    <footer>
+        Posted at <time pubdate>@Model.Post.PostedDate.ToString("r")</time>
+    </footer>
 
-    <div>
+    <section>
         @foreach (var comment in Model.Comments)
         {
-            <div>
+            <article>
                 <h2>@comment.Title</h2>
-                <div><a href="@comment.OwnerWebsite">@comment.PostedBy</a></div>
+                <address>
+                    <a title="Comment by @comment.PostedBy" href="@comment.OwnerWebsite">@comment.PostedBy</a>
+                </address>
                 <div>@comment.Body</div>
                 <div>Posted date: @comment.PostedDate</div>
-            </div>
+            </article>
         }
-    </div>
-</div>
+    </section>
+</article>

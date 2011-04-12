@@ -11,11 +11,14 @@ namespace RavenDbBlog.ViewModels
         public IList<Post> Posts { get; set; }
         public IList<Comment> Comments { get; set; }
 
+        public bool IsCommentClosed { get; set; }
+
         public class Comment
         {
             public string Title { get; set; }
             public string Body { get; set; }
             public string PostedBy { get; set; }
+            public string OwnerWebsite { get; set; }    // Look for HTML injection.
             public DateTimeOffset PostedAt { get; set; }
         }
 

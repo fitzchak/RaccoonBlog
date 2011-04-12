@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace RavenDbBlog.ViewModels
 {
@@ -10,10 +11,10 @@ namespace RavenDbBlog.ViewModels
         public class Post
         {
             public string Title { get; set; }
-            public string Body { get; set; }
+            public MvcHtmlString Body { get; set; }
             public string Slug { get; set; }
             public ICollection<string> Tags { get; set; }
-            public DateTimeOffset PostedAt { get; set; }
+            public DateTimeOffset CreatedAt { get; set; }
             public DateTimeOffset PublishedAt { get; set; }
             public int CommentsCount { get; set; }
         }

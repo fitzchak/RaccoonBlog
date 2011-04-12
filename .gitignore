@@ -21,4 +21,4 @@ temp-war-deps
 /.gitversion.tmp
 /.gitversion.short.tmp
 StyleCop.Cache
-src/LibsNuget/
+src/Packages/
