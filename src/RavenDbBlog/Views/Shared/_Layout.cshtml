@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{
+    ViewBag.Message = TempData["Message"] as string;
+}
+<!DOCTYPE html>
 <html>
 <head>
     <title>@ViewBag.Title</title>
@@ -30,6 +33,9 @@
 
             </div>
             <div id="content">
+                @if (string.IsNullOrEmpty(ViewBag.Message)) { 
+                    <div class="message">@ViewBag.Message</div>
+                }
                 @RenderBody()
             </div>
         </div>

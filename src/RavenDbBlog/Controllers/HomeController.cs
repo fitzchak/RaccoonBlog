@@ -88,30 +88,30 @@ namespace RavenDbBlog.Controllers
 
         [HttpPost]
         [CaptchaValidator]
-        public ActionResult NewComment(CommentInput input, bool captchaValid)
+        public ActionResult NewComment(CommentInput newComment, bool captchaValid)
         {
             if (!captchaValid)
                 ModelState.AddModelError("_FORM", "You did not type the verification word correctly. Please try again.");
 
+            var result = GetPostAndComments(newComment.PostId);
+            var post = result.Item1;
+            var comments = result.Item2;
+
+            if (post == null)
+                return HttpNotFound();
+
             if (!ModelState.IsValid)
             {
-                var result = GetPostAndComments(input.PostId);
-                var post = result.Item1;
-                var comments = result.Item2;
-
-                if (post == null)
-                    return HttpNotFound();
-
                 var vm = new PostViewModel
                          {
                              Post = post.MapTo<PostViewModel.PostDetails>(),
                              Comments = comments.Comments.MapTo<PostViewModel.Comment>(),
-                             NewComment = input,
+                             NewComment = newComment,
                          };
                 return View("Show", vm);
             }
-
-            return RedirectToAction("Show", new {id = input.PostId});
+            TempData["message"] = "You feedback will be posted soon. Thanks for the feedback.";
+            return RedirectToAction("Show", new { post.Id, post.Slug });
         }
     }
 }
