@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
+using Joel.Net;
 using MvcReCaptcha;
 using Newtonsoft.Json;
 using Raven.Client;
@@ -110,26 +112,52 @@ namespace RavenDbBlog.Controllers
                 return View("Show", vm);
             }
 
-            //if (newComment.RememberMe == true)
+            var comment = new CommentsCollection.Comment
+                              {
+                                  Author = newComment.Name,
+                                  Body = newComment.Body,
+                                  CreatedAt = DateTimeOffset.Now,
+                                  // TODO: Time zone of the client.
+                                  Email = newComment.Email,
+                                  Important = false,
+                                  Url = newComment.Url,
+                                  IsSpam = CheckForSpam(newComment),
+                              };
+
+            if (!comment.IsSpam) // && newComment.RememberMe == true )
             {
                 var commentCookie = newComment.MapTo<CommentCookie>();
                 Response.Cookies.Add(new HttpCookie(CommentCookieName, JsonConvert.SerializeObject(commentCookie)));
             }
 
-            var comment = new CommentsCollection.Comment
-                              {
-                                  Author = newComment.Name,
-                                  Body = newComment.Body,
-                                  CreatedAt = DateTimeOffset.Now, // TODO: Time zone of the client.
-                                  Email = newComment.Email,
-                                  Important = false,
-                                  Url = newComment.Url,
-                              };
             comments.Comments.Add(comment);
             Session.SaveChanges();
 
             TempData["message"] = "You feedback will be posted soon. Thanks for the feedback.";
             return RedirectToAction("Show", new { post.Slug });
+        }
+
+        public bool CheckForSpam(CommentInput comment)
+        {
+            //Create a new instance of the Akismet API and verify your key is valid.
+            string blog = "http://" + ConfigurationSettings.AppSettings["MainUrl"];
+            var api = new Akismet(ConfigurationSettings.AppSettings["AkismetKey"], blog, HttpContext.Request.UserAgent);
+            if (!api.VerifyKey()) throw new Exception("Akismet API key invalid.");
+            
+            var akismetComment = new AkismetComment
+            {
+                Blog = blog,
+                UserIp = HttpContext.Request.UserHostAddress,
+                UserAgent = HttpContext.Request.UserAgent,
+                CommentContent = comment.Body,
+                CommentType = "comment",
+                CommentAuthor = comment.Name,
+                CommentAuthorEmail = comment.Email,
+                CommentAuthorUrl = comment.Url,
+            };
+
+            //Check if Akismet thinks this comment is spam. Returns TRUE if spam.
+            return api.CommentCheck(akismetComment);
         }
     }
 }

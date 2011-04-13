@@ -12,12 +12,12 @@ namespace RavenDbBlog.Core.Models
         public class Comment
         {
             public string Body { get; set; }
-
             public string Author { get; set; }
-            public bool Important { get; set; }
-
             public string Email { get; set; }
             public string Url { get; set; }
+
+            public bool Important { get; set; }
+            public bool IsSpam { get; set; }
 
             public DateTimeOffset CreatedAt { get; set; }
         }
