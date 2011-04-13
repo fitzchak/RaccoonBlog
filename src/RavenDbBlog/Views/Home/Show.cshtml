@@ -49,6 +49,9 @@
             <a name="feedback"></a>
             <h1>Feedback</h1>
         </header>
+        @if (Model.Comments.Count == 0) { 
+            <p>No comments posted yet.</p>
+        }
         @foreach (var comment in Model.Comments)
         {
             <article class="comment">
@@ -65,3 +68,14 @@
         }
     </section>
 </article>
+
+<form action="@Url.Action("NewComment")">
+    @Html.EditorFor(x => x.NewComment.Name)
+    @Html.EditorFor(x =>x.NewComment.Email)
+    @Html.EditorFor(x => x.NewComment.Url)
+    @Html.EditorFor(x => x.NewComment.Body)
+    
+    Html.GenerateCaptcha()
+    @Html.EditorFor(x => x.NewComment.PostId)
+    <input type="submit" value="Post Comment" />
+</form>

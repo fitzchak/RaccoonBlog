@@ -246,15 +246,23 @@ article header h1 a
 	background: #FFCC66;
 }
 
+.form_item 
+{
+    margin-top: 4px;
+}
 
+.form_item span
+{
+    width: 200px;
+    display: block;
+    float: left;
+}
 
-
-
-
-
-
-
-
+.form_item textarea
+{
+    height: 193px;
+    width: 400px;
+}
 
 
 
