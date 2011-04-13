@@ -78,6 +78,7 @@
     <Compile Include="AutoMapper\Profiles\Resolvers\RavenIdResolver.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Helpers\HtmlExtantions.cs" />
     <Compile Include="Helpers\Results\HttpNotFoundResult.cs" />
     <Compile Include="Helpers\Results\HttpStatusCodeResult.cs" />
     <Compile Include="Helpers\Results\HttpUnauthorizedResult.cs" />
