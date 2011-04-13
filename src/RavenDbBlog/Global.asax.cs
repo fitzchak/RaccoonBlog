@@ -28,6 +28,12 @@ namespace RavenDbBlog
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                "post-new-comment",
+                "posts/new-comment",
+                new {controller = "Home", action = "NewComment"}
+                );
+
+            routes.MapRoute(
                 "post-details",
                 "posts/{id}/{slug}",
                 new {controller = "Home", action = "Show", slug = UrlParameter.Optional},

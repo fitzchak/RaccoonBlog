@@ -69,13 +69,13 @@
     </section>
 </article>
 
-<form action="@Url.Action("NewComment")">
+<form action="@Url.Action("NewComment")" method="post">
     @Html.EditorFor(x => x.NewComment.Name)
     @Html.EditorFor(x =>x.NewComment.Email)
     @Html.EditorFor(x => x.NewComment.Url)
     @Html.EditorFor(x => x.NewComment.Body)
     
-    Html.GenerateCaptcha()
+    @Html.GenerateCaptcha()
     @Html.EditorFor(x => x.NewComment.PostId)
     <input type="submit" value="Post Comment" />
 </form>
