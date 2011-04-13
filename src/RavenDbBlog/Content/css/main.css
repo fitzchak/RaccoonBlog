@@ -255,7 +255,7 @@ article header h1 a
     margin-top: 4px;
 }
 
-.form_item span
+.form_item span.form_item_name
 {
     width: 200px;
     display: block;
