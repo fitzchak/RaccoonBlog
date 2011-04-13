@@ -49,7 +49,6 @@ namespace RavenDbBlog.Controllers
             if (post == null)
                 return HttpNotFound();
 
-
             if(post.PublishAt > DateTimeOffset.Now)
                 return HttpNotFound("The post you looked for does not exist.");
 
