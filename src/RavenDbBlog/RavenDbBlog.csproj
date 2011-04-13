@@ -91,6 +91,9 @@
     <Compile Include="AutoMapper\Profiles\PostsViewModelMapperProfile.cs" />
     <Compile Include="AutoMapper\Profiles\PostViewModelMapperProfile.cs" />
     <Compile Include="AutoMapper\Profiles\Resolvers\RavenIdResolver.cs" />
+    <Compile Include="Commands\AddCommentCommand.cs" />
+    <Compile Include="Common\EnumerableExtensions.cs" />
+    <Compile Include="Commands\SendEmailCommand.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Helpers\HtmlExtantions.cs" />
@@ -103,6 +106,8 @@
     <Compile Include="Infrastructure\AutoMapperExtensions.cs" />
     <Compile Include="Infrastructure\RavenActionFilterAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Commands\CommandExcucator.cs" />
+    <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Services\MetaWeblog.cs" />
     <Compile Include="ViewModels\CommentCookie.cs" />
     <Compile Include="ViewModels\CommentInput.cs" />

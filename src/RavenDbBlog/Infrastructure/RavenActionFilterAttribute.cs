@@ -18,7 +18,7 @@ namespace RavenDbBlog.Infrastructure
     /// </remarks>
     public class RavenActionFilterAttribute : ActionFilterAttribute
     {
-        private static readonly IDocumentStore DocumentStore = CreateDocumentStore();
+        public static readonly IDocumentStore DocumentStore = CreateDocumentStore();
 
         private readonly ConcurrentDictionary<Type, Tuple<Action<ControllerBase, IDocumentSession>, Func<ControllerBase, IDocumentSession>>> _accessorsCache = new ConcurrentDictionary<Type, Tuple<Action<ControllerBase, IDocumentSession>, Func<ControllerBase, IDocumentSession>>>();
 
