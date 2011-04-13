@@ -19,6 +19,10 @@ namespace RavenDbBlog.AutoMapper
                 .ForMember(x => x.Body, o => o.MapFrom(m => MvcHtmlString.Create(m.Body)))
                 .ForMember(x => x.EmailHash, o => o.MapFrom(m => EmailHashResolver.Resolve(m.Email)))
                 ;
+
+            Mapper.CreateMap<CommentInput, CommentCookie>();
+
+            Mapper.CreateMap<CommentCookie, CommentInput>();
         }
     }
 }

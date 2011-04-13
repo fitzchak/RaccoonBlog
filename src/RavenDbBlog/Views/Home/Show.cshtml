@@ -69,13 +69,14 @@
     </section>
 </article>
 
-<form action="@Url.Action("NewComment", new { id = Model.NewComment.PostId })" method="post">
+<form action="@Url.Action("NewComment", new { Model.Post.Id })" method="post">
     @Html.EditorFor(x => x.NewComment.Name)
     @Html.EditorFor(x =>x.NewComment.Email)
     @Html.EditorFor(x => x.NewComment.Url)
     @Html.EditorFor(x => x.NewComment.Body)
     
-    @Html.GenerateCaptcha()
-    @Html.EditorFor(x => x.NewComment.PostId)
+    @if (!Model.IsTrustedUser) { 
+        @Html.GenerateCaptcha()
+    }
     <input type="submit" value="Post Comment" />
 </form>

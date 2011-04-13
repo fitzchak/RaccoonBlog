@@ -47,6 +47,9 @@
     <Reference Include="MvcReCaptcha">
       <HintPath>..\packages\MvcReCaptchaRelease\MvcReCaptcha.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.4.0.1\lib\40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Raven.Client.Lightweight">
       <HintPath>..\packages\RavenDB-Unstable-Build-326\Client\Raven.Client.Lightweight.dll</HintPath>
     </Reference>
@@ -98,6 +101,7 @@
     <Compile Include="Infrastructure\RavenActionFilterAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\MetaWeblog.cs" />
+    <Compile Include="ViewModels\CommentCookie.cs" />
     <Compile Include="ViewModels\CommentInput.cs" />
     <Compile Include="ViewModels\PostViewModel.cs" />
     <Compile Include="ViewModels\PostsViewModel.cs" />

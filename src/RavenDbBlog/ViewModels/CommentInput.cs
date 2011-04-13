@@ -22,9 +22,6 @@ namespace RavenDbBlog.ViewModels
         [DataType(DataType.MultilineText)]
         public string Body { get; set; }
 
-        [HiddenInput]
-        public int PostId { get; set; }
-
         [Display(Name = "Remember Me?")]
         public bool? RememberMe { get; set; }
     }
