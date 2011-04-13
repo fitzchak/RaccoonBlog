@@ -72,6 +72,7 @@ namespace RavenDbBlog.Commands
             builder.Append("</p>");
             message.Body = builder.ToString();
 
+            message.IsBodyHtml = true;
             new SendEmailCommand(message).Execute();
         }
 
