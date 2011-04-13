@@ -130,7 +130,14 @@ namespace RavenDbBlog.Controllers
                 Response.Cookies.Add(new HttpCookie(CommentCookieName, JsonConvert.SerializeObject(commentCookie)));
             }
 
-            comments.Comments.Add(comment);
+            if (comment.IsSpam)
+            {
+                comments.Spam.Add(comment);
+            }
+            else
+            {
+                comments.Comments.Add(comment);
+            }
             Session.SaveChanges();
 
             TempData["message"] = "You feedback will be posted soon. Thanks for the feedback.";

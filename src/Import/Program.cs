@@ -47,21 +47,36 @@ namespace RavenDbBlog.Import
                         };
 
                         var ravenComment = new RavenComment
-                        {
-                            PostId = "posts/" + post.ID,
-                            Id = "posts/" + post.ID + "/comments",
-                            Comments = post.Comments.Select(
-                                comment => new RavenComment.Comment
-                                {
-                                    Author = comment.Author,
-                                    Body = comment.Body,
-                                    CreatedAt = comment.DateCreated,
-                                    Email = comment.Email,
-                                    Important = comment.IsBlogAuthor ?? false,
-                                    Url = comment.Url
-                                }
-                                ).ToList()
-                        };
+                                               {
+                                                   PostId = "posts/" + post.ID,
+                                                   Id = "posts/" + post.ID + "/comments",
+                                                   Comments = post.Comments
+                                                       .Where(comment => comment.StatusFlag == 5)
+                                                       .Select(
+                                                           comment => new RavenComment.Comment
+                                                                          {
+                                                                              Author = comment.Author,
+                                                                              Body = comment.Body,
+                                                                              CreatedAt = comment.DateCreated,
+                                                                              Email = comment.Email,
+                                                                              Important = comment.IsBlogAuthor ?? false,
+                                                                              Url = comment.Url
+                                                                          }
+                                                       ).ToList(),
+                                                   Spam = post.Comments
+                                                       .Where(comment => comment.StatusFlag == 12)
+                                                       .Select(
+                                                           comment => new RavenComment.Comment
+                                                                          {
+                                                                              Author = comment.Author,
+                                                                              Body = comment.Body,
+                                                                              CreatedAt = comment.DateCreated,
+                                                                              Email = comment.Email,
+                                                                              Important = comment.IsBlogAuthor ?? false,
+                                                                              Url = comment.Url
+                                                                          }
+                                                       ).ToList(),
+                                               };
 
                         using (var session = store.OpenSession())
                         {
