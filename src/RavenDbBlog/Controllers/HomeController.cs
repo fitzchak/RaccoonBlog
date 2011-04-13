@@ -62,7 +62,7 @@ namespace RavenDbBlog.Controllers
             {
                 var commentCookie = JsonConvert.DeserializeObject<CommentCookie>(cookie.Value);
                 vm.NewComment = commentCookie.MapTo<CommentInput>();
-                vm.IsTrustedUser = true;
+                // vm.IsTrustedUser = true;
             }
             return View(vm);
         }
@@ -125,6 +125,11 @@ namespace RavenDbBlog.Controllers
             return RedirectToAction("Show", new { post.Slug });
         }
 
-        
+        [ChildActionOnly]
+        public ActionResult TagsList(int id)
+        {
+            // Session.Query<>()
+            return View("TagsList");
+        }
     }
 }
