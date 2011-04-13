@@ -11,6 +11,7 @@ namespace RavenDbBlog.ViewModels
 
         public PostDetails Post { get; set; }
         public IList<Comment> Comments { get; set; }
+        public CommentInput NewComment { get; set; }
 
         public bool IsCommentClosed { get; set; }
 

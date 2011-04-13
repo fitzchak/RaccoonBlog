@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 using AutoMapper;
+using MvcReCaptcha;
 using Raven.Client;
 using RavenDbBlog.Core.Models;
 using RavenDbBlog.Infrastructure;
@@ -10,7 +11,7 @@ using System.Linq;
 
 namespace RavenDbBlog.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
 
         public new IDocumentSession Session { get; set; }
@@ -39,20 +40,18 @@ namespace RavenDbBlog.Controllers
                             });
         }
 
-        public ActionResult Show(string id, string slug)
+        public ActionResult Show(int id, string slug)
         {
-            var results = Session.Load<object>("posts/" + id, "posts/" + id + "/comments");
+            var result = GetPostAndComments(id);
+            var post = result.Item1;
+            var comments = result.Item2;
 
-            if (results.Length == 0)
+            if (post == null)
                 return HttpNotFound();
 
-            var post = (Post) results[0];
-            var comments = new CommentsCollection();
-            if(results.Length > 1)
-                comments = (CommentsCollection) results[1];
 
             if(post.PublishAt > DateTimeOffset.Now)
-                return HttpNotFound();
+                return HttpNotFound("The post you looked for does not exist.");
 
             if (post.Slug != slug)
                 return RedirectPermanent("/posts/" + id + "/" + post.Slug); // TODO: do this properly
@@ -63,6 +62,56 @@ namespace RavenDbBlog.Controllers
                              Comments = comments.Comments.MapTo<PostViewModel.Comment>()
                          };
             return View(vm);
+        }
+
+        private Tuple<Post, CommentsCollection> GetPostAndComments(int postId)
+        {
+            var results = Session.Load<object>("posts/" + postId, "posts/" + postId + "/comments");
+
+            Post post = null;
+            if (results.Length > 0)
+                post = (Post) results[0];
+
+            var comments = new CommentsCollection();
+            if(results.Length > 1)
+                comments = (CommentsCollection) results[1];
+
+            return new Tuple<Post, CommentsCollection>(post, comments);
+        }
+
+        [HttpGet]
+        [CaptchaValidator]
+        public ActionResult NewComment(int id)
+        {
+            return RedirectToAction("Show", new { Id = id });
+        }
+
+        [HttpPost]
+        [CaptchaValidator]
+        public ActionResult NewComment(CommentInput input, bool captchaValid)
+        {
+            if (!captchaValid)
+                ModelState.AddModelError("_FORM", "You did not type the verification word correctly. Please try again.");
+
+            if (!ModelState.IsValid)
+            {
+                var result = GetPostAndComments(input.PostId);
+                var post = result.Item1;
+                var comments = result.Item2;
+
+                if (post == null)
+                    return HttpNotFound();
+
+                var vm = new PostViewModel
+                         {
+                             Post = post.MapTo<PostViewModel.PostDetails>(),
+                             Comments = comments.Comments.MapTo<PostViewModel.Comment>(),
+                             NewComment = input,
+                         };
+                return View("Show", vm);
+            }
+
+            return RedirectToAction("Show", new {id = input.PostId});
         }
     }
 }

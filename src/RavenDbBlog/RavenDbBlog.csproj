@@ -38,8 +38,15 @@
       <HintPath>..\packages\AutoMapper.1.1.0.118\lib\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MvcReCaptcha">
+      <HintPath>..\packages\MvcReCaptchaRelease\MvcReCaptcha.dll</HintPath>
+    </Reference>
     <Reference Include="Raven.Client.Lightweight">
       <HintPath>..\packages\RavenDB-Unstable-Build-326\Client\Raven.Client.Lightweight.dll</HintPath>
+    </Reference>
+    <Reference Include="Recaptcha, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MvcReCaptchaRelease\Recaptcha.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.WebPages" />
@@ -69,7 +76,11 @@
     <Compile Include="AutoMapper\Profiles\PostsViewModelMapperProfile.cs" />
     <Compile Include="AutoMapper\Profiles\PostViewModelMapperProfile.cs" />
     <Compile Include="AutoMapper\Profiles\Resolvers\RavenIdResolver.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Helpers\Results\HttpNotFoundResult.cs" />
+    <Compile Include="Helpers\Results\HttpStatusCodeResult.cs" />
+    <Compile Include="Helpers\Results\HttpUnauthorizedResult.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -77,6 +88,7 @@
     <Compile Include="Infrastructure\RavenActionFilterAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\MetaWeblog.cs" />
+    <Compile Include="ViewModels\CommentInput.cs" />
     <Compile Include="ViewModels\PostViewModel.cs" />
     <Compile Include="ViewModels\PostsViewModel.cs" />
   </ItemGroup>
@@ -87,6 +99,9 @@
     <Content Include="Content\css\main.css" />
     <Content Include="Content\css\ResetCss.css" />
     <Content Include="Global.asax" />
+    <Content Include="Views\Home\EditorTemplates\HiddenInput.cshtml" />
+    <None Include="Views\Home\EditorTemplates\MultilineText.cshtml" />
+    <None Include="Views\Home\EditorTemplates\String.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -117,6 +132,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Shared\404.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
