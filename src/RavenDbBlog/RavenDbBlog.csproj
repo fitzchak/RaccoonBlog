@@ -56,6 +56,9 @@
     <Reference Include="Raven.Client.Lightweight">
       <HintPath>..\packages\RavenDB-Unstable-Build-326\Client\Raven.Client.Lightweight.dll</HintPath>
     </Reference>
+    <Reference Include="RazorEngine">
+      <HintPath>..\packages\RazorEngine.2.1\lib\.NetFramework 4.0\RazorEngine.dll</HintPath>
+    </Reference>
     <Reference Include="Recaptcha, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MvcReCaptchaRelease\Recaptcha.dll</HintPath>
@@ -64,6 +67,10 @@
       <HintPath>..\packages\routedebugger.1.0.0.1\lib\net35\RouteDebugger.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\RazorEngine.2.1\lib\.NetFramework 4.0\System.Web.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.WebPages" />
     <Reference Include="System.Web.Helpers" />
     <Reference Include="System" />
@@ -111,6 +118,7 @@
     <Compile Include="Services\MetaWeblog.cs" />
     <Compile Include="ViewModels\CommentCookie.cs" />
     <Compile Include="ViewModels\CommentInput.cs" />
+    <Compile Include="ViewModels\NewCommentEmailViewModel.cs" />
     <Compile Include="ViewModels\PostViewModel.cs" />
     <Compile Include="ViewModels\PostsViewModel.cs" />
   </ItemGroup>
@@ -124,6 +132,7 @@
     <Content Include="Global.asax" />
     <Content Include="license.txt" />
     <Content Include="Views\Home\EditorTemplates\HiddenInput.cshtml" />
+    <Content Include="Emails\NewComment.cshtml" />
     <None Include="Views\Home\EditorTemplates\MultilineText.cshtml" />
     <None Include="Views\Home\EditorTemplates\String.cshtml" />
     <Content Include="Web.config" />

@@ -3,12 +3,14 @@ using System.Configuration;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
+using System.Web.Mvc;
 using Joel.Net;
 using Newtonsoft.Json;
 using RavenDbBlog.Common;
 using RavenDbBlog.Core.Models;
 using RavenDbBlog.Infrastructure;
 using RavenDbBlog.ViewModels;
+using RazorEngine;
 
 namespace RavenDbBlog.Commands
 {
@@ -65,12 +67,15 @@ namespace RavenDbBlog.Commands
             var blogName = ConfigurationSettings.AppSettings["blogName"];
             message.Subject = string.Format("A new comment on {0} blog", blogName);
 
-            var builder = new StringBuilder();
-            builder.AppendFormat("<h1>A new comment on {0} blog{1}</h1>", blogName);
-            builder.Append("<p>");
-            builder.Append(JsonConvert.SerializeObject(comment));
-            builder.Append("</p>");
-            message.Body = builder.ToString();
+            var vm = new NewCommentEmailViewModel
+                         {
+                             Author = comment.Author,
+                             Body = MvcHtmlString.Create(comment.Body),
+                             CreatedAt = comment.CreatedAt,
+                             Email = comment.Email,
+                             Url = comment.Url,
+                         };
+            message.Body = Razor.Run(vm, "NewComment");
 
             message.IsBodyHtml = true;
             new SendEmailCommand(message).Execute();
