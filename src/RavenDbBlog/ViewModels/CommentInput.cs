@@ -22,7 +22,6 @@ namespace RavenDbBlog.ViewModels
         [DataType(DataType.MultilineText)]
         public string Body { get; set; }
 
-        // [Required]  // It's already required by non nullalbe type. Just to make code more clear.
         [HiddenInput]
         public int PostId { get; set; }
 

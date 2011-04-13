@@ -33,7 +33,7 @@
 
             </div>
             <div id="content">
-                @if (string.IsNullOrEmpty(ViewBag.Message)) { 
+                @if (!string.IsNullOrEmpty(ViewBag.Message)) { 
                     <div class="message">@ViewBag.Message</div>
                 }
                 @RenderBody()

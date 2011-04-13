@@ -80,7 +80,6 @@ namespace RavenDbBlog.Controllers
         }
 
         [HttpGet]
-        [CaptchaValidator]
         public ActionResult NewComment(int id)
         {
             return RedirectToAction("Show", new { Id = id });
@@ -111,7 +110,7 @@ namespace RavenDbBlog.Controllers
                 return View("Show", vm);
             }
             TempData["message"] = "You feedback will be posted soon. Thanks for the feedback.";
-            return RedirectToAction("Show", new { post.Id, post.Slug });
+            return RedirectToAction("Show", new { post.Slug });
         }
     }
 }

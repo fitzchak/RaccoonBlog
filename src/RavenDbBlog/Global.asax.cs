@@ -7,6 +7,7 @@ using System.Web.Routing;
 using AutoMapper;
 using RavenDbBlog.AutoMapper;
 using RavenDbBlog.Infrastructure;
+using RouteDebug;
 
 namespace RavenDbBlog
 {
@@ -29,14 +30,15 @@ namespace RavenDbBlog
 
             routes.MapRoute(
                 "post-new-comment",
-                "posts/new-comment",
-                new {controller = "Home", action = "NewComment"}
+                "posts/comment/{id}",
+                new {controller = "Home", action = "NewComment"},
+                new { id = MatchPositiveInteger }
                 );
 
             routes.MapRoute(
                 "post-details",
                 "posts/{id}/{slug}",
-                new {controller = "Home", action = "Show", slug = UrlParameter.Optional},
+                new { controller = "Home", action = "Show", slug = UrlParameter.Optional },
                 new {id = MatchPositiveInteger}
                 );
 
@@ -47,10 +49,12 @@ namespace RavenDbBlog
                 );
 
             routes.MapRoute(
-                "Default", // Route name
-                "{controller}/{action}/{*id}", // URL with parameters
-                new {controller = "Home", action = "Index", id = UrlParameter.Optional} // Parameter defaults
+                "Default",
+                "{controller}/{action}",
+                new {controller = "Home", action = "Index"}
                 );
+
+            // RouteDebugger.RewriteRoutesForTesting(RouteTable.Routes);
         }
 
         protected void Application_Start()

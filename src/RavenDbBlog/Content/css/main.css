@@ -70,6 +70,10 @@ p {
     margin: 1em 0px;
 }
 
+ul 
+{
+    padding-left: 40px;
+}
 
 #container
 {
@@ -266,3 +270,39 @@ article header h1 a
 
 
 
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error
+{
+    color: #ff0000;
+}
+
+.field-validation-valid
+{
+    display: none;
+}
+
+.input-validation-error
+{
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+
+.validation-summary-errors
+{
+    font-weight: bold;
+    color: #ff0000;
+}
+
+.validation-summary-valid
+{
+    display: none;
+}
+
+.message
+{
+    border: 1px solid #930;
+    background-color: #FC6;
+    padding: 3px;
+    text-align: center;
+}
