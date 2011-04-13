@@ -26,16 +26,6 @@ namespace RavenDbBlog.Controllers
 
             return View(new PostsViewModel
                             {
-                                //Posts = posts.Select(post => new PostsViewModel.PostInternalViewModel
-                                //                                 {
-                                //                                     Body = MvcHtmlString.Create(post.Body),
-                                //                                     CommentsCount = post.CommentsCount,
-                                //                                     CreatedAt = post.CreatedAt,
-                                //                                     PublishedAt = post.PublishAt,
-                                //                                     Slug = post.Slug,
-                                //                                     Tags = new string[0],
-                                //                                     Title = post.Title
-                                //                                 }).ToList(), 
                                 Posts = posts.MapTo<PostsViewModel.PostSummary>()
                             });
         }
