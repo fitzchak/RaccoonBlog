@@ -53,6 +53,7 @@
     <Reference Include="Newtonsoft.Json, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.4.0.1\lib\40\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Raven.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL" />
     <Reference Include="Raven.Client.Lightweight, Version=1.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
       <HintPath>..\packages\raven\Client\Raven.Client.Lightweight.dll</HintPath>
     </Reference>
@@ -133,7 +134,7 @@
     <Content Include="Global.asax" />
     <Content Include="Views\Home\EditorTemplates\HiddenInput.cshtml" />
     <Content Include="Emails\NewComment.cshtml" />
-    <Content Include="Views\Home\TagsList.cshtml" />
+    <Content Include="Views\Home\UnsortedList.cshtml" />
     <None Include="Views\Home\EditorTemplates\MultilineText.cshtml" />
     <None Include="Views\Home\EditorTemplates\String.cshtml" />
     <Content Include="Web.config" />

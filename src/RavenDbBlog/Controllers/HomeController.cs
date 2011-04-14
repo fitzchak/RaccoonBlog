@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using AutoMapper;
 using MvcReCaptcha;
 using Newtonsoft.Json;
+using Raven.Abstractions.Data;
 using Raven.Client;
 using RavenDbBlog.Commands;
 using RavenDbBlog.Core.Models;
@@ -124,14 +125,32 @@ namespace RavenDbBlog.Controllers
         [ChildActionOnly]
         public ActionResult TagsList()
         {
-            var tags = Session.Query<Post>()
-                .SelectMany(post => post.Tags)
-                .GroupBy(tag => tag)
-                .OrderBy(tag => tag)
-                .Take(1000)
-                .ToList();
+            // Session.Advanced.LuceneQuery<Post>().GroupBy(AggregationOperation.Count, );
 
-            return View(tags);
+            //var tags = Session.Query<Post>()
+            //    .SelectMany(post => post.Tags)
+            //    .GroupBy(tag => tag)
+            //    .OrderBy(tag => tag)
+            //    .Take(1000)
+            //    .ToList();
+
+            var tags = new List<string>();
+            return View("UnsortedList", tags);
         }
+
+        //[ChildActionOnly]
+        //public ActionResult ArchivesList()
+        //{
+        //    var datesQuery = from post in Session.Query<Post>()
+        //                     group post by new { post.PublishAt.Month, post.PublishAt.Year }
+        //                         into date
+        //                         select ", " + date.Count();
+
+        //    var dates = datesQuery
+        //        .Take(1000)
+        //        .ToList();
+
+        //    return View("UnsortedList", dates);
+        //}
     }
 }
