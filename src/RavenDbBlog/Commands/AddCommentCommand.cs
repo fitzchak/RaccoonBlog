@@ -8,6 +8,7 @@ using Joel.Net;
 using Newtonsoft.Json;
 using RavenDbBlog.Common;
 using RavenDbBlog.Core.Models;
+using RavenDbBlog.Domain;
 using RavenDbBlog.Infrastructure;
 using RavenDbBlog.ViewModels;
 using RazorEngine;
@@ -28,7 +29,11 @@ namespace RavenDbBlog.Commands
         public void Execute()
         {
             var session = RavenActionFilterAttribute.DocumentStore.OpenSession();
-            var comments = session.Load<CommentsCollection>("posts/" + _postId + "/comments");
+            var postAndComments = new PostReader(session).GetPostAndComments(_postId);
+            var post = postAndComments.Item1;
+            post.CommentsCount++;
+
+            var comments = postAndComments.Item2;
             var comment = new CommentsCollection.Comment
             {
                 Author = _commentInput.Name,

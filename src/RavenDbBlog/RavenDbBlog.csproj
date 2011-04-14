@@ -103,6 +103,7 @@
     <Compile Include="Commands\SendEmailCommand.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Domain\PostReader.cs" />
     <Compile Include="Helpers\HtmlExtantions.cs" />
     <Compile Include="Helpers\Results\HttpNotFoundResult.cs" />
     <Compile Include="Helpers\Results\HttpStatusCodeResult.cs" />

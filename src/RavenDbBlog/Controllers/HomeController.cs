@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Raven.Client;
 using RavenDbBlog.Commands;
 using RavenDbBlog.Core.Models;
+using RavenDbBlog.Domain;
 using RavenDbBlog.Infrastructure;
 using RavenDbBlog.ViewModels;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace RavenDbBlog.Controllers
             if (!string.IsNullOrEmpty(tag))
             {
                 postsQuery = from post in postsQuery
-                             where post.Tags.Any(tag1 => tag1 == tag)
+                             where post.Tags.Any(postTag => postTag == tag)
                              select post;
             }
 
@@ -48,7 +49,7 @@ namespace RavenDbBlog.Controllers
 
         public ActionResult Show(int id, string slug)
         {
-            var result = GetPostAndComments(id);
+            var result = new PostReader(Session).GetPostAndComments(id);
             var post = result.Item1;
             var comments = result.Item2;
 
@@ -77,21 +78,6 @@ namespace RavenDbBlog.Controllers
             return View(vm);
         }
 
-        private Tuple<Post, CommentsCollection> GetPostAndComments(int postId)
-        {
-            var results = Session.Load<object>("posts/" + postId, "posts/" + postId + "/comments");
-
-            Post post = null;
-            if (results.Length > 0)
-                post = (Post) results[0];
-
-            var comments = new CommentsCollection();
-            if(results.Length > 1)
-                comments = (CommentsCollection) results[1];
-
-            return new Tuple<Post, CommentsCollection>(post, comments);
-        }
-
         [HttpGet]
         public ActionResult NewComment(int id)
         {
@@ -105,7 +91,7 @@ namespace RavenDbBlog.Controllers
             if (!captchaValid)
                 ModelState.AddModelError("_FORM", "You did not type the verification word correctly. Please try again.");
 
-            var result = GetPostAndComments(id);
+            var result = new PostReader(Session).GetPostAndComments(id);
             var post = result.Item1;
             var comments = result.Item2;
 
