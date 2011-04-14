@@ -28,7 +28,9 @@
 
                 <aside class="section">
                     <h1>Post Tags</h1>
-                    @*@{Html.RenderAction("PostTags");}*@
+                    <div class="tags_list">
+                        @{Html.RenderAction("TagsList");}
+                    </div>
                 </aside>
 
             </div>

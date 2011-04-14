@@ -1,0 +1,7 @@
+﻿@model IList<string>
+<ul>
+    @foreach (var tag in Model)
+    {
+        <li><a href="@Url.Action("Index", "Home", new { tag })">@tag</a></li>
+    }
+</ul>

@@ -133,6 +133,7 @@
     <Content Include="Global.asax" />
     <Content Include="Views\Home\EditorTemplates\HiddenInput.cshtml" />
     <Content Include="Emails\NewComment.cshtml" />
+    <Content Include="Views\Home\TagsList.cshtml" />
     <None Include="Views\Home\EditorTemplates\MultilineText.cshtml" />
     <None Include="Views\Home\EditorTemplates\String.cshtml" />
     <Content Include="Web.config" />

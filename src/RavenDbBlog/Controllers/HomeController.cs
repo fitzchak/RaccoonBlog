@@ -122,10 +122,16 @@ namespace RavenDbBlog.Controllers
         }
 
         [ChildActionOnly]
-        public ActionResult TagsList(int id)
+        public ActionResult TagsList()
         {
-            // Session.Query<>()
-            return View("TagsList");
+            var tags = Session.Query<Post>()
+                .SelectMany(post => post.Tags)
+                .GroupBy(tag => tag)
+                .OrderBy(tag => tag)
+                .Take(1000)
+                .ToList();
+
+            return View(tags);
         }
     }
 }
