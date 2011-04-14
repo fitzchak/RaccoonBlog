@@ -30,7 +30,7 @@ namespace RavenDbBlog.Controllers
             if (!string.IsNullOrEmpty(tag))
             {
                 postsQuery = from post in postsQuery
-                             where post.Tags.Contains(tag)
+                             where post.Tags.Any(tag1 => tag1 == tag)
                              select post;
             }
 
