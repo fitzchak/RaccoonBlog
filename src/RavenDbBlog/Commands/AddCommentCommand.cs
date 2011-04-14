@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using Joel.Net;
 using Raven.Client;
 using RavenDbBlog.Core.Models;
+using RavenDbBlog.Infrastructure.Commands;
 using RavenDbBlog.ViewModels;
 using RazorEngine;
 

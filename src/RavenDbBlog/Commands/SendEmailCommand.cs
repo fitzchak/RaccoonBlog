@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Linq;
 using System.Net.Mail;
 using RavenDbBlog.Common;
+using RavenDbBlog.Infrastructure.Commands;
 
 namespace RavenDbBlog.Commands
 {
@@ -16,13 +17,13 @@ namespace RavenDbBlog.Commands
         {
             var message = new MailMessage();
 
-            var commentsMederatorEmails = ConfigurationManager.AppSettings["CommentsMederatorEmails"];
+            var commentsMederatorEmails = ConfigurationManager.AppSettings["OwnerEmail"];
             commentsMederatorEmails
                 .Split(';')
                 .Select(x => new MailAddress(x.Trim()))
                 .ForEach(email => message.To.Add(email));
 
-            var blogName = ConfigurationManager.AppSettings["blogName"];
+            var blogName = ConfigurationManager.AppSettings["BlogName"];
             message.Subject = string.Format("{0} from {1}", Subject, blogName);
 
             message.Body = Contents;

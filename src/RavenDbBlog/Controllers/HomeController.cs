@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Web;
 using System.Web.Mvc;
-using AutoMapper;
 using MvcReCaptcha;
 using Newtonsoft.Json;
-using Raven.Abstractions.Data;
 using Raven.Client;
 using RavenDbBlog.Commands;
 using RavenDbBlog.Core.Models;
-using RavenDbBlog.Domain;
-using RavenDbBlog.Infrastructure;
+using RavenDbBlog.Infrastructure.AutoMapper;
+using RavenDbBlog.Infrastructure.Commands;
 using RavenDbBlog.ViewModels;
 using System.Linq;
 
@@ -117,7 +114,11 @@ namespace RavenDbBlog.Controllers
                 return View("Show", vm);
             }
 
-            CommandExcucator.ExcuteLater(new AddCommentCommand(newComment, id));
+            CommandExcucator.ExcuteLater(new AddCommentCommand
+                                             {
+                                                 CommentInput = newComment,
+                                                 PostId = id
+                                             });
 
             // if (!commenter.IsSpamer) // && newComment.RememberMe == true )
             {
