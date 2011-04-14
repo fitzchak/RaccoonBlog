@@ -22,11 +22,11 @@ namespace RavenDbBlog.Commands
             Session.Load<object>("posts/" + PostId, "posts/" + PostId + "/comments");
 
             var post = Session.Load<Post>("posts/" + PostId);
-            var comments = Session.Load<CommentsCollection>("posts/" + PostId + "/comments");
+            var comments = Session.Load<PostComments>("posts/" + PostId + "/comments");
 
             post.CommentsCount++;
 
-            var comment = new CommentsCollection.Comment
+            var comment = new PostComments.Comment
             {
                 Author = CommentInput.Name,
                 Body = CommentInput.Body,
