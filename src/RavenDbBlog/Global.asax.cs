@@ -24,32 +24,24 @@ namespace RavenDbBlog
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                "post-new-comment",
-                "posts/comment/{id}",
-                new {controller = "Home", action = "NewComment"},
+                "CommentOnPost",
+                "{id}/comment",
+                new { controller = "Post", action = "Comment"},
                 new { id = MatchPositiveInteger }
                 );
 
             routes.MapRoute(
-                "post-details",
-                "posts/{id}/{slug}",
-                new { controller = "Home", action = "Show", slug = UrlParameter.Optional },
-                new {id = MatchPositiveInteger}
+                "PostById",
+                "{id}/{slug}",
+                new { controller = "Post", action = "Show", slug = UrlParameter.Optional },
+                new { id = MatchPositiveInteger }
                 );
 
             routes.MapRoute(
-                "post-list",
-                "posts",
-                new {controller = "Home", action = "Index"}
+                "AllPosts",
+                "",
+                new { controller = "Post", action = "List"}
                 );
-
-            routes.MapRoute(
-                "Default",
-                "{controller}/{action}",
-                new {controller = "Home", action = "Index"}
-                );
-
-            // RouteDebugger.RewriteRoutesForTesting(RouteTable.Routes);
         }
 
         protected void Application_Start()
