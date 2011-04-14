@@ -17,5 +17,7 @@ namespace RavenDbBlog.Core.Models
         public DateTimeOffset PublishAt { get; set; }
 
         public int CommentsCount { get; set; }
+
+        public string CommentsId { get; set; }
     }
 }

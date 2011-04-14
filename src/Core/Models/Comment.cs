@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RavenDbBlog.Core.Models
 {
-    public class CommentsCollection
+    public class PostComments
     {
         public string Id { get; set; }
         public string PostId { get; set; }

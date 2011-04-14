@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using Raven.Client.Document;
+using RavenDbBlog.Core.Models;
 using RavenDbBlog.Infrastructure.EntityFramework;
 using System.Linq;
 using RavenPost = RavenDbBlog.Core.Models.Post;
-using RavenComment = RavenDbBlog.Core.Models.CommentsCollection;
+
 namespace RavenDbBlog.Import
 {
     class Program
@@ -46,14 +47,13 @@ namespace RavenDbBlog.Import
                                 .ToList()
                         };
 
-                        var ravenComment = new RavenComment
+                        var commentsCollection = new PostComments
                                                {
                                                    PostId = "posts/" + post.ID,
-                                                   Id = "posts/" + post.ID + "/comments",
                                                    Comments = post.Comments
                                                        .Where(comment => comment.StatusFlag == 5)
                                                        .Select(
-                                                           comment => new RavenComment.Comment
+                                                           comment => new PostComments.Comment
                                                                           {
                                                                               Author = comment.Author,
                                                                               Body = comment.Body,
@@ -66,7 +66,7 @@ namespace RavenDbBlog.Import
                                                    Spam = post.Comments
                                                        .Where(comment => comment.StatusFlag == 12)
                                                        .Select(
-                                                           comment => new RavenComment.Comment
+                                                           comment => new PostComments.Comment
                                                                           {
                                                                               Author = comment.Author,
                                                                               Body = comment.Body,
@@ -80,8 +80,11 @@ namespace RavenDbBlog.Import
 
                         using (var session = store.OpenSession())
                         {
+                            session.Store(commentsCollection);
+
+                            ravenPost.Id = commentsCollection.Id;
+
                             session.Store(ravenPost);
-                            session.Store(ravenComment);
                             session.SaveChanges();
                         }
 
