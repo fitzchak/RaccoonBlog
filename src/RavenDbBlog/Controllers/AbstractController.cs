@@ -2,19 +2,17 @@
 
 namespace RavenDbBlog.Controllers
 {
-    public class BaseController : Controller
+    public class AbstractController : Controller
     {
-        public BaseController()
+        public AbstractController()
         {
             ViewBag.MetaDescription = "";
             ViewBag.MetaKeywords = "";
         }
 
-// ReSharper disable MemberCanBeMadeStatic.Global
-        protected new HttpNotFoundResult HttpNotFound(string statusDescription = null)
-// ReSharper restore MemberCanBeMadeStatic.Global
+        protected new HttpNotFoundWithViewResult HttpNotFound(string statusDescription = null)
         {
-            return new HttpNotFoundResult(statusDescription);
+            return new HttpNotFoundWithViewResult(statusDescription);
         }
 
         protected HttpUnauthorizedResult HttpUnauthorized(string statusDescription = null)

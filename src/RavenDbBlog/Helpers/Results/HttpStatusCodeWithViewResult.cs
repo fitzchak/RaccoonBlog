@@ -3,14 +3,14 @@ using System.Web.Mvc;
 
 namespace RavenDbBlog.Controllers
 {
-    public class HttpStatusCodeResult : ViewResult
+    public class HttpStatusCodeWithViewResult : ViewResult
     {
         public int StatusCode { get; private set; }
         public string StatusDescription { get; private set; }
 
-        public HttpStatusCodeResult(int statusCode) : this(statusCode, null) { }
+        public HttpStatusCodeWithViewResult(int statusCode) : this(statusCode, null) { }
 
-        public HttpStatusCodeResult(int statusCode, string statusDescription)
+        public HttpStatusCodeWithViewResult(int statusCode, string statusDescription)
         {
             this.StatusCode = statusCode;
             this.StatusDescription = statusDescription;
@@ -28,7 +28,7 @@ namespace RavenDbBlog.Controllers
             {
                 context.HttpContext.Response.StatusDescription = StatusDescription;
             }
-            this.ViewName = StatusCode.ToString();
+            ViewName = StatusCode.ToString();
             base.ExecuteResult(context);
         }
     }
