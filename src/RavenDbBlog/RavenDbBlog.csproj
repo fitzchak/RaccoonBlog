@@ -37,16 +37,13 @@
     <Reference Include="AutoMapper">
       <HintPath>..\packages\AutoMapper.1.1.0.118\lib\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="Elmah">
+      <HintPath>..\packages\elmah.1.1\lib\Elmah.dll</HintPath>
+    </Reference>
     <Reference Include="Joel.Net.Akismet">
       <HintPath>..\packages\Joel.Net.Akismet-binary.1.0.1\Joel.Net.Akismet.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Web.Mvc">
-      <HintPath>..\packages\Mvc3Futures.3.0.20105.0\lib\Microsoft.Web.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="MvcContrib">
-      <HintPath>..\packages\MvcContrib.Mvc3-ci.3.0.62.0\lib\MvcContrib.dll</HintPath>
-    </Reference>
     <Reference Include="MvcReCaptcha">
       <HintPath>..\packages\MvcReCaptchaRelease\MvcReCaptcha.dll</HintPath>
     </Reference>
@@ -63,9 +60,6 @@
     <Reference Include="Recaptcha, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MvcReCaptchaRelease\Recaptcha.dll</HintPath>
-    </Reference>
-    <Reference Include="RouteDebugger">
-      <HintPath>..\packages\routedebugger.1.0.0.1\lib\net35\RouteDebugger.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -94,17 +88,16 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoMapper\AutoMapperConfiguration.cs" />
-    <Compile Include="AutoMapper\Profiles\Resolvers\EmailHashResolver.cs" />
-    <Compile Include="AutoMapper\Profiles\PostsViewModelMapperProfile.cs" />
-    <Compile Include="AutoMapper\Profiles\PostViewModelMapperProfile.cs" />
-    <Compile Include="AutoMapper\Profiles\Resolvers\RavenIdResolver.cs" />
+    <Compile Include="Infrastructure\AutoMapper\AutoMapperConfiguration.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\EmailHashResolver.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\PostsViewModelMapperProfile.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\PostViewModelMapperProfile.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\RavenIdResolver.cs" />
     <Compile Include="Commands\AddCommentCommand.cs" />
     <Compile Include="Common\EnumerableExtensions.cs" />
     <Compile Include="Commands\SendEmailCommand.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Domain\PostReader.cs" />
     <Compile Include="Helpers\HtmlExtantions.cs" />
     <Compile Include="Helpers\Results\HttpNotFoundResult.cs" />
     <Compile Include="Helpers\Results\HttpStatusCodeResult.cs" />
@@ -112,7 +105,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\AutoMapperExtensions.cs" />
+    <Compile Include="Infrastructure\AutoMapper\AutoMapperExtensions.cs" />
+    <Compile Include="Infrastructure\DocumentStoreHolder.cs" />
     <Compile Include="Infrastructure\RavenActionFilterAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Commands\CommandExcucator.cs" />
