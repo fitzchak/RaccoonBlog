@@ -10,7 +10,9 @@ namespace RavenDbBlog.Controllers
             ViewBag.MetaKeywords = "";
         }
 
+// ReSharper disable MemberCanBeMadeStatic.Global
         protected new HttpNotFoundResult HttpNotFound(string statusDescription = null)
+// ReSharper restore MemberCanBeMadeStatic.Global
         {
             return new HttpNotFoundResult(statusDescription);
         }

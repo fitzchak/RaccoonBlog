@@ -23,10 +23,19 @@
         </ul>
     </nav>
 
-    <div class="post_body">
+    <div class="post_body raw_html">
         @Model.Post.Body
     </div>
 
+    <div class="tags">
+        <ul>
+            @foreach (var tag in Model.Post.Tags)
+            {
+                <li><a href="@Url.Action("Index", new {tag})">@tag</a></li>
+            }
+        </ul>
+    </div>
+    
     <footer>
         <div id="postToolbar">
             <a href="http://www.dotnetkicks.com/kick/?url=http://ayende.com@(ViewBag.CurrentPageUrl)"><img src="http://www.dotnetkicks.com/Services/Images/KickItImageGenerator.ashx?url=@(ViewBag.CurrentPageUrl)" border="0"></a>

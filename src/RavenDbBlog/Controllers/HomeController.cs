@@ -4,7 +4,6 @@ using System.Configuration;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
-using Joel.Net;
 using MvcReCaptcha;
 using Newtonsoft.Json;
 using Raven.Client;

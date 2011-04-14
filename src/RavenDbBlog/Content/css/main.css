@@ -72,7 +72,16 @@ p {
 
 ul 
 {
+    list-style-type: none;
+}
+.raw_html ul, .raw_html ol
+{
     padding-left: 40px;
+}
+
+pre 
+{
+    margin: 1em 0px;
 }
 
 #container
@@ -305,4 +314,22 @@ article header h1 a
     background-color: #FC6;
     padding: 3px;
     text-align: center;
+}
+
+
+.tags li 
+{
+    display: inline;
+    margin: 0 1px;
+}
+.tags a 
+{
+    background-color: #FC6;
+    border: 1px solid #FF8000;
+    padding: 3px 4px;
+    margin: 2px 2px 2px 0;
+    text-decoration: none;
+    font-size: 90%;
+    line-height: 2.4;
+    white-space: nowrap;   
 }
