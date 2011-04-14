@@ -1,9 +1,12 @@
 ﻿using System.Web.Mvc;
+using Raven.Client;
 
 namespace RavenDbBlog.Controllers
 {
     public class AbstractController : Controller
     {
+        public new IDocumentSession Session { get; set; }
+
         public AbstractController()
         {
             ViewBag.MetaDescription = "";
@@ -15,9 +18,9 @@ namespace RavenDbBlog.Controllers
             return new HttpNotFoundWithViewResult(statusDescription);
         }
 
-        protected HttpUnauthorizedResult HttpUnauthorized(string statusDescription = null)
+        protected HttpUnauthorizedWithViewResult HttpUnauthorized(string statusDescription = null)
         {
-            return new HttpUnauthorizedResult(statusDescription);
+            return new HttpUnauthorizedWithViewResult(statusDescription);
         }
     }
 }
