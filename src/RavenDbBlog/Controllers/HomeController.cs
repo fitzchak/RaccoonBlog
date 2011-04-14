@@ -20,11 +20,15 @@ namespace RavenDbBlog.Controllers
     public class HomeController : BaseController
     {
         private const string CommentCookieName = "commenter";
+        private const int DefaultPageSize = 25;
 
         public new IDocumentSession Session { get; set; }
 
-        public ActionResult Index(string tag)
+        public ActionResult Index(string tag, int page, int pagesize = DefaultPageSize)
         {
+            if (pagesize < 1 || pagesize > 50)
+                pagesize = DefaultPageSize;
+
             var postsQuery = from post in Session.Query<Post>()
                              where post.PublishAt < DateTimeOffset.Now
                              select post;
@@ -39,7 +43,7 @@ namespace RavenDbBlog.Controllers
             var posts = postsQuery
                 .Where(x => x.PublishAt < DateTimeOffset.Now)
                 .OrderByDescending(x => x.PublishAt)
-                .Take(30)
+                .Take(pagesize)
                 .ToList();
 
             return View(new PostsViewModel
@@ -50,9 +54,10 @@ namespace RavenDbBlog.Controllers
 
         public ActionResult Show(int id, string slug)
         {
-            var result = new PostReader(Session).GetPostAndComments(id);
-            var post = result.Item1;
-            var comments = result.Item2;
+            Session.Load<object>("posts/" + id, "posts/" + id + "/comments");
+
+            var post = Session.Load<Post>("posts/" + id);
+            var comments = Session.Load<CommentsCollection>("posts/" + id + "/comments");
 
             if (post == null)
                 return HttpNotFound();
@@ -89,12 +94,14 @@ namespace RavenDbBlog.Controllers
         [CaptchaValidator]
         public ActionResult NewComment(CommentInput newComment, int id, bool captchaValid)
         {
+            var isCaptchaRequired = true;
+            //GetCommenter(newComment.CommenterKey);
             if (!captchaValid)
                 ModelState.AddModelError("_FORM", "You did not type the verification word correctly. Please try again.");
 
-            var result = new PostReader(Session).GetPostAndComments(id);
-            var post = result.Item1;
-            var comments = result.Item2;
+            Session.Load<object>("posts/" + id, "posts/" + id + "/comments");
+            var post = Session.Load<Post>("posts/" + id);
+            var comments = Session.Load<CommentsCollection>("posts/" + id + "/comments");
 
             if (post == null)
                 return HttpNotFound();
@@ -121,6 +128,8 @@ namespace RavenDbBlog.Controllers
             TempData["message"] = "You feedback will be posted soon. Thanks for the feedback.";
             return RedirectToAction("Show", new { post.Slug });
         }
+
+        
 
         [ChildActionOnly]
         public ActionResult TagsList()
