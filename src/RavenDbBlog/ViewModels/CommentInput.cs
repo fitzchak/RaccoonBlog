@@ -25,6 +25,9 @@ namespace RavenDbBlog.ViewModels
         [Display(Name = "Remember Me?")]
         public bool? RememberMe { get; set; }
 
+        [HiddenInput]
+        public string CommenterKey { get; set; }
+
         public RequestValues Request { get; set; }
     }
 
