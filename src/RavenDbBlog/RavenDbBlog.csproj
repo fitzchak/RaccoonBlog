@@ -102,7 +102,7 @@
     <Compile Include="Helpers\HtmlExtantions.cs" />
     <Compile Include="Helpers\Results\HttpNotFoundWithViewResult.cs" />
     <Compile Include="Helpers\Results\HttpStatusCodeWithViewResult.cs" />
-    <Compile Include="Helpers\Results\HttpUnauthorizedResult.cs" />
+    <Compile Include="Helpers\Results\HttpUnauthorizedWithViewResult.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -169,7 +169,7 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Show.cshtml" />
+    <Content Include="Views\Post\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />

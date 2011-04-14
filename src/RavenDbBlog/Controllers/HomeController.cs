@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Raven.Client;
 using RavenDbBlog.Commands;
 using RavenDbBlog.Core.Models;
+using RavenDbBlog.Infrastructure;
 using RavenDbBlog.Infrastructure.AutoMapper;
 using RavenDbBlog.Infrastructure.Commands;
 using RavenDbBlog.ViewModels;
@@ -14,72 +15,52 @@ using System.Linq;
 
 namespace RavenDbBlog.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController : AbstractController
     {
-        private const string CommentCookieName = "commenter";
-        private const int DefaultPageSize = 25;
-
-        public new IDocumentSession Session { get; set; }
-
-        public ActionResult Index(string tag, int page, int pagesize = DefaultPageSize)
+        private const int DefaultPage = 1;
+        private const int PageSize = 25;
+       
+        public ActionResult Index(int page = DefaultPage)
         {
-            if (pagesize < 1 || pagesize > 50)
-                pagesize = DefaultPageSize;
+            page = Math.Max(DefaultPage, page) - 1;
 
             var postsQuery = from post in Session.Query<Post>()
-                             where post.PublishAt < DateTimeOffset.Now
-                             select post;
-
-            if (!string.IsNullOrEmpty(tag))
-            {
-                postsQuery = from post in postsQuery
-                             where post.Tags.Any(postTag => postTag == tag)
-                             select post;
-            }
+                        where post.PublishAt < DateTimeOffset.Now
+                        orderby post.PublishAt descending 
+                        select post;
 
             var posts = postsQuery
-                .Where(x => x.PublishAt < DateTimeOffset.Now)
-                .OrderByDescending(x => x.PublishAt)
-                .Take(pagesize)
+                .Skip(page * PageSize)
+                .Take(PageSize)
                 .ToList();
 
             return View(new PostsViewModel
+            {
+                Posts = posts.MapTo<PostsViewModel.PostSummary>()
+            });
+        }
+
+        public ActionResult Tag(string tag, int page = DefaultPage)
+        {
+            page = Math.Max(DefaultPage, page) - 1;
+
+            var postsQuery = from post in Session.Query<Post>()
+                             where post.PublishAt < DateTimeOffset.Now && 
+                                   post.Tags.Any(postTag => postTag == tag)
+                             orderby post.PublishAt descending
+                             select post;
+
+            var posts = postsQuery
+                .Skip(page * PageSize)
+                .Take(PageSize)
+                .ToList();
+
+            return View("Index",new PostsViewModel
                             {
                                 Posts = posts.MapTo<PostsViewModel.PostSummary>()
                             });
         }
 
-        public ActionResult Show(int id, string slug)
-        {
-            Session.Load<object>("posts/" + id, "posts/" + id + "/comments");
-
-            var post = Session.Load<Post>("posts/" + id);
-            var comments = Session.Load<CommentsCollection>("posts/" + id + "/comments");
-
-            if (post == null)
-                return HttpNotFound();
-
-            if(post.PublishAt > DateTimeOffset.Now)
-                return HttpNotFound("The post you looked for does not exist.");
-
-            if (post.Slug != slug)
-                return RedirectPermanent("/posts/" + id + "/" + post.Slug); // TODO: do this properly
-
-            var vm = new PostViewModel
-                         {
-                             Post = post.MapTo<PostViewModel.PostDetails>(),
-                             Comments = comments.Comments.MapTo<PostViewModel.Comment>(),
-                         };
-
-            var cookie = Request.Cookies[CommentCookieName];
-            if (cookie != null)
-            {
-                var commentCookie = JsonConvert.DeserializeObject<CommentCookie>(cookie.Value);
-                vm.NewComment = commentCookie.MapTo<CommentInput>();
-                // vm.IsTrustedUser = true;
-            }
-            return View(vm);
-        }
 
         [HttpGet]
         public ActionResult NewComment(int id)
@@ -98,7 +79,7 @@ namespace RavenDbBlog.Controllers
 
             Session.Load<object>("posts/" + id, "posts/" + id + "/comments");
             var post = Session.Load<Post>("posts/" + id);
-            var comments = Session.Load<CommentsCollection>("posts/" + id + "/comments");
+            var comments = Session.Load<PostComments>("posts/" + id + "/comments");
 
             if (post == null)
                 return HttpNotFound();
@@ -123,7 +104,7 @@ namespace RavenDbBlog.Controllers
             // if (!commenter.IsSpamer) // && newComment.RememberMe == true )
             {
                 var commentCookie = newComment.MapTo<CommentCookie>();
-                Response.Cookies.Add(new HttpCookie(CommentCookieName, JsonConvert.SerializeObject(commentCookie)));
+                Response.Cookies.Add(new HttpCookie(Constants.CommentCookieName, JsonConvert.SerializeObject(commentCookie)));
             }  
 
             TempData["message"] = "You feedback will be posted soon. Thanks for the feedback.";
