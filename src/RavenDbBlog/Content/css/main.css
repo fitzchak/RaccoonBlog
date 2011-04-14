@@ -74,9 +74,16 @@ ul
 {
     list-style-type: none;
 }
-.raw_html ul, .raw_html ol
+.raw_html ul
 {
     padding-left: 40px;
+    list-style-type: disc;
+}
+
+.raw_html ol
+{
+    padding-left: 40px;
+    list-style-type: decimal;
 }
 
 pre 
