@@ -1,6 +1,7 @@
 using AutoMapper;
+using RavenDbBlog.Infrastructure.AutoMapper.Profiles;
 
-namespace RavenDbBlog.AutoMapper
+namespace RavenDbBlog.Infrastructure.AutoMapper
 {
     public class AutoMapperConfiguration
     {
