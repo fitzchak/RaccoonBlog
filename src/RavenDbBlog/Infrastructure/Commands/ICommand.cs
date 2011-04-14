@@ -1,4 +1,4 @@
-﻿namespace RavenDbBlog.Commands
+﻿namespace RavenDbBlog.Infrastructure.Commands
 {
     public interface ICommand
     {
