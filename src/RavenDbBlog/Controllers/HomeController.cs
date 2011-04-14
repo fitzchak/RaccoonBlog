@@ -21,9 +21,20 @@ namespace RavenDbBlog.Controllers
 
         public new IDocumentSession Session { get; set; }
 
-        public ActionResult Index()
+        public ActionResult Index(string tag)
         {
-            var posts = Session.Query<Post>()
+            var postsQuery = from post in Session.Query<Post>()
+                             where post.PublishAt < DateTimeOffset.Now
+                             select post;
+
+            if (!string.IsNullOrEmpty(tag))
+            {
+                postsQuery = from post in postsQuery
+                             where post.Tags.Contains(tag)
+                             select post;
+            }
+
+            var posts = postsQuery
                 .Where(x => x.PublishAt < DateTimeOffset.Now)
                 .OrderByDescending(x => x.PublishAt)
                 .Take(30)

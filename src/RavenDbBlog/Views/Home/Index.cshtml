@@ -15,6 +15,15 @@
             @post.Body
         </div>
 
+        <div class="tags">
+            <ul>
+                @foreach (var tag in post.Tags)
+                {
+                    <li><a href="@Url.Action("Index", new {tag})">@tag</a></li>
+                }
+            </ul>
+        </div>
+
         <footer>
             Posted @@ <time pubdate>@post.CreatedAt.ToString("r")</time> | <a href="@ViewBag.PostUrl#feedback">Feedback (@post.CommentsCount)</a>
         </footer>
