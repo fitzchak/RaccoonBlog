@@ -14,7 +14,7 @@ namespace RavenDbBlog.ViewModels
         public CommentInput NewComment { get; set; }
 
         public bool IsCommentClosed { get; set; }
-        public bool IsTrustedUser { get; set; }
+        public bool IsTrustedCommenter { get; set; }
 
         public class Comment
         {
