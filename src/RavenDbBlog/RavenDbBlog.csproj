@@ -92,7 +92,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\RssController.cs" />
+    <Compile Include="Controllers\SyndicationController.cs" />
     <Compile Include="Infrastructure\ActionResults\XmlResult.cs" />
     <Compile Include="Services\Akismet.cs" />
     <Compile Include="Controllers\PostController.cs" />
@@ -144,6 +144,7 @@
     <Content Include="Views\Post\TagsList.cshtml" />
     <Content Include="Views\Post\ArchivesList.cshtml" />
     <Content Include="Services\MetaWeblogAPI.ashx" />
+    <Content Include="wlwmanifest.xml" />
     <None Include="Views\Post\EditorTemplates\MultilineText.cshtml" />
     <None Include="Views\Post\EditorTemplates\String.cshtml" />
     <Content Include="Web.config">

@@ -8,9 +8,30 @@ using Raven.Client.Linq;
 
 namespace RavenDbBlog.Controllers
 {
-	public class RssController : AbstractController
+	public class SyndicationController : AbstractController
 	{
-		public ActionResult Feed()
+		public ActionResult Rsd()
+		{
+			var ns = XNamespace.Get("http://archipelago.phrasewise.com/rsd");
+
+			return Xml(new XDocument(
+			           	new XElement(ns + "service",
+			           	             new XElement(ns + "engineName", "Raccoon Blog"),
+			           	             new XElement(ns + "engineLink", "http://hibernatingrhinos.com"),
+			           	             new XElement(ns + "homePageLink", Url.Action("List", "Post")),
+			           	             new XElement(ns + "apis",
+			           	                          new XElement(ns + "api",
+			           	                                       new XAttribute("name", "MetaWeblog"),
+			           	                                       new XAttribute("preferred", "true"),
+			           	                                       new XAttribute("blogID", "0"),
+			           	                                       new XAttribute("apiLink",Url.Content("~/Services/MetaWeblogAPI.ashx"))
+			           	                          	)
+			           	             	)
+			           		)
+			           	), typeof (SyndicationController).FullName);
+		}
+
+		public ActionResult Rss()
 		{
 			RavenQueryStatistics stats;
 			var posts = Session.Query<Post>()

@@ -28,8 +28,14 @@ namespace RavenDbBlog
 
 			routes.MapRoute("RssFeed",
 			  "rss",
-			  new { controller = "Rss", action = "Feed" }
+			  new { controller = "Syndication", action = "Rss" }
 			  );
+
+			routes.MapRoute("RsdFeed",
+			  "rsd",
+			  new { controller = "Syndication", action = "Rsd" }
+			  );
+
 
             routes.MapRoute("PostById",
                 "{id}/{slug}",
