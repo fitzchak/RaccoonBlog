@@ -44,9 +44,6 @@
       <HintPath>..\packages\Joel.Net.Akismet-binary.1.0.1\Joel.Net.Akismet.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="MvcReCaptcha">
-      <HintPath>..\packages\MvcReCaptchaRelease\MvcReCaptcha.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.4.0.1\lib\40\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -57,9 +54,9 @@
     <Reference Include="RazorEngine">
       <HintPath>..\packages\RazorEngine.2.1\lib\.NetFramework 4.0\RazorEngine.dll</HintPath>
     </Reference>
-    <Reference Include="Recaptcha, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Recaptcha, Version=1.0.5.0, Culture=neutral, PublicKeyToken=9afc4d65b28c38c2, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MvcReCaptchaRelease\Recaptcha.dll</HintPath>
+      <HintPath>..\packages\recaptcha.1.0.5.0\lib\.NetFramework 4.0\Recaptcha.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">

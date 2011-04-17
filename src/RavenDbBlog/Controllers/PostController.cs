@@ -7,7 +7,6 @@ using RavenDbBlog.Helpers.Validation;
 using RavenDbBlog.Infrastructure.AutoMapper;
 using RavenDbBlog.ViewModels;
 using System.Web;
-using MvcReCaptcha;
 using Raven.Abstractions.Data;
 using RavenDbBlog.Commands;
 using RavenDbBlog.Infrastructure.Commands;
@@ -98,7 +97,6 @@ namespace RavenDbBlog.Controllers
         }
 
         [HttpPost]
-        [CaptchaValidator]
         public ActionResult Comment(CommentInput newComment, int id)
         {
             var commenter = GetCommenter(newComment.CommenterKey);
