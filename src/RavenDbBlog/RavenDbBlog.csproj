@@ -121,7 +121,6 @@
     <Compile Include="ViewModels\RequestValues.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Readme\RouteDebugger.Readme.txt" />
     <Content Include="Content\css\ayende.css" />
     <Content Include="Content\css\ayende2.css" />
     <Content Include="Content\css\images\printer.png" />
