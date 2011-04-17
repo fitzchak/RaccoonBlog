@@ -33,7 +33,7 @@ namespace RavenDbBlog
             routes.MapRoute(
                 "PostById",
                 "{id}/{slug}",
-                new { controller = "Post", action = "Show", slug = UrlParameter.Optional },
+                new { controller = "Post", action = "Item", slug = UrlParameter.Optional },
                 new { id = MatchPositiveInteger }
                 );
 

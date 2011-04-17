@@ -98,7 +98,6 @@
     <Compile Include="Common\EnumerableExtensions.cs" />
     <Compile Include="Commands\SendEmailCommand.cs" />
     <Compile Include="Controllers\AbstractController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Helpers\HtmlExtantions.cs" />
     <Compile Include="Helpers\Results\HttpNotFoundWithViewResult.cs" />
     <Compile Include="Helpers\Results\HttpStatusCodeWithViewResult.cs" />
@@ -128,11 +127,11 @@
     <Content Include="Content\css\main.css" />
     <Content Include="Content\css\ResetCss.css" />
     <Content Include="Global.asax" />
-    <Content Include="Views\Home\EditorTemplates\HiddenInput.cshtml" />
+    <Content Include="Views\Post\EditorTemplates\HiddenInput.cshtml" />
     <Content Include="Emails\NewComment.cshtml" />
-    <Content Include="Views\Home\UnsortedList.cshtml" />
-    <None Include="Views\Home\EditorTemplates\MultilineText.cshtml" />
-    <None Include="Views\Home\EditorTemplates\String.cshtml" />
+    <Content Include="Views\Post\UnsortedList.cshtml" />
+    <None Include="Views\Post\EditorTemplates\MultilineText.cshtml" />
+    <None Include="Views\Post\EditorTemplates\String.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -172,7 +171,7 @@
     <Content Include="Views\Post\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Post\Item.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">
