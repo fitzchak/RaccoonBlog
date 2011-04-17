@@ -23,24 +23,27 @@ namespace RavenDbBlog
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
-                "CommentOnPost",
+            routes.MapRoute("CommentOnPost",
                 "{id}/comment",
                 new { controller = "Post", action = "Comment"},
                 new { id = MatchPositiveInteger }
                 );
 
-            routes.MapRoute(
-                "PostById",
+            routes.MapRoute("PostById",
                 "{id}/{slug}",
                 new { controller = "Post", action = "Item", slug = UrlParameter.Optional },
                 new { id = MatchPositiveInteger }
                 );
+            
+            routes.MapRoute("PostController",
+                "{controller}/{action}",
+                new { controller = "Post", action = "List"},
+                new { controller = "Post", action = "TagsList|ArchivesList" }
+                );
 
-            routes.MapRoute(
-                "AllPosts",
+            routes.MapRoute("AllPosts",
                 "",
-                new { controller = "Post", action = "List"}
+                new { controller = "Post", action = "List" }
                 );
         }
 
