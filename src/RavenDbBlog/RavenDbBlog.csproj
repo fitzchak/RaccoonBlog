@@ -40,9 +40,6 @@
     <Reference Include="Elmah">
       <HintPath>..\packages\elmah.1.1\lib\Elmah.dll</HintPath>
     </Reference>
-    <Reference Include="Joel.Net.Akismet">
-      <HintPath>..\packages\Joel.Net.Akismet-binary.1.0.1\Joel.Net.Akismet.dll</HintPath>
-    </Reference>
     <Reference Include="MarkdownDeep">
       <HintPath>..\packages\MarkdownDeep.NET.1.4\lib\.NetFramework 3.5\MarkdownDeep.dll</HintPath>
     </Reference>
@@ -50,7 +47,6 @@
     <Reference Include="Newtonsoft.Json, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.4.0.1\lib\40\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Raven.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL" />
     <Reference Include="Raven.Client.Lightweight, Version=1.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
       <HintPath>..\packages\raven\Client\Raven.Client.Lightweight.dll</HintPath>
     </Reference>
@@ -64,6 +60,9 @@
     <Reference Include="RouteDebugger, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\routedebugger.1.0.0.1\lib\net35\RouteDebugger.dll</HintPath>
+    </Reference>
+    <Reference Include="Subkismet">
+      <HintPath>..\packages\subkismet.1.0.0\lib\Subkismet.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -93,6 +92,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Services\Akismet.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Helpers\Validation\RecaptchaValidatorWrapper.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\MarkdownResolver.cs" />

@@ -11,7 +11,6 @@ using RavenDbBlog.Infrastructure.AutoMapper;
 using RavenDbBlog.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RavenDbBlog.ViewModels;
 using System.Web;
-using Raven.Abstractions.Data;
 using RavenDbBlog.Commands;
 using RavenDbBlog.Infrastructure.Commands;
 using Constants = RavenDbBlog.Infrastructure.Constants;
