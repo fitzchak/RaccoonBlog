@@ -8,8 +8,8 @@
     <ProjectGuid>{03EBB446-3306-4F60-B49F-29E4737CEAFC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>IntegrationTests</RootNamespace>
-    <AssemblyName>IntegrationTests</AssemblyName>
+    <RootNamespace>RavenDbBlog.IntegrationTests</RootNamespace>
+    <AssemblyName>RavenDbBlog.IntegrationTests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
