@@ -17,7 +17,7 @@ namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles
                 .ForMember(x => x.Body, o => o.MapFrom(m => MvcHtmlString.Create(m.Body)));
 
             Mapper.CreateMap<PostComments.Comment, PostViewModel.Comment>()
-                .ForMember(x => x.Body, o => o.MapFrom(m => MvcHtmlString.Create(m.Body)))
+                .ForMember(x => x.Body, o => o.MapFrom(m => MarkdownResolver.Resolve(m.Body)))
                 .ForMember(x => x.EmailHash, o => o.MapFrom(m => EmailHashResolver.Resolve(m.Email)))
                 ;
 
