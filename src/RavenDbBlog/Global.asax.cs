@@ -46,6 +46,12 @@ namespace RavenDbBlog
                 new { controller = "Post", action = "Tag" }
                 );
 
+            routes.MapRoute("PostsByYearMonth",
+                "archive/{year}/{month}",
+                new { controller = "Post", action = "Archive" },
+                new { Year = MatchPositiveInteger, Month = MatchPositiveInteger }
+                );
+
             routes.MapRoute("AllPosts",
                 "",
                 new { controller = "Post", action = "List" }

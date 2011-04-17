@@ -92,6 +92,27 @@ namespace RavenDbBlog.Controllers
             });
         }
 
+        public ActionResult Archive(int year, int month, int page = DefaultPage)
+        {
+            page = Math.Max(DefaultPage, page) - 1;
+
+            var postsQuery = from post in Session.Query<Post>()
+                             where post.PublishAt < DateTimeOffset.Now
+                                   && (post.PublishAt.Year == year && post.PublishAt.Month == month)
+                             orderby post.PublishAt descending
+                             select post;
+
+            var posts = postsQuery
+                .Skip(page * PageSize)
+                .Take(PageSize)
+                .ToList();
+
+            return View("List", new PostsViewModel
+            {
+                Posts = posts.MapTo<PostsViewModel.PostSummary>()
+            });
+        }
+
         [HttpGet]
         public ActionResult Comment(int id)
         {
