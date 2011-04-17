@@ -3,6 +3,8 @@ using System.Collections.Concurrent;
 using System.Linq;
 using Raven.Client;
 using Raven.Client.Document;
+using Raven.Client.Indexes;
+using RavenDbBlog.Indexes;
 
 namespace RavenDbBlog.Infrastructure.Raven
 {
@@ -16,10 +18,14 @@ namespace RavenDbBlog.Infrastructure.Raven
 
         private static IDocumentStore CreateDocumentStore()
         {
-            return new DocumentStore
-            {
-                Url = "http://localhost:8080"
-            }.Initialize();
+            var documentStore = new DocumentStore
+                {
+                    Url = "http://localhost:8080"
+                }.Initialize();
+
+            IndexCreation.CreateIndexes(typeof(Tags_Count).Assembly, documentStore);
+
+            return documentStore;
         }
 
         private static readonly ConcurrentDictionary<Type, Accessors> AccessorsCache = new ConcurrentDictionary<Type, Accessors>();

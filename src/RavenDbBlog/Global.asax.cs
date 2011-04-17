@@ -41,6 +41,11 @@ namespace RavenDbBlog
                 new { controller = "Post", action = "TagsList|ArchivesList" }
                 );
 
+            routes.MapRoute("PostsByTag",
+                "tags/{name}",
+                new { controller = "Post", action = "Tag" }
+                );
+
             routes.MapRoute("AllPosts",
                 "",
                 new { controller = "Post", action = "List" }

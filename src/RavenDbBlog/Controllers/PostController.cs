@@ -1,9 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using Newtonsoft.Json;
 using RavenDbBlog.Core.Models;
 using RavenDbBlog.Helpers.Validation;
+using RavenDbBlog.Indexes;
 using RavenDbBlog.Infrastructure.AutoMapper;
 using RavenDbBlog.ViewModels;
 using System.Web;
@@ -69,13 +70,13 @@ namespace RavenDbBlog.Controllers
             });
         }
 
-        public ActionResult Tag(string tag, int page = DefaultPage)
+        public ActionResult Tag(string name, int page = DefaultPage)
         {
             page = Math.Max(DefaultPage, page) - 1;
 
             var postsQuery = from post in Session.Query<Post>()
                              where post.PublishAt < DateTimeOffset.Now &&
-                                   post.Tags.Any(postTag => postTag == tag)
+                                   post.Tags.Any(postTag => postTag == name)
                              orderby post.PublishAt descending
                              select post;
 
@@ -159,18 +160,11 @@ namespace RavenDbBlog.Controllers
         [ChildActionOnly]
         public ActionResult TagsList()
         {
-            var tags = Session.Advanced.LuceneQuery<Post>()
-                .GroupBy(AggregationOperation.Count, "Tags,")
+            var tags = Session.Query<TagCount, Tags_Count>()
+                .Where(x=>x.Count > 20)
                 .ToList();
-            //posts.Contains()
-            //var tags = Session.Query<Post>()
-            //    .SelectMany(post => post.Tags)
-            //    .GroupBy(tag => tag)
-            //    .OrderBy(tag => tag)
-            //    .Take(1000)
-            //    .ToList();
-
-            return View("UnsortedList", tags);
+        
+            return View(tags);
         }
 
         //[ChildActionOnly]

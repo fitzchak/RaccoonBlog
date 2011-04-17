@@ -1,0 +1,10 @@
+﻿@model IList<RavenDbBlog.Indexes.TagCount>
+@{
+    Layout = "";    
+}
+<ul>
+    @foreach (var tag in Model)
+    {
+        <li><a href="@Url.Action("Tag", "Post", new { tag.Name })">@tag.Name</a> (@tag.Count)</li>
+    }
+</ul>

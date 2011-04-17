@@ -58,6 +58,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\recaptcha.1.0.5.0\lib\.NetFramework 4.0\Recaptcha.dll</HintPath>
     </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -87,6 +88,7 @@
   <ItemGroup>
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Helpers\Validation\RecaptchaValidatorWrapper.cs" />
+    <Compile Include="Infrastructure\Indexes\Tags_Count.cs" />
     <Compile Include="Infrastructure\AutoMapper\AutoMapperConfiguration.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\EmailHashResolver.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\PostsViewModelMapperProfile.cs" />
@@ -127,7 +129,7 @@
     <Content Include="Global.asax" />
     <Content Include="Views\Post\EditorTemplates\HiddenInput.cshtml" />
     <Content Include="Emails\NewComment.cshtml" />
-    <Content Include="Views\Post\UnsortedList.cshtml" />
+    <Content Include="Views\Post\TagsList.cshtml" />
     <None Include="Views\Post\EditorTemplates\MultilineText.cshtml" />
     <None Include="Views\Post\EditorTemplates\String.cshtml" />
     <Content Include="Web.config" />
