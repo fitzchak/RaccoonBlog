@@ -37,6 +37,9 @@
     <Reference Include="AutoMapper">
       <HintPath>..\packages\AutoMapper.1.1.0.118\lib\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="CookComputing.XmlRpcV2">
+      <HintPath>..\packages\xmlrpcnet.2.5.0\lib\net20\CookComputing.XmlRpcV2.dll</HintPath>
+    </Reference>
     <Reference Include="Elmah">
       <HintPath>..\packages\elmah.1.1\lib\Elmah.dll</HintPath>
     </Reference>
@@ -120,6 +123,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Infrastructure\Commands\CommandExcucator.cs" />
     <Compile Include="Infrastructure\Commands\ICommand.cs" />
+    <Compile Include="Services\IMetaWeblog.cs" />
+    <Compile Include="Services\MetaWeblog.cs" />
+    <Compile Include="Services\Structs.cs" />
     <Compile Include="ViewModels\CommentInput.cs" />
     <Compile Include="ViewModels\NewCommentEmailViewModel.cs" />
     <Compile Include="ViewModels\PostViewModel.cs" />
@@ -137,6 +143,7 @@
     <Content Include="EmailViews\NewComment.cshtml" />
     <Content Include="Views\Post\TagsList.cshtml" />
     <Content Include="Views\Post\ArchivesList.cshtml" />
+    <Content Include="Services\MetaWeblogAPI.ashx" />
     <None Include="Views\Post\EditorTemplates\MultilineText.cshtml" />
     <None Include="Views\Post\EditorTemplates\String.cshtml" />
     <Content Include="Web.config">

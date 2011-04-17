@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="MetaWeblogAPI.ashx.cs" Class="MetaWeblogSample.MetaWeblog" %>
+﻿<%@ WebHandler Language="C#" Class="RavenDbBlog.Services.MetaWeblog" %>
