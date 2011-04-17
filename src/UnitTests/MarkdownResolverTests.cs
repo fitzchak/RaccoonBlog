@@ -1,8 +1,10 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using RavenDbBlog.Infrastructure.AutoMapper.Profiles.Resolvers;
 using Xunit;
 
+/* References:
+ * http://refactormycode.com/codes/333-sanitize-html
+ */
 namespace RavenDbBlog.UnitTests
 {
     public class MarkdownResolverTests
