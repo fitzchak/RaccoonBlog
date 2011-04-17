@@ -21,15 +21,21 @@
         <div id="mainBody">
             <div id="sidebar">
                 <aside class="section">
-                    <h1>NHibernate Course</h1>
-                    <p>Advanced NHibernate Course, March 7 - 9, 2011. Dallas, Texas.</p>
-		            <p><a href="http://www.eventbee.com/view/dallas-nhibernate">Register NOW for early bird pricing</a></p>
+                    <h1>Title</h1>
+                    <p>Text 1</p>
+		            <p>Text 2</p>
                 </aside>
 
                 <aside class="section">
                     <h1>Tags</h1>
                     <div class="tags_list">
                         @{Html.RenderAction("TagsList");}
+                    </div>
+                </aside>
+                <aside class="section">
+                    <h1>Archive</h1>
+                    <div class="tags_list">
+                        @{Html.RenderAction("ArchivesList");}
                     </div>
                 </aside>
 

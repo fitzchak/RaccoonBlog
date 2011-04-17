@@ -88,6 +88,7 @@
   <ItemGroup>
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Helpers\Validation\RecaptchaValidatorWrapper.cs" />
+    <Compile Include="Infrastructure\Indexes\Posts_ByDatePublished_Count.cs" />
     <Compile Include="Infrastructure\Indexes\Tags_Count.cs" />
     <Compile Include="Infrastructure\AutoMapper\AutoMapperConfiguration.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\EmailHashResolver.cs" />
@@ -130,6 +131,7 @@
     <Content Include="Views\Post\EditorTemplates\HiddenInput.cshtml" />
     <Content Include="Emails\NewComment.cshtml" />
     <Content Include="Views\Post\TagsList.cshtml" />
+    <Content Include="Views\Post\ArchivesList.cshtml" />
     <None Include="Views\Post\EditorTemplates\MultilineText.cshtml" />
     <None Include="Views\Post\EditorTemplates\String.cshtml" />
     <Content Include="Web.config" />

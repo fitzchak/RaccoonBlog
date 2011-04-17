@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Raven.Client.Linq;
 using System.Web.Mvc;
 using RavenDbBlog.Core.Models;
 using RavenDbBlog.Helpers.Validation;
@@ -160,26 +161,29 @@ namespace RavenDbBlog.Controllers
         [ChildActionOnly]
         public ActionResult TagsList()
         {
-            var tags = Session.Query<TagCount, Tags_Count>()
-                .Where(x=>x.Count > 20)
+            var mostRecentTag = new DateTimeOffset(DateTimeOffset.Now.Year - 2,
+                                                   DateTimeOffset.Now.Month, 
+                                                   1, 0, 0, 0,
+                                                   DateTimeOffset.Now.Offset);
+
+            var tagCounts = Session.Query<TagCount, Tags_Count>()
+                .Where(x => x.Count > 20 && x.LastSeenAt > mostRecentTag)
+                .As<TempTagCount>();
+            var tags = tagCounts
                 .ToList();
         
             return View(tags);
         }
 
-        //[ChildActionOnly]
-        //public ActionResult ArchivesList()
-        //{
-        //    var datesQuery = from post in Session.Query<Post>()
-        //                     group post by new { post.PublishAt.Month, post.PublishAt.Year }
-        //                         into date
-        //                         select ", " + date.Count();
+        [ChildActionOnly]
+        public ActionResult ArchivesList()
+        {
+            var dates = Session.Query<PostCountByMonth, Posts_ByMonthPublished_Count>()
+                .OrderByDescending(x => x.Year)
+                .ThenByDescending(x => x.Month)
+                .ToList();
 
-        //    var dates = datesQuery
-        //        .Take(1000)
-        //        .ToList();
-
-        //    return View("UnsortedList", dates);
-        //}
+            return View(dates);
+        }
     }
 }
