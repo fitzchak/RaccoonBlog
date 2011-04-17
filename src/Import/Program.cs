@@ -58,7 +58,7 @@ namespace RavenDbBlog.Import
                             Title = post.Title,
                             Tags = post.Links.Select(x=>x.Categories.Title)
                                 .Where(x => x != "Uncategorized")
-                                .ToList()
+                                .ToArray()
                         };
 
                         var commentsCollection = new PostComments
@@ -97,7 +97,6 @@ namespace RavenDbBlog.Import
                             ravenPost.CommentsId = commentsCollection.Id;
 
                             session.Store(ravenPost);
-                        	commentsCollection.PostId = ravenPost.Id;
 
                             session.SaveChanges();
                         }
