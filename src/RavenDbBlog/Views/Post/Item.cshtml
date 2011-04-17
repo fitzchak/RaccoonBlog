@@ -8,16 +8,16 @@
         <h1><a href="@Url.Action("Item", new { Model.Post.Id, Model.Post.Slug })">@Model.Post.Title</a></h1>
     </header>
     
-    <nav>
+    <nav id="headerPrevNext">
         <ul>
             @if (Model.PreviousPost != null)
             { 
-                <li><a href="@Url.Action("Item", new { Model.PreviousPost.Id, Model.PreviousPost.Slug })">@Model.PreviousPost.Title</a></li>
+                <li><a href="@Url.Action("Item", new { Model.PreviousPost.Id, Model.PreviousPost.Slug })">previous: @Model.PreviousPost.Title</a></li>
             }
         
             @if (Model.NextPost != null)
             { 
-                <li><a href="@Url.Action("Item", new { Model.NextPost.Id, Model.NextPost.Slug })">@Model.NextPost.Title</a></li>
+                <li><a href="@Url.Action("Item", new { Model.NextPost.Id, Model.NextPost.Slug })">next: @Model.NextPost.Title</a></li>
             }
         </ul>
     </nav>
