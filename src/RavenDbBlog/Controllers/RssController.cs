@@ -21,11 +21,9 @@ namespace RavenDbBlog.Controllers
 				.ToList();
 
 			string requestETagHeader = Request.Headers["If-None-Match"] ?? string.Empty;
-			var responseETagHeader = stats.Timestamp.ToString("r");
+			var responseETagHeader = stats.Timestamp.ToString("o");
 			if (requestETagHeader == responseETagHeader)
 				return HttpNotModified();
-
-			Response.AddHeader("ETag", responseETagHeader);
 
 			var rss = new XDocument(
 				new XElement("rss",
