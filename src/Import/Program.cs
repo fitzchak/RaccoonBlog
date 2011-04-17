@@ -51,7 +51,7 @@ namespace RavenDbBlog.Import
                                                {
                                                    PostId = "posts/" + post.ID,
                                                    Comments = post.Comments
-                                                       .Where(comment => comment.StatusFlag == 5)
+                                                       .Where(comment => comment.StatusFlag != 5)
                                                        .Select(
                                                            comment => new PostComments.Comment
                                                                           {
