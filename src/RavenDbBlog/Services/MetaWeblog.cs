@@ -102,7 +102,13 @@ namespace RavenDbBlog.Services
 		{
 			if (ValidateUser(username, password))
 			{
+				var mostRecentTag = new DateTimeOffset(DateTimeOffset.Now.Year - 2,
+												  DateTimeOffset.Now.Month,
+												  1, 0, 0, 0,
+												  DateTimeOffset.Now.Offset);
+
 				var categoryInfos = session.Query<TagCount, Tags_Count>()
+					 .Where(x => x.Count > 20 && x.LastSeenAt > mostRecentTag)
 					.ToList();
 
 				return categoryInfos.Select(x => new CategoryInfo
