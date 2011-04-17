@@ -1,24 +1,23 @@
 ﻿@model PostViewModel
 @{
     ViewBag.Title = @Model.Post.Title;
-    ViewBag.CurrentPageUrl = Url.Action("Post", new { Model.Post.Id, Model.Post.Slug });
 }
 
 <article class="post">
     <header>
-        <h1><a href="@ViewBag.CurrentPageUrl">@Model.Post.Title</a></h1>
+        <h1><a href="@Url.Action("Item", new { Model.Post.Id, Model.Post.Slug })">@Model.Post.Title</a></h1>
     </header>
     
     <nav>
         <ul>
             @if (Model.PreviousPost != null)
             { 
-                <li><a href="@Url.Action("Post", new { Model.PreviousPost.Id, Model.PreviousPost.Slug })">@Model.PreviousPost.Title</a></li>
+                <li><a href="@Url.Action("Item", new { Model.PreviousPost.Id, Model.PreviousPost.Slug })">@Model.PreviousPost.Title</a></li>
             }
         
             @if (Model.NextPost != null)
             { 
-                <li><a href="@Url.Action("Post", new { Model.NextPost.Id, Model.NextPost.Slug })">@Model.NextPost.Title</a></li>
+                <li><a href="@Url.Action("Item", new { Model.NextPost.Id, Model.NextPost.Slug })">@Model.NextPost.Title</a></li>
             }
         </ul>
     </nav>
@@ -31,19 +30,13 @@
         <ul>
             @foreach (var tag in Model.Post.Tags)
             {
-                <li><a href="@Url.Action("Index", new {tag})">@tag</a></li>
+                <li><a href="@Url.Action("Tag", new { tag })">@tag</a></li>
             }
         </ul>
     </div>
     
     <footer>
-        <div id="postToolbar">
-            <a href="http://www.dotnetkicks.com/kick/?url=http://ayende.com@(ViewBag.CurrentPageUrl)"><img src="http://www.dotnetkicks.com/Services/Images/KickItImageGenerator.ashx?url=@(ViewBag.CurrentPageUrl)" border="0"></a>
-        </div>
-
-        <a href="javascript:window.print();" class="printIcon"><span>Print</span></a>
-
-        | Posted at <time pubdate>@Model.Post.CreatedAt.ToString("r")</time>
+        Posted at <time pubdate>@Model.Post.CreatedAt.ToString("r")</time>
 
         @if (Model.Post.PublishedAt != Model.Post.CreatedAt)
         { 

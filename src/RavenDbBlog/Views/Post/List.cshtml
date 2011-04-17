@@ -5,7 +5,7 @@
 
 @foreach (var post in Model.Posts)
 {
-    ViewBag.PostUrl = Url.Action("Show", new { post.Id, post.Slug });
+    ViewBag.PostUrl = Url.Action("Item", new { post.Id, post.Slug });
     <article class="postSummery">
         <header>
             <h1><a href="@ViewBag.PostUrl">@post.Title</a></h1>
@@ -19,7 +19,7 @@
             <ul>
                 @foreach (var tag in post.Tags)
                 {
-                    <li><a href="@Url.Action("Index", new {tag})">@tag</a></li>
+                    <li><a href="@Url.Action("List", new {tag})">@tag</a></li>
                 }
             </ul>
         </div>
