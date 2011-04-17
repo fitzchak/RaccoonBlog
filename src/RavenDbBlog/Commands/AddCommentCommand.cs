@@ -38,7 +38,7 @@ namespace RavenDbBlog.Commands
             {
                 Author = _commentInput.Name,
                 Body = _commentInput.Body,
-                CreatedAt = DateTimeOffset.Now,  // TODO: Time zone of the client.
+                CreatedAt = DateTimeOffset.Now,  
                 Email = _commentInput.Email,
                 Important = false, //TODO: How to figure this out?
                 Url = _commentInput.Url,
