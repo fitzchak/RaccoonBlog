@@ -32,7 +32,7 @@ namespace RavenDbBlog.Controllers
             var comments = Session.Load<PostComments>(post.CommentsId);
 
             if (post.Slug != slug)
-                return RedirectToActionPermanent("Index", new {id, post.Slug});
+                return RedirectToActionPermanent("Item", new {id, post.Slug});
 
             var vm = new PostViewModel
             {
@@ -189,7 +189,7 @@ namespace RavenDbBlog.Controllers
         [HttpGet]
         public ActionResult Comment(int id)
         {
-            return RedirectToAction("Item", new { Id = id });
+            return RedirectToAction("Item", new { id });
         }
 
         [HttpPost]
