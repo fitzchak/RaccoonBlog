@@ -21,7 +21,8 @@ namespace RavenDbBlog.Import
                     .Include("Comments")
                     .Include("Links")
                     .Include("Links.Categories")
-                    .ToList();
+                    .ToList()
+					.OrderBy(x=>x.DateSyndicated);
 
                 Console.WriteLine("Loading data took {0:#,#} ms", sp.ElapsedMilliseconds);
 
