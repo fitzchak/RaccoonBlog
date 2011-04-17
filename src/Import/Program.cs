@@ -82,7 +82,7 @@ namespace RavenDbBlog.Import
                         {
                             session.Store(commentsCollection);
 
-                            ravenPost.Id = commentsCollection.Id;
+                            ravenPost.CommentsId = commentsCollection.Id;
 
                             session.Store(ravenPost);
                             session.SaveChanges();
