@@ -39,7 +39,7 @@ namespace RavenDbBlog.Services
     [XmlRpcMissingMapping(MappingAction.Ignore)]
     public struct Post
     {
-        public DateTime dateCreated;
+        public DateTime? dateCreated;
         public string description;
         public string title;
         public string[] categories;

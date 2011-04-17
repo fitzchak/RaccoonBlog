@@ -1,30 +1,47 @@
-﻿using CookComputing.XmlRpc;
+﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
+using System.Web;
+using CookComputing.XmlRpc;
+using Raven.Client;
+using RavenDbBlog.Core.Models;
+using RavenDbBlog.Indexes;
+using RavenDbBlog.Infrastructure.Raven;
+using System.Linq;
 
 namespace RavenDbBlog.Services
 {
     public class MetaWeblog : XmlRpcService, IMetaWeblog
     {
-        #region Public Constructors
-
-        public MetaWeblog()
-        {
-        }
-
-        #endregion
+    	private readonly IDocumentSession session = DocumentStoreHolder.DocumentStore.OpenSession();
 
         #region IMetaWeblog Members
 
-        string IMetaWeblog.AddPost(string blogid, string username, string password,
-            Post post, bool publish)
+        string IMetaWeblog.AddPost(string blogid, string username, string password, Post post, bool publish)
         {
-            if (ValidateUser(username, password))
-            {
-                string id = string.Empty;
+			if (ValidateUser(username, password))
+			{
+				var comments = new PostComments();
+				session.Store(comments);
 
-                // TODO: Implement your own logic to add the post and set the id
-
-                return id;
+				var newPost = new Core.Models.Post
+				{
+					Author = "users/" + username,
+					Body = post.description,
+					CommentsId = comments.Id,
+					CreatedAt = DateTimeOffset.Now,
+					//TODO: Smarter re-scheduling
+					PublishAt = post.dateCreated == null ? DateTimeOffset.Now : new DateTimeOffset(post.dateCreated.Value),
+					Slug = post.wp_slug,
+					Tags = post.categories,
+					Title = post.title,
+					CommentsCount = 0,
+				};
+				session.Store(newPost);
+				session.SaveChanges();
+                
+                return newPost.Id;
             }
             throw new XmlRpcFaultException(0, "User is not valid!");
         }
@@ -34,11 +51,20 @@ namespace RavenDbBlog.Services
         {
             if (ValidateUser(username, password))
             {
-                bool result = false;
+            	var postToEdit = session.Load<Core.Models.Post>(postid);
+				if (postToEdit == null)
+					throw new XmlRpcFaultException(0, "Post does not exists");
+            	postToEdit.Slug = post.wp_slug;
+            	postToEdit.Author = "users/" + username;
+            	postToEdit.Body = post.description;
+				if(post.dateCreated!=null)
+					postToEdit.PublishAt = new DateTimeOffset(post.dateCreated.Value);
+            	postToEdit.Tags = post.categories;
+            	postToEdit.Title = post.title;
 
-                // TODO: Implement your own logic to add the post and set the result
+				session.SaveChanges();
 
-                return result;
+            	return true;
             }
             throw new XmlRpcFaultException(0, "User is not valid!");
         }
@@ -47,11 +73,20 @@ namespace RavenDbBlog.Services
         {
             if (ValidateUser(username, password))
             {
-                Post post = new Post();
+				var thePost = session.Load<Core.Models.Post>(postid);
 
-                // TODO: Implement your own logic to update the post and set the post
+				if (thePost == null)
+					throw new XmlRpcFaultException(0, "Post does not exists");
 
-                return post;
+            	return new Post
+            	{
+            		wp_slug = thePost.Slug,
+            		description = thePost.Body,
+            		dateCreated = thePost.PublishAt.DateTime,
+            		categories = thePost.Tags.ToArray(),
+            		title = thePost.Title,
+					postid = thePost.Id,
+            	};
             }
             throw new XmlRpcFaultException(0, "User is not valid!");
         }
@@ -60,11 +95,13 @@ namespace RavenDbBlog.Services
         {
             if (ValidateUser(username, password))
             {
-                List<CategoryInfo> categoryInfos = new List<CategoryInfo>();
-
-                // TODO: Implement your own logic to get category info and set the categoryInfos
-
-                return categoryInfos.ToArray();
+            	return session.Query<TagCount, Tags_Count>()
+            		.Select(x => new CategoryInfo
+            		{
+            			categoryid = x.Name,
+            			description = x.Name,
+            			title = x.Name
+            		}).ToArray();
             }
             throw new XmlRpcFaultException(0, "User is not valid!");
         }
@@ -74,11 +111,21 @@ namespace RavenDbBlog.Services
         {
             if (ValidateUser(username, password))
             {
-                List<Post> posts = new List<Post>();
+                
+            	var list = session.Query<Core.Models.Post>()
+            		.OrderByDescending(x=>x.PublishAt)
+            		.Take(numberOfPosts)
+            		.ToList();
 
-                // TODO: Implement your own logic to get posts and set the posts
-
-                return posts.ToArray();
+            	return list.Select(thePost => new Post
+            	{
+            		wp_slug = thePost.Slug,
+            		description = thePost.Body,
+            		dateCreated = thePost.PublishAt.DateTime,
+            		categories = thePost.Tags.ToArray(),
+            		title = thePost.Title,
+            		postid = thePost.Id,
+            	}).ToArray();
             }
             throw new XmlRpcFaultException(0, "User is not valid!");
         }
@@ -88,11 +135,20 @@ namespace RavenDbBlog.Services
         {
             if (ValidateUser(username, password))
             {
-                MediaObjectInfo objectInfo = new MediaObjectInfo();
+				var imagePhysicalPath = Context.Server.MapPath(ConfigurationManager.AppSettings["uploadsPath"]);
+				var imageWebPath = ConfigurationManager.AppSettings["UploadsPath"].Replace("~", Context.Request.ApplicationPath);
 
-                // TODO: Implement your own logic to add media object and set the objectInfo
+				imagePhysicalPath = Path.Combine(imagePhysicalPath, mediaObject.name);
+				var directoryPath = Path.GetDirectoryName(imagePhysicalPath).Replace("/", "\\");
+				if (!Directory.Exists(directoryPath))
+					Directory.CreateDirectory(directoryPath);
+				File.WriteAllBytes(imagePhysicalPath, mediaObject.bits);
 
-                return objectInfo;
+
+				return new MediaObjectInfo()
+				{
+					url = Path.Combine(imageWebPath, mediaObject.name)
+				};
             }
             throw new XmlRpcFaultException(0, "User is not valid!");
         }
@@ -101,11 +157,19 @@ namespace RavenDbBlog.Services
         {
             if (ValidateUser(username, password))
             {
-                bool result = false;
+				var thePost = session.Load<Core.Models.Post>(postid);
 
-                // TODO: Implement your own logic to delete the post and set the result
+				if(thePost != null)
+				{
+					var postComments = session.Load<Core.Models.PostComments>(thePost.CommentsId);
+					if(postComments!=null)
+						session.Delete(postComments);
+					session.Delete(thePost);
+				}
 
-                return result;
+				session.SaveChanges();
+
+            	return true;
             }
             throw new XmlRpcFaultException(0, "User is not valid!");
         }
@@ -114,11 +178,15 @@ namespace RavenDbBlog.Services
         {
             if (ValidateUser(username, password))
             {
-                List<BlogInfo> infoList = new List<BlogInfo>();
-
-                // TODO: Implement your own logic to get blog info objects and set the infoList
-
-                return infoList.ToArray();
+            	return new[]
+            	{
+            		new BlogInfo
+            		{
+            			blogid = "blogs/1",
+            			blogName = username,
+						url = Context.Request.RawUrl
+            		},
+            	};
             }
             throw new XmlRpcFaultException(0, "User is not valid!");
         }
@@ -127,11 +195,12 @@ namespace RavenDbBlog.Services
         {
             if (ValidateUser(username, password))
             {
-                UserInfo info = new UserInfo();
-
-                // TODO: Implement your own logic to get user info objects and set the info
-
-                return info;
+                return new UserInfo
+                {
+                	email = "none",
+					nickname = username,
+					userid = "users/"+username
+                };
             }
             throw new XmlRpcFaultException(0, "User is not valid!");
         }
@@ -142,13 +211,16 @@ namespace RavenDbBlog.Services
 
         private bool ValidateUser(string username, string password)
         {
-            bool result = false;
+        	var user = session.Load<User>("users/"+username);
+			if (user == null)
+				return false;
 
-            // TODO: Implement the logic to validate the user
+			if(DateTime.Now > new DateTime(2011, 4, 25))
+				throw new InvalidOperationException("Hack expired, fix me already");
 
-            return result;
+        	return user.ValidatePassword(password);
         }
 
-        #endregion
+    	#endregion
     }
 }
