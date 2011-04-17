@@ -6,6 +6,7 @@ namespace RavenDbBlog.Core.Models
     {
         public string Id { get; set; }
         public Guid Key { get; set; }
+        public bool? IsTrustedCommenter { get; set; }
 
         public string Name { get; set; }
         public string Email { get; set; }

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using RavenDbBlog.Core.Models;
+using RavenDbBlog.Helpers.Validation;
 using RavenDbBlog.Infrastructure.AutoMapper;
 using RavenDbBlog.ViewModels;
 using System.Web;
@@ -98,12 +99,18 @@ namespace RavenDbBlog.Controllers
 
         [HttpPost]
         [CaptchaValidator]
-        public ActionResult Comment(CommentInput newComment, int id, bool captchaValid)
+        public ActionResult Comment(CommentInput newComment, int id)
         {
-            var isCaptchaRequired = true;
-            GetCommenter(newComment.CommenterKey);
-            if (!captchaValid)
-                ModelState.AddModelError("_FORM", "You did not type the verification word correctly. Please try again.");
+            var commenter = GetCommenter(newComment.CommenterKey);
+            bool isCaptchaRequired = (commenter != null && commenter.IsTrustedCommenter == true) == false;
+            if (isCaptchaRequired)
+            {
+                var isCaptchaValid = RecaptchaValidatorWrapper.Validate(ControllerContext.HttpContext);
+                if (isCaptchaValid)
+                {
+                    ModelState.AddModelError("_FORM", "You did not type the verification word correctly. Please try again.");
+                }
+            }
 
             Session.Load<object>("posts/" + id, "posts/" + id + "/comments");
             var post = Session.Load<Post>("posts/" + id);
@@ -139,11 +146,20 @@ namespace RavenDbBlog.Controllers
             return RedirectToAction("Item", new { post.Slug });
         }
 
+
         private Commenter GetCommenter(string commenterKey)
         {
+            Guid guid;
+            if (Guid.TryParse(commenterKey, out guid))
+                GetCommenter(guid);
+            return null;
+        }
+
+        private Commenter GetCommenter(Guid commenterKey)
+        {
             return Session.Query<Commenter>()
-                    .Where(x => x.Key == commenterKey)
-                        .FirstOrDefault();
+                .Where(x => x.Key == commenterKey)
+                .FirstOrDefault();
         }
 
 
