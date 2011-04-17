@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Web;
+using System.Web.Mvc;
 using AutoMapper;
 using RavenDbBlog.Core.Models;
 using RavenDbBlog.Infrastructure.AutoMapper.Profiles.Resolvers;
@@ -21,9 +22,13 @@ namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles
                 .ForMember(x => x.EmailHash, o => o.MapFrom(m => EmailHashResolver.Resolve(m.Email)))
                 ;
 
-            Mapper.CreateMap<CommentInput, Commenter>();
+            Mapper.CreateMap<Commenter, CommentInput>()
+                .ForMember(x => x.Body, o => o.Ignore())
+                .ForMember(x => x.RememberMe, o => o.UseValue(true))
+                .ForMember(x => x.CommenterKey, o => o.MapFrom(m => m.Key))
+                ;
 
-            Mapper.CreateMap<Commenter, CommentInput>();
+            Mapper.CreateMap<HttpRequestWrapper, RequestValues>();
         }
     }
 }
