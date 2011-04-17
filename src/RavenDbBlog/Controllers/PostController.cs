@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Raven.Client.Linq;
 using System.Web.Mvc;
 using RavenDbBlog.Core.Models;
@@ -37,6 +38,8 @@ namespace RavenDbBlog.Controllers
             {
                 Post = post.MapTo<PostViewModel.PostDetails>(),
                 Comments = comments.Comments.MapTo<PostViewModel.Comment>(),
+                NextPost = GetPostReference(x => x.PublishAt > post.PublishAt),
+                PreviousPost = GetPostReference(x => x.PublishAt < post.PublishAt),
             };
 
             var cookie = Request.Cookies[Constants.CommenterKeyCookieName];
@@ -47,6 +50,19 @@ namespace RavenDbBlog.Controllers
                 vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
             }
             return View(vm);
+        }
+
+        private PostViewModel.PostReference GetPostReference(Expression<Func<Post, bool>> expression)
+        {
+            return Session.Query<Post>()
+                .Where(expression)
+                .Select(p => new PostViewModel.PostReference
+                    {
+                        Id = p.Id,
+                        Slug = p.Slug,
+                        Title = p.Title
+                    })
+                .FirstOrDefault();
         }
 
         private const int DefaultPage = 1;
@@ -246,6 +262,7 @@ namespace RavenDbBlog.Controllers
 
             var tagCounts = Session.Query<TagCount, Tags_Count>()
                 .Where(x => x.Count > 20 && x.LastSeenAt > mostRecentTag)
+                .OrderBy(x=>x.Name)
                 .As<TempTagCount>();
             var tags = tagCounts
                 .ToList();
