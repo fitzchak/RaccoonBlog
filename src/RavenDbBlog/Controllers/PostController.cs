@@ -218,7 +218,7 @@ namespace RavenDbBlog.Controllers
                 var vm = new PostViewModel
                 {
                     Post = post.MapTo<PostViewModel.PostDetails>(),
-                    Comments = comments.Comments.MapTo<PostViewModel.Comment>(),
+                    Comments = comments != null ? comments.Comments.MapTo<PostViewModel.Comment>() : new List<PostViewModel.Comment>(),
                     NewComment = newComment,
                 };
                 return View("Item", vm);
