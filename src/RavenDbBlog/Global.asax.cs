@@ -1,15 +1,12 @@
-﻿using System.Web.Mvc;
+﻿using System.Web;
+using System.Web.Mvc;
 using System.Web.Routing;
-using RavenDbBlog.Infrastructure;
 using RavenDbBlog.Infrastructure.AutoMapper;
 using RavenDbBlog.Infrastructure.Controllers;
 
 namespace RavenDbBlog
 {
-    // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
-    // visit http://go.microsoft.com/?LinkId=9394801
-
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : HttpApplication
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
@@ -44,6 +41,18 @@ namespace RavenDbBlog
             routes.MapRoute("PostsByTag",
                 "tags/{name}",
                 new { controller = "Post", action = "Tag" }
+                );
+
+            routes.MapRoute("RedirectLegacyPostUrl",
+                "archive/{year}/{month}/{day}/{slug}.aspx",
+                new { controller = "Post", action = "RedirectItem" },
+                new { Year = MatchPositiveInteger, Month = MatchPositiveInteger, Day = MatchPositiveInteger }
+                );
+
+            routes.MapRoute("PostsByYearMonthDay",
+                "archive/{year}/{month}/{day}",
+                new { controller = "Post", action = "ArchiveYearMonthDay" },
+                new { Year = MatchPositiveInteger, Month = MatchPositiveInteger, Day = MatchPositiveInteger }
                 );
 
             routes.MapRoute("PostsByYearMonth",

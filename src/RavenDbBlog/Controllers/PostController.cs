@@ -21,7 +21,7 @@ namespace RavenDbBlog.Controllers
         public ActionResult Item(int id, string slug)
         {
             var post = Session
-                .Include<Post>(x=>x.CommentsId)
+                .Include<Post>(x => x.CommentsId)
                 .Load("posts/" + id);
 
             if (post == null || post.PublishAt > DateTimeOffset.Now)
@@ -153,6 +153,20 @@ namespace RavenDbBlog.Controllers
             {
                 Posts = posts.MapTo<PostsViewModel.PostSummary>()
             });
+        }
+
+        public ActionResult RedirectItem(int year, int month, int day, string slug)
+        {
+            var postQuery = from post1 in Session.Query<Post>()
+                      where post1.Slug == slug &&
+                            (post1.PublishAt.Year == year && post1.PublishAt.Month == month && post1.PublishAt.Day == day)
+                      select post1;
+
+            var post = postQuery.FirstOrDefault();
+            if (post == null)
+                return HttpNotFound();
+
+            return RedirectToActionPermanent("Item", new {post.Id, post.Slug});
         }
 
         [HttpGet]
