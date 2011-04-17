@@ -128,11 +128,7 @@ namespace RavenDbBlog.Controllers
                 return View("Item", vm);
             }
 
-            CommandExcucator.ExcuteLater(new AddCommentCommand
-            {
-                CommentInput = newComment,
-                PostId = id
-            });
+            CommandExcucator.ExcuteLater(new AddCommentCommand(newComment, Request.MapTo<RequestValues>(), id));
 
             if (newComment.RememberMe == true)
             {

@@ -12,29 +12,36 @@ namespace RavenDbBlog.Commands
 {
     public class AddCommentCommand : ICommand
     {
-        public CommentInput CommentInput { get; set; }
-        public RequestValues RequestValues { get; set; }
-        public int PostId { get; set; }
+        private readonly CommentInput _commentInput;
+        private readonly RequestValues _requestValues;
+        private readonly int _postId;
 
         public IDocumentSession Session { get; set; }
 
+        public AddCommentCommand(CommentInput commentInput, RequestValues requestValues, int postId)
+        {
+            _commentInput = commentInput;
+            _requestValues = requestValues;
+            _postId = postId;
+        }
+
         public void Execute()
         {
-            Session.Load<object>("posts/" + PostId, "posts/" + PostId + "/comments");
+            Session.Load<object>("posts/" + _postId, "posts/" + _postId + "/comments");
 
-            var post = Session.Load<Post>("posts/" + PostId);
-            var comments = Session.Load<PostComments>("posts/" + PostId + "/comments");
+            var post = Session.Load<Post>("posts/" + _postId);
+            var comments = Session.Load<PostComments>("posts/" + _postId + "/comments");
 
             post.CommentsCount++;
 
             var comment = new PostComments.Comment
             {
-                Author = CommentInput.Name,
-                Body = CommentInput.Body,
+                Author = _commentInput.Name,
+                Body = _commentInput.Body,
                 CreatedAt = DateTimeOffset.Now,  // TODO: Time zone of the client.
-                Email = CommentInput.Email,
+                Email = _commentInput.Email,
                 Important = false, //TODO: How to figure this out?
-                Url = CommentInput.Url,
+                Url = _commentInput.Url,
                 IsSpam = CheckForSpam(),
             };
 
@@ -70,19 +77,19 @@ namespace RavenDbBlog.Commands
         {
             //Create a new instance of the Akismet API and verify your key is valid.
             string blog = "http://" + ConfigurationSettings.AppSettings["MainUrl"];
-            var api = new Akismet(ConfigurationSettings.AppSettings["AkismetKey"], blog, RequestValues.UserAgent);
+            var api = new Akismet(ConfigurationSettings.AppSettings["AkismetKey"], blog, _requestValues.UserAgent);
             if (!api.VerifyKey()) throw new Exception("Akismet API key invalid.");
 
             var akismetComment = new AkismetComment
             {
                 Blog = blog,
-                UserIp = RequestValues.UserHostAddress,
-                UserAgent = RequestValues.UserAgent,
-                CommentContent = CommentInput.Body,
+                UserIp = _requestValues.UserHostAddress,
+                UserAgent = _requestValues.UserAgent,
+                CommentContent = _commentInput.Body,
                 CommentType = "comment",
-                CommentAuthor = CommentInput.Name,
-                CommentAuthorEmail = CommentInput.Email,
-                CommentAuthorUrl = CommentInput.Url,
+                CommentAuthor = _commentInput.Name,
+                CommentAuthorEmail = _commentInput.Email,
+                CommentAuthorUrl = _commentInput.Url,
             };
 
             //Check if Akismet thinks this comment is spam. Returns TRUE if spam.
