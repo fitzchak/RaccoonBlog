@@ -111,11 +111,11 @@
     <Compile Include="Infrastructure\Commands\CommandExcucator.cs" />
     <Compile Include="Infrastructure\Commands\ICommand.cs" />
     <Compile Include="Services\MetaWeblog.cs" />
-    <Compile Include="ViewModels\CommentCookie.cs" />
     <Compile Include="ViewModels\CommentInput.cs" />
     <Compile Include="ViewModels\NewCommentEmailViewModel.cs" />
     <Compile Include="ViewModels\PostViewModel.cs" />
     <Compile Include="ViewModels\PostsViewModel.cs" />
+    <Compile Include="ViewModels\RequestValues.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Readme\RouteDebugger.Readme.txt" />
@@ -166,10 +166,10 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Post\List.cshtml" />
+    <Content Include="Views\Post\Item.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Post\Item.cshtml" />
+    <Content Include="Views\Post\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">

@@ -36,12 +36,12 @@ namespace RavenDbBlog.Controllers
                 Comments = comments.Comments.MapTo<PostViewModel.Comment>(),
             };
 
-            var cookie = Request.Cookies[Constants.CommentCookieName];
+            var cookie = Request.Cookies[Constants.CommenterKeyCookieName];
             if (cookie != null)
             {
-                var commentCookie = JsonConvert.DeserializeObject<CommentCookie>(cookie.Value);
-                vm.NewComment = commentCookie.MapTo<CommentInput>();
-                // vm.IsTrustedUser = true;
+                var commenter =  GetCommenter(cookie.Value);
+                vm.NewComment = commenter.MapTo<CommentInput>();
+                vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
             }
             return View(vm);
         }
@@ -99,8 +99,8 @@ namespace RavenDbBlog.Controllers
         [HttpPost]
         public ActionResult Comment(CommentInput newComment, int id)
         {
-            var commenter = GetCommenter(newComment.CommenterKey);
-            bool isCaptchaRequired = (commenter != null && commenter.IsTrustedCommenter == true) == false;
+            var commenter = GetCommenter(newComment.CommenterKey) ?? new Commenter();
+            bool isCaptchaRequired = commenter.IsTrustedCommenter == false;
             if (isCaptchaRequired)
             {
                 var isCaptchaValid = RecaptchaValidatorWrapper.Validate(ControllerContext.HttpContext);
@@ -134,10 +134,9 @@ namespace RavenDbBlog.Controllers
                 PostId = id
             });
 
-            // if (!commenter.IsSpamer) // && newComment.RememberMe == true )
+            if (newComment.RememberMe == true)
             {
-                var commentCookie = newComment.MapTo<CommentCookie>();
-                Response.Cookies.Add(new HttpCookie(Constants.CommentCookieName, JsonConvert.SerializeObject(commentCookie)));
+                Response.Cookies.Add(new HttpCookie(Constants.CommenterKeyCookieName, commenter.Key.ToString()));
             }
 
             TempData["message"] = "You feedback will be posted soon. Thanks for the feedback.";

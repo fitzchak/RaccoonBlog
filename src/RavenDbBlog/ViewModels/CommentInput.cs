@@ -27,13 +27,5 @@ namespace RavenDbBlog.ViewModels
 
         [HiddenInput]
         public string CommenterKey { get; set; }
-
-        public RequestValues Request { get; set; }
-    }
-
-    public class RequestValues
-    {
-        public string UserAgent { get; set; }
-        public string UserHostAddress { get; set; }
     }
 }

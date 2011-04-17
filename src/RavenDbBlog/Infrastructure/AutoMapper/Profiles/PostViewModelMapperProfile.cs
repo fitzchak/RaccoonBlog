@@ -21,9 +21,9 @@ namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles
                 .ForMember(x => x.EmailHash, o => o.MapFrom(m => EmailHashResolver.Resolve(m.Email)))
                 ;
 
-            Mapper.CreateMap<CommentInput, CommentCookie>();
+            Mapper.CreateMap<CommentInput, Commenter>();
 
-            Mapper.CreateMap<CommentCookie, CommentInput>();
+            Mapper.CreateMap<Commenter, CommentInput>();
         }
     }
 }
