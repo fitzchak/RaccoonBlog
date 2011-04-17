@@ -14,6 +14,8 @@ namespace RavenDbBlog.Import
         {
             using (var e = new SubtextEntities())
             {
+            	Console.WriteLine("Starting...");
+
                 var sp = Stopwatch.StartNew();
                 var theEntireDatabaseOhMygod = e.Posts
                     .Include("Comments")

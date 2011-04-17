@@ -26,6 +26,11 @@ namespace RavenDbBlog
                 new { id = MatchPositiveInteger }
                 );
 
+			routes.MapRoute("RssFeed",
+			  "rss",
+			  new { controller = "Rss", action = "Feed" }
+			  );
+
             routes.MapRoute("PostById",
                 "{id}/{slug}",
                 new { controller = "Post", action = "Item", slug = UrlParameter.Optional },

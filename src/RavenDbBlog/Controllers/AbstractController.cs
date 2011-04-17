@@ -1,5 +1,9 @@
-﻿using System.Web.Mvc;
+﻿using System.IO;
+using System.Web.Mvc;
+using System.Xml;
+using System.Xml.Linq;
 using Raven.Client;
+using RavenDbBlog.Infrastructure.ActionResults;
 
 namespace RavenDbBlog.Controllers
 {
@@ -22,5 +26,15 @@ namespace RavenDbBlog.Controllers
         {
             return new HttpUnauthorizedWithViewResult(statusDescription);
         }
+
+		protected HttpStatusCodeResult HttpNotModified()
+		{
+			return new HttpStatusCodeResult(304);
+		}
+
+		protected ActionResult Xml(XDocument document, string etag)
+		{
+			return new XmlResult(document, etag);
+		}
     }
 }
