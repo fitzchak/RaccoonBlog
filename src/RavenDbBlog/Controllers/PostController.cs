@@ -7,6 +7,7 @@ using RavenDbBlog.Core.Models;
 using RavenDbBlog.Helpers.Validation;
 using RavenDbBlog.Indexes;
 using RavenDbBlog.Infrastructure.AutoMapper;
+using RavenDbBlog.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RavenDbBlog.ViewModels;
 using System.Web;
 using Raven.Abstractions.Data;
@@ -166,7 +167,7 @@ namespace RavenDbBlog.Controllers
             if (post == null)
                 return HttpNotFound();
 
-            return RedirectToActionPermanent("Item", new {post.Id, post.Slug});
+            return RedirectToActionPermanent("Item", new { Id = RavenIdResolver.Resolve(post.Id), post.Slug });
         }
 
         [HttpGet]

@@ -71,6 +71,8 @@ namespace RavenDbBlog
                 "",
                 new { controller = "Post", action = "List" }
                 );
+
+             //RouteDebug.RouteDebugger.RewriteRoutesForTesting(routes);
         }
 
         protected void Application_Start()
