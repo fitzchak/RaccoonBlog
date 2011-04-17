@@ -27,12 +27,12 @@
     </div>
 
     <footer>
-        Posted at <time pubdate>@Model.Post.CreatedAt.ToString("r")</time>
+        Published at <time pubdate>@Model.Post.PublishedAt.ToString("r")</time>
 
         @if (Model.Post.PublishedAt != Model.Post.CreatedAt)
         { 
             <span>
-            | Originally published at <time>@Model.Post.PublishedAt.ToString("r")</time>
+            | Originally posted at <time>@Model.Post.CreatedAt.ToString("r")</time>
             </span>
         }
     </footer>
