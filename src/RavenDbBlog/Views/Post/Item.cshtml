@@ -26,15 +26,6 @@
         @Model.Post.Body
     </div>
 
-    <div class="tags">
-        <ul>
-            @foreach (var tag in Model.Post.Tags)
-            {
-                <li><a href="@Url.Action("Tag", new { tag })">@tag</a></li>
-            }
-        </ul>
-    </div>
-    
     <footer>
         Posted at <time pubdate>@Model.Post.CreatedAt.ToString("r")</time>
 
@@ -45,6 +36,17 @@
             </span>
         }
     </footer>
+
+	
+    <div class="tags">
+        <ul>
+            @foreach (var tag in Model.Post.Tags)
+            {
+                <li><a href="@Url.Action("Tag", new { tag })">@tag</a></li>
+            }
+        </ul>
+    </div>
+    
 
     <section class="comments">
         <header>
