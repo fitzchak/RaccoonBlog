@@ -33,7 +33,7 @@ namespace RavenDbBlog.Core.Models
 
 		public bool ValidatePassword(string maybePwd)
 		{
-			return HashedPassword == maybePwd;
+			return HashedPassword == GetHashedPassword(maybePwd);
 		}
 	}
 }
