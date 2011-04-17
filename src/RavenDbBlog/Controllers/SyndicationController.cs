@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Web.Mvc;
 using System.Xml.Linq;
@@ -31,6 +32,19 @@ namespace RavenDbBlog.Controllers
 			           	), typeof (SyndicationController).FullName);
 		}
 
+		public ActionResult Tag(string name)
+		{
+			RavenQueryStatistics stats;
+			var posts = Session.Query<Post>()
+				.Statistics(out stats)
+				.Where(x => x.PublishAt < DateTimeOffset.Now && x.Tags.Any(tag => tag == name))
+				.OrderByDescending(x => x.PublishAt)
+				.Take(20)
+				.ToList();
+
+			return Rss(stats, posts);
+		}
+
 		public ActionResult Rss()
 		{
 			RavenQueryStatistics stats;
@@ -41,6 +55,11 @@ namespace RavenDbBlog.Controllers
 				.Take(20)
 				.ToList();
 
+			return Rss(stats, posts);
+		}
+
+		private ActionResult Rss(RavenQueryStatistics stats, List<Post> posts)
+		{
 			string requestETagHeader = Request.Headers["If-None-Match"] ?? string.Empty;
 			var responseETagHeader = stats.Timestamp.ToString("o");
 			if (requestETagHeader == responseETagHeader)
