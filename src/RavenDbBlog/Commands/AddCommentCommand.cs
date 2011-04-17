@@ -13,6 +13,7 @@ namespace RavenDbBlog.Commands
     public class AddCommentCommand : ICommand
     {
         public CommentInput CommentInput { get; set; }
+        public RequestValues RequestValues { get; set; }
         public int PostId { get; set; }
 
         public IDocumentSession Session { get; set; }
@@ -69,14 +70,14 @@ namespace RavenDbBlog.Commands
         {
             //Create a new instance of the Akismet API and verify your key is valid.
             string blog = "http://" + ConfigurationSettings.AppSettings["MainUrl"];
-            var api = new Akismet(ConfigurationSettings.AppSettings["AkismetKey"], blog, CommentInput.Request.UserAgent);
+            var api = new Akismet(ConfigurationSettings.AppSettings["AkismetKey"], blog, RequestValues.UserAgent);
             if (!api.VerifyKey()) throw new Exception("Akismet API key invalid.");
 
             var akismetComment = new AkismetComment
             {
                 Blog = blog,
-                UserIp = CommentInput.Request.UserHostAddress,
-                UserAgent = CommentInput.Request.UserAgent,
+                UserIp = RequestValues.UserHostAddress,
+                UserAgent = RequestValues.UserAgent,
                 CommentContent = CommentInput.Body,
                 CommentType = "comment",
                 CommentAuthor = CommentInput.Name,
