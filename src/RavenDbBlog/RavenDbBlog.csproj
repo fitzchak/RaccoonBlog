@@ -92,8 +92,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\SyndicationController.cs" />
     <Compile Include="Infrastructure\ActionResults\XmlResult.cs" />
+    <Compile Include="RouteConfigurator.cs" />
     <Compile Include="Services\Akismet.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Helpers\Validation\RecaptchaValidatorWrapper.cs" />
