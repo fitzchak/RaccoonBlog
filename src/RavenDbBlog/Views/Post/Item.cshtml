@@ -26,6 +26,18 @@
         @Model.Post.Body
     </div>
 
+    <footer>
+        Published at <time pubdate>@Model.Post.PublishedAt.ToString("r")</time>
+
+        @if (Model.Post.PublishedAt != Model.Post.CreatedAt)
+        { 
+            <span>
+            | Originally posted at <time>@Model.Post.CreatedAt.ToString("r")</time>
+            </span>
+        }
+    </footer>
+
+	
     <div class="tags">
         <ul>
             @foreach (var tag in Model.Post.Tags)
@@ -35,16 +47,6 @@
         </ul>
     </div>
     
-    <footer>
-        Posted at <time pubdate>@Model.Post.CreatedAt.ToString("r")</time>
-
-        @if (Model.Post.PublishedAt != Model.Post.CreatedAt)
-        { 
-            <span>
-            | Originally published at <time>@Model.Post.PublishedAt.ToString("r")</time>
-            </span>
-        }
-    </footer>
 
     <section class="comments">
         <header>

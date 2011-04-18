@@ -5,6 +5,6 @@
 <ul>
     @foreach (var postCount in Model)
     {
-        <li><a href="@Url.Action("Archive", "Post", new { postCount.Year, postCount.Month })"> @(new DateTime(postCount.Year, @postCount.Month,1).ToString("MMMM, yyyy")) </a> (@postCount.Count)</li>
+        <li><a href="@Url.Action("Archive", "Post", new { postCount.Year, postCount.Month })"> @(new DateTime(postCount.Year, @postCount.Month,1).ToString("MMMM, yyyy", System.Globalization.CultureInfo.InvariantCulture)) </a> (@postCount.Count)</li>
     }
 </ul>

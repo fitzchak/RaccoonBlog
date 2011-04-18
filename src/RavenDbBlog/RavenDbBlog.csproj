@@ -37,11 +37,11 @@
     <Reference Include="AutoMapper">
       <HintPath>..\packages\AutoMapper.1.1.0.118\lib\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="CookComputing.XmlRpcV2">
+      <HintPath>..\packages\xmlrpcnet.2.5.0\lib\net20\CookComputing.XmlRpcV2.dll</HintPath>
+    </Reference>
     <Reference Include="Elmah">
       <HintPath>..\packages\elmah.1.1\lib\Elmah.dll</HintPath>
-    </Reference>
-    <Reference Include="Joel.Net.Akismet">
-      <HintPath>..\packages\Joel.Net.Akismet-binary.1.0.1\Joel.Net.Akismet.dll</HintPath>
     </Reference>
     <Reference Include="MarkdownDeep">
       <HintPath>..\packages\MarkdownDeep.NET.1.4\lib\.NetFramework 3.5\MarkdownDeep.dll</HintPath>
@@ -50,7 +50,6 @@
     <Reference Include="Newtonsoft.Json, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.4.0.1\lib\40\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Raven.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL" />
     <Reference Include="Raven.Client.Lightweight, Version=1.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
       <HintPath>..\packages\raven\Client\Raven.Client.Lightweight.dll</HintPath>
     </Reference>
@@ -93,6 +92,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\SyndicationController.cs" />
+    <Compile Include="Infrastructure\ActionResults\XmlResult.cs" />
+    <Compile Include="Services\Akismet.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Helpers\Validation\RecaptchaValidatorWrapper.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\MarkdownResolver.cs" />
@@ -121,7 +123,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Infrastructure\Commands\CommandExcucator.cs" />
     <Compile Include="Infrastructure\Commands\ICommand.cs" />
+    <Compile Include="Services\IMetaWeblog.cs" />
     <Compile Include="Services\MetaWeblog.cs" />
+    <Compile Include="Services\PostSchedulingStrategy.cs" />
+    <Compile Include="Services\Structs.cs" />
     <Compile Include="ViewModels\CommentInput.cs" />
     <Compile Include="ViewModels\NewCommentEmailViewModel.cs" />
     <Compile Include="ViewModels\PostViewModel.cs" />
@@ -129,8 +134,6 @@
     <Compile Include="ViewModels\RequestValues.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\css\ayende.css" />
-    <Content Include="Content\css\ayende2.css" />
     <Content Include="Content\css\images\printer.png" />
     <Content Include="Content\css\main.css" />
     <Content Include="Content\css\ResetCss.css" />
@@ -139,6 +142,8 @@
     <Content Include="EmailViews\NewComment.cshtml" />
     <Content Include="Views\Post\TagsList.cshtml" />
     <Content Include="Views\Post\ArchivesList.cshtml" />
+    <Content Include="Services\MetaWeblogAPI.ashx" />
+    <Content Include="wlwmanifest.xml" />
     <None Include="Views\Post\EditorTemplates\MultilineText.cshtml" />
     <None Include="Views\Post\EditorTemplates\String.cshtml" />
     <Content Include="Web.config">
@@ -150,7 +155,6 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Content\css\Site.css" />
     <Content Include="Content\js\jquery-1.4.4.js" />
     <Content Include="Content\js\jquery-1.4.4.min.js" />
     <Content Include="Content\js\jquery-1.4.4-vsdoc.js" />

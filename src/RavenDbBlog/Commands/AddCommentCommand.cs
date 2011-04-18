@@ -27,10 +27,8 @@ namespace RavenDbBlog.Commands
 
         public void Execute()
         {
-            Session.Load<object>("posts/" + _postId, "posts/" + _postId + "/comments");
-
-            var post = Session.Load<Post>("posts/" + _postId);
-            var comments = Session.Load<PostComments>("posts/" + _postId + "/comments");
+            var post = Session.Load<Post>(_postId);
+            var comments = Session.Load<PostComments>(_postId);
 
             post.CommentsCount++;
 

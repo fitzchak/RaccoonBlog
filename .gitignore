@@ -22,3 +22,4 @@ temp-war-deps
 /.gitversion.short.tmp
 StyleCop.Cache
 src/Packages/
+/Server

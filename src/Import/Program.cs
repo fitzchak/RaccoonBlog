@@ -14,12 +14,15 @@ namespace RavenDbBlog.Import
         {
             using (var e = new SubtextEntities())
             {
+            	Console.WriteLine("Starting...");
+
                 var sp = Stopwatch.StartNew();
                 var theEntireDatabaseOhMygod = e.Posts
                     .Include("Comments")
                     .Include("Links")
                     .Include("Links.Categories")
-                    .ToList();
+                    .ToList()
+					.OrderBy(x=>x.DateSyndicated);
 
                 Console.WriteLine("Loading data took {0:#,#} ms", sp.ElapsedMilliseconds);
 
@@ -30,6 +33,19 @@ namespace RavenDbBlog.Import
                                            Url = "http://localhost:8080",
                                        }.Initialize())
                 {
+					using(var s = store.OpenSession())
+					{
+						var user = new User
+						{
+							Id = "users/ayende",
+							Name = "Ayende Rahien",
+						};
+						user.SetPassword("123456");
+						s.Store(user);
+
+						s.SaveChanges();
+					}
+
                     foreach (var post in theEntireDatabaseOhMygod)
                     {
                         var ravenPost = new RavenPost
@@ -39,19 +55,17 @@ namespace RavenDbBlog.Import
                             PublishAt = new DateTimeOffset(post.DateSyndicated ?? post.DateAdded),
                             Body = post.Text,
                             CommentsCount = post.FeedBackCount,
-                            Id = "posts/" + post.ID,
                             Slug = post.EntryName,
                             Title = post.Title,
                             Tags = post.Links.Select(x=>x.Categories.Title)
                                 .Where(x => x != "Uncategorized")
-                                .ToList()
+                                .ToArray()
                         };
 
                         var commentsCollection = new PostComments
                                                {
-                                                   PostId = "posts/" + post.ID,
                                                    Comments = post.Comments
-                                                       .Where(comment => comment.StatusFlag == 5)
+                                                       .Where(comment => comment.StatusFlag != 5)
                                                        .Select(
                                                            comment => new PostComments.Comment
                                                                           {
@@ -81,10 +95,10 @@ namespace RavenDbBlog.Import
                         using (var session = store.OpenSession())
                         {
                             session.Store(commentsCollection);
-
                             ravenPost.CommentsId = commentsCollection.Id;
 
                             session.Store(ravenPost);
+
                             session.SaveChanges();
                         }
 
