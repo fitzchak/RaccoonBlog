@@ -9,7 +9,7 @@ namespace RavenDbBlog.Core.Models
 		const string ConstantSalt = "xi07cevs01q4#";
 		public string Id { get; set; }
 		public string Name { get; set; }
-		public string HashedPassword { get; private set; }
+		protected string HashedPassword { get; private set; }
 
 		public void SetPassword(string pwd)
 		{
