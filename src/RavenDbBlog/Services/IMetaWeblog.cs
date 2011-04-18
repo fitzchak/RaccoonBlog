@@ -1,4 +1,5 @@
 ﻿using CookComputing.XmlRpc;
+using RavenDbBlog.Services.RssModels;
 
 namespace RavenDbBlog.Services
 {

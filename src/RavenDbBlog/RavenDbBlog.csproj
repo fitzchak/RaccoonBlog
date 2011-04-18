@@ -126,7 +126,7 @@
     <Compile Include="Services\IMetaWeblog.cs" />
     <Compile Include="Services\MetaWeblog.cs" />
     <Compile Include="Services\PostSchedulingStrategy.cs" />
-    <Compile Include="Services\Structs.cs" />
+    <Compile Include="Services\RssModels\Structs.cs" />
     <Compile Include="ViewModels\CommentInput.cs" />
     <Compile Include="ViewModels\NewCommentEmailViewModel.cs" />
     <Compile Include="ViewModels\PostViewModel.cs" />

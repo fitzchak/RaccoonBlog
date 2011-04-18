@@ -7,10 +7,10 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using CookComputing.XmlRpc;
 using Raven.Client;
-using RavenDbBlog.Core.Models;
 using RavenDbBlog.Indexes;
 using RavenDbBlog.Infrastructure.Raven;
 using System.Linq;
+using RavenDbBlog.Services.RssModels;
 
 namespace RavenDbBlog.Services
 {
@@ -29,7 +29,7 @@ namespace RavenDbBlog.Services
 		{
 			if (ValidateUser(username, password))
 			{
-				var comments = new PostComments();
+                var comments = new Core.Models.PostComments();
 				session.Store(comments);
 
 				var newPost = new Core.Models.Post
@@ -228,7 +228,7 @@ namespace RavenDbBlog.Services
 
 		private bool ValidateUser(string username, string password)
 		{
-			var user = session.Load<User>("users/" + username);
+            var user = session.Load<Core.Models.User>("users/" + username);
 			if (user == null)
 				return false;
 
