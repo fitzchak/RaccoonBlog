@@ -23,7 +23,7 @@ namespace RavenDbBlog.Controllers
         {
             var post = Session
                 .Include<Post>(x => x.CommentsId)
-                .Load("posts/" + id);
+                .Load(id);
 
             if (post == null || post.PublishAt > DateTimeOffset.Now)
                 return HttpNotFound();
@@ -205,9 +205,8 @@ namespace RavenDbBlog.Controllers
                 }
             }
 
-            Session.Load<object>("posts/" + id, "posts/" + id + "/comments");
-            var post = Session.Load<Post>("posts/" + id);
-            var comments = Session.Load<PostComments>("posts/" + id + "/comments");
+            var post = Session.Load<Post>(id);
+            var comments = Session.Load<PostComments>(id);
 
             if (post == null)
                 return HttpNotFound();
