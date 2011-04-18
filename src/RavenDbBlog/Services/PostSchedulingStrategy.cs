@@ -1,22 +1,22 @@
 using System;
+using System.Linq;
 using Raven.Client;
+using RavenDbBlog.Core.Models;
 
 namespace RavenDbBlog.Services
 {
 	public class PostSchedulingStrategy
 	{
-		private IDocumentSession session;
-		private readonly DateTimeOffset? requestedDate;
-		private readonly DateTimeOffset? currentDate;
+		private readonly IDocumentSession _session;
+	    private readonly DateTimeOffset? _currentDate;
 
-		public PostSchedulingStrategy(IDocumentSession session, DateTimeOffset? requestedDate, DateTimeOffset? currentDate)
-		{
-			this.session = session;
-			this.requestedDate = requestedDate;
-			this.currentDate = currentDate;
-		}
+	    public PostSchedulingStrategy(IDocumentSession session, DateTimeOffset? currentDate)
+        {
+            _session = session;
+            _currentDate = currentDate;
+        }
 
-		/// <summary>
+	    /// <summary>
 		/// The rules are simple:
 		/// * If there is no set date, schedule in at the end of the queue, but on a Monday - Friday 
 		/// * If there is a set date, move all the posts from that day one day forward
@@ -26,9 +26,57 @@ namespace RavenDbBlog.Services
 		///  * Check if there is a post in the day we shifted the edited post to, if so, switch them
 		///  * Else, trim all the holes in the schedule
 		/// </summary>
-		public DateTimeOffset Schedule()
+        public DateTimeOffset Schedule(DateTimeOffset? requestedDate = null)
 		{
-			throw new NotImplementedException();
+            if (requestedDate == null)
+            {
+                var date = GetLastPostOnSchedule();
+                date.AddDays(1);
+                date = PutScheduleInWorkdaysOnly(date);
+                return date;
+            }
+
+	        var postsQuery = from p in _session.Query<Post>()
+	                         where p.PublishAt > requestedDate && p.SkipAutoReschedule == false
+	                         orderby p.PublishAt
+	                         select p;
+	        var rescheduleDate = requestedDate.Value;
+	        foreach (var post in postsQuery)
+	        {
+	            rescheduleDate = PutScheduleInWorkdaysOnly(rescheduleDate.AddDays(1));
+                post.PublishAt = NewDate(rescheduleDate, post.PublishAt);
+	        }
+
+	        return DateTimeOffset.Now;
 		}
+
+	    private static DateTimeOffset NewDate(DateTimeOffset date, DateTimeOffset time)
+	    {
+            return new DateTimeOffset(date.Year, date.Month, date.Day, time.Hour, time.Minute, time.Second, time.Millisecond, time.Offset);
+	    }
+
+	    private DateTimeOffset PutScheduleInWorkdaysOnly(DateTimeOffset date)
+	    {
+            // TODO: Use CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek
+            if (date.DayOfWeek == DayOfWeek.Saturday)
+                return date.AddDays(2);
+
+            if (date.DayOfWeek == DayOfWeek.Sunday)
+                return date.AddDays(1);
+
+	        return date;
+	    }
+
+	    private DateTimeOffset GetLastPostOnSchedule()
+	    {
+	        var post = _session.Query<Post>()
+	            .OrderByDescending(p => p.PublishAt)
+	            .FirstOrDefault();
+
+	        if (post == null)
+                return DateTimeOffset.Now;
+	            
+	        return post.PublishAt;
+	    }
 	}
 }
