@@ -38,7 +38,7 @@ namespace RavenDbBlog.Import
 						var user = new User
 						{
 							Id = "users/ayende",
-							Name = "Ayende Rahien",
+							FullName = "Ayende Rahien",
 						};
 						user.SetPassword("123456");
 						s.Store(user);

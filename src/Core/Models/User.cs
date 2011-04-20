@@ -1,4 +1,5 @@
 using System;
+using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -8,7 +9,8 @@ namespace RavenDbBlog.Core.Models
 	{
 		const string ConstantSalt = "xi07cevs01q4#";
 		public string Id { get; set; }
-		public string Name { get; set; }
+		public string FullName { get; set; }
+		public string Username { get; set; }
 		protected string HashedPassword { get; private set; }
 
 		public void SetPassword(string pwd)
@@ -31,9 +33,9 @@ namespace RavenDbBlog.Core.Models
 			return hashedPassword;
 		}
 
-		public bool ValidatePassword(string maybePwd)
+		public bool ValidatePassword(SecureString maybePwd)
 		{
-			return HashedPassword == GetHashedPassword(maybePwd);
+			return HashedPassword == GetHashedPassword(maybePwd.ToString());
 		}
 	}
 }
