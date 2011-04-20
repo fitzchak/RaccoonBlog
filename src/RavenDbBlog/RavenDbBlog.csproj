@@ -141,7 +141,7 @@
     <Content Include="Content\css\main.css" />
     <Content Include="Content\css\ResetCss.css" />
     <Content Include="Global.asax" />
-    <Content Include="Views\Post\EditorTemplates\HiddenInput.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\HiddenInput.cshtml" />
     <Content Include="EmailViews\NewComment.cshtml" />
     <Content Include="Views\Post\TagsList.cshtml" />
     <Content Include="Views\Post\ArchivesList.cshtml" />
@@ -149,8 +149,8 @@
     <Content Include="wlwmanifest.xml" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Login\CurrentUser.cshtml" />
-    <None Include="Views\Post\EditorTemplates\MultilineText.cshtml" />
-    <None Include="Views\Post\EditorTemplates\String.cshtml" />
+    <None Include="Views\Shared\EditorTemplates\MultilineText.cshtml" />
+    <None Include="Views\Shared\EditorTemplates\String.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
