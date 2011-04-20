@@ -35,13 +35,23 @@ namespace RavenDbBlog.Import
                 {
 					using(var s = store.OpenSession())
 					{
-						var user = new User
+						var user1 = new User
 						{
-							Id = "users/ayende",
-							FullName = "Ayende Rahien",
+							Id = "users/1",
+                            Email = "ayende@ayende.com",
+                            FullName = "Ayende Rahien",
 						};
-						user.SetPassword("123456");
-						s.Store(user);
+						user1.SetPassword("123456");
+						s.Store(user1);
+
+                        var user2 = new User
+                        {
+                            Id = "users/2",
+                            Email = "fitzchak@ayende.com",
+                            FullName = "Fitzchak Yitzchaki",
+                        };
+                        user2.SetPassword("123456");
+                        s.Store(user2);
 
 						s.SaveChanges();
 					}
