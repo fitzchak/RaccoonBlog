@@ -129,6 +129,7 @@
     <Compile Include="Services\PostSchedulingStrategy.cs" />
     <Compile Include="Services\RssModels\Structs.cs" />
     <Compile Include="ViewModels\CommentInput.cs" />
+    <Compile Include="ViewModels\CurrentUserViewModel.cs" />
     <Compile Include="ViewModels\LoginInput.cs" />
     <Compile Include="ViewModels\NewCommentEmailViewModel.cs" />
     <Compile Include="ViewModels\PostViewModel.cs" />
@@ -147,6 +148,7 @@
     <Content Include="Services\MetaWeblogAPI.ashx" />
     <Content Include="wlwmanifest.xml" />
     <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Login\CurrentUser.cshtml" />
     <None Include="Views\Post\EditorTemplates\MultilineText.cshtml" />
     <None Include="Views\Post\EditorTemplates\String.cshtml" />
     <Content Include="Web.config">

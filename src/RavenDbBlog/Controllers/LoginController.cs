@@ -24,9 +24,7 @@ namespace RavenDbBlog.Controllers
         // [RequireHttps(Order = 1)]
         public ActionResult Login(LoginInput input)
         {
-            var user = Session.Query<User>()
-                .Where(u => u.FullName == input.Username)
-                .FirstOrDefault();
+            var user = GetUserByName(input.Username);
 
             const string loginFailMessage = "Username and password are not valid.";
             if (user == null || user.ValidatePassword(input.Password) == false)
@@ -43,11 +41,42 @@ namespace RavenDbBlog.Controllers
             return View(vm);
         }
 
+        private User GetUserByName(string username)
+        {
+            return Session.Query<User>()
+                .Where(u => u.Username == username)
+                .FirstOrDefault();
+        }
+
         [HttpGet]
         public ActionResult LogOut(string returnurl)
         {
             FormsAuthentication.SignOut();
             return RedirectToRoute("Default");
+        }
+
+        [ChildActionOnly]
+        public ActionResult CurrentUser()
+        {
+            var user = GetCurrentUser();
+            var vm = new CurrentUserViewModel();
+
+            if (user != null)
+            {
+                vm.FullName = user.FullName;
+            }
+
+            return View(vm);
+        }
+
+        private User GetCurrentUser()
+        {
+            if (Request.IsAuthenticated == false)
+                return null;
+	
+            var username = HttpContext.User.Identity.Name;
+            var user = GetUserByName(username);
+            return user;
         }
     }
 }
