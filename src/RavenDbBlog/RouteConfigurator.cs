@@ -80,7 +80,10 @@ namespace RavenDbBlog
                 new { controller = "Post", action = "List" }
                 );
 
-            //RouteDebug.RouteDebugger.RewriteRoutesForTesting(routes);
+            routes.MapRoute("Default",
+                "",
+                new { controller = "Post", action = "List" }
+                );
         }
     }
 }

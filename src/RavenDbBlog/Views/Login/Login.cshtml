@@ -1,0 +1,16 @@
+﻿@model LoginInput
+
+@{
+	ViewBag.Title = "Login";
+}
+
+<article id="login">
+	@Html.ValidationSummary("form-error")
+
+	<form action="@Url.Action("Login")" method="post">
+		@Html.EditorFor(x => x.Email)
+		@Html.EditorFor(x => x.Password)
+				  
+		<input type="submit" value="Login">
+	</form>
+</article>
