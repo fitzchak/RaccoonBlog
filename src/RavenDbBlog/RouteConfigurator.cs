@@ -80,6 +80,12 @@ namespace RavenDbBlog
                 new { controller = "Post", action = "List" }
                 );
 
+            routes.MapRoute("LoginController",
+               "users/{action}",
+               new { controller = "Login" },
+               new { action = "Login|LogOut|CurrentUser" }
+               );
+
             routes.MapRoute("Default",
                 "",
                 new { controller = "Post", action = "List" }
