@@ -24,9 +24,9 @@ namespace RavenDbBlog.Controllers
         // [RequireHttps(Order = 1)]
         public ActionResult Login(LoginInput input)
         {
-            var user = GetUserByName(input.Username);
+            var user = GetUserByEmail(input.Email);
 
-            const string loginFailMessage = "Username and password are not valid.";
+            const string loginFailMessage = "Email and password are not match.";
             if (user == null || user.ValidatePassword(input.Password) == false)
             {
                 ModelState.AddModelError("UserNotExistOrPasswordNotMatch", loginFailMessage);
@@ -34,17 +34,17 @@ namespace RavenDbBlog.Controllers
 
             if (ModelState.IsValid)
             {
-                FormsAuthentication.RedirectFromLoginPage(input.Username, false);
+                FormsAuthentication.RedirectFromLoginPage(input.Email, false);
             }
 
-            var vm = new LoginInput {Username = input.Username};
+            var vm = new LoginInput {Email = input.Email};
             return View(vm);
         }
 
-        private User GetUserByName(string username)
+        private User GetUserByEmail(string email)
         {
             return Session.Query<User>()
-                .Where(u => u.Username == username)
+                .Where(u => u.Email == email)
                 .FirstOrDefault();
         }
 
@@ -74,8 +74,8 @@ namespace RavenDbBlog.Controllers
             if (Request.IsAuthenticated == false)
                 return null;
 	
-            var username = HttpContext.User.Identity.Name;
-            var user = GetUserByName(username);
+            var email = HttpContext.User.Identity.Name;
+            var user = GetUserByEmail(email);
             return user;
         }
     }
