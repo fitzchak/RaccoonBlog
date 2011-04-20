@@ -26,7 +26,7 @@ namespace RavenDbBlog.Services
 
 		#region IMetaWeblog Members
 
-        string IMetaWeblog.AddPost(string blogid, string username, SecureString password, Post post, bool publish)
+        string IMetaWeblog.AddPost(string blogid, string username, string password, Post post, bool publish)
 		{
 			if (ValidateUser(username, password))
 			{
@@ -54,7 +54,7 @@ namespace RavenDbBlog.Services
 			throw new XmlRpcFaultException(0, "User is not valid!");
 		}
 
-        bool IMetaWeblog.UpdatePost(string postid, string username, SecureString password,
+        bool IMetaWeblog.UpdatePost(string postid, string username, string password,
 			Post post, bool publish)
 		{
 			if (ValidateUser(username, password))
@@ -77,7 +77,7 @@ namespace RavenDbBlog.Services
 			throw new XmlRpcFaultException(0, "User is not valid!");
 		}
 
-        Post IMetaWeblog.GetPost(string postid, string username, SecureString password)
+        Post IMetaWeblog.GetPost(string postid, string username, string password)
 		{
 			if (ValidateUser(username, password))
 			{
@@ -99,7 +99,7 @@ namespace RavenDbBlog.Services
 			throw new XmlRpcFaultException(0, "User is not valid!");
 		}
 
-		CategoryInfo[] IMetaWeblog.GetCategories(string blogid, string username, SecureString password)
+		CategoryInfo[] IMetaWeblog.GetCategories(string blogid, string username, string password)
 		{
 			if (ValidateUser(username, password))
 			{
@@ -124,7 +124,7 @@ namespace RavenDbBlog.Services
 			throw new XmlRpcFaultException(0, "User is not valid!");
 		}
 
-		Post[] IMetaWeblog.GetRecentPosts(string blogid, string username, SecureString password,
+		Post[] IMetaWeblog.GetRecentPosts(string blogid, string username, string password,
 			int numberOfPosts)
 		{
 			if (ValidateUser(username, password))
@@ -148,7 +148,7 @@ namespace RavenDbBlog.Services
 			throw new XmlRpcFaultException(0, "User is not valid!");
 		}
 
-		MediaObjectInfo IMetaWeblog.NewMediaObject(string blogid, string username, SecureString password,
+		MediaObjectInfo IMetaWeblog.NewMediaObject(string blogid, string username, string password,
 			MediaObject mediaObject)
 		{
 			if (ValidateUser(username, password))
@@ -171,7 +171,7 @@ namespace RavenDbBlog.Services
 			throw new XmlRpcFaultException(0, "User is not valid!");
 		}
 
-		bool IMetaWeblog.DeletePost(string key, string postid, string username, SecureString password, bool publish)
+		bool IMetaWeblog.DeletePost(string key, string postid, string username, string password, bool publish)
 		{
 			if (ValidateUser(username, password))
 			{
@@ -192,7 +192,7 @@ namespace RavenDbBlog.Services
 			throw new XmlRpcFaultException(0, "User is not valid!");
 		}
 
-		BlogInfo[] IMetaWeblog.GetUsersBlogs(string key, string username, SecureString password)
+		BlogInfo[] IMetaWeblog.GetUsersBlogs(string key, string username, string password)
 		{
 			if (ValidateUser(username, password))
 			{
@@ -209,7 +209,7 @@ namespace RavenDbBlog.Services
 			throw new XmlRpcFaultException(0, "User is not valid!");
 		}
 
-		UserInfo IMetaWeblog.GetUserInfo(string key, string username, SecureString password)
+		UserInfo IMetaWeblog.GetUserInfo(string key, string username, string password)
 		{
 			if (ValidateUser(username, password))
 			{
@@ -227,7 +227,7 @@ namespace RavenDbBlog.Services
 
 		#region Private Methods
 
-        private bool ValidateUser(string username, SecureString password)
+        private bool ValidateUser(string username, string password)
 		{
             var user = session.Load<Core.Models.User>("users/" + username);
 			if (user == null)

@@ -13,7 +13,6 @@ namespace RavenDbBlog.ViewModels
 
         [Required]
         [Display(Name = "Password")]
-        [UIHint("String")]
-        public SecureString Password { get; set; }
+        public string Password { get; set; }
     }
 }

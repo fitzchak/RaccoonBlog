@@ -9,22 +9,22 @@ namespace RavenDbBlog.Services
         #region MetaWeblog API
 
         [XmlRpcMethod("metaWeblog.newPost")]
-        string AddPost(string blogid, string username, SecureString password, Post post, bool publish);
+        string AddPost(string blogid, string username, string password, Post post, bool publish);
 
         [XmlRpcMethod("metaWeblog.editPost")]
-        bool UpdatePost(string postid, string username, SecureString password, Post post, bool publish);
+        bool UpdatePost(string postid, string username, string password, Post post, bool publish);
 
         [XmlRpcMethod("metaWeblog.getPost")]
-        Post GetPost(string postid, string username, SecureString password);
+        Post GetPost(string postid, string username, string password);
 
         [XmlRpcMethod("metaWeblog.getCategories")]
-        CategoryInfo[] GetCategories(string blogid, string username, SecureString password);
+        CategoryInfo[] GetCategories(string blogid, string username, string password);
 
         [XmlRpcMethod("metaWeblog.getRecentPosts")]
-        Post[] GetRecentPosts(string blogid, string username, SecureString password, int numberOfPosts);
+        Post[] GetRecentPosts(string blogid, string username, string password, int numberOfPosts);
 
         [XmlRpcMethod("metaWeblog.newMediaObject")]
-        MediaObjectInfo NewMediaObject(string blogid, string username, SecureString password,
+        MediaObjectInfo NewMediaObject(string blogid, string username, string password,
             MediaObject mediaObject);
 
         #endregion
@@ -33,13 +33,13 @@ namespace RavenDbBlog.Services
 
         [XmlRpcMethod("blogger.deletePost")]
         [return: XmlRpcReturnValue(Description = "Returns true.")]
-        bool DeletePost(string key, string postid, string username, SecureString password, bool publish);
+        bool DeletePost(string key, string postid, string username, string password, bool publish);
 
         [XmlRpcMethod("blogger.getUsersBlogs")]
-        BlogInfo[] GetUsersBlogs(string key, string username, SecureString password);
+        BlogInfo[] GetUsersBlogs(string key, string username, string password);
 
         [XmlRpcMethod("blogger.getUserInfo")]
-        UserInfo GetUserInfo(string key, string username, SecureString password);
+        UserInfo GetUserInfo(string key, string username, string password);
 
         #endregion
     }

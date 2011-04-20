@@ -33,9 +33,9 @@ namespace RavenDbBlog.Core.Models
 			return hashedPassword;
 		}
 
-		public bool ValidatePassword(SecureString maybePwd)
+		public bool ValidatePassword(string maybePwd)
 		{
-			return HashedPassword == GetHashedPassword(maybePwd.ToString());
+			return HashedPassword == GetHashedPassword(maybePwd);
 		}
 	}
 }
