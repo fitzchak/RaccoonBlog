@@ -1,13 +1,14 @@
 ﻿@model CurrentUserViewModel
-
-@if (Model.IsAuthenticated()) { 
-	<div>
-		Welcome @Model.FullName
-		<a href="@Url.Action("Logout", "Login")">Log out</a>
-	</div>
+@{
+	Layout = "";    
 }
-else { 
-	<div>
-		<a href="@Url.Action("Login", "Login")">Log in</a>
-	</div>
+@if (Model.IsAuthenticated())
+{ 
+	<h1>Welcome @Model.FullName</h1>
+    <p><a href="@Url.Action("Logout", "Login")">Log out</a></p>
+}
+else
+{ 
+	<h1>Log In</h1>
+    <p><a href="@Url.Action("Login", "Login")">Log in</a></p>
 }

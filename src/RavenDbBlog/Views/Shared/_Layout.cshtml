@@ -24,6 +24,10 @@
 		</header>
         <div id="mainBody">
             <div id="sidebar">
+				<aside class="section">
+                    @{Html.RenderAction("CurrentUser", "Login");}
+                </aside>
+
                 <aside class="section">
                     <h1>Title</h1>
                     <p>Text 1</p>
@@ -32,11 +36,11 @@
 
                 <aside class="section tags_list">
                     <h1>Tags</h1>
-                    @{Html.RenderAction("TagsList");}
+                    @{Html.RenderAction("TagsList", "Post");}
                 </aside>
                 <aside class="section tags_list">
                     <h1>Archive</h1>
-                    @{Html.RenderAction("ArchivesList");}
+                    @{Html.RenderAction("ArchivesList", "Post");}
                 </aside>
 
             </div>
