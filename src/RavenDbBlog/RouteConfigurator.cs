@@ -57,7 +57,7 @@ namespace RavenDbBlog
 			routes.MapRoute("UserAdminController2",
 			   "admin/users/{action}",
 			   new { controller = "UserAdmin" },
-			   new { action = "Update|List" }
+			   new { action = "Add|Update|List" }
 			   );
     	}
 
