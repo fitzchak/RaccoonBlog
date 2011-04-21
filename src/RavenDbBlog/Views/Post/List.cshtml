@@ -21,9 +21,9 @@
 
 		<div class="tags">
 		    <ul>
-                @foreach (var tag in post.Tags)
+                @foreach (var name in post.Tags)
                 {
-                    <li><a href="@Url.Action("List", new {tag})">@tag</a></li>
+                    <li><a href="@Url.Action("Tag", new { name })">@name</a></li>
                 }
             </ul>
         </div>

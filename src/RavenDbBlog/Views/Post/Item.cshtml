@@ -40,9 +40,9 @@
 	
     <div class="tags">
         <ul>
-            @foreach (var tag in Model.Post.Tags)
+            @foreach (var name in Model.Post.Tags)
             {
-                <li><a href="@Url.Action("Tag", new { tag })">@tag</a></li>
+                <li><a href="@Url.Action("Tag", new { name })">@name</a></li>
             }
         </ul>
     </div>
