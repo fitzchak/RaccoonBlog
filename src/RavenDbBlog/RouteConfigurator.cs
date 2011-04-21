@@ -27,11 +27,6 @@ namespace RavenDbBlog
 
     		ConfigureArchive();
 
-            routes.MapRoute("AllPosts",
-                "",
-                new { controller = "Post", action = "List" }
-                );
-
             routes.MapRoute("LoginController",
                "users/{action}",
                new { controller = "Login" },
@@ -40,7 +35,12 @@ namespace RavenDbBlog
 
     		ConfigureAdmin();
 
-           routes.MapRoute("Default",
+            routes.MapRoute("AllPosts",
+                "",
+                new { controller = "Post", action = "List" }
+                );
+
+            routes.MapRoute("Default",
                 "",
                 new { controller = "Post", action = "List" }
                 );
