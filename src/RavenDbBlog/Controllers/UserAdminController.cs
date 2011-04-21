@@ -47,7 +47,7 @@ namespace RavenDbBlog.Controllers
                 user.FullName = input.FullName;
                 user.Email = input.Email;
                 Session.Store(user);
-                RedirectToAction("List");
+                return RedirectToAction("List");
             }
             return View("Edit", input);
         }
