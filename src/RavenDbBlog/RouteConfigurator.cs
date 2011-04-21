@@ -48,17 +48,22 @@ namespace RavenDbBlog
 
     	private void ConfigureAdmin()
     	{
-			routes.MapRoute("UserAdminController1",
+			routes.MapRoute("UserAdminController-ActionWithId",
 			  "admin/users/{id}/{action}",
 			  new { controller = "UserAdmin" },
 			  new { action = "Edit|Details|Delete", id = MatchPositiveInteger }
 			  );
 
-			routes.MapRoute("UserAdminController2",
+			routes.MapRoute("UserAdminController-Action",
 			   "admin/users/{action}",
 			   new { controller = "UserAdmin" },
-			   new { action = "Add|Update|List" }
+			   new { action = "Add|Update" }
 			   );
+
+            routes.MapRoute("UserAdminController-UsersList",
+               "admin/users",
+               new { controller = "UserAdmin", action = "List" }
+               );
     	}
 
     	private void ConfigureArchive()
