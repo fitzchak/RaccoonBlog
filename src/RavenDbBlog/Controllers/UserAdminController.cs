@@ -23,12 +23,30 @@ namespace RavenDbBlog.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult Add()
+        {
+            return View(new UserInput());
+        }
+
+        [HttpPost]
         public ActionResult Add(UserInput input)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = input.MapTo<User>();
+                Session.Store(user);
+                RedirectToAction("List");
+            }
+            return View(input);
+        }
+
+        public ActionResult Edit(UserInput input)
         {
             return View();
         }
 
-        public ActionResult Edit(UserInput input)
+        public ActionResult Delete(int id)
         {
             return View();
         }

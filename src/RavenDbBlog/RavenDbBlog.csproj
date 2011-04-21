@@ -96,6 +96,7 @@
     <Compile Include="Controllers\SyndicationController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="Infrastructure\ActionResults\XmlResult.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\UserAdminMapperProfile.cs" />
     <Compile Include="RouteConfigurator.cs" />
     <Compile Include="Services\Akismet.cs" />
     <Compile Include="Controllers\PostController.cs" />
@@ -187,6 +188,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\404.cshtml" />
+    <Content Include="Views\UserAdmin\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -86,6 +86,12 @@ namespace RavenDbBlog
                new { action = "Login|LogOut|CurrentUser" }
                );
 
+            routes.MapRoute("UserAdminController",
+               "admin/users/{action}",
+               new { controller = "UserAdmin" },
+               new { action = "Add|Edit|List" }
+               );
+
             routes.MapRoute("Default",
                 "",
                 new { controller = "Post", action = "List" }

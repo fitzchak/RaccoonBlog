@@ -1,0 +1,16 @@
+﻿@model UserInput
+
+@{
+	ViewBag.Title = "Add user";
+}
+
+<article id="user-input">
+	@Html.ValidationSummary("form-error")
+
+	<form action="@Url.Action("Add")" method="post">
+		@Html.EditorFor(x => x.FullName)
+		@Html.EditorFor(x => x.Email)
+				  
+		<input type="submit" value="Add User">
+	</form>
+</article>
