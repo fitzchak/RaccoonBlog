@@ -18,7 +18,7 @@ namespace RavenDbBlog.Controllers
             return View(vm);
         }
 
-        public ActionResult Details()
+        public ActionResult Details(int id)
         {
             return View();
         }
@@ -26,11 +26,19 @@ namespace RavenDbBlog.Controllers
         [HttpGet]
         public ActionResult Add()
         {
-            return View(new UserInput());
+            return View("Edit", new UserInput());
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            var user = Session.Load<User>(id);
+            var vm = user.MapTo<UserInput>();
+            return View(vm);
         }
 
         [HttpPost]
-        public ActionResult Add(UserInput input)
+        public ActionResult Update(UserInput input)
         {
             if (ModelState.IsValid)
             {
@@ -38,12 +46,7 @@ namespace RavenDbBlog.Controllers
                 Session.Store(user);
                 RedirectToAction("List");
             }
-            return View(input);
-        }
-
-        public ActionResult Edit(UserInput input)
-        {
-            return View();
+            return View("Edit", input);
         }
 
         public ActionResult Delete(int id)

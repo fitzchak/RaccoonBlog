@@ -1,9 +1,7 @@
 ﻿@model UserInput
-
 @{
-	ViewBag.Title = "Add user";
+	ViewBag.Title = Model.IsNewUser() ? "Create a new user" : "Edit User " + Mdoel.FullName;
 }
-
 <article id="user-input">
 	@Html.ValidationSummary("form-error")
 

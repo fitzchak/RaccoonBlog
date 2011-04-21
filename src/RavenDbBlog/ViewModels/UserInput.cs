@@ -11,5 +11,10 @@ namespace RavenDbBlog.ViewModels
         [Display(Name = "Email")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+
+        public bool IsNewUser()
+        {
+            return string.IsNullOrEmpty(Email);
+        }
     }
 }

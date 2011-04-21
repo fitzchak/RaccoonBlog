@@ -11,6 +11,9 @@ namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles
             Mapper.CreateMap<UserInput, User>()
                 .ConstructUsing(input => GetUserByEmail(input.Email) ?? new User())
                 ;
+
+            Mapper.CreateMap<User, UserSummeryViewModel>()
+                ;
         }
     }
 }
