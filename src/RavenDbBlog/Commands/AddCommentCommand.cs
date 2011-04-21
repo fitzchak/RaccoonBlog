@@ -74,8 +74,8 @@ namespace RavenDbBlog.Commands
         private bool CheckForSpam()
         {
             //Create a new instance of the Akismet API and verify your key is valid.
-            string blog = "http://" + ConfigurationSettings.AppSettings["MainUrl"];
-            var api = new Akismet(ConfigurationSettings.AppSettings["AkismetKey"], blog, _requestValues.UserAgent);
+            string blog = "http://" + ConfigurationManager.AppSettings["MainUrl"];
+			var api = new Akismet(ConfigurationManager.AppSettings["AkismetKey"], blog, _requestValues.UserAgent);
             if (!api.VerifyKey()) throw new Exception("Akismet API key invalid.");
 
             var akismetComment = new AkismetComment
