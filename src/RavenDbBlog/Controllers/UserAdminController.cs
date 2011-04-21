@@ -33,8 +33,7 @@ namespace RavenDbBlog.Controllers
         public ActionResult Edit(int id)
         {
             var user = Session.Load<User>(id);
-            var vm = user.MapTo<UserInput>();
-            return View(vm);
+        	return View(user.MapTo<UserInput>());
         }
 
         [HttpPost]
@@ -42,8 +41,7 @@ namespace RavenDbBlog.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = input.MapTo<User>();
-                Session.Store(user);
+            	Session.Store(input.MapTo<User>());
                 RedirectToAction("List");
             }
             return View("Edit", input);

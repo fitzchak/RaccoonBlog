@@ -21,7 +21,6 @@ namespace RavenDbBlog.Controllers
         }
 
         [HttpPost]
-        // [RequireHttps(Order = 1)]
         public ActionResult Login(LoginInput input)
         {
             var user = GetUserByEmail(input.Email);
@@ -73,7 +72,6 @@ namespace RavenDbBlog.Controllers
             {
                 vm.FullName = user.FullName;
             }
-
             return View(vm);
         }
 
