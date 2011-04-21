@@ -40,15 +40,18 @@ namespace RavenDbBlog.Services
 	                         orderby p.PublishAt
 	                         select p;
 
+	    	var nextPostDate = requestedDate.Value;
 	        foreach (var post in postsQuery)
 	        {
-	        	post.PublishAt = post
-					.PublishAt
-					.AddDays(1)
-					.SkipToNextWorkDay();
+				post.PublishAt
+					= nextPostDate 
+					= nextPostDate
+						.AddDays(1)
+						.SkipToNextWorkDay()
+						.AtTime(post.PublishAt);
 	        }
 
-	        return DateTimeOffset.Now;
+	    	return requestedDate.Value;
 		}
 
 	    private DateTimeOffset GetLastPostOnSchedule()
@@ -67,6 +70,11 @@ namespace RavenDbBlog.Services
 		public static DateTimeOffset AtNoon(this DateTimeOffset date)
 		{
 			return new DateTimeOffset(date.Year, date.Month, date.Day, 12, 0, 0, 0, date.Offset);
+		}
+
+		public static DateTimeOffset AtTime(this DateTimeOffset date, DateTimeOffset time)
+		{
+			return new DateTimeOffset(date.Year, date.Month, date.Day, time.Hour, time.Minute, time.Second, time.Millisecond, date.Offset);
 		}
 
 		public static DateTimeOffset SkipToNextWorkDay(this DateTimeOffset date)
