@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Linq;
 using Raven.Client;
 using RavenDbBlog.Core.Models;
@@ -30,10 +31,7 @@ namespace RavenDbBlog.Services
 		{
             if (requestedDate == null)
             {
-                var date = GetLastPostOnSchedule();
-                date.AddDays(1);
-                date = PutScheduleInWorkdaysOnly(date);
-                return date;
+            	return GetLastPostOnSchedule().AddDaysAndEnsureIsInNextWorkWeekDay(1);
             }
 
 	        var postsQuery = from p in _session.Query<Post>()
@@ -43,7 +41,7 @@ namespace RavenDbBlog.Services
 	        var rescheduleDate = requestedDate.Value;
 	        foreach (var post in postsQuery)
 	        {
-	            rescheduleDate = PutScheduleInWorkdaysOnly(rescheduleDate.AddDays(1));
+	        	rescheduleDate = rescheduleDate.AddDaysAndEnsureIsInNextWorkWeekDay(1);
                 post.PublishAt = NewDate(rescheduleDate, post.PublishAt);
 	        }
 
@@ -55,28 +53,31 @@ namespace RavenDbBlog.Services
             return new DateTimeOffset(date.Year, date.Month, date.Day, time.Hour, time.Minute, time.Second, time.Millisecond, time.Offset);
 	    }
 
-	    private DateTimeOffset PutScheduleInWorkdaysOnly(DateTimeOffset date)
-	    {
-            // TODO: Use CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek
-            if (date.DayOfWeek == DayOfWeek.Saturday)
-                return date.AddDays(2);
-
-            if (date.DayOfWeek == DayOfWeek.Sunday)
-                return date.AddDays(1);
-
-	        return date;
-	    }
-
+	    
 	    private DateTimeOffset GetLastPostOnSchedule()
 	    {
 	        var post = _session.Query<Post>()
 	            .OrderByDescending(p => p.PublishAt)
 	            .FirstOrDefault();
 
-	        if (post == null)
-                return DateTimeOffset.Now;
-	            
-	        return post.PublishAt;
+	        return post != null ? post.PublishAt : DateTimeOffset.Now;
 	    }
+	}
+
+	public static class DateTimeOffsetExtensions
+	{
+		public static DateTimeOffset AddDaysAndEnsureIsInNextWorkWeekDay(this DateTimeOffset date, int days)
+		{
+			date = date.AddDays(days);
+			// we explicitly choose not to user the CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek
+			// because we want it to be fixed for what we need, not whatever the user for this is set to.
+			if (date.DayOfWeek == DayOfWeek.Saturday)
+				return date.AddDays(2);
+
+			if (date.DayOfWeek == DayOfWeek.Sunday)
+				return date.AddDays(1);
+
+			return date;
+		}
 	}
 }
