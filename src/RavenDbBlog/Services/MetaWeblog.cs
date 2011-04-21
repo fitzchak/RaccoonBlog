@@ -17,7 +17,14 @@ namespace RavenDbBlog.Services
 {
 	public class MetaWeblog : XmlRpcService, IMetaWeblog
 	{
-		private readonly IDocumentSession session = DocumentStoreHolder.DocumentStore.OpenSession();
+		private readonly IDocumentSession session;
+		PostSchedulingStrategy postScheduleringStrategy;
+
+		public MetaWeblog()
+		{
+			session = DocumentStoreHolder.DocumentStore.OpenSession();
+			postScheduleringStrategy = new PostSchedulingStrategy(session);
+		}
 
 		private  UrlHelper Url
 		{
@@ -33,14 +40,18 @@ namespace RavenDbBlog.Services
                 var comments = new Core.Models.PostComments();
 				session.Store(comments);
 
+				var publishDate = post.dateCreated == null ? 
+					postScheduleringStrategy.Schedule() : 
+					postScheduleringStrategy.Schedule(new DateTimeOffset(post.dateCreated.Value));
+
 				var newPost = new Core.Models.Post
 				{
 					Author = "users/" + username,
 					Body = post.description,
 					CommentsId = comments.Id,
 					CreatedAt = DateTimeOffset.Now,
-					//TODO: Smarter re-scheduling
-					PublishAt = post.dateCreated == null ? DateTimeOffset.Now : new DateTimeOffset(post.dateCreated.Value),
+					SkipAutoReschedule = post.dateCreated != null,
+					PublishAt = publishDate,
 					Slug = post.wp_slug,
 					Tags = post.categories,
 					Title = post.title,
@@ -65,8 +76,18 @@ namespace RavenDbBlog.Services
 				postToEdit.Slug = post.wp_slug;
 				postToEdit.Author = "users/" + username;
 				postToEdit.Body = post.description;
-				if (post.dateCreated != null)
-					postToEdit.PublishAt = new DateTimeOffset(post.dateCreated.Value);
+				if (
+					// don't bother moving things if we are already talking about something that is fixed
+					postToEdit.SkipAutoReschedule && 
+					// if we haven't modified it, or if we modified to the same value, we can ignore this
+					post.dateCreated != null && 
+					post.dateCreated.Value != postToEdit.PublishAt.DateTime
+					)
+					
+				{
+					// schedule all the future posts up 
+					postToEdit.PublishAt = postScheduleringStrategy.Schedule(new DateTimeOffset(post.dateCreated.Value));
+				}
 				postToEdit.Tags = post.categories;
 				postToEdit.Title = post.title;
 
