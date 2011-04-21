@@ -8,12 +8,7 @@ namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles
     {
         protected override void Configure()
         {
-            Mapper.CreateMap<UserInput, User>()
-                .ConstructUsing(input => GetUserByEmail(input.Email) ?? new User())
-                ;
-
-            Mapper.CreateMap<User, UserSummeryViewModel>()
-                ;
+            Mapper.CreateMap<User, UserSummeryViewModel>();
         }
     }
 }

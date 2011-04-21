@@ -19,7 +19,7 @@ namespace RavenDbBlog
             AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfigurator.Configure(RouteTable.Routes);
+			new RouteConfigurator(RouteTable.Routes).Configure();
 
             AutoMapperConfiguration.Configure();
         }
