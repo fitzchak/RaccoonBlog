@@ -10,6 +10,7 @@ namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles
         protected override void Configure()
         {
             Mapper.CreateMap<User, UserSummeryViewModel>()
+                .ForMember(x => x.Id, o => o.MapFrom(m => RavenIdResolver.Resolve(m.Id)))
                 ;
 
             Mapper.CreateMap<User, UserInput>()
