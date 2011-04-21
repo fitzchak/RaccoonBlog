@@ -1,9 +1,12 @@
 ﻿@model UserInput
 @{
-	ViewBag.Title = Model.IsNewUser() ? "Create a New User" : "Edit User " + Model.FullName;
+	ViewBag.H1 = Model.IsNewUser() ? "Create a New User" : "Edit User " + Model.FullName;
 	ViewBag.SubmitButtonText = Model.IsNewUser() ? "Create User" : "Update User";
+
+	ViewBag.Title = ViewBag.H1;
 }
 <article id="user-input">
+	<h1>@ViewBag.H1</h1>
 	@Html.ValidationSummary("form-error")
 
 	<form action="@Url.Action("Add")" method="post">
