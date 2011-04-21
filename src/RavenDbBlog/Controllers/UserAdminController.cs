@@ -33,6 +33,8 @@ namespace RavenDbBlog.Controllers
         public ActionResult Edit(int id)
         {
             var user = Session.Load<User>(id);
+            if (user == null)
+                return HttpNotFound("User does not exist.");
         	return View(user.MapTo<UserInput>());
         }
 
