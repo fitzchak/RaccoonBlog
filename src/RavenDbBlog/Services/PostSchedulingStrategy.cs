@@ -8,13 +8,11 @@ namespace RavenDbBlog.Services
 {
 	public class PostSchedulingStrategy
 	{
-		private readonly IDocumentSession _session;
-	    private readonly DateTimeOffset? _currentDate;
+		private readonly IDocumentSession session;
 
-	    public PostSchedulingStrategy(IDocumentSession session, DateTimeOffset? currentDate)
+	    public PostSchedulingStrategy(IDocumentSession session)
         {
-            _session = session;
-            _currentDate = currentDate;
+            this.session = session;
         }
 
 	    /// <summary>
@@ -31,44 +29,48 @@ namespace RavenDbBlog.Services
 		{
             if (requestedDate == null)
             {
-            	return GetLastPostOnSchedule().AddDaysAndEnsureIsInNextWorkWeekDay(1);
+            	return GetLastPostOnSchedule()
+            		.AddDays(1)
+					.SkipToNextWorkDay()
+            		.AtNoon();
             }
 
-	        var postsQuery = from p in _session.Query<Post>()
+	    	var postsQuery = from p in session.Query<Post>()
 	                         where p.PublishAt > requestedDate && p.SkipAutoReschedule == false
 	                         orderby p.PublishAt
 	                         select p;
 
-	        var rescheduleDate = requestedDate.Value;
 	        foreach (var post in postsQuery)
 	        {
-	        	post.PublishAt = post.PublishAt.AddDaysAndEnsureIsInNextWorkWeekDay(1);
+	        	post.PublishAt = post
+					.PublishAt
+					.AddDays(1)
+					.SkipToNextWorkDay();
 	        }
 
 	        return DateTimeOffset.Now;
 		}
 
-	    private static DateTimeOffset NewDate(DateTimeOffset date, DateTimeOffset time)
-	    {
-            return new DateTimeOffset(date.Year, date.Month, date.Day, time.Hour, time.Minute, time.Second, time.Millisecond, time.Offset);
-	    }
-
-	    
 	    private DateTimeOffset GetLastPostOnSchedule()
 	    {
-	        var post = _session.Query<Post>()
-	            .OrderByDescending(p => p.PublishAt)
-	            .FirstOrDefault();
+	    	var p = session.Query<Post>()
+	    		.OrderByDescending(post => post.PublishAt)
+	    		.Select(post => new {post.PublishAt})
+	    		.FirstOrDefault();
 
-	        return post != null ? post.PublishAt : DateTimeOffset.Now;
+	        return p != null ? p.PublishAt : DateTimeOffset.Now;
 	    }
 	}
 
 	public static class DateTimeOffsetExtensions
 	{
-		public static DateTimeOffset AddDaysAndEnsureIsInNextWorkWeekDay(this DateTimeOffset date, int days)
+		public static DateTimeOffset AtNoon(this DateTimeOffset date)
 		{
-			date = date.AddDays(days);
+			return new DateTimeOffset(date.Year, date.Month, date.Day, 12, 0, 0, 0, date.Offset);
+		}
+
+		public static DateTimeOffset SkipToNextWorkDay(this DateTimeOffset date)
+		{
 			// we explicitly choose not to user the CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek
 			// because we want it to be fixed for what we need, not whatever the user for this is set to.
 			if (date.DayOfWeek == DayOfWeek.Saturday)
