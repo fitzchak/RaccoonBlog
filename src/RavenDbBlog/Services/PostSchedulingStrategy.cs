@@ -38,11 +38,11 @@ namespace RavenDbBlog.Services
 	                         where p.PublishAt > requestedDate && p.SkipAutoReschedule == false
 	                         orderby p.PublishAt
 	                         select p;
+
 	        var rescheduleDate = requestedDate.Value;
 	        foreach (var post in postsQuery)
 	        {
-	        	rescheduleDate = rescheduleDate.AddDaysAndEnsureIsInNextWorkWeekDay(1);
-                post.PublishAt = NewDate(rescheduleDate, post.PublishAt);
+	        	post.PublishAt = post.PublishAt.AddDaysAndEnsureIsInNextWorkWeekDay(1);
 	        }
 
 	        return DateTimeOffset.Now;
