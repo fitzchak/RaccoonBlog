@@ -15,7 +15,6 @@ namespace RavenDbBlog
     		this.routes = routes;
     	}
 
-
     	public void Configure()
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
@@ -49,13 +48,13 @@ namespace RavenDbBlog
 
     	private void ConfigureAdmin()
     	{
-			routes.MapRoute("UserAdminController",
+			routes.MapRoute("UserAdminController1",
 			  "admin/users/{id}/{action}",
 			  new { controller = "UserAdmin" },
 			  new { action = "Edit|Details|Delete", id = MatchPositiveInteger }
 			  );
 
-			routes.MapRoute("UserAdminController",
+			routes.MapRoute("UserAdminController2",
 			   "admin/users/{action}",
 			   new { controller = "UserAdmin" },
 			   new { action = "Update|List" }
