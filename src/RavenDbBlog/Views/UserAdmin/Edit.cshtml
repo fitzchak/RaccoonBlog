@@ -9,7 +9,7 @@
 	<h1>@ViewBag.H1</h1>
 	@Html.ValidationSummary("form-error")
 
-	<form action="@Url.Action("Add")" method="post">
+	<form action="@Url.Action("Update")" method="post">
 		@Html.EditorFor(x => x.FullName)
 		@Html.EditorFor(x => x.Email)
 				  
