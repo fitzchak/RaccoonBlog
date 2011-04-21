@@ -9,6 +9,7 @@ namespace RavenDbBlog.Infrastructure.AutoMapper
         {
             Mapper.AddProfile(new PostViewModelMapperProfile());
             Mapper.AddProfile(new PostsViewModelMapperProfile());
+            Mapper.AddProfile(new UserAdminMapperProfile());
         }
     }
 }
