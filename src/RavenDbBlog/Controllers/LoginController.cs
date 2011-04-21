@@ -23,7 +23,7 @@ namespace RavenDbBlog.Controllers
         [HttpPost]
         public ActionResult Login(LoginInput input)
         {
-            var user = GetUserByEmail(input.Email);
+            var user = Session.GetUserByEmail(input.Email);
 
             const string loginFailMessage = "Email and password are not match.";
             if (user == null || user.ValidatePassword(input.Password) == false)
@@ -48,12 +48,7 @@ namespace RavenDbBlog.Controllers
             return Redirect(retrunUrl);
         }
 
-        private User GetUserByEmail(string email)
-        {
-            return Session.Query<User>()
-                .Where(u => u.Email == email)
-                .FirstOrDefault();
-        }
+       
 
         [HttpGet]
         public ActionResult LogOut(string returnurl)
@@ -65,24 +60,19 @@ namespace RavenDbBlog.Controllers
         [ChildActionOnly]
         public ActionResult CurrentUser()
         {
-            var user = GetCurrentUser();
-            var vm = new CurrentUserViewModel();
+			if (Request.IsAuthenticated == false)
+				return View(new CurrentUserViewModel());
 
-            if (user != null)
-            {
-                vm.FullName = user.FullName;
-            }
-            return View(vm);
+        	var user = Session.GetUserByEmail(HttpContext.User.Identity.Name);
+        	return View(new CurrentUserViewModel {FullName = user.FullName});
+
         }
 
         private User GetCurrentUser()
         {
-            if (Request.IsAuthenticated == false)
                 return null;
 	
-            var email = HttpContext.User.Identity.Name;
-            var user = GetUserByEmail(email);
-            return user;
+           
         }
     }
 }
