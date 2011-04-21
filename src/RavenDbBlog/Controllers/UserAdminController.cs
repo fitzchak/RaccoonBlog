@@ -43,7 +43,7 @@ namespace RavenDbBlog.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = Session.GetUserByEmail(input.Email) ?? new User();
+                var user = Session.Load<User>(input.Id) ?? new User();
                 user.FullName = input.FullName;
                 user.Email = input.Email;
                 Session.Store(user);
