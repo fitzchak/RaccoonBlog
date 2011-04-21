@@ -14,10 +14,10 @@ namespace RavenDbBlog.Controllers
         {
             if (Request.IsAuthenticated)
             {
-                return RedirectToRoute("Default");
+                return RedirectFromLoginPage();
             }
 
-            return View(new LoginInput());
+            return View(new LoginInput { ReturnUrl = returnUrl });
         }
 
         [HttpPost]
@@ -34,11 +34,19 @@ namespace RavenDbBlog.Controllers
 
             if (ModelState.IsValid)
             {
-                FormsAuthentication.RedirectFromLoginPage(input.Email, false);
+                FormsAuthentication.SetAuthCookie(input.Email, false);
+                return RedirectFromLoginPage(input.ReturnUrl);
             }
 
-            var vm = new LoginInput {Email = input.Email};
+            var vm = new LoginInput {Email = input.Email, ReturnUrl = input.ReturnUrl};
             return View(vm);
+        }
+
+        private ActionResult RedirectFromLoginPage(string retrunUrl = null)
+        {
+            if (string.IsNullOrEmpty(retrunUrl))
+                return RedirectToRoute("Default");
+            return Redirect(retrunUrl);
         }
 
         private User GetUserByEmail(string email)
@@ -52,7 +60,7 @@ namespace RavenDbBlog.Controllers
         public ActionResult LogOut(string returnurl)
         {
             FormsAuthentication.SignOut();
-            return RedirectToRoute("Default");
+            return RedirectFromLoginPage(returnurl);
         }
 
         [ChildActionOnly]

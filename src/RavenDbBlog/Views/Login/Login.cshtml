@@ -1,9 +1,7 @@
 ﻿@model LoginInput
-
 @{
 	ViewBag.Title = "Login";
 }
-
 <article id="login">
 	@Html.ValidationSummary("form-error")
 
@@ -11,6 +9,7 @@
 		@Html.EditorFor(x => x.Email)
 		@Html.EditorFor(x => x.Password)
 				  
+		@Html.EditorFor(x => x.ReturnUrl)
 		<input type="submit" value="Login">
 	</form>
 </article>
