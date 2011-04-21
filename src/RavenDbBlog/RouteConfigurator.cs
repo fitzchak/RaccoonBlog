@@ -87,9 +87,15 @@ namespace RavenDbBlog
                );
 
             routes.MapRoute("UserAdminController",
+               "admin/users/{id}/{action}",
+               new { controller = "UserAdmin" },
+               new { action = "Edit|Details|Delete", id = MatchPositiveInteger }
+               );
+
+            routes.MapRoute("UserAdminController",
                "admin/users/{action}",
                new { controller = "UserAdmin" },
-               new { action = "Add|Edit|List" }
+               new { action = "Update|List" }
                );
 
             routes.MapRoute("Default",
