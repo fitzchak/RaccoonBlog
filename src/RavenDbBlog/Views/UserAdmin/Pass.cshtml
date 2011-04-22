@@ -1,0 +1,17 @@
+﻿@model UserPasswordInput
+@{
+	ViewBag.Title = "Change Password: " + Model.FullName;
+}
+<article id="user-input">
+	<h1>Edit @Model.FullName's Password</h1>
+	@Html.ValidationSummary(true)
+
+	<form action="@Url.Action("ChangePass")" method="post">
+		
+		@Html.EditorFor(x => x.OldPass)
+		@Html.EditorFor(x => x.NewPass)
+		@Html.EditorFor(x => x.NewPassConfirmation)
+
+		<input type="submit" value="Change Password">
+	</form>
+</article>

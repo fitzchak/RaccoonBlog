@@ -21,9 +21,12 @@ namespace RavenDbBlog.Controllers
             return View(vm);
         }
 
-        public ActionResult Details(int id)
+        public ActionResult Pass(int id)
         {
-            return View();
+			var user = Session.Load<User>(id);
+			if (user == null)
+				return HttpNotFound("User does not exist.");
+			return View(user.MapTo<UserPasswordInput>());
         }
 
         [HttpGet]
@@ -56,9 +59,29 @@ namespace RavenDbBlog.Controllers
             return View("Edit", input);
         }
 
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+
+		[HttpPost]
+		public ActionResult ChangePass(UserPasswordInput input)
+		{
+			if (input.NewPass != input.NewPassConfirmation)
+			{
+				ModelState.AddModelError("NewPass", "New password does not match password confirmation");
+
+			}
+			var user = Session.Load<User>(input.Id);
+
+			if (user.ValidatePassword(input.OldPass) == false)
+			{
+				ModelState.AddModelError("OldPass", "Old password did not match existing password");
+			}
+
+			if (ModelState.IsValid)
+			{
+				user.SetPassword(input.NewPass);
+				return RedirectToAction("List");
+			}
+
+			return View("Pass", input);
+		}
     }
 }
