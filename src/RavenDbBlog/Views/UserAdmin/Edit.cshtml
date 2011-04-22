@@ -7,7 +7,7 @@
 }
 <article id="user-input">
 	<h1>@ViewBag.H1</h1>
-	@Html.ValidationSummary("form-error")
+	@Html.ValidationSummary(true)
 
 	<form action="@Url.Action("Update")" method="post">
 		@Html.EditorFor(x => x.FullName)
