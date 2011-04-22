@@ -1,9 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace RavenDbBlog.ViewModels
 {
     public class UserInput
     {
+        [HiddenInput]
+        public int Id { get; set; }
+
         [Display(Name = "Full Name")]
         public string FullName { get; set; }
 
@@ -14,7 +18,7 @@ namespace RavenDbBlog.ViewModels
 
         public bool IsNewUser()
         {
-            return string.IsNullOrEmpty(Email);
+            return Id == 0;
         }
     }
 }

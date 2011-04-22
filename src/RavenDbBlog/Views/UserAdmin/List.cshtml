@@ -1,0 +1,17 @@
+﻿@model IList<UserSummeryViewModel>
+@{
+    ViewBag.Title = "Users";
+}
+<article>
+	<h1>Users</h1>
+	<ul class="users-list">
+		@foreach (var user in Model) { 
+			<li>
+				<p><strong>User Id</strong> @user.Id</p>
+				<p><strong>Full Name</strong> @user.FullName</p>
+				<p><strong>Email</strong> @user.Email</p>
+				<div class="edit-button"><a href="@Url.Action("Edit", new { user.Id })">Edit</a></div>
+			</li>
+		}
+	</ul>
+</article>

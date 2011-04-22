@@ -27,11 +27,6 @@ namespace RavenDbBlog
 
     		ConfigureArchive();
 
-            routes.MapRoute("AllPosts",
-                "",
-                new { controller = "Post", action = "List" }
-                );
-
             routes.MapRoute("LoginController",
                "users/{action}",
                new { controller = "Login" },
@@ -40,7 +35,12 @@ namespace RavenDbBlog
 
     		ConfigureAdmin();
 
-           routes.MapRoute("Default",
+            routes.MapRoute("AllPosts",
+                "",
+                new { controller = "Post", action = "List" }
+                );
+
+            routes.MapRoute("Default",
                 "",
                 new { controller = "Post", action = "List" }
                 );
@@ -48,17 +48,22 @@ namespace RavenDbBlog
 
     	private void ConfigureAdmin()
     	{
-			routes.MapRoute("UserAdminController1",
+			routes.MapRoute("UserAdminController-ActionWithId",
 			  "admin/users/{id}/{action}",
 			  new { controller = "UserAdmin" },
 			  new { action = "Edit|Details|Delete", id = MatchPositiveInteger }
 			  );
 
-			routes.MapRoute("UserAdminController2",
+			routes.MapRoute("UserAdminController-Action",
 			   "admin/users/{action}",
 			   new { controller = "UserAdmin" },
-			   new { action = "Update|List" }
+			   new { action = "Add|Update" }
 			   );
+
+            routes.MapRoute("UserAdminController-UsersList",
+               "admin/users",
+               new { controller = "UserAdmin", action = "List" }
+               );
     	}
 
     	private void ConfigureArchive()

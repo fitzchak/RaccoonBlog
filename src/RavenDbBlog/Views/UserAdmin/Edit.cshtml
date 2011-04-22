@@ -1,14 +1,19 @@
 ﻿@model UserInput
 @{
-	ViewBag.Title = Model.IsNewUser() ? "Create a new user" : "Edit User " + Mdoel.FullName;
+	ViewBag.H1 = Model.IsNewUser() ? "Create a New User" : "Edit User " + Model.FullName;
+	ViewBag.SubmitButtonText = Model.IsNewUser() ? "Create User" : "Update User";
+
+	ViewBag.Title = ViewBag.H1;
 }
 <article id="user-input">
+	<h1>@ViewBag.H1</h1>
 	@Html.ValidationSummary("form-error")
 
-	<form action="@Url.Action("Add")" method="post">
+	<form action="@Url.Action("Update")" method="post">
 		@Html.EditorFor(x => x.FullName)
 		@Html.EditorFor(x => x.Email)
 				  
-		<input type="submit" value="Add User">
+		@Html.EditorFor(x => x.Id)
+		<input type="submit" value="@ViewBag.SubmitButtonText">
 	</form>
 </article>
