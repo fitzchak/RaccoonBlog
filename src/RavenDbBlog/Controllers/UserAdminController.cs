@@ -8,10 +8,13 @@ namespace RavenDbBlog.Controllers
 {
     public class UserAdminController : AdminController
     {
-        public ActionResult List()
+    	private const int PageSize = 25;
+
+    	public ActionResult List(int page = 0)
         {
             var users = Session.Query<User>()
                 .OrderBy(u => u.FullName)
+				.Skip(page * PageSize)
                 .ToList();
 
             var vm = users.MapTo<UserSummeryViewModel>();
