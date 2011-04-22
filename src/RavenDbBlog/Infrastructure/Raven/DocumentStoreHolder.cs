@@ -14,18 +14,23 @@ namespace RavenDbBlog.Infrastructure.Raven
     /// </summary>
     public class DocumentStoreHolder
     {
-        public static readonly IDocumentStore DocumentStore = CreateDocumentStore();
+        public static IDocumentStore documentStore;
 
-        private static IDocumentStore CreateDocumentStore()
+    	public static IDocumentStore DocumentStore
+    	{
+    		get { return (documentStore ?? (documentStore = CreateDocumentStore())); }
+    	}
+
+    	private static IDocumentStore CreateDocumentStore()
         {
-            var documentStore = new DocumentStore
+            var store = new DocumentStore
                 {
                     Url = "http://localhost:8080"
                 }.Initialize();
 
-            IndexCreation.CreateIndexes(typeof(Tags_Count).Assembly, documentStore);
+            IndexCreation.CreateIndexes(typeof(Tags_Count).Assembly, store);
 
-            return documentStore;
+            return store;
         }
 
         private static readonly ConcurrentDictionary<Type, Accessors> AccessorsCache = new ConcurrentDictionary<Type, Accessors>();
