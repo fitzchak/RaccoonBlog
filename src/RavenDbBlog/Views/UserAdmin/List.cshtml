@@ -15,6 +15,7 @@
 				<div class="edit-button">
 					<div><a href="@Url.Action("Edit", new { user.Id })">Edit</a></div>
 					<div><a href="@Url.Action("Pass", new { user.Id })">Change Password</a></div>
+					<div><a href="@Url.Action("Activation", new { user.Id })">@(user.Enabled ? "Disable" : "Enable")</a></div>
 				</div>
 			</li>
 		}

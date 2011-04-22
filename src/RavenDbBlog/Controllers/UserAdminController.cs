@@ -29,6 +29,15 @@ namespace RavenDbBlog.Controllers
 			return View(user.MapTo<UserPasswordInput>());
         }
 
+		public ActionResult Activation(int id)
+		{
+			var user = Session.Load<User>(id);
+			if (user == null)
+				return HttpNotFound("User does not exist.");
+			return View(user.MapTo<UserInput>());
+		}
+
+
         [HttpGet]
         public ActionResult Add()
         {
@@ -69,7 +78,9 @@ namespace RavenDbBlog.Controllers
 
 			}
 			var user = Session.Load<User>(input.Id);
-
+			   if (user == null)
+                return HttpNotFound("User does not exist.");
+        
 			if (user.ValidatePassword(input.OldPass) == false)
 			{
 				ModelState.AddModelError("OldPass", "Old password did not match existing password");
@@ -82,6 +93,18 @@ namespace RavenDbBlog.Controllers
 			}
 
 			return View("Pass", input);
+		}
+
+		[HttpPost]
+		public ActionResult SetActivation(int id, bool newStatus)
+		{
+			var user = Session.Load<User>(id);
+			if (user == null)
+				return HttpNotFound("User does not exist.");
+
+			user.Enabled = newStatus;
+			
+			return RedirectToAction("List");
 		}
     }
 }

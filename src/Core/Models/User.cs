@@ -12,6 +12,7 @@ namespace RavenDbBlog.Core.Models
 		public string FullName { get; set; }
 		public string Email { get; set; }
 		protected string HashedPassword { get; private set; }
+		public bool Enabled { get; set; }
 
 		public void SetPassword(string pwd)
 		{

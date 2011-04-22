@@ -195,6 +195,7 @@
     <Content Include="Views\UserAdmin\Edit.cshtml" />
     <Content Include="Views\UserAdmin\List.cshtml" />
     <Content Include="Views\UserAdmin\Pass.cshtml" />
+    <Content Include="Views\UserAdmin\Activation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
