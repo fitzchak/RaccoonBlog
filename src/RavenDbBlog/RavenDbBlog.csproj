@@ -141,6 +141,7 @@
     <Compile Include="ViewModels\PostsViewModel.cs" />
     <Compile Include="ViewModels\RequestValues.cs" />
     <Compile Include="ViewModels\UserInput.cs" />
+    <Compile Include="ViewModels\UserPasswordInput.cs" />
     <Compile Include="ViewModels\UserSummeryViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -156,6 +157,7 @@
     <Content Include="wlwmanifest.xml" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Login\CurrentUser.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <None Include="Views\Shared\EditorTemplates\MultilineText.cshtml" />
     <None Include="Views\Shared\EditorTemplates\String.cshtml" />
     <Content Include="Web.config">
@@ -192,6 +194,7 @@
     <Content Include="Views\Shared\404.cshtml" />
     <Content Include="Views\UserAdmin\Edit.cshtml" />
     <Content Include="Views\UserAdmin\List.cshtml" />
+    <Content Include="Views\UserAdmin\Pass.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
