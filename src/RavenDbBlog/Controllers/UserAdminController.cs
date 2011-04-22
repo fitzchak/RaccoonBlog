@@ -44,10 +44,11 @@ namespace RavenDbBlog.Controllers
             if (ModelState.IsValid)
             {
                 var user = Session.GetUserByEmail(input.Email) ?? new User();
-                user.FullName = input.FullName;
-                user.Email = input.Email;
+
+            	input.MapTo(user);
                 Session.Store(user);
-                RedirectToAction("List");
+
+                return RedirectToAction("List");
             }
             return View("Edit", input);
         }
