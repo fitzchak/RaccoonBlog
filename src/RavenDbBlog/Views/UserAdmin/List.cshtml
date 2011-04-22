@@ -4,6 +4,7 @@
 }
 <article>
 	<h1>Users</h1>
+	@Html.ActionLink("Create New User", "Add")
 	<ul class="users-list">
 		@foreach (var user in Model) { 
 			<li>
