@@ -67,12 +67,5 @@ namespace RavenDbBlog.Controllers
         	return View(new CurrentUserViewModel {FullName = user.FullName});
 
         }
-
-        private User GetCurrentUser()
-        {
-                return null;
-	
-           
-        }
     }
 }
