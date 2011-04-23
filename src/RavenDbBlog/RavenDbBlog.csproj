@@ -118,7 +118,7 @@
     <Compile Include="Common\EnumerableExtensions.cs" />
     <Compile Include="Commands\SendEmailCommand.cs" />
     <Compile Include="Controllers\AbstractController.cs" />
-    <Compile Include="Helpers\HtmlExtantions.cs" />
+    <Compile Include="Helpers\RecaptchHelperExtantions.cs" />
     <Compile Include="Helpers\Results\HttpNotFoundWithViewResult.cs" />
     <Compile Include="Helpers\Results\HttpStatusCodeWithViewResult.cs" />
     <Compile Include="Helpers\Results\HttpUnauthorizedWithViewResult.cs" />
@@ -161,6 +161,7 @@
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Login\CurrentUser.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EmailAddress.cshtml" />
     <None Include="Views\Shared\EditorTemplates\MultilineText.cshtml" />
     <None Include="Views\Shared\EditorTemplates\String.cshtml" />
     <Content Include="Web.config">

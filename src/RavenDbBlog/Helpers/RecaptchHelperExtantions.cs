@@ -6,7 +6,7 @@ using Recaptcha;
 
 namespace RavenDbBlog.Helpers
 {
-    public static class HtmlExtantions
+    public static class RecaptchHelperExtantions
     {
         public static MvcHtmlString GenerateCaptcha(this HtmlHelper helper)
         {
