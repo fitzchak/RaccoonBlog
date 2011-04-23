@@ -9,6 +9,7 @@ using System.Web.Routing;
 using CookComputing.XmlRpc;
 using Raven.Client;
 using RavenDbBlog.Indexes;
+using RavenDbBlog.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RavenDbBlog.Infrastructure.Raven;
 using System.Linq;
 using RavenDbBlog.Services.RssModels;
@@ -107,7 +108,7 @@ namespace RavenDbBlog.Services
 
 				return new Post
 				{
-					wp_slug = thePost.Slug,
+                    wp_slug = SlugConverter.TitleToSlag(thePost.Title),
 					description = thePost.Body,
 					dateCreated = thePost.PublishAt.DateTime,
 					categories = thePost.Tags.ToArray(),
@@ -156,7 +157,7 @@ namespace RavenDbBlog.Services
 
 				return list.Select(thePost => new Post
 				{
-					wp_slug = thePost.Slug,
+					wp_slug = SlugConverter.TitleToSlag(thePost.Title),
 					description = thePost.Body,
 					dateCreated = thePost.PublishAt.DateTime,
 					categories = thePost.Tags.ToArray(),

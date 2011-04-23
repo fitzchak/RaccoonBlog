@@ -28,20 +28,20 @@ namespace RavenDbBlog.Controllers
             if (post == null || post.PublishAt > DateTimeOffset.Now)
                 return HttpNotFound();
             
-            var comments = Session.Load<PostComments>(post.CommentsId);
-
-            var _slug = SlugConverter.TitleToSlag(post.Title);
-            if (_slug != slug)
-                return RedirectToActionPermanent("Item", new {id, _slug});
 
             var vm = new PostViewModel
-            {
-                Post = post.MapTo<PostViewModel.PostDetails>(),
-                Comments = comments.Comments.MapTo<PostViewModel.Comment>(),
-                NextPost = GetPostReference(x => x.PublishAt > post.PublishAt),
-                PreviousPost = GetPostReference(x => x.PublishAt < post.PublishAt),
-                // IsCommentClosed = TODO: set this value.
-            };
+                         {
+                             Post = post.MapTo<PostViewModel.PostDetails>(),
+                         };
+
+            if (vm.Post.Slug != slug)
+                return RedirectToActionPermanent("Item", new {id, vm.Post.Slug});
+
+            var comments = Session.Load<PostComments>(post.CommentsId);
+            vm.Comments = comments.Comments.MapTo<PostViewModel.Comment>();
+            vm.NextPost = GetPostReference(x => x.PublishAt > post.PublishAt);
+            vm.PreviousPost = GetPostReference(x => x.PublishAt < post.PublishAt);
+            // vm.IsCommentClosed = TODO: set this value.
 
             var cookie = Request.Cookies[Constants.CommenterKeyCookieName];
             if (cookie != null)
@@ -53,13 +53,13 @@ namespace RavenDbBlog.Controllers
             return View(vm);
         }
 
-        private PostViewModel.PostReference GetPostReference(Expression<Func<Post, bool>> expression)
+        private PostReference GetPostReference(Expression<Func<Post, bool>> expression)
         {
             var postReference = Session.Query<Post>()
                 .Where(expression)
                 .Select(p => new {p.Id, p.Title})
                 .FirstOrDefault();
-            return postReference.MapTo<PostViewModel.PostReference>();
+            return postReference.MapTo<PostReference>();
         }
 
         private const int DefaultPage = 1;
@@ -180,7 +180,8 @@ namespace RavenDbBlog.Controllers
             if (post == null)
                 return HttpNotFound();
 
-            return RedirectToActionPermanent("Item", new { Id = RavenIdResolver.Resolve(post.Id), post.Slug });
+            var postReference = post.MapTo<PostReference>();
+            return RedirectToActionPermanent("Item", new { postReference.Id, postReference.Slug });
         }
 
         [HttpGet]
@@ -228,7 +229,8 @@ namespace RavenDbBlog.Controllers
             }
 
             TempData["message"] = "You feedback will be posted soon. Thanks for the feedback.";
-            return RedirectToAction("Item", new { post.Slug });
+            var postReference = post.MapTo<PostReference>();
+            return RedirectToAction("Item", new { postReference.Id, postReference.Slug });
         }
 
 
