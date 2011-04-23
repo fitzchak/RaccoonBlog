@@ -52,7 +52,6 @@ namespace RavenDbBlog.Services
 					CreatedAt = DateTimeOffset.Now,
 					SkipAutoReschedule = post.dateCreated != null,
 					PublishAt = publishDate,
-					Slug = post.wp_slug,
 					Tags = post.categories,
 					Title = post.title,
 					CommentsCount = 0,
@@ -73,7 +72,6 @@ namespace RavenDbBlog.Services
 				var postToEdit = session.Load<Core.Models.Post>(postid);
 				if (postToEdit == null)
 					throw new XmlRpcFaultException(0, "Post does not exists");
-				postToEdit.Slug = post.wp_slug;
 				postToEdit.Author = "users/" + username;
 				postToEdit.Body = post.description;
 				if (

@@ -65,7 +65,7 @@ namespace RavenDbBlog.Import
                             PublishAt = new DateTimeOffset(post.DateSyndicated ?? post.DateAdded),
                             Body = post.Text,
                             CommentsCount = post.FeedBackCount,
-                            Slug = post.EntryName,
+                            LegacySlug = post.EntryName,
                             Title = post.Title,
                             Tags = post.Links.Select(x=>x.Categories.Title)
                                 .Where(x => x != "Uncategorized")

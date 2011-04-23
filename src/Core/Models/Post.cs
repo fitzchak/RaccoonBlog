@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 namespace RavenDbBlog.Core.Models
 {
@@ -7,7 +6,7 @@ namespace RavenDbBlog.Core.Models
     {
         public string Id { get; set; }
         public string Title { get; set; }
-        public string Slug { get; set; }
+        public string LegacySlug { get; set; }
         public string Body { get; set; }
         public string[] Tags { get; set; }
         

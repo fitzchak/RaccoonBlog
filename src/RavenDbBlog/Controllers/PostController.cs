@@ -30,8 +30,9 @@ namespace RavenDbBlog.Controllers
             
             var comments = Session.Load<PostComments>(post.CommentsId);
 
-            if (post.Slug != slug)
-                return RedirectToActionPermanent("Item", new {id, post.Slug});
+            var _slug = SlugConverter.TitleToSlag(post.Title);
+            if (_slug != slug)
+                return RedirectToActionPermanent("Item", new {id, _slug});
 
             var vm = new PostViewModel
             {
@@ -39,13 +40,14 @@ namespace RavenDbBlog.Controllers
                 Comments = comments.Comments.MapTo<PostViewModel.Comment>(),
                 NextPost = GetPostReference(x => x.PublishAt > post.PublishAt),
                 PreviousPost = GetPostReference(x => x.PublishAt < post.PublishAt),
+                // IsCommentClosed = TODO: set this value.
             };
 
             var cookie = Request.Cookies[Constants.CommenterKeyCookieName];
             if (cookie != null)
             {
                 var commenter =  GetCommenter(cookie.Value);
-                vm.NewComment = commenter.MapTo<CommentInput>();
+                vm.NewComment = commenter.MapTo<CommentInput>();    // TODO.
                 vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
             }
             return View(vm);
@@ -53,15 +55,11 @@ namespace RavenDbBlog.Controllers
 
         private PostViewModel.PostReference GetPostReference(Expression<Func<Post, bool>> expression)
         {
-            return Session.Query<Post>()
+            var postReference = Session.Query<Post>()
                 .Where(expression)
-                .Select(p => new PostViewModel.PostReference
-                    {
-                        Id = p.Id,
-                        Slug = p.Slug,
-                        Title = p.Title
-                    })
+                .Select(p => new {p.Id, p.Title})
                 .FirstOrDefault();
+            return postReference.MapTo<PostViewModel.PostReference>();
         }
 
         private const int DefaultPage = 1;
@@ -174,7 +172,7 @@ namespace RavenDbBlog.Controllers
         public ActionResult RedirectItem(int year, int month, int day, string slug)
         {
             var postQuery = from post1 in Session.Query<Post>()
-                      where post1.Slug == slug &&
+                      where post1.LegacySlug == slug &&
                             (post1.PublishAt.Year == year && post1.PublishAt.Month == month && post1.PublishAt.Day == day)
                       select post1;
 
