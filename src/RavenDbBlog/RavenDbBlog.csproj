@@ -97,6 +97,7 @@
     <Compile Include="Controllers\Queries.cs" />
     <Compile Include="Controllers\SyndicationController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
+    <Compile Include="EnsureLowerCaseRouteModule.cs" />
     <Compile Include="Infrastructure\ActionResults\XmlResult.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\UserAdminMapperProfile.cs" />
     <Compile Include="LowercaseRoute.cs" />
