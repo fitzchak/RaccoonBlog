@@ -15,5 +15,10 @@ namespace RavenDbBlog.Infrastructure.AutoMapper
         {
             return (TResult)Mapper.Map(self, self.GetType(), typeof(TResult));
         }
+
+        public static TResult DynamicMapTo<TResult>(this object self)
+        {
+            return (TResult)Mapper.DynamicMap(self, self.GetType(), typeof(TResult));
+        }
     }
 }
