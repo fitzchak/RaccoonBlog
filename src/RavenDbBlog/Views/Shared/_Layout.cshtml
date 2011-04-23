@@ -17,8 +17,8 @@
     <div class="containter page">
         <header id="headermain">
 			<div id="logoarea">
-				<div id="logoimage"><a href="@Url.Action("List", "Post")"><img alt="Ayende's Logo" class="topLogo" src="http://www.ayende.com/Images/logo.jpg"></a></div>
-				<h1>Ayende @@ Rahien</h1>
+				<div id="logoimage"><a href="@Url.RouteUrl("Default")"><img alt="Ayende's Logo" class="topLogo" src="http://www.ayende.com/Images/logo.jpg"></a></div>
+				<h1><a href="@Url.RouteUrl("Default")">Ayende @@ Rahien</a></h1>
 				<h2>Unnatural acts on source code</h2>
 			</div>
 		</header>
@@ -29,6 +29,10 @@
                     <p>Text 1</p>
 		            <p>Text 2</p>
                 </aside>
+
+				<aside class="section">
+                    <h1>Recent Comments</h1>
+				</aside>
 
                 <aside class="section tags_list">
                     <h1>Tags</h1>
