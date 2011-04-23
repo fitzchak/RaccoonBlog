@@ -6,6 +6,8 @@ using System.Xml.Linq;
 using RavenDbBlog.Core.Models;
 using System.Linq;
 using Raven.Client.Linq;
+using RavenDbBlog.Infrastructure.AutoMapper;
+using RavenDbBlog.ViewModels;
 
 namespace RavenDbBlog.Controllers
 {
@@ -19,7 +21,7 @@ namespace RavenDbBlog.Controllers
 			           	new XElement(ns + "service",
 			           	             new XElement(ns + "engineName", "Raccoon Blog"),
 			           	             new XElement(ns + "engineLink", "http://hibernatingrhinos.com"),
-			           	             new XElement(ns + "homePageLink", Url.Action("List", "Post")),
+			           	             new XElement(ns + "homePageLink", Url.RouteUrl("Default")),
 			           	             new XElement(ns + "apis",
 			           	                          new XElement(ns + "api",
 			           	                                       new XAttribute("name", "MetaWeblog"),
@@ -78,7 +80,7 @@ namespace RavenDbBlog.Controllers
 				                          select new XElement("item",
 				                                              new XElement("title", post.Title),
 				                                              new XElement("description", post.Body),
-				                                              new XElement("link", post.Slug),
+				                                              new XElement("link", GetPostLink(post)),
 				                                              new XElement("pubDate", post.PublishAt.ToString("R"))
 				                          	)
 				             	)
@@ -88,7 +90,13 @@ namespace RavenDbBlog.Controllers
 			return Xml(rss, responseETagHeader);
 		}
 
-		private static string GetBlogCopyright()
+	    private string GetPostLink(Post post)
+	    {
+            var postReference = post.MapTo<PostReference>();
+            return Url.Action("Item", "Post", new { postReference.Id, postReference.Slug });
+	    }
+
+	    private static string GetBlogCopyright()
 		{
 			return ConfigurationManager.AppSettings["Copyright"];
 		}
