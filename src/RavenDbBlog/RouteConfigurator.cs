@@ -35,6 +35,15 @@ namespace RavenDbBlog
 
     		ConfigureAdmin();
 
+            #region "PostAdminController"
+
+            routes.MapRouteLowerCase("PostAdminController-List",
+                "admin/posts",
+                new { controller = "PostAdmin", action = "list" }
+                );
+
+            #endregion
+
             routes.MapRouteLowerCase("AllPosts",
                 "",
                 new { controller = "Post", action = "List" }

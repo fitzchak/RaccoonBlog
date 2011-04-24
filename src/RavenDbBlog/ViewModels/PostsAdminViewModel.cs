@@ -15,7 +15,8 @@ namespace RavenDbBlog.ViewModels
             public string Slug { get; set; }
             public ICollection<string> Tags { get; set; }
             public DateTimeOffset CreatedAt { get; set; }
-            public DateTimeOffset PublishedAt { get; set; }
+            public DateTimeOffset PublishAt { get; set; }
+            public bool IsPublished { get; set; }
             public int CommentsCount { get; set; }
         }
     }
