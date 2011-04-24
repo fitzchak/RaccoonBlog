@@ -62,7 +62,7 @@ namespace RavenDbBlog.Controllers
             return postReference.DynamicMapTo<PostReference>();
         }
 
-        public ActionResult List(int page = DefaultPage)
+        public ActionResult List(int page)
         {
             page = Math.Max(DefaultPage, page) - 1;
 

@@ -9,7 +9,7 @@ namespace RavenDbBlog.Controllers
 {
     public class PostAdminController : AdminController
     {
-        public ActionResult List(int page = DefaultPage)
+        public ActionResult List(int page)
         {
             page = Math.Max(DefaultPage, page) - 1;
 

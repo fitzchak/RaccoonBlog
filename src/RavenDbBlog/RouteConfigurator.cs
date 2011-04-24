@@ -44,15 +44,19 @@ namespace RavenDbBlog
 
             #endregion
 
+            #region "Default"
+
             routes.MapRouteLowerCase("AllPosts",
                 "",
-                new { controller = "Post", action = "List" }
+                new { controller = "Post", action = "List", page = 1 }
                 );
 
             routes.MapRouteLowerCase("Default",
                 "",
-                new { controller = "Post", action = "List" }
+                new { controller = "Post", action = "List", page = 1 }
                 );
+
+            #endregion
         }
 
     	private void ConfigureAdmin()
