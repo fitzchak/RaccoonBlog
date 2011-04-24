@@ -8,7 +8,6 @@ using RavenDbBlog.Core.Models;
 using RavenDbBlog.Helpers.Validation;
 using RavenDbBlog.Indexes;
 using RavenDbBlog.Infrastructure.AutoMapper;
-using RavenDbBlog.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RavenDbBlog.ViewModels;
 using System.Web;
 using RavenDbBlog.Commands;
@@ -47,7 +46,7 @@ namespace RavenDbBlog.Controllers
             if (cookie != null)
             {
                 var commenter =  GetCommenter(cookie.Value);
-                vm.NewComment = commenter.MapTo<CommentInput>();    // TODO.
+                vm.CommentInput = commenter.MapTo<CommentInput>();
                 vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
             }
             return View(vm);
@@ -188,9 +187,9 @@ namespace RavenDbBlog.Controllers
         }
 
         [HttpPost]
-        public ActionResult Comment(CommentInput newComment, int id)
+        public ActionResult Comment(CommentInput input, int id)
         {
-            var commenter = GetCommenter(newComment.CommenterKey) ?? new Commenter();
+            var commenter = GetCommenter(input.CommenterKey) ?? new Commenter();
             bool isCaptchaRequired = commenter.IsTrustedCommenter == false;
             if (isCaptchaRequired)
             {
@@ -213,14 +212,14 @@ namespace RavenDbBlog.Controllers
                 {
                     Post = post.MapTo<PostViewModel.PostDetails>(),
                     Comments = comments != null ? comments.Comments.MapTo<PostViewModel.Comment>() : new List<PostViewModel.Comment>(),
-                    NewComment = newComment,
+                    CommentInput = input,
                 };
                 return View("Item", vm);
             }
 
-            CommandExcucator.ExcuteLater(new AddCommentCommand(newComment, Request.MapTo<RequestValues>(), id));
+            CommandExcucator.ExcuteLater(new AddCommentCommand(input, Request.MapTo<RequestValues>(), id));
 
-            if (newComment.RememberMe == true)
+            if (input.RememberMe == true)
             {
                 Response.Cookies.Add(new HttpCookie(Constants.CommenterKeyCookieName, commenter.Key.ToString()));
             }
