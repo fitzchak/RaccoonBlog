@@ -9,7 +9,7 @@ namespace RavenDbBlog.Controllers
 {
     public class PostAdminController : AdminController
     {
-        public ActionResult Posts(int page = DefaultPage)
+        public ActionResult List(int page = DefaultPage)
         {
             page = Math.Max(DefaultPage, page) - 1;
 
@@ -22,10 +22,7 @@ namespace RavenDbBlog.Controllers
                 .Take(PageSize)
                 .ToList();
 
-            return View(new PostsViewModel
-            {
-                Posts = posts.MapTo<PostsViewModel.PostSummary>()
-            });
+            return View(new PostsViewModel {Posts = posts.MapTo<PostsViewModel.PostSummary>()});
         }
     }
 }
