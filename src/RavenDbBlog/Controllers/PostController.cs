@@ -81,7 +81,7 @@ namespace RavenDbBlog.Controllers
             });
         }
 
-        public ActionResult Tag(string name, int page = DefaultPage)
+        public ActionResult Tag(string name, int page)
         {
             page = Math.Max(DefaultPage, page) - 1;
 
@@ -165,7 +165,7 @@ namespace RavenDbBlog.Controllers
             });
         }
 
-        public ActionResult RedirectItem(int year, int month, int day, string slug)
+        public ActionResult RedirectLegacyPost(int year, int month, int day, string slug)
         {
             var postQuery = from post1 in Session.Query<Post>()
                       where post1.LegacySlug == slug &&

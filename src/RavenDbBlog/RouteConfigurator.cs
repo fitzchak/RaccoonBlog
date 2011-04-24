@@ -19,37 +19,17 @@ namespace RavenDbBlog
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-    		ConfigureComments();
+            ConfigureSyndication();
 
-        	ConfigureRss();
+            ConfigurePost();
+            
+    	    ConfigureLogin();
 
-    		ConfigurePosts();
+            ConfigurePostAdmin();
 
-    		ConfigureArchive();
-
-            routes.MapRouteLowerCase("LoginController",
-               "users/{action}",
-               new { controller = "Login" },
-               new { action = "Login|LogOut|CurrentUser" }
-               );
-
-    		ConfigureAdmin();
-
-            #region "PostAdminController"
-
-            routes.MapRouteLowerCase("PostAdminController-List",
-                "admin/posts",
-                new { controller = "PostAdmin", action = "list" }
-                );
-
-            #endregion
+            ConfigureUserAdmin();
 
             #region "Default"
-
-            routes.MapRouteLowerCase("AllPosts",
-                "",
-                new { controller = "Post", action = "List", page = 1 }
-                );
 
             routes.MapRouteLowerCase("Default",
                 "",
@@ -59,86 +39,99 @@ namespace RavenDbBlog
             #endregion
         }
 
-    	private void ConfigureAdmin()
-    	{
-			routes.MapRouteLowerCase("UserAdminController-ActionWithId",
-			  "admin/users/{id}/{action}",
-			  new { controller = "UserAdmin" },
-			  new { action = "Edit|Details|Delete", id = MatchPositiveInteger }
-			  );
+        private void ConfigureUserAdmin()
+        {
+            routes.MapRouteLowerCase("UserAdminController-ActionWithId",
+              "admin/users/{id}/{action}",
+              new { controller = "UserAdmin" },
+              new { action = "Edit|Details|Delete", id = MatchPositiveInteger }
+              );
 
-			routes.MapRouteLowerCase("UserAdminController-Action",
-			   "admin/users/{action}",
-			   new { controller = "UserAdmin" },
-			   new { action = "Add|Update" }
-			   );
+            routes.MapRouteLowerCase("UserAdminController-Action",
+               "admin/users/{action}",
+               new { controller = "UserAdmin" },
+               new { action = "Add|Update" }
+               );
 
             routes.MapRouteLowerCase("UserAdminController-UsersList",
                "admin/users",
                new { controller = "UserAdmin", action = "List" }
                );
-    	}
+        }
 
-    	private void ConfigureArchive()
+        private void ConfigurePostAdmin()
+        {
+            routes.MapRouteLowerCase("PostAdminController-List",
+               "admin/posts",
+               new { controller = "PostAdmin", action = "list" }
+               );
+        }
+
+        private void ConfigureLogin()
+        {
+            routes.MapRouteLowerCase("LoginController",
+               "users/{action}",
+               new { controller = "Login" },
+               new { action = "Login|LogOut|CurrentUser" }
+               );
+        }
+
+        private void ConfigurePost()
+        {
+            routes.MapRouteLowerCase("PostController-Comment",
+                "{id}/comment",
+                new { controller = "Post", action = "Comment" },
+                new { id = MatchPositiveInteger }
+                );
+
+            routes.MapRouteLowerCase("PostController-Details",
+                "{id}/{slug}",
+                new { controller = "Post", action = "Item", slug = UrlParameter.Optional },
+                new { id = MatchPositiveInteger }
+                );
+
+            routes.MapRouteLowerCase("PostController-internal",
+                "{controller}/{action}",
+                new { controller = "Post", action = "List" },
+                new { controller = "Post", action = "TagsList|ArchivesList" }
+                );
+
+            routes.MapRouteLowerCase("PostController-PostsByTag",
+                "tags/{name}",
+                new { controller = "Post", action = "Tag", page = 1 }
+                );
+
+            #region "Archive"
+
+            routes.MapRouteLowerCase("RedirectLegacyPostUrl",
+                "archive/{year}/{month}/{day}/{slug}.aspx",
+                new { controller = "Post", action = "RedirectLegacyPost" },
+                new { Year = MatchPositiveInteger, Month = MatchPositiveInteger, Day = MatchPositiveInteger }
+                );
+
+            routes.MapRouteLowerCase("PostsByYearMonthDay",
+                "archive/{year}/{month}/{day}",
+                new { controller = "Post", action = "ArchiveYearMonthDay" },
+                new { Year = MatchPositiveInteger, Month = MatchPositiveInteger, Day = MatchPositiveInteger }
+                );
+
+            routes.MapRouteLowerCase("PostsByYearMonth",
+                "archive/{year}/{month}",
+                new { controller = "Post", action = "ArchiveYearMonth" },
+                new { Year = MatchPositiveInteger, Month = MatchPositiveInteger }
+                );
+
+            routes.MapRouteLowerCase("PostsByYear",
+                "archive/{year}",
+                new { controller = "Post", action = "ArchiveYear" },
+                new { Year = MatchPositiveInteger }
+                );
+
+            #endregion
+        }
+
+    	private void ConfigureSyndication()
     	{
-
-			routes.MapRouteLowerCase("RedirectLegacyPostUrl",
-				"archive/{year}/{month}/{day}/{slug}.aspx",
-				new { controller = "Post", action = "RedirectItem" },
-				new { Year = MatchPositiveInteger, Month = MatchPositiveInteger, Day = MatchPositiveInteger }
-				);
-
-			routes.MapRouteLowerCase("PostsByYearMonthDay",
-				"archive/{year}/{month}/{day}",
-				new { controller = "Post", action = "ArchiveYearMonthDay" },
-				new { Year = MatchPositiveInteger, Month = MatchPositiveInteger, Day = MatchPositiveInteger }
-				);
-
-			routes.MapRouteLowerCase("PostsByYearMonth",
-				"archive/{year}/{month}",
-				new { controller = "Post", action = "ArchiveYearMonth" },
-				new { Year = MatchPositiveInteger, Month = MatchPositiveInteger }
-				);
-
-			routes.MapRouteLowerCase("PostsByYear",
-				"archive/{year}",
-				new { controller = "Post", action = "ArchiveYear" },
-				new { Year = MatchPositiveInteger }
-				);
-    	}
-
-    	private void ConfigurePosts()
-    	{
-			routes.MapRouteLowerCase("PostById",
-				"{id}/{slug}",
-				new { controller = "Post", action = "Item", slug = UrlParameter.Optional },
-				new { id = MatchPositiveInteger }
-				);
-
-			routes.MapRouteLowerCase("PostController",
-				"{controller}/{action}",
-				new { controller = "Post", action = "List" },
-				new { controller = "Post", action = "TagsList|ArchivesList" }
-				);
-
-			routes.MapRouteLowerCase("PostsByTag",
-				"tags/{name}",
-				new { controller = "Post", action = "Tag" }
-				);
-    	}
-
-    	private void ConfigureComments()
-    	{
-			routes.MapRouteLowerCase("CommentOnPost",
-			 "{id}/comment",
-			 new { controller = "Post", action = "Comment" },
-			 new { id = MatchPositiveInteger }
-			 );
-    	}
-
-    	private void ConfigureRss()
-    	{
-
 			routes.MapRouteLowerCase("RssFeed",
 			  "rss",
 			  new { controller = "Syndication", action = "Rss" }
