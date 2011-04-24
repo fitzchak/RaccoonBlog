@@ -9,6 +9,9 @@ namespace RavenDbBlog.Controllers
 {
     public class AbstractController : Controller
     {
+        protected const int DefaultPage = 1;
+        protected const int PageSize = 25;
+
         public new IDocumentSession Session { get; set; }
 
         public AbstractController()
