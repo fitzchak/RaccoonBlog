@@ -94,11 +94,13 @@
   <ItemGroup>
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PostAdminController.cs" />
     <Compile Include="Controllers\Queries.cs" />
     <Compile Include="Controllers\SyndicationController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="EnsureLowerCaseRouteModule.cs" />
     <Compile Include="Infrastructure\ActionResults\XmlResult.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\PostsAdminViewModelMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\SlugConverter.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\UserAdminMapperProfile.cs" />
     <Compile Include="LowercaseRoute.cs" />
@@ -141,6 +143,7 @@
     <Compile Include="ViewModels\LoginInput.cs" />
     <Compile Include="ViewModels\NewCommentEmailViewModel.cs" />
     <Compile Include="ViewModels\PostReference.cs" />
+    <Compile Include="ViewModels\PostsAdminViewModel.cs" />
     <Compile Include="ViewModels\PostViewModel.cs" />
     <Compile Include="ViewModels\PostsViewModel.cs" />
     <Compile Include="ViewModels\RequestValues.cs" />
