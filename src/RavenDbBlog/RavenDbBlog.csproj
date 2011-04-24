@@ -142,6 +142,7 @@
     <Compile Include="ViewModels\CurrentUserViewModel.cs" />
     <Compile Include="ViewModels\LoginInput.cs" />
     <Compile Include="ViewModels\NewCommentEmailViewModel.cs" />
+    <Compile Include="ViewModels\PostInput.cs" />
     <Compile Include="ViewModels\PostReference.cs" />
     <Compile Include="ViewModels\PostsAdminViewModel.cs" />
     <Compile Include="ViewModels\PostViewModel.cs" />

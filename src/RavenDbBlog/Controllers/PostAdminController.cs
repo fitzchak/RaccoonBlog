@@ -24,5 +24,34 @@ namespace RavenDbBlog.Controllers
 
             return View(new PostsAdminViewModel {Posts = posts.MapTo<PostsAdminViewModel.PostSummary>()});
         }
+
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            var post = Session.Load<Post>(id);
+            if (post == null)
+                return HttpNotFound("Post does not exist.");
+            return View(post.MapTo<PostInput>());
+        }
+
+        [HttpPost]
+        public ActionResult Update(PostInput input)
+        {
+            if (ModelState.IsValid)
+            {
+                var post = Session.Load<Post>(input.Id) ?? new Post();
+                post.Title = input.Title;
+                post.Body = input.Body.ToHtmlString();
+                Session.Store(post);
+                return RedirectToAction("List");
+            }
+            return View("Edit", input);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            return View();
+        }
     }
 }
