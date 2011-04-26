@@ -1,23 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web.Mvc;
 
 namespace RavenDbBlog.ViewModels
 {
     public class PostsAdminViewModel
     {
-        public IList<PostSummary> Posts { get; set; }
+        public IList<PostSummaryJson> PostsJson { get; set; }
 
-        public class PostSummary
+        public class PostSummaryJson
         {
             public int Id { get; set; }
-            public MvcHtmlString Title { get; set; }
+            public string Title { get; set; }
             public string Slug { get; set; }
-            public ICollection<string> Tags { get; set; }
-            public DateTimeOffset CreatedAt { get; set; }
             public DateTimeOffset PublishAt { get; set; }
             public bool IsPublished { get; set; }
-            public int CommentsCount { get; set; }
         }
     }
 }

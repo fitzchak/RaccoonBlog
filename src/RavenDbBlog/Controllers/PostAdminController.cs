@@ -22,7 +22,7 @@ namespace RavenDbBlog.Controllers
                 .Take(PageSize)
                 .ToList();
 
-            return View(new PostsAdminViewModel {Posts = posts.MapTo<PostsAdminViewModel.PostSummary>()});
+            return View(new PostsAdminViewModel {PostsJson = posts.MapTo<PostsAdminViewModel.PostSummaryJson>()});
         }
 
         [HttpGet]

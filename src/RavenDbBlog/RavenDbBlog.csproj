@@ -157,6 +157,8 @@
     <Content Include="Content\css\images\printer.png" />
     <Content Include="Content\css\main.css" />
     <Content Include="Content\css\ResetCss.css" />
+    <Content Include="Content\css\fullcalendar.css" />
+    <Content Include="Content\js\fullcalendar.min.js" />
     <Content Include="Global.asax" />
     <Content Include="Content\js\jquery-1.5.2-vsdoc.js" />
     <Content Include="Content\js\jquery-1.5.2.js" />
