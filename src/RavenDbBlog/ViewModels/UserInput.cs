@@ -16,6 +16,7 @@ namespace RavenDbBlog.ViewModels
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
+        [Display(Name = "Is Enabled?")]
 		public bool Enabled { get; set; }
 
         public bool IsNewUser()
