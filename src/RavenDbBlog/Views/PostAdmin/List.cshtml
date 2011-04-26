@@ -13,7 +13,14 @@
         $(function () {
             $('#postsCalendar').fullCalendar({
                 weekends: false,
-                events: '@Url.Action("ListFeed")'
+                eventSources: [{
+                    url: '@Url.Action("ListFeed")',
+                    type: 'POST',
+                    error: function(e, f, g, h, t) {
+                    debugger
+                        alert('there was an error while fetching events!');
+                    },
+                }]
             })
         });
     </script>

@@ -14,9 +14,7 @@ namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles
             Mapper.CreateMap<Post, PostSummaryJson>()
                 .ForMember(x => x.Id, o => o.MapFrom(m => RavenIdResolver.Resolve(m.Id)))
                 .ForMember(x => x.Title, o => o.MapFrom(m => MvcHtmlString.Create(m.Title)))
-                .ForMember(x => x.Slug, o => o.MapFrom(m => SlugConverter.TitleToSlag(m.Title)))
-                .ForMember(x => x.PublishAt, o => o.MapFrom(m => m.PublishAt))
-                .ForMember(x => x.IsPublished, o => o.MapFrom(m => m.PublishAt < DateTimeOffset.Now))
+                .ForMember(x => x.Start, o => o.MapFrom(m => m.PublishAt))
                 ;
         }
     }

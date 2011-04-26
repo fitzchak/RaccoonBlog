@@ -1,5 +1,7 @@
+using System;
 using AutoMapper;
 using RavenDbBlog.Infrastructure.AutoMapper.Profiles;
+using RavenDbBlog.Infrastructure.AutoMapper.Profiles.Resolvers;
 
 namespace RavenDbBlog.Infrastructure.AutoMapper
 {
@@ -7,6 +9,8 @@ namespace RavenDbBlog.Infrastructure.AutoMapper
     {
         public static void Configure()
         {
+            Mapper.CreateMap<DateTimeOffset, DateTime>().ConvertUsing<DateTimeTypeConverter>();
+
             Mapper.AddProfile(new PostViewModelMapperProfile());
             Mapper.AddProfile(new PostsViewModelMapperProfile());
 
