@@ -13,6 +13,12 @@ namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles
                 .ForMember(x => x.Id, o => o.MapFrom(m => RavenIdResolver.Resolve(m.Id)))
                 ;
 
+        	Mapper.CreateMap<User, UserPasswordInput>()
+        		.ForMember(x => x.Id, o => o.MapFrom(m => RavenIdResolver.Resolve(m.Id)));
+
+        	Mapper.CreateMap<UserInput, User>()
+        		.ForMember(x => x.Id, o => o.Ignore());
+
             Mapper.CreateMap<User, UserInput>()
                 .ForMember(x => x.Id, o => o.MapFrom(m => RavenIdResolver.Resolve(m.Id)))
                 ;

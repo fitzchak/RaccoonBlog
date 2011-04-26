@@ -17,7 +17,7 @@ namespace RavenDbBlog.Infrastructure.Controllers
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            DocumentStoreHolder.TryComplete(filterContext.Controller, filterContext.Exception != null);
+            DocumentStoreHolder.TryComplete(filterContext.Controller, filterContext.Exception == null);
         }
     }
 }

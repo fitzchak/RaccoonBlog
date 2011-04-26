@@ -4,13 +4,19 @@
 }
 <article>
 	<h1>Users</h1>
+	@Html.ActionLink("Create New User", "Add")
 	<ul class="users-list">
 		@foreach (var user in Model) { 
 			<li>
+				
 				<p><strong>User Id</strong> @user.Id</p>
 				<p><strong>Full Name</strong> @user.FullName</p>
 				<p><strong>Email</strong> @user.Email</p>
-				<div class="edit-button"><a href="@Url.Action("Edit", new { user.Id })">Edit</a></div>
+				<div class="edit-button">
+					<div><a href="@Url.Action("Edit", new { user.Id })">Edit</a></div>
+					<div><a href="@Url.Action("Pass", new { user.Id })">Change Password</a></div>
+					<div><a href="@Url.Action("Activation", new { user.Id })">@(user.Enabled ? "Disable" : "Enable")</a></div>
+				</div>
 			</li>
 		}
 	</ul>

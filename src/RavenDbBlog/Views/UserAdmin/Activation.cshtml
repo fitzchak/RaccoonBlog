@@ -1,0 +1,14 @@
+﻿@model UserInput
+@{
+	ViewBag.SeelctedAction = Model.Enabled ? "Disable" : "Enable";
+	ViewBag.Title = (Model.Enabled ? "Disable" : "Enable") + " " + Model.FullName;
+}
+<article id="user-input">
+	<h1>@ViewBag.Title</h1>
+	@Html.ValidationSummary(true)
+
+	<form action="@Url.Action("SetActivation", new { newStatus = @Model.Enabled == false })" method="post">
+		@Html.EditorFor(x => x.Id)
+		<input type="submit" value="@ViewBag.SeelctedAction">
+	</form>
+</article>

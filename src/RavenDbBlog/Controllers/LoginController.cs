@@ -25,11 +25,15 @@ namespace RavenDbBlog.Controllers
         {
             var user = Session.GetUserByEmail(input.Email);
 
-            const string loginFailMessage = "Email and password are not match.";
-            if (user == null || user.ValidatePassword(input.Password) == false)
+        	if (user == null || user.ValidatePassword(input.Password) == false)
             {
-                ModelState.AddModelError("UserNotExistOrPasswordNotMatch", loginFailMessage);
+                ModelState.AddModelError("UserNotExistOrPasswordNotMatch", 
+					"Email and password are not match.");
             }
+			if(user != null && user.Enabled == false)
+			{
+				ModelState.AddModelError("NotEnabled", "The user is not enabled");
+			}
 
             if (ModelState.IsValid)
             {
@@ -37,8 +41,7 @@ namespace RavenDbBlog.Controllers
                 return RedirectFromLoginPage(input.ReturnUrl);
             }
 
-            var vm = new LoginInput {Email = input.Email, ReturnUrl = input.ReturnUrl};
-            return View(vm);
+        	return View(new LoginInput {Email = input.Email, ReturnUrl = input.ReturnUrl});
         }
 
         private ActionResult RedirectFromLoginPage(string retrunUrl = null)

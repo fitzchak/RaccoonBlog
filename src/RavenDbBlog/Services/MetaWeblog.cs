@@ -35,15 +35,14 @@ namespace RavenDbBlog.Services
 		#region IMetaWeblog Members
 
         string IMetaWeblog.AddPost(string blogid, string username, string password, Post post, bool publish)
-		{
-			if (ValidateUser(username, password))
-			{
-                var comments = new Core.Models.PostComments();
-				session.Store(comments);
+        {
+        	ValidateUser(username, password);
+        	var comments = new Core.Models.PostComments();
+        	session.Store(comments);
 
-				var publishDate = post.dateCreated == null ? 
-					postScheduleringStrategy.Schedule() : 
-					postScheduleringStrategy.Schedule(new DateTimeOffset(post.dateCreated.Value));
+        	var publishDate = post.dateCreated == null
+        	                  	? postScheduleringStrategy.Schedule()
+        	                  	: postScheduleringStrategy.Schedule(new DateTimeOffset(post.dateCreated.Value));
 
 				var newPost = new Core.Models.Post
 				{
@@ -60,12 +59,10 @@ namespace RavenDbBlog.Services
 				session.Store(newPost);
 				session.SaveChanges();
 
-				return newPost.Id;
-			}
-			throw new XmlRpcFaultException(0, "User is not valid!");
-		}
+        	return newPost.Id;
+        }
 
-        bool IMetaWeblog.UpdatePost(string postid, string username, string password,
+		bool IMetaWeblog.UpdatePost(string postid, string username, string password,
 			Post post, bool publish)
 		{
 			if (ValidateUser(username, password))
@@ -90,21 +87,22 @@ namespace RavenDbBlog.Services
 				postToEdit.Tags = post.categories;
 				postToEdit.Title = post.title;
 
-				session.SaveChanges();
+        	{
+        		// schedule all the future posts up 
+        		postToEdit.PublishAt = postScheduleringStrategy.Schedule(new DateTimeOffset(post.dateCreated.Value));
+        	}
+        	postToEdit.Tags = post.categories;
+        	postToEdit.Title = post.title;
 
-				return true;
-			}
-			throw new XmlRpcFaultException(0, "User is not valid!");
-		}
+        	session.SaveChanges();
 
-        Post IMetaWeblog.GetPost(string postid, string username, string password)
-		{
-			if (ValidateUser(username, password))
-			{
-				var thePost = session.Load<Core.Models.Post>(postid);
+        	return true;
+        }
 
-				if (thePost == null)
-					throw new XmlRpcFaultException(0, "Post does not exists");
+		Post IMetaWeblog.GetPost(string postid, string username, string password)
+        {
+        	ValidateUser(username, password);
+        	var thePost = session.Load<Core.Models.Post>(postid);
 
 				return new Post
 				{
@@ -119,41 +117,48 @@ namespace RavenDbBlog.Services
 			throw new XmlRpcFaultException(0, "User is not valid!");
 		}
 
+        	return new Post
+        	{
+        		wp_slug = thePost.Slug,
+        		description = thePost.Body,
+        		dateCreated = thePost.PublishAt.DateTime,
+        		categories = thePost.Tags.ToArray(),
+        		title = thePost.Title,
+        		postid = thePost.Id,
+        	};
+        }
+
 		CategoryInfo[] IMetaWeblog.GetCategories(string blogid, string username, string password)
 		{
-			if (ValidateUser(username, password))
+			ValidateUser(username, password);
+			var mostRecentTag = new DateTimeOffset(DateTimeOffset.Now.Year - 2,
+			                                       DateTimeOffset.Now.Month,
+			                                       1, 0, 0, 0,
+			                                       DateTimeOffset.Now.Offset);
+
+			var categoryInfos = session.Query<TagCount, Tags_Count>()
+				.Where(x => x.Count > 20 && x.LastSeenAt > mostRecentTag)
+				.ToList();
+
+			return categoryInfos.Select(x => new CategoryInfo
 			{
-				var mostRecentTag = new DateTimeOffset(DateTimeOffset.Now.Year - 2,
-												  DateTimeOffset.Now.Month,
-												  1, 0, 0, 0,
-												  DateTimeOffset.Now.Offset);
-
-				var categoryInfos = session.Query<TagCount, Tags_Count>()
-					 .Where(x => x.Count > 20 && x.LastSeenAt > mostRecentTag)
-					.ToList();
-
-				return categoryInfos.Select(x => new CategoryInfo
-				{
-					categoryid = x.Name,
-					description = x.Name,
-					title = x.Name,
-					htmlUrl = Url.Action("Tag", "Post", new {x.Name}),
-					rssUrl = Url.Action("Tag", "Syndication", new { x.Name }),
-				}).ToArray();
-			}
-			throw new XmlRpcFaultException(0, "User is not valid!");
+				categoryid = x.Name,
+				description = x.Name,
+				title = x.Name,
+				htmlUrl = Url.Action("Tag", "Post", new {x.Name}),
+				rssUrl = Url.Action("Tag", "Syndication", new {x.Name}),
+			}).ToArray();
 		}
 
 		Post[] IMetaWeblog.GetRecentPosts(string blogid, string username, string password,
 			int numberOfPosts)
 		{
-			if (ValidateUser(username, password))
-			{
+			ValidateUser(username, password);
 
-				var list = session.Query<Core.Models.Post>()
-					.OrderByDescending(x => x.PublishAt)
-					.Take(numberOfPosts)
-					.ToList();
+			var list = session.Query<Core.Models.Post>()
+				.OrderByDescending(x => x.PublishAt)
+				.Take(numberOfPosts)
+				.ToList();
 
 				return list.Select(thePost => new Post
 				{
@@ -171,92 +176,78 @@ namespace RavenDbBlog.Services
 		MediaObjectInfo IMetaWeblog.NewMediaObject(string blogid, string username, string password,
 			MediaObject mediaObject)
 		{
-			if (ValidateUser(username, password))
+			ValidateUser(username, password);
+			var imagePhysicalPath = Context.Server.MapPath(ConfigurationManager.AppSettings["uploadsPath"]);
+			var imageWebPath = ConfigurationManager.AppSettings["UploadsPath"].Replace("~", Context.Request.ApplicationPath);
+
+			imagePhysicalPath = Path.Combine(imagePhysicalPath, mediaObject.name);
+			var directoryPath = Path.GetDirectoryName(imagePhysicalPath).Replace("/", "\\");
+			if (!Directory.Exists(directoryPath))
+				Directory.CreateDirectory(directoryPath);
+			File.WriteAllBytes(imagePhysicalPath, mediaObject.bits);
+
+
+			return new MediaObjectInfo()
 			{
-				var imagePhysicalPath = Context.Server.MapPath(ConfigurationManager.AppSettings["uploadsPath"]);
-				var imageWebPath = ConfigurationManager.AppSettings["UploadsPath"].Replace("~", Context.Request.ApplicationPath);
-
-				imagePhysicalPath = Path.Combine(imagePhysicalPath, mediaObject.name);
-				var directoryPath = Path.GetDirectoryName(imagePhysicalPath).Replace("/", "\\");
-				if (!Directory.Exists(directoryPath))
-					Directory.CreateDirectory(directoryPath);
-				File.WriteAllBytes(imagePhysicalPath, mediaObject.bits);
-
-
-				return new MediaObjectInfo()
-				{
-					url = Path.Combine(imageWebPath, mediaObject.name)
-				};
-			}
-			throw new XmlRpcFaultException(0, "User is not valid!");
+				url = Path.Combine(imageWebPath, mediaObject.name)
+			};
 		}
 
 		bool IMetaWeblog.DeletePost(string key, string postid, string username, string password, bool publish)
 		{
-			if (ValidateUser(username, password))
+			ValidateUser(username, password);
+			var thePost = session.Load<Core.Models.Post>(postid);
+
+			if (thePost != null)
 			{
-				var thePost = session.Load<Core.Models.Post>(postid);
-
-				if (thePost != null)
-				{
-					var postComments = session.Load<Core.Models.PostComments>(thePost.CommentsId);
-					if (postComments != null)
-						session.Delete(postComments);
-					session.Delete(thePost);
-				}
-
-				session.SaveChanges();
-
-				return true;
+				var postComments = session.Load<Core.Models.PostComments>(thePost.CommentsId);
+				if (postComments != null)
+					session.Delete(postComments);
+				session.Delete(thePost);
 			}
-			throw new XmlRpcFaultException(0, "User is not valid!");
+
+			session.SaveChanges();
+
+			return true;
 		}
 
 		BlogInfo[] IMetaWeblog.GetUsersBlogs(string key, string username, string password)
 		{
-			if (ValidateUser(username, password))
+			ValidateUser(username, password);
+			return new[]
 			{
-				return new[]
-            	{
-            		new BlogInfo
-            		{
-            			blogid = "blogs/1",
-            			blogName = username,
-						url = Context.Request.RawUrl
-            		},
-            	};
-			}
-			throw new XmlRpcFaultException(0, "User is not valid!");
+				new BlogInfo
+				{
+					blogid = "blogs/1",
+					blogName = username,
+					url = Context.Request.RawUrl
+				},
+			};
 		}
 
 		UserInfo IMetaWeblog.GetUserInfo(string key, string username, string password)
 		{
-			if (ValidateUser(username, password))
+			ValidateUser(username, password);
+			return new UserInfo
 			{
-				return new UserInfo
-				{
-					email = "none",
-					nickname = username,
-					userid = "users/" + username
-				};
-			}
-			throw new XmlRpcFaultException(0, "User is not valid!");
+				email = "none",
+				nickname = username,
+				userid = "users/" + username
+			};
 		}
 
 		#endregion
 
 		#region Private Methods
 
-        private bool ValidateUser(string username, string password)
+        private void ValidateUser(string username, string password)
 		{
             var user = session.Load<Core.Models.User>("users/" + username);
-			if (user == null)
-				return false;
+			if (user == null || user.ValidatePassword(password))
+				throw new XmlRpcFaultException(0, "User is not valid!");
+			if(user.Enabled == false)
+				throw new XmlRpcFaultException(0, "User is not enabled!");
 
-			if (DateTime.Now > new DateTime(2011, 4, 25))
-				throw new InvalidOperationException("Hack expired, fix me already");
-
-			return user.ValidatePassword(password);
 		}
 
 		#endregion

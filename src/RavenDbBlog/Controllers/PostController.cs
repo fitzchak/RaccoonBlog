@@ -233,20 +233,14 @@ namespace RavenDbBlog.Controllers
         private Commenter GetCommenter(string commenterKey)
         {
             Guid guid;
-            if (Guid.TryParse(commenterKey, out guid))
-                GetCommenter(guid);
-            return null;
+        	if (Guid.TryParse(commenterKey, out guid) == false)
+        		return null;
+        	return Session.Query<Commenter>()
+        				.Where(x => x.Key == guid)
+        				.FirstOrDefault();
         }
 
-        private Commenter GetCommenter(Guid commenterKey)
-        {
-            return Session.Query<Commenter>()
-                .Where(x => x.Key == commenterKey)
-                .FirstOrDefault();
-        }
-
-
-        [ChildActionOnly]
+    	[ChildActionOnly]
         public ActionResult TagsList()
         {
             var mostRecentTag = new DateTimeOffset(DateTimeOffset.Now.Year - 2,

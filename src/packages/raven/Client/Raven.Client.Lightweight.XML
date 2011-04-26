@@ -54,13 +54,14 @@
             <param name="sourceType">A <see cref="T:System.Type"/> that represents the type you want to convert from. 
                             </param>
         </member>
-        <member name="M:Raven.Client.Converters.ITypeConverter.ConvertFrom(System.Object)">
+        <member name="M:Raven.Client.Converters.ITypeConverter.ConvertFrom(System.String,System.Object)">
             <summary>
             Converts the given object to the type of this converter.
             </summary>
             <returns>
             An <see cref="T:System.Object"/> that represents the converted value.
             </returns>
+            <param name="tag">The tag prefix to use</param>
             <param name="value">The <see cref="T:System.Object"/> to convert. </param>
             <exception cref="T:System.NotSupportedException">The conversion cannot be performed. </exception>
         </member>
@@ -83,7 +84,7 @@
             <param name="sourceType">A <see cref="T:System.Type"/> that represents the type you want to convert from. 
                             </param>
         </member>
-        <member name="M:Raven.Client.Converters.Int32Converter.ConvertFrom(System.Object)">
+        <member name="M:Raven.Client.Converters.Int32Converter.ConvertFrom(System.String,System.Object)">
             <summary>
             Converts the given object to the type of this converter, using the specified context and culture information.
             </summary>
@@ -6718,6 +6719,11 @@
             Initializes a new instance of the <see cref="T:Raven.Client.Document.DocumentStore"/> class.
             </summary>
         </member>
+        <member name="M:Raven.Client.Document.DocumentStore.ParseConnectionString(System.String)">
+            <summary>
+             Parse a given connection string
+            </summary>
+        </member>
         <member name="M:Raven.Client.Document.DocumentStore.ProcessConnectionStringOption(System.Net.NetworkCredential,System.String,System.String)">
             <summary>
             Parse the connection string option
@@ -6882,7 +6888,7 @@
             <param name="sourceType">A <see cref="T:System.Type"/> that represents the type you want to convert from. 
                             </param>
         </member>
-        <member name="M:Raven.Client.Converters.Int64Converter.ConvertFrom(System.Object)">
+        <member name="M:Raven.Client.Converters.Int64Converter.ConvertFrom(System.String,System.Object)">
             <summary>
             Converts the given object to the type of this converter, using the specified context and culture information.
             </summary>
@@ -6956,7 +6962,7 @@
             Initializes a new instance of the <see cref="T:Raven.Client.Document.DocumentConvention"/> class.
             </summary>
         </member>
-        <member name="M:Raven.Client.Document.DocumentConvention.DefaultFindFullDocumentKeyFromValueTypeIdentifier(System.ValueType,System.Type)">
+        <member name="M:Raven.Client.Document.DocumentConvention.DefaultFindFullDocumentKeyFromNonStringIdentifier(System.Object,System.Type)">
             <summary>
              Find the full document name assuming that we are using the standard conventions
              for generating a document key
@@ -7042,7 +7048,7 @@
             Gets or sets the function to find the clr type of a document.
             </summary>
         </member>
-        <member name="P:Raven.Client.Document.DocumentConvention.FindFullDocumentKeyFromValueTypeIdentifier">
+        <member name="P:Raven.Client.Document.DocumentConvention.FindFullDocumentKeyFromNonStringIdentifier">
             <summary>
             Gets or sets the function to find the full document key based on the type of a document
             and the value type identifier (just the numeric part of the id).
@@ -7109,7 +7115,7 @@
             <param name="sourceType">A <see cref="T:System.Type"/> that represents the type you want to convert from. 
                             </param>
         </member>
-        <member name="M:Raven.Client.Converters.GuidConverter.ConvertFrom(System.Object)">
+        <member name="M:Raven.Client.Converters.GuidConverter.ConvertFrom(System.String,System.Object)">
             <summary>
             Converts the given object to the type of this converter, using the specified context and culture information.
             </summary>
