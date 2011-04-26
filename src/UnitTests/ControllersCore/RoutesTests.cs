@@ -1,4 +1,5 @@
 using System;
+using System.Web.Mvc;
 using System.Web.Routing;
 using MvcContrib.TestHelper;
 using RavenDbBlog.Controllers;
@@ -63,8 +64,12 @@ namespace RavenDbBlog.UnitTests.ControllersCore
         public void LoginControllerRoutes()
         {
             "~/users/login".ShouldMapTo<LoginController>(c => c.Login((string)null));
-            var loginInput = new LoginInput();
-            "~/users/login".ShouldMapTo<LoginController>(c => c.Login(loginInput));
+            var input = new LoginInput{Email = "Fitzchak@ayende.com", Password = "P@ssw0rd"};
+            var routeData = "~/users/login".WithMethod(HttpVerbs.Post);
+            //routeData.Values["Email"] = input.Email;
+            //routeData.Values["Password"] = input.Password;
+            routeData.ShouldMapTo<LoginController>(c => c.Login(input));
+
 
             "~/users/logout".ShouldMapTo<LoginController>(c => c.LogOut(null));
 
