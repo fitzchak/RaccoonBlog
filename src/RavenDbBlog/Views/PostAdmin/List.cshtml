@@ -2,37 +2,10 @@
 @{
     ViewBag.Title = "Manage posts";
 }
-<ul>
-	@foreach (var post in Model.Posts)
-	{
-		ViewBag.PostUrl = Url.Action("Details", new { post.Id, post.Slug });
-		<li class="post_summery">
-			<article>
-				<header>
-					<h1><a href="@ViewBag.PostUrl">@post.Title</a></h1>
-				</header>
 
-				<footer>
-					<div>Posted @@ <time>@post.CreatedAt.ToString("r")</time></div>
-					<div>@(post.IsPublished ? "Published" : "Will publish" ) @@ <time pubdate>@post.PublishAt.ToString("r")</time></div>
-					<a href="@ViewBag.PostUrl#comments">@post.CommentsCount comments</a>
-				</footer>
-
-				<div class="tags">
-					<ul>
-						@foreach (var name in post.Tags)
-						{
-							<li><a href="@Url.Action("Tag", new { name })">@name</a></li>
-						}
-					</ul>
-				</div>
-
-				<div class="command_section">
-					<a href="@ViewBag.PostUrl">View</a>
-					<a href="@Url.Action("Edit", new { post.Id })">Edit</a>
-					<a href="@Url.Action("Delete", new { post.Id })">Delete</a>
-				</div>
-			</article>
-		</li>
-	}
-</ul>
+@section Style {
+    <link href="@Url.Content("~/Content/css/fullcalendar.css")" rel="stylesheet" type="text/css">
+}
+@section Script {
+    <script src="@Url.Content("~/Content/js/fullcalendar.js")" type="text/javascript"></script>
+}

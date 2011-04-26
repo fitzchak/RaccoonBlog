@@ -5,11 +5,12 @@
 <html>
 <head>
     <title>@ViewBag.Title</title>
-    <link href="@Url.Content("~/Content/css/ResetCss.css")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Content/css/main.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/ResetCss.css")" rel="stylesheet" type="text/css">
+    <link href="@Url.Content("~/Content/css/main.css")" rel="stylesheet" type="text/css">
+    @RenderSection("Style", false);
 
-	<link id="Rsd" rel="EditURI" type="application/rsd+xml" title="RSD" href="@Url.Action("Rsd", "Syndication")" />
-    <link id="AtomLink" title="RSS" type="application/rss+xml" rel="alternate" href="@Url.Action("Rss", "Syndication")" />
+	<link id="Rsd" rel="EditURI" type="application/rsd+xml" title="RSD" href="@Url.Action("Rsd", "Syndication")">
+    <link id="AtomLink" title="RSS" type="application/rss+xml" rel="alternate" href="@Url.Action("Rss", "Syndication")">
   
 </head>
 <body>
