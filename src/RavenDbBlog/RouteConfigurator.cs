@@ -61,6 +61,11 @@ namespace RavenDbBlog
 
         private void ConfigurePostAdmin()
         {
+            routes.MapRouteLowerCase("PostAdminController-ListFeed",
+               "admin/posts/feed",
+               new { controller = "PostAdmin", action = "ListFeed" }
+               );
+
             routes.MapRouteLowerCase("PostAdminController-List",
                "admin/posts",
                new { controller = "PostAdmin", action = "list" }

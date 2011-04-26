@@ -9,20 +9,27 @@ namespace RavenDbBlog.Controllers
 {
     public class PostAdminController : AdminController
     {
-        public ActionResult List(int page)
+        public ActionResult List()
         {
-            page = Math.Max(DefaultPage, page) - 1;
+            return View();
+        }
 
-            var postsQuery = from post in Session.Query<Post>()
-                             orderby post.PublishAt descending
-                             select post;
-
-            var posts = postsQuery
-                .Skip(page * PageSize)
-                .Take(PageSize)
+        public JsonResult ListFeed(double start, double end)
+        {
+            var posts = Session.Query<Post>()
+                .Where(post => post.PublishAt >= ConvertFromUnixTimestamp(start) &&
+                    post.PublishAt <= ConvertFromUnixTimestamp(end))
+                .OrderByDescending(post => post.PublishAt)
+                .Take(1000)
                 .ToList();
 
-            return View(new PostsAdminViewModel {PostsJson = posts.MapTo<PostsAdminViewModel.PostSummaryJson>()});
+            return Json(posts.MapTo<PostSummaryJson>());
+        }
+
+        private static DateTimeOffset ConvertFromUnixTimestamp(double timestamp)
+        {
+            var origin = new DateTimeOffset(1970, 1, 1, 0, 0, 0, 0, DateTimeOffset.Now.Offset);
+            return origin.AddSeconds(timestamp);
         }
 
         [HttpGet]

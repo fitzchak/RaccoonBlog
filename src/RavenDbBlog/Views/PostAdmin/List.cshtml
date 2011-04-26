@@ -1,5 +1,4 @@
-﻿@model PostsAdminViewModel
-@{
+﻿@{
     ViewBag.Title = "Manage posts";
 }
 <div id="postsCalendar">
@@ -12,13 +11,9 @@
     <script src="@Url.Content("~/Content/js/fullcalendar.min.js")" type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
-            var posts = [
-                @foreach(var post in Model.PostsJson) {
-                    <text>{ id: @post.Id, title: '@post.Title'},</text>
-                }
-            ];
             $('#postsCalendar').fullCalendar({
-                weekends: false
+                weekends: false,
+                events: '@Url.Action("ListFeed")'
             })
         });
     </script>

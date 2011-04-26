@@ -11,7 +11,7 @@ namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles
     {
         protected override void Configure()
         {
-            Mapper.CreateMap<Post, PostsAdminViewModel.PostSummaryJson>()
+            Mapper.CreateMap<Post, PostSummaryJson>()
                 .ForMember(x => x.Id, o => o.MapFrom(m => RavenIdResolver.Resolve(m.Id)))
                 .ForMember(x => x.Title, o => o.MapFrom(m => MvcHtmlString.Create(m.Title)))
                 .ForMember(x => x.Slug, o => o.MapFrom(m => SlugConverter.TitleToSlag(m.Title)))
