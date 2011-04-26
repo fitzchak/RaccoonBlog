@@ -44,13 +44,13 @@ namespace RavenDbBlog
             routes.MapRouteLowerCase("UserAdminController-ActionWithId",
               "admin/users/{id}/{action}",
               new { controller = "UserAdmin" },
-              new { action = "Edit|Details|Delete", id = MatchPositiveInteger }
+              new { action = "Edit", id = MatchPositiveInteger }
               );
 
             routes.MapRouteLowerCase("UserAdminController-Action",
                "admin/users/{action}",
                new { controller = "UserAdmin" },
-               new { action = "Add|Update" }
+               new { action = "Add" }
                );
 
             routes.MapRouteLowerCase("UserAdminController-UsersList",

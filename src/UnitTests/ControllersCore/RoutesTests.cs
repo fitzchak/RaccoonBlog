@@ -67,7 +67,24 @@ namespace RavenDbBlog.UnitTests.ControllersCore
             "~/users/login".ShouldMapTo<LoginController>(c => c.Login(loginInput));
 
             "~/users/logout".ShouldMapTo<LoginController>(c => c.LogOut(null));
-         
+
+            "~/users/currentuser".ShouldMapTo<LoginController>(c => c.CurrentUser());
+        }
+
+        [Fact]
+        public void PostAdminControllerRoutes()
+        {
+            "~/admin/posts".ShouldMapTo<PostAdminController>(c => c.List(DefaultPage));
+        }
+
+        [Fact]
+        public void UserAdminControllerRoutes()
+        {
+            "~/admin/users".ShouldMapTo<UserAdminController>(c => c.List());
+
+            "~/admin/users/4/edit".ShouldMapTo<UserAdminController>(c => c.Edit(4));
+
+            "~/admin/users/add".ShouldMapTo<UserAdminController>(c => c.Add());
         }
 
         [Fact]
