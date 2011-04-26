@@ -73,14 +73,18 @@
     </section>
 </article>
 
-<form action="@Url.Action("Comment", new { Model.Post.Id })" method="post">
-    @Html.EditorFor(x => x.CommentInput.Name)
-    @Html.EditorFor(x => x.CommentInput.Email)
-    @Html.EditorFor(x => x.CommentInput.Url)
-    @Html.EditorFor(x => x.CommentInput.Body)
+@if (Model.IsCommentClosed) { 
+    <div>Comments have been closed on this topic.</div>
+} else {
+    <form action="@Url.Action("Comment", new { Model.Post.Id })" method="post">
+        @Html.EditorFor(x => x.CommentInput.Name)
+        @Html.EditorFor(x => x.CommentInput.Email)
+        @Html.EditorFor(x => x.CommentInput.Url)
+        @Html.EditorFor(x => x.CommentInput.Body)
     
-    @if (!Model.IsTrustedCommenter) { 
-        @Html.GenerateCaptcha()
-    }
-    <input type="submit" value="Post Comment" />
-</form>
+        @if (!Model.IsTrustedCommenter) { 
+            @Html.GenerateCaptcha()
+        }
+        <input type="submit" value="Post Comment" />
+    </form>
+}
