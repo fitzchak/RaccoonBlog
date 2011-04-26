@@ -44,13 +44,13 @@ namespace RavenDbBlog
             routes.MapRouteLowerCase("UserAdminController-ActionWithId",
               "admin/users/{id}/{action}",
               new { controller = "UserAdmin" },
-              new { action = "Edit", id = MatchPositiveInteger }
+              new { id = MatchPositiveInteger, action = "Edit|SetActivation|ChangePass" }
               );
 
             routes.MapRouteLowerCase("UserAdminController-Action",
                "admin/users/{action}",
                new { controller = "UserAdmin" },
-               new { action = "Add" }
+               new { action = "Add|Update" }
                );
 
             routes.MapRouteLowerCase("UserAdminController-UsersList",
@@ -92,7 +92,7 @@ namespace RavenDbBlog
 
             routes.MapRouteLowerCase("PostController-internal",
                 "{controller}/{action}",
-                new { controller = "Post", action = "List" },
+                new { controller = "Post" },
                 new { controller = "Post", action = "TagsList|ArchivesList" }
                 );
 

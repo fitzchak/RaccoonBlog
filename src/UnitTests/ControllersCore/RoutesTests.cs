@@ -86,17 +86,22 @@ namespace RavenDbBlog.UnitTests.ControllersCore
         {
             "~/admin/users".ShouldMapTo<UserAdminController>(c => c.List(DefaultPage));
 
+            "~/admin/users/add".ShouldMapTo<UserAdminController>(c => c.Add());
             "~/admin/users/4/edit".ShouldMapTo<UserAdminController>(c => c.Edit(4));
 
-            "~/admin/users/4/changepass".ShouldMapTo<UserAdminController>(c => c.ChangePass(4));
-            "~/admin/users/4/changepass".ShouldMapTo<UserAdminController>(c => c.ChangePass((UserPasswordInput)null));
+            "~/admin/users/4/changepass"
+                .WithMethod(HttpVerbs.Get)
+                .ShouldMapTo<UserAdminController>(c => c.ChangePass(4));
 
-            "~/admin/users/4/setactivation?isActive=true".ShouldMapTo<UserAdminController>(c => c.SetActivation(4, true));
+            "~/admin/users/4/changepass"
+                .WithMethod(HttpVerbs.Post)
+                .ShouldMapTo<UserAdminController>(c => c.ChangePass(null));
 
-            var userInput = new UserInput { Id = 2, Email = "fitzchak@ayende.com", Enabled = true, FullName = "Fitzchak Yitzchaki" };
-            "~/admin/users/update".ShouldMapTo<UserAdminController>(c => c.Update(userInput));
+            var activateRoute = "~/admin/users/4/setactivation".WithMethod(HttpVerbs.Get);
+            activateRoute.Values["isActive"] = bool.TrueString;
+            activateRoute.ShouldMapTo<UserAdminController>(c => c.SetActivation(4, true));
 
-            "~/admin/users/add".ShouldMapTo<UserAdminController>(c => c.Add());
+            "~/admin/users/update".ShouldMapTo<UserAdminController>(c => c.Update(null));
         }
 
         [Fact]
