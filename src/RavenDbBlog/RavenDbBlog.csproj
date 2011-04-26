@@ -166,11 +166,10 @@
     <Content Include="wlwmanifest.xml" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Login\CurrentUser.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EmailAddress.cshtml" />
     <Content Include="Views\PostAdmin\List.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <None Include="Views\Shared\EditorTemplates\MultilineText.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <None Include="Views\Shared\EditorTemplates\String.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
