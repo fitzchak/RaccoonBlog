@@ -58,7 +58,7 @@
     @if (IsSectionDefined("Script"))
     {
         <script src="@Url.Content("~/Content/js/jquery-1.5.2.min.js")" type="text/javascript"></script>
-        RenderSection("Script");
+        @RenderSection("Script");
     }
 </body>
 </html>
