@@ -9,6 +9,8 @@ namespace RavenDbBlog.UnitTests.ControllersCore
 {
     public class RoutesTests : IDisposable
     {
+        const int DefaultPage = 1;
+
         public RoutesTests()
         {
             new RouteConfigurator(RouteTable.Routes).Configure();
@@ -22,7 +24,7 @@ namespace RavenDbBlog.UnitTests.ControllersCore
         [Fact]
         public void DefaultRoute()
         {
-            "~/".ShouldMapTo<PostController>(c => c.List(1));
+            "~/".ShouldMapTo<PostController>(c => c.List(DefaultPage));
         }
 
         [Fact]
@@ -36,7 +38,7 @@ namespace RavenDbBlog.UnitTests.ControllersCore
         [Fact]
         public void PostControllerRoutes()
         {
-            "~/".ShouldMapTo<PostController>(c => c.List(1));
+            "~/".ShouldMapTo<PostController>(c => c.List(DefaultPage));
 
             "~/1024".ShouldMapTo<PostController>(c => c.Item(1024, null));
             "~/1024/blog-post-title".ShouldMapTo<PostController>(c => c.Item(1024, "blog-post-title"));
@@ -48,12 +50,12 @@ namespace RavenDbBlog.UnitTests.ControllersCore
             "~/post/tagslist".ShouldMapTo<PostController>(c => c.TagsList());
             "~/post/archiveslist".ShouldMapTo<PostController>(c => c.ArchivesList());
 
-            "~/tag/tag-name".ShouldMapTo<PostController>(c => c.Tag("tag-name", 1));
+            "~/tag/tag-name".ShouldMapTo<PostController>(c => c.Tag("tag-name", DefaultPage));
 
             // "~/archive".ShouldMapTo<ErrorController>(c => c.404());
-            "~/archive/2011".ShouldMapTo<PostController>(c => c.ArchiveYear(2011));
-            "~/archive/2011/4".ShouldMapTo<PostController>(c => c.ArchiveYearMonth(2011, 4));
-            "~/archive/2011/4/24".ShouldMapTo<PostController>(c => c.ArchiveYearMonthDay(2011, 4, 24));
+            "~/archive/2011".ShouldMapTo<PostController>(c => c.ArchiveYear(2011, DefaultPage));
+            "~/archive/2011/4".ShouldMapTo<PostController>(c => c.ArchiveYearMonth(2011, 4, DefaultPage));
+            "~/archive/2011/4/24".ShouldMapTo<PostController>(c => c.ArchiveYearMonthDay(2011, 4, 24, DefaultPage));
             "~/archive/2011/4/24/legacy-post-title".ShouldMapTo<PostController>(c => c.RedirectLegacyPost(2011, 4, 24, "legacy-post-title"));
         }
 
