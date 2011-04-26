@@ -45,31 +45,25 @@ namespace RavenDbBlog.UnitTests.ControllersCore
             "~/1024/blog-post-title".ShouldMapTo<PostController>(c => c.Item(1024, "blog-post-title"));
 
             "~/1024/comment".ShouldMapTo<PostController>(c => c.Comment(1024));
-            var commentInput = new CommentInput { Name = "Fitzchak Yitzchaki", Email = "fitzchak@ayende.com", Body = "This blog is awesome!" };
-            "~/1024/comment".ShouldMapTo<PostController>(c => c.Comment(commentInput, 1024));
+            "~/1024/comment".ShouldMapTo<PostController>(c => c.Comment((CommentInput)null, 1024));
 
             "~/post/tagslist".ShouldMapTo<PostController>(c => c.TagsList());
             "~/post/archiveslist".ShouldMapTo<PostController>(c => c.ArchivesList());
 
-            "~/tag/tag-name".ShouldMapTo<PostController>(c => c.Tag("tag-name", DefaultPage));
+            "~/tags/tag-name".ShouldMapTo<PostController>(c => c.Tag("tag-name", DefaultPage));
 
             // "~/archive".ShouldMapTo<ErrorController>(c => c.404());
             "~/archive/2011".ShouldMapTo<PostController>(c => c.ArchiveYear(2011, DefaultPage));
             "~/archive/2011/4".ShouldMapTo<PostController>(c => c.ArchiveYearMonth(2011, 4, DefaultPage));
             "~/archive/2011/4/24".ShouldMapTo<PostController>(c => c.ArchiveYearMonthDay(2011, 4, 24, DefaultPage));
-            "~/archive/2011/4/24/legacy-post-title".ShouldMapTo<PostController>(c => c.RedirectLegacyPost(2011, 4, 24, "legacy-post-title"));
+            "~/archive/2011/4/24/legacy-post-title.aspx".ShouldMapTo<PostController>(c => c.RedirectLegacyPost(2011, 4, 24, "legacy-post-title"));
         }
 
         [Fact]
         public void LoginControllerRoutes()
         {
             "~/users/login".ShouldMapTo<LoginController>(c => c.Login((string)null));
-            var input = new LoginInput{Email = "Fitzchak@ayende.com", Password = "P@ssw0rd"};
-            var routeData = "~/users/login".WithMethod(HttpVerbs.Post);
-            //routeData.Values["Email"] = input.Email;
-            //routeData.Values["Password"] = input.Password;
-            routeData.ShouldMapTo<LoginController>(c => c.Login(input));
-
+            "~/users/login".WithMethod(HttpVerbs.Post).ShouldMapTo<LoginController>(c => c.Login((LoginInput)null));
 
             "~/users/logout".ShouldMapTo<LoginController>(c => c.LogOut(null));
 
@@ -90,8 +84,7 @@ namespace RavenDbBlog.UnitTests.ControllersCore
             "~/admin/users/4/edit".ShouldMapTo<UserAdminController>(c => c.Edit(4));
 
             "~/admin/users/4/changepass".ShouldMapTo<UserAdminController>(c => c.ChangePass(4));
-            var passwordInput = new UserPasswordInput { Id = 4, OldPass = "123456Aa!", NewPass = "^123456Aa!", NewPassConfirmation = "^123456Aa!" };
-            "~/admin/users/4/changepass".ShouldMapTo<UserAdminController>(c => c.ChangePass(passwordInput));
+            "~/admin/users/4/changepass".ShouldMapTo<UserAdminController>(c => c.ChangePass((UserPasswordInput)null));
 
             "~/admin/users/4/setactivation?isActive=true".ShouldMapTo<UserAdminController>(c => c.SetActivation(4, true));
 
