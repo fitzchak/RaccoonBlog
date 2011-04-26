@@ -2,10 +2,19 @@
 @{
     ViewBag.Title = "Manage posts";
 }
+<div id="postsCalendar">
 
+</div>
 @section Style {
     <link href="@Url.Content("~/Content/css/fullcalendar.css")" rel="stylesheet" type="text/css">
 }
 @section Script {
-    <script src="@Url.Content("~/Content/js/fullcalendar.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/js/fullcalendar.min.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#postsCalendar').fullCalendar({
+                
+            })
+        });
+    </script>
 }
