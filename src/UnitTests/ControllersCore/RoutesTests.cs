@@ -44,8 +44,13 @@ namespace RavenDbBlog.UnitTests.ControllersCore
             "~/1024".ShouldMapTo<PostController>(c => c.Item(1024, null));
             "~/1024/blog-post-title".ShouldMapTo<PostController>(c => c.Item(1024, "blog-post-title"));
 
-            "~/1024/comment".ShouldMapTo<PostController>(c => c.Comment(1024));
-            "~/1024/comment".ShouldMapTo<PostController>(c => c.Comment((CommentInput)null, 1024));
+            "~/1024/comment"
+                .WithMethod(HttpVerbs.Get)
+                .ShouldMapTo<PostController>(c => c.Item(1024, "comment"));
+
+            "~/1024/comment"
+                .WithMethod(HttpVerbs.Post)
+                .ShouldMapTo<PostController>(c => c.Comment(null, 1024));
 
             "~/post/tagslist".ShouldMapTo<PostController>(c => c.TagsList());
             "~/post/archiveslist".ShouldMapTo<PostController>(c => c.ArchivesList());

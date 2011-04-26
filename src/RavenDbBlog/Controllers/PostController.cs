@@ -184,12 +184,6 @@ namespace RavenDbBlog.Controllers
             return RedirectToActionPermanent("Item", new { postReference.Id, postReference.Slug });
         }
 
-        [HttpGet]
-        public ActionResult Comment(int id)
-        {
-            return RedirectToAction("Item", new { id });
-        }
-
         [HttpPost]
         public ActionResult Comment(CommentInput input, int id)
         {

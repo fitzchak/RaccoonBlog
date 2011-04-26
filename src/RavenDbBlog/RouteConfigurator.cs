@@ -81,7 +81,7 @@ namespace RavenDbBlog
             routes.MapRouteLowerCase("PostController-Comment",
                 "{id}/comment",
                 new { controller = "Post", action = "Comment" },
-                new { id = MatchPositiveInteger }
+                new { httpMethod = new HttpMethodConstraint("POST"), id = MatchPositiveInteger }
                 );
 
             routes.MapRouteLowerCase("PostController-Details",
