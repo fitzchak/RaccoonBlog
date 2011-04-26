@@ -44,7 +44,7 @@ namespace RavenDbBlog.Controllers
             if (ModelState.IsValid)
             {
                 var user = Session.Load<User>(input.Id) ?? new User();
-            	input.MapPropertiestoInstance(user);
+                input.MapPropertiestoInstance(user);
                 Session.Store(user);
                 return RedirectToAction("List");
             }
@@ -63,27 +63,24 @@ namespace RavenDbBlog.Controllers
 		[HttpPost]
 		public ActionResult ChangePass(UserPasswordInput input)
 		{
-            if (ModelState.IsValid)
-            {
-                var user = Session.Load<User>(input.Id);
-                if (user == null)
-                    return HttpNotFound("User does not exist.");
+		    if (ModelState.IsValid == false)
+                return View(input);
 
-                if (user.ValidatePassword(input.OldPass) == false)
-                {
-                    ModelState.AddModelError("OldPass", "Old password did not match existing password");
-                }
+            var user = Session.Load<User>(input.Id);
+		    if (user == null)
+		        return HttpNotFound("User does not exist.");
 
-                if (ModelState.IsValid)
-                {
-                    user.SetPassword(input.NewPass);
-                    return RedirectToAction("List");
-                }
-            }
-            return View(input);
+		    if (user.ValidatePassword(input.OldPass) == false)
+		    {
+		        ModelState.AddModelError("OldPass", "Old password did not match existing password");
+                return View(input);
+		    }
+		    
+            user.SetPassword(input.NewPass);
+		    return RedirectToAction("List");
 		}
 
-		[HttpPost]
+        [HttpPost]
 		public ActionResult SetActivation(int id, bool isActive)
 		{
 			var user = Session.Load<User>(id);
