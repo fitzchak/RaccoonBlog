@@ -33,7 +33,7 @@ namespace RavenDbBlog
 
             routes.MapRouteLowerCase("Default",
                 "",
-                new { controller = "Post", action = "List", page = 1 }
+                new { controller = "Post", action = "List" }
                 );
 
             #endregion
@@ -98,7 +98,7 @@ namespace RavenDbBlog
 
             routes.MapRouteLowerCase("PostController-PostsByTag",
                 "tags/{name}",
-                new { controller = "Post", action = "Tag", page = 1 }
+                new { controller = "Post", action = "Tag" }
                 );
 
             #region "Archive"

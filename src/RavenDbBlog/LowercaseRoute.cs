@@ -49,6 +49,7 @@ namespace RavenDbBlog
                 Constraints = new RouteValueDictionary(constraints),
                 DataTokens = new RouteValueDictionary(),
             };
+            route.Defaults.Add("page", 1);
 
             routes.Add(name, route);
 
