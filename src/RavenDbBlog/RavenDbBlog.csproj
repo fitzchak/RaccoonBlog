@@ -158,6 +158,9 @@
     <Content Include="Content\css\main.css" />
     <Content Include="Content\css\ResetCss.css" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\jquery-1.5.2-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.5.2.js" />
+    <Content Include="Scripts\jquery-1.5.2.min.js" />
     <Content Include="Views\Shared\EditorTemplates\HiddenInput.cshtml" />
     <Content Include="EmailViews\NewComment.cshtml" />
     <Content Include="Views\Post\TagsList.cshtml" />
