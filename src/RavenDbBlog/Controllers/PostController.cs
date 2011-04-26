@@ -102,7 +102,7 @@ namespace RavenDbBlog.Controllers
             });
         }
 
-        public ActionResult ArchiveYear(int year, int page = DefaultPage)
+        public ActionResult ArchiveYear(int year, int page)
         {
             page = Math.Max(DefaultPage, page) - 1;
 
@@ -123,7 +123,7 @@ namespace RavenDbBlog.Controllers
             });
         }
 
-        public ActionResult ArchiveYearMonth(int year, int month, int page = DefaultPage)
+        public ActionResult ArchiveYearMonth(int year, int month, int page)
         {
             page = Math.Max(DefaultPage, page) - 1;
 
@@ -144,7 +144,7 @@ namespace RavenDbBlog.Controllers
             });
         }
 
-        public ActionResult ArchiveYearMonthDay(int year, int month, int day, int page = DefaultPage)
+        public ActionResult ArchiveYearMonthDay(int year, int month, int day, int page)
         {
             page = Math.Max(DefaultPage, page) - 1;
 
