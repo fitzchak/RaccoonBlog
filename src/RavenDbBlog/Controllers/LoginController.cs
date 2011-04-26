@@ -30,7 +30,7 @@ namespace RavenDbBlog.Controllers
                 ModelState.AddModelError("UserNotExistOrPasswordNotMatch", 
 					"Email and password are not match.");
             }
-			if(user != null && user.Enabled == false)
+			else if(user.Enabled == false)
 			{
 				ModelState.AddModelError("NotEnabled", "The user is not enabled");
 			}
