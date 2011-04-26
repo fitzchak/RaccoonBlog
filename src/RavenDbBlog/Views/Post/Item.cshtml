@@ -74,10 +74,10 @@
 </article>
 
 <form action="@Url.Action("Comment", new { Model.Post.Id })" method="post">
-    @Html.EditorFor(x => x.NewComment.Name)
-    @Html.EditorFor(x =>x.NewComment.Email)
-    @Html.EditorFor(x => x.NewComment.Url)
-    @Html.EditorFor(x => x.NewComment.Body)
+    @Html.EditorFor(x => x.CommentInput.Name)
+    @Html.EditorFor(x => x.CommentInput.Email)
+    @Html.EditorFor(x => x.CommentInput.Url)
+    @Html.EditorFor(x => x.CommentInput.Body)
     
     @if (!Model.IsTrustedCommenter) { 
         @Html.GenerateCaptcha()
