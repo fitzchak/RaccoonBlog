@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using RavenDbBlog.Core.Models;
 using RavenDbBlog.Infrastructure.AutoMapper;
+using RavenDbBlog.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RavenDbBlog.ViewModels;
 
 namespace RavenDbBlog.Controllers
@@ -21,23 +22,6 @@ namespace RavenDbBlog.Controllers
             var vm = users.MapTo<UserSummeryViewModel>();
             return View(vm);
         }
-
-        public ActionResult Pass(int id)
-        {
-			var user = Session.Load<User>(id);
-			if (user == null)
-				return HttpNotFound("User does not exist.");
-			return View(user.MapTo<UserPasswordInput>());
-        }
-
-		public ActionResult Activation(int id)
-		{
-			var user = Session.Load<User>(id);
-			if (user == null)
-				return HttpNotFound("User does not exist.");
-			return View(user.MapTo<UserInput>());
-		}
-
 
         [HttpGet]
         public ActionResult Add()
@@ -60,7 +44,6 @@ namespace RavenDbBlog.Controllers
             if (ModelState.IsValid)
             {
                 var user = Session.Load<User>(input.Id) ?? new User();
-
             	input.MapTo(user);
                 Session.Store(user);
                 return RedirectToAction("List");
@@ -68,42 +51,48 @@ namespace RavenDbBlog.Controllers
             return View("Edit", input);
         }
 
+        [HttpGet]
+        public ActionResult ChangePass(int id)
+        {
+            var user = Session.Load<User>(id);
+            if (user == null)
+                return HttpNotFound("User does not exist.");
+            return View(new UserPasswordInput { Id = RavenIdResolver.Resolve(user.Id) });
+        }
 
 		[HttpPost]
 		public ActionResult ChangePass(UserPasswordInput input)
 		{
-			if (input.NewPass != input.NewPassConfirmation)
-			{
-				ModelState.AddModelError("NewPass", "New password does not match password confirmation");
+            if (ModelState.IsValid)
+            {
+                var user = Session.Load<User>(input.Id);
+                if (user == null)
+                    return HttpNotFound("User does not exist.");
 
-			}
-			var user = Session.Load<User>(input.Id);
-			   if (user == null)
-                return HttpNotFound("User does not exist.");
-        
-			if (user.ValidatePassword(input.OldPass) == false)
-			{
-				ModelState.AddModelError("OldPass", "Old password did not match existing password");
-			}
+                if (user.ValidatePassword(input.OldPass) == false)
+                {
+                    ModelState.AddModelError("OldPass", "Old password did not match existing password");
+                }
 
-			if (ModelState.IsValid)
-			{
-				user.SetPassword(input.NewPass);
-				return RedirectToAction("List");
-			}
-
-			return View("Pass", input);
+                if (ModelState.IsValid)
+                {
+                    user.SetPassword(input.NewPass);
+                    return RedirectToAction("List");
+                }
+            }
+            return View(input);
 		}
 
 		[HttpPost]
-		public ActionResult SetActivation(int id, bool newStatus)
+		public ActionResult SetActivation(int id, bool isActive)
 		{
 			var user = Session.Load<User>(id);
 			if (user == null)
 				return HttpNotFound("User does not exist.");
 
-			user.Enabled = newStatus;
-			
+			user.Enabled = isActive;
+
+            // TODO: return Json, in case of ajax request.
 			return RedirectToAction("List");
 		}
     }

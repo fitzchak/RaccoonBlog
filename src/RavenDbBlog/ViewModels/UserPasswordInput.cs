@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using RavenDbBlog.Helpers;
 
 namespace RavenDbBlog.ViewModels
 {
@@ -7,8 +8,6 @@ namespace RavenDbBlog.ViewModels
 	{
 		[HiddenInput]
 		public int Id { get; set; }
-
-		public string FullName { get; set; }
 
 		[Required]
 		[Display(Name = "Old Password")]
@@ -18,11 +17,13 @@ namespace RavenDbBlog.ViewModels
 		[Required]
 		[Display(Name = "New Password")]
 		[DataType(DataType.Password)]
+        [ValidatePasswordLength]
 		public string NewPass { get; set; }
 
 		[Required]
 		[Display(Name = "New Password Confirmation")]
 		[DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
 		public string NewPassConfirmation { get; set; }
 	}
 }

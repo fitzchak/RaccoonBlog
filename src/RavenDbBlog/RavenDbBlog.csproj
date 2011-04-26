@@ -151,6 +151,7 @@
     <Compile Include="ViewModels\UserInput.cs" />
     <Compile Include="ViewModels\UserPasswordInput.cs" />
     <Compile Include="ViewModels\UserSummeryViewModel.cs" />
+    <Compile Include="Helpers\Attributes\ValidatePasswordLengthAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\images\printer.png" />
@@ -205,8 +206,7 @@
     <Content Include="Views\Shared\404.cshtml" />
     <Content Include="Views\UserAdmin\Edit.cshtml" />
     <Content Include="Views\UserAdmin\List.cshtml" />
-    <Content Include="Views\UserAdmin\Pass.cshtml" />
-    <Content Include="Views\UserAdmin\Activation.cshtml" />
+    <Content Include="Views\UserAdmin\ChangePass.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
