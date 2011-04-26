@@ -58,6 +58,10 @@ namespace RavenDbBlog.Controllers
                 .Where(expression)
                 .Select(p => new {p.Id, p.Title})
                 .FirstOrDefault();
+
+            if (postReference == null)
+                return null;
+
             return postReference.DynamicMapTo<PostReference>();
         }
 
