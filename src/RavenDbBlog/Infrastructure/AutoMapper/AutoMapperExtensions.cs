@@ -16,7 +16,7 @@ namespace RavenDbBlog.Infrastructure.AutoMapper
             return (TResult)Mapper.Map(self, self.GetType(), typeof(TResult));
         }
 
-		public static TResult MapTo<TResult>(this object self, TResult value)
+		public static TResult MapPropertiestoInstance<TResult>(this object self, TResult value)
 		{
 			return (TResult)Mapper.Map(self, value, self.GetType(), typeof(TResult));
 		}

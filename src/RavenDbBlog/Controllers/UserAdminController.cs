@@ -44,7 +44,7 @@ namespace RavenDbBlog.Controllers
             if (ModelState.IsValid)
             {
                 var user = Session.Load<User>(input.Id) ?? new User();
-            	input.MapTo(user);
+            	input.MapPropertiestoInstance(user);
                 Session.Store(user);
                 return RedirectToAction("List");
             }
