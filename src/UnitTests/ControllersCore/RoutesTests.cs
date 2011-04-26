@@ -84,6 +84,15 @@ namespace RavenDbBlog.UnitTests.ControllersCore
 
             "~/admin/users/4/edit".ShouldMapTo<UserAdminController>(c => c.Edit(4));
 
+            "~/admin/users/4/changepass".ShouldMapTo<UserAdminController>(c => c.ChangePass(4));
+            var passwordInput = new UserPasswordInput { Id = 4, OldPass = "123456Aa!", NewPass = "^123456Aa!", NewPassConfirmation = "^123456Aa!" };
+            "~/admin/users/4/changepass".ShouldMapTo<UserAdminController>(c => c.ChangePass(passwordInput));
+
+            "~/admin/users/4/setactivation?isActive=true".ShouldMapTo<UserAdminController>(c => c.SetActivation(4, true));
+
+            var userInput = new UserInput { Id = 2, Email = "fitzchak@ayende.com", Enabled = true, FullName = "Fitzchak Yitzchaki" };
+            "~/admin/users/update".ShouldMapTo<UserAdminController>(c => c.Update(userInput));
+
             "~/admin/users/add".ShouldMapTo<UserAdminController>(c => c.Add());
         }
 
