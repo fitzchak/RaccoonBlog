@@ -80,7 +80,7 @@ namespace RavenDbBlog.UnitTests.ControllersCore
         [Fact]
         public void UserAdminControllerRoutes()
         {
-            "~/admin/users".ShouldMapTo<UserAdminController>(c => c.List());
+            "~/admin/users".ShouldMapTo<UserAdminController>(c => c.List(DefaultPage));
 
             "~/admin/users/4/edit".ShouldMapTo<UserAdminController>(c => c.Edit(4));
 

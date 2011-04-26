@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using RavenDbBlog.Core.Models;
 using RavenDbBlog.Infrastructure.AutoMapper;
@@ -8,10 +9,10 @@ namespace RavenDbBlog.Controllers
 {
     public class UserAdminController : AdminController
     {
-    	private const int PageSize = 25;
-
-    	public ActionResult List(int page = 0)
+    	public ActionResult List(int page)
         {
+            page = Math.Max(DefaultPage, page) - 1;
+
             var users = Session.Query<User>()
                 .OrderBy(u => u.FullName)
 				.Skip(page * PageSize)
