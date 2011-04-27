@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Manage posts";
 }
-<div id="message"></div>
+<div class="messageWrapper"><div id="message" style="visibility:hidden"></div></div>
 <div id="postsCalendar">
 
 </div>
@@ -47,6 +47,7 @@
             function setMessage(message, cssClass) {
                 var m = $('#message').html(message);
                 if (cssClass) m.addClass(cssClass);
+                m.css('visibility', 'visible');
             }
         });
     </script>
