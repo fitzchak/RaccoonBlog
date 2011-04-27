@@ -74,7 +74,7 @@ namespace RavenDbBlog.Import
                         var commentsCollection = new PostComments
                                                {
                                                    Comments = post.Comments
-                                                       .Where(comment => comment.StatusFlag != 5)
+                                                       .Where(comment => comment.StatusFlag == 1)
                                                        .Select(
                                                            comment => new PostComments.Comment
                                                                           {
@@ -83,11 +83,12 @@ namespace RavenDbBlog.Import
                                                                               CreatedAt = comment.DateCreated,
                                                                               Email = comment.Email,
                                                                               Important = comment.IsBlogAuthor ?? false,
-                                                                              Url = comment.Url
+                                                                              Url = comment.Url,
+                                                                              IsSpam = false
                                                                           }
                                                        ).ToList(),
                                                    Spam = post.Comments
-                                                       .Where(comment => comment.StatusFlag == 12)
+                                                       .Where(comment => comment.StatusFlag != 1)
                                                        .Select(
                                                            comment => new PostComments.Comment
                                                                           {
@@ -96,7 +97,8 @@ namespace RavenDbBlog.Import
                                                                               CreatedAt = comment.DateCreated,
                                                                               Email = comment.Email,
                                                                               Important = comment.IsBlogAuthor ?? false,
-                                                                              Url = comment.Url
+                                                                              Url = comment.Url,
+                                                                              IsSpam = true
                                                                           }
                                                        ).ToList(),
                                                };
