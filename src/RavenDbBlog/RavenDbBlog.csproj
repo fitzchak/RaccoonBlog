@@ -162,10 +162,13 @@
     <Content Include="Content\css\ResetCss.css" />
     <Content Include="Content\css\fullcalendar.css" />
     <Content Include="Content\js\fullcalendar.min.js" />
+    <Content Include="Content\js\jquery-ui-1.8.12.custom.min.js" />
     <Content Include="Global.asax" />
     <Content Include="Content\js\jquery-1.5.2-vsdoc.js" />
     <Content Include="Content\js\jquery-1.5.2.js" />
     <Content Include="Content\js\jquery-1.5.2.min.js" />
+    <Content Include="Content\js\jquery.ui.core.js" />
+    <Content Include="Content\js\jquery.ui.core.min.js" />
     <Content Include="Views\Shared\EditorTemplates\HiddenInput.cshtml" />
     <Content Include="EmailViews\NewComment.cshtml" />
     <Content Include="Views\Post\TagsList.cshtml" />
