@@ -203,6 +203,10 @@ article.post footer, postToolbar
 {
     display: inline;
 }
+.comment.spam
+{
+    background-color: Gray;
+}
 
 
 #sidebar

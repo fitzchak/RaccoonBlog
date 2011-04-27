@@ -22,6 +22,7 @@ namespace RavenDbBlog.ViewModels
             public string Url { get; set; }    // Look for HTML injection.
             public string EmailHash { get; set; }
             public DateTimeOffset CreatedAt { get; set; }
+            public bool IsSpam { get; set; }
         }
 
         public class PostDetails
