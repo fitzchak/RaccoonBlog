@@ -14,6 +14,11 @@ namespace RavenDbBlog.Controllers
             return View();
         }
 
+        public ActionResult Details(int id, string slug)
+        {
+            return View();
+        }
+
         public ActionResult ListFeed(double start, double end)
         {
             var posts = Session.Query<Post>()

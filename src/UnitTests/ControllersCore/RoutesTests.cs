@@ -84,6 +84,9 @@ namespace RavenDbBlog.UnitTests.ControllersCore
             routeData.Values["start"] = 0;
             routeData.Values["end"] = 0;
             routeData.ShouldMapTo<PostAdminController>(c => c.ListFeed(0, 0));
+
+            "~/admin/posts/1024".ShouldMapTo<PostAdminController>(c => c.Details(1024, null));
+            "~/admin/posts/1024/blog-post-title".ShouldMapTo<PostAdminController>(c => c.Details(1024, "blog-post-title"));
         }
 
         [Fact]
