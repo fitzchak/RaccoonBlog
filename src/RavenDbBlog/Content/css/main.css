@@ -241,7 +241,7 @@ article.post footer, postToolbar
 	border: 1px dotted #993300;
 	z-index: 5;
 }
-#content div
+.post_body div
 {
     z-index: 10;
 }
@@ -333,6 +333,26 @@ article header h1 a
     text-align: center;
 }
 
+.messageWrapper 
+{
+    text-align: center;
+}
+#message 
+{
+    padding: 0 7px;
+    display: inline-block;
+    position: relative;
+    background-color: #FFF1A8;
+    border: 3px solid #FFF1A8;
+    text-align: center;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+#message.fail {
+    background-color: red;
+}
+
 
 .tags li 
 {
@@ -362,4 +382,6 @@ article header h1 a
 
 
 
-#headerPrevNext { color: #993300; font-family: Verdana; }#headerPrevNext h1 { background-color: #ffcc66; border-bottom: 1px solid #999999; font-family: Georgia; font-size: 0.9em; padding: 4px; text-align: center; }#headerPrevNext ul { margin-top: 3px; margin-left: 3px; color: #993300 }#headerPrevNext li { display: inline; font-size: 0.7em; color: #4c1a00; }#headerPrevNext li em { color: #cc8514; font-family: Georgia; padding-right: 3px }#headerPrevNext a { color: inherit; padding: 2px; text-decoration: none; }#headerPrevNext a:hover, #headerPrevNext a:hover em { background-color: #993300; color: #ffffff; }ul.users-list{	}ul.users-list li{	padding: 5px 0;	border-bottom: 1px dotted #444;}ul.users-list li p{	margin: 4px 0;}ul.users-list li strong{	color: #444;	width: 100px;	display: block;	float: left;}.edit-button{	float: right;	margin-top: -60px;}
+#headerPrevNext { color: #993300; font-family: Verdana; }#headerPrevNext h1 { background-color: #ffcc66; border-bottom: 1px solid #999999; font-family: Georgia; font-size: 0.9em; padding: 4px; text-align: center; }#headerPrevNext ul { margin-top: 3px; margin-left: 3px; color: #993300 }#headerPrevNext li { display: inline; font-size: 0.7em; color: #4c1a00; }#headerPrevNext li em { color: #cc8514; font-family: Georgia; padding-right: 3px }#headerPrevNext a { color: inherit; padding: 2px; text-decoration: none; }#headerPrevNext a:hover, #headerPrevNext a:hover em { background-color: #993300; color: #ffffff; }ul.users-list{	}ul.users-list li{	padding: 5px 0;	border-bottom: 1px dotted #444;}ul.users-list li p{	margin: 4px 0;}ul.users-list li strong{	color: #444;	width: 100px;	display: block;	float: left;}.edit-button{	float: right;	margin-top: -60px;}.fc-grid .fc-event-time {
+    font-size: 11px;
+}
