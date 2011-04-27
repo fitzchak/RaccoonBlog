@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using RavenDbBlog.Core.Models;
+using RavenDbBlog.DataServices;
 using RavenDbBlog.Helpers;
 using RavenDbBlog.Infrastructure.AutoMapper;
 using RavenDbBlog.Services;
@@ -18,7 +19,28 @@ namespace RavenDbBlog.Controllers
 
         public ActionResult Details(int id, string slug)
         {
-            return View();
+            var post = Session
+                .Include<Post>(x => x.CommentsId)
+                .Load(id);
+
+            var vm = new AdminPostDetailsViewModel
+            {
+                Post = post.MapTo<AdminPostDetailsViewModel.PostDetails>(),
+            };
+
+            if (vm.Post.Slug != slug)
+                return RedirectToActionPermanent("Details", new { id, vm.Post.Slug });
+
+            var comments = Session.Load<PostComments>(post.CommentsId);
+            var allComments = comments.Comments
+                .Concat(comments.Spam)
+                .OrderBy(comment => comment.CreatedAt);
+            vm.Comments = allComments.MapTo<AdminPostDetailsViewModel.Comment>();
+            vm.NextPost = new PostService(Session).GetPostReference(x => x.PublishAt > post.PublishAt);
+            vm.PreviousPost = new PostService(Session).GetPostReference(x => x.PublishAt < post.PublishAt);
+            // vm.IsCommentClosed = TODO: set this value.
+            
+            return View(vm);
         }
 
         public ActionResult ListFeed(long start, long end)

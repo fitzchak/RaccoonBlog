@@ -98,6 +98,7 @@
     <Compile Include="Controllers\Queries.cs" />
     <Compile Include="Controllers\SyndicationController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
+    <Compile Include="DataServices\PostService.cs" />
     <Compile Include="EnsureLowerCaseRouteModule.cs" />
     <Compile Include="Helpers\Attributes\AjaxAttribute.cs" />
     <Compile Include="Helpers\Results\JsonNetResult.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Services\MetaWeblog.cs" />
     <Compile Include="Services\PostSchedulingStrategy.cs" />
     <Compile Include="Services\RssModels\Structs.cs" />
+    <Compile Include="ViewModels\AdminPostDetailsViewModel.cs" />
     <Compile Include="ViewModels\CommentInput.cs" />
     <Compile Include="ViewModels\CurrentUserViewModel.cs" />
     <Compile Include="ViewModels\LoginInput.cs" />

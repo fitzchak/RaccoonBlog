@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using Raven.Client.Linq;
 using System.Web.Mvc;
 using RavenDbBlog.Core.Models;
+using RavenDbBlog.DataServices;
 using RavenDbBlog.Helpers.Validation;
 using RavenDbBlog.Indexes;
 using RavenDbBlog.Infrastructure.AutoMapper;
@@ -38,8 +38,8 @@ namespace RavenDbBlog.Controllers
 
             var comments = Session.Load<PostComments>(post.CommentsId);
             vm.Comments = comments.Comments.MapTo<PostViewModel.Comment>();
-            vm.NextPost = GetPostReference(x => x.PublishAt > post.PublishAt);
-            vm.PreviousPost = GetPostReference(x => x.PublishAt < post.PublishAt);
+            vm.NextPost = new PostService(Session).GetPostReference(x => x.PublishAt > post.PublishAt);
+            vm.PreviousPost = new PostService(Session).GetPostReference(x => x.PublishAt < post.PublishAt);
             // vm.IsCommentClosed = TODO: set this value.
 
             var cookie = Request.Cookies[Constants.CommenterKeyCookieName];
@@ -50,19 +50,6 @@ namespace RavenDbBlog.Controllers
                 vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
             }
             return View(vm);
-        }
-
-        private PostReference GetPostReference(Expression<Func<Post, bool>> expression)
-        {
-            var postReference = Session.Query<Post>()
-                .Where(expression)
-                .Select(p => new {p.Id, p.Title})
-                .FirstOrDefault();
-
-            if (postReference == null)
-                return null;
-
-            return postReference.DynamicMapTo<PostReference>();
         }
 
         public ActionResult List(int page)
