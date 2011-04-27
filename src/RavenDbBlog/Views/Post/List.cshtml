@@ -5,7 +5,7 @@
 
 @foreach (var post in Model.Posts)
 {
-    ViewBag.PostUrl = Url.Action("Item", new { post.Id, post.Slug });
+    ViewBag.PostUrl = Url.Action("Details", new { post.Id, post.Slug });
     <article class="postSummery">
         <header>
             <h1><a href="@ViewBag.PostUrl">@post.Title</a></h1>

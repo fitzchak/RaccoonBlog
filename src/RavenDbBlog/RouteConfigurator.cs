@@ -103,7 +103,7 @@ namespace RavenDbBlog
 
             routes.MapRouteLowerCase("PostController-Details",
                 "{id}/{slug}",
-                new { controller = "Post", action = "Item", slug = UrlParameter.Optional },
+                new { controller = "Post", action = "Details", slug = UrlParameter.Optional },
                 new { id = MatchPositiveInteger }
                 );
 

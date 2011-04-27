@@ -180,6 +180,7 @@
     <Content Include="Views\Login\CurrentUser.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EmailAddress.cshtml" />
     <Content Include="Views\PostAdmin\List.cshtml" />
+    <Content Include="Views\PostAdmin\Details.cshtml" />
     <None Include="Views\Shared\EditorTemplates\MultilineText.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <None Include="Views\Shared\EditorTemplates\String.cshtml" />
@@ -220,7 +221,7 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Post\Item.cshtml" />
+    <Content Include="Views\Post\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Post\List.cshtml" />

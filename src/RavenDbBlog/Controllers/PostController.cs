@@ -18,7 +18,7 @@ namespace RavenDbBlog.Controllers
 {
     public class PostController : AbstractController
     {
-        public ActionResult Item(int id, string slug)
+        public ActionResult Details(int id, string slug)
         {
             var post = Session
                 .Include<Post>(x => x.CommentsId)
@@ -34,7 +34,7 @@ namespace RavenDbBlog.Controllers
                          };
 
             if (vm.Post.Slug != slug)
-                return RedirectToActionPermanent("Item", new {id, vm.Post.Slug});
+                return RedirectToActionPermanent("Details", new {id, vm.Post.Slug});
 
             var comments = Session.Load<PostComments>(post.CommentsId);
             vm.Comments = comments.Comments.MapTo<PostViewModel.Comment>();
@@ -181,7 +181,7 @@ namespace RavenDbBlog.Controllers
                 return HttpNotFound();
 
             var postReference = post.MapTo<PostReference>();
-            return RedirectToActionPermanent("Item", new { postReference.Id, postReference.Slug });
+            return RedirectToActionPermanent("Details", new { postReference.Id, postReference.Slug });
         }
 
         [HttpPost]
@@ -212,7 +212,7 @@ namespace RavenDbBlog.Controllers
                     Comments = comments != null ? comments.Comments.MapTo<PostViewModel.Comment>() : new List<PostViewModel.Comment>(),
                     CommentInput = input,
                 };
-                return View("Item", vm);
+                return View("Details", vm);
             }
 
             CommandExcucator.ExcuteLater(new AddCommentCommand(input, Request.MapTo<RequestValues>(), id));
@@ -224,7 +224,7 @@ namespace RavenDbBlog.Controllers
 
             TempData["message"] = "You feedback will be posted soon. Thanks for the feedback.";
             var postReference = post.MapTo<PostReference>();
-            return RedirectToAction("Item", new { postReference.Id, postReference.Slug });
+            return RedirectToAction("Details", new { postReference.Id, postReference.Slug });
         }
 
 
