@@ -26,11 +26,16 @@
                     },
                 }],
                 eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
-                    var jqxhr = $.post(setArticleDate, {id: event.id, date: event.start.valueOf()}, function(){ setMessage('Change post date succeed: ' + event.title); }, 'json');
-                    jqxhr.error(function(){ 
+                    var jqxhr = $.post(setArticleDate, {id: event.id, date: event.start.valueOf()}, null, 'json');
+                    jqxhr.error(failAction);
+                    jqxhr.success(function(data, textStatus, jqXHR){ 
+                        if (!data.success) failAction();
+                        else setMessage('Change post date succeed: ' + event.title);
+                    });
+                    function failAction(){
                         revertFunc(); 
                         setMessage('Change post date failed: ' + event.title, 'fail');
-                    });
+                    }
                 }
             });
             
