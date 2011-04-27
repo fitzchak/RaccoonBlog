@@ -39,7 +39,7 @@ namespace RavenDbBlog.Commands
                 Body = _commentInput.Body,
                 CreatedAt = DateTimeOffset.Now,  
                 Email = _commentInput.Email,
-                Important = false, //TODO: How to figure this out?
+                Important = _requestValues.IsAuthenticated,
                 Url = _commentInput.Url,
                 IsSpam = CheckForSpam(),
             };

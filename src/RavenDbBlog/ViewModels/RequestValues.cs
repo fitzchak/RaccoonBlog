@@ -4,5 +4,6 @@
     {
         public string UserAgent { get; set; }
         public string UserHostAddress { get; set; }
+        public bool IsAuthenticated { get; set; }
     }
 }
