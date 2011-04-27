@@ -2,6 +2,8 @@
 using System.Web.Mvc;
 using System.Xml;
 using System.Xml.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Raven.Client;
 using RavenDbBlog.Infrastructure.ActionResults;
 
@@ -39,5 +41,11 @@ namespace RavenDbBlog.Controllers
 		{
 			return new XmlResult(document, etag);
 		}
+
+        protected new JsonNetResult Json(object data)
+        {
+            var settings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
+            return new JsonNetResult(data, settings);
+        }
     }
 }

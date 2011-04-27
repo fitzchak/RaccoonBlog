@@ -14,12 +14,12 @@ namespace RavenDbBlog.Controllers
             return View();
         }
 
-        public JsonResult ListFeed(double start, double end)
+        public ActionResult ListFeed(double start, double end)
         {
             var posts = Session.Query<Post>()
                 .Where(post => post.PublishAt >= ConvertFromUnixTimestamp(start) &&
                     post.PublishAt <= ConvertFromUnixTimestamp(end))
-                .OrderByDescending(post => post.PublishAt)
+                .OrderBy(post => post.PublishAt)
                 .Take(1000)
                 .ToList();
 

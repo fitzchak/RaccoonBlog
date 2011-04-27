@@ -99,6 +99,7 @@
     <Compile Include="Controllers\SyndicationController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="EnsureLowerCaseRouteModule.cs" />
+    <Compile Include="Helpers\Results\JsonNetResult.cs" />
     <Compile Include="Infrastructure\ActionResults\XmlResult.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\PostsAdminViewModelMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\DateTimeTypeConverter.cs" />
