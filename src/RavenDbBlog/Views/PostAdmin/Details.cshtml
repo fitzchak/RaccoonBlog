@@ -59,6 +59,7 @@
         @foreach (var comment in Model.Comments)
         {
             <article class="comment@(comment.IsSpam ? " spam" : null)">
+                <input type="checkbox">
                 <img class="avatar" src="http://www.gravatar.com/avatar.php?gravatar_id=@(comment.EmailHash)&amp;size=50&amp;default=identicon" alt="Gravatar" style="border-width:0px;">
 
                 <div class="comment_title">
@@ -75,4 +76,14 @@
 
 @if (Model.IsCommentClosed) { 
     <div>Comments have been closed on this topic.</div>
+}
+@section Script {
+    <script type="text/javascript">
+        $(function () {
+            $('.comment').click(function () {
+                var c = $(this).children(':checkbox');
+                c.attr('checked', !c.attr('checked'));
+            });
+        });
+    </script>
 }
