@@ -6,12 +6,11 @@ namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles
 {
     public abstract class AbstractProfile : Profile
     {
-        private UrlHelper _urlHelper;
         protected UrlHelper UrlHelper
         {
             get
             {
-                return _urlHelper ?? (_urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext));
+                return new UrlHelper(HttpContext.Current.Request.RequestContext);
             }
         }
     }
