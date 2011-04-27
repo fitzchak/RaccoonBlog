@@ -16,9 +16,8 @@
                 eventSources: [{
                     url: '@Url.Action("ListFeed")',
                     type: 'POST',
-                    error: function(e, f, g, h, t) {
-                    debugger
-                        alert('there was an error while fetching events!');
+                    error: function(xhr, ajaxOptions, error) {
+                        alert('There was an error while fetching events! Error Code: ' + xhr.status + ' Error: ' + error);
                     },
                 }]
             })
