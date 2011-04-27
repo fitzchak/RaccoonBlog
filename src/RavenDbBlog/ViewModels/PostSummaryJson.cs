@@ -6,6 +6,6 @@ namespace RavenDbBlog.ViewModels
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public DateTime Start { get; set; }
+        public string Start { get; set; }
     }
 }
