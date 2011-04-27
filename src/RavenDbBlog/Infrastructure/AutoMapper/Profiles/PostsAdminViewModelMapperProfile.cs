@@ -7,7 +7,7 @@ using RavenDbBlog.ViewModels;
 
 namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles
 {
-    public class PostsAdminViewModelMapperProfile : Profile
+    public class PostsAdminViewModelMapperProfile : AbstractProfile
     {
         protected override void Configure()
         {
@@ -15,6 +15,7 @@ namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles
                 .ForMember(x => x.Id, o => o.MapFrom(m => RavenIdResolver.Resolve(m.Id)))
                 .ForMember(x => x.Title, o => o.MapFrom(m => MvcHtmlString.Create(m.Title)))
                 .ForMember(x => x.Start, o => o.MapFrom(m => m.PublishAt.ToString("yyyy-MM-ddTHH:mm:ssZ")))
+                .ForMember(x => x.Url, o => o.MapFrom(m => UrlHelper.Action("Details", "PostAdmin", new { Id = RavenIdResolver.Resolve(m.Id), Slug = SlugConverter.TitleToSlag(m.Title) })))
                 ;
         }
     }

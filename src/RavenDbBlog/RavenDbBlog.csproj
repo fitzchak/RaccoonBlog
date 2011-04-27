@@ -101,6 +101,7 @@
     <Compile Include="EnsureLowerCaseRouteModule.cs" />
     <Compile Include="Helpers\Results\JsonNetResult.cs" />
     <Compile Include="Infrastructure\ActionResults\XmlResult.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\AbstractProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\PostsAdminViewModelMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\DateTimeTypeConverter.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\SlugConverter.cs" />
