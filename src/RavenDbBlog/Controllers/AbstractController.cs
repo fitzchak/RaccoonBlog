@@ -1,6 +1,4 @@
-﻿using System.IO;
-using System.Web.Mvc;
-using System.Xml;
+﻿using System.Web.Mvc;
 using System.Xml.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -9,7 +7,7 @@ using RavenDbBlog.Infrastructure.ActionResults;
 
 namespace RavenDbBlog.Controllers
 {
-    public class AbstractController : Controller
+    public abstract class AbstractController : Controller
     {
         protected const int DefaultPage = 1;
         protected const int PageSize = 25;
@@ -21,7 +19,7 @@ namespace RavenDbBlog.Controllers
             ViewBag.MetaDescription = "";
             ViewBag.MetaKeywords = "";
         }
-
+        
         protected new HttpNotFoundWithViewResult HttpNotFound(string statusDescription = null)
         {
             return new HttpNotFoundWithViewResult(statusDescription);
