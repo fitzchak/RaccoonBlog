@@ -87,6 +87,11 @@ namespace RavenDbBlog.UnitTests.ControllersCore
 
             "~/admin/posts/1024".ShouldMapTo<PostAdminController>(c => c.Details(1024, null));
             "~/admin/posts/1024/blog-post-title".ShouldMapTo<PostAdminController>(c => c.Details(1024, "blog-post-title"));
+
+            var setpostdate = "~/admin/posts/setpostdate".WithMethod(HttpVerbs.Post);
+            setpostdate.Values["id"] = 1024;
+            // setpostdate.Values["date"] = "Tue Mar 29 2011 10:25:00 GMT+0200 (Jerusalem Standard Time)";
+            //setpostdate.ShouldMapTo<PostAdminController>(c => c.SetPostDate(1024, DateTime.MinValue));
         }
 
         [Fact]

@@ -13,7 +13,7 @@
     <script src="@Url.Content("~/Content/js/fullcalendar.min.js")" type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
-            var setArticleDate = '@Url.Action("SetArticleDate")';
+            var setArticleDate = '@Url.Action("SetPostDate")';
             $('#postsCalendar').fullCalendar({
                 weekends: false,
                 editable: true,
@@ -25,11 +25,11 @@
                         alert('There was an error while fetching events! Error Code: ' + xhr.status + ' Error: ' + error);
                     },
                 }],
-                eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) { 
-                    var jqxhr = $.post(setArticleDate, {}, function(){ setMessage('Change post date succeed'); }, 'json');
+                eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
+                    var jqxhr = $.post(setArticleDate, {id: event.id, date: event.start.valueOf()}, function(){ setMessage('Change post date succeed: ' + event.title); }, 'json');
                     jqxhr.error(function(){ 
                         revertFunc(); 
-                        setMessage('Change post date failed', 'fail');
+                        setMessage('Change post date failed: ' + event.title, 'fail');
                     });
                 }
             });

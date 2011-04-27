@@ -77,6 +77,16 @@ namespace RavenDbBlog.Services
 			return new DateTimeOffset(date.Year, date.Month, date.Day, time.Hour, time.Minute, time.Second, time.Millisecond, date.Offset);
 		}
 
+        public static DateTimeOffset WithDate(this DateTimeOffset time, DateTimeOffset date)
+        {
+            return new DateTimeOffset(date.Year, date.Month, date.Day, time.Hour, time.Minute, time.Second, time.Millisecond, time.Offset);
+        }
+
+        public static DateTimeOffset WithDate(this DateTimeOffset time, DateTime date)
+        {
+            return new DateTimeOffset(date.Year, date.Month, date.Day, time.Hour, time.Minute, time.Second, time.Millisecond, time.Offset);
+        }
+
 		public static DateTimeOffset SkipToNextWorkDay(this DateTimeOffset date)
 		{
 			// we explicitly choose not to user the CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek
