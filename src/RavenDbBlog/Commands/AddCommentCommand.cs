@@ -34,6 +34,7 @@ namespace RavenDbBlog.Commands
 
             var comment = new PostComments.Comment
             {
+                Id = comments.GenerateNewCommentId(),
                 Author = _commentInput.Name,
                 Body = _commentInput.Body,
                 CreatedAt = DateTimeOffset.Now,  

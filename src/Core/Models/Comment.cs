@@ -9,8 +9,17 @@ namespace RavenDbBlog.Core.Models
         public List<Comment> Comments { get; set; }
         public List<Comment> Spam { get; set; }
 
+        public int LastCommentId { get; set; }
+
+        public int GenerateNewCommentId()
+        {
+            return ++LastCommentId;
+        }
+
         public class Comment
         {
+
+            public int Id { get; set; }
             public string Body { get; set; }
             public string Author { get; set; }
             public string Email { get; set; }
