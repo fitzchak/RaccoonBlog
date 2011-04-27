@@ -46,7 +46,7 @@ namespace RavenDbBlog.Controllers
             if (cookie != null)
             {
                 var commenter =  GetCommenter(cookie.Value);
-                vm.CommentInput = commenter.MapTo<CommentInput>();
+                vm.Input = commenter.MapTo<CommentInput>();
                 vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
             }
             return View(vm);
@@ -175,11 +175,11 @@ namespace RavenDbBlog.Controllers
         public ActionResult Comment(CommentInput input, int id)
         {
             var commenter = GetCommenter(input.CommenterKey) ?? new Commenter();
-            bool isCaptchaRequired = commenter.IsTrustedCommenter == false;
+            bool isCaptchaRequired = commenter.IsTrustedCommenter != true;
             if (isCaptchaRequired)
             {
                 var isCaptchaValid = RecaptchaValidatorWrapper.Validate(ControllerContext.HttpContext);
-                if (isCaptchaValid)
+                if (isCaptchaValid == false)
                 {
                     ModelState.AddModelError("_FORM", "You did not type the verification word correctly. Please try again.");
                 }
@@ -191,13 +191,13 @@ namespace RavenDbBlog.Controllers
             if (post == null)
                 return HttpNotFound();
 
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid == false)
             {
                 var vm = new PostViewModel
                 {
                     Post = post.MapTo<PostViewModel.PostDetails>(),
                     Comments = comments != null ? comments.Comments.MapTo<PostViewModel.Comment>() : new List<PostViewModel.Comment>(),
-                    CommentInput = input,
+                    Input = input,
                 };
                 return View("Details", vm);
             }

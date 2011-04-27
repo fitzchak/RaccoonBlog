@@ -76,13 +76,15 @@
 @if (Model.IsCommentClosed) { 
     <div>Comments have been closed on this topic.</div>
 } else {
+    @Html.ValidationSummary()
     <form action="@Url.Action("Comment", new { Model.Post.Id })" method="post">
-        @Html.EditorFor(x => x.CommentInput.Name)
-        @Html.EditorFor(x => x.CommentInput.Email)
-        @Html.EditorFor(x => x.CommentInput.Url)
-        @Html.EditorFor(x => x.CommentInput.Body)
+        @Html.EditorFor(x => x.Input.Name)
+        @Html.EditorFor(x => x.Input.Email)
+        @Html.EditorFor(x => x.Input.Url)
+        @Html.EditorFor(x => x.Input.Body)
     
-        @if (!Model.IsTrustedCommenter) { 
+        @if (!Model.IsTrustedCommenter)
+        { 
             @Html.GenerateCaptcha()
         }
         <input type="submit" value="Post Comment" />
