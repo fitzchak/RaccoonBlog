@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Configuration;
 using System.Web.Mvc;
-using Joel.Net;
 using Raven.Client;
 using RavenDbBlog.Core.Models;
 using RavenDbBlog.Infrastructure.Commands;
+using RavenDbBlog.Services;
 using RavenDbBlog.ViewModels;
 using RazorEngine;
 
@@ -41,7 +40,7 @@ namespace RavenDbBlog.Commands
                 Email = _commentInput.Email,
                 Important = _requestValues.IsAuthenticated,
                 Url = _commentInput.Url,
-                IsSpam = CheckForSpam(),
+                IsSpam = new AskimetService(_requestValues).CheckForSpam(_commentInput),
             };
 
             if (comment.IsSpam)
@@ -69,30 +68,6 @@ namespace RavenDbBlog.Commands
                                                  Subject = "Comment: " + post.Title,
                                                  Contents = emailContents
                                              });
-        }
-
-
-        private bool CheckForSpam()
-        {
-            //Create a new instance of the Akismet API and verify your key is valid.
-            string blog = "http://" + ConfigurationManager.AppSettings["MainUrl"];
-			var api = new Akismet(ConfigurationManager.AppSettings["AkismetKey"], blog, _requestValues.UserAgent);
-            if (!api.VerifyKey()) throw new Exception("Akismet API key invalid.");
-
-            var akismetComment = new AkismetComment
-            {
-                Blog = blog,
-                UserIp = _requestValues.UserHostAddress,
-                UserAgent = _requestValues.UserAgent,
-                CommentContent = _commentInput.Body,
-                CommentType = "comment",
-                CommentAuthor = _commentInput.Name,
-                CommentAuthorEmail = _commentInput.Email,
-                CommentAuthorUrl = _commentInput.Url,
-            };
-
-            //Check if Akismet thinks this comment is spam. Returns TRUE if spam.
-            return api.CommentCheck(akismetComment);
         }
     }
 }

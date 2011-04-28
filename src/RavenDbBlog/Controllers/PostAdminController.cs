@@ -116,40 +116,37 @@ namespace RavenDbBlog.Controllers
             }
 
             var comments = Session.Load<PostComments>(id);
+            var requestValues = Request.MapTo<RequestValues>();
             switch (command)
             {
                 case "Delete":
                     comments.Comments.RemoveAll(c => commentIds.Contains(c.Id));
                     comments.Spam.RemoveAll(c => commentIds.Contains(c.Id));
                     break;
-                case "Mark Spam":
-                    var spams = comments.Comments.Where(c => commentIds.Contains(c.Id))
-                        .Concat(comments.Spam.Where(c => commentIds.Contains(c.Id))
-                                    .ToArray();
+                case "Mark Spam": 
+                    var spams = comments.Comments
+                        .Where(c => commentIds.Contains(c.Id))
+                        .ToArray();
 
                     comments.Comments.RemoveAll(spams.Contains);
                     comments.Spam.RemoveAll(spams.Contains);
-
-                    //Askimet
-
+                    foreach (var comment in spams)
+                    {
+                        new AskimetService(requestValues).MarkHum(comment);
+                    }
                     break;
                 case "Mark Ham":
-                    var ham = comments.Comments.Where(c => commentIds.Contains(c.Id))
-                        .Concat(comments.Spam.Where(c => commentIds.Contains(c.Id))
-                                    .ToArray();
+                    var ham = comments.Spam
+                        .Where(c => commentIds.Contains(c.Id))
+                        .ToArray();
 
-                    comments.Comments.RemoveAll(ham.Contains);
                     comments.Spam.RemoveAll(ham.Contains);
-
                     foreach (var comment in ham)
                     {
                         comment.IsSpam = false;
+                        new AskimetService(requestValues).MarkHum(comment);
                     }
-
                     comments.Comments.AddRange(ham);
-
-                    //Askimet 
-
                     break;
                 default:
                     throw new InvalidOperationException(command + " command is not recognized.");

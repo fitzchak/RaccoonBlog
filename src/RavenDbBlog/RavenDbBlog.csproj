@@ -139,6 +139,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Infrastructure\Commands\CommandExcucator.cs" />
     <Compile Include="Infrastructure\Commands\ICommand.cs" />
+    <Compile Include="Services\AskimetService.cs" />
     <Compile Include="Services\IMetaWeblog.cs" />
     <Compile Include="Services\MetaWeblog.cs" />
     <Compile Include="Services\PostSchedulingStrategy.cs" />
