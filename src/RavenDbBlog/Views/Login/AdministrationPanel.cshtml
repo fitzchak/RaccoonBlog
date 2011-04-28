@@ -5,8 +5,12 @@
 @if (Model.IsAuthenticated())
 { 
 	<aside class="section admin-panel">
-        <h1>Administration Panel - @Model.FullName</h1>
-        <p><a href="@Url.Action("List", "AdminPost")">Posts</a></p>
-        <p><a href="@Url.Action("Logout", "Login")">Log out</a></p>
+        <h1>Administration Panel</h1>
+        <p>Welceome @Model.FullName!</p>
+        <ul>
+            <li><a href="@Url.Action("List", "PostAdmin")">Posts</a></li>
+            <li><a href="@Url.Action("List", "UserAdmin")">Users</a></li>
+            <li><a href="@Url.Action("Logout", "Login")">Log out</a></li>
+        </ul>
     </aside>
 }
