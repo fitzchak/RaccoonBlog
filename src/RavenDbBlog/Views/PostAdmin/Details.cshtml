@@ -88,15 +88,10 @@
 @section Script {
     <script type="text/javascript">
         $(function () {
-//            $('.comment').click(function () {
-//                var c = $(this).children('input:checkbox');
-//                c.attr('checked', !c.attr('checked'));
-//            });
-//            $('#delete').click(function () {
-//                var c = $('.comments input:checkbox:checked');
-//                var h = c.siblings('input:hidden[name=commentIds]');
-//                var a = c.add(h).serializeArray();
-//            });
+            $('.comment').click(function () {
+                var c = $(this).children('input:checkbox');
+                c.attr('checked', !c.attr('checked'));
+            });
         });
     </script>
 }
