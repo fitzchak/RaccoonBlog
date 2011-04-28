@@ -176,6 +176,12 @@ namespace RavenDbBlog.Controllers
         [HttpPost]
         public ActionResult Comment(CommentInput input, int id)
         {
+            bool isCommentClosed = DateTimeOffset.Now - new PostService(Session).GetLastCommentDateForPost(id) > TimeSpan.FromDays(30D);
+            if (isCommentClosed)
+            {
+                ModelState.AddModelError("CommentClosed", "This post is closed for comments.");
+            }
+
             var commenter = GetCommenter(input.CommenterKey) ?? new Commenter();
             bool isCaptchaRequired = commenter.IsTrustedCommenter != true;
             if (isCaptchaRequired)
@@ -183,7 +189,7 @@ namespace RavenDbBlog.Controllers
                 var isCaptchaValid = RecaptchaValidatorWrapper.Validate(ControllerContext.HttpContext);
                 if (isCaptchaValid == false)
                 {
-                    ModelState.AddModelError("_FORM", "You did not type the verification word correctly. Please try again.");
+                    ModelState.AddModelError("CaptchaNotValid", "You did not type the verification word correctly. Please try again.");
                 }
             }
 
