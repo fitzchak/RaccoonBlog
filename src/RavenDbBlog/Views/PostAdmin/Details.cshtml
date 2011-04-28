@@ -58,8 +58,7 @@
         <form action="@Url.Action("CommentsAdmin", new { id = Model.Post.Id })" method="post">
             @foreach (var comment in Model.Comments) {
                 <article class="comment@(comment.IsImportant ? " important" : null)@(comment.IsSpam ? " spam" : null)">
-                    <input type="checkbox" name="selected" value="true">
-                    <input type="hidden" name="id" value="@comment.Id">
+                    <input type="checkbox" name="commentId" value="@comment.Id">
 
                     <img class="avatar" src="http://www.gravatar.com/avatar.php?gravatar_id=@(comment.EmailHash)&amp;size=50&amp;default=identicon" alt="Gravatar" style="border-width:0px;">
 
@@ -73,15 +72,16 @@
                 </article>
             }
             <div id="comments-admin">
-                <input type="submit" value="Delete">
-                <input type="submit" value="Mark Spam">
-                <input type="submit" value="Mark Ham">
+                <input type="submit" name="operation" value="Delete">
+                <input type="submit" name="operation" value="Mark Spam">
+                <input type="submit" name="operation" value="Mark Ham">
             </div>
         </form>
     </section>
 </article>
 
-@if (Model.IsCommentClosed) { 
+@if (Model.IsCommentClosed)
+{ 
     <div>Comments have been closed on this topic.</div>
 }
 
@@ -94,7 +94,7 @@
 //            });
 //            $('#delete').click(function () {
 //                var c = $('.comments input:checkbox:checked');
-//                var h = c.siblings('input:hidden[name=id]');
+//                var h = c.siblings('input:hidden[name=commentId]');
 //                var a = c.add(h).serializeArray();
 //            });
         });

@@ -95,7 +95,7 @@ namespace RavenDbBlog.Controllers
         }
         
         [HttpPost]
-        public ActionResult CommentsAdmin(int id)
+        public ActionResult CommentsAdmin(int id, string operation, int[] commentId)
         {
             if (Request.IsAjaxRequest())
             {
