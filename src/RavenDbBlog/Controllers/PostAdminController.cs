@@ -39,7 +39,7 @@ namespace RavenDbBlog.Controllers
             vm.Comments = allComments.MapTo<AdminPostDetailsViewModel.Comment>();
             vm.NextPost = new PostService(Session).GetPostReference(x => x.PublishAt > post.PublishAt);
             vm.PreviousPost = new PostService(Session).GetPostReference(x => x.PublishAt < post.PublishAt);
-            // vm.IsCommentClosed = TODO: set this value.
+            vm.IsCommentClosed = DateTimeOffset.Now - new PostService(Session).GetLastCommentDateForPost(id) > TimeSpan.FromDays(30D);
             
             return View("Details", vm);
         }
