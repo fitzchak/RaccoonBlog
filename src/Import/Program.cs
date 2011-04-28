@@ -75,6 +75,7 @@ namespace RavenDbBlog.Import
                         var commentsCollection = new PostComments();
                         commentsCollection.Comments = post.Comments
                             .Where(comment => comment.StatusFlag == 1)
+                            .OrderBy(comment => comment.DateCreated)
                             .Select(
                                 comment => new PostComments.Comment
                                     {
@@ -90,6 +91,7 @@ namespace RavenDbBlog.Import
                             ).ToList();
                         commentsCollection.Spam = post.Comments
                             .Where(comment => comment.StatusFlag != 1)
+                            .OrderBy(comment => comment.DateCreated)
                             .Select(
                                 comment => new PostComments.Comment
                                     {
