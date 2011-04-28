@@ -41,7 +41,7 @@ namespace RavenDbBlog.Controllers
             vm.PreviousPost = new PostService(Session).GetPostReference(x => x.PublishAt < post.PublishAt);
             // vm.IsCommentClosed = TODO: set this value.
             
-            return View(vm);
+            return View("Details", vm);
         }
 
         public ActionResult ListFeed(long start, long end)
@@ -95,15 +95,72 @@ namespace RavenDbBlog.Controllers
         }
         
         [HttpPost]
-        public ActionResult CommentsAdmin(int id, string operation, int[] commentId)
+        public ActionResult CommentsAdmin(int id, string command, int[] commentIds)
         {
+            if (commentIds.Length < 1)
+                ModelState.AddModelError("CommentIdsAreEmpty", "Not comments was selected.");
+            var commands = new[] {"Delete", "Mark Spam", "Mark Ham"};
+            if (commands.Any(c => c == command) == false)
+                ModelState.AddModelError("CommentIsNotRecognized", command + " command is not recognized.");
+            var post = Session.Load<Post>(id);
+            if (post == null)
+                return HttpNotFound();
+            var slug =  SlugConverter.TitleToSlag(post.Title);
+
+            if (ModelState.IsValid == false)
+            {
+                if (Request.IsAjaxRequest())
+                    return Json(new {Success = false, message = ModelState.Values});
+
+                return Details(id, slug);
+            }
+
+            var comments = Session.Load<PostComments>(id);
+            switch (command)
+            {
+                case "Delete":
+                    comments.Comments.RemoveAll(c => commentIds.Contains(c.Id));
+                    comments.Spam.RemoveAll(c => commentIds.Contains(c.Id));
+                    break;
+                case "Mark Spam":
+                    var spams = comments.Comments.Where(c => commentIds.Contains(c.Id))
+                        .Concat(comments.Spam.Where(c => commentIds.Contains(c.Id))
+                                    .ToArray();
+
+                    comments.Comments.RemoveAll(spams.Contains);
+                    comments.Spam.RemoveAll(spams.Contains);
+
+                    //Askimet
+
+                    break;
+                case "Mark Ham":
+                    var ham = comments.Comments.Where(c => commentIds.Contains(c.Id))
+                        .Concat(comments.Spam.Where(c => commentIds.Contains(c.Id))
+                                    .ToArray();
+
+                    comments.Comments.RemoveAll(ham.Contains);
+                    comments.Spam.RemoveAll(ham.Contains);
+
+                    foreach (var comment in ham)
+                    {
+                        comment.IsSpam = false;
+                    }
+
+                    comments.Comments.AddRange(ham);
+
+                    //Askimet 
+
+                    break;
+                default:
+                    throw new InvalidOperationException(command + " command is not recognized.");
+            }
+
             if (Request.IsAjaxRequest())
             {
                 return Json(new {Success = false});
             }
 
-            var post = Session.Load<Post>(id);
-            return Details(id, post == null ? null : SlugConverter.TitleToSlag(post.Title) );
+            return RedirectToAction("Details", new { id, slug });
         }
 
         [HttpPost]

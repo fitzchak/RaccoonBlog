@@ -58,7 +58,7 @@
         <form action="@Url.Action("CommentsAdmin", new { id = Model.Post.Id })" method="post">
             @foreach (var comment in Model.Comments) {
                 <article class="comment@(comment.IsImportant ? " important" : null)@(comment.IsSpam ? " spam" : null)">
-                    <input type="checkbox" name="commentId" value="@comment.Id">
+                    <input type="checkbox" name="commentIds" value="@comment.Id">
 
                     <img class="avatar" src="http://www.gravatar.com/avatar.php?gravatar_id=@(comment.EmailHash)&amp;size=50&amp;default=identicon" alt="Gravatar" style="border-width:0px;">
 
@@ -94,7 +94,7 @@
 //            });
 //            $('#delete').click(function () {
 //                var c = $('.comments input:checkbox:checked');
-//                var h = c.siblings('input:hidden[name=commentId]');
+//                var h = c.siblings('input:hidden[name=commentIds]');
 //                var a = c.add(h).serializeArray();
 //            });
         });
