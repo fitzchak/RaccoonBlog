@@ -23,6 +23,7 @@ namespace RavenDbBlog.ViewModels
             public string EmailHash { get; set; }
             public DateTimeOffset CreatedAt { get; set; }
             public bool IsSpam { get; set; }
+            public bool IsImportant { get; set; }
         }
 
         public class PostDetails

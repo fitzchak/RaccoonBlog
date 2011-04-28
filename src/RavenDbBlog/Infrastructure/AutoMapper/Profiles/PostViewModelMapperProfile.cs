@@ -21,6 +21,7 @@ namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles
             Mapper.CreateMap<PostComments.Comment, PostViewModel.Comment>()
                 .ForMember(x => x.Body, o => o.MapFrom(m => MarkdownResolver.Resolve(m.Body)))
                 .ForMember(x => x.EmailHash, o => o.MapFrom(m => EmailHashResolver.Resolve(m.Email)))
+                .ForMember(x => x.IsImportant, o => o.MapFrom(m => m.Important))
                 ;
             
             Mapper.CreateMap<Post, PostReference>()

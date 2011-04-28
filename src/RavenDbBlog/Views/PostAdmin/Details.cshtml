@@ -58,7 +58,7 @@
         }
         @foreach (var comment in Model.Comments)
         {
-            <article class="comment@(comment.IsSpam ? " spam" : null)">
+            <article class="comment@(comment.IsImportant ? " important" : null)@(comment.IsSpam ? " spam" : null)">
                 <input type="checkbox" name="selected" value="true">
                 <input type="hidden" name="id" value="@comment.Id">
 

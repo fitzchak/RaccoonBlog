@@ -58,7 +58,7 @@
         }
         @foreach (var comment in Model.Comments)
         {
-            <article class="comment">
+            <article class="comment@(comment.IsImportant ? " important" : null)">
                 <img class="avatar" src="http://www.gravatar.com/avatar.php?gravatar_id=@(comment.EmailHash)&amp;size=50&amp;default=identicon" alt="Gravatar" style="border-width:0px;">
 
                 <div class="comment_title">
