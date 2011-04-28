@@ -82,7 +82,7 @@ namespace RavenDbBlog.Import
                                                                               Body = comment.Body,
                                                                               CreatedAt = comment.DateCreated,
                                                                               Email = comment.Email,
-                                                                              Important = comment.IsBlogAuthor ?? false,
+                                                                              Important = (comment.IsBlogAuthor ?? false) || comment.Email == "ayende@ayende.com",
                                                                               Url = comment.Url,
                                                                               IsSpam = false
                                                                           }
