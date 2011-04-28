@@ -24,6 +24,8 @@
 		</header>
         <div id="mainBody">
             <div id="sidebar">
+                @{Html.RenderAction("AdministrationPanel", "Login");}
+                   
 			    <aside class="section">
                     <h1>Title</h1>
                     <p>Text 1</p>
@@ -46,10 +48,10 @@
 				<aside class="section login">
                     @{Html.RenderAction("CurrentUser", "Login");}
                 </aside>
-
             </div>
             <div id="content">
-                @if (!string.IsNullOrEmpty(ViewBag.Message)) { 
+                @if (!string.IsNullOrEmpty(ViewBag.Message))
+                { 
                     <div class="message">@ViewBag.Message</div>
                 }
                 @RenderBody()

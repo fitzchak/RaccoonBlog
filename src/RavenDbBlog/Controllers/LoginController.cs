@@ -68,7 +68,16 @@ namespace RavenDbBlog.Controllers
 
         	var user = Session.GetUserByEmail(HttpContext.User.Identity.Name);
         	return View(new CurrentUserViewModel {FullName = user.FullName});
+        }
 
+        [ChildActionOnly]
+        public ActionResult AdministrationPanel()
+        {
+            if (Request.IsAuthenticated == false)
+                return View(new CurrentUserViewModel());
+
+            var user = Session.GetUserByEmail(HttpContext.User.Identity.Name);
+            return View(new CurrentUserViewModel { FullName = user.FullName });
         }
     }
 }

@@ -73,6 +73,7 @@ namespace RavenDbBlog.UnitTests.ControllersCore
             "~/users/logout".ShouldMapTo<LoginController>(c => c.LogOut(null));
 
             "~/users/currentuser".ShouldMapTo<LoginController>(c => c.CurrentUser());
+            "~/users/administrationpanel".ShouldMapTo<LoginController>(c => c.AdministrationPanel());
         }
 
         [Fact]

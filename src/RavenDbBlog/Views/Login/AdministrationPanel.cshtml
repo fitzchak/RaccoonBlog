@@ -1,0 +1,12 @@
+﻿@model CurrentUserViewModel
+@{
+    Layout = "";    
+}
+@if (Model.IsAuthenticated())
+{ 
+	<aside class="section admin-panel">
+        <h1>Administration Panel - @Model.FullName</h1>
+        <p><a href="@Url.Action("List", "AdminPost")">Posts</a></p>
+        <p><a href="@Url.Action("Logout", "Login")">Log out</a></p>
+    </aside>
+}

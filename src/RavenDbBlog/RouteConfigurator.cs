@@ -89,7 +89,7 @@ namespace RavenDbBlog
             routes.MapRouteLowerCase("LoginController",
                "users/{action}",
                new { controller = "Login" },
-               new { action = "Login|LogOut|CurrentUser" }
+               new { action = "Login|LogOut|CurrentUser|AdministrationPanel" }
                );
         }
 
