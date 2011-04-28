@@ -61,10 +61,10 @@ namespace RavenDbBlog
 
         private void ConfigurePostAdmin()
         {
-            routes.MapRouteLowerCase("PostAdminController-ActionWithId",
+            routes.MapRouteLowerCase("PostAdminController-PostActionWithId",
                 "admin/posts/{id}/{action}",
                 new {controller = "PostAdmin"},
-                new {action = "SetPostDate|CommentsAdmin", id = MatchPositiveInteger}
+                new {httpMethod = new HttpMethodConstraint("POST"), action = "SetPostDate|CommentsAdmin", id = MatchPositiveInteger}
                 );
 
             routes.MapRouteLowerCase("PostAdminController-Details",
