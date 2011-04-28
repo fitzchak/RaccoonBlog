@@ -432,3 +432,7 @@ ul.users-list li strong
 .fc-grid .fc-event-time {
     font-size: 11px;
 }
+.fc-header-title 
+{
+    margin-top: 9px;
+}
