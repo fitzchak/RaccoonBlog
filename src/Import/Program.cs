@@ -47,6 +47,7 @@ namespace RavenDbBlog.Import
 					            {
                                     Id = "users/" + (i + 1),
                                     Email = users[i].Email,
+                                    FullName = users[i].FullName,
                                     Enabled = true,
 					            };
                             user.SetPassword("123456");
