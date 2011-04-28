@@ -72,37 +72,37 @@ namespace RavenDbBlog.Import
                                 .ToArray()
                         };
 
-                        var commentsCollection = new PostComments
-                                               {
-                                                   Comments = post.Comments
-                                                       .Where(comment => comment.StatusFlag == 1)
-                                                       .Select(
-                                                           comment => new PostComments.Comment
-                                                                          {
-                                                                              Author = comment.Author,
-                                                                              Body = comment.Body,
-                                                                              CreatedAt = comment.DateCreated,
-                                                                              Email = comment.Email,
-                                                                              Important = comment.IsBlogAuthor ?? false,
-                                                                              Url = comment.Url,
-                                                                              IsSpam = false
-                                                                          }
-                                                       ).ToList(),
-                                                   Spam = post.Comments
-                                                       .Where(comment => comment.StatusFlag != 1)
-                                                       .Select(
-                                                           comment => new PostComments.Comment
-                                                                          {
-                                                                              Author = comment.Author,
-                                                                              Body = comment.Body,
-                                                                              CreatedAt = comment.DateCreated,
-                                                                              Email = comment.Email,
-                                                                              Important = comment.IsBlogAuthor ?? false,
-                                                                              Url = comment.Url,
-                                                                              IsSpam = true
-                                                                          }
-                                                       ).ToList(),
-                                               };
+                        var commentsCollection = new PostComments();
+                        commentsCollection.Comments = post.Comments
+                            .Where(comment => comment.StatusFlag == 1)
+                            .Select(
+                                comment => new PostComments.Comment
+                                    {
+                                        Id = commentsCollection.GenerateNewCommentId(),
+                                        Author = comment.Author,
+                                        Body = comment.Body,
+                                        CreatedAt = comment.DateCreated,
+                                        Email = comment.Email,
+                                        Important = comment.IsBlogAuthor ?? false,
+                                        Url = comment.Url,
+                                        IsSpam = false
+                                    }
+                            ).ToList();
+                        commentsCollection.Spam = post.Comments
+                            .Where(comment => comment.StatusFlag != 1)
+                            .Select(
+                                comment => new PostComments.Comment
+                                    {
+                                        Id = commentsCollection.GenerateNewCommentId(),
+                                        Author = comment.Author,
+                                        Body = comment.Body,
+                                        CreatedAt = comment.DateCreated,
+                                        Email = comment.Email,
+                                        Important = comment.IsBlogAuthor ?? false,
+                                        Url = comment.Url,
+                                        IsSpam = true
+                                    }
+                            ).ToList();
 
                         using (var session = store.OpenSession())
                         {
