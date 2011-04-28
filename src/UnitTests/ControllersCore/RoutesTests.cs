@@ -95,14 +95,14 @@ namespace RavenDbBlog.UnitTests.ControllersCore
 
             "~/admin/posts/1024/setpostdate"
                 .WithMethod(HttpVerbs.Get)
-                .ShouldMapTo<PostAdminController>(c => c.Details(1024, null));
+                .ShouldMapTo<PostAdminController>(c => c.Details(1024, "setpostdate"));
 
             var commentsadmin = "~/admin/posts/1024/commentsadmin".WithMethod(HttpVerbs.Post);
             commentsadmin.ShouldMapTo<PostAdminController>(c => c.CommentsAdmin(1024, null, null));
 
             "~/admin/posts/1024/commentsadmin"
                 .WithMethod(HttpVerbs.Get)
-                .ShouldMapTo<PostAdminController>(c => c.Details(1024, null));
+                .ShouldMapTo<PostAdminController>(c => c.Details(1024, "commentsadmin"));
         }
 
         [Fact]
