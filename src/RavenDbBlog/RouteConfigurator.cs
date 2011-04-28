@@ -78,7 +78,13 @@ namespace RavenDbBlog
                 new { controller = "PostAdmin", action = "Details", slug = UrlParameter.Optional },
                 new { id = MatchPositiveInteger }
                 );
-            
+
+            routes.MapRouteLowerCase("PostAdminController-Action",
+                "admin/posts/{action}",
+                new { controller = "PostAdmin" },
+                new { action = "Update" }
+                );
+
             routes.MapRouteLowerCase("PostAdminController-ListFeed",
                 "admin/posts/feed",
                 new { controller = "PostAdmin", action = "ListFeed" }
