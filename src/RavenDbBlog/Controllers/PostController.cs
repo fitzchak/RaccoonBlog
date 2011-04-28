@@ -37,7 +37,9 @@ namespace RavenDbBlog.Controllers
                 return RedirectToActionPermanent("Details", new {id, vm.Post.Slug});
 
             var comments = Session.Load<PostComments>(post.CommentsId);
-            vm.Comments = comments.Comments.MapTo<PostViewModel.Comment>();
+            vm.Comments = comments.Comments
+                .OrderBy(comment => comment.CreatedAt)
+                .MapTo<PostViewModel.Comment>();
             vm.NextPost = new PostService(Session).GetPostReference(x => x.PublishAt > post.PublishAt);
             vm.PreviousPost = new PostService(Session).GetPostReference(x => x.PublishAt < post.PublishAt);
             // vm.IsCommentClosed = TODO: set this value.
