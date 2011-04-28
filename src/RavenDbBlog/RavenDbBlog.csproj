@@ -187,6 +187,7 @@
     <Content Include="Views\PostAdmin\Details.cshtml" />
     <Content Include="Views\Login\AdministrationPanel.cshtml" />
     <Content Include="Views\PostAdmin\Edit.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
     <None Include="Views\Shared\EditorTemplates\MultilineText.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <None Include="Views\Shared\EditorTemplates\String.cshtml" />
