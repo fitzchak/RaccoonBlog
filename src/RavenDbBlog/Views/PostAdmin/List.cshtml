@@ -13,7 +13,6 @@
     <script src="@Url.Content("~/Content/js/fullcalendar.min.js")" type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
-            var setArticleDate = '@Url.Action("SetPostDate")';
             $('#postsCalendar').fullCalendar({
                 header: {
 				    left: 'prev,next today',
@@ -31,7 +30,7 @@
                     },
                 }],
                 eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
-                    var jqxhr = $.post(setArticleDate, {id: event.id, date: event.start.valueOf()}, null, 'json');
+                    var jqxhr = $.post('/admin/posts/' + event.id + '/setpostdate', {date: event.start.valueOf()}, null, 'json');
                     jqxhr.error(failAction);
                     jqxhr.success(function(data, textStatus, jqXHR){ 
                         if (!data.success) failAction();

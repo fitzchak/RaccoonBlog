@@ -61,18 +61,18 @@ namespace RavenDbBlog
 
         private void ConfigurePostAdmin()
         {
+            routes.MapRouteLowerCase("PostAdminController-ActionWithId",
+                "admin/posts/{id}/{action}",
+                new {controller = "PostAdmin"},
+                new {action = "SetPostDate|CommentsAdmin", id = MatchPositiveInteger}
+                );
+
             routes.MapRouteLowerCase("PostAdminController-Details",
                 "admin/posts/{id}/{slug}",
                 new { controller = "PostAdmin", action = "Details", slug = UrlParameter.Optional },
                 new { id = MatchPositiveInteger }
                 );
             
-            routes.MapRouteLowerCase("PostAdminController-Action",
-                "admin/posts/{action}",
-                new { controller = "PostAdmin" },
-                new { action = "SetPostDate" }
-                );
-
             routes.MapRouteLowerCase("PostAdminController-ListFeed",
                 "admin/posts/feed",
                 new { controller = "PostAdmin", action = "ListFeed" }

@@ -5,6 +5,7 @@ using RavenDbBlog.Core.Models;
 using RavenDbBlog.DataServices;
 using RavenDbBlog.Helpers;
 using RavenDbBlog.Infrastructure.AutoMapper;
+using RavenDbBlog.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RavenDbBlog.Services;
 using RavenDbBlog.ViewModels;
 
@@ -91,6 +92,18 @@ namespace RavenDbBlog.Controllers
             Session.SaveChanges();
 
             return Json(new { success = true });
+        }
+        
+        [HttpPost]
+        public ActionResult CommentsAdmin(int id)
+        {
+            if (Request.IsAjaxRequest())
+            {
+                return Json(new {Success = false});
+            }
+
+            var post = Session.Load<Post>(id);
+            return Details(id, post == null ? null : SlugConverter.TitleToSlag(post.Title) );
         }
 
         [HttpPost]

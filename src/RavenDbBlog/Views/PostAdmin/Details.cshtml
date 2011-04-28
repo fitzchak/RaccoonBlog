@@ -40,8 +40,7 @@
 	
     <div class="tags">
         <ul>
-            @foreach (var name in Model.Post.Tags)
-            {
+            @foreach (var name in Model.Post.Tags) {
                 <li><a href="@Url.Action("Tag", new { name })">@name</a></li>
             }
         </ul>
@@ -56,45 +55,48 @@
         @if (Model.Comments.Count == 0) { 
             <p>No comments posted yet.</p>
         }
-        @foreach (var comment in Model.Comments)
-        {
-            <article class="comment@(comment.IsImportant ? " important" : null)@(comment.IsSpam ? " spam" : null)">
-                <input type="checkbox" name="selected" value="true">
-                <input type="hidden" name="id" value="@comment.Id">
+        <form action="@Url.Action("CommentsAdmin", new { id = Model.Post.Id })" method="post">
+            @foreach (var comment in Model.Comments) {
+                <article class="comment@(comment.IsImportant ? " important" : null)@(comment.IsSpam ? " spam" : null)">
+                    <input type="checkbox" name="selected" value="true">
+                    <input type="hidden" name="id" value="@comment.Id">
 
-                <img class="avatar" src="http://www.gravatar.com/avatar.php?gravatar_id=@(comment.EmailHash)&amp;size=50&amp;default=identicon" alt="Gravatar" style="border-width:0px;">
+                    <img class="avatar" src="http://www.gravatar.com/avatar.php?gravatar_id=@(comment.EmailHash)&amp;size=50&amp;default=identicon" alt="Gravatar" style="border-width:0px;">
 
-                <div class="comment_title">
-                    @comment.CreatedAt by
-                    <address>
-                        <a title="@(string.IsNullOrEmpty(comment.Url) ? "Comment by " + comment.Author : comment.Url)" href="@comment.Url">@comment.Author</a>
-                    </address>
-                </div>
-                <p>@comment.Body</p>
-            </article>
-        }
+                    <div class="comment_title">
+                        @comment.CreatedAt by
+                        <address>
+                            <a title="@(string.IsNullOrEmpty(comment.Url) ? "Comment by " + comment.Author : comment.Url)" href="@comment.Url">@comment.Author</a>
+                        </address>
+                    </div>
+                    <p>@comment.Body</p>
+                </article>
+            }
+            <div id="comments-admin">
+                <input type="submit" value="Delete">
+                <input type="submit" value="Mark Spam">
+                <input type="submit" value="Mark Ham">
+            </div>
+        </form>
     </section>
 </article>
 
 @if (Model.IsCommentClosed) { 
     <div>Comments have been closed on this topic.</div>
 }
-<div>
-    <a id="delete">Delete</a>
-</div>
 
 @section Script {
     <script type="text/javascript">
         $(function () {
-            $('.comment').click(function () {
-                var c = $(this).children('input:checkbox');
-                c.attr('checked', !c.attr('checked'));
-            });
-            $('#delete').click(function () {
-                var c = $('.comments input:checkbox:checked');
-                var h = c.siblings('input:hidden[name=id]');
-                var a = c.add(h).serializeArray();
-            });
+//            $('.comment').click(function () {
+//                var c = $(this).children('input:checkbox');
+//                c.attr('checked', !c.attr('checked'));
+//            });
+//            $('#delete').click(function () {
+//                var c = $('.comments input:checkbox:checked');
+//                var h = c.siblings('input:hidden[name=id]');
+//                var a = c.add(h).serializeArray();
+//            });
         });
     </script>
 }
