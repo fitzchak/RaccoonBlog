@@ -6,6 +6,9 @@
 <article class="post">
     <header>
         <h1><a href="@Url.Action("Details", new { Model.Post.Id, Model.Post.Slug })">@Model.Post.Title</a></h1>
+        <div id="post-admin">
+            <a href="@Html.Action("Edit")">Edit</a>
+        </div>
     </header>
     
     <nav id="headerPrevNext">

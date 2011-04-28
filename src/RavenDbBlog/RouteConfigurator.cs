@@ -67,6 +67,12 @@ namespace RavenDbBlog
                 new {httpMethod = new HttpMethodConstraint("POST"), action = "SetPostDate|CommentsAdmin", id = MatchPositiveInteger}
                 );
 
+            routes.MapRouteLowerCase("PostAdminController-ActionWithId",
+                "admin/posts/{id}/{action}",
+                new { controller = "PostAdmin" },
+                new { action = "Edit", id = MatchPositiveInteger }
+                );
+
             routes.MapRouteLowerCase("PostAdminController-Details",
                 "admin/posts/{id}/{slug}",
                 new { controller = "PostAdmin", action = "Details", slug = UrlParameter.Optional },
