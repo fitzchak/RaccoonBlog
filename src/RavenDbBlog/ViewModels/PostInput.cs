@@ -13,10 +13,11 @@ namespace RavenDbBlog.ViewModels
         [Display(Name = "Title")]
         public string Title { get; set; }
 
+        [AllowHtml]
         [Required]
         [Display(Name = "Body")]
         [DataType(DataType.MultilineText)]
-        public MvcHtmlString Body { get; set; }
+        public string Body { get; set; }
 
         [Display(Name = "Created At")]
         [DataType(DataType.DateTime)]
