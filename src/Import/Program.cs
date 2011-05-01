@@ -2,31 +2,46 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Xsl;
+using Raven.Client;
 using Raven.Client.Document;
 using RavenDbBlog.Core.Models;
 using RavenDbBlog.Infrastructure.EntityFramework;
-using System.Linq;
+using Sgml;
+using Post = RavenDbBlog.Infrastructure.EntityFramework.Post;
 using RavenPost = RavenDbBlog.Core.Models.Post;
 
 namespace RavenDbBlog.Import
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static readonly HashSet<string> seen = new HashSet<string>();
+
+        private static void Main(string[] args)
         {
-            //GetAllHtmlFromComments();
-            //return;
+            using (var e = new SubtextEntities())
+            {
+                var comments = e.Comments.ToList();
+
+                foreach (var comment in comments)
+                {
+                    Console.WriteLine(comment.Id);
+                    Convert(comment);
+                }
+            }
+
+
 
             using (var e = new SubtextEntities())
             {
-            	Console.WriteLine("Starting...");
+                Console.WriteLine("Starting...");
 
-                var sp = Stopwatch.StartNew();
-                var theEntireDatabaseOhMygod = e.Posts
+                Stopwatch sp = Stopwatch.StartNew();
+                IOrderedEnumerable<Post> theEntireDatabaseOhMygod = e.Posts
                     .Include("Comments")
                     .Include("Links")
                     .Include("Links.Categories")
@@ -36,19 +51,18 @@ namespace RavenDbBlog.Import
                 Console.WriteLine("Loading data took {0:#,#} ms", sp.ElapsedMilliseconds);
 
 
-
-                using (var store = new DocumentStore
-                                       {
-                                           Url = "http://localhost:8080",
-                                       }.Initialize())
+                using (IDocumentStore store = new DocumentStore
+                    {
+                        Url = "http://localhost:8080",
+                    }.Initialize())
                 {
-                    using (var s = store.OpenSession())
+                    using (IDocumentSession s = store.OpenSession())
                     {
                         var users = new[]
-					        {
-					            new {Email = "ayende@ayende.com", FullName = "Ayende Rahien"},
-					            new {Email = "fitzchak@ayende.com", FullName = "Fitzchak Yitzchaki"},
-					        };
+                            {
+                                new {Email = "ayende@ayende.com", FullName = "Ayende Rahien"},
+                                new {Email = "fitzchak@ayende.com", FullName = "Fitzchak Yitzchaki"},
+                            };
 
                         for (int i = 0; i < users.Length; i++)
                         {
@@ -65,21 +79,21 @@ namespace RavenDbBlog.Import
                         s.SaveChanges();
                     }
 
-                    foreach (var post in theEntireDatabaseOhMygod)
+                    foreach (Post post in theEntireDatabaseOhMygod)
                     {
                         var ravenPost = new RavenPost
-                        {
-                            Author = post.Author,
-                            CreatedAt = new DateTimeOffset(post.DateAdded),
-                            PublishAt = new DateTimeOffset(post.DateSyndicated ?? post.DateAdded),
-                            Body = post.Text,
-                            CommentsCount = post.FeedBackCount,
-                            LegacySlug = post.EntryName,
-                            Title = post.Title,
-                            Tags = post.Links.Select(x => x.Categories.Title)
-                                .Where(x => x != "Uncategorized")
-                                .ToArray()
-                        };
+                            {
+                                Author = post.Author,
+                                CreatedAt = new DateTimeOffset(post.DateAdded),
+                                PublishAt = new DateTimeOffset(post.DateSyndicated ?? post.DateAdded),
+                                Body = post.Text,
+                                CommentsCount = post.FeedBackCount,
+                                LegacySlug = post.EntryName,
+                                Title = post.Title,
+                                Tags = post.Links.Select(x => x.Categories.Title)
+                                    .Where(x => x != "Uncategorized")
+                                    .ToArray()
+                            };
 
                         var commentsCollection = new PostComments();
                         commentsCollection.Comments = post.Comments
@@ -90,7 +104,7 @@ namespace RavenDbBlog.Import
                                     {
                                         Id = commentsCollection.GenerateNewCommentId(),
                                         Author = comment.Author,
-                                        //Body = ConvertCommentToMarkdown(comment.Body),
+                                        Body = ConvertCommentToMarkdown(comment.Body),
                                         CreatedAt = comment.DateCreated,
                                         Email = comment.Email,
                                         Important = comment.IsBlogAuthor ?? false,
@@ -106,7 +120,7 @@ namespace RavenDbBlog.Import
                                     {
                                         Id = commentsCollection.GenerateNewCommentId(),
                                         Author = comment.Author,
-                                        //Body = ConvertCommentToMarkdown(comment.Body),
+                                        Body = ConvertCommentToMarkdown(comment.Body),
                                         CreatedAt = comment.DateCreated,
                                         Email = comment.Email,
                                         Important = comment.IsBlogAuthor ?? false,
@@ -115,7 +129,7 @@ namespace RavenDbBlog.Import
                                     }
                             ).ToList();
 
-                        using (var session = store.OpenSession())
+                        using (IDocumentSession session = store.OpenSession())
                         {
                             session.Store(commentsCollection);
                             ravenPost.CommentsId = commentsCollection.Id;
@@ -124,53 +138,87 @@ namespace RavenDbBlog.Import
 
                             session.SaveChanges();
                         }
-
                     }
                 }
 
                 Console.WriteLine(sp.Elapsed);
             }
-
         }
 
-        private static void GetAllHtmlFromComments()
+        private static string Convert(Comment comment)
         {
-            using (var e = new SubtextEntities())
-            {
-                int c = 0;
-                foreach (var comment in e.Comments.ToArray())
+            var sb = new StringBuilder();
+
+            var sgmlReader = new SgmlReader
                 {
-                    if (IsHtmlComment(comment.Body))
-                    {
-                        //Console.WriteLine("Id: " + comment.Id + " Comment: " + comment.Body + Environment.NewLine + Environment.NewLine);
-                        c++;
-                        //if (c > 10)
-                        //{
-                        //    Console.WriteLine("Break: " + c);
-                        //    break;
-                        //}
-                    }
+                    InputStream = new StringReader(comment.Body),
+                    DocType = "HTML",
+                    WhitespaceHandling = WhitespaceHandling.Significant,
+                    CaseFolding = CaseFolding.ToLower
+                };
+
+            bool outputEndElement = false;
+            int indentLevel = 0;
+            while (sgmlReader.Read())
+            {
+                switch (sgmlReader.NodeType)
+                {
+                    case XmlNodeType.Text:
+                        if (indentLevel > 0)
+                            sb.Append("\t");
+                        sb.AppendLine(sgmlReader.Value);
+                        break;
+                    case XmlNodeType.Element:
+                        switch (sgmlReader.LocalName)
+                        {
+                            case "h1":
+                                sb.Append("## ");
+                                break;
+                            case "br":
+                                sb.AppendLine("  ");
+                                break;
+                            case "a":
+                                if (sgmlReader.MoveToAttribute("href"))
+                                {
+                                    string url = sgmlReader.Value;
+                                    sgmlReader.Read();
+
+                                    sb.AppendFormat("[{0}]({1})", sgmlReader.Value, url);
+                                }
+                                break;
+                            case "html":
+                                break;
+                            case "pre":
+                            case "code":
+                            case "quote":
+                                indentLevel = 1;
+                                break;
+                            default:
+                                Console.WriteLine(sgmlReader.LocalName);
+                                outputEndElement = true;
+                                sb.Append("<").Append(sgmlReader.LocalName);
+                                break;
+                        }
+                        break;
+                    case XmlNodeType.SignificantWhitespace:
+                    case XmlNodeType.Whitespace:
+                        break;
+                    case XmlNodeType.EndElement:
+                        indentLevel = 0;
+                        if (outputEndElement)
+                            sb.Append(">");
+                        outputEndElement = false;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
             }
-        }
 
-        static HashSet<string> seen = new HashSet<string>();
-
-        private static bool IsHtmlComment(string body)
-        {
-            var match = Regex.Match(ConvertCommentToMarkdown(body), @"</[^ac]\w+>"); // <[^ =T>.</acu]
-            if (match.Success)
-            {
-                if (seen.Add(match.Value))
-                    Console.WriteLine("Match: " + match.Value);
-                return true;
-            }
-            return false;
+            return sb.ToString();
         }
 
         private static string ConvertCommentToMarkdown(string body)
         {
-            return HtmlToMarkdown(body);
 
             body = body.Replace("<br />", "  " + Environment.NewLine);
 
@@ -184,46 +232,11 @@ namespace RavenDbBlog.Import
             body = body.Replace("<em>", "*");
             body = body.Replace("</em>", "*");
 
-            body = body.Replace("</pre>", "*");
-            body = body.Replace("</quote>", "*");
-            body = body.Replace("</h1>", "*");
-            body = body.Replace("</a>", "*");
-            body = body.Replace("</code>", "*");
+            body = body.Replace("<h1>", "# ");
+            body = body.Replace("</h1>", "");
+
 
             return body;
-        }
-
-        public static string HtmlToMarkdown(string html)
-        {
-            var xslt = new XslCompiledTransform();
-            xslt.Load("markdown.xsl");
-
-            // Execute the transform and output the results to a file.
-            var buffer = new StringBuilder();
-            var writer1 = new StringWriter(buffer);
-            var writer = new XmlTextWriter(writer1);
-
-            var doc = FromHtml(new StringReader(html));
-            xslt.Transform(new XmlNodeReader(doc), writer);
-
-            return buffer.ToString();
-        }
-
-        private static XmlDocument FromHtml(TextReader reader)
-        {
-            // setup SGMLReader
-            Sgml.SgmlReader sgmlReader = new Sgml.SgmlReader();
-            sgmlReader.DocType = "HTML";
-            sgmlReader.WhitespaceHandling = WhitespaceHandling.All;
-            sgmlReader.CaseFolding = Sgml.CaseFolding.ToLower;
-            sgmlReader.InputStream = reader;
-
-            // create document
-            var doc = new XmlDocument();
-            doc.PreserveWhitespace = true;
-            doc.XmlResolver = null;
-            doc.Load(sgmlReader);
-            return doc;
         }
 
     }
