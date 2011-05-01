@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Raven.Client.Linq;
 using System.Web.Mvc;
+using RavenDbBlog.Core;
 using RavenDbBlog.Core.Models;
 using RavenDbBlog.DataServices;
 using RavenDbBlog.Helpers.Validation;
 using RavenDbBlog.Indexes;
 using RavenDbBlog.Infrastructure.AutoMapper;
+using RavenDbBlog.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RavenDbBlog.ViewModels;
 using System.Web;
 using RavenDbBlog.Commands;
@@ -54,108 +56,102 @@ namespace RavenDbBlog.Controllers
             return View(vm);
         }
 
-        public ActionResult List(int page)
+        public ActionResult List()
         {
-            page = Math.Max(DefaultPage, page) - 1;
-
             var postsQuery = from post in Session.Query<Post>()
                              where post.PublishAt < DateTimeOffset.Now
                              orderby post.PublishAt descending
                              select post;
 
+            var count = postsQuery.Count();
             var posts = postsQuery
-                .Skip(page * PageSize)
+                .Skip(CurrentPage * PageSize)
                 .Take(PageSize)
                 .ToList();
 
-            return View(new PostsViewModel
-            {
-                Posts = posts.MapTo<PostsViewModel.PostSummary>()
-            });
+            return ListView(count, posts);
         }
 
-        public ActionResult Tag(string name, int page)
+        private ActionResult ListView(int count, ICollection<Post> posts)
         {
-            page = Math.Max(DefaultPage, page) - 1;
+            return View("List", new PostsViewModel
+                {
+                    CurrentPage = CurrentPage + 1,
+                    PostsCount = count,
+                    Posts = posts.MapTo<PostsViewModel.PostSummary>()
+                });
+        }
 
+        public ActionResult Tag(string slug)
+        {
+            RavenQueryStatistics stats;
             var postsQuery = from post in Session.Query<Post>()
+                             .Statistics(out stats)
                              where post.PublishAt < DateTimeOffset.Now &&
-                                   post.Tags.Any(postTag => postTag == name)
+                                   post.Tags.Any(postTag => postTag == slug)
                              orderby post.PublishAt descending
                              select post;
 
             var posts = postsQuery
-                .Skip(page * PageSize)
+                .Skip(CurrentPage * PageSize)
                 .Take(PageSize)
                 .ToList();
 
-            return View("List", new PostsViewModel
-            {
-                Posts = posts.MapTo<PostsViewModel.PostSummary>()
-            });
+            return ListView(stats.TotalResults, posts);
         }
 
-        public ActionResult ArchiveYear(int year, int page)
+        public ActionResult ArchiveYear(int year)
         {
-            page = Math.Max(DefaultPage, page) - 1;
-
+            RavenQueryStatistics stats;
             var postsQuery = from post in Session.Query<Post>()
+                             .Statistics(out stats)
                              where post.PublishAt < DateTimeOffset.Now
                                    && (post.PublishAt.Year == year)
                              orderby post.PublishAt descending
                              select post;
 
             var posts = postsQuery
-                .Skip(page * PageSize)
+                .Skip(CurrentPage * PageSize)
                 .Take(PageSize)
                 .ToList();
 
-            return View("List", new PostsViewModel
-            {
-                Posts = posts.MapTo<PostsViewModel.PostSummary>()
-            });
+            return ListView(stats.TotalResults, posts);
         }
 
-        public ActionResult ArchiveYearMonth(int year, int month, int page)
+        public ActionResult ArchiveYearMonth(int year, int month)
         {
-            page = Math.Max(DefaultPage, page) - 1;
-
+            RavenQueryStatistics stats;
             var postsQuery = from post in Session.Query<Post>()
+                             .Statistics(out stats)
                              where post.PublishAt < DateTimeOffset.Now
                                    && (post.PublishAt.Year == year && post.PublishAt.Month == month)
                              orderby post.PublishAt descending
                              select post;
 
             var posts = postsQuery
-                .Skip(page * PageSize)
+                .Skip(CurrentPage * PageSize)
                 .Take(PageSize)
                 .ToList();
 
-            return View("List", new PostsViewModel
-            {
-                Posts = posts.MapTo<PostsViewModel.PostSummary>()
-            });
+            return ListView(stats.TotalResults, posts);
         }
 
-        public ActionResult ArchiveYearMonthDay(int year, int month, int day, int page)
+        public ActionResult ArchiveYearMonthDay(int year, int month, int day)
         {
-            page = Math.Max(DefaultPage, page) - 1;
-
+            RavenQueryStatistics stats;
             var postsQuery = from post in Session.Query<Post>()
+                             .Statistics(out stats)
                              where post.PublishAt < DateTimeOffset.Now
                                    && (post.PublishAt.Year == year && post.PublishAt.Month == month && post.PublishAt.Day == day)
                              orderby post.PublishAt descending
                              select post;
 
             var posts = postsQuery
-                .Skip(page * PageSize)
+                .Skip(CurrentPage * PageSize)
                 .Take(PageSize)
                 .ToList();
 
-            return View("List", new PostsViewModel
-            {
-                Posts = posts.MapTo<PostsViewModel.PostSummary>()
-            });
+            return ListView(stats.TotalResults, posts);
         }
 
         public ActionResult RedirectLegacyPost(int year, int month, int day, string slug)
@@ -248,7 +244,7 @@ namespace RavenDbBlog.Controllers
             var tags = tagCounts
                 .ToList();
         
-            return View(tags);
+            return View(tags.MapTo<TagsListViewModel>());
         }
 
         [ChildActionOnly]

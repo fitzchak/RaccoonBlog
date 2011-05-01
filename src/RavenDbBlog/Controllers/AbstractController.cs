@@ -20,6 +20,19 @@ namespace RavenDbBlog.Controllers
             ViewBag.MetaKeywords = "";
         }
         
+        protected int CurrentPage
+        {
+            get
+            {
+                var s = Request.QueryString["page"];
+
+                int result;
+                if (int.TryParse(s, out result))
+                    return result;
+                return 0;
+            }
+        }
+
         protected new HttpNotFoundWithViewResult HttpNotFound(string statusDescription = null)
         {
             return new HttpNotFoundWithViewResult(statusDescription);
