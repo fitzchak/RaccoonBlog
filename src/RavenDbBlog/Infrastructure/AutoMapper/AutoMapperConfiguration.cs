@@ -16,6 +16,7 @@ namespace RavenDbBlog.Infrastructure.AutoMapper
 
             Mapper.AddProfile(new PostViewModelMapperProfile());
             Mapper.AddProfile(new PostsViewModelMapperProfile());
+            Mapper.AddProfile(new TagsListViewModelMapperProfile());
 
             Mapper.AddProfile(new UserAdminMapperProfile());
             Mapper.AddProfile(new PostsAdminViewModelMapperProfile());

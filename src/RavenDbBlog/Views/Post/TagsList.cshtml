@@ -1,10 +1,10 @@
-﻿@model IList<RavenDbBlog.Indexes.TempTagCount>
+﻿@model IList<TagsListViewModel>
 @{
     Layout = "";    
 }
 <ul>
     @foreach (var tag in Model)
     {
-        <li><a href="@Url.Action("Tag", "Post", new { tag.Name })">@tag.Name</a> (@tag.Count)</li>
+        <li><a href="@Url.Action("Tag", "Post", new { tag.Slug })">@tag.Name</a> (@tag.Count)</li>
     }
 </ul>
