@@ -54,8 +54,13 @@
     <Compile Include="ControllersCore\RoutesTests.cs" />
     <Compile Include="MarkdownResolverTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SlugConverterTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{235B3CF2-01F8-414B-AB25-0D9095F9DF54}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RavenDbBlog\RavenDbBlog.csproj">
       <Project>{58CCD7A4-503D-467D-8DC4-4D310BD42774}</Project>
       <Name>RavenDbBlog</Name>
