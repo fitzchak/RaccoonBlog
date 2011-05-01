@@ -5,12 +5,12 @@ namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles.Resolvers
 {
     public class TagsResolver
     {
-        private const string TagsSeparator = "||";
+        private const char TagsSeparator = '|';
 
         public static string ResolveTags(string[] tags)
         {
             string result = tags.Aggregate(string.Empty, (current, tag) => current + (TagsSeparator + tag));
-            return result.Trim();
+            return result.Trim(TagsSeparator);
         }
 
         public static string[] ResolveTagsInput(string tags)
