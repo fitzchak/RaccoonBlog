@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using RavenDbBlog.Core;
 using RavenDbBlog.Core.Models;
 using RavenDbBlog.DataServices;
 using RavenDbBlog.Helpers;

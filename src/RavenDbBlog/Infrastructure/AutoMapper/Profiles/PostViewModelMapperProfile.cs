@@ -1,6 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
+using RavenDbBlog.Core;
 using RavenDbBlog.Core.Models;
 using RavenDbBlog.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RavenDbBlog.ViewModels;

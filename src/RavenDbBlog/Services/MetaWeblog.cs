@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using CookComputing.XmlRpc;
 using Raven.Client;
+using RavenDbBlog.Core;
 using RavenDbBlog.Indexes;
 using RavenDbBlog.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RavenDbBlog.Infrastructure.Raven;
