@@ -108,6 +108,7 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\DateTimeTypeConverter.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\MvcHtmlStringConverter.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\SlugConverter.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\TagsResolver.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\UserAdminMapperProfile.cs" />
     <Compile Include="LowercaseRoute.cs" />
     <Compile Include="RouteConfigurator.cs" />

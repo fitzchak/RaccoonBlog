@@ -18,6 +18,7 @@ namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles
             
             Mapper.CreateMap<Post, PostInput>()
                 .ForMember(x => x.Id, o => o.MapFrom(m => RavenIdResolver.Resolve(m.Id)))
+                .ForMember(x => x.Tags, o => o.MapFrom(m => TagsResolver.ResolveTags(m.Tags)))
                 ;
 
             Mapper.CreateMap<Post, AdminPostDetailsViewModel.PostDetails>()
