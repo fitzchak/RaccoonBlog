@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace RavenDbBlog.Core.Models
 {
@@ -19,5 +20,18 @@ namespace RavenDbBlog.Core.Models
         public int CommentsCount { get; set; }
 
         public string CommentsId { get; set; }
+
+        public IEnumerable<string> TagsAsSlugs
+        {
+            get
+            {
+                if (Tags == null)
+                    yield break;
+                foreach (var tag in Tags)
+                {
+                    yield return SlugConverter.TitleToSlag(tag);
+                }
+            }
+        }
     }
 }
