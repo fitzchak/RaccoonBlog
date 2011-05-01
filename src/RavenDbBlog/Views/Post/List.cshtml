@@ -1,6 +1,7 @@
 ﻿@model PostsViewModel
 @{
     ViewBag.Title = "Ayende @ Rahien blog";
+    ViewBag.CurrentAction = @ViewContext.Controller.ValueProvider.GetValue("action").RawValue.ToString();
 }
 
 @foreach (var post in Model.Posts)
@@ -31,3 +32,9 @@
     </article>
 }
 
+@if (Model.HasNextPage) { 
+    <a href="@Url.Action(@ViewBag.CurrentAction, new { page = Model.CurrentPage + 1 })">Next Page</a>
+}
+@if (Model.HasPrevPage) { 
+    <a href="@Url.Action(@ViewBag.CurrentAction, new { page = Model.CurrentPage - 1 })">Previous Page</a>
+}
