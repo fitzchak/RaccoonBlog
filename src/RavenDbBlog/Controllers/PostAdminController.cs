@@ -62,10 +62,11 @@ namespace RavenDbBlog.Controllers
             var post = Session.Load<Post>(id);
             if (post == null)
                 return HttpNotFound("Post does not exist.");
-            return View(post.MapTo<PostInput>());
+            return View(new EditPostViewModel {Input = post.MapTo<PostInput>()});
         }
-
+        
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Update(PostInput input)
         {
             if (ModelState.IsValid)
@@ -73,9 +74,11 @@ namespace RavenDbBlog.Controllers
                 var post = Session.Load<Post>(input.Id) ?? new Post();
                 input.MapPropertiestoInstance(post);
                 Session.Store(post);
-                return RedirectToAction("List");
+
+                var postReference = post.MapTo<PostReference>();
+                return RedirectToAction("Details", new { postReference.Id, postReference.Slug});
             }
-            return View("Edit", input);
+            return View("Edit", new EditPostViewModel {Input = input});
         }
         
         [HttpPost]
