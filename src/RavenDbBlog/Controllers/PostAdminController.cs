@@ -15,7 +15,7 @@ namespace RavenDbBlog.Controllers
     {
         public ActionResult List()
         {
-            return View();
+            return View("List");
         }
 
         public ActionResult Details(int id, string slug)
@@ -163,7 +163,7 @@ namespace RavenDbBlog.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            return View();
+            return List();
         }
     }
 
