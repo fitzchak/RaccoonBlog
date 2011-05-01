@@ -15,7 +15,7 @@ namespace RavenDbBlog.Controllers
     {
         public ActionResult List()
         {
-            return View("List");
+            return View();
         }
 
         public ActionResult Details(int id, string slug)
@@ -71,8 +71,7 @@ namespace RavenDbBlog.Controllers
             if (ModelState.IsValid)
             {
                 var post = Session.Load<Post>(input.Id) ?? new Post();
-                post.Title = input.Title;
-                post.Body = input.Body.ToHtmlString();
+                input.MapPropertiestoInstance(post);
                 Session.Store(post);
                 return RedirectToAction("List");
             }
@@ -163,7 +162,7 @@ namespace RavenDbBlog.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            return List();
+            return RedirectToAction("List");
         }
     }
 
