@@ -8,15 +8,14 @@
 	<ul class="users-list admin-list">
 		@foreach (var user in Model) { 
 			<li>
-				
-				<p><strong>User Id</strong> @user.Id</p>
-				<p><strong>Full Name</strong> @user.FullName</p>
-				<p><strong>Email</strong> @user.Email</p>
-				<div class="edit-button">
+				@Html.DisplayFor(u => user.FullName)
+				@Html.DisplayFor(u => user.Email)
+				@Html.DisplayFor(u => user.Enabled)
+				<div class="command-section">
 					<div><a href="@Url.Action("Edit", new { user.Id })">Edit</a></div>
-					<div><a href="@Url.Action("ChangePass", new { post.Id })">Change Password</a></div>
+					<div><a href="@Url.Action("ChangePass", new { user.Id })">Change Password</a></div>
 					<div>
-                        <form action="@Url.Action("SetActivation", new { user.Id, isActive != user.Enabled })" method="post">
+                        <form action="@Url.Action("SetActivation", new { user.Id, isActive = user.Enabled == false })" method="post">
                             <input type="submit" value="@(user.Enabled ? "Activate" : "Disable")">
                         </form>
                     </div>
