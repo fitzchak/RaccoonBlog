@@ -142,6 +142,9 @@ namespace RavenDbBlog.UnitTests.ControllersCore
         public void SectionAdminControllerRoutes()
         {
             "~/admin/sections".ShouldMapTo<SectionAdminController>(c => c.List());
+
+            "~/admin/sections/add".ShouldMapTo<SectionAdminController>(c => c.Add());
+            "~/admin/sections/4/edit".ShouldMapTo<SectionAdminController>(c => c.Edit(4));
         }
 
         [Fact]

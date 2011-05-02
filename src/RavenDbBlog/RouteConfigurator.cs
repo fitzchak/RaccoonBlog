@@ -52,6 +52,18 @@ namespace RavenDbBlog
 
         private void ConfigureAdminSection()
         {
+            routes.MapRouteLowerCase("SectionAdminController-ActionWithId",
+                "admin/sections/{id}/{action}",
+                new { controller = "SectionAdmin" },
+                new { action = "Edit", id = MatchPositiveInteger }
+                );
+
+            routes.MapRouteLowerCase("SectionAdminController-Action",
+               "admin/sections/{action}",
+               new { controller = "SectionAdmin" },
+               new { action = "Add|Update" }
+               );
+
             routes.MapRouteLowerCase("SectionAdminController-List",
                 "admin/sections",
                 new { controller = "SectionAdmin", action = "List" }
