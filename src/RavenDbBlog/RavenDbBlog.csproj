@@ -104,6 +104,7 @@
     <Compile Include="DataServices\PostService.cs" />
     <Compile Include="EnsureLowerCaseRouteModule.cs" />
     <Compile Include="Helpers\Attributes\AjaxAttribute.cs" />
+    <Compile Include="Helpers\Validation\RequiredIfAttribute.cs" />
     <Compile Include="Helpers\Results\JsonNetResult.cs" />
     <Compile Include="Infrastructure\ActionResults\XmlResult.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\AbstractProfile.cs" />
@@ -164,6 +165,7 @@
     <Compile Include="ViewModels\PostsViewModel.cs" />
     <Compile Include="ViewModels\RequestValues.cs" />
     <Compile Include="ViewModels\SectionDetails.cs" />
+    <Compile Include="ViewModels\SectionInput.cs" />
     <Compile Include="ViewModels\SectionSummery.cs" />
     <Compile Include="ViewModels\TagsListViewModel.cs" />
     <Compile Include="ViewModels\UserInput.cs" />
