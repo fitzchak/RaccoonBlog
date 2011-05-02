@@ -16,8 +16,7 @@ namespace RavenDbBlog.Controllers
         public static IQueryable<Post> WhereIsPublicPost(this IQueryable<Post> query)
         {
             return query
-                .Where(post => post.PublishAt < DateTimeOffset.Now)
-                .Where(post => post.IsDeleted == false);
+                .Where(post => post.PublishAt < DateTimeOffset.Now && post.IsDeleted == false);
         }
     }
 }
