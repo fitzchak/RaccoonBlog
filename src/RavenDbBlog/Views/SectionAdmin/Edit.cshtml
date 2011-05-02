@@ -1,7 +1,7 @@
 ﻿@model SectionInput
 @{
 	ViewBag.H1 = Model.IsNewSection() ? "Create a New Section" : "Edit Section " + Model.Title;
-    ViewBag.SubmitButtonText = Model.IsNewUser() ? "Create Section" : "Update Section";
+    ViewBag.SubmitButtonText = Model.IsNewSection() ? "Create Section" : "Update Section";
 
 	ViewBag.Title = ViewBag.H1;
 }
@@ -14,7 +14,7 @@
 		@Html.EditorFor(x => x.Body)
 		@Html.EditorFor(x => x.ControllerName)
 		@Html.EditorFor(x => x.ActionName)
-		@Html.EditorFor(x => x.Active)
+		@Html.EditorFor(x => x.IsActive)
 				  
 		@Html.EditorFor(x => x.Id)
 		<input type="submit" value="@ViewBag.SubmitButtonText">
