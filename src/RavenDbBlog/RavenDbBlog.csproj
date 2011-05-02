@@ -107,6 +107,7 @@
     <Compile Include="Helpers\Results\JsonNetResult.cs" />
     <Compile Include="Infrastructure\ActionResults\XmlResult.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\AbstractProfile.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\SectionAdminMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\SectionMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\TagsListViewModelMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\PostsAdminViewModelMapperProfile.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="ViewModels\PostsViewModel.cs" />
     <Compile Include="ViewModels\RequestValues.cs" />
     <Compile Include="ViewModels\SectionDetails.cs" />
+    <Compile Include="ViewModels\SectionSummery.cs" />
     <Compile Include="ViewModels\TagsListViewModel.cs" />
     <Compile Include="ViewModels\UserInput.cs" />
     <Compile Include="ViewModels\UserPasswordInput.cs" />
@@ -235,6 +237,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\SectionAdmin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Post\Details.cshtml" />
