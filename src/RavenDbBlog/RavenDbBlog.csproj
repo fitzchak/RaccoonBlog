@@ -184,6 +184,9 @@
     <Content Include="Content\js\jquery-1.5.2.min.js" />
     <Content Include="Content\js\jquery.ui.core.js" />
     <Content Include="Content\js\jquery.ui.core.min.js" />
+    <None Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\HiddenInput.cshtml" />
+    <None Include="Views\Shared\DisplayTemplates\String.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\HiddenInput.cshtml" />
     <Content Include="EmailViews\NewComment.cshtml" />
     <Content Include="Views\Post\TagsList.cshtml" />
@@ -199,6 +202,7 @@
     <Content Include="Views\PostAdmin\Edit.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
     <Content Include="Views\Section\List.cshtml" />
+    <Content Include="Views\SectionAdmin\List.cshtml" />
     <None Include="Views\Shared\EditorTemplates\MultilineText.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <None Include="Views\Shared\EditorTemplates\String.cshtml" />
@@ -237,7 +241,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\SectionAdmin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Post\Details.cshtml" />

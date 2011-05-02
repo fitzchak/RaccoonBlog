@@ -1,0 +1,16 @@
+﻿@model IList<SectionSummery>
+@{
+    ViewBag.Title = "Manage sections";
+}
+<article>
+    <h1>Sections</h1>
+	@Html.ActionLink("Create Section", "Add")
+	<ul class="sections-list">
+		@foreach (var section1 in Model) { 
+			<li>
+				@Html.DisplayFor(s => section1.Title)
+				@Html.DisplayFor(s => section1.IsActive)
+			</li>
+		}
+	</ul>
+</article>
