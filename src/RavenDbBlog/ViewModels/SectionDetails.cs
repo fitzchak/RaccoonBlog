@@ -1,17 +1,17 @@
-namespace RavenDbBlog.Core.Models
+﻿namespace RavenDbBlog.ViewModels
 {
-    /*Section can contains:
-     * 1. Body = "Any html text"
-     * 2. Can point to any internal action.
-     */
-    public class Section
+    public class SectionDetails
     {
         public string Id { get; set; }
         public string Title { get; set; }
-        public bool IsActive { get; set; }
 
         public string Body { get; set; }
         public string ControllerName { get; set; }
         public string ActionName { get; set; }
+
+        public bool IsActionSection()
+        {
+            return string.IsNullOrEmpty(Body);
+        }
     }
 }

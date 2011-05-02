@@ -161,6 +161,7 @@
     <Compile Include="ViewModels\PostViewModel.cs" />
     <Compile Include="ViewModels\PostsViewModel.cs" />
     <Compile Include="ViewModels\RequestValues.cs" />
+    <Compile Include="ViewModels\SectionDetails.cs" />
     <Compile Include="ViewModels\TagsListViewModel.cs" />
     <Compile Include="ViewModels\UserInput.cs" />
     <Compile Include="ViewModels\UserPasswordInput.cs" />
