@@ -32,9 +32,9 @@
     </article>
 }
 
-@if (Model.HasNextPage) { 
-    <a href="@Url.Action(@ViewBag.CurrentAction, new { page = Model.CurrentPage + 1 })">Next Page</a>
-}
 @if (Model.HasPrevPage) { 
     <a href="@Url.Action(@ViewBag.CurrentAction, new { page = Model.CurrentPage - 1 })">Previous Page</a>
+}
+@if (Model.HasNextPage) { 
+    <a href="@Url.Action(@ViewBag.CurrentAction, new { page = Model.CurrentPage + 1 })">Next Page</a>
 }
