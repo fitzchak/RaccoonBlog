@@ -423,10 +423,15 @@ div.display_item li strong
 	display: block;
 	float: left;
 }
-.commands-section
+article.useradmin-list .commands-section
 {
 	float: right;
 	margin-top: -60px;
+}
+article.sectionadmin-list .commands-section
+{
+	float: right;
+	margin-top: -20px;
 }
 
 .commands-section ul li 

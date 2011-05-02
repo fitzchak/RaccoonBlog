@@ -2,10 +2,10 @@
 @{
     ViewBag.Title = "Users";
 }
-<article>
+<article class"useradmin-list">
 	<h1>Users</h1>
 	@Html.ActionLink("Create New User", "Add")
-	<ul class="users-list admin-list">
+	<ul class="admin-list">
 		@foreach (var user in Model) { 
 			<li>
 				@Html.DisplayFor(u => user.FullName)
