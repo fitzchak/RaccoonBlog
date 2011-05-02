@@ -5,9 +5,10 @@
 <article class="sectionadmin-list">
     <h1>Sections</h1>
 	@Html.ActionLink("Create Section", "Add")
-	<ul class="sections-list admin-list">
+	<ul class="admin-list sortable">
 		@foreach (var section1 in Model) { 
 			<li>
+				@Html.DisplayFor(s => section1.Id)
 				@Html.DisplayFor(s => section1.Title)
 				@Html.DisplayFor(s => section1.IsActive)
 
@@ -20,3 +21,18 @@
 		}
 	</ul>
 </article>
+
+@section Script {
+    <script src="@Url.Content("~/Content/js/jquery-ui-1.8.12.custom.min.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('ul.sortable').sortable({
+                /*containment: 'parent',*/
+                update: function (e, ui) {
+                    var id = $(this).children('[name$="id"]').val();
+                    alert(id);
+                }
+            });
+        });
+    </script>
+}
