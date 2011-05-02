@@ -29,13 +29,11 @@ namespace RavenDbBlog.Import
 
                 foreach (var comment in comments)
                 {
-                    Console.WriteLine(comment.Id);
-                    Convert(comment);
+                    Convert(comment.Body);
                 }
             }
 
-
-
+            return;
             using (var e = new SubtextEntities())
             {
                 Console.WriteLine("Starting...");
@@ -145,13 +143,13 @@ namespace RavenDbBlog.Import
             }
         }
 
-        private static string Convert(Comment comment)
+        private static string Convert(string body)
         {
             var sb = new StringBuilder();
 
             var sgmlReader = new SgmlReader
                 {
-                    InputStream = new StringReader(comment.Body),
+                    InputStream = new StringReader(body),
                     DocType = "HTML",
                     WhitespaceHandling = WhitespaceHandling.Significant,
                     CaseFolding = CaseFolding.ToLower
@@ -188,10 +186,25 @@ namespace RavenDbBlog.Import
                                 break;
                             case "html":
                                 break;
+                            case "strong":
+                            case "b":
+                                sb.AppendFormat("**{0}**", sgmlReader.Value);
+                                break;
+                            case "i":
+                            case "em":
+                                sb.AppendFormat("_{0}_", sgmlReader.Value);
+                                break;
+                            case "li":
+                                sb.AppendFormat("- {0}", sgmlReader.Value);
+                                break;
                             case "pre":
                             case "code":
                             case "quote":
                                 indentLevel = 1;
+                                break;
+                            case "ul":
+                            case "ol":
+                            case "img":
                                 break;
                             default:
                                 Console.WriteLine(sgmlReader.LocalName);
@@ -202,6 +215,7 @@ namespace RavenDbBlog.Import
                         break;
                     case XmlNodeType.SignificantWhitespace:
                     case XmlNodeType.Whitespace:
+                    case XmlNodeType.CDATA:
                         break;
                     case XmlNodeType.EndElement:
                         indentLevel = 0;
