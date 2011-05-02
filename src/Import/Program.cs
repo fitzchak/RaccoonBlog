@@ -25,17 +25,6 @@ namespace RavenDbBlog.Import
         {
             using (var e = new SubtextEntities())
             {
-                var comments = e.Comments.ToList();
-
-                foreach (var comment in comments)
-                {
-                    Convert(comment.Body);
-                }
-            }
-
-            return;
-            using (var e = new SubtextEntities())
-            {
                 Console.WriteLine("Starting...");
 
                 Stopwatch sp = Stopwatch.StartNew();
@@ -143,7 +132,7 @@ namespace RavenDbBlog.Import
             }
         }
 
-        private static string Convert(string body)
+        private static string ConvertCommentToMarkdown(string body)
         {
             var sb = new StringBuilder();
 
@@ -230,28 +219,5 @@ namespace RavenDbBlog.Import
 
             return sb.ToString();
         }
-
-        private static string ConvertCommentToMarkdown(string body)
-        {
-
-            body = body.Replace("<br />", "  " + Environment.NewLine);
-
-            body = body.Replace("<strong>", "**");
-            body = body.Replace("</strong>", "**");
-            body = body.Replace("<b>", "**");
-            body = body.Replace("</b>", "**");
-
-            body = body.Replace("<i>", "*");
-            body = body.Replace("</i>", "*");
-            body = body.Replace("<em>", "*");
-            body = body.Replace("</em>", "*");
-
-            body = body.Replace("<h1>", "# ");
-            body = body.Replace("</h1>", "");
-
-
-            return body;
-        }
-
     }
 }
