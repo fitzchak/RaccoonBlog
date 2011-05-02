@@ -14,7 +14,6 @@ namespace RavenDbBlog.Controllers
         {
             var users = Session.Query<User>()
                 .OrderBy(u => u.FullName)
-				.Skip(CurrentPage * PageSize)
                 .ToList();
 
             var vm = users.MapTo<UserSummeryViewModel>();
