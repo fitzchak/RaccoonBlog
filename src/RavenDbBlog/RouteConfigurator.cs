@@ -23,6 +23,8 @@ namespace RavenDbBlog
 
             ConfigurePost();
             
+    	    ConfigureSection();
+
     	    ConfigureLogin();
 
             ConfigurePostAdmin();
@@ -37,6 +39,15 @@ namespace RavenDbBlog
                 );
 
             #endregion
+        }
+
+        private void ConfigureSection()
+        {
+            routes.MapRouteLowerCase("SectionController-internal",
+                "{controller}/{action}",
+                new { },
+                new { controller = "Section", action = "List" }
+                );
         }
 
         private void ConfigureUserAdmin()

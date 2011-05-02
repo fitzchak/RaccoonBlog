@@ -97,6 +97,8 @@
     <Compile Include="Controllers\PostAdminController.cs" />
     <Compile Include="Controllers\Queries.cs" />
     <Compile Include="Controllers\QueryableExtensions.cs" />
+    <Compile Include="Controllers\SectionAdminController.cs" />
+    <Compile Include="Controllers\SectionController.cs" />
     <Compile Include="Controllers\SyndicationController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="DataServices\PostService.cs" />
@@ -192,6 +194,7 @@
     <Content Include="Views\Login\AdministrationPanel.cshtml" />
     <Content Include="Views\PostAdmin\Edit.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
+    <Content Include="Views\Section\List.cshtml" />
     <None Include="Views\Shared\EditorTemplates\MultilineText.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <None Include="Views\Shared\EditorTemplates\String.cshtml" />

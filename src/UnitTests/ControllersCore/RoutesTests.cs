@@ -133,6 +133,12 @@ namespace RavenDbBlog.UnitTests.ControllersCore
         }
 
         [Fact]
+        public void SectionControllerRoutes()
+        {
+            "~/section/list".ShouldMapTo<SectionController>(c => c.List());
+        }
+
+        [Fact]
         public void IgnoreRoutes()
         {
             "~/WebResource.axd".ShouldBeIgnored();
