@@ -22,12 +22,12 @@ namespace RavenDbBlog
             ConfigureSyndication();
 
             ConfigurePost();
+            ConfigurePostAdmin();
             
     	    ConfigureSection();
+    	    ConfigureAdminSection();
 
     	    ConfigureLogin();
-
-            ConfigurePostAdmin();
 
             ConfigureUserAdmin();
 
@@ -47,6 +47,14 @@ namespace RavenDbBlog
                 "{controller}/{action}",
                 new { },
                 new { controller = "Section", action = "List" }
+                );
+        }
+
+        private void ConfigureAdminSection()
+        {
+            routes.MapRouteLowerCase("SectionAdminController-List",
+                "admin/sections",
+                new { controller = "SectionAdmin", action = "List" }
                 );
         }
 
