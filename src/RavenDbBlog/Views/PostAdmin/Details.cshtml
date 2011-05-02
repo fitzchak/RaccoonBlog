@@ -11,7 +11,7 @@
                 <li><a href="@Url.Action("Edit")">Edit</a></li>
                 <li>
                     <form action="@Url.Action("Delete", new { Model.Post.Id })" method="post">
-                        <input type="submit" value="Delete">
+                        <input type="submit" value="Delete" class="confirm">
                     </form>
                 </li>
             </ul>
@@ -82,9 +82,9 @@
                 </article>
             }
             <div id="comments-admin">
-                <input type="submit" name="operation" value="Delete">
-                <input type="submit" name="operation" value="Mark Spam">
-                <input type="submit" name="operation" value="Mark Ham">
+                <input type="submit" name="operation" value="Delete" class="confirm">
+                <input type="submit" name="operation" value="Mark Spam" class="confirm">
+                <input type="submit" name="operation" value="Mark Ham" class="confirm">
             </div>
         </form>
     </section>
@@ -101,6 +101,9 @@
             $('.comment').click(function () {
                 var c = $(this).children('input:checkbox');
                 c.attr('checked', !c.attr('checked'));
+            });
+            $('.confirm').click(function () {
+                if (!confirm( 'Are you sure you want to ' + $(this).val().toLowerCase() + '?') ) return false;
             });
         });
     </script>
