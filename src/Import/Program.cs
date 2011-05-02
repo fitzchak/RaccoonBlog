@@ -18,11 +18,50 @@ namespace RavenDbBlog.Import
     {
         private static void Main(string[] args)
         {
+            using (IDocumentStore store = new DocumentStore
+                {
+                    Url = "http://localhost:8080",
+                }.Initialize())
+            {
+                CreateSections(store);
+                ImportDatabase(store);
+            }
+        }
+
+        private static void CreateSections(IDocumentStore store)
+        {
+            Console.WriteLine("Creating sections");
+            using (IDocumentSession s = store.OpenSession())
+            {
+                var sections = new[]
+                    {
+                        new Section {Title = "Administration Panel", ControllerName = "Login", ActionName = "AdministrationPanel"},
+                        new Section {Title = "Title", Body = string.Format("Text 1{0}{0}Text 2{0}{0}", Environment.NewLine)},
+                        new Section {Title = "Recent Comments", Body = "Recent Comments"},
+                        new Section {Title = "Tags", ControllerName = "Post", ActionName = "TagsList"},
+                        new Section {Title = "Archive", ControllerName = "Post", ActionName = "ArchivesList"},
+                        new Section {Title = "Login", ControllerName = "Login", ActionName = "CurrentUser"},
+
+                    };
+
+                foreach (var section in sections)
+                {
+                    section.IsActive = true;
+                    s.Store(section);
+                }
+                s.SaveChanges();
+            }
+            Console.WriteLine("Finish creating sections");
+        }
+
+        private static void ImportDatabase(IDocumentStore store)
+        {
+            Stopwatch sp = Stopwatch.StartNew();
+
             using (var e = new SubtextEntities())
             {
                 Console.WriteLine("Starting...");
 
-                Stopwatch sp = Stopwatch.StartNew();
                 IOrderedEnumerable<Post> theEntireDatabaseOhMygod = e.Posts
                     .Include("Comments")
                     .Include("Links")
@@ -32,99 +71,91 @@ namespace RavenDbBlog.Import
 
                 Console.WriteLine("Loading data took {0:#,#} ms", sp.ElapsedMilliseconds);
 
-
-                using (IDocumentStore store = new DocumentStore
-                    {
-                        Url = "http://localhost:8080",
-                    }.Initialize())
+                using (IDocumentSession s = store.OpenSession())
                 {
-                    using (IDocumentSession s = store.OpenSession())
-                    {
-                        var users = new[]
-                            {
-                                new {Email = "ayende@ayende.com", FullName = "Ayende Rahien"},
-                                new {Email = "fitzchak@ayende.com", FullName = "Fitzchak Yitzchaki"},
-                            };
-
-                        for (int i = 0; i < users.Length; i++)
+                    var users = new[]
                         {
-                            var user = new User
-                                {
-                                    Id = "users/" + (i + 1),
-                                    Email = users[i].Email,
-                                    FullName = users[i].FullName,
-                                    Enabled = true,
-                                };
-                            user.SetPassword("123456");
-                            s.Store(user);
-                        }
-                        s.SaveChanges();
-                    }
+                            new {Email = "ayende@ayende.com", FullName = "Ayende Rahien"},
+                            new {Email = "fitzchak@ayende.com", FullName = "Fitzchak Yitzchaki"},
+                        };
 
-                    foreach (Post post in theEntireDatabaseOhMygod)
+                    for (int i = 0; i < users.Length; i++)
                     {
-                        var ravenPost = new RavenPost
+                        var user = new User
                             {
-                                Author = post.Author,
-                                CreatedAt = new DateTimeOffset(post.DateAdded),
-                                PublishAt = new DateTimeOffset(post.DateSyndicated ?? post.DateAdded),
-                                Body = post.Text,
-                                CommentsCount = post.FeedBackCount,
-                                LegacySlug = post.EntryName,
-                                Title = post.Title,
-                                Tags = post.Links.Select(x => x.Categories.Title)
-                                    .Where(x => x != "Uncategorized")
-                                    .ToArray()
+                                Id = "users/" + (i + 1),
+                                Email = users[i].Email,
+                                FullName = users[i].FullName,
+                                Enabled = true,
                             };
-
-                        var commentsCollection = new PostComments();
-                        commentsCollection.Comments = post.Comments
-                            .Where(comment => comment.StatusFlag == 1)
-                            .OrderBy(comment => comment.DateCreated)
-                            .Select(
-                                comment => new PostComments.Comment
-                                    {
-                                        Id = commentsCollection.GenerateNewCommentId(),
-                                        Author = comment.Author,
-                                        Body = ConvertCommentToMarkdown(comment.Body),
-                                        CreatedAt = comment.DateCreated,
-                                        Email = comment.Email,
-                                        Important = comment.IsBlogAuthor ?? false,
-                                        Url = comment.Url,
-                                        IsSpam = false
-                                    }
-                            ).ToList();
-                        commentsCollection.Spam = post.Comments
-                            .Where(comment => comment.StatusFlag != 1)
-                            .OrderBy(comment => comment.DateCreated)
-                            .Select(
-                                comment => new PostComments.Comment
-                                    {
-                                        Id = commentsCollection.GenerateNewCommentId(),
-                                        Author = comment.Author,
-                                        Body = ConvertCommentToMarkdown(comment.Body),
-                                        CreatedAt = comment.DateCreated,
-                                        Email = comment.Email,
-                                        Important = comment.IsBlogAuthor ?? false,
-                                        Url = comment.Url,
-                                        IsSpam = true
-                                    }
-                            ).ToList();
-
-                        using (IDocumentSession session = store.OpenSession())
-                        {
-                            session.Store(commentsCollection);
-                            ravenPost.CommentsId = commentsCollection.Id;
-
-                            session.Store(ravenPost);
-
-                            session.SaveChanges();
-                        }
+                        user.SetPassword("123456");
+                        s.Store(user);
                     }
+                    s.SaveChanges();
                 }
 
-                Console.WriteLine(sp.Elapsed);
+                foreach (Post post in theEntireDatabaseOhMygod)
+                {
+                    var ravenPost = new RavenPost
+                        {
+                            Author = post.Author,
+                            CreatedAt = new DateTimeOffset(post.DateAdded),
+                            PublishAt = new DateTimeOffset(post.DateSyndicated ?? post.DateAdded),
+                            Body = post.Text,
+                            CommentsCount = post.FeedBackCount,
+                            LegacySlug = post.EntryName,
+                            Title = post.Title,
+                            Tags = post.Links.Select(x => x.Categories.Title)
+                                .Where(x => x != "Uncategorized")
+                                .ToArray()
+                        };
+
+                    var commentsCollection = new PostComments();
+                    commentsCollection.Comments = post.Comments
+                        .Where(comment => comment.StatusFlag == 1)
+                        .OrderBy(comment => comment.DateCreated)
+                        .Select(
+                            comment => new PostComments.Comment
+                                {
+                                    Id = commentsCollection.GenerateNewCommentId(),
+                                    Author = comment.Author,
+                                    Body = ConvertCommentToMarkdown(comment.Body),
+                                    CreatedAt = comment.DateCreated,
+                                    Email = comment.Email,
+                                    Important = comment.IsBlogAuthor ?? false,
+                                    Url = comment.Url,
+                                    IsSpam = false
+                                }
+                        ).ToList();
+                    commentsCollection.Spam = post.Comments
+                        .Where(comment => comment.StatusFlag != 1)
+                        .OrderBy(comment => comment.DateCreated)
+                        .Select(
+                            comment => new PostComments.Comment
+                                {
+                                    Id = commentsCollection.GenerateNewCommentId(),
+                                    Author = comment.Author,
+                                    Body = ConvertCommentToMarkdown(comment.Body),
+                                    CreatedAt = comment.DateCreated,
+                                    Email = comment.Email,
+                                    Important = comment.IsBlogAuthor ?? false,
+                                    Url = comment.Url,
+                                    IsSpam = true
+                                }
+                        ).ToList();
+
+                    using (IDocumentSession s = store.OpenSession())
+                    {
+                        s.Store(commentsCollection);
+                        ravenPost.CommentsId = commentsCollection.Id;
+
+                        s.Store(ravenPost);
+
+                        s.SaveChanges();
+                    }
+                }
             }
+            Console.WriteLine(sp.Elapsed);
         }
 
         private static string ConvertCommentToMarkdown(string body)
