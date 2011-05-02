@@ -157,9 +157,8 @@ namespace RavenDbBlog.Controllers
 
             if (Request.IsAjaxRequest())
             {
-                return Json(new {Success = false});
+                return Json(new {Success = true});
             }
-
             return RedirectToAction("Details", new { id, slug });
         }
 
@@ -168,6 +167,11 @@ namespace RavenDbBlog.Controllers
         {
             var post = Session.Load<Post>(id);
             post.IsDeleted = true;
+
+            if (Request.IsAjaxRequest())
+            {
+                return Json(new { Success = true });
+            }
             return RedirectToAction("List");
         }
     }
