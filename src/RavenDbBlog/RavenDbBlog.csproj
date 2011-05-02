@@ -96,6 +96,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PostAdminController.cs" />
     <Compile Include="Controllers\Queries.cs" />
+    <Compile Include="Controllers\QueryableExtensions.cs" />
     <Compile Include="Controllers\SyndicationController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="DataServices\PostService.cs" />

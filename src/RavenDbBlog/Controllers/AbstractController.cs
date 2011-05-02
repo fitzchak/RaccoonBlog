@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using System.Xml.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -25,11 +26,10 @@ namespace RavenDbBlog.Controllers
             get
             {
                 var s = Request.QueryString["page"];
-
                 int result;
                 if (int.TryParse(s, out result))
-                    return result;
-                return 0;
+                    return Math.Max(DefaultPage, result);
+                return DefaultPage;
             }
         }
 

@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Raven.Client.Linq;
 using System.Web.Mvc;
-using RavenDbBlog.Core;
 using RavenDbBlog.Core.Models;
 using RavenDbBlog.DataServices;
 using RavenDbBlog.Helpers.Validation;
 using RavenDbBlog.Indexes;
 using RavenDbBlog.Infrastructure.AutoMapper;
-using RavenDbBlog.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RavenDbBlog.ViewModels;
 using System.Web;
 using RavenDbBlog.Commands;
@@ -65,8 +63,7 @@ namespace RavenDbBlog.Controllers
 
             var count = postsQuery.Count();
             var posts = postsQuery
-                .Skip(CurrentPage * PageSize)
-                .Take(PageSize)
+                .Paging(CurrentPage, DefaultPage, PageSize)
                 .ToList();
 
             return ListView(count, posts);
@@ -76,7 +73,7 @@ namespace RavenDbBlog.Controllers
         {
             return View("List", new PostsViewModel
                 {
-                    CurrentPage = CurrentPage + 1,
+                    CurrentPage = CurrentPage,
                     PostsCount = count,
                     Posts = posts.MapTo<PostsViewModel.PostSummary>()
                 });
@@ -93,8 +90,7 @@ namespace RavenDbBlog.Controllers
                              select post;
 
             var posts = postsQuery
-                .Skip(CurrentPage * PageSize)
-                .Take(PageSize)
+                .Paging(CurrentPage, DefaultPage, PageSize)
                 .ToList();
 
             return ListView(stats.TotalResults, posts);
@@ -111,8 +107,7 @@ namespace RavenDbBlog.Controllers
                              select post;
 
             var posts = postsQuery
-                .Skip(CurrentPage * PageSize)
-                .Take(PageSize)
+                .Paging(CurrentPage, DefaultPage, PageSize)
                 .ToList();
 
             return ListView(stats.TotalResults, posts);
@@ -129,8 +124,7 @@ namespace RavenDbBlog.Controllers
                              select post;
 
             var posts = postsQuery
-                .Skip(CurrentPage * PageSize)
-                .Take(PageSize)
+                .Paging(CurrentPage, DefaultPage, PageSize)
                 .ToList();
 
             return ListView(stats.TotalResults, posts);
@@ -147,8 +141,7 @@ namespace RavenDbBlog.Controllers
                              select post;
 
             var posts = postsQuery
-                .Skip(CurrentPage * PageSize)
-                .Take(PageSize)
+                .Paging(CurrentPage, DefaultPage, PageSize)
                 .ToList();
 
             return ListView(stats.TotalResults, posts);
