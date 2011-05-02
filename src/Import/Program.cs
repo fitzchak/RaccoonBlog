@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -17,8 +16,6 @@ namespace RavenDbBlog.Import
 {
     internal class Program
     {
-        private static readonly HashSet<string> seen = new HashSet<string>();
-
         private static void Main(string[] args)
         {
             using (var e = new SubtextEntities())
