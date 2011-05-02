@@ -6,9 +6,10 @@
 { 
 	<aside class="section admin-panel">
         <h1>Administration Panel</h1>
-        <p>Welceome @Model.FullName!</p>
+        <p>Welcome @Model.FullName!</p>
         <ul>
             <li><a href="@Url.Action("List", "PostAdmin")">Posts</a></li>
+            <li><a href="@Url.Action("List", "SectionAdmin")">Section</a></li>
             <li><a href="@Url.Action("List", "UserAdmin")">Users</a></li>
             <li><a href="@Url.Action("Logout", "Login")">Log out</a></li>
         </ul>
