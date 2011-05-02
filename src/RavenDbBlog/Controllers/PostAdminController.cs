@@ -50,6 +50,7 @@ namespace RavenDbBlog.Controllers
             var posts = Session.Query<Post>()
                 .Where(post => post.PublishAt >= DateTimeOffsetUtil.ConvertFromUnixTimestamp(start) &&
                     post.PublishAt <= DateTimeOffsetUtil.ConvertFromUnixTimestamp(end))
+                .Where(post => post.IsDeleted == false)
                 .OrderBy(post => post.PublishAt)
                 .Take(1000)
                 .ToList();
