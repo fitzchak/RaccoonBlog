@@ -56,17 +56,15 @@ namespace RavenDbBlog.Controllers
 
         public ActionResult List()
         {
-            var postsQuery = from post in Session.Query<Post>()
-                             where post.PublishAt < DateTimeOffset.Now
-                             orderby post.PublishAt descending
-                             select post;
-
-            var count = postsQuery.Count();
-            var posts = postsQuery
+            RavenQueryStatistics stats;
+            var posts = Session.Query<Post>()
+                .Statistics(out stats)
+                .WhereIsPublicPost()
+                .OrderByDescending(post => post.PublishAt)
                 .Paging(CurrentPage, DefaultPage, PageSize)
                 .ToList();
 
-            return ListView(count, posts);
+            return ListView(stats.TotalResults, posts);
         }
 
         private ActionResult ListView(int count, ICollection<Post> posts)
@@ -82,14 +80,11 @@ namespace RavenDbBlog.Controllers
         public ActionResult Tag(string slug)
         {
             RavenQueryStatistics stats;
-            var postsQuery = from post in Session.Query<Post>()
-                             .Statistics(out stats)
-                             where post.PublishAt < DateTimeOffset.Now &&
-                                   post.Tags.Any(postTag => postTag == slug)
-                             orderby post.PublishAt descending
-                             select post;
-
-            var posts = postsQuery
+            var posts = Session.Query<Post>()
+                .Statistics(out stats)
+                .WhereIsPublicPost()
+                .Where(post => post.Tags.Any(postTag => postTag == slug))
+                .OrderByDescending(post => post.PublishAt)
                 .Paging(CurrentPage, DefaultPage, PageSize)
                 .ToList();
 
@@ -99,14 +94,11 @@ namespace RavenDbBlog.Controllers
         public ActionResult ArchiveYear(int year)
         {
             RavenQueryStatistics stats;
-            var postsQuery = from post in Session.Query<Post>()
-                             .Statistics(out stats)
-                             where post.PublishAt < DateTimeOffset.Now
-                                   && (post.PublishAt.Year == year)
-                             orderby post.PublishAt descending
-                             select post;
-
-            var posts = postsQuery
+            var posts = Session.Query<Post>()
+                .Statistics(out stats)
+                .WhereIsPublicPost()
+                .Where(post => post.PublishAt.Year == year)
+                .OrderByDescending(post => post.PublishAt)
                 .Paging(CurrentPage, DefaultPage, PageSize)
                 .ToList();
 
@@ -116,14 +108,11 @@ namespace RavenDbBlog.Controllers
         public ActionResult ArchiveYearMonth(int year, int month)
         {
             RavenQueryStatistics stats;
-            var postsQuery = from post in Session.Query<Post>()
-                             .Statistics(out stats)
-                             where post.PublishAt < DateTimeOffset.Now
-                                   && (post.PublishAt.Year == year && post.PublishAt.Month == month)
-                             orderby post.PublishAt descending
-                             select post;
-
-            var posts = postsQuery
+            var posts = Session.Query<Post>()
+                .Statistics(out stats)
+                .WhereIsPublicPost()
+                .Where(post => post.PublishAt.Year == year && post.PublishAt.Month == month)
+                .OrderByDescending(post => post.PublishAt)
                 .Paging(CurrentPage, DefaultPage, PageSize)
                 .ToList();
 
@@ -133,14 +122,11 @@ namespace RavenDbBlog.Controllers
         public ActionResult ArchiveYearMonthDay(int year, int month, int day)
         {
             RavenQueryStatistics stats;
-            var postsQuery = from post in Session.Query<Post>()
-                             .Statistics(out stats)
-                             where post.PublishAt < DateTimeOffset.Now
-                                   && (post.PublishAt.Year == year && post.PublishAt.Month == month && post.PublishAt.Day == day)
-                             orderby post.PublishAt descending
-                             select post;
-
-            var posts = postsQuery
+            var posts = Session.Query<Post>()
+                .Statistics(out stats)
+                .WhereIsPublicPost()
+                .Where(post => post.PublishAt.Year == year && post.PublishAt.Month == month && post.PublishAt.Day == day)
+                .OrderByDescending(post => post.PublishAt)
                 .Paging(CurrentPage, DefaultPage, PageSize)
                 .ToList();
 
@@ -149,10 +135,10 @@ namespace RavenDbBlog.Controllers
 
         public ActionResult RedirectLegacyPost(int year, int month, int day, string slug)
         {
-            var postQuery = from post1 in Session.Query<Post>()
-                      where post1.LegacySlug == slug &&
-                            (post1.PublishAt.Year == year && post1.PublishAt.Month == month && post1.PublishAt.Day == day)
-                      select post1;
+            var postQuery = Session.Query<Post>()
+                .WhereIsPublicPost()
+                .Where(post1 => post1.LegacySlug == slug &&
+                        (post1.PublishAt.Year == year && post1.PublishAt.Month == month && post1.PublishAt.Day == day));
 
             var post = postQuery.FirstOrDefault();
             if (post == null)
@@ -181,7 +167,10 @@ namespace RavenDbBlog.Controllers
                     ModelState.AddModelError("CaptchaNotValid", "You did not type the verification word correctly. Please try again.");
                 }
             }
-
+            /*TODO:
+             * 1. Load only public posts. User cannot comment on deleted posts.
+             * 2. User cannot comment on closed posts.
+             */
             var post = Session.Load<Post>(id);
             var comments = Session.Load<PostComments>(id);
 

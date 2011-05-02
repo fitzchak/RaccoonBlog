@@ -166,6 +166,8 @@ namespace RavenDbBlog.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
+            var post = Session.Load<Post>(id);
+            post.IsDeleted = true;
             return RedirectToAction("List");
         }
     }
