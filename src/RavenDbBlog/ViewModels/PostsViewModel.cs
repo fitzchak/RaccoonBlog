@@ -8,7 +8,7 @@ namespace RavenDbBlog.ViewModels
     public class PostsViewModel
     {
         public bool HasNextPage { get { return CurrentPage*AbstractController.PageSize < PostsCount; } }
-        public bool HasPrevPage { get { return CurrentPage*AbstractController.PageSize > PostsCount; } }
+        public bool HasPrevPage { get { return CurrentPage*AbstractController.PageSize > AbstractController.PageSize*AbstractController.DefaultPage; } }
 
         public int CurrentPage { get; set; }
         public int PostsCount { get; set; }
