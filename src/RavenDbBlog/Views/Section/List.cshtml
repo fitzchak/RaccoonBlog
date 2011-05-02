@@ -3,28 +3,14 @@
     Layout = "";    
 }
 <div id="sidebar">
-    @{Html.RenderAction("AdministrationPanel", "Login");}
-                   
-	<aside class="section">
-        <h1>Title</h1>
-        <p>Text 1</p>
-		<p>Text 2</p>
-    </aside>
-
-	<aside class="section">
-        <h1>Recent Comments</h1>
-	</aside>
-
-    <aside class="section tags_list">
-        <h1>Tags</h1>
-        @{Html.RenderAction("TagsList", "Post");}
-    </aside>
-    <aside class="section tags_list">
-        <h1>Archive</h1>
-        @{Html.RenderAction("ArchivesList", "Post");}
-    </aside>
-
-	<aside class="section login">
-        @{Html.RenderAction("CurrentUser", "Login");}
-    </aside>
+    @foreach (var section in Model) {
+        <aside class="section">
+            <h1>@(section.Title)</h1>
+            @if (section.IsActionSection()) { 
+                Html.RenderAction(section.ActionName, section.ControllerName);
+            } else {
+                @(section.Body)
+            }
+        </aside>
+	}
 </div>

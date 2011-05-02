@@ -11,11 +11,11 @@ namespace RavenDbBlog.Controllers
         [ChildActionOnly]
         public ActionResult List()
         {
-            var section = Session.Query<Section>()
+            var sections = Session.Query<Section>()
                 .Where(s => s.IsActive)
                 .ToList();
 
-            return View(section.MapTo<SectionDetails>());
+            return View(sections.MapTo<SectionDetails>());
         }
     }
 }
