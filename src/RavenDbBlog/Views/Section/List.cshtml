@@ -3,6 +3,8 @@
     Layout = "";    
 }
 <div id="sidebar">
+    @{Html.RenderAction("AdministrationPanel", "Login");}
+
     @foreach (var section in Model) {
         <aside class="section">
             <h1>@(section.Title)</h1>

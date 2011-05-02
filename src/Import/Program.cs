@@ -35,13 +35,11 @@ namespace RavenDbBlog.Import
             {
                 var sections = new[]
                     {
-                        new Section {Title = "Administration Panel", ControllerName = "Login", ActionName = "AdministrationPanel"},
                         new Section {Title = "Title", Body = string.Format("Text 1{0}{0}Text 2{0}{0}", Environment.NewLine)},
                         new Section {Title = "Recent Comments", Body = "Recent Comments"},
                         new Section {Title = "Tags", ControllerName = "Post", ActionName = "TagsList"},
                         new Section {Title = "Archive", ControllerName = "Post", ActionName = "ArchivesList"},
                         new Section {Title = "Login", ControllerName = "Login", ActionName = "CurrentUser"},
-
                     };
 
                 foreach (var section in sections)
