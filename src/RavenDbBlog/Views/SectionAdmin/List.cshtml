@@ -5,7 +5,7 @@
 <article>
     <h1>Sections</h1>
 	@Html.ActionLink("Create Section", "Add")
-	<ul class="sections-list">
+	<ul class="sections-list admin-list">
 		@foreach (var section1 in Model) { 
 			<li>
 				@Html.DisplayFor(s => section1.Title)

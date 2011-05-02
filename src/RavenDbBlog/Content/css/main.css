@@ -403,20 +403,20 @@ article header h1 a
 #headerPrevNext a { color: inherit; padding: 2px; text-decoration: none; }
 #headerPrevNext a:hover, #headerPrevNext a:hover em { background-color: #993300; color: #ffffff; }
 
-ul.users-list
+ul.admin-list
 {
 	
 }
-ul.users-list li
+ul.admin-list li
 {
 	padding: 5px 0;
 	border-bottom: 1px dotted #444;
 }
-ul.users-list li p
+div.display_item
 {
 	margin: 4px 0;
 }
-ul.users-list li strong
+div.display_item li strong
 {
 	color: #444;
 	width: 100px;
@@ -427,6 +427,11 @@ ul.users-list li strong
 {
 	float: right;
 	margin-top: -60px;
+}
+
+.commands-section ul li 
+{
+    border: none;
 }
 
 .fc-grid .fc-event-time {
