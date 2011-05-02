@@ -12,6 +12,14 @@ namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles
             Mapper.CreateMap<Section, SectionSummery>()
                 .ForMember(x => x.Id, o => o.MapFrom(m => RavenIdResolver.Resolve(m.Id)))
                 ;
+            
+            Mapper.CreateMap<Section, SectionInput>()
+                .ForMember(x => x.Id, o => o.MapFrom(m => RavenIdResolver.Resolve(m.Id)))
+                ;
+
+            Mapper.CreateMap<SectionInput, Section>()
+                .ForMember(x => x.Id, o => o.Ignore())
+                ;
         }
     }
 }
