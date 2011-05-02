@@ -82,7 +82,7 @@ namespace RavenDbBlog
             routes.MapRouteLowerCase("PostAdminController-Action",
                 "admin/posts/{action}",
                 new { controller = "PostAdmin" },
-                new { action = "Update" }
+                new { action = "Update|Delete" }
                 );
 
             routes.MapRouteLowerCase("PostAdminController-ListFeed",

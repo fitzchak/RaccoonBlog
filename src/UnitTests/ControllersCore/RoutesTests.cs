@@ -89,6 +89,9 @@ namespace RavenDbBlog.UnitTests.ControllersCore
             "~/admin/posts/1024/blog-post-title".ShouldMapTo<PostAdminController>(c => c.Details(1024, "blog-post-title"));
 
             "~/admin/posts/update".ShouldMapTo<PostAdminController>(c => c.Update(null));
+            var delete = "~/admin/posts/delete".WithMethod(HttpVerbs.Post);
+            delete.Values["id"] = 1024;
+            delete.ShouldMapTo<PostAdminController>(c => c.Delete(1024));
 
             var setpostdate = "~/admin/posts/1024/setpostdate".WithMethod(HttpVerbs.Post);
             setpostdate.Values["date"] = 0;
