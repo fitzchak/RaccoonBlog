@@ -15,6 +15,7 @@ namespace RavenDbBlog.ViewModels
 
         [AllowHtml]
         [Display(Name = "Body")]
+        [DataType(DataType.MultilineText)]
         public string Body { get; set; }
 
         [RequiredIf("Body", "")]
