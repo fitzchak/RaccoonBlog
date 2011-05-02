@@ -6,6 +6,9 @@ namespace RavenDbBlog.ViewModels
 {
     public class SectionInput
     {
+        [HiddenInput]
+        public int Id { get; set; }
+
         [Required]
         [Display(Name = "Title")]
         public string Title { get; set; }
@@ -22,9 +25,12 @@ namespace RavenDbBlog.ViewModels
         [Display(Name = "Action Name")]
         public string ActionName { get; set; }
 
-        public bool IsActionSection()
+        [Display(Name = "Active?")]
+        public bool IsActive { get; set; }
+
+        public bool IsNewSection()
         {
-            return string.IsNullOrEmpty(Body);
+            return Id == 0;
         }
     }
 }
