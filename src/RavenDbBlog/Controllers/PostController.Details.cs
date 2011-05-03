@@ -64,7 +64,7 @@ namespace RavenDbBlog.Controllers
                 vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
             }
             
-            return View(vm);
+            return View("Details", vm);
         }
 
         [HttpPost]
