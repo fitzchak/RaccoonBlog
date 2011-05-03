@@ -103,6 +103,7 @@
     <Compile Include="Controllers\SyndicationController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="DataServices\PostService.cs" />
+    <Compile Include="DataServices\UserService.cs" />
     <Compile Include="EnsureLowerCaseRouteModule.cs" />
     <Compile Include="Helpers\Attributes\AjaxAttribute.cs" />
     <Compile Include="Helpers\Validation\RequiredIfAttribute.cs" />

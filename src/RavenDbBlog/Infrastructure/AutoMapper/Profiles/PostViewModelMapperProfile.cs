@@ -34,6 +34,13 @@ namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles
                 .ForMember(x => x.CommenterKey, o => o.MapFrom(m => m.Key))
                 ;
 
+            Mapper.CreateMap<User, CommentInput>()
+                .ForMember(x => x.Name, o => o.MapFrom(m => m.FullName))
+                .ForMember(x => x.Url, o => o.Ignore())
+                .ForMember(x => x.Body, o => o.Ignore())
+                .ForMember(x => x.CommenterKey, o => o.Ignore())
+                ;
+
             Mapper.CreateMap<HttpRequestWrapper, RequestValues>();
         }
     }

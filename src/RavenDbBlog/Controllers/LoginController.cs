@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.Security;
 using RavenDbBlog.Core.Models;
+using RavenDbBlog.DataServices;
 using RavenDbBlog.ViewModels;
 
 namespace RavenDbBlog.Controllers
@@ -73,11 +74,14 @@ namespace RavenDbBlog.Controllers
         [ChildActionOnly]
         public ActionResult AdministrationPanel()
         {
-            if (Request.IsAuthenticated == false)
-                return View(new CurrentUserViewModel());
+            var user = new UserService(Session).GetCurrentUser();
 
-            var user = Session.GetUserByEmail(HttpContext.User.Identity.Name);
-            return View(new CurrentUserViewModel { FullName = user.FullName });
+            var vm = new CurrentUserViewModel();
+            if (user != null)
+            {
+                vm.FullName = user.FullName;
+            }
+            return View(vm);
         }
     }
 }

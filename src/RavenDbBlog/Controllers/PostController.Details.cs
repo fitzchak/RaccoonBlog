@@ -45,12 +45,19 @@ namespace RavenDbBlog.Controllers
             vm.IsCommentClosed = DateTimeOffset.Now - new PostService(Session).GetLastCommentDateForPost(id) > TimeSpan.FromDays(30D);
 
             var cookie = Request.Cookies[CommenterCookieName];
-            if (cookie != null)
+            if (Request.IsAuthenticated)
+            {
+                var user = new UserService(Session).GetCurrentUser();
+                vm.Input = user.MapTo<CommentInput>();
+                vm.IsTrustedCommenter = true;
+            }
+            else if (cookie != null)
             {
                 var commenter = GetCommenter(cookie.Value);
                 vm.Input = commenter.MapTo<CommentInput>();
                 vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
             }
+            
             return View(vm);
         }
 
