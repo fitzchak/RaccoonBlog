@@ -104,6 +104,10 @@ namespace RavenDbBlog.Controllers
                     Comments = comments != null ? comments.Comments.MapTo<PostViewModel.Comment>() : new List<PostViewModel.Comment>(),
                     Input = input,
                 };
+
+                if (Request.IsAjaxRequest())
+                    return Json(new { Success = false, message = ModelState.Values });
+
                 return View("Details", vm);
             }
 
@@ -111,7 +115,11 @@ namespace RavenDbBlog.Controllers
 
             Response.Cookies.Add(new HttpCookie(CommenterCookieName, commenter.Key.ToString()));
 
-            TempData["message"] = "You feedback will be posted soon. Thanks for the feedback.";
+            const string successMessage = "You feedback will be posted soon. Thanks!";
+            if (Request.IsAjaxRequest())
+                return Json(new { Success = true, message = successMessage });
+
+            TempData["message"] = successMessage;
             var postReference = post.MapTo<PostReference>();
             return RedirectToAction("Details", new { postReference.Id, postReference.Slug });
         }
