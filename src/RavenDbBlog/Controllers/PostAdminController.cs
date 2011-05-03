@@ -52,7 +52,7 @@ namespace RavenDbBlog.Controllers
                     post.PublishAt <= DateTimeOffsetUtil.ConvertFromUnixTimestamp(end))
                 .Where(post => post.IsDeleted == false)
                 .OrderBy(post => post.PublishAt)
-                .Take(1000)
+                .Take(256)
                 .ToList();
 
             return Json(posts.MapTo<PostSummaryJson>());
