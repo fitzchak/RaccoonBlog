@@ -57,7 +57,9 @@ namespace RavenDbBlog.Services
                 CommentAuthorUrl = comment.Url,
             };
 
+            #if Release
             api.SubmitHam(akismetComment);
+            #endif
         }
 
         public void MarkSpam(PostComments.Comment comment)
@@ -79,7 +81,9 @@ namespace RavenDbBlog.Services
                 CommentAuthorUrl = comment.Url,
             };
 
+            #if Release
             api.SubmitSpam(akismetComment);
+            #endif
         }
     }
 }
