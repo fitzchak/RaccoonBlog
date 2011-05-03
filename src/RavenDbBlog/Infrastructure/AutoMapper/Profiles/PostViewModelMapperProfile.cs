@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System.Configuration;
+using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using RavenDbBlog.Core;
@@ -8,7 +9,7 @@ using RavenDbBlog.ViewModels;
 
 namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles
 {
-    public class PostViewModelMapperProfile : Profile
+    public class PostViewModelMapperProfile : AbstractProfile
     {
         protected override void Configure()
         {
@@ -36,7 +37,7 @@ namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles
 
             Mapper.CreateMap<User, CommentInput>()
                 .ForMember(x => x.Name, o => o.MapFrom(m => m.FullName))
-                .ForMember(x => x.Url, o => o.Ignore())
+                .ForMember(x => x.Url, o => o.MapFrom(m => ConfigurationManager.AppSettings["MainUrl"] + UrlHelper.RouteUrl("Default")))
                 .ForMember(x => x.Body, o => o.Ignore())
                 .ForMember(x => x.CommenterKey, o => o.Ignore())
                 ;

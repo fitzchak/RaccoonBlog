@@ -71,7 +71,7 @@ namespace RavenDbBlog.Controllers
             }
 
             var commenter = GetCommenter(input.CommenterKey) ?? new Commenter();
-            bool isCaptchaRequired = Request.IsAuthenticated || commenter.IsTrustedCommenter != true;
+            bool isCaptchaRequired = commenter.IsTrustedCommenter != true && Request.IsAuthenticated == false;
             if (isCaptchaRequired)
             {
                 var isCaptchaValid = RecaptchaValidatorWrapper.Validate(ControllerContext.HttpContext);
