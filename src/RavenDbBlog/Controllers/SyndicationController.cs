@@ -93,7 +93,7 @@ namespace RavenDbBlog.Controllers
 	    private string GetPostLink(Post post)
 	    {
             var postReference = post.MapTo<PostReference>();
-            return Url.Action("Details", "Post", new { postReference.Id, postReference.Slug });
+            return Url.Action("Details", "Post", new { Id = postReference.DomainId, postReference.Slug });
 	    }
 
 	    private static string GetBlogCopyright()

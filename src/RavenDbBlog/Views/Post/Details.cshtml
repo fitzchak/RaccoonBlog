@@ -12,12 +12,12 @@
         <ul>
             @if (Model.PreviousPost != null)
             { 
-                <li><a href="@Url.Action("Details", new { Model.PreviousPost.Id, Model.PreviousPost.Slug })">previous: @Model.PreviousPost.Title</a></li>
+                <li><a href="@Url.Action("Details", new { id = Model.PreviousPost.DomainId, Model.PreviousPost.Slug })">previous: @Model.PreviousPost.Title</a></li>
             }
         
             @if (Model.NextPost != null)
             { 
-                <li><a href="@Url.Action("Details", new { Model.NextPost.Id, Model.NextPost.Slug })">next: @Model.NextPost.Title</a></li>
+                <li><a href="@Url.Action("Details", new { id = Model.NextPost.DomainId, Model.NextPost.Slug })">next: @Model.NextPost.Title</a></li>
             }
         </ul>
     </nav>

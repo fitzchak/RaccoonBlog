@@ -78,7 +78,7 @@ namespace RavenDbBlog.Controllers
                 Session.Store(post);
 
                 var postReference = post.MapTo<PostReference>();
-                return RedirectToAction("Details", new { postReference.Id, postReference.Slug});
+                return RedirectToAction("Details", new { Id = postReference.DomainId, postReference.Slug});
             }
             return View("Edit", new EditPostViewModel {Input = input});
         }

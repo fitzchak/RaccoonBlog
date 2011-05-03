@@ -94,21 +94,22 @@ namespace RavenDbBlog.Controllers
             if (post == null || post.IsPublicPost() == false)
                 return HttpNotFound();
 
-            var comments = Session.Load<PostComments>(id);
-
+            PostReference postReference;
             if (ModelState.IsValid == false)
             {
-                var vm = new PostViewModel
-                {
-                    Post = post.MapTo<PostViewModel.PostDetails>(),
-                    Comments = comments != null ? comments.Comments.MapTo<PostViewModel.Comment>() : new List<PostViewModel.Comment>(),
-                    Input = input,
-                };
-
                 if (Request.IsAjaxRequest())
                     return Json(new { Success = false, message = ModelState.Values });
 
-                return View("Details", vm);
+                postReference = post.MapTo<PostReference>();
+                var result = Details(postReference.DomainId, postReference.Slug);
+                var model = result as ViewResult;
+                if (model != null)
+                {
+                    var viewModel = model.Model as PostViewModel;
+                    if (viewModel != null)
+                        viewModel.Input = input;
+                }
+                return result;
             }
 
             CommandExcucator.ExcuteLater(new AddCommentCommand(input, Request.MapTo<RequestValues>(), id));
@@ -120,8 +121,8 @@ namespace RavenDbBlog.Controllers
                 return Json(new { Success = true, message = successMessage });
 
             TempData["message"] = successMessage;
-            var postReference = post.MapTo<PostReference>();
-            return RedirectToAction("Details", new { postReference.Id, postReference.Slug });
+            postReference = post.MapTo<PostReference>();
+            return RedirectToAction("Details", new { Id = postReference.DomainId, postReference.Slug });
         }
 
         private Commenter GetCommenter(string commenterKey)

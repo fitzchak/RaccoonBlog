@@ -37,7 +37,7 @@ namespace RavenDbBlog.Controllers
                 return HttpNotFound();
 
             var postReference = post.MapTo<PostReference>();
-            return RedirectToActionPermanent("Details", new { postReference.Id, postReference.Slug });
+            return RedirectToActionPermanent("Details", new { Id = postReference.DomainId, postReference.Slug });
         }
 
         [ChildActionOnly]

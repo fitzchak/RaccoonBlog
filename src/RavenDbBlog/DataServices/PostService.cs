@@ -22,7 +22,8 @@ namespace RavenDbBlog.DataServices
         {
             var postReference = Session.Query<Post>()
                 .Where(expression)
-                .Select(p => new { p.Id, p.Title })
+                .OrderByDescending(post => post.PublishAt)
+                .Select(p => new {p.Id, p.Title})
                 .FirstOrDefault();
 
             if (postReference == null)
