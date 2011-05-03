@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Manage sections";
 }
+<div class="messageWrapper"><div id="message" style="visibility:hidden"></div></div>
 <article class="sectionadmin-list">
     <h1>Sections</h1>
 	@Html.ActionLink("Create Section", "Add")
@@ -27,12 +28,29 @@
     <script type="text/javascript">
         $(function () {
             $('ul.sortable').sortable({
-                /*containment: 'parent',*/
+                cursor: 'move',
                 update: function (e, ui) {
-                    var id = $(this).children('[name$="id"]').val();
-                    alert(id);
+                    var t = $(this);
+                    var li = $(ui.item);
+                    var title = li.find('.display_item>strong:contains("Title")').next().text();
+                    var jqxhr = $.post('/admin/sections/' + li.find('[name$="Id"]').val() + '/setposition', { newPosition: li.parent('ul').children('li').index(li) }, null, 'json');
+                    jqxhr.error(failAction);
+                    jqxhr.success(function (data, textStatus, jqXHR) {
+                        if (!data.success) failAction();
+                        else setMessage('Change section position succeed: ' + title);
+                    });
+                    function failAction() {
+                        t.sortable('cancel');
+                        setMessage('Change section position failed: ' + title, 'fail');
+                    }
                 }
             });
+
+            function setMessage(message, cssClass) {
+                var m = $('#message').html(message);
+                if (cssClass) m.addClass(cssClass);
+                m.css('visibility', 'visible');
+            }
         });
     </script>
 }
