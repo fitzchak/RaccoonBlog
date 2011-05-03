@@ -60,7 +60,8 @@ namespace RavenDbBlog.Controllers
             {
                 var sections = Session.Query<Section>()
                     .Where(s => s.Position >= newPosition && s.Position < section.Position)
-                    .OrderBy(s => s.Position);
+                    .OrderBy(s => s.Position)
+                    .ToList();
 
                 foreach (var section1 in sections)
                 {
@@ -71,7 +72,8 @@ namespace RavenDbBlog.Controllers
             {
                 var sections = Session.Query<Section>()
                     .Where(s => s.Position < newPosition && s.Position >= section.Position)
-                    .OrderBy(s => s.Position);
+                    .OrderBy(s => s.Position)
+                    .ToList();
 
                 foreach (var section1 in sections)
                 {
