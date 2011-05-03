@@ -89,7 +89,13 @@
     
         @if (!Model.IsTrustedCommenter)
         { 
-            @Html.GenerateCaptcha()
+            <div class="form_item">
+                <label>
+                    <span class="form_item_name">Are you human?</span>
+                    @Html.GenerateCaptcha()
+                    @Html.ValidationMessage("CaptchaNotValid")
+                </label>
+            </div>
         }
         <input type="submit" value="Post Comment" />
     </form>
