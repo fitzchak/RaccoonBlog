@@ -11,12 +11,13 @@ using RavenDbBlog.ViewModels;
 using System.Web;
 using RavenDbBlog.Commands;
 using RavenDbBlog.Infrastructure.Commands;
-using Constants = RavenDbBlog.Infrastructure.Constants;
 
 namespace RavenDbBlog.Controllers
 {
     public partial class PostController
     {
+        public const string CommenterCookieName = "commenter";
+
         public ActionResult Details(int id, string slug)
         {
             var post = Session
@@ -43,7 +44,7 @@ namespace RavenDbBlog.Controllers
             vm.PreviousPost = new PostService(Session).GetPostReference(x => x.PublishAt < post.PublishAt);
             vm.IsCommentClosed = DateTimeOffset.Now - new PostService(Session).GetLastCommentDateForPost(id) > TimeSpan.FromDays(30D);
 
-            var cookie = Request.Cookies[Constants.CommenterKeyCookieName];
+            var cookie = Request.Cookies[CommenterCookieName];
             if (cookie != null)
             {
                 var commenter = GetCommenter(cookie.Value);
@@ -95,7 +96,7 @@ namespace RavenDbBlog.Controllers
 
             CommandExcucator.ExcuteLater(new AddCommentCommand(input, Request.MapTo<RequestValues>(), id));
 
-            Response.Cookies.Add(new HttpCookie(Constants.CommenterKeyCookieName, commenter.Key.ToString()));
+            Response.Cookies.Add(new HttpCookie(CommenterCookieName, commenter.Key.ToString()));
 
             TempData["message"] = "You feedback will be posted soon. Thanks for the feedback.";
             var postReference = post.MapTo<PostReference>();
