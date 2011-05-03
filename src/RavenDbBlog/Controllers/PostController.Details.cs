@@ -60,8 +60,11 @@ namespace RavenDbBlog.Controllers
             else if (cookie != null)
             {
                 var commenter = GetCommenter(cookie.Value);
-                vm.Input = commenter.MapTo<CommentInput>();
-                vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
+                if (commenter != null)
+                {
+                    vm.Input = commenter.MapTo<CommentInput>();
+                    vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
+                }
             }
             
             return View("Details", vm);
