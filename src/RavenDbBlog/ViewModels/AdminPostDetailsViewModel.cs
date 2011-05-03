@@ -37,6 +37,8 @@ namespace RavenDbBlog.ViewModels
             public DateTimeOffset PublishedAt { get; set; }
 
             public ICollection<string> Tags { get; set; }
+
+            public string Key { get; set; }
         }
     }
 }

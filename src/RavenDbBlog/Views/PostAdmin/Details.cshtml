@@ -8,6 +8,8 @@
         <h1><a href="@Url.Action("Details", new { Model.Post.Id, Model.Post.Slug })">@Model.Post.Title</a></h1>
         <div id="post-admin">
             <ul>
+                <li><a href="@Url.Action("Details", "Post")">View</a></li>
+                <li><a href="@Url.Action("Details", "Post", new { key = @Model.Post.Key })">Private View</a></li>
                 <li><a href="@Url.Action("Edit")">Edit</a></li>
                 <li>
                     <form action="@Url.Action("Delete", new { Model.Post.Id })" method="post">

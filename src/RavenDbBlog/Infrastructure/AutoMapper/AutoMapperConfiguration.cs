@@ -11,6 +11,7 @@ namespace RavenDbBlog.Infrastructure.AutoMapper
         public static void Configure()
         {
             Mapper.CreateMap<string, MvcHtmlString>().ConvertUsing<MvcHtmlStringConverter>();
+            Mapper.CreateMap<Guid, string>().ConvertUsing<GuidToStringConverter>();
 
             Mapper.CreateMap<DateTimeOffset, DateTime>().ConvertUsing<DateTimeTypeConverter>();
 

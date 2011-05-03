@@ -110,6 +110,7 @@
     <Compile Include="Helpers\Results\JsonNetResult.cs" />
     <Compile Include="Infrastructure\ActionResults\XmlResult.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\AbstractProfile.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\GuidToStringConverter.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\SectionAdminMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\SectionMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\TagsListViewModelMapperProfile.cs" />
