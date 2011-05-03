@@ -24,9 +24,15 @@ namespace RavenDbBlog.Controllers
                 .Include<Post>(x => x.CommentsId)
                 .Load(id);
 
-            if (post == null || post.PublishAt > DateTimeOffset.Now)
+            if (post == null)
                 return HttpNotFound();
 
+            if (post.IsPublicPost() == false)
+            {
+                Guid guid;
+                if (Guid.TryParse(Request.QueryString["key"], out guid) == false || guid != post.ShowPostEvenIfPrivate)
+                    return HttpNotFound();
+            }
 
             var vm = new PostViewModel
             {
@@ -80,15 +86,15 @@ namespace RavenDbBlog.Controllers
                     ModelState.AddModelError("CaptchaNotValid", "You did not type the verification word correctly. Please try again.");
                 }
             }
-            /*TODO:
-             * 1. Load only public posts. User cannot comment on deleted posts.
-             * 2. User cannot comment on closed posts.
-             */
-            var post = Session.Load<Post>(id);
-            var comments = Session.Load<PostComments>(id);
 
-            if (post == null)
+            var post = Session
+                .Include<Post>(x => x.CommentsId)
+                .Load(id);
+
+            if (post == null || post.IsPublicPost() == false)
                 return HttpNotFound();
+
+            var comments = Session.Load<PostComments>(id);
 
             if (ModelState.IsValid == false)
             {

@@ -10,8 +10,20 @@ namespace RavenDbBlog.Core.Models
         public string LegacySlug { get; set; }
         public string Body { get; set; }
         public string[] Tags { get; set; }
-        
         public string Author { get; set; }
+
+        private Guid _showPostEvenIfPrivate;
+        public Guid ShowPostEvenIfPrivate
+        {
+            get
+            {
+                if (_showPostEvenIfPrivate == Guid.Empty)
+                    _showPostEvenIfPrivate = Guid.NewGuid();
+                return _showPostEvenIfPrivate;
+            }
+            set { _showPostEvenIfPrivate = value; }
+        }
+
 
         public DateTimeOffset CreatedAt { get; set; }
 		public bool SkipAutoReschedule { get; set; }
@@ -33,6 +45,12 @@ namespace RavenDbBlog.Core.Models
                     yield return SlugConverter.TitleToSlag(tag);
                 }
             }
+        }
+
+        public bool IsPublicPost()
+        {
+            return PublishAt <= DateTimeOffset.Now &&
+                   IsDeleted == false;
         }
     }
 }
