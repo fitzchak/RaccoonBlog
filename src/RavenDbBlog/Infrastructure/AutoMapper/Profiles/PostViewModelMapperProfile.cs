@@ -31,7 +31,6 @@ namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles
 
             Mapper.CreateMap<Commenter, CommentInput>()
                 .ForMember(x => x.Body, o => o.Ignore())
-                .ForMember(x => x.RememberMe, o => o.UseValue(true))
                 .ForMember(x => x.CommenterKey, o => o.MapFrom(m => m.Key))
                 ;
 

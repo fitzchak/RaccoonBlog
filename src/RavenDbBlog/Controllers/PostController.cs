@@ -189,11 +189,8 @@ namespace RavenDbBlog.Controllers
             }
 
             CommandExcucator.ExcuteLater(new AddCommentCommand(input, Request.MapTo<RequestValues>(), id));
-
-            if (input.RememberMe == true)
-            {
-                Response.Cookies.Add(new HttpCookie(Constants.CommenterKeyCookieName, commenter.Key.ToString()));
-            }
+           
+            Response.Cookies.Add(new HttpCookie(Constants.CommenterKeyCookieName, commenter.Key.ToString()));
 
             TempData["message"] = "You feedback will be posted soon. Thanks for the feedback.";
             var postReference = post.MapTo<PostReference>();
