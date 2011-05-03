@@ -9,6 +9,7 @@ namespace RavenDbBlog.Core.Models
         public string Id { get; set; }
         public string Title { get; set; }
         public bool IsActive { get; set; }
+        public int Position { get; set; }
 
         public string Body { get; set; }
         public string ControllerName { get; set; }

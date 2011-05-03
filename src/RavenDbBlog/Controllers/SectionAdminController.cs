@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using RavenDbBlog.Core.Models;
+using RavenDbBlog.Helpers;
 using RavenDbBlog.Infrastructure.AutoMapper;
 using RavenDbBlog.ViewModels;
 
@@ -42,6 +43,44 @@ namespace RavenDbBlog.Controllers
                 return RedirectToAction("List");
             }
             return View("Edit", input);
+        }
+
+        [AjaxOnly]
+        [HttpPost]
+        public ActionResult SetPosition(int id, int newPosition)
+        {
+            var section = Session.Load<Section>(id);
+            if (section == null)
+                return Json(new {success = false, message = string.Format("There is no post with id {0}", id)});
+
+            if (section.Position == newPosition)
+                return Json(new {success = false, message = string.Format("The {0} section has already this position", section.Title)});
+
+            if (section.Position > newPosition)
+            {
+                var sections = Session.Query<Section>()
+                    .Where(s => s.Position >= newPosition && s.Position < section.Position)
+                    .OrderBy(s => s.Position);
+
+                foreach (var section1 in sections)
+                {
+                    section1.Position++;
+                }
+            }
+            else if (section.Position < newPosition)
+            {
+                var sections = Session.Query<Section>()
+                    .Where(s => s.Position < newPosition && s.Position >= section.Position)
+                    .OrderBy(s => s.Position);
+
+                foreach (var section1 in sections)
+                {
+                    section1.Position--;
+                }
+            }
+
+            section.Position = newPosition;
+            return Json(new { success = true });
         }
     }
 }

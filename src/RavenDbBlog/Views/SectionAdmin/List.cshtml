@@ -39,9 +39,9 @@
                         if (!data.success) failAction();
                         else setMessage('Change section position succeed: ' + title);
                     });
-                    function failAction() {
+                    function failAction(data, textStatus, jqXHR) {
                         t.sortable('cancel');
-                        setMessage('Change section position failed: ' + title, 'fail');
+                        setMessage('Change section position failed: ' + (data.message ? data.message : title), 'fail');
                     }
                 }
             });

@@ -25,7 +25,7 @@ namespace RavenDbBlog
             ConfigurePostAdmin();
             
     	    ConfigureSection();
-    	    ConfigureAdminSection();
+    	    ConfigureSectionAdmin();
 
     	    ConfigureLogin();
 
@@ -50,12 +50,12 @@ namespace RavenDbBlog
                 );
         }
 
-        private void ConfigureAdminSection()
+        private void ConfigureSectionAdmin()
         {
             routes.MapRouteLowerCase("SectionAdminController-ActionWithId",
                 "admin/sections/{id}/{action}",
                 new { controller = "SectionAdmin" },
-                new { action = "Edit", id = MatchPositiveInteger }
+                new { action = "Edit|SetPosition", id = MatchPositiveInteger }
                 );
 
             routes.MapRouteLowerCase("SectionAdminController-Action",

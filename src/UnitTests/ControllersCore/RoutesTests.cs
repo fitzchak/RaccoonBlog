@@ -145,6 +145,10 @@ namespace RavenDbBlog.UnitTests.ControllersCore
 
             "~/admin/sections/add".ShouldMapTo<SectionAdminController>(c => c.Add());
             "~/admin/sections/4/edit".ShouldMapTo<SectionAdminController>(c => c.Edit(4));
+
+            var setpostdate = "~/admin/sections/4/setposition".WithMethod(HttpVerbs.Post);
+            setpostdate.Values["newPosition"] = 0;
+            setpostdate.ShouldMapTo<SectionAdminController>(c => c.SetPosition(4, 0));
         }
 
         [Fact]
