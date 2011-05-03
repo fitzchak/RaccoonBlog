@@ -76,7 +76,11 @@
 @if (Model.IsCommentClosed) { 
     <div>Comments have been closed on this topic.</div>
 } else {
-    @Html.ValidationSummary()
+    if (ViewData.ModelState.IsValid == false) { 
+        <div class="form-error">
+            @Html.ValidationSummary(true)
+        </div>
+    }
     <form action="@Url.Action("Comment", new { Model.Post.Id })" method="post">
         @Html.EditorFor(x => x.Input.Name)
         @Html.EditorFor(x => x.Input.Email)
