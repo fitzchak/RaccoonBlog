@@ -42,10 +42,13 @@ namespace RavenDbBlog.Import
                         new Section {Title = "Login", ControllerName = "Login", ActionName = "CurrentUser"},
                     };
 
+                var i = 0;
                 foreach (var section in sections)
                 {
+                    section.Position = i;
                     section.IsActive = true;
                     s.Store(section);
+                    i++;
                 }
                 s.SaveChanges();
             }
