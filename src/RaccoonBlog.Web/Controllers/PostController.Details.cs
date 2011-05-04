@@ -50,26 +50,7 @@ namespace RaccoonBlog.Web.Controllers
         	return View("Details", vm);
         }
 
-    	private void SetWhateverUserIsTrustedCommenter(PostViewModel vm)
-    	{
-    		var cookie = Request.Cookies[CommenterCookieName];
-    		if (Request.IsAuthenticated)
-    		{
-    			var user = Session.GetCurrentUser();
-    			vm.Input = user.MapTo<CommentInput>();
-    			vm.IsTrustedCommenter = true;
-    		}
-    		else if (cookie != null)
-    		{
-    			var commenter = GetCommenter(cookie.Value);
-    			if (commenter != null)
-    			{
-    				vm.Input = commenter.MapTo<CommentInput>();
-    				vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
-    			}
-    		}
-    	}
-
+    	
     	[HttpPost]
         public ActionResult Comment(CommentInput input, int id)
         {
@@ -139,7 +120,29 @@ namespace RaccoonBlog.Web.Controllers
             return RedirectToAction("Details", new { Id = postReference.DomainId, postReference.Slug });
         }
 
-        private Commenter GetCommenter(string commenterKey)
+		private void SetWhateverUserIsTrustedCommenter(PostViewModel vm)
+		{
+			if (Request.IsAuthenticated)
+			{
+				var user = Session.GetCurrentUser();
+				vm.Input = user.MapTo<CommentInput>();
+				vm.IsTrustedCommenter = true;
+				return;
+			}
+
+			var cookie = Request.Cookies[CommenterCookieName];
+			if (cookie == null)
+				return;
+
+			var commenter = GetCommenter(cookie.Value);
+			if (commenter == null)
+				return;
+
+			vm.Input = commenter.MapTo<CommentInput>();
+			vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
+		}
+		
+		private Commenter GetCommenter(string commenterKey)
         {
             Guid guid;
             if (Guid.TryParse(commenterKey, out guid) == false)
