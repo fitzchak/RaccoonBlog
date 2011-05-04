@@ -92,6 +92,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\DocumentSessionExtensions.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ElmahController.cs" />
     <Compile Include="Helpers\Results\ElmahResult.cs" />
