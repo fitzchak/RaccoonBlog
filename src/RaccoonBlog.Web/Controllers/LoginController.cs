@@ -26,7 +26,7 @@ namespace RaccoonBlog.Web.Controllers
         	if (user == null || user.ValidatePassword(input.Password) == false)
             {
                 ModelState.AddModelError("UserNotExistOrPasswordNotMatch", 
-					"Email and password are not match.");
+					"Email and password do not match to any known user.");
             }
 			else if(user.Enabled == false)
 			{
