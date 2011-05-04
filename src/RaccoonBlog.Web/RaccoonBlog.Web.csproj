@@ -162,7 +162,7 @@
     <Compile Include="Infrastructure\Commands\ICommand.cs" />
     <Compile Include="Services\AkismetComment.cs" />
     <Compile Include="Services\AskimetService.cs" />
-    <Compile Include="Services\DateTimeOffsetExtensions.cs" />
+    <Compile Include="Common\DateTimeOffsetExtensions.cs" />
     <Compile Include="Services\IMetaWeblog.cs" />
     <Compile Include="Services\MetaWeblog.cs" />
     <Compile Include="Services\PostSchedulingStrategy.cs" />
