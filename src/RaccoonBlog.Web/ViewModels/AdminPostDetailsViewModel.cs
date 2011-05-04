@@ -12,7 +12,7 @@ namespace RaccoonBlog.Web.ViewModels
         public PostDetails Post { get; set; }
         public IList<Comment> Comments { get; set; }
 
-        public bool IsCommentClosed { get; set; }
+        public bool AreCommentsClosed { get; set; }
 
         public class Comment
         {

@@ -48,7 +48,7 @@ namespace RaccoonBlog.Web.Controllers
                 .MapTo<PostViewModel.Comment>();
             vm.NextPost = new PostService(Session).GetPostReference(x => x.PublishAt > post.PublishAt);
             vm.PreviousPost = new PostService(Session).GetPostReference(x => x.PublishAt < post.PublishAt);
-            vm.IsCommentClosed = comments.AreCommentsClosed(post);
+            vm.AreCommentsClosed = comments.AreCommentsClosed(post);
 
             var cookie = Request.Cookies[CommenterCookieName];
             if (Request.IsAuthenticated)
