@@ -19,11 +19,6 @@ namespace RaccoonBlog.Web.Infrastructure.Commands
                     command.Execute();
                     succcessfully = true;
                 }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex);
-                    throw;
-                }
                 finally
                 {
                     DocumentStoreHolder.TryComplete(command, succcessfully);
