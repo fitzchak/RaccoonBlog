@@ -49,8 +49,6 @@ namespace RaccoonBlog.Web.Controllers
             return Redirect(retrunUrl);
         }
 
-       
-
         [HttpGet]
         public ActionResult LogOut(string returnurl)
         {
