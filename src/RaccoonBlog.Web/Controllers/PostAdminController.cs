@@ -25,24 +25,27 @@ namespace RaccoonBlog.Web.Controllers
                 .Include<Post>(x => x.CommentsId)
                 .Load(id);
 
-            var vm = new AdminPostDetailsViewModel
-            {
-                Post = post.MapTo<AdminPostDetailsViewModel.PostDetails>(),
-            };
+			var comments = Session.Load<PostComments>(post.CommentsId);
 
-            if (vm.Post.Slug != slug)
-                return RedirectToActionPermanent("Details", new { id, vm.Post.Slug });
+        	var vm = new AdminPostDetailsViewModel
+			{
+				Post = post.MapTo<AdminPostDetailsViewModel.PostDetails>(),
+				
+				Comments = comments
+					.Comments
+					.Concat(comments.Spam)
+					.OrderBy(comment => comment.CreatedAt)
+					.MapTo<AdminPostDetailsViewModel.Comment>(),
 
-            var comments = Session.Load<PostComments>(post.CommentsId);
-            var allComments = comments.Comments
-                .Concat(comments.Spam)
-                .OrderBy(comment => comment.CreatedAt);
+				NextPost = Session.GetPostReference(x => x.PublishAt > post.PublishAt),
+				PreviousPost = Session.GetPostReference(x => x.PublishAt < post.PublishAt),
+				AreCommentsClosed = comments.AreCommentsClosed(post),
+			};
 
-            vm.Comments = allComments.MapTo<AdminPostDetailsViewModel.Comment>();
-        	vm.NextPost = Session.GetPostReference(x => x.PublishAt > post.PublishAt);
-			vm.PreviousPost = Session.GetPostReference(x => x.PublishAt < post.PublishAt);
-            vm.AreCommentsClosed = comments.AreCommentsClosed(post);
-            
+
+        	if (vm.Post.Slug != slug)
+				return RedirectToActionPermanent("Details", new { id, vm.Post.Slug });
+
             return View("Details", vm);
         }
 
