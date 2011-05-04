@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using RaccoonBlog.Web.Common;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Indexes;
 using RaccoonBlog.Web.Models;

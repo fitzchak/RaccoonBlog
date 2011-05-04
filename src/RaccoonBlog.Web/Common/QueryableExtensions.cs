@@ -6,7 +6,7 @@ using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
 using Raven.Client;
 
-namespace RaccoonBlog.Web.Controllers
+namespace RaccoonBlog.Web.Common
 {
     public static class QueryableExtensions
     {
