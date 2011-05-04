@@ -9,17 +9,18 @@ using Raven.Client.Linq;
 
 namespace RaccoonBlog.Web.Controllers
 {
-    public class SectionController : AbstractController
-    {
-        [ChildActionOnly]
-        public ActionResult List()
-        {
-            var sections = Session.Query<Section>()
-                .Where(s => s.IsActive)
-                .ToList();
+	public class SectionController : AbstractController
+	{
+		[ChildActionOnly]
+		public ActionResult List()
+		{
+			var sections = Session.Query<Section>()
+				.Where(s => s.IsActive)
+				.OrderBy(x => x.Position)
+				.ToList();
 
-            return View(sections.MapTo<SectionDetails>());
-        }
+			return View(sections.MapTo<SectionDetails>());
+		}
 
 
 		[ChildActionOnly]
@@ -50,5 +51,5 @@ namespace RaccoonBlog.Web.Controllers
 
 			return View(dates);
 		}
-    }
+	}
 }

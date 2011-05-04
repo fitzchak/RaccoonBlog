@@ -35,14 +35,13 @@ namespace RaccoonBlog.Web.Controllers
         [HttpPost]
         public ActionResult Update(SectionInput input)
         {
-            if (ModelState.IsValid)
-            {
-                var section = Session.Load<Section>(input.Id) ?? new Section();
-                input.MapPropertiesToInstance(section);
-                Session.Store(section);
-                return RedirectToAction("List");
-            }
-            return View("Edit", input);
+        	if (!ModelState.IsValid)
+        		return View("Edit", input);
+
+        	var section = Session.Load<Section>(input.Id) ?? new Section();
+        	input.MapPropertiesToInstance(section);
+        	Session.Store(section);
+        	return RedirectToAction("List");
         }
 
         [AjaxOnly]
@@ -63,9 +62,9 @@ namespace RaccoonBlog.Web.Controllers
                     .OrderBy(s => s.Position)
                     .ToList();
 
-                foreach (var section1 in sections)
+                foreach (var s in sections)
                 {
-                    section1.Position++;
+                    s.Position++;
                 }
             }
             else if (section.Position < newPosition)
@@ -75,9 +74,9 @@ namespace RaccoonBlog.Web.Controllers
                     .OrderBy(s => s.Position)
                     .ToList();
 
-                foreach (var section1 in sections)
+                foreach (var s in sections)
                 {
-                    section1.Position--;
+                    s.Position--;
                 }
             }
 
