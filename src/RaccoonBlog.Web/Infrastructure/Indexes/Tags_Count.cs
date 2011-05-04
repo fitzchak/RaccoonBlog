@@ -18,17 +18,4 @@ namespace RaccoonBlog.Web.Infrastructure.Indexes
                                 select new {Name = g.Key, Count = g.Sum(x => x.Count), LastSeenAt = g.Max(x=>(DateTimeOffset)x.LastSeenAt) };
         }
     }
-
-    public class TagCount
-    {
-        public string Name { get; set; }
-        public int Count { get; set; }
-        public DateTimeOffset LastSeenAt { get; set; }
-    }
-
-    public class TempTagCount
-    {
-        public string Name { get; set; }
-        public int Count { get; set; }
-    }
 }

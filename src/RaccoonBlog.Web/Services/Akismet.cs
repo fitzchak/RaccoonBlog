@@ -14,19 +14,8 @@ using System.IO;
 namespace RaccoonBlog.Web.Services {
 
     #region - public class AkismetComment -
-    public class AkismetComment {
-        public string Blog = null;
-        public string UserIp = null;
-        public string UserAgent = null;
-        public string Referrer = null;
-        public string Permalink = null;
-        public string CommentType = null;
-        public string CommentAuthor = null;
-        public string CommentAuthorEmail = null;
-        public string CommentAuthorUrl = null;
-        public string CommentContent = null;
-    }
-    #endregion
+
+	#endregion
 
     public class Akismet {
         const string verifyUrl = "http://rest.akismet.com/1.1/verify-key";

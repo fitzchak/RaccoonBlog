@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using RaccoonBlog.Web.Common;
 using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Helpers.Attributes;
+using RaccoonBlog.Web.Infrastructure;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.Services;
@@ -121,7 +122,7 @@ namespace RaccoonBlog.Web.Controllers
         }
         
         [HttpPost]
-        public ActionResult CommentsAdmin(int id, CommentCommand command, int[] commentIds)
+        public ActionResult CommentsAdmin(int id, CommentCommandOptions commandOptions, int[] commentIds)
         {
             if (commentIds.Length < 1)
                 ModelState.AddModelError("CommentIdsAreEmpty", "Not comments was selected.");
@@ -142,14 +143,14 @@ namespace RaccoonBlog.Web.Controllers
 
             var comments = Session.Load<PostComments>(id);
             var requestValues = Request.MapTo<RequestValues>();
-            switch (command)
+            switch (commandOptions)
             {
-                case CommentCommand.Delete:
+                case CommentCommandOptions.Delete:
                     comments.Comments.RemoveAll(c => commentIds.Contains(c.Id));
                     comments.Spam.RemoveAll(c => commentIds.Contains(c.Id));
                     break;
 
-                case CommentCommand.MarkSpam: 
+                case CommentCommandOptions.MarkSpam: 
                     var spams = comments.Comments
                         .Where(c => commentIds.Contains(c.Id))
                         .ToArray();
@@ -162,7 +163,7 @@ namespace RaccoonBlog.Web.Controllers
                     }
                     break;
 
-                case CommentCommand.MarkHam:
+                case CommentCommandOptions.MarkHam:
                     var ham = comments.Spam
                         .Where(c => commentIds.Contains(c.Id))
                         .ToArray();
@@ -176,7 +177,7 @@ namespace RaccoonBlog.Web.Controllers
                     comments.Comments.AddRange(ham);
                     break;
                 default:
-                    throw new InvalidOperationException(command + " command is not recognized.");
+                    throw new InvalidOperationException(commandOptions + " command is not recognized.");
             }
 
             if (Request.IsAjaxRequest())
@@ -198,27 +199,12 @@ namespace RaccoonBlog.Web.Controllers
             }
             return RedirectToAction("List");
         }
-    }
 
-	public enum CommentCommand
-	{
-		Delete,
-		MarkHam,
-		MarkSpam
-	}
-
-	public class DateTimeOffsetUtil
-    {
-        public static DateTimeOffset ConvertFromUnixTimestamp(long timestamp)
-        {
-            var origin = new DateTimeOffset(1970, 1, 1, 0, 0, 0, 0, DateTimeOffset.Now.Offset);
-            return origin.AddSeconds(timestamp);
-        }
-
-        public static DateTimeOffset ConvertFromJsTimestamp(long timestamp)
-        {
-            var origin = new DateTimeOffset(1970, 1, 1, 0, 0, 0, 0, DateTimeOffset.Now.Offset);
-            return origin.AddMilliseconds(timestamp);
-        }
+		public enum CommentCommandOptions
+		{
+			Delete,
+			MarkHam,
+			MarkSpam
+		}
     }
 }

@@ -16,11 +16,4 @@ namespace RaccoonBlog.Web.Infrastructure.Indexes
                                 select new {g.Key.Year, g.Key.Month, Count = g.Sum(x => x.Count)};
         }
     }
-
-    public class PostCountByMonth
-    {
-        public int Year { get; set; }
-        public int Month { get; set; }
-        public int Count { get; set; }
-    }
 }

@@ -93,7 +93,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\DocumentSessionExtensions.cs" />
+    <Compile Include="Common\RouteCollectionExtension.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Common\DateTimeOffsetUtil.cs" />
     <Compile Include="Controllers\ElmahController.cs" />
     <Compile Include="Helpers\Results\ElmahResult.cs" />
     <Compile Include="Controllers\PostController.Details.cs" />
@@ -105,7 +107,7 @@
     <Compile Include="Controllers\SyndicationController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="EnsureLowerCaseRouteModule.cs" />
-    <Compile Include="Helpers\Attributes\AjaxAttribute.cs" />
+    <Compile Include="Helpers\Attributes\AjaxOnlyAttribute.cs" />
     <Compile Include="Helpers\ModelStateExtensions.cs" />
     <Compile Include="Helpers\Validation\RequiredIfAttribute.cs" />
     <Compile Include="Helpers\Results\JsonNetResult.cs" />
@@ -121,6 +123,9 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\TagsResolver.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\UserAdminMapperProfile.cs" />
     <Compile Include="Common\LowercaseRoute.cs" />
+    <Compile Include="Infrastructure\Indexes\PostCountByMonth.cs" />
+    <Compile Include="Infrastructure\Indexes\TagCount.cs" />
+    <Compile Include="Infrastructure\Indexes\TempTagCount.cs" />
     <Compile Include="Models\PostComments.cs" />
     <Compile Include="Models\Commenter.cs" />
     <Compile Include="Models\Post.cs" />
@@ -131,7 +136,7 @@
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Helpers\Validation\RecaptchaValidatorWrapper.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\MarkdownResolver.cs" />
-    <Compile Include="Infrastructure\Indexes\Posts_ByDatePublished_Count.cs" />
+    <Compile Include="Infrastructure\Indexes\Posts_ByMonthPublished_Count.cs" />
     <Compile Include="Infrastructure\Indexes\Tags_Count.cs" />
     <Compile Include="Infrastructure\AutoMapper\AutoMapperConfiguration.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\EmailHashResolver.cs" />
@@ -155,12 +160,22 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Infrastructure\Commands\CommandExcucator.cs" />
     <Compile Include="Infrastructure\Commands\ICommand.cs" />
+    <Compile Include="Services\AkismetComment.cs" />
     <Compile Include="Services\AskimetService.cs" />
+    <Compile Include="Services\DateTimeOffsetExtensions.cs" />
     <Compile Include="Services\IMetaWeblog.cs" />
     <Compile Include="Services\MetaWeblog.cs" />
     <Compile Include="Services\PostSchedulingStrategy.cs" />
-    <Compile Include="Services\RssModels\Structs.cs" />
+    <Compile Include="Services\RssModels\Category.cs" />
+    <Compile Include="Services\RssModels\CategoryInfo.cs" />
+    <Compile Include="Services\RssModels\Enclosure.cs" />
+    <Compile Include="Services\RssModels\MediaObject.cs" />
+    <Compile Include="Services\RssModels\MediaObjectInfo.cs" />
+    <Compile Include="Services\RssModels\Post.cs" />
+    <Compile Include="Services\RssModels\Source.cs" />
+    <Compile Include="Services\RssModels\BlogInfo.cs" />
     <Compile Include="Common\SlugConverter.cs" />
+    <Compile Include="Services\RssModels\UserInfo.cs" />
     <Compile Include="ViewModels\AdminPostDetailsViewModel.cs" />
     <Compile Include="ViewModels\CommentInput.cs" />
     <Compile Include="ViewModels\CurrentUserViewModel.cs" />
