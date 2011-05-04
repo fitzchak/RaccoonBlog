@@ -64,63 +64,79 @@ namespace RaccoonBlog.Web.Controllers
         	var comments = Session.Load<PostComments>(post.CommentsId);
 			if (comments == null)
 				return HttpNotFound();
+			
+			var commenter = GetCommenter(input.CommenterKey) ?? new Commenter { Key = Guid.NewGuid() };
+			
+    		ValidateCommentsAllowed(post, comments);
+			ValidateCaptcha(input, commenter);
 
-        	bool areCommentsClosed = comments.AreCommentsClosed(post);
-            if (areCommentsClosed)
-            {
-                ModelState.AddModelError("CommentsClosed", "This post is closed for new comments.");
-            }
+    		if (ModelState.IsValid == false)
+    			return PostingCommentFailed(post, input);
 
-            var commenter = GetCommenter(input.CommenterKey) ?? new Commenter {Key = Guid.NewGuid()};
-            bool isCaptchaRequired = commenter.IsTrustedCommenter != true && Request.IsAuthenticated == false;
-            if (isCaptchaRequired)
-            {
-                var isCaptchaValid = RecaptchaValidatorWrapper.Validate(ControllerContext.HttpContext);
-                if (isCaptchaValid == false)
-                {
-                    ModelState.AddModelError("CaptchaNotValid", "You did not type the verification word correctly. Please try again.");
-                }
-            }
+    		CommandExcucator.ExcuteLater(new AddCommentCommand(input, Request.MapTo<RequestValues>(), id));
 
-            if (post.AllowComments == false)
-            {
-                ModelState.AddModelError("CommentNotAllowed", "This post is closed for comments.");
-            }
+            SetCommenterCookie(commenter);
 
-            PostReference postReference;
-            if (ModelState.IsValid == false)
-            {
-                if (Request.IsAjaxRequest())
-                    return Json(new {Success = false, message = ModelState.GetFirstErrorMessage()});
-
-                postReference = post.MapTo<PostReference>();
-                var result = Details(postReference.DomainId, postReference.Slug);
-                var model = result as ViewResult;
-                if (model != null)
-                {
-                    var viewModel = model.Model as PostViewModel;
-                    if (viewModel != null)
-                        viewModel.Input = input;
-                }
-                return result;
-            }
-
-            CommandExcucator.ExcuteLater(new AddCommentCommand(input, Request.MapTo<RequestValues>(), id));
-
-            var cookie = new HttpCookie(CommenterCookieName, commenter.Key.ToString())
-                {Expires = DateTime.Now.AddYears(1)};
-            Response.Cookies.Add(cookie);
-
-            const string successMessage = "You feedback will be posted soon. Thanks!";
-            if (Request.IsAjaxRequest())
-                return Json(new { Success = true, message = successMessage });
-
-            TempData["message"] = successMessage;
-            postReference = post.MapTo<PostReference>();
-            return RedirectToAction("Details", new { Id = postReference.DomainId, postReference.Slug });
+    		return PostingCommentSucceeded(post);
         }
 
-		private void SetWhateverUserIsTrustedCommenter(PostViewModel vm)
+    	private ActionResult PostingCommentSucceeded(Post post)
+    	{
+    		const string successMessage = "You feedback will be posted soon. Thanks!";
+    		if (Request.IsAjaxRequest())
+    			return Json(new { Success = true, message = successMessage });
+
+    		TempData["message"] = successMessage;
+    		var postReference = post.MapTo<PostReference>();
+    		return RedirectToAction("Details", new { Id = postReference.DomainId, postReference.Slug });
+    	}
+
+    	private void SetCommenterCookie(Commenter commenter)
+    	{
+    		var cookie = new HttpCookie(CommenterCookieName, commenter.Key.ToString())
+    		{Expires = DateTime.Now.AddYears(1)};
+    		Response.Cookies.Add(cookie);
+    	}
+
+    	private void ValidateCommentsAllowed(Post post, PostComments comments)
+    	{
+    		if (comments.AreCommentsClosed(post))
+    			ModelState.AddModelError("CommentsClosed", "This post is closed for new comments.");
+    		if (post.AllowComments == false)
+    			ModelState.AddModelError("CommentsClosed", "This post does not allow comments.");
+    	}
+
+    	private void ValidateCaptcha(CommentInput input, Commenter commenter)
+    	{
+    		if (Request.IsAuthenticated || 
+				commenter.IsTrustedCommenter == true)
+				return;
+
+    		if (RecaptchaValidatorWrapper.Validate(ControllerContext.HttpContext)) 
+				return;
+
+    		ModelState.AddModelError("CaptchaNotValid",
+    		                         "You did not type the verification word correctly. Please try again.");
+    	}
+
+    	private ActionResult PostingCommentFailed(Post post, CommentInput input)
+    	{
+			if (Request.IsAjaxRequest())
+				return Json(new { Success = false, message = ModelState.GetFirstErrorMessage() });
+
+			var postReference = post.MapTo<PostReference>();
+			var result = Details(postReference.DomainId, postReference.Slug);
+			var model = result as ViewResult;
+			if (model != null)
+			{
+				var viewModel = model.Model as PostViewModel;
+				if (viewModel != null)
+					viewModel.Input = input;
+			}
+			return result;
+    	}
+
+    	private void SetWhateverUserIsTrustedCommenter(PostViewModel vm)
 		{
 			if (Request.IsAuthenticated)
 			{
