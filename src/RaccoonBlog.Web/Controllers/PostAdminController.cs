@@ -22,9 +22,6 @@ namespace RaccoonBlog.Web.Controllers
 
         public ActionResult Details(int id, string slug)
         {
-			var postService = new PostService(Session);
-			
-			
 			var post = Session
                 .Include<Post>(x => x.CommentsId)
                 .Load(id);
@@ -43,8 +40,8 @@ namespace RaccoonBlog.Web.Controllers
                 .OrderBy(comment => comment.CreatedAt);
 
             vm.Comments = allComments.MapTo<AdminPostDetailsViewModel.Comment>();
-        	vm.NextPost = postService.GetPostReference(x => x.PublishAt > post.PublishAt);
-            vm.PreviousPost = postService.GetPostReference(x => x.PublishAt < post.PublishAt);
+        	vm.NextPost = Session.GetPostReference(x => x.PublishAt > post.PublishAt);
+			vm.PreviousPost = Session.GetPostReference(x => x.PublishAt < post.PublishAt);
             vm.AreCommentsClosed = comments.AreCommentsClosed(post);
             
             return View("Details", vm);
