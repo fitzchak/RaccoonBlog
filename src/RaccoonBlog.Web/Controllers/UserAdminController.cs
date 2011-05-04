@@ -37,14 +37,13 @@ namespace RaccoonBlog.Web.Controllers
         [HttpPost]
         public ActionResult Update(UserInput input)
         {
-            if (ModelState.IsValid)
-            {
-                var user = Session.Load<User>(input.Id) ?? new User();
-                input.MapPropertiesToInstance(user);
-                Session.Store(user);
-                return RedirectToAction("List");
-            }
-            return View("Edit", input);
+        	if (!ModelState.IsValid)
+        		return View("Edit", input);
+
+        	var user = Session.Load<User>(input.Id) ?? new User();
+        	input.MapPropertiesToInstance(user);
+        	Session.Store(user);
+        	return RedirectToAction("List");
         }
 
         [HttpGet]
@@ -85,7 +84,6 @@ namespace RaccoonBlog.Web.Controllers
 
 			user.Enabled = isActive;
 
-            // TODO: return Json, in case of ajax request.
 			return RedirectToAction("List");
 		}
     }
