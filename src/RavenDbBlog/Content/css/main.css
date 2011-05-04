@@ -446,3 +446,9 @@ article.sectionadmin-list .commands-section
 {
     margin-top: 9px;
 }
+
+div.commentsClosedMessage
+{
+    font-style: italic;
+    padding-top: 10px;
+}
