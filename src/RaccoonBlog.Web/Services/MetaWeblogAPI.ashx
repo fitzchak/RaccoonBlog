@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" Class="RavenDbBlog.Services.MetaWeblog" %>
+﻿<%@ WebHandler Language="C#" Class="RaccoonBlog.Web.Services.MetaWeblog" %>
