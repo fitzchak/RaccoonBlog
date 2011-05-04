@@ -121,16 +121,15 @@ namespace RaccoonBlog.Web.Controllers
         }
         
         [HttpPost]
-        public ActionResult CommentsAdmin(int id, string command, int[] commentIds)
+        public ActionResult CommentsAdmin(int id, CommentCommand command, int[] commentIds)
         {
             if (commentIds.Length < 1)
                 ModelState.AddModelError("CommentIdsAreEmpty", "Not comments was selected.");
-            var commands = new[] {"Delete", "Mark Spam", "Mark Ham"};
-            if (commands.Any(c => c == command) == false)
-                ModelState.AddModelError("CommentIsNotRecognized", command + " command is not recognized.");
+        	
             var post = Session.Load<Post>(id);
             if (post == null)
                 return HttpNotFound();
+
             var slug =  SlugConverter.TitleToSlag(post.Title);
 
             if (ModelState.IsValid == false)
@@ -145,11 +144,12 @@ namespace RaccoonBlog.Web.Controllers
             var requestValues = Request.MapTo<RequestValues>();
             switch (command)
             {
-                case "Delete":
+                case CommentCommand.Delete:
                     comments.Comments.RemoveAll(c => commentIds.Contains(c.Id));
                     comments.Spam.RemoveAll(c => commentIds.Contains(c.Id));
                     break;
-                case "Mark Spam": 
+
+                case CommentCommand.MarkSpam: 
                     var spams = comments.Comments
                         .Where(c => commentIds.Contains(c.Id))
                         .ToArray();
@@ -158,10 +158,11 @@ namespace RaccoonBlog.Web.Controllers
                     comments.Spam.RemoveAll(spams.Contains);
                     foreach (var comment in spams)
                     {
-                        new AskimetService(requestValues).MarkHum(comment);
+                        new AskimetService(requestValues).MarkSpam(comment);
                     }
                     break;
-                case "Mark Ham":
+
+                case CommentCommand.MarkHam:
                     var ham = comments.Spam
                         .Where(c => commentIds.Contains(c.Id))
                         .ToArray();
@@ -170,7 +171,7 @@ namespace RaccoonBlog.Web.Controllers
                     foreach (var comment in ham)
                     {
                         comment.IsSpam = false;
-                        new AskimetService(requestValues).MarkHum(comment);
+                        new AskimetService(requestValues).MarkHam(comment);
                     }
                     comments.Comments.AddRange(ham);
                     break;
@@ -185,7 +186,7 @@ namespace RaccoonBlog.Web.Controllers
             return RedirectToAction("Details", new { id, slug });
         }
 
-        [HttpPost]
+    	[HttpPost]
         public ActionResult Delete(int id)
         {
             var post = Session.Load<Post>(id);
@@ -199,7 +200,14 @@ namespace RaccoonBlog.Web.Controllers
         }
     }
 
-    public class DateTimeOffsetUtil
+	public enum CommentCommand
+	{
+		Delete,
+		MarkHam,
+		MarkSpam
+	}
+
+	public class DateTimeOffsetUtil
     {
         public static DateTimeOffset ConvertFromUnixTimestamp(long timestamp)
         {

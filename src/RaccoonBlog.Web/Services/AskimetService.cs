@@ -37,7 +37,7 @@ namespace RaccoonBlog.Web.Services
             return api.CommentCheck(akismetComment);
         }
 
-        public void MarkHum(PostComments.Comment comment)
+        public void MarkHam(PostComments.Comment comment)
         {
             //Create a new instance of the Akismet API and verify your key is valid.
             string blog = "http://" + ConfigurationManager.AppSettings["MainUrl"];
