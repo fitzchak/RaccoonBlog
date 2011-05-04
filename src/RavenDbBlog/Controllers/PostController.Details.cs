@@ -79,7 +79,7 @@ namespace RavenDbBlog.Controllers
                 ModelState.AddModelError("CommentClosed", "This post is closed for comments.");
             }
 
-            var commenter = GetCommenter(input.CommenterKey) ?? new Commenter();
+            var commenter = GetCommenter(input.CommenterKey) ?? new Commenter {Key = Guid.NewGuid()};
             bool isCaptchaRequired = commenter.IsTrustedCommenter != true && Request.IsAuthenticated == false;
             if (isCaptchaRequired)
             {
@@ -117,7 +117,9 @@ namespace RavenDbBlog.Controllers
 
             CommandExcucator.ExcuteLater(new AddCommentCommand(input, Request.MapTo<RequestValues>(), id));
 
-            Response.Cookies.Add(new HttpCookie(CommenterCookieName, commenter.Key.ToString()));
+            var cookie = new HttpCookie(CommenterCookieName, commenter.Key.ToString())
+                {Expires = DateTime.Now.AddYears(1)};
+            Response.Cookies.Add(cookie);
 
             const string successMessage = "You feedback will be posted soon. Thanks!";
             if (Request.IsAjaxRequest())
