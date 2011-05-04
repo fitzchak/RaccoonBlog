@@ -5,7 +5,7 @@ namespace RaccoonBlog.Web.Helpers.Results
 {
 	public class ElmahResult : ActionResult
 	{
-		private string _resouceType;
+		private readonly string _resouceType;
 
 		public ElmahResult(string resouceType)
 		{

@@ -10,12 +10,14 @@ namespace RaccoonBlog.Web.Helpers
     {
         public static MvcHtmlString GenerateCaptcha(this HtmlHelper helper)
         {
-            var control = new RecaptchaControl();
-            control.ID = "recaptcha";
-            control.Theme = "clean";
-            control.PublicKey = ConfigurationManager.AppSettings["ReCaptchaPublicKey"];
-            control.PrivateKey = ConfigurationManager.AppSettings["ReCaptchaPrivateKey"];
-            var writer = new HtmlTextWriter(new StringWriter());
+            var control = new RecaptchaControl
+            {
+            	ID = "recaptcha",
+            	Theme = "clean",
+            	PublicKey = ConfigurationManager.AppSettings["ReCaptchaPublicKey"],
+            	PrivateKey = ConfigurationManager.AppSettings["ReCaptchaPrivateKey"]
+            };
+        	var writer = new HtmlTextWriter(new StringWriter());
             control.RenderControl(writer);
             var html = writer.InnerWriter.ToString();
             return MvcHtmlString.Create(html);

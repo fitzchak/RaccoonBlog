@@ -6,7 +6,7 @@ namespace RaccoonBlog.Web.Infrastructure.ActionResults
 {
 	public class XmlResult : ActionResult
 	{
-		private XDocument document;
+		private readonly XDocument document;
 		private readonly string etag;
 
 		public XmlResult(XDocument document, string etag )
