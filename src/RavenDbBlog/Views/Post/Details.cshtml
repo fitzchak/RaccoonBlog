@@ -72,9 +72,7 @@
         }
 
         <article id="postComment">
-            @if (Model.Post.IsCommentAllowed = false) { 
-                <div class="commentsClosedMessage">This post is closed for comments.</div>
-            } else if (Model.IsCommentClosed) { 
+            @if (Model.Post.IsCommentAllowed = false || Model.IsCommentClosed) { 
                 <div class="commentsClosedMessage">Comments have been closed on this topic.</div>
             } else {
                 if (ViewData.ModelState.IsValid == false) { 

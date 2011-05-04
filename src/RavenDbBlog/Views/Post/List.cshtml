@@ -18,7 +18,7 @@
 
         <footer>
             Posted @@ <time pubdate>@post.CreatedAt.ToString("r")</time>
-            @if (post.IsCommentsAllowed) {
+            @if (post.CommentsCount > 0) {
                 <text>
                     | <a href="@ViewBag.PostUrl#feedback">Feedback (@post.CommentsCount)</a>
                 </text>

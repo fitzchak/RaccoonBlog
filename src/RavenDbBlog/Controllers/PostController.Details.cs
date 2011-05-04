@@ -97,6 +97,11 @@ namespace RavenDbBlog.Controllers
             if (post == null || post.IsPublicPost() == false)
                 return HttpNotFound();
 
+            if (post.AllowComments)
+            {
+                ModelState.AddModelError("CommentNotAllowed", "This post is closed for comments.");
+            }
+
             PostReference postReference;
             if (ModelState.IsValid == false)
             {

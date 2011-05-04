@@ -1,6 +1,5 @@
 ﻿using System.Configuration;
 using System.Web;
-using System.Web.Mvc;
 using AutoMapper;
 using RavenDbBlog.Core;
 using RavenDbBlog.Core.Models;
