@@ -60,7 +60,7 @@ namespace RaccoonBlog.Web.Controllers
 			return Rss(stats, posts);
 		}
 
-		private ActionResult Rss(RavenQueryStatistics stats, List<Post> posts)
+		private ActionResult Rss(RavenQueryStatistics stats, IEnumerable<Post> posts)
 		{
 			string requestETagHeader = Request.Headers["If-None-Match"] ?? string.Empty;
 			var responseETagHeader = stats.Timestamp.ToString("o");
@@ -93,7 +93,7 @@ namespace RaccoonBlog.Web.Controllers
 	    private string GetPostLink(Post post)
 	    {
             var postReference = post.MapTo<PostReference>();
-            return Url.Action("Details", "Post", new { Id = postReference.DomainId, postReference.Slug });
+            return Url.Action("Details", "PostDetails", new { Id = postReference.DomainId, postReference.Slug });
 	    }
 
 	    private static string GetBlogCopyright()
