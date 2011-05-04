@@ -18,6 +18,7 @@ namespace RavenDbBlog
     	public void Configure()
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            routes.IgnoreRoute("{*favicon}", new { favicon = @"(.*/)?favicon.ico(/.*)?" });
 
             ConfigureSyndication();
 
@@ -31,14 +32,24 @@ namespace RavenDbBlog
 
             ConfigureUserAdmin();
 
+            ConfigureElmah();
+
             #region "Default"
 
             routes.MapRouteLowerCase("Default",
                 "",
-                new { controller = "Post", action = "List" }
+                new { controller = "Post", action = "Index" }
                 );
 
             #endregion
+        }
+
+        private void ConfigureElmah()
+        {
+            routes.MapRouteLowerCase("ElmahController-internal",
+                "admin/elmah/{type}",
+                new { controller = "Elmah", action = "Index", type = UrlParameter.Optional }
+                );
         }
 
         private void ConfigureSection()
