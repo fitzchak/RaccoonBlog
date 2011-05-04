@@ -16,7 +16,7 @@ namespace RaccoonBlog.Web.Controllers
 
         public new IDocumentSession Session { get; set; }
 
-        public AbstractController()
+    	protected AbstractController()
         {
             ViewBag.MetaDescription = "";
             ViewBag.MetaKeywords = "";
