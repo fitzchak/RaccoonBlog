@@ -24,6 +24,13 @@ namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles
             
             Mapper.CreateMap<PostInput, Post>()
                 .ForMember(x => x.Id, o => o.Ignore())
+                .ForMember(x => x.Author, o => o.Ignore())
+                .ForMember(x => x.LegacySlug, o => o.Ignore())
+                .ForMember(x => x.ShowPostEvenIfPrivate, o => o.Ignore())
+                .ForMember(x => x.SkipAutoReschedule, o => o.Ignore())
+                .ForMember(x => x.IsDeleted, o => o.Ignore())
+                .ForMember(x => x.CommentsCount, o => o.Ignore())
+                .ForMember(x => x.CommentsId, o => o.Ignore())
                 .ForMember(x => x.Tags, o => o.MapFrom(m => TagsResolver.ResolveTagsInput(m.Tags)))
                 ;
 

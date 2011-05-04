@@ -19,6 +19,7 @@ namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles
 
             Mapper.CreateMap<SectionInput, Section>()
                 .ForMember(x => x.Id, o => o.Ignore())
+                .ForMember(x => x.Position, o => o.Ignore())
                 ;
         }
     }
