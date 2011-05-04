@@ -116,8 +116,6 @@ namespace RaccoonBlog.Web.Controllers
                 return Json(new {success = false});
 
             post.PublishAt = post.PublishAt.WithDate(DateTimeOffsetUtil.ConvertFromJsTimestamp(date));
-            Session.Store(post);
-            Session.SaveChanges();
 
             return Json(new { success = true });
         }
