@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -12,6 +13,17 @@ namespace RaccoonBlog.Web.Models
 		public string Email { get; set; }
 		protected string HashedPassword { get; private set; }
 		public bool Enabled { get; set; }
+		private Guid passwordSalt;
+		private Guid PasswordSalt
+		{
+			get
+			{
+				if (passwordSalt == Guid.Empty)
+					passwordSalt = Guid.NewGuid();
+				return passwordSalt;
+			}
+			set { passwordSalt = value; }
+		}
 
 		public void SetPassword(string pwd)
 		{
@@ -25,7 +37,9 @@ namespace RaccoonBlog.Web.Models
 			{
 				var saltPerUser = Id;
 				var computedHash = sha.ComputeHash(
-					Encoding.Unicode.GetBytes(saltPerUser + pwd + ConstantSalt)
+					PasswordSalt.ToByteArray().Concat(
+						Encoding.Unicode.GetBytes(saltPerUser + pwd + ConstantSalt)
+						).ToArray()
 					);
 
 				hashedPassword = Convert.ToBase64String(computedHash);
