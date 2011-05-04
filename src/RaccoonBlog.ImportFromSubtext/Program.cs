@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
-using RaccoonBlog.ImportFromSubtext;
 using RaccoonBlog.Web.Models;
 using Raven.Client;
 using Raven.Client.Document;
 using Sgml;
-using Post = RaccoonBlog.ImportFromSubtext.Post;
-using RavenPost = RaccoonBlog.Web.Models.Post;
 
-namespace RavenDbBlog.Import
+namespace RaccoonBlog.ImportFromSubtext
 {
     internal class Program
     {
@@ -100,11 +96,11 @@ namespace RavenDbBlog.Import
 
                 foreach (Post post in theEntireDatabaseOhMygod)
                 {
-                    var ravenPost = new RavenPost
+                    var ravenPost = new Web.Models.Post
                         {
                             Author = usersList
                                     .Where(u=> u.FullName == post.Author)
-                                    .Select(u => new RavenPost.AuthorReference{FullName = u.FullName, Id = u.Id})
+                                    .Select(u => new Web.Models.Post.AuthorReference{FullName = u.FullName, Id = u.Id})
                                     .FirstOrDefault(),
                             CreatedAt = new DateTimeOffset(post.DateAdded),
                             PublishAt = new DateTimeOffset(post.DateSyndicated ?? post.DateAdded),

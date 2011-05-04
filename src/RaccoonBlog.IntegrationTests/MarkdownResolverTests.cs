@@ -5,7 +5,7 @@ using Xunit;
 /* References:
  * http://refactormycode.com/codes/333-sanitize-html
  */
-namespace RavenDbBlog.UnitTests
+namespace RaccoonBlog.IntegrationTests
 {
     public class MarkdownResolverTests
     {

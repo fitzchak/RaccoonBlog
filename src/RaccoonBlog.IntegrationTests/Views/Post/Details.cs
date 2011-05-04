@@ -1,4 +1,4 @@
-namespace UiTests.Views.Post
+namespace RaccoonBlog.IntegrationTests.Views.Post
 {
     public class Details
     {

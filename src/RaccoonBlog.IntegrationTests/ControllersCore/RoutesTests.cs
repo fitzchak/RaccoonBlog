@@ -7,7 +7,7 @@ using RaccoonBlog.Web.Controllers;
 using RaccoonBlog.Web.ViewModels;
 using Xunit;
 
-namespace RavenDbBlog.UnitTests.ControllersCore
+namespace RaccoonBlog.IntegrationTests.ControllersCore
 {
     public class RoutesTests : IDisposable
     {

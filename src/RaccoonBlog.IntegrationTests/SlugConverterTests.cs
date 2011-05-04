@@ -1,7 +1,7 @@
 using RaccoonBlog.Web;
 using Xunit;
 
-namespace RavenDbBlog.UnitTests
+namespace RaccoonBlog.IntegrationTests
 {
     public class SlugConverterTests
     {

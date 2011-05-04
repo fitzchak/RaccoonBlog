@@ -2,7 +2,7 @@ using AutoMapper;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using Xunit;
 
-namespace IntegrationTests.AutoMapper
+namespace RaccoonBlog.IntegrationTests.AutoMapper
 {
 	public class AutoMapperConfigurationTester
 	{
