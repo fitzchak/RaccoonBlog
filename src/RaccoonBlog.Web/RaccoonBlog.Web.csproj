@@ -98,13 +98,11 @@
     <Compile Include="Controllers\PostController.Details.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PostAdminController.cs" />
-    <Compile Include="Controllers\Queries.cs" />
     <Compile Include="Common\QueryableExtensions.cs" />
     <Compile Include="Controllers\SectionAdminController.cs" />
     <Compile Include="Controllers\SectionController.cs" />
     <Compile Include="Controllers\SyndicationController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
-    <Compile Include="DataServices\UserService.cs" />
     <Compile Include="EnsureLowerCaseRouteModule.cs" />
     <Compile Include="Helpers\Attributes\AjaxAttribute.cs" />
     <Compile Include="Helpers\ModelStateExtensions.cs" />

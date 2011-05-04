@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Web.Mvc;
 using RaccoonBlog.Web.Common;
-using RaccoonBlog.Web.DataServices;
 using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Helpers.Attributes;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
@@ -78,7 +77,7 @@ namespace RaccoonBlog.Web.Controllers
                 var post = Session.Load<Post>(input.Id) ?? new Post();
                 input.MapPropertiestoInstance(post);
 
-                var author = new UserService(Session).GetCurrentUser().MapTo<Post.AuthorReference>();
+                var author = Session.GetCurrentUser().MapTo<Post.AuthorReference>();
                 if (post.Author == null || string.IsNullOrEmpty(post.Author.FullName))
                     post.Author = author;
                 else

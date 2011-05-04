@@ -1,6 +1,6 @@
 using System.Web.Mvc;
 using System.Web.Security;
-using RaccoonBlog.Web.DataServices;
+using RaccoonBlog.Web.Common;
 using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Controllers
@@ -69,7 +69,7 @@ namespace RaccoonBlog.Web.Controllers
         [ChildActionOnly]
         public ActionResult AdministrationPanel()
         {
-            var user = new UserService(Session).GetCurrentUser();
+            var user = Session.GetCurrentUser();
 
             var vm = new CurrentUserViewModel();
             if (user != null)

@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using RaccoonBlog.Web.Commands;
 using RaccoonBlog.Web.Common;
-using RaccoonBlog.Web.DataServices;
 using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Helpers.Validation;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
@@ -54,7 +53,7 @@ namespace RaccoonBlog.Web.Controllers
             var cookie = Request.Cookies[CommenterCookieName];
             if (Request.IsAuthenticated)
             {
-                var user = new UserService(Session).GetCurrentUser();
+                var user = Session.GetCurrentUser();
                 vm.Input = user.MapTo<CommentInput>();
                 vm.IsTrustedCommenter = true;
             }
