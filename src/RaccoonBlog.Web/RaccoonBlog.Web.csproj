@@ -121,7 +121,7 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\MvcHtmlStringConverter.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\TagsResolver.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\UserAdminMapperProfile.cs" />
-    <Compile Include="LowercaseRoute.cs" />
+    <Compile Include="Common\LowercaseRoute.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Commenter.cs" />
     <Compile Include="Models\Post.cs" />
@@ -161,7 +161,7 @@
     <Compile Include="Services\MetaWeblog.cs" />
     <Compile Include="Services\PostSchedulingStrategy.cs" />
     <Compile Include="Services\RssModels\Structs.cs" />
-    <Compile Include="SlugConverter.cs" />
+    <Compile Include="Common\SlugConverter.cs" />
     <Compile Include="ViewModels\AdminPostDetailsViewModel.cs" />
     <Compile Include="ViewModels\CommentInput.cs" />
     <Compile Include="ViewModels\CurrentUserViewModel.cs" />

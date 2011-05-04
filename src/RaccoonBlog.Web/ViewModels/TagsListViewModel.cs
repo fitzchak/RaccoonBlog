@@ -1,4 +1,6 @@
-﻿namespace RaccoonBlog.Web.ViewModels
+﻿using RaccoonBlog.Web.Common;
+
+namespace RaccoonBlog.Web.ViewModels
 {
     public class TagsListViewModel
     {

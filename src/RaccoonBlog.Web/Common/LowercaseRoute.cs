@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace RaccoonBlog.Web
+namespace RaccoonBlog.Web.Common
 {
     public class LowercaseRoute : Route
     {

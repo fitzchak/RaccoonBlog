@@ -1,6 +1,7 @@
 ﻿using System.Configuration;
 using System.Web;
 using AutoMapper;
+using RaccoonBlog.Web.Common;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;

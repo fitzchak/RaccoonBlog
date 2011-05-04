@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using CookComputing.XmlRpc;
+using RaccoonBlog.Web.Common;
 using RaccoonBlog.Web.Controllers;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Indexes;

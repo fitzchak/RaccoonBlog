@@ -1,4 +1,5 @@
-﻿using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
+﻿using RaccoonBlog.Web.Common;
+using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 
 namespace RaccoonBlog.Web.ViewModels
 {

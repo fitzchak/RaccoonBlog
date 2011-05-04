@@ -1,5 +1,6 @@
 using System.Web.Mvc;
 using System.Web.Routing;
+using RaccoonBlog.Web.Common;
 
 namespace RaccoonBlog.Web
 {
