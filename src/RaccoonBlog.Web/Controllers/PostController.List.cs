@@ -39,42 +39,22 @@ namespace RaccoonBlog.Web.Controllers
 		}
 
 
-        public ActionResult ArchiveYear(int year)
+        public ActionResult Archive(int year, int? month, int? day)
         {
             RavenQueryStatistics stats;
-            var posts = Session.Query<Post>()
+            var postsQuery = Session.Query<Post>()
                 .Statistics(out stats)
                 .WhereIsPublicPost()
-                .Where(post => post.PublishAt.Year == year)
-                .OrderByDescending(post => post.PublishAt)
-                .Paging(CurrentPage, DefaultPage, PageSize)
-                .ToList();
+				.Where(post => post.PublishAt.Year == year);
+			
+			if(month != null)
+				postsQuery = postsQuery.Where(post => post.PublishAt.Month == month.Value);
 
-            return ListView(stats.TotalResults, posts);
-        }
+			if(day != null)
+				postsQuery = postsQuery.Where(post => post.PublishAt.Day == day.Value);
 
-        public ActionResult ArchiveYearMonth(int year, int month)
-        {
-            RavenQueryStatistics stats;
-            var posts = Session.Query<Post>()
-                .Statistics(out stats)
-                .WhereIsPublicPost()
-                .Where(post => post.PublishAt.Year == year && post.PublishAt.Month == month)
-                .OrderByDescending(post => post.PublishAt)
-                .Paging(CurrentPage, DefaultPage, PageSize)
-                .ToList();
-
-            return ListView(stats.TotalResults, posts);
-        }
-
-        public ActionResult ArchiveYearMonthDay(int year, int month, int day)
-        {
-            RavenQueryStatistics stats;
-            var posts = Session.Query<Post>()
-                .Statistics(out stats)
-                .WhereIsPublicPost()
-                .Where(post => post.PublishAt.Year == year && post.PublishAt.Month == month && post.PublishAt.Day == day)
-                .OrderByDescending(post => post.PublishAt)
+            var posts = 
+				postsQuery.OrderByDescending(post => post.PublishAt)
                 .Paging(CurrentPage, DefaultPage, PageSize)
                 .ToList();
 

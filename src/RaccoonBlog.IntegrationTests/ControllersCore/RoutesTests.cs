@@ -57,9 +57,9 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
             "~/tags/tag-name".ShouldMapTo<PostController>(c => c.Tag("tag-name"));
 
             // "~/archive".ShouldMapTo<ErrorController>(c => c.404());
-            "~/archive/2011".ShouldMapTo<PostController>(c => c.ArchiveYear(2011));
-            "~/archive/2011/4".ShouldMapTo<PostController>(c => c.ArchiveYearMonth(2011, 4));
-            "~/archive/2011/4/24".ShouldMapTo<PostController>(c => c.ArchiveYearMonthDay(2011, 4, 24));
+            "~/archive/2011".ShouldMapTo<PostController>(c => c.Archive(2011, null,null));
+			"~/archive/2011/4".ShouldMapTo<PostController>(c => c.Archive(2011, 4, null));
+            "~/archive/2011/4/24".ShouldMapTo<PostController>(c => c.Archive(2011, 4, 24));
             "~/archive/2011/4/24/legacy-post-title.aspx".ShouldMapTo<LegacyPostController>(c => c.RedirectLegacyPost(2011, 4, 24, "legacy-post-title"));
         }
 
