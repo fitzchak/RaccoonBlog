@@ -54,9 +54,15 @@ namespace RaccoonBlog.Web.Controllers
 
         public ActionResult ListFeed(long start, long end)
         {
-            var posts = Session.Query<Post>()
-                .Where(post => post.PublishAt >= DateTimeOffsetUtil.ConvertFromUnixTimestamp(start) &&
-                    post.PublishAt <= DateTimeOffsetUtil.ConvertFromUnixTimestamp(end))
+        	var startAsDateTimeOffset = DateTimeOffsetUtil.ConvertFromUnixTimestamp(start);
+        	var endAsDateTimeOffset = DateTimeOffsetUtil.ConvertFromUnixTimestamp(end);
+
+        	var posts = Session.Query<Post>()
+                .Where
+				(
+					post => post.PublishAt >= startAsDateTimeOffset &&
+							post.PublishAt <= endAsDateTimeOffset
+				)
                 .Where(post => post.IsDeleted == false)
                 .OrderBy(post => post.PublishAt)
                 .Take(256)
