@@ -31,6 +31,8 @@ namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles
                 .ForMember(x => x.IsDeleted, o => o.Ignore())
                 .ForMember(x => x.CommentsCount, o => o.Ignore())
                 .ForMember(x => x.CommentsId, o => o.Ignore())
+                .ForMember(x => x.LastEditedBy, o => o.Ignore())
+                .ForMember(x => x.LastEditedAt, o => o.Ignore())
                 .ForMember(x => x.Tags, o => o.MapFrom(m => TagsResolver.ResolveTagsInput(m.Tags)))
                 ;
 

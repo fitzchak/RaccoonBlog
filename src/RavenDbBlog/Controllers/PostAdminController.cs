@@ -75,6 +75,16 @@ namespace RavenDbBlog.Controllers
             {
                 var post = Session.Load<Post>(input.Id) ?? new Post();
                 input.MapPropertiestoInstance(post);
+
+                var author = new UserService(Session).GetCurrentUser().MapTo<Post.AuthorReference>();
+                if (post.Author == null || string.IsNullOrEmpty(post.Author.FullName))
+                    post.Author = author;
+                else
+                {
+                    post.LastEditedBy = author;
+                    post.LastEditedAt = DateTimeOffset.Now;
+                }
+
                 Session.Store(post);
 
                 var postReference = post.MapTo<PostReference>();

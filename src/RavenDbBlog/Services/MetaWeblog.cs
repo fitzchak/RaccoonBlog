@@ -9,6 +9,7 @@ using Raven.Client;
 using RavenDbBlog.Controllers;
 using RavenDbBlog.Core;
 using RavenDbBlog.Core.Models;
+using RavenDbBlog.DataServices;
 using RavenDbBlog.Indexes;
 using RavenDbBlog.Infrastructure.AutoMapper;
 using RavenDbBlog.Infrastructure.AutoMapper.Profiles.Resolvers;
@@ -71,6 +72,16 @@ namespace RavenDbBlog.Services
             var postToEdit = session.Load<Core.Models.Post>(postid);
             if (postToEdit == null)
                 throw new XmlRpcFaultException(0, "Post does not exists");
+
+            var author = user.MapTo<Core.Models.Post.AuthorReference>();
+            if (postToEdit.Author == null || string.IsNullOrEmpty(postToEdit.Author.FullName))
+                postToEdit.Author = author;
+            else
+            {
+                postToEdit.LastEditedBy = author;
+                postToEdit.LastEditedAt = DateTimeOffset.Now;
+            }
+
             postToEdit.Author = user.MapTo<Core.Models.Post.AuthorReference>();
             postToEdit.Body = post.description;
             if (
