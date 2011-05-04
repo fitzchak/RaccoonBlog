@@ -16,12 +16,16 @@ namespace RaccoonBlog.Web.Controllers
     {
         public ActionResult List()
         {
+			// the actual UI is handled via JavaScript
             return View();
         }
 
         public ActionResult Details(int id, string slug)
         {
-            var post = Session
+			var postService = new PostService(Session);
+			
+			
+			var post = Session
                 .Include<Post>(x => x.CommentsId)
                 .Load(id);
 
@@ -37,10 +41,11 @@ namespace RaccoonBlog.Web.Controllers
             var allComments = comments.Comments
                 .Concat(comments.Spam)
                 .OrderBy(comment => comment.CreatedAt);
+
             vm.Comments = allComments.MapTo<AdminPostDetailsViewModel.Comment>();
-            vm.NextPost = new PostService(Session).GetPostReference(x => x.PublishAt > post.PublishAt);
-            vm.PreviousPost = new PostService(Session).GetPostReference(x => x.PublishAt < post.PublishAt);
-            vm.IsCommentClosed = DateTimeOffset.Now - new PostService(Session).GetLastCommentDateForPost(id) > TimeSpan.FromDays(30D);
+        	vm.NextPost = postService.GetPostReference(x => x.PublishAt > post.PublishAt);
+            vm.PreviousPost = postService.GetPostReference(x => x.PublishAt < post.PublishAt);
+            vm.IsCommentClosed = DateTimeOffset.Now - comments.LastCommentAtOr(post.CreatedAt) > TimeSpan.FromDays(30D);
             
             return View("Details", vm);
         }

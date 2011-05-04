@@ -123,7 +123,7 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\TagsResolver.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\UserAdminMapperProfile.cs" />
     <Compile Include="Common\LowercaseRoute.cs" />
-    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\PostComments.cs" />
     <Compile Include="Models\Commenter.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\Section.cs" />

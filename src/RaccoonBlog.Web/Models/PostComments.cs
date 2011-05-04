@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RaccoonBlog.Web.Models
 {
@@ -15,6 +16,15 @@ namespace RaccoonBlog.Web.Models
         {
             return ++LastCommentId;
         }
+
+		public DateTimeOffset LastCommentAtOr(DateTimeOffset defaultValue)
+		{
+			if (Comments.Count == 0)
+				return defaultValue;
+
+			return Comments.Max(x => x.CreatedAt);
+		}
+
 
         public class Comment
         {

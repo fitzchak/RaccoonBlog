@@ -31,19 +31,5 @@ namespace RaccoonBlog.Web.DataServices
 
             return postReference.DynamicMapTo<PostReference>();
         }
-
-        public DateTimeOffset? GetLastCommentDateForPost(int postId)
-        {
-            var comments = Session.Load<PostComments>(postId);
-            var comment = comments.Comments
-                .OrderByDescending(c => c.CreatedAt)
-                .Select(c => new {c.CreatedAt})
-                .FirstOrDefault();
-           
-            if (comment == null)
-                return null;
-
-            return comment.CreatedAt;
-        }
     }
 }

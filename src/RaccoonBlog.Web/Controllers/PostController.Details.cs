@@ -48,7 +48,7 @@ namespace RaccoonBlog.Web.Controllers
                 .MapTo<PostViewModel.Comment>();
             vm.NextPost = new PostService(Session).GetPostReference(x => x.PublishAt > post.PublishAt);
             vm.PreviousPost = new PostService(Session).GetPostReference(x => x.PublishAt < post.PublishAt);
-            vm.IsCommentClosed = DateTimeOffset.Now - new PostService(Session).GetLastCommentDateForPost(id) > TimeSpan.FromDays(30D);
+            vm.IsCommentClosed = DateTimeOffset.Now - comments.LastCommentAtOr(post.CreatedAt) > TimeSpan.FromDays(30D);
 
             var cookie = Request.Cookies[CommenterCookieName];
             if (Request.IsAuthenticated)
@@ -73,10 +73,21 @@ namespace RaccoonBlog.Web.Controllers
         [HttpPost]
         public ActionResult Comment(CommentInput input, int id)
         {
-            bool isCommentClosed = DateTimeOffset.Now - new PostService(Session).GetLastCommentDateForPost(id) > TimeSpan.FromDays(30D);
-            if (isCommentClosed)
+			var post = Session
+				.Include<Post>(x => x.CommentsId)
+				.Load(id);
+
+			if (post == null || post.IsPublicPost() == false)
+				return HttpNotFound();
+
+        	var comments = Session.Load<PostComments>(post.CommentsId);
+			if (comments == null)
+				return HttpNotFound();
+
+            bool areCommentsClosed = DateTimeOffset.Now - comments.LastCommentAtOr(post.CreatedAt) > TimeSpan.FromDays(30);
+            if (areCommentsClosed)
             {
-                ModelState.AddModelError("CommentClosed", "This post is closed for comments.");
+                ModelState.AddModelError("CommentsClosed", "This post is closed for new comments.");
             }
 
             var commenter = GetCommenter(input.CommenterKey) ?? new Commenter {Key = Guid.NewGuid()};
@@ -89,13 +100,6 @@ namespace RaccoonBlog.Web.Controllers
                     ModelState.AddModelError("CaptchaNotValid", "You did not type the verification word correctly. Please try again.");
                 }
             }
-
-            var post = Session
-                .Include<Post>(x => x.CommentsId)
-                .Load(id);
-
-            if (post == null || post.IsPublicPost() == false)
-                return HttpNotFound();
 
             if (post.AllowComments == false)
             {
