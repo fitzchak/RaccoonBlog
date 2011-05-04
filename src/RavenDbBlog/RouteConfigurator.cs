@@ -157,7 +157,7 @@ namespace RavenDbBlog
                 );
 
             routes.MapRouteLowerCase("PostController-PostsByTag",
-                "tags/{name}",
+                "tags/{slug}",
                 new { controller = "Post", action = "Tag" }
                 );
 
