@@ -75,11 +75,6 @@
     </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="markdown.xsl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\RaccoonBlog.Web\RaccoonBlog.Web.csproj">
       <Project>{58CCD7A4-503D-467D-8DC4-4D310BD42774}</Project>
       <Name>RaccoonBlog.Web</Name>
