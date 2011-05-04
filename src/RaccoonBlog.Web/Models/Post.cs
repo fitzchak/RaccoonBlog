@@ -28,7 +28,7 @@ namespace RaccoonBlog.Web.Models
 
 
         public DateTimeOffset CreatedAt { get; set; }
-        public DateTimeOffset LastEditedAt { get; set; }
+        public DateTimeOffset? LastEditedAt { get; set; }
 		public bool SkipAutoReschedule { get; set; }
         public DateTimeOffset PublishAt { get; set; }
         public bool IsDeleted { get; set; }

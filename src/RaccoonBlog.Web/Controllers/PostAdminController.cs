@@ -88,11 +88,13 @@ namespace RaccoonBlog.Web.Controllers
         		return View("Edit", new EditPostViewModel {Input = input});
 
         	var post = Session.Load<Post>(input.Id) ?? new Post();
-        	input.MapPropertiestoInstance(post);
+        	input.MapPropertiesToInstance(post);
 
         	var author = Session.GetCurrentUser().MapTo<Post.AuthorReference>();
         	if (post.Author == null || string.IsNullOrEmpty(post.Author.FullName))
+        	{
         		post.Author = author;
+        	}
         	else
         	{
         		post.LastEditedBy = author;

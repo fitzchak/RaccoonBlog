@@ -40,7 +40,7 @@ namespace RaccoonBlog.Web.Controllers
             if (ModelState.IsValid)
             {
                 var user = Session.Load<User>(input.Id) ?? new User();
-                input.MapPropertiestoInstance(user);
+                input.MapPropertiesToInstance(user);
                 Session.Store(user);
                 return RedirectToAction("List");
             }

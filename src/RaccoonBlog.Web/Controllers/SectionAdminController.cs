@@ -38,7 +38,7 @@ namespace RaccoonBlog.Web.Controllers
             if (ModelState.IsValid)
             {
                 var section = Session.Load<Section>(input.Id) ?? new Section();
-                input.MapPropertiestoInstance(section);
+                input.MapPropertiesToInstance(section);
                 Session.Store(section);
                 return RedirectToAction("List");
             }

@@ -23,7 +23,7 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper
             return (TResult)Mapper.Map(self, self.GetType(), typeof(TResult));
         }
 
-		public static TResult MapPropertiestoInstance<TResult>(this object self, TResult value)
+		public static TResult MapPropertiesToInstance<TResult>(this object self, TResult value)
 		{
             if (self == null)
                 throw new ArgumentNullException();
