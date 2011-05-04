@@ -58,12 +58,12 @@ namespace RaccoonBlog.Web.Controllers
         	var endAsDateTimeOffset = DateTimeOffsetUtil.ConvertFromUnixTimestamp(end);
 
         	var posts = Session.Query<Post>()
-                .Where
+				.Where(post => post.IsDeleted == false)
+				.Where
 				(
 					post => post.PublishAt >= startAsDateTimeOffset &&
 							post.PublishAt <= endAsDateTimeOffset
 				)
-                .Where(post => post.IsDeleted == false)
                 .OrderBy(post => post.PublishAt)
                 .Take(256)
                 .ToList();
@@ -84,26 +84,25 @@ namespace RaccoonBlog.Web.Controllers
         [ValidateInput(false)]
         public ActionResult Update(PostInput input)
         {
-            if (ModelState.IsValid)
-            {
-                var post = Session.Load<Post>(input.Id) ?? new Post();
-                input.MapPropertiestoInstance(post);
+        	if (!ModelState.IsValid)
+        		return View("Edit", new EditPostViewModel {Input = input});
 
-                var author = Session.GetCurrentUser().MapTo<Post.AuthorReference>();
-                if (post.Author == null || string.IsNullOrEmpty(post.Author.FullName))
-                    post.Author = author;
-                else
-                {
-                    post.LastEditedBy = author;
-                    post.LastEditedAt = DateTimeOffset.Now;
-                }
+        	var post = Session.Load<Post>(input.Id) ?? new Post();
+        	input.MapPropertiestoInstance(post);
 
-                Session.Store(post);
+        	var author = Session.GetCurrentUser().MapTo<Post.AuthorReference>();
+        	if (post.Author == null || string.IsNullOrEmpty(post.Author.FullName))
+        		post.Author = author;
+        	else
+        	{
+        		post.LastEditedBy = author;
+        		post.LastEditedAt = DateTimeOffset.Now;
+        	}
 
-                var postReference = post.MapTo<PostReference>();
-                return RedirectToAction("Details", new { Id = postReference.DomainId, postReference.Slug});
-            }
-            return View("Edit", new EditPostViewModel {Input = input});
+        	Session.Store(post);
+
+        	var postReference = post.MapTo<PostReference>();
+        	return RedirectToAction("Details", new { Id = postReference.DomainId, postReference.Slug});
         }
         
         [HttpPost]
