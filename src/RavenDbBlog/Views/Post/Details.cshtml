@@ -70,37 +70,66 @@
                 <p>@comment.Body</p>
             </article>
         }
+
+        <article id="postComment">
+            @if (Model.IsCommentClosed) { 
+                <div class="commentsClosedMessage">Comments have been closed on this topic.</div>
+            } else {
+                if (ViewData.ModelState.IsValid == false) { 
+                    <div class="form-error">
+                        @Html.ValidationSummary(true)
+                    </div>
+                }
+                using (@Html.BeginForm("Comment", "Post", new { Model.Post.Id })) {
+                    @Html.EditorFor(x => x.Input.Name)
+                    @Html.EditorFor(x => x.Input.Email)
+                    @Html.EditorFor(x => x.Input.Url)
+                    @Html.EditorFor(x => x.Input.Body)
+    
+                    if (!Model.IsTrustedCommenter) { 
+                        <div class="form_item">
+                            <label>
+                                <span class="form_item_name">Are you human?</span>
+                                @Html.GenerateCaptcha()
+                                @Html.ValidationMessage("CaptchaNotValid")
+                            </label>
+                        </div>
+                    }
+                    @Html.EditorFor(x => x.Input.CommenterKey)
+                    <input type="submit" value="Post Comment" />
+                }
+            }
+        </article>
     </section>
 </article>
-
-@if (Model.IsCommentClosed) { 
-    <div>Comments have been closed on this topic.</div>
-} else {
-    if (ViewData.ModelState.IsValid == false) { 
-        <div class="form-error">
-            @Html.ValidationSummary(true)
-        </div>
-    }
-    using (@Html.BeginForm("Comment", "Post", new { Model.Post.Id })) {
-        @Html.EditorFor(x => x.Input.Name)
-        @Html.EditorFor(x => x.Input.Email)
-        @Html.EditorFor(x => x.Input.Url)
-        @Html.EditorFor(x => x.Input.Body)
-    
-        if (!Model.IsTrustedCommenter) { 
-            <div class="form_item">
-                <label>
-                    <span class="form_item_name">Are you human?</span>
-                    @Html.GenerateCaptcha()
-                    @Html.ValidationMessage("CaptchaNotValid")
-                </label>
-            </div>
-        }
-        <input type="submit" value="Post Comment" />
-    }
-}
+<div class="messageWrapper"><div id="message" style="visibility:hidden"></div></div>
 
 @section Script {
     <script src="@Url.Content("~/Content/js/jquery.validate.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Content/js/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#postComment form').submit(function () {
+                var t = $(this);
+                if (t.valid()) {
+                    var jqxhr = $.post('@Url.Action("Comment", new { Model.Post.Id })', t.serializeArray(), null, 'json');
+                    jqxhr.error(failAction);
+                    jqxhr.success(function (data, textStatus, jqXHR) {
+                        if (!data.success) failAction();
+                        else setMessage(data.message);
+                    });
+                    function failAction(data, textStatus, jqXHR) {
+                        setMessage('An error occurred while posing your feedback: ' + data.message, 'fail');
+                    }
+                }
+                return false;
+            });
+
+            function setMessage(message, cssClass) {
+                var m = $('#message').html(message);
+                if (cssClass) m.addClass(cssClass);
+                m.css('visibility', 'visible');
+            }
+        });
+    </script>
 }
