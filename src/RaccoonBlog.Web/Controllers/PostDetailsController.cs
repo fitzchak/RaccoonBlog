@@ -58,7 +58,7 @@ namespace RaccoonBlog.Web.Controllers
 				.Include<Post>(x => x.CommentsId)
 				.Load(id);
 
-			if (post == null || post.IsPublicPost() == false)
+			if (post == null || post.IsPublicPost(Request.QueryString["key"]) == false)
 				return HttpNotFound();
 
         	var comments = Session.Load<PostComments>(post.CommentsId);

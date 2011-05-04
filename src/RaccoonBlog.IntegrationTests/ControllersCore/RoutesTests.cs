@@ -40,16 +40,16 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
         {
             "~/".ShouldMapTo<PostController>(c => c.List());
 
-            "~/1024".ShouldMapTo<PostController>(c => c.Details(1024, null));
-            "~/1024/blog-post-title".ShouldMapTo<PostController>(c => c.Details(1024, "blog-post-title"));
+			"~/1024".ShouldMapTo<PostDetailsController>(c => c.Details(1024, null));
+			"~/1024/blog-post-title".ShouldMapTo<PostDetailsController>(c => c.Details(1024, "blog-post-title"));
 
             "~/1024/comment"
                 .WithMethod(HttpVerbs.Get)
-                .ShouldMapTo<PostController>(c => c.Details(1024, "comment"));
+				.ShouldMapTo<PostDetailsController>(c => c.Details(1024, "comment"));
 
             "~/1024/comment"
                 .WithMethod(HttpVerbs.Post)
-                .ShouldMapTo<PostController>(c => c.Comment(null, 1024));
+                .ShouldMapTo<PostDetailsController>(c => c.Comment(null, 1024));
 
             "~/section/tagslist".ShouldMapTo<SectionController>(c => c.TagsList());
 			"~/section/archiveslist".ShouldMapTo<SectionController>(c => c.ArchivesList());
