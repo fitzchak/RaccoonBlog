@@ -38,7 +38,7 @@ namespace RavenDbBlog
 
             routes.MapRouteLowerCase("Default",
                 "",
-                new { controller = "Post", action = "Index" }
+                new { controller = "Post", action = "List" }
                 );
 
             #endregion
