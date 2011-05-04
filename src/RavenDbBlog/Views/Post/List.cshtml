@@ -17,7 +17,12 @@
         </div>
 
         <footer>
-            Posted @@ <time pubdate>@post.CreatedAt.ToString("r")</time> | <a href="@ViewBag.PostUrl#feedback">Feedback (@post.CommentsCount)</a>
+            Posted @@ <time pubdate>@post.CreatedAt.ToString("r")</time>
+            @if (post.IsCommentsAllowed) {
+                <text>
+                    | <a href="@ViewBag.PostUrl#feedback">Feedback (@post.CommentsCount)</a>
+                </text>
+            }
         </footer>
 
 		<div class="tags">

@@ -29,6 +29,7 @@ namespace RavenDbBlog.Core.Models
 		public bool SkipAutoReschedule { get; set; }
         public DateTimeOffset PublishAt { get; set; }
         public bool IsDeleted { get; set; }
+        public bool AllowComments { get; set; }
 
         public int CommentsCount { get; set; }
 

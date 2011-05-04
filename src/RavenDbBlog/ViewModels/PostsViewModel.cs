@@ -25,6 +25,7 @@ namespace RavenDbBlog.ViewModels
             public DateTimeOffset CreatedAt { get; set; }
             public DateTimeOffset PublishedAt { get; set; }
             public int CommentsCount { get; set; }
+            public bool IsCommentsAllowed { get; set; }
         }
     }
 }

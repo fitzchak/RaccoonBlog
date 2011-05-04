@@ -108,7 +108,8 @@ namespace RavenDbBlog.Import
                             Title = post.Title,
                             Tags = post.Links.Select(x => x.Categories.Title)
                                 .Where(x => x != "Uncategorized")
-                                .ToArray()
+                                .ToArray(),
+                            AllowComments = true
                         };
 
                     var commentsCollection = new PostComments();
