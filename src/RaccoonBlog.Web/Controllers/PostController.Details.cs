@@ -27,50 +27,50 @@ namespace RaccoonBlog.Web.Controllers
             if (post == null)
                 return HttpNotFound();
 
-            if (post.IsPublicPost() == false)
-            {
-                Guid guid;
-                if (Guid.TryParse(Request.QueryString["key"], out guid) == false || guid != post.ShowPostEvenIfPrivate)
-                    return HttpNotFound();
-            }
+			if (post.IsPublicPost(Request.QueryString["key"]) == false)
+				return HttpNotFound();  
 
-            var vm = new PostViewModel
-            {
-                Post = post.MapTo<PostViewModel.PostDetails>(),
-            };
+			var comments = Session.Load<PostComments>(post.CommentsId);
+			var vm = new PostViewModel
+			{
+				Post = post.MapTo<PostViewModel.PostDetails>(),
+				Comments = comments.Comments
+					.OrderBy(comment => comment.CreatedAt)
+					.MapTo<PostViewModel.Comment>(),
+				NextPost = Session.GetPostReference(x => x.PublishAt > post.PublishAt),
+				PreviousPost = Session.GetPostReference(x => x.PublishAt < post.PublishAt),
+				AreCommentsClosed = comments.AreCommentsClosed(post),
+			};
 
-            if (vm.Post.Slug != slug)
-                return RedirectToActionPermanent("Details", new { id, vm.Post.Slug });
+        	if (vm.Post.Slug != slug)
+				return RedirectToActionPermanent("Details", new { id, vm.Post.Slug });
 
-            var comments = Session.Load<PostComments>(post.CommentsId);
-            vm.Comments = comments.Comments
-                .OrderBy(comment => comment.CreatedAt)
-                .MapTo<PostViewModel.Comment>();
-			vm.NextPost = Session.GetPostReference(x => x.PublishAt > post.PublishAt);
-			vm.PreviousPost = Session.GetPostReference(x => x.PublishAt < post.PublishAt);
-            vm.AreCommentsClosed = comments.AreCommentsClosed(post);
+            SetWhateverUserIsTrustedCommenter(vm);
 
-            var cookie = Request.Cookies[CommenterCookieName];
-            if (Request.IsAuthenticated)
-            {
-                var user = Session.GetCurrentUser();
-                vm.Input = user.MapTo<CommentInput>();
-                vm.IsTrustedCommenter = true;
-            }
-            else if (cookie != null)
-            {
-                var commenter = GetCommenter(cookie.Value);
-                if (commenter != null)
-                {
-                    vm.Input = commenter.MapTo<CommentInput>();
-                    vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
-                }
-            }
-            
-            return View("Details", vm);
+        	return View("Details", vm);
         }
 
-        [HttpPost]
+    	private void SetWhateverUserIsTrustedCommenter(PostViewModel vm)
+    	{
+    		var cookie = Request.Cookies[CommenterCookieName];
+    		if (Request.IsAuthenticated)
+    		{
+    			var user = Session.GetCurrentUser();
+    			vm.Input = user.MapTo<CommentInput>();
+    			vm.IsTrustedCommenter = true;
+    		}
+    		else if (cookie != null)
+    		{
+    			var commenter = GetCommenter(cookie.Value);
+    			if (commenter != null)
+    			{
+    				vm.Input = commenter.MapTo<CommentInput>();
+    				vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
+    			}
+    		}
+    	}
+
+    	[HttpPost]
         public ActionResult Comment(CommentInput input, int id)
         {
 			var post = Session
