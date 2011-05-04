@@ -72,6 +72,8 @@
         }
 
         <article id="postComment">
+            <div class="messageWrapper"><div id="message" style="visibility:hidden"></div></div>
+
             @if (Model.Post.IsCommentAllowed = false || Model.IsCommentClosed) { 
                 <div class="commentsClosedMessage">Comments have been closed on this topic.</div>
             } else {
@@ -102,7 +104,6 @@
         </article>
     </section>
 </article>
-<div class="messageWrapper"><div id="message" style="visibility:hidden"></div></div>
 
 @section Script {
     <script src="@Url.Content("~/Content/js/jquery.validate.min.js")" type="text/javascript"></script>
