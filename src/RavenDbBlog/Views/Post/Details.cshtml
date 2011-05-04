@@ -112,7 +112,7 @@
             $('#postComment form').submit(function () {
                 var t = $(this);
                 if (t.valid()) {
-                    var jqxhr = $.post('@Url.Action("Comment", new { Model.Post.Id })', t.serializeArray(), null, 'json');
+                    var jqxhr = $.post(t.attr('action'), t.serializeArray(), null, 'json');
                     jqxhr.error(failAction);
                     jqxhr.success(function (data, textStatus, jqXHR) {
                         if (!data.success) failAction();
