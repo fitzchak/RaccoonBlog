@@ -1,6 +1,8 @@
+using System;
 using System.Threading.Tasks;
 using Elmah;
 using RavenDbBlog.Infrastructure.Raven;
+using System.Diagnostics;
 
 namespace RavenDbBlog.Infrastructure.Commands
 {
@@ -16,6 +18,11 @@ namespace RavenDbBlog.Infrastructure.Commands
                     DocumentStoreHolder.TryAddSession(command);
                     command.Execute();
                     succcessfully = true;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                    throw;
                 }
                 finally
                 {
