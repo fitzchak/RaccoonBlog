@@ -13,6 +13,7 @@ namespace RaccoonBlog.Web.Models
 		public string Email { get; set; }
 		protected string HashedPassword { get; private set; }
 		public bool Enabled { get; set; }
+
 		private Guid passwordSalt;
 		private Guid PasswordSalt
 		{
