@@ -43,16 +43,12 @@ namespace RaccoonBlog.Web.Commands
                 IsSpam = new AskimetService(_requestValues).CheckForSpam(_commentInput),
             };
 
-            if (comment.IsSpam)
-            {
-                comments.Spam.Add(comment);
-            }
-            else
-            {
-                comments.Comments.Add(comment);
-            }
+        	if (comment.IsSpam)
+        		comments.Spam.Add(comment);
+        	else
+        		comments.Comments.Add(comment);
 
-            var vm = new NewCommentEmailViewModel
+        	var vm = new NewCommentEmailViewModel
             {
                 Author = comment.Author,
                 Body = MvcHtmlString.Create(comment.Body),
