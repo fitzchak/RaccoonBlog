@@ -94,6 +94,7 @@
   <ItemGroup>
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ElmahController.cs" />
+    <Compile Include="Helpers\Results\ElmahResult.cs" />
     <Compile Include="Controllers\PostController.Details.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PostAdminController.cs" />
@@ -285,8 +286,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>28564</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>http://localhost/RaccoonBlog.Web</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
