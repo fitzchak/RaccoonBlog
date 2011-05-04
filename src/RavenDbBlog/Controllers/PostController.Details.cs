@@ -5,6 +5,7 @@ using Raven.Client.Linq;
 using System.Web.Mvc;
 using RavenDbBlog.Core.Models;
 using RavenDbBlog.DataServices;
+using RavenDbBlog.Helpers;
 using RavenDbBlog.Helpers.Validation;
 using RavenDbBlog.Infrastructure.AutoMapper;
 using RavenDbBlog.ViewModels;
@@ -106,7 +107,7 @@ namespace RavenDbBlog.Controllers
             if (ModelState.IsValid == false)
             {
                 if (Request.IsAjaxRequest())
-                    return Json(new { Success = false, message = ModelState.Values });
+                    return Json(new {Success = false, message = ModelState.GetFirstErrorMessage()});
 
                 postReference = post.MapTo<PostReference>();
                 var result = Details(postReference.DomainId, postReference.Slug);

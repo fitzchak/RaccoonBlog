@@ -124,7 +124,7 @@ namespace RavenDbBlog.Controllers
             if (ModelState.IsValid == false)
             {
                 if (Request.IsAjaxRequest())
-                    return Json(new {Success = false, message = ModelState.Values});
+                    return Json(new {Success = false, message = ModelState.GetFirstErrorMessage()});
 
                 return Details(id, slug);
             }
