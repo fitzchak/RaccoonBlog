@@ -14,7 +14,7 @@ using System.Web;
 
 namespace RaccoonBlog.Web.Controllers
 {
-    public partial class PostController : AbstractController
+    public class PostDetailsController : AbstractController
     {
         public const string CommenterCookieName = "commenter";
 

@@ -98,7 +98,7 @@
     <Compile Include="Common\DateTimeOffsetUtil.cs" />
     <Compile Include="Controllers\ElmahController.cs" />
     <Compile Include="Helpers\Results\ElmahResult.cs" />
-    <Compile Include="Controllers\PostController.Details.cs" />
+    <Compile Include="Controllers\PostDetailsController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PostAdminController.cs" />
     <Compile Include="Common\QueryableExtensions.cs" />
@@ -272,7 +272,7 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Post\Details.cshtml" />
+    <Content Include="Views\PostDetails\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Post\List.cshtml" />

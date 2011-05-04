@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace RaccoonBlog.Web.Controllers
 {
-    public partial class PostController
+	public class PostController : AbstractController
     {
         public ActionResult List()
         {
