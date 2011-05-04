@@ -25,7 +25,9 @@ namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles
                 .ForMember(x => x.IsImportant, o => o.MapFrom(m => m.Important))
                 ;
 
-            Mapper.CreateMap<Post, PostReference>();
+            Mapper.CreateMap<Post, PostReference>()
+                .ForMember(x => x.Slug, o => o.Ignore())
+                ;
             
             Mapper.CreateMap<Commenter, CommentInput>()
                 .ForMember(x => x.Body, o => o.Ignore())

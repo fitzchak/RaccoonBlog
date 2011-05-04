@@ -4,18 +4,17 @@ namespace RavenDbBlog.ViewModels
 {
     public class TagsListViewModel
     {
-        private string _name;
-        public string Name
+        public string Name { get; set; }
+
+        private string _slug;
+        public string Slug
         {
-            get { return _name; }
-            set
+            get
             {
-                _name = value;
-                Slug = SlugConverter.TitleToSlag(Name);
+                return _slug ?? (_slug = SlugConverter.TitleToSlag(Name));
             }
         }
 
-        public string Slug { get; private set; }
         public int Count { get; set; }
     }
 }
