@@ -51,8 +51,8 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
                 .WithMethod(HttpVerbs.Post)
                 .ShouldMapTo<PostController>(c => c.Comment(null, 1024));
 
-            "~/post/tagslist".ShouldMapTo<PostController>(c => c.TagsList());
-            "~/post/archiveslist".ShouldMapTo<PostController>(c => c.ArchivesList());
+            "~/section/tagslist".ShouldMapTo<SectionController>(c => c.TagsList());
+			"~/section/archiveslist".ShouldMapTo<SectionController>(c => c.ArchivesList());
 
             "~/tags/tag-name".ShouldMapTo<PostController>(c => c.Tag("tag-name"));
 
@@ -60,7 +60,7 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
             "~/archive/2011".ShouldMapTo<PostController>(c => c.ArchiveYear(2011));
             "~/archive/2011/4".ShouldMapTo<PostController>(c => c.ArchiveYearMonth(2011, 4));
             "~/archive/2011/4/24".ShouldMapTo<PostController>(c => c.ArchiveYearMonthDay(2011, 4, 24));
-            "~/archive/2011/4/24/legacy-post-title.aspx".ShouldMapTo<PostController>(c => c.RedirectLegacyPost(2011, 4, 24, "legacy-post-title"));
+            "~/archive/2011/4/24/legacy-post-title.aspx".ShouldMapTo<LegacyPostController>(c => c.RedirectLegacyPost(2011, 4, 24, "legacy-post-title"));
         }
 
         [Fact]
@@ -103,7 +103,7 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
                 .ShouldMapTo<PostAdminController>(c => c.Details(1024, "setpostdate"));
 
             var commentsadmin = "~/admin/posts/1024/commentsadmin".WithMethod(HttpVerbs.Post);
-            commentsadmin.ShouldMapTo<PostAdminController>(c => c.CommentsAdmin(1024, null, null));
+            commentsadmin.ShouldMapTo<PostAdminController>(c => c.CommentsAdmin(1024, PostAdminController.CommentCommandOptions.Delete, null));
 
             "~/admin/posts/1024/commentsadmin"
                 .WithMethod(HttpVerbs.Get)

@@ -133,7 +133,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="RouteConfigurator.cs" />
     <Compile Include="Services\Akismet.cs" />
-    <Compile Include="Controllers\PostController.cs" />
+    <Compile Include="Controllers\LegacyPostController.cs" />
     <Compile Include="Helpers\Validation\RecaptchaValidatorWrapper.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\MarkdownResolver.cs" />
     <Compile Include="Infrastructure\Indexes\Posts_ByMonthPublished_Count.cs" />
@@ -218,8 +218,8 @@
     <None Include="Views\Shared\DisplayTemplates\String.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\HiddenInput.cshtml" />
     <Content Include="EmailViews\NewComment.cshtml" />
-    <Content Include="Views\Post\TagsList.cshtml" />
-    <Content Include="Views\Post\ArchivesList.cshtml" />
+    <Content Include="Views\Section\TagsList.cshtml" />
+    <Content Include="Views\Section\ArchivesList.cshtml" />
     <Content Include="Services\MetaWeblogAPI.ashx" />
     <Content Include="wlwmanifest.xml" />
     <Content Include="Views\Login\Login.cshtml" />

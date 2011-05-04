@@ -24,15 +24,20 @@ namespace RaccoonBlog.Web.Controllers
             return ListView(stats.TotalResults, posts);
         }
 
-        private ActionResult ListView(int count, ICollection<Post> posts)
-        {
-            return View("List", new PostsViewModel
-            {
-                CurrentPage = CurrentPage,
-                PostsCount = count,
-                Posts = posts.MapTo<PostsViewModel.PostSummary>()
-            });
-        }
+		public ActionResult Tag(string slug)
+		{
+			RavenQueryStatistics stats;
+			var posts = Session.Query<Post>()
+				.Statistics(out stats)
+				.WhereIsPublicPost()
+				.Where(post => post.Tags.Any(postTag => postTag == slug))
+				.OrderByDescending(post => post.PublishAt)
+				.Paging(CurrentPage, DefaultPage, PageSize)
+				.ToList();
+
+			return ListView(stats.TotalResults, posts);
+		}
+
 
         public ActionResult ArchiveYear(int year)
         {
@@ -75,5 +80,15 @@ namespace RaccoonBlog.Web.Controllers
 
             return ListView(stats.TotalResults, posts);
         }
+
+		private ActionResult ListView(int count, IEnumerable<Post> posts)
+		{
+			return View("List", new PostsViewModel
+			{
+				CurrentPage = CurrentPage,
+				PostsCount = count,
+				Posts = posts.MapTo<PostsViewModel.PostSummary>()
+			});
+		}
     }
 }
