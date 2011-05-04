@@ -1,3 +1,8 @@
+// //-----------------------------------------------------------------------
+// // <copyright company="Hibernating Rhinos LTD">
+// //     Copyright (c) Hibernating Rhinos LTD. All rights reserved.
+// // </copyright>
+// //-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
 using RaccoonBlog.Web.Common;
@@ -6,32 +11,33 @@ namespace RaccoonBlog.Web.Models
 {
 	public class Post
 	{
-		public string Id { get; set; }
-		public string Title { get; set; }
-		public string LegacySlug { get; set; }
-		public string Body { get; set; }
-		public string[] Tags { get; set; }
-		public AuthorReference Author { get; set; }
-		public AuthorReference LastEditedBy { get; set; }
-
 		private Guid _showPostEvenIfPrivate;
-		public Guid ShowPostEvenIfPrivate
-		{
-			get
-			{
-				if (_showPostEvenIfPrivate == Guid.Empty)
-					_showPostEvenIfPrivate = Guid.NewGuid();
-				return _showPostEvenIfPrivate;
-			}
-			set { _showPostEvenIfPrivate = value; }
-		}
+
+		public string Id { get; set; }
+
+		public string Title { get; set; }
+
+		public string LegacySlug { get; set; }
+
+		public string Body { get; set; }
+
+		public string[] Tags { get; set; }
+
+		public AuthorReference Author { get; set; }
+
+		public AuthorReference LastEditedBy { get; set; }
 
 
 		public DateTimeOffset CreatedAt { get; set; }
+
 		public DateTimeOffset? LastEditedAt { get; set; }
+
 		public bool SkipAutoReschedule { get; set; }
+
 		public DateTimeOffset PublishAt { get; set; }
+
 		public bool IsDeleted { get; set; }
+
 		public bool AllowComments { get; set; }
 
 		public int CommentsCount { get; set; }
@@ -51,6 +57,17 @@ namespace RaccoonBlog.Web.Models
 			}
 		}
 
+		public Guid ShowPostEvenIfPrivate
+		{
+			get
+			{
+				if (_showPostEvenIfPrivate == Guid.Empty)
+					_showPostEvenIfPrivate = Guid.NewGuid();
+				return _showPostEvenIfPrivate;
+			}
+			set { _showPostEvenIfPrivate = value; }
+		}
+
 		public bool IsPublicPost(string key)
 		{
 			if (PublishAt <= DateTimeOffset.Now && IsDeleted == false)
@@ -63,10 +80,14 @@ namespace RaccoonBlog.Web.Models
 			return maybeKey == ShowPostEvenIfPrivate;
 		}
 
+		#region Nested type: AuthorReference
+
 		public class AuthorReference
 		{
 			public string Id { get; set; }
 			public string FullName { get; set; }
 		}
+
+		#endregion
 	}
 }
