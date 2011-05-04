@@ -21,7 +21,7 @@ namespace RaccoonBlog.Web.Services
     public class MetaWeblog : XmlRpcService, IMetaWeblog
     {
         private readonly IDocumentSession session;
-        PostSchedulingStrategy postScheduleringStrategy;
+    	readonly PostSchedulingStrategy postScheduleringStrategy;
 
         public MetaWeblog()
         {

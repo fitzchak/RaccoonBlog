@@ -22,14 +22,13 @@ namespace RaccoonBlog.Web.Services
 		///  * only to Monday - Friday
 		///  * don't touch posts that are marked with SkipAutoReschedule = true
 		/// * If we are moving a current post, we need to:
-		///  * Check if there is a post in the day we shifted the edited post to, if so, switch them
-		///  * Else, trim all the holes in the schedule
+		///  * trim all the holes in the schedule
 		/// </summary>
         public DateTimeOffset Schedule(DateTimeOffset? requestedDate = null)
 		{
             if (requestedDate == null)
             {
-            	return GetLastPostOnSchedule()
+            	return GetLastScheduledPostDate()
             		.AddDays(1)
 					.SkipToNextWorkDay()
             		.AtNoon();
@@ -54,7 +53,7 @@ namespace RaccoonBlog.Web.Services
 	    	return requestedDate.Value;
 		}
 
-	    private DateTimeOffset GetLastPostOnSchedule()
+	    private DateTimeOffset GetLastScheduledPostDate()
 	    {
 	    	var p = session.Query<Post>()
 	    		.OrderByDescending(post => post.PublishAt)
