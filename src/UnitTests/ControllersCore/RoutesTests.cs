@@ -152,6 +152,13 @@ namespace RavenDbBlog.UnitTests.ControllersCore
         }
 
         [Fact]
+        public void ElmahControllerRoutes()
+        {
+            "~/admin/elmah".ShouldMapTo<ElmahController>(c => c.Index(null));
+            "~/admin/elmah/stylesheet".ShouldMapTo<ElmahController>(c => c.Index("stylesheet"));
+        }
+
+        [Fact]
         public void IgnoreRoutes()
         {
             "~/WebResource.axd".ShouldBeIgnored();
