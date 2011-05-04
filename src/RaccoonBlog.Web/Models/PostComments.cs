@@ -17,16 +17,13 @@ namespace RaccoonBlog.Web.Models
             return ++LastCommentId;
         }
 
-		public DateTimeOffset LastCommentAtOr(DateTimeOffset defaultValue)
-		{
-			if (Comments.Count == 0)
-				return defaultValue;
+    	public bool AreCommentsClosed(Post post)
+    	{
+    		DateTimeOffset lastCommentDate = Comments.Count == 0 ? post.CreatedAt : Comments.Max(x => x.CreatedAt);
+    		return DateTimeOffset.Now - lastCommentDate > TimeSpan.FromDays(30);
+    	}
 
-			return Comments.Max(x => x.CreatedAt);
-		}
-
-
-        public class Comment
+    	public class Comment
         {
             public int Id { get; set; }
             public string Body { get; set; }

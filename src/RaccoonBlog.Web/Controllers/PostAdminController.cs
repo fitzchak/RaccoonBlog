@@ -45,7 +45,7 @@ namespace RaccoonBlog.Web.Controllers
             vm.Comments = allComments.MapTo<AdminPostDetailsViewModel.Comment>();
         	vm.NextPost = postService.GetPostReference(x => x.PublishAt > post.PublishAt);
             vm.PreviousPost = postService.GetPostReference(x => x.PublishAt < post.PublishAt);
-            vm.IsCommentClosed = DateTimeOffset.Now - comments.LastCommentAtOr(post.CreatedAt) > TimeSpan.FromDays(30D);
+            vm.IsCommentClosed = comments.AreCommentsClosed(post);
             
             return View("Details", vm);
         }

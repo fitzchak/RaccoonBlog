@@ -48,7 +48,7 @@ namespace RaccoonBlog.Web.Controllers
                 .MapTo<PostViewModel.Comment>();
             vm.NextPost = new PostService(Session).GetPostReference(x => x.PublishAt > post.PublishAt);
             vm.PreviousPost = new PostService(Session).GetPostReference(x => x.PublishAt < post.PublishAt);
-            vm.IsCommentClosed = DateTimeOffset.Now - comments.LastCommentAtOr(post.CreatedAt) > TimeSpan.FromDays(30D);
+            vm.IsCommentClosed = comments.AreCommentsClosed(post);
 
             var cookie = Request.Cookies[CommenterCookieName];
             if (Request.IsAuthenticated)
@@ -84,7 +84,7 @@ namespace RaccoonBlog.Web.Controllers
 			if (comments == null)
 				return HttpNotFound();
 
-            bool areCommentsClosed = DateTimeOffset.Now - comments.LastCommentAtOr(post.CreatedAt) > TimeSpan.FromDays(30);
+        	bool areCommentsClosed = comments.AreCommentsClosed(post);
             if (areCommentsClosed)
             {
                 ModelState.AddModelError("CommentsClosed", "This post is closed for new comments.");
