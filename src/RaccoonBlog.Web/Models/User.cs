@@ -1,9 +1,8 @@
 using System;
-using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace RavenDbBlog.Core.Models
+namespace RaccoonBlog.Web.Models
 {
 	public class User
 	{

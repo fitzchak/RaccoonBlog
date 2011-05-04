@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
-using RavenDbBlog.Core.Models;
-using RavenDbBlog.Helpers;
-using RavenDbBlog.Infrastructure.AutoMapper;
-using RavenDbBlog.ViewModels;
+using RaccoonBlog.Web.Helpers.Attributes;
+using RaccoonBlog.Web.Infrastructure.AutoMapper;
+using RaccoonBlog.Web.Models;
+using RaccoonBlog.Web.ViewModels;
 
-namespace RavenDbBlog.Controllers
+namespace RaccoonBlog.Web.Controllers
 {
     public class SectionAdminController : AdminController
     {

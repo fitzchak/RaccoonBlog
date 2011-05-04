@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RavenDbBlog.ViewModels
+﻿namespace RaccoonBlog.Web.ViewModels
 {
     public class PostSummaryJson
     {

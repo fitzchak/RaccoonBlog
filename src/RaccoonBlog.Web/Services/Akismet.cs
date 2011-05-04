@@ -11,7 +11,7 @@ using System.Net;
 using System.Web;
 using System.IO;
 
-namespace Joel.Net {
+namespace RaccoonBlog.Web.Services {
 
     #region - public class AkismetComment -
     public class AkismetComment {

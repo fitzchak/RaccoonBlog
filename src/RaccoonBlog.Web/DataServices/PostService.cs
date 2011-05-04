@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using RaccoonBlog.Web.Infrastructure.AutoMapper;
+using RaccoonBlog.Web.Models;
+using RaccoonBlog.Web.ViewModels;
 using Raven.Client;
 using Raven.Client.Linq;
-using RavenDbBlog.Core.Models;
-using RavenDbBlog.Infrastructure.AutoMapper;
-using RavenDbBlog.ViewModels;
 
-namespace RavenDbBlog.DataServices
+namespace RaccoonBlog.Web.DataServices
 {
     public class PostService
     {

@@ -1,9 +1,8 @@
-using System;
 using System.Linq;
+using RaccoonBlog.Web.Models;
 using Raven.Client.Indexes;
-using RavenDbBlog.Core.Models;
 
-namespace RavenDbBlog.Indexes
+namespace RaccoonBlog.Web.Infrastructure.Indexes
 {
     public class Posts_ByMonthPublished_Count : AbstractIndexCreationTask<Post, PostCountByMonth>
     {

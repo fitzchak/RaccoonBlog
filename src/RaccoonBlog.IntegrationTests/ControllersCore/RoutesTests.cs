@@ -2,8 +2,9 @@ using System;
 using System.Web.Mvc;
 using System.Web.Routing;
 using MvcContrib.TestHelper;
-using RavenDbBlog.Controllers;
-using RavenDbBlog.ViewModels;
+using RaccoonBlog.Web;
+using RaccoonBlog.Web.Controllers;
+using RaccoonBlog.Web.ViewModels;
 using Xunit;
 
 namespace RavenDbBlog.UnitTests.ControllersCore

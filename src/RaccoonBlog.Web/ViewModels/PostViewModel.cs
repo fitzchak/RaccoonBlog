@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
-namespace RavenDbBlog.ViewModels
+namespace RaccoonBlog.Web.ViewModels
 {
     public class PostViewModel
     {

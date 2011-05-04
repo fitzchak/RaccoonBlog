@@ -1,10 +1,9 @@
 using System;
-using System.Globalization;
 using System.Linq;
+using RaccoonBlog.Web.Models;
 using Raven.Client;
-using RavenDbBlog.Core.Models;
 
-namespace RavenDbBlog.Services
+namespace RaccoonBlog.Web.Services
 {
 	public class PostSchedulingStrategy
 	{

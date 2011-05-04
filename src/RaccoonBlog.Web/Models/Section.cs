@@ -1,4 +1,4 @@
-namespace RavenDbBlog.Core.Models
+namespace RaccoonBlog.Web.Models
 {
     /*Section can contains:
      * 1. Body = "Any html text"

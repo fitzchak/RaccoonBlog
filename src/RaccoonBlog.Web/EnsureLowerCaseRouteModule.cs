@@ -3,7 +3,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Web;
 
-namespace RavenDbBlog
+namespace RaccoonBlog.Web
 {
     /* http://stackoverflow.com/questions/696673/lower-case-urls-in-asp-net-mvc
      * Search engines treat URLs case-sensitively, meaning that if you have multiple links to the same content, that content's page ranking is distributed and hence diluted.

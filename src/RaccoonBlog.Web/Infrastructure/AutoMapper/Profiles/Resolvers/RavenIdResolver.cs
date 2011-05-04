@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles.Resolvers
+namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers
 {
     public class RavenIdResolver
     {

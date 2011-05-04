@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RavenDbBlog.Common
+namespace RaccoonBlog.Web.Common
 {
     public static class EnumerableExtensions
     {

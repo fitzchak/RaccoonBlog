@@ -3,10 +3,11 @@ using System.Web.Mvc;
 using System.Xml.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using RaccoonBlog.Web.Helpers.Results;
+using RaccoonBlog.Web.Infrastructure.ActionResults;
 using Raven.Client;
-using RavenDbBlog.Infrastructure.ActionResults;
 
-namespace RavenDbBlog.Controllers
+namespace RaccoonBlog.Web.Controllers
 {
     public abstract class AbstractController : Controller
     {

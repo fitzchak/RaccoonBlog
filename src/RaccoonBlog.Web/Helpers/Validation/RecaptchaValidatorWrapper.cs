@@ -2,7 +2,7 @@ using System.Configuration;
 using System.Web;
 using Recaptcha;
 
-namespace RavenDbBlog.Helpers.Validation
+namespace RaccoonBlog.Web.Helpers.Validation
 {
     public class RecaptchaValidatorWrapper
     {

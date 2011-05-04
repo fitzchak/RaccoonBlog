@@ -1,6 +1,6 @@
 using System.Web.Mvc;
 
-namespace RavenDbBlog.Controllers
+namespace RaccoonBlog.Web.Controllers
 {
     [Authorize]
     public abstract class AdminController : AbstractController

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 
-namespace RavenDbBlog.Helpers
+namespace RaccoonBlog.Web.Helpers
 {
     public static class ModelStateExtensions
     {

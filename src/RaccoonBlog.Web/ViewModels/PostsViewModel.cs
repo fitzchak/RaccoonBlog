@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
-using RavenDbBlog.Controllers;
+using RaccoonBlog.Web.Controllers;
 
-namespace RavenDbBlog.ViewModels
+namespace RaccoonBlog.Web.ViewModels
 {
     public class PostsViewModel
     {

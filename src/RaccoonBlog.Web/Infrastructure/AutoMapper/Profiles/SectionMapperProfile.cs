@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using RavenDbBlog.Core.Models;
-using RavenDbBlog.ViewModels;
+using RaccoonBlog.Web.Models;
+using RaccoonBlog.Web.ViewModels;
 
-namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles
+namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 {
     public class SectionMapperProfile : Profile
     {

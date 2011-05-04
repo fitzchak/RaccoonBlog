@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Configuration;
-using Joel.Net;
-using RavenDbBlog.Core.Models;
-using RavenDbBlog.ViewModels;
+using RaccoonBlog.Web.Models;
+using RaccoonBlog.Web.ViewModels;
 
-namespace RavenDbBlog.Services
+namespace RaccoonBlog.Web.Services
 {
     public class AskimetService
     {

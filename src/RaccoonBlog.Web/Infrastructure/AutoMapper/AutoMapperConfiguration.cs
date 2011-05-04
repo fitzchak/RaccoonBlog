@@ -1,10 +1,10 @@
 using System;
 using System.Web.Mvc;
 using AutoMapper;
-using RavenDbBlog.Infrastructure.AutoMapper.Profiles;
-using RavenDbBlog.Infrastructure.AutoMapper.Profiles.Resolvers;
+using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles;
+using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 
-namespace RavenDbBlog.Infrastructure.AutoMapper
+namespace RaccoonBlog.Web.Infrastructure.AutoMapper
 {
     public class AutoMapperConfiguration
     {

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Web.Mvc;
+using RaccoonBlog.Web.Infrastructure.Commands;
+using RaccoonBlog.Web.Models;
+using RaccoonBlog.Web.Services;
+using RaccoonBlog.Web.ViewModels;
 using Raven.Client;
-using RavenDbBlog.Core.Models;
-using RavenDbBlog.Infrastructure.Commands;
-using RavenDbBlog.Services;
-using RavenDbBlog.ViewModels;
 using RazorEngine;
 
-namespace RavenDbBlog.Commands
+namespace RaccoonBlog.Web.Commands
 {
     public class AddCommentCommand : ICommand
     {

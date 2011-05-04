@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles.Resolvers
+namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers
 {
     public class EmailHashResolver
     {

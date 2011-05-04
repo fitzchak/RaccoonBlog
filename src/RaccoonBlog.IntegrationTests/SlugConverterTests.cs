@@ -1,4 +1,4 @@
-using RavenDbBlog.Core;
+using RaccoonBlog.Web;
 using Xunit;
 
 namespace RavenDbBlog.UnitTests

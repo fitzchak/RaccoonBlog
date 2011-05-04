@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using RavenDbBlog.Infrastructure.AutoMapper.Profiles.Resolvers;
+using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using Xunit;
 
 /* References:

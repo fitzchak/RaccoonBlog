@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
-namespace RavenDbBlog.Helpers.Validation
+namespace RaccoonBlog.Web.Helpers.Validation
 {
     public class RequiredIfAttribute : ValidationAttribute, IClientValidatable
     {

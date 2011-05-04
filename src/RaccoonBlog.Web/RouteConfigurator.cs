@@ -1,8 +1,7 @@
-using System;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace RavenDbBlog
+namespace RaccoonBlog.Web
 {
     public class RouteConfigurator
     {

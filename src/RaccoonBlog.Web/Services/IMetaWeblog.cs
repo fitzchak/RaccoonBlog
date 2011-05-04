@@ -1,8 +1,7 @@
-﻿using System.Security;
-using CookComputing.XmlRpc;
-using RavenDbBlog.Services.RssModels;
+﻿using CookComputing.XmlRpc;
+using RaccoonBlog.Web.Services.RssModels;
 
-namespace RavenDbBlog.Services
+namespace RaccoonBlog.Web.Services
 {
     public interface IMetaWeblog
     {

@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
-using RavenDbBlog.Helpers.Validation;
+using RaccoonBlog.Web.Helpers.Validation;
 
-namespace RavenDbBlog.ViewModels
+namespace RaccoonBlog.Web.ViewModels
 {
     public class SectionInput
     {

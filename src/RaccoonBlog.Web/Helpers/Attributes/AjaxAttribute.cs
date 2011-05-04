@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Web.Mvc;
-using RavenDbBlog.Controllers;
+using RaccoonBlog.Web.Helpers.Results;
 
-namespace RavenDbBlog.Helpers
+namespace RaccoonBlog.Web.Helpers.Attributes
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public sealed class AjaxOnlyAttribute : ActionFilterAttribute

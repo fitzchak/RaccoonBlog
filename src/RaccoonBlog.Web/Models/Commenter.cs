@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RavenDbBlog.Core.Models
+namespace RaccoonBlog.Web.Models
 {
     public class Commenter
     {

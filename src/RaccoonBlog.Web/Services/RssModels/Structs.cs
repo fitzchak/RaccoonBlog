@@ -1,7 +1,7 @@
 ﻿using System;
 using CookComputing.XmlRpc;
 
-namespace RavenDbBlog.Services.RssModels
+namespace RaccoonBlog.Web.Services.RssModels
 {
     #region Structs
 

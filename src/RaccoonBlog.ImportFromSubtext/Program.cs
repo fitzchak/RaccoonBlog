@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using RaccoonBlog.ImportFromSubtext;
+using RaccoonBlog.Web.Models;
 using Raven.Client;
 using Raven.Client.Document;
-using RavenDbBlog.Core.Models;
 using Sgml;
 using Post = RaccoonBlog.ImportFromSubtext.Post;
-using RavenPost = RavenDbBlog.Core.Models.Post;
+using RavenPost = RaccoonBlog.Web.Models.Post;
 
 namespace RavenDbBlog.Import
 {

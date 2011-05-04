@@ -1,13 +1,13 @@
 using System;
 using System.Linq;
+using RaccoonBlog.Web.Infrastructure.AutoMapper;
+using RaccoonBlog.Web.Infrastructure.Indexes;
+using RaccoonBlog.Web.Models;
+using RaccoonBlog.Web.ViewModels;
 using Raven.Client.Linq;
 using System.Web.Mvc;
-using RavenDbBlog.Core.Models;
-using RavenDbBlog.Indexes;
-using RavenDbBlog.Infrastructure.AutoMapper;
-using RavenDbBlog.ViewModels;
 
-namespace RavenDbBlog.Controllers
+namespace RaccoonBlog.Web.Controllers
 {
     public partial class PostController : AbstractController
     {

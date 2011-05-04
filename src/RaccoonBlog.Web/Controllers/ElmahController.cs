@@ -1,7 +1,7 @@
 using System.Web;
 using System.Web.Mvc;
 
-namespace RavenDbBlog.Controllers
+namespace RaccoonBlog.Web.Controllers
 {
     public class ElmahController : AdminController
     {

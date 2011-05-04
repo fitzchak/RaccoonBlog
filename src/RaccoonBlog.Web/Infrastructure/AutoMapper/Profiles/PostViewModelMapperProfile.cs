@@ -1,12 +1,11 @@
 ﻿using System.Configuration;
 using System.Web;
 using AutoMapper;
-using RavenDbBlog.Core;
-using RavenDbBlog.Core.Models;
-using RavenDbBlog.Infrastructure.AutoMapper.Profiles.Resolvers;
-using RavenDbBlog.ViewModels;
+using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
+using RaccoonBlog.Web.Models;
+using RaccoonBlog.Web.ViewModels;
 
-namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles
+namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 {
     public class PostViewModelMapperProfile : AbstractProfile
     {

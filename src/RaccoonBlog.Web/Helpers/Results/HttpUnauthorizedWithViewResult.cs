@@ -1,4 +1,4 @@
-﻿namespace RavenDbBlog.Controllers
+﻿namespace RaccoonBlog.Web.Helpers.Results
 {
     public class HttpUnauthorizedWithViewResult : HttpStatusCodeWithViewResult
     {

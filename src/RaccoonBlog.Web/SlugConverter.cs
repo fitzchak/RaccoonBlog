@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace RavenDbBlog.Core
+namespace RaccoonBlog.Web
 {
     public class SlugConverter
     {

@@ -1,9 +1,9 @@
 ﻿using System.Web;
+using RaccoonBlog.Web.Controllers;
+using RaccoonBlog.Web.Models;
 using Raven.Client;
-using RavenDbBlog.Controllers;
-using RavenDbBlog.Core.Models;
 
-namespace RavenDbBlog.DataServices
+namespace RaccoonBlog.Web.DataServices
 {
     public class UserService
     {

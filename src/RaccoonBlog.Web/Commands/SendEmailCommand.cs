@@ -1,11 +1,10 @@
-﻿using System;
-using System.Configuration;
+﻿using System.Configuration;
 using System.Linq;
 using System.Net.Mail;
-using RavenDbBlog.Common;
-using RavenDbBlog.Infrastructure.Commands;
+using RaccoonBlog.Web.Common;
+using RaccoonBlog.Web.Infrastructure.Commands;
 
-namespace RavenDbBlog.Commands
+namespace RaccoonBlog.Web.Commands
 {
     public class SendEmailCommand : ICommand
     {

@@ -4,7 +4,7 @@ using System.Web.Mvc;
 using System.Web.UI;
 using Recaptcha;
 
-namespace RavenDbBlog.Helpers
+namespace RaccoonBlog.Web.Helpers
 {
     public static class RecaptchHelperExtensions
     {

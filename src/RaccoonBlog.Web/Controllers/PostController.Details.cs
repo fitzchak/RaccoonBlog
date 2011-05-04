@@ -1,19 +1,18 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using RaccoonBlog.Web.Commands;
+using RaccoonBlog.Web.DataServices;
+using RaccoonBlog.Web.Helpers;
+using RaccoonBlog.Web.Helpers.Validation;
+using RaccoonBlog.Web.Infrastructure.AutoMapper;
+using RaccoonBlog.Web.Infrastructure.Commands;
+using RaccoonBlog.Web.Models;
+using RaccoonBlog.Web.ViewModels;
 using Raven.Client.Linq;
 using System.Web.Mvc;
-using RavenDbBlog.Core.Models;
-using RavenDbBlog.DataServices;
-using RavenDbBlog.Helpers;
-using RavenDbBlog.Helpers.Validation;
-using RavenDbBlog.Infrastructure.AutoMapper;
-using RavenDbBlog.ViewModels;
 using System.Web;
-using RavenDbBlog.Commands;
-using RavenDbBlog.Infrastructure.Commands;
 
-namespace RavenDbBlog.Controllers
+namespace RaccoonBlog.Web.Controllers
 {
     public partial class PostController
     {

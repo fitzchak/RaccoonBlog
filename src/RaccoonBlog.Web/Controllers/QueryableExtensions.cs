@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
-using RavenDbBlog.Core.Models;
+using RaccoonBlog.Web.Models;
 
-namespace RavenDbBlog.Controllers
+namespace RaccoonBlog.Web.Controllers
 {
     public static class QueryableExtensions
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 
-namespace RavenDbBlog.Controllers
+namespace RaccoonBlog.Web.Helpers.Results
 {
     public class HttpStatusCodeWithViewResult : ViewResult
     {

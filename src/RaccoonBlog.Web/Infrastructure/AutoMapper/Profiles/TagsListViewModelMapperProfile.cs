@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using RavenDbBlog.Indexes;
-using RavenDbBlog.ViewModels;
+using RaccoonBlog.Web.Infrastructure.Indexes;
+using RaccoonBlog.Web.ViewModels;
 
-namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles
+namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 {
     public class TagsListViewModelMapperProfile : Profile
     {

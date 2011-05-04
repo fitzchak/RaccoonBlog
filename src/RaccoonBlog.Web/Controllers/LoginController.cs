@@ -1,12 +1,9 @@
-using System;
-using System.Linq;
 using System.Web.Mvc;
 using System.Web.Security;
-using RavenDbBlog.Core.Models;
-using RavenDbBlog.DataServices;
-using RavenDbBlog.ViewModels;
+using RaccoonBlog.Web.DataServices;
+using RaccoonBlog.Web.ViewModels;
 
-namespace RavenDbBlog.Controllers
+namespace RaccoonBlog.Web.Controllers
 {
     public class LoginController : AbstractController
     {

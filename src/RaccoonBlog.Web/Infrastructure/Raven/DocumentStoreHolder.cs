@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Concurrent;
 using System.Linq;
+using RaccoonBlog.Web.Infrastructure.Indexes;
 using Raven.Client;
 using Raven.Client.Document;
 using Raven.Client.Indexes;
-using RavenDbBlog.Indexes;
 
-namespace RavenDbBlog.Infrastructure.Raven
+namespace RaccoonBlog.Web.Infrastructure.Raven
 {
     /// <summary>
     /// This class manages the state of objects that desire a document session. We aren't relying on an IoC container here

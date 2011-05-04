@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 using AutoMapper;
 
-namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles
+namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 {
     public abstract class AbstractProfile : Profile
     {

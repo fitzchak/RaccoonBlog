@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
-namespace RavenDbBlog.ViewModels
+namespace RaccoonBlog.Web.ViewModels
 {
     public class PostInput
     {

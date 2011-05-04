@@ -1,10 +1,10 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using RavenDbBlog.Infrastructure.AutoMapper;
-using RavenDbBlog.Infrastructure.Controllers;
+using RaccoonBlog.Web.Infrastructure.AutoMapper;
+using RaccoonBlog.Web.Infrastructure.Controllers;
 
-namespace RavenDbBlog
+namespace RaccoonBlog.Web
 {
     public class MvcApplication : HttpApplication
     {

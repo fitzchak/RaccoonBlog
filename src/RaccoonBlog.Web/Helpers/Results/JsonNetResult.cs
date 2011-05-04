@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 
-namespace RavenDbBlog.Controllers
+namespace RaccoonBlog.Web.Helpers.Results
 {
     public class JsonNetResult : ActionResult
     {

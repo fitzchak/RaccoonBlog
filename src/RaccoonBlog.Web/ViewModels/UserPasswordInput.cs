@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
-using RavenDbBlog.Helpers;
+using RaccoonBlog.Web.Helpers.Attributes;
 
-namespace RavenDbBlog.ViewModels
+namespace RaccoonBlog.Web.ViewModels
 {
 	public class UserPasswordInput
 	{

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using AutoMapper;
 
-namespace RavenDbBlog.Infrastructure.AutoMapper
+namespace RaccoonBlog.Web.Infrastructure.AutoMapper
 {
     public static class AutoMapperExtensions
     {

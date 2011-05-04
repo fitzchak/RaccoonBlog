@@ -1,7 +1,7 @@
 using System.Web.Mvc;
-using RavenDbBlog.Infrastructure.Raven;
+using RaccoonBlog.Web.Infrastructure.Raven;
 
-namespace RavenDbBlog.Infrastructure.Controllers
+namespace RaccoonBlog.Web.Infrastructure.Controllers
 {
     /// <summary>
     /// This filter will manage the session for all of the controllers that needs a Raven Document Session.

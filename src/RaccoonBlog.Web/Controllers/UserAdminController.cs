@@ -1,12 +1,11 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
-using RavenDbBlog.Core.Models;
-using RavenDbBlog.Infrastructure.AutoMapper;
-using RavenDbBlog.Infrastructure.AutoMapper.Profiles.Resolvers;
-using RavenDbBlog.ViewModels;
+using RaccoonBlog.Web.Infrastructure.AutoMapper;
+using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
+using RaccoonBlog.Web.Models;
+using RaccoonBlog.Web.ViewModels;
 
-namespace RavenDbBlog.Controllers
+namespace RaccoonBlog.Web.Controllers
 {
     public class UserAdminController : AdminController
     {

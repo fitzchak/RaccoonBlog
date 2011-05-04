@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles.Resolvers
+namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers
 {
     public class TagsResolver
     {

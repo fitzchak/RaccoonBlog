@@ -5,20 +5,17 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using CookComputing.XmlRpc;
+using RaccoonBlog.Web.Controllers;
+using RaccoonBlog.Web.Infrastructure.AutoMapper;
+using RaccoonBlog.Web.Infrastructure.Indexes;
+using RaccoonBlog.Web.Infrastructure.Raven;
+using RaccoonBlog.Web.Models;
+using RaccoonBlog.Web.Services.RssModels;
 using Raven.Client;
-using RavenDbBlog.Controllers;
-using RavenDbBlog.Core;
-using RavenDbBlog.Core.Models;
-using RavenDbBlog.DataServices;
-using RavenDbBlog.Indexes;
-using RavenDbBlog.Infrastructure.AutoMapper;
-using RavenDbBlog.Infrastructure.AutoMapper.Profiles.Resolvers;
-using RavenDbBlog.Infrastructure.Raven;
 using System.Linq;
-using RavenDbBlog.Services.RssModels;
-using Post = RavenDbBlog.Services.RssModels.Post;
+using Post = RaccoonBlog.Web.Services.RssModels.Post;
 
-namespace RavenDbBlog.Services
+namespace RaccoonBlog.Web.Services
 {
     public class MetaWeblog : XmlRpcService, IMetaWeblog
     {
@@ -41,16 +38,16 @@ namespace RavenDbBlog.Services
         string IMetaWeblog.AddPost(string blogid, string username, string password, Post post, bool publish)
         {
             var user = ValidateUser(username, password);
-            var comments = new Core.Models.PostComments();
+            var comments = new PostComments();
             session.Store(comments);
 
             var publishDate = post.dateCreated == null
                                 ? postScheduleringStrategy.Schedule()
                                 : postScheduleringStrategy.Schedule(new DateTimeOffset(post.dateCreated.Value));
 
-            var newPost = new Core.Models.Post
+            var newPost = new Models.Post
             {
-                Author = user.MapTo<Core.Models.Post.AuthorReference>(),
+                Author = user.MapTo<Models.Post.AuthorReference>(),
                 Body = post.description,
                 CommentsId = comments.Id,
                 CreatedAt = DateTimeOffset.Now,
@@ -69,11 +66,11 @@ namespace RavenDbBlog.Services
         bool IMetaWeblog.UpdatePost(string postid, string username, string password, Post post, bool publish)
         {
             var user = ValidateUser(username, password);
-            var postToEdit = session.Load<Core.Models.Post>(postid);
+            var postToEdit = session.Load<Models.Post>(postid);
             if (postToEdit == null)
                 throw new XmlRpcFaultException(0, "Post does not exists");
 
-            var author = user.MapTo<Core.Models.Post.AuthorReference>();
+            var author = user.MapTo<Models.Post.AuthorReference>();
             if (postToEdit.Author == null || string.IsNullOrEmpty(postToEdit.Author.FullName))
                 postToEdit.Author = author;
             else
@@ -82,7 +79,7 @@ namespace RavenDbBlog.Services
                 postToEdit.LastEditedAt = DateTimeOffset.Now;
             }
 
-            postToEdit.Author = user.MapTo<Core.Models.Post.AuthorReference>();
+            postToEdit.Author = user.MapTo<Models.Post.AuthorReference>();
             postToEdit.Body = post.description;
             if (
                 // don't bother moving things if we are already talking about something that is fixed
@@ -113,7 +110,7 @@ namespace RavenDbBlog.Services
         Post IMetaWeblog.GetPost(string postid, string username, string password)
         {
             ValidateUser(username, password);
-            var thePost = session.Load<Core.Models.Post>(postid);
+            var thePost = session.Load<Models.Post>(postid);
             if (thePost.IsDeleted)
             {
                 throw new InvalidOperationException("You cannot get deleted post");
@@ -157,7 +154,7 @@ namespace RavenDbBlog.Services
         {
             ValidateUser(username, password);
 
-            var list = session.Query<Core.Models.Post>()
+            var list = session.Query<Models.Post>()
                 .Where(p=> p.IsDeleted == false)
                 .OrderByDescending(x => x.PublishAt)
                 .Take(numberOfPosts)
@@ -197,7 +194,7 @@ namespace RavenDbBlog.Services
         bool IMetaWeblog.DeletePost(string key, string postid, string username, string password, bool publish)
         {
             ValidateUser(username, password);
-            var thePost = session.Load<Core.Models.Post>(postid);
+            var thePost = session.Load<Models.Post>(postid);
 
             if (thePost != null)
             {

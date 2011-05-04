@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
-using RavenDbBlog.Core;
-using RavenDbBlog.Core.Models;
-using RavenDbBlog.DataServices;
-using RavenDbBlog.Helpers;
-using RavenDbBlog.Infrastructure.AutoMapper;
-using RavenDbBlog.Infrastructure.AutoMapper.Profiles.Resolvers;
-using RavenDbBlog.Services;
-using RavenDbBlog.ViewModels;
+using RaccoonBlog.Web.DataServices;
+using RaccoonBlog.Web.Helpers;
+using RaccoonBlog.Web.Helpers.Attributes;
+using RaccoonBlog.Web.Infrastructure.AutoMapper;
+using RaccoonBlog.Web.Models;
+using RaccoonBlog.Web.Services;
+using RaccoonBlog.Web.ViewModels;
 
-namespace RavenDbBlog.Controllers
+namespace RaccoonBlog.Web.Controllers
 {
     public class PostAdminController : AdminController
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace RavenDbBlog.Core.Models
+namespace RaccoonBlog.Web.Models
 {
     public class PostComments
     {

@@ -1,5 +1,5 @@
 using AutoMapper;
-using RavenDbBlog.Infrastructure.AutoMapper;
+using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using Xunit;
 
 namespace IntegrationTests.AutoMapper

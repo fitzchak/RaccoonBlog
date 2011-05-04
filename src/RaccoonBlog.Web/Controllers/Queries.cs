@@ -1,8 +1,8 @@
 using System.Linq;
+using RaccoonBlog.Web.Models;
 using Raven.Client;
-using RavenDbBlog.Core.Models;
 
-namespace RavenDbBlog.Controllers
+namespace RaccoonBlog.Web.Controllers
 {
 	public static class Queries
 	{
