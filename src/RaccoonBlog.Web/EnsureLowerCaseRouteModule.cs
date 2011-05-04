@@ -36,7 +36,7 @@ namespace RaccoonBlog.Web
                 response.Clear();
                 response.Status = "301 Moved Permanently";
                 response.StatusCode = (int)HttpStatusCode.MovedPermanently;
-                response.AddHeader("Location", url.ToLower());
+                response.AddHeader("Location", url.ToLowerInvariant());
                 response.End();
             }
         }
