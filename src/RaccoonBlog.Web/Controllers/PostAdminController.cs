@@ -25,6 +25,9 @@ namespace RaccoonBlog.Web.Controllers
                 .Include<Post>(x => x.CommentsId)
                 .Load(id);
 
+			if (post == null)
+				return HttpNotFound();
+
 			var comments = Session.Load<PostComments>(post.CommentsId);
 
         	var vm = new AdminPostDetailsViewModel
