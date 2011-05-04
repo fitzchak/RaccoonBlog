@@ -10,7 +10,7 @@ namespace RavenDbBlog.Core.Models
         public string LegacySlug { get; set; }
         public string Body { get; set; }
         public string[] Tags { get; set; }
-        public string Author { get; set; }
+        public AuthorReference Author { get; set; }
 
         private Guid _showPostEvenIfPrivate;
         public Guid ShowPostEvenIfPrivate
@@ -52,6 +52,12 @@ namespace RavenDbBlog.Core.Models
         {
             return PublishAt <= DateTimeOffset.Now &&
                    IsDeleted == false;
+        }
+
+        public class AuthorReference
+        {
+            public string Id { get; set; }
+            public string FullName { get; set; }
         }
     }
 }

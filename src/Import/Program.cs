@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -72,14 +73,14 @@ namespace RavenDbBlog.Import
 
                 Console.WriteLine("Loading data took {0:#,#} ms", sp.ElapsedMilliseconds);
 
+                var usersList = new List<User>();
                 using (IDocumentSession s = store.OpenSession())
                 {
                     var users = new[]
-                        {
-                            new {Email = "ayende@ayende.com", FullName = "Ayende Rahien"},
-                            new {Email = "fitzchak@ayende.com", FullName = "Fitzchak Yitzchaki"},
-                        };
-
+                    {
+                        new {Email = "ayende@ayende.com", FullName = "Ayende Rahien"},
+                        new {Email = "fitzchak@ayende.com", FullName = "Fitzchak Yitzchaki"},
+                    };
                     for (int i = 0; i < users.Length; i++)
                     {
                         var user = new User
@@ -91,6 +92,7 @@ namespace RavenDbBlog.Import
                             };
                         user.SetPassword("123456");
                         s.Store(user);
+                        usersList.Add(user);
                     }
                     s.SaveChanges();
                 }
@@ -99,7 +101,10 @@ namespace RavenDbBlog.Import
                 {
                     var ravenPost = new RavenPost
                         {
-                            Author = post.Author,
+                            Author = usersList
+                                    .Where(u=> u.FullName == post.Author)
+                                    .Select(u => new RavenPost.AuthorReference{FullName = u.FullName, Id = u.Id})
+                                    .FirstOrDefault(),
                             CreatedAt = new DateTimeOffset(post.DateAdded),
                             PublishAt = new DateTimeOffset(post.DateSyndicated ?? post.DateAdded),
                             Body = post.Text,

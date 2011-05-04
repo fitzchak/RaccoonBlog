@@ -46,6 +46,9 @@ namespace RavenDbBlog.Infrastructure.AutoMapper.Profiles
                 .ForMember(x => x.EmailHash, o => o.MapFrom(m => EmailHashResolver.Resolve(m.Email)))
                 .ForMember(x => x.IsImportant, o => o.MapFrom(m => m.Important))
                 ;
+            
+            Mapper.CreateMap<User, Post.AuthorReference>()
+                ;
         }
     }
 }

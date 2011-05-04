@@ -6,12 +6,16 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using CookComputing.XmlRpc;
 using Raven.Client;
+using RavenDbBlog.Controllers;
 using RavenDbBlog.Core;
+using RavenDbBlog.Core.Models;
 using RavenDbBlog.Indexes;
+using RavenDbBlog.Infrastructure.AutoMapper;
 using RavenDbBlog.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RavenDbBlog.Infrastructure.Raven;
 using System.Linq;
 using RavenDbBlog.Services.RssModels;
+using Post = RavenDbBlog.Services.RssModels.Post;
 
 namespace RavenDbBlog.Services
 {
@@ -35,7 +39,7 @@ namespace RavenDbBlog.Services
 
         string IMetaWeblog.AddPost(string blogid, string username, string password, Post post, bool publish)
         {
-            ValidateUser(username, password);
+            var user = ValidateUser(username, password);
             var comments = new Core.Models.PostComments();
             session.Store(comments);
 
@@ -45,7 +49,7 @@ namespace RavenDbBlog.Services
 
             var newPost = new Core.Models.Post
             {
-                Author = "users/" + username,
+                Author = user.MapTo<Core.Models.Post.AuthorReference>(),
                 Body = post.description,
                 CommentsId = comments.Id,
                 CreatedAt = DateTimeOffset.Now,
@@ -61,14 +65,13 @@ namespace RavenDbBlog.Services
             return newPost.Id;
         }
 
-        bool IMetaWeblog.UpdatePost(string postid, string username, string password,
-            Post post, bool publish)
+        bool IMetaWeblog.UpdatePost(string postid, string username, string password, Post post, bool publish)
         {
-            ValidateUser(username, password);
+            var user = ValidateUser(username, password);
             var postToEdit = session.Load<Core.Models.Post>(postid);
             if (postToEdit == null)
                 throw new XmlRpcFaultException(0, "Post does not exists");
-            postToEdit.Author = "users/" + username;
+            postToEdit.Author = user.MapTo<Core.Models.Post.AuthorReference>();
             postToEdit.Body = post.description;
             if (
                 // don't bother moving things if we are already talking about something that is fixed
@@ -100,6 +103,10 @@ namespace RavenDbBlog.Services
         {
             ValidateUser(username, password);
             var thePost = session.Load<Core.Models.Post>(postid);
+            if (thePost.IsDeleted)
+            {
+                throw new InvalidOperationException("You cannot get deleted post");
+            }
 
             return new Post
             {
@@ -140,6 +147,7 @@ namespace RavenDbBlog.Services
             ValidateUser(username, password);
 
             var list = session.Query<Core.Models.Post>()
+                .Where(p=> p.IsDeleted == false)
                 .OrderByDescending(x => x.PublishAt)
                 .Take(numberOfPosts)
                 .ToList();
@@ -182,10 +190,7 @@ namespace RavenDbBlog.Services
 
             if (thePost != null)
             {
-                var postComments = session.Load<Core.Models.PostComments>(thePost.CommentsId);
-                if (postComments != null)
-                    session.Delete(postComments);
-                session.Delete(thePost);
+                thePost.IsDeleted = true;
             }
 
             session.SaveChanges();
@@ -209,12 +214,14 @@ namespace RavenDbBlog.Services
 
         UserInfo IMetaWeblog.GetUserInfo(string key, string username, string password)
         {
-            ValidateUser(username, password);
+            var user = ValidateUser(username, password);
             return new UserInfo
             {
-                email = "none",
-                nickname = username,
-                userid = "users/" + username
+                email = user.Email,
+                nickname = user.FullName,
+                firstname = user.FullName.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault(),
+                lastname = user.FullName.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).LastOrDefault(),
+                userid = user.Id
             };
         }
 
@@ -222,14 +229,14 @@ namespace RavenDbBlog.Services
 
         #region Private Methods
 
-        private void ValidateUser(string username, string password)
+        private User ValidateUser(string username, string password)
         {
-            var user = session.Load<Core.Models.User>("users/" + username);
-            if (user == null || user.ValidatePassword(password))
+            var user = session.GetUserByEmail(username);
+            if (user == null || user.ValidatePassword(password) == false)
                 throw new XmlRpcFaultException(0, "User is not valid!");
             if (user.Enabled == false)
                 throw new XmlRpcFaultException(0, "User is not enabled!");
-
+            return user;
         }
 
         #endregion
