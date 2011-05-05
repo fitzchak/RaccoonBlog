@@ -158,21 +158,21 @@ namespace RaccoonBlog.Web
 
             #region "Archive"
 
-            routes.MapRouteLowerCase("PostsByYearMonthDay",
+            routes.MapRouteLowerCase("PostControllerPostsByYearMonthDay",
                 "archive/{year}/{month}/{day}",
-                new { controller = "Post", action = "ArchiveYearMonthDay" },
+                new { controller = "Post", action = "Archive" },
                 new { Year = MatchPositiveInteger, Month = MatchPositiveInteger, Day = MatchPositiveInteger }
                 );
 
             routes.MapRouteLowerCase("PostsByYearMonth",
                 "archive/{year}/{month}",
-                new { controller = "Post", action = "ArchiveYearMonth" },
+                new { controller = "Post", action = "Archive" },
                 new { Year = MatchPositiveInteger, Month = MatchPositiveInteger }
                 );
 
             routes.MapRouteLowerCase("PostsByYear",
                 "archive/{year}",
-                new { controller = "Post", action = "ArchiveYear" },
+                new { controller = "Post", action = "Archive" },
                 new { Year = MatchPositiveInteger }
                 );
 
