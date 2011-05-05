@@ -433,6 +433,12 @@ article.sectionadmin-list .commands-section
 	margin-top: -54px;
 }
 
+
+article.post-detalis footer .author 
+{
+    font-style: italic;
+}
+
 .commands-section ul li 
 {
     border: none;

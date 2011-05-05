@@ -74,8 +74,8 @@ namespace RaccoonBlog.ImportFromSubtext
                 {
                     var users = new[]
                     {
-                        new {Email = "ayende@ayende.com", FullName = "Ayende Rahien"},
-                        new {Email = "fitzchak@ayende.com", FullName = "Fitzchak Yitzchaki"},
+                        new {Email = "ayende@ayende.com", FullName = "Ayende Rahien", TwitterNick = "ayende", RelatedTwitterNick=(string)null},
+                        new {Email = "fitzchak@ayende.com", FullName = "Fitzchak Yitzchaki", TwitterNick = "fitzchak", RelatedTwitterNick="ayende"},
                     };
                     for (int i = 0; i < users.Length; i++)
                     {
@@ -84,6 +84,8 @@ namespace RaccoonBlog.ImportFromSubtext
                                 Id = "users/" + (i + 1),
                                 Email = users[i].Email,
                                 FullName = users[i].FullName,
+                                TwitterNick = users[i].TwitterNick,
+                                RelatedTwitterNick = users[i].RelatedTwitterNick,
                                 Enabled = true,
                             };
                         user.SetPassword("123456");
@@ -97,9 +99,9 @@ namespace RaccoonBlog.ImportFromSubtext
                 {
                     var ravenPost = new Web.Models.Post
                         {
-                            Author = usersList
+                            AuthorId = usersList
                                     .Where(u=> u.FullName == post.Author)
-                                    .Select(u => new Web.Models.Post.AuthorReference{FullName = u.FullName, Id = u.Id})
+                                    .Select(u => u.Id)
                                     .FirstOrDefault(),
                             CreatedAt = new DateTimeOffset(post.DateAdded),
                             PublishAt = new DateTimeOffset(post.DateSyndicated ?? post.DateAdded),

@@ -41,6 +41,8 @@ namespace RaccoonBlog.Web.Controllers
 				PreviousPost = Session.GetPostReference(x => x.PublishAt < post.PublishAt),
 				AreCommentsClosed = comments.AreCommentsClosed(post),
 			};
+            var author = Session.Load<User>(post.AuthorId) ?? new User();
+            vm.Post.Author = author.MapTo<PostViewModel.UserDetails>();
 
         	if (vm.Post.Slug != slug)
 				return RedirectToActionPermanent("Details", new { id, vm.Post.Slug });

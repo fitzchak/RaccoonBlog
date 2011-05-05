@@ -132,6 +132,7 @@
     <Compile Include="EnsureLowerCaseRouteModule.cs" />
     <Compile Include="Helpers\Attributes\AjaxOnlyAttribute.cs" />
     <Compile Include="Helpers\ModelStateExtensions.cs" />
+    <Compile Include="Helpers\TwitterExtensions.cs" />
     <Compile Include="Helpers\UrlHelperExtensions.cs" />
     <Compile Include="Helpers\Validation\RequiredIfAttribute.cs" />
     <Compile Include="Helpers\Results\JsonNetResult.cs" />
@@ -228,6 +229,7 @@
     <Content Include="Content\js\RequiredIfValidation.js" />
     <Content Include="Content\js\fullcalendar.min.js" />
     <Content Include="Content\js\jquery-ui-1.8.12.custom.min.js" />
+    <Content Include="Content\js\showdown.js" />
     <Content Include="Global.asax" />
     <Content Include="Content\js\jquery.ui.core.js" />
     <Content Include="Content\js\jquery.ui.core.min.js" />

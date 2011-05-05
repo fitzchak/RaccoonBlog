@@ -17,6 +17,7 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
                 .ForMember(x => x.Slug, o => o.MapFrom(m => SlugConverter.TitleToSlag(m.Title)))
                 .ForMember(x => x.PublishedAt, o => o.MapFrom(m => m.PublishAt))
                 .ForMember(x => x.IsCommentAllowed, o => o.MapFrom(m => m.AllowComments))
+                .ForMember(x => x.Author, o => o.Ignore())
                 ;
 
             Mapper.CreateMap<PostComments.Comment, PostViewModel.Comment>()
@@ -42,6 +43,8 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
                 ;
 
             Mapper.CreateMap<HttpRequestWrapper, RequestValues>();
+
+            Mapper.CreateMap<User, PostViewModel.UserDetails>();
         }
     }
 }
