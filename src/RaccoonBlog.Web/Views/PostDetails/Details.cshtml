@@ -118,6 +118,7 @@
 @section Script {
     <script type="text/javascript" src="@Url.Content("~/Content/js/jquery.validate.min.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Content/js/jquery.validate.unobtrusive.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Content/js/showdown.js")"></script>
     <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
     <script type="text/javascript">
         $(function () {
@@ -135,6 +136,13 @@
                 }
                 return false;
             });
+
+            var $textarea = $('textarea[name$="Body"]'),
+            $preview = $('<div id="preview"></div>').insertAfter($textarea),
+            converter = new Showdown.converter();
+            $textarea.keyup(function () {
+                $preview.html(converter.makeHtml($textarea.val()));
+            }).trigger('keyup');
         });
     </script>
 }
