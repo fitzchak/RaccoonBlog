@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Web.Mvc;
 using RaccoonBlog.Web.Infrastructure.Commands;
+using RaccoonBlog.Web.Mailers;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.Services;
 using RaccoonBlog.Web.ViewModels;
 using Raven.Client;
-using RazorEngine;
 
 namespace RaccoonBlog.Web.Commands
 {
@@ -57,13 +57,7 @@ namespace RaccoonBlog.Web.Commands
                 Url = comment.Url,
             };
 
-            var emailContents = Razor.Run(vm, "NewComment");
-
-            CommandExcucator.ExcuteLater(new SendEmailCommand()
-                                             {
-                                                 Subject = "Comment: " + post.Title,
-                                                 Contents = emailContents
-                                             });
+            CommandExcucator.ExcuteLater(new SendEmailCommand(new MailTemplates().NewComment(vm)));
         }
     }
 }

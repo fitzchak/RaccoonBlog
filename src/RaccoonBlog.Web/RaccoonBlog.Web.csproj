@@ -151,6 +151,7 @@
     <Compile Include="Infrastructure\Indexes\PostCountByMonth.cs" />
     <Compile Include="Infrastructure\Indexes\TagCount.cs" />
     <Compile Include="Infrastructure\Indexes\TempTagCount.cs" />
+    <Compile Include="Mailers\MailTemplates.cs" />
     <Compile Include="Models\PostComments.cs" />
     <Compile Include="Models\Commenter.cs" />
     <Compile Include="Models\Post.cs" />
@@ -236,11 +237,12 @@
     <Content Include="Content\js\jquery-1.6.min.js" />
     <Content Include="Views\SectionAdmin\Edit.cshtml" />
     <Compile Include="Controllers\PostController.cs" />
+    <Content Include="Views\MailTemplates\_Layout.cshtml" />
     <None Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\HiddenInput.cshtml" />
     <None Include="Views\Shared\DisplayTemplates\String.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\HiddenInput.cshtml" />
-    <Content Include="ViewsEmail\NewComment.cshtml" />
+    <Content Include="Views\MailTemplates\NewComment.cshtml" />
     <Content Include="Views\Section\TagsList.cshtml" />
     <Content Include="Views\Section\ArchivesList.cshtml" />
     <Content Include="Services\MetaWeblogAPI.ashx" />
