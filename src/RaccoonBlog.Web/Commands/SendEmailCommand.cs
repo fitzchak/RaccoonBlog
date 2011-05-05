@@ -6,16 +6,16 @@ namespace RaccoonBlog.Web.Commands
 {
     public class SendEmailCommand : ICommand
     {
-        private readonly MailMessage mailMessage;
+        private readonly MailMessage _mailMessage;
 
         public SendEmailCommand(MailMessage mailMessage)
         {
-            this.mailMessage = mailMessage;
+            _mailMessage = mailMessage;
         }
 
         public void Execute()
         {
-            mailMessage.Send();
+            _mailMessage.Send();
         }
     }
 }
