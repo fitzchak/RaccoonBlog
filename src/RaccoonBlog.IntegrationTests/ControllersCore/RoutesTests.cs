@@ -40,20 +40,6 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
         {
             "~/".ShouldMapTo<PostController>(c => c.List());
 
-			"~/1024".ShouldMapTo<PostDetailsController>(c => c.Details(1024, null));
-			"~/1024/blog-post-title".ShouldMapTo<PostDetailsController>(c => c.Details(1024, "blog-post-title"));
-
-            "~/1024/comment"
-                .WithMethod(HttpVerbs.Get)
-				.ShouldMapTo<PostDetailsController>(c => c.Details(1024, "comment"));
-
-            "~/1024/comment"
-                .WithMethod(HttpVerbs.Post)
-                .ShouldMapTo<PostDetailsController>(c => c.Comment(null, 1024));
-
-            "~/section/tagslist".ShouldMapTo<SectionController>(c => c.TagsList());
-			"~/section/archiveslist".ShouldMapTo<SectionController>(c => c.ArchivesList());
-
             "~/tags/tag-name".ShouldMapTo<PostController>(c => c.Tag("tag-name"));
 
             // "~/archive".ShouldMapTo<ErrorController>(c => c.404());
@@ -61,6 +47,21 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
 			"~/archive/2011/4".ShouldMapTo<PostController>(c => c.Archive(2011, 4, null));
             "~/archive/2011/4/24".ShouldMapTo<PostController>(c => c.Archive(2011, 4, 24));
             "~/archive/2011/4/24/legacy-post-title.aspx".ShouldMapTo<LegacyPostController>(c => c.RedirectLegacyPost(2011, 4, 24, "legacy-post-title"));
+        }
+
+        [Fact]
+        public void PostDetailsControllerRoutes()
+        {
+            "~/1024".ShouldMapTo<PostDetailsController>(c => c.Details(1024, null));
+            "~/1024/blog-post-title".ShouldMapTo<PostDetailsController>(c => c.Details(1024, "blog-post-title"));
+
+            "~/1024/comment"
+                .WithMethod(HttpVerbs.Get)
+                .ShouldMapTo<PostDetailsController>(c => c.Details(1024, "comment"));
+
+            "~/1024/comment"
+                .WithMethod(HttpVerbs.Post)
+                .ShouldMapTo<PostDetailsController>(c => c.Comment(null, 1024));
         }
 
         [Fact]
@@ -137,6 +138,9 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
         public void SectionControllerRoutes()
         {
             "~/section/list".ShouldMapTo<SectionController>(c => c.List());
+
+            "~/section/tagslist".ShouldMapTo<SectionController>(c => c.TagsList());
+            "~/section/archiveslist".ShouldMapTo<SectionController>(c => c.ArchivesList());
         }
 
         [Fact]

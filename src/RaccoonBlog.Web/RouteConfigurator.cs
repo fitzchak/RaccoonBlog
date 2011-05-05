@@ -23,6 +23,7 @@ namespace RaccoonBlog.Web
             ConfigureSyndication();
 
             ConfigurePost();
+            ConfigurePostDetails();
             ConfigurePostAdmin();
             
     	    ConfigureSection();
@@ -57,7 +58,7 @@ namespace RaccoonBlog.Web
             routes.MapRouteLowerCase("SectionController-internal",
                 "{controller}/{action}",
                 new { },
-                new { controller = "Section", action = "List" }
+                new { controller = "Section", action = "List|TagsList|ArchivesList" }
                 );
         }
 
@@ -149,24 +150,6 @@ namespace RaccoonBlog.Web
 
         private void ConfigurePost()
         {
-            routes.MapRouteLowerCase("PostController-Comment",
-                "{id}/comment",
-                new { controller = "Post", action = "Comment" },
-                new { httpMethod = new HttpMethodConstraint("POST"), id = MatchPositiveInteger }
-                );
-
-            routes.MapRouteLowerCase("PostController-Details",
-                "{id}/{slug}",
-                new { controller = "Post", action = "Details", slug = UrlParameter.Optional },
-                new { id = MatchPositiveInteger }
-                );
-
-            routes.MapRouteLowerCase("PostController-internal",
-                "{controller}/{action}",
-                new { controller = "Post" },
-                new { controller = "Post", action = "TagsList|ArchivesList" }
-                );
-
             routes.MapRouteLowerCase("PostController-PostsByTag",
                 "tags/{slug}",
                 new { controller = "Post", action = "Tag" }
@@ -199,6 +182,21 @@ namespace RaccoonBlog.Web
                 );
 
             #endregion
+        }
+
+        private void ConfigurePostDetails()
+        {
+            routes.MapRouteLowerCase("PostDetailsController-Comment",
+                "{id}/comment",
+                new { controller = "PostDetails", action = "Comment" },
+                new { httpMethod = new HttpMethodConstraint("POST"), id = MatchPositiveInteger }
+                );
+
+            routes.MapRouteLowerCase("PostDetailsController-Details",
+                "{id}/{slug}",
+                new { controller = "PostDetails", action = "Details", slug = UrlParameter.Optional },
+                new { id = MatchPositiveInteger }
+                );
         }
 
     	private void ConfigureSyndication()
