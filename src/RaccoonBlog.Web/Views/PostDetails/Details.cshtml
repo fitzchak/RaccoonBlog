@@ -26,19 +26,7 @@
         @Model.Post.Body
     </div>
 
-    <footer>
-        <div class="author">Posted By: @Model.Post.Author.FullName</div>
-        <div class="published">Published at <time pubdate>@Model.Post.PublishedAt.ToString("r")</time></div>
-        @if (Model.Post.PublishedAt != Model.Post.CreatedAt) { 
-            <div class="created">Originally posted at <time>@Model.Post.CreatedAt.ToString("r")</time></div>
-        }
-        <div class="share">
-            @Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, Model.Post.Author.TwitterNick, Model.Post.Author.RelatedTwitterNick, Model.Post.Author.RelatedTwitterNickDesc)
-        </div>
-    </footer>
-
-	
-    <div class="tags">
+	<div class="tags">
         <ul>
             @foreach (var name in Model.Post.Tags)
             {
@@ -48,6 +36,19 @@
     </div>
     
 
+    <footer>
+        <p class="author">Posted By: @Model.Post.Author.FullName</p>
+        <p class="published">Published at <time pubdate>@Model.Post.PublishedAt.ToString("r")</time></p>
+        @if (Model.Post.PublishedAt != Model.Post.CreatedAt) { 
+            <p class="created">Originally posted at <time>@Model.Post.CreatedAt.ToString("r")</time></p>
+        }
+        <p class="share">
+            @Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, Model.Post.Author.TwitterNick, Model.Post.Author.RelatedTwitterNick, Model.Post.Author.RelatedTwitterNickDesc)
+        </p>
+    </footer>
+
+	
+ 
     <section class="comments">
         <header>
             <a name="feedback"></a>
