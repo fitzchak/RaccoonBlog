@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Security.Policy;
 using System.Web.Mvc;
+using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Commands;
 using RaccoonBlog.Web.Mailers;
 using RaccoonBlog.Web.Models;
@@ -48,16 +50,8 @@ namespace RaccoonBlog.Web.Commands
         	else
         		comments.Comments.Add(comment);
 
-        	var vm = new NewCommentEmailViewModel
-            {
-                Author = comment.Author,
-                Body = MvcHtmlString.Create(comment.Body),
-                CreatedAt = comment.CreatedAt,
-                Email = comment.Email,
-                Url = comment.Url,
-            };
-
-            CommandExcucator.ExcuteLater(new SendEmailCommand(new MailTemplates().NewComment(vm)));
+            var message = new MailTemplates().NewComment(comment.MapTo<NewCommentEmailViewModel>());
+            CommandExcucator.ExcuteLater(new SendEmailCommand(message));
         }
     }
 }

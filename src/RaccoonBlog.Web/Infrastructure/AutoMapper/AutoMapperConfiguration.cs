@@ -19,6 +19,7 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper
             Mapper.AddProfile(new PostsViewModelMapperProfile());
             Mapper.AddProfile(new TagsListViewModelMapperProfile());
             Mapper.AddProfile(new SectionMapperProfile());
+            Mapper.AddProfile(new EmailViewModelMapperProfile());
 
             Mapper.AddProfile(new UserAdminMapperProfile());
             Mapper.AddProfile(new PostsAdminViewModelMapperProfile());
