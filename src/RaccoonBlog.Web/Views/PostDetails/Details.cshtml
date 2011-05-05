@@ -27,14 +27,14 @@
     </div>
 
     <footer>
-        Published at <time pubdate>@Model.Post.PublishedAt.ToString("r")</time>
-
-        @if (Model.Post.PublishedAt != Model.Post.CreatedAt)
-        { 
-            <span>
-            | Originally posted at <time>@Model.Post.CreatedAt.ToString("r")</time>
-            </span>
+        <div class="author">Posted By: @Model.Post.Author.FullName</div>
+        <div class="published">Published at <time pubdate>@Model.Post.PublishedAt.ToString("r")</time></div>
+        @if (Model.Post.PublishedAt != Model.Post.CreatedAt) { 
+            <div class="created">Originally posted at <time>@Model.Post.CreatedAt.ToString("r")</time></div>
         }
+        <div class="share">
+            @Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, Model.Post.Author.TwitterNick, Model.Post.Author.RelatedTwitterNick, Model.Post.Author.RelatedTwitterNickDesc)
+        </div>
     </footer>
 
 	
@@ -53,7 +53,8 @@
             <a name="feedback"></a>
             <h1>Feedback</h1>
         </header>
-        @if (Model.Comments.Count == 0) { 
+        @if (Model.Comments.Count == 0)
+        { 
             <p>No comments posted yet.</p>
         }
         @foreach (var comment in Model.Comments)
@@ -75,21 +76,27 @@
         <article id="postComment">
             <div class="messageWrapper"><div id="message" style="visibility:hidden"></div></div>
 
-            @if (Model.Post.IsCommentAllowed = false || Model.AreCommentsClosed) { 
+            @if (Model.Post.IsCommentAllowed = false || Model.AreCommentsClosed)
+            { 
                 <div class="commentsClosedMessage">Comments have been closed on this topic.</div>
-            } else {
-                if (ViewData.ModelState.IsValid == false) { 
+            }
+            else
+            {
+                if (ViewData.ModelState.IsValid == false)
+                { 
                     <div class="form-error">
                         @Html.ValidationSummary(true)
                     </div>
                 }
-                using (@Html.BeginForm("Comment", "PostDetails", new { Model.Post.Id })) {
+                using (@Html.BeginForm("Comment", "PostDetails", new { Model.Post.Id }))
+                {
                     @Html.EditorFor(x => x.Input.Name)
                     @Html.EditorFor(x => x.Input.Email)
                     @Html.EditorFor(x => x.Input.Url)
                     @Html.EditorFor(x => x.Input.Body)
     
-                    if (!Model.IsTrustedCommenter) { 
+                    if (!Model.IsTrustedCommenter)
+                    { 
                         <div class="form_item">
                             <label>
                                 <span class="form_item_name">Are you human?</span>
@@ -105,8 +112,6 @@
         </article>
     </section>
 </article>
-
-@Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, Model.Post.Author.TwitterNick, Model.Post.Author.RelatedTwitterNick, Model.Post.Author.RelatedTwitterNickDesc)
 
 @section Style {
     <link rel="canonical" href="@Url.AbsoluteAction("Details", new { Model.Post.Id, Model.Post.Slug })">}
