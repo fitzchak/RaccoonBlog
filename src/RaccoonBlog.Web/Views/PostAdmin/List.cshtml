@@ -13,6 +13,7 @@
     <script src="@Url.Content("~/Content/js/fullcalendar.min.js")" type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
+            var listFeed = '@Url.Action("ListFeed")';
             $('#postsCalendar').fullCalendar({
                 header: {
 				    left: 'prev,next today',
@@ -23,11 +24,11 @@
                 editable: true,
                 disableResizing: true,
                 eventSources: [{
-                    url: '@Url.Action("ListFeed")',
+                    url: listFeed,
                     type: 'POST',
                     error: function(xhr, ajaxOptions, error) {
                         alert('There was an error while fetching events! Error Code: ' + xhr.status + ' Error: ' + error);
-                    },
+                    }
                 }],
                 eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
                     var jqxhr = $.post('/admin/posts/' + event.id + '/setpostdate', {date: event.start.valueOf()}, null, 'json');
