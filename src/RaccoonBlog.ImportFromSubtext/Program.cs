@@ -33,8 +33,7 @@ namespace RaccoonBlog.ImportFromSubtext
             {
                 var sections = new[]
                     {
-                        new Section {Title = "Title", Body = string.Format("Text 1{0}{0}Text 2{0}{0}", Environment.NewLine)},
-                        new Section {Title = "Recent Comments", Body = "Recent Comments"},
+                        new Section {Title = "Future Posts", ControllerName = "Section", ActionName = "FuturePosts"},
                         new Section {Title = "Tags", ControllerName = "Section", ActionName = "TagsList"},
                         new Section {Title = "Archive", ControllerName = "Section", ActionName = "ArchivesList"},
                     };
