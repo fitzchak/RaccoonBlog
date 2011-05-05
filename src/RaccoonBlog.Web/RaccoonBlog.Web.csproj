@@ -218,7 +218,7 @@
     <Content Include="Views\Shared\DisplayTemplates\HiddenInput.cshtml" />
     <None Include="Views\Shared\DisplayTemplates\String.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\HiddenInput.cshtml" />
-    <Content Include="EmailViews\NewComment.cshtml" />
+    <Content Include="Views\EmailTemplates\NewComment.cshtml" />
     <Content Include="Views\Section\TagsList.cshtml" />
     <Content Include="Views\Section\ArchivesList.cshtml" />
     <Content Include="Services\MetaWeblogAPI.ashx" />
