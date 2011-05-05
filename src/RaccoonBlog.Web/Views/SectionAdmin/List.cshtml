@@ -53,11 +53,6 @@
             $('.confirm').click(function () {
                 if (!confirm('Are you sure you want to ' + $(this).val().toLowerCase() + '?')) return false;
             });
-            function setMessage(message, cssClass) {
-                var m = $('#message').html(message);
-                if (cssClass) m.addClass(cssClass);
-                m.css('visibility', 'visible');
-            }
         });
     </script>
 }
