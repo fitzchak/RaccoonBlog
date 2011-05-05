@@ -50,7 +50,7 @@ namespace RaccoonBlog.Web.Controllers
         	return View("Details", vm);
         }
 
-    	
+        [ValidateInput(false)]
     	[HttpPost]
         public ActionResult Comment(CommentInput input, int id)
         {
