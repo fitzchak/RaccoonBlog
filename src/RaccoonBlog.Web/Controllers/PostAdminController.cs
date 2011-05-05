@@ -122,7 +122,7 @@ namespace RaccoonBlog.Web.Controllers
         }
         
         [HttpPost]
-        public ActionResult CommentsAdmin(int id, CommentCommandOptions commandOptions, int[] commentIds)
+        public ActionResult CommentsAdmin(int id, CommentCommandOptions command, int[] commentIds)
         {
             if (commentIds.Length < 1)
                 ModelState.AddModelError("CommentIdsAreEmpty", "Not comments was selected.");
@@ -143,7 +143,7 @@ namespace RaccoonBlog.Web.Controllers
 
             var comments = Session.Load<PostComments>(id);
             var requestValues = Request.MapTo<RequestValues>();
-            switch (commandOptions)
+            switch (command)
             {
                 case CommentCommandOptions.Delete:
                     comments.Comments.RemoveAll(c => commentIds.Contains(c.Id));
@@ -177,7 +177,7 @@ namespace RaccoonBlog.Web.Controllers
                     comments.Comments.AddRange(ham);
                     break;
                 default:
-                    throw new InvalidOperationException(commandOptions + " command is not recognized.");
+                    throw new InvalidOperationException(command + " command is not recognized.");
             }
 
             if (Request.IsAjaxRequest())
@@ -199,12 +199,12 @@ namespace RaccoonBlog.Web.Controllers
             }
             return RedirectToAction("List");
         }
+    }
 
-		public enum CommentCommandOptions
-		{
-			Delete,
-			MarkHam,
-			MarkSpam
-		}
+    public enum CommentCommandOptions
+    {
+        Delete,
+        MarkHam,
+        MarkSpam
     }
 }

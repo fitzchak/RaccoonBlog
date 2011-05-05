@@ -109,7 +109,8 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
                 .ShouldMapTo<PostAdminController>(c => c.Details(1024, "setpostdate"));
 
             var commentsadmin = "~/admin/posts/1024/commentsadmin".WithMethod(HttpVerbs.Post);
-            commentsadmin.ShouldMapTo<PostAdminController>(c => c.CommentsAdmin(1024, PostAdminController.CommentCommandOptions.Delete, null));
+            commentsadmin.Values["command"] = "Delete";
+            commentsadmin.ShouldMapTo<PostAdminController>(c => c.CommentsAdmin(1024, CommentCommandOptions.Delete, null));
 
             "~/admin/posts/1024/commentsadmin"
                 .WithMethod(HttpVerbs.Get)
