@@ -231,7 +231,6 @@ namespace RaccoonBlog.ImportFromSubtext
                             case "img":
                                 break;
                             default:
-                                Console.WriteLine(sgmlReader.LocalName);
                                 outputEndElement = true;
                                 sb.Append("<").Append(sgmlReader.LocalName);
                                 break;
