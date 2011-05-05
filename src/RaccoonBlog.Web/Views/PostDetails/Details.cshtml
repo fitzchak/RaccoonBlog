@@ -43,7 +43,7 @@
             <p class="created">Originally posted at <time>@Model.Post.CreatedAt.ToString("r")</time></p>
         }
         <p class="share">
-            @Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, Model.Post.Author.TwitterNick, Model.Post.Author.RelatedTwitterNick, Model.Post.Author.RelatedTwitterNickDesc)
+            @Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, Model.Post.Author)
         </p>
     </footer>
 

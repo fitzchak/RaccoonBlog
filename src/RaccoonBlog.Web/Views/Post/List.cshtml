@@ -6,7 +6,7 @@
 
 @foreach (var post in Model.Posts)
 {
-    ViewBag.PostUrl = Url.Action("Details", "PostDetails", new { post.Id, post.Slug });
+    ViewBag.PostUrl = Url.AbsoluteAction("Details", "PostDetails", new { post.Id, post.Slug });
     <article class="postSummery">
         <header>
             <h1><a href="@ViewBag.PostUrl">@post.Title</a></h1>
@@ -35,7 +35,7 @@
         </footer>
 
 		 <p class="share">
-            @Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, post.Author.TwitterNick, post.Author.RelatedTwitterNick, post.Author.RelatedTwitterNickDesc)
+            @Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, post.Author, (string)ViewBag.PostUrl, post.Title.ToString())
         </p>
     </article>
 }
@@ -45,4 +45,9 @@
 }
 @if (Model.HasNextPage) { 
     <a href="@Url.Action(@ViewBag.CurrentAction, new { page = Model.CurrentPage + 1 })">Next Page</a>
+}
+
+@section script {
+	<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+}
 }
