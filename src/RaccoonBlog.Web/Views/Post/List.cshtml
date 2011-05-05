@@ -16,15 +16,6 @@
             @post.Body
         </div>
 
-        <footer>
-            Posted @@ <time pubdate>@post.CreatedAt.ToString("r")</time>
-            @if (post.CommentsCount > 0) {
-                <text>
-                    | <a href="@ViewBag.PostUrl#feedback">Feedback (@post.CommentsCount)</a>
-                </text>
-            }
-        </footer>
-
 		<div class="tags">
 		    <ul>
                 @foreach (var name in post.Tags)
@@ -34,6 +25,18 @@
             </ul>
         </div>
 
+        <footer>
+            Posted @@ <time pubdate>@post.CreatedAt.ToString("r")</time>
+            @if (post.CommentsCount > 0) {
+                <text>
+                    | <a href="@ViewBag.PostUrl#feedback">Feedback (@post.CommentsCount)</a>
+                </text>
+            }
+        </footer>
+
+		 <p class="share">
+            @Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, post.Author.TwitterNick, post.Author.RelatedTwitterNick, post.Author.RelatedTwitterNickDesc)
+        </p>
     </article>
 }
 

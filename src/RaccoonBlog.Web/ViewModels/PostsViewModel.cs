@@ -25,6 +25,14 @@ namespace RaccoonBlog.Web.ViewModels
             public DateTimeOffset CreatedAt { get; set; }
             public DateTimeOffset PublishedAt { get; set; }
             public int CommentsCount { get; set; }
+			public UserDetails Author { get; set; }
+
+			public class UserDetails
+			{
+				public string TwitterNick { get; set; }
+				public string RelatedTwitterNick { get; set; }
+				public string RelatedTwitterNickDesc { get; set; }
+			}
         }
     }
 }
