@@ -12,6 +12,7 @@ namespace RaccoonBlog.Web.Controllers
         public ActionResult List()
         {
             var sections = Session.Query<Section>()
+                .OrderBy(x => x.Position)
                 .ToList();
 
             return View(sections.MapTo<SectionSummery>());
