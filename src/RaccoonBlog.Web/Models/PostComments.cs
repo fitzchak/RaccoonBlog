@@ -35,6 +35,9 @@ namespace RaccoonBlog.Web.Models
             public bool IsSpam { get; set; }
 
             public DateTimeOffset CreatedAt { get; set; }
+
+    	    public string UserHostAddress { get; set; }
+            public string UserAgent { get; set; }
         }
     }
 }

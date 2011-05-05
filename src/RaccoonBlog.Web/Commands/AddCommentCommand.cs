@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Security.Policy;
-using System.Web.Mvc;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Infrastructure.Commands;
@@ -42,12 +40,14 @@ namespace RaccoonBlog.Web.Commands
                 Id = comments.GenerateNewCommentId(),
                 Author = _commentInput.Name,
                 Body = _commentInput.Body,
-                CreatedAt = DateTimeOffset.Now,  
+                CreatedAt = DateTimeOffset.Now,
                 Email = _commentInput.Email,
-                Important = _requestValues.IsAuthenticated,
                 Url = _commentInput.Url,
-                IsSpam = new AskimetService(_requestValues).CheckForSpam(_commentInput),
+                Important = _requestValues.IsAuthenticated,
+                UserAgent = _requestValues.UserAgent,
+                UserHostAddress = _requestValues.UserHostAddress
             };
+            comment.IsSpam = new AskimetService().CheckForSpam(comment);
 
         	if (comment.IsSpam)
         		comments.Spam.Add(comment);

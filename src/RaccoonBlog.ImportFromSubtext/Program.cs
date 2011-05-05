@@ -125,8 +125,10 @@ namespace RaccoonBlog.ImportFromSubtext
                                     Body = ConvertCommentToMarkdown(comment.Body),
                                     CreatedAt = comment.DateCreated,
                                     Email = comment.Email,
-                                    Important = comment.IsBlogAuthor ?? false,
                                     Url = comment.Url,
+                                    Important = comment.IsBlogAuthor ?? false,
+                                    UserAgent = comment.UserAgent,
+                                    UserHostAddress = comment.IpAddress,
                                     IsSpam = false
                                 }
                         ).ToList();
@@ -141,8 +143,10 @@ namespace RaccoonBlog.ImportFromSubtext
                                     Body = ConvertCommentToMarkdown(comment.Body),
                                     CreatedAt = comment.DateCreated,
                                     Email = comment.Email,
-                                    Important = comment.IsBlogAuthor ?? false,
                                     Url = comment.Url,
+                                    Important = comment.IsBlogAuthor ?? false,
+                                    UserAgent = comment.UserAgent,
+                                    UserHostAddress = comment.IpAddress,
                                     IsSpam = true
                                 }
                         ).ToList();

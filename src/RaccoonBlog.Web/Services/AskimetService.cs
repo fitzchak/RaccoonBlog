@@ -2,36 +2,28 @@
 using System.Configuration;
 using Joel.Net;
 using RaccoonBlog.Web.Models;
-using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Services
 {
     public class AskimetService
     {
-        private readonly RequestValues _requestValues;
-
-        public AskimetService(RequestValues requestValues)
-        {
-            _requestValues = requestValues;
-        }
-
-        public bool CheckForSpam(CommentInput commentInput)
+        public bool CheckForSpam(PostComments.Comment comment)
         {
             //Create a new instance of the Akismet API and verify your key is valid.
             string blog = "http://" + ConfigurationManager.AppSettings["MainUrl"];
-            var api = new Akismet(ConfigurationManager.AppSettings["AkismetKey"], blog, _requestValues.UserAgent);
+            var api = new Akismet(ConfigurationManager.AppSettings["AkismetKey"], blog, comment.UserAgent);
             if (!api.VerifyKey()) throw new Exception("Akismet API key invalid.");
 
             var akismetComment = new AkismetComment
             {
                 Blog = blog,
-                UserIp = _requestValues.UserHostAddress,
-                UserAgent = _requestValues.UserAgent,
-                CommentContent = commentInput.Body,
+                UserIp = comment.UserHostAddress,
+                UserAgent = comment.UserAgent,
+                CommentContent = comment.Body,
                 CommentType = "comment",
-                CommentAuthor = commentInput.Name,
-                CommentAuthorEmail = commentInput.Email,
-                CommentAuthorUrl = commentInput.Url,
+                CommentAuthor = comment.Author,
+                CommentAuthorEmail = comment.Email,
+                CommentAuthorUrl = comment.Url,
             };
 
             //Check if Akismet thinks this comment is spam. Returns TRUE if spam.
@@ -42,14 +34,14 @@ namespace RaccoonBlog.Web.Services
         {
             //Create a new instance of the Akismet API and verify your key is valid.
             string blog = "http://" + ConfigurationManager.AppSettings["MainUrl"];
-            var api = new Akismet(ConfigurationManager.AppSettings["AkismetKey"], blog, _requestValues.UserAgent);
+            var api = new Akismet(ConfigurationManager.AppSettings["AkismetKey"], blog, comment.UserAgent);
             if (!api.VerifyKey()) throw new Exception("Akismet API key invalid.");
 
             var akismetComment = new AkismetComment
             {
                 Blog = blog,
-                UserIp = _requestValues.UserHostAddress,
-                UserAgent = _requestValues.UserAgent,
+                UserIp = comment.UserHostAddress,
+                UserAgent = comment.UserAgent,
                 CommentContent = comment.Body,
                 CommentType = "comment",
                 CommentAuthor = comment.Author,
@@ -66,14 +58,14 @@ namespace RaccoonBlog.Web.Services
         {
             //Create a new instance of the Akismet API and verify your key is valid.
             string blog = "http://" + ConfigurationManager.AppSettings["MainUrl"];
-            var api = new Akismet(ConfigurationManager.AppSettings["AkismetKey"], blog, _requestValues.UserAgent);
+            var api = new Akismet(ConfigurationManager.AppSettings["AkismetKey"], blog, comment.UserAgent);
             if (!api.VerifyKey()) throw new Exception("Akismet API key invalid.");
 
             var akismetComment = new AkismetComment
             {
                 Blog = blog,
-                UserIp = _requestValues.UserHostAddress,
-                UserAgent = _requestValues.UserAgent,
+                UserIp = comment.UserHostAddress,
+                UserAgent = comment.UserAgent,
                 CommentContent = comment.Body,
                 CommentType = "comment",
                 CommentAuthor = comment.Author,

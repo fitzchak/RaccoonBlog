@@ -4,7 +4,6 @@ using System.Web.Mvc;
 using RaccoonBlog.Web.Common;
 using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Helpers.Attributes;
-using RaccoonBlog.Web.Infrastructure;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.Services;
@@ -159,7 +158,7 @@ namespace RaccoonBlog.Web.Controllers
                     comments.Spam.RemoveAll(spams.Contains);
                     foreach (var comment in spams)
                     {
-                        new AskimetService(requestValues).MarkSpam(comment);
+                        new AskimetService().MarkSpam(comment);
                     }
                     break;
 
@@ -172,7 +171,7 @@ namespace RaccoonBlog.Web.Controllers
                     foreach (var comment in ham)
                     {
                         comment.IsSpam = false;
-                        new AskimetService(requestValues).MarkHam(comment);
+                        new AskimetService().MarkHam(comment);
                     }
                     comments.Comments.AddRange(ham);
                     break;
