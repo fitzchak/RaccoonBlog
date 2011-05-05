@@ -4,7 +4,12 @@
 }
 <article id="user-input">
 	<h1>Edit @Model.FullName's Password</h1>
-	@Html.ValidationSummary(true)
+
+	@if (ViewData.ModelState.IsValid == false) { 
+        <div class="form-error">
+            @Html.ValidationSummary(true)
+        </div>
+    }
 
 	<form action="@Url.Action("ChangePass")" method="post">
 		@Html.EditorFor(x => x.Input.OldPass)
