@@ -1,0 +1,10 @@
+﻿@model IList<FuturePostViewModel>
+@{
+    Layout = "";    
+}
+<ul>
+    @foreach (var futurePost in Model)
+    {
+        <li>@futurePost.Title - @futurePost.Time</li>
+    }
+</ul>
