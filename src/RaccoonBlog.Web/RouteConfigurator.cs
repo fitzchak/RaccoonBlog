@@ -23,6 +23,7 @@ namespace RaccoonBlog.Web
             ConfigureSyndication();
 
             ConfigurePost();
+            ConfigureLegacyPost();
             ConfigurePostDetails();
             ConfigurePostAdmin();
             
@@ -157,12 +158,6 @@ namespace RaccoonBlog.Web
 
             #region "Archive"
 
-            routes.MapRouteLowerCase("RedirectLegacyPostUrl",
-                "archive/{year}/{month}/{day}/{slug}.aspx",
-                new { controller = "Post", action = "RedirectLegacyPost" },
-                new { Year = MatchPositiveInteger, Month = MatchPositiveInteger, Day = MatchPositiveInteger }
-                );
-
             routes.MapRouteLowerCase("PostsByYearMonthDay",
                 "archive/{year}/{month}/{day}",
                 new { controller = "Post", action = "ArchiveYearMonthDay" },
@@ -182,6 +177,15 @@ namespace RaccoonBlog.Web
                 );
 
             #endregion
+        }
+
+        private void ConfigureLegacyPost()
+        {
+            routes.MapRouteLowerCase("LegacyPostController-RedirectLegacyPostUrl",
+                "archive/{year}/{month}/{day}/{slug}.aspx",
+                new { controller = "LegacyPost", action = "RedirectLegacyPost" },
+                new { Year = MatchPositiveInteger, Month = MatchPositiveInteger, Day = MatchPositiveInteger }
+                );
         }
 
         private void ConfigurePostDetails()
