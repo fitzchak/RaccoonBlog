@@ -3,7 +3,7 @@
     ViewBag.Title = @Model.Post.Title;
 }
 
-<article class="post">
+<article class="post-detalis">
     <header>
         <h1><a href="@Url.Action("Details", new { Model.Post.Id, Model.Post.Slug })">@Model.Post.Title</a></h1>
     </header>
