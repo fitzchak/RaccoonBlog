@@ -74,7 +74,7 @@ namespace RaccoonBlog.Web
             routes.MapRouteLowerCase("SectionAdminController-Action",
                "admin/sections/{action}",
                new { controller = "SectionAdmin" },
-               new { action = "Add|Update" }
+               new { action = "Add|Update|Delete" }
                );
 
             routes.MapRouteLowerCase("SectionAdminController-List",

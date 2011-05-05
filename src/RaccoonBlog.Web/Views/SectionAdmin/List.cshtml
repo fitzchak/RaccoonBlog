@@ -16,6 +16,11 @@
                 <div class="commands-section">
                     <ul>
                         <li><a href="@Url.Action("Edit", new { section1.Id })">Edit</a></li>
+                        <li>
+                            <form action="@Url.Action("Delete", new { section1.Id })" method="post">
+                                <input type="submit" value="Delete" class="confirm">
+                            </form>
+                        </li>
                     </ul>
                 </div>
 			</li>
@@ -45,7 +50,9 @@
                     }
                 }
             });
-
+            $('.confirm').click(function () {
+                if (!confirm('Are you sure you want to ' + $(this).val().toLowerCase() + '?')) return false;
+            });
             function setMessage(message, cssClass) {
                 var m = $('#message').html(message);
                 if (cssClass) m.addClass(cssClass);

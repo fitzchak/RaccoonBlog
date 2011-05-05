@@ -44,6 +44,22 @@ namespace RaccoonBlog.Web.Controllers
         	return RedirectToAction("List");
         }
 
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            var section = Session.Load<Section>(id);
+            if (section == null)
+                return HttpNotFound("Section does not exist.");
+          
+            Session.Delete(section);
+            
+            if (Request.IsAjaxRequest())
+            {
+                return Json(new { Success = true });
+            }
+            return RedirectToAction("List");
+        }
+
         [AjaxOnly]
         [HttpPost]
         public ActionResult SetPosition(int id, int newPosition)

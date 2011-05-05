@@ -157,6 +157,12 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
             "~/admin/sections/add".ShouldMapTo<SectionAdminController>(c => c.Add());
             "~/admin/sections/4/edit".ShouldMapTo<SectionAdminController>(c => c.Edit(4));
 
+            "~/admin/sections/update".ShouldMapTo<SectionAdminController>(c => c.Update(null));
+
+            var delete = "~/admin/sections/delete".WithMethod(HttpVerbs.Post);
+            delete.Values["id"] = 4;
+            delete.ShouldMapTo<SectionAdminController>(c => c.Delete(4));
+
             var setpostdate = "~/admin/sections/4/setposition".WithMethod(HttpVerbs.Post);
             setpostdate.Values["newPosition"] = 0;
             setpostdate.ShouldMapTo<SectionAdminController>(c => c.SetPosition(4, 0));
