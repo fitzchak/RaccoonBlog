@@ -42,7 +42,7 @@
         <ul>
             @foreach (var name in Model.Post.Tags)
             {
-                <li><a href="@Url.Action("Tag", new { name })">@name</a></li>
+                <li><a href="@Url.Action("Tag", "Post", new { name })">@name</a></li>
             }
         </ul>
     </div>
@@ -82,7 +82,7 @@
                         @Html.ValidationSummary(true)
                     </div>
                 }
-                using (@Html.BeginForm("Comment", "Post", new { Model.Post.Id })) {
+                using (@Html.BeginForm("Comment", "PostDetails", new { Model.Post.Id })) {
                     @Html.EditorFor(x => x.Input.Name)
                     @Html.EditorFor(x => x.Input.Email)
                     @Html.EditorFor(x => x.Input.Url)

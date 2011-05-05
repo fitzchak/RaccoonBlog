@@ -8,8 +8,8 @@
         <h1><a href="@Url.Action("Details", new { Model.Post.Id, Model.Post.Slug })">@Model.Post.Title</a></h1>
         <div id="post-admin">
             <ul>
-                <li><a href="@Url.Action("Details", "Post")">View</a></li>
-                <li><a href="@Url.Action("Details", "Post", new { key = @Model.Post.Key })">Private View</a></li>
+                <li><a href="@Url.Action("Details", "PostDetails")">View</a></li>
+                <li><a href="@Url.Action("Details", "PostDetails", new { key = @Model.Post.Key })">Private View</a></li>
                 <li><a href="@Url.Action("Edit")">Edit</a></li>
                 <li>
                     <form action="@Url.Action("Delete", new { Model.Post.Id })" method="post">
@@ -53,7 +53,7 @@
     <div class="tags">
         <ul>
             @foreach (var name in Model.Post.Tags) {
-                <li><a href="@Url.Action("Tag", new { name })">@name</a></li>
+                <li><a href="@Url.Action("Tag", "Post", new { name })">@name</a></li>
             }
         </ul>
     </div>

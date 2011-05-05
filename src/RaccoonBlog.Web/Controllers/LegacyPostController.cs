@@ -1,11 +1,8 @@
-using System;
 using System.Linq;
 using RaccoonBlog.Web.Common;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
-using RaccoonBlog.Web.Infrastructure.Indexes;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
-using Raven.Client.Linq;
 using System.Web.Mvc;
 
 namespace RaccoonBlog.Web.Controllers
@@ -24,7 +21,7 @@ namespace RaccoonBlog.Web.Controllers
                 return HttpNotFound();
 
             var postReference = post.MapTo<PostReference>();
-            return RedirectToActionPermanent("Details", new { Id = postReference.DomainId, postReference.Slug });
+            return RedirectToActionPermanent("Details", "PostDetails", new { Id = postReference.DomainId, postReference.Slug });
         }
     }
 }
