@@ -69,9 +69,6 @@
       <HintPath>..\packages\MarkdownDeep.NET.1.4\lib\.NetFramework 3.5\MarkdownDeep.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Mvc.Mailer">
-      <HintPath>..\packages\MvcMailer.1.1\lib\40\Mvc.Mailer.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.0.2.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.4.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
@@ -119,6 +116,7 @@
   <ItemGroup>
     <Compile Include="Common\DocumentSessionExtensions.cs" />
     <Compile Include="Common\RouteCollectionExtension.cs" />
+    <Compile Include="Common\UrlHelperExtensions.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Common\DateTimeOffsetUtil.cs" />
     <Compile Include="Controllers\ElmahController.cs" />
@@ -153,7 +151,6 @@
     <Compile Include="Infrastructure\Indexes\PostCountByMonth.cs" />
     <Compile Include="Infrastructure\Indexes\TagCount.cs" />
     <Compile Include="Infrastructure\Indexes\TempTagCount.cs" />
-    <Compile Include="Mailers\MailTemplates.cs" />
     <Compile Include="Models\PostComments.cs" />
     <Compile Include="Models\Commenter.cs" />
     <Compile Include="Models\Post.cs" />

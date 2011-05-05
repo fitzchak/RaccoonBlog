@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Configuration;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Infrastructure.Commands;
-using RaccoonBlog.Web.Mailers;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.Services;
 using RaccoonBlog.Web.ViewModels;
@@ -54,17 +54,22 @@ namespace RaccoonBlog.Web.Commands
         	else
         		comments.Comments.Add(comment);
 
-            var viewModel = comment.MapTo<NewCommentEmailViewModel>();
-            viewModel.PostId = RavenIdResolver.Resolve(post.Id);
-            viewModel.PostTitle = post.Title;
-            var message = new MailTemplates().NewComment(viewModel);
-            CommandExcucator.ExcuteLater(new SendEmailCommand(message));
+            SendNewCommentEmail(post, comment);
         }
 
-        public void Execute(IDocumentSession session)
-        {
-            Session = session;
-            Execute();
-        }
+    	private static void SendNewCommentEmail(Post post, PostComments.Comment comment)
+    	{
+    		var viewModel = comment.MapTo<NewCommentEmailViewModel>();
+    		viewModel.PostId = RavenIdResolver.Resolve(post.Id);
+    		viewModel.PostTitle = post.Title;
+    		viewModel.BlogName = ConfigurationManager.AppSettings["BlogName"];
+
+    		var subject = string.Format("Comment on: {0} from {1}", viewModel.PostTitle, viewModel.BlogName);
+
+			if(comment.IsSpam)
+				subject = "Spam " + subject;
+
+    		CommandExcucator.ExcuteLater(new SendEmailCommand(viewModel.Email,subject, "NewComment", viewModel));
+    	}
     }
 }
