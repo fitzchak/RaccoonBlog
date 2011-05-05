@@ -2,6 +2,7 @@
 using System.Security.Policy;
 using System.Web.Mvc;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
+using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Infrastructure.Commands;
 using RaccoonBlog.Web.Mailers;
 using RaccoonBlog.Web.Models;
@@ -28,6 +29,9 @@ namespace RaccoonBlog.Web.Commands
 
         public void Execute()
         {
+            if (Session == null)
+                throw new NullReferenceException();
+
             var post = Session.Load<Post>(_postId);
             var comments = Session.Load<PostComments>(_postId);
 
@@ -50,8 +54,17 @@ namespace RaccoonBlog.Web.Commands
         	else
         		comments.Comments.Add(comment);
 
-            var message = new MailTemplates().NewComment(comment.MapTo<NewCommentEmailViewModel>());
+            var viewModel = comment.MapTo<NewCommentEmailViewModel>();
+            viewModel.PostId = RavenIdResolver.Resolve(post.Id);
+            viewModel.PostTitle = post.Title;
+            var message = new MailTemplates().NewComment(viewModel);
             CommandExcucator.ExcuteLater(new SendEmailCommand(message));
+        }
+
+        public void Execute(IDocumentSession session)
+        {
+            Session = session;
+            Execute();
         }
     }
 }
