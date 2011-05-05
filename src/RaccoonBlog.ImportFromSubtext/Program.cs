@@ -37,7 +37,6 @@ namespace RaccoonBlog.ImportFromSubtext
                         new Section {Title = "Recent Comments", Body = "Recent Comments"},
                         new Section {Title = "Tags", ControllerName = "Section", ActionName = "TagsList"},
                         new Section {Title = "Archive", ControllerName = "Section", ActionName = "ArchivesList"},
-                        new Section {Title = "Login", ControllerName = "Login", ActionName = "CurrentUser"},
                     };
 
                 var i = 0;
