@@ -381,13 +381,12 @@ article header h1 a
     white-space: nowrap;   
 }
 
-.tags_list ul 
+.section ul 
 {
     list-style-type: disc;
     padding-left: 40px;
 }
-
-.tags_list li
+.section li
 {
     margin: 1px 0;
 }
