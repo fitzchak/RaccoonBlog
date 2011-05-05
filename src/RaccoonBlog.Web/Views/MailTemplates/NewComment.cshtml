@@ -1,8 +1,15 @@
  @model NewCommentEmailViewModel
-<h1>A new comment on {0} blog</h1>
+<h1>A new comment on @Model.BlogName blog</h1>
+<strong>Post:</strong> <a href="@Url.Abs(Url.Action("Details", "PostDetails", new { id = Model.PostId }))">@Model.PostTitle</a>
+
 <ul>
     <li><strong>Author:</strong> @Model.Author</li>
     <li><strong>Url:</strong> @Model.Url</li>
     <li><strong>Email:</strong> @Model.Email</li>
     <li><strong>CreatedAt:</strong> @Model.CreatedAt</li>
 </ul>
+<strong>Body:</strong>
+<p>@Model.Body</p>
+
+<a href="@Url.Abs(Url.Action("Details", "PostDetails", new { id = Model.PostId }))#comment@(Model.Id)">View Comment</a>
+<a href="@Url.Abs(Url.Action("Details", "PostAdmin", new { id = Model.PostId }))#comment@(Model.Id)">View Comment In Admin Page</a>

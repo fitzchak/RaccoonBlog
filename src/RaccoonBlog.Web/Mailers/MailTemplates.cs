@@ -22,7 +22,7 @@ namespace RaccoonBlog.Web.Mailers
             var message = new MailMessage
                               {
                                   IsBodyHtml = true,
-                                  Subject = string.Format("Comment on: {0} from {1}", viewModel.Title, blogName)
+                                  Subject = string.Format("Comment on: {0} from {1}", viewModel.PostTitle, blogName)
                               };
 
             var commentsMederatorEmails = ConfigurationManager.AppSettings["OwnerEmail"];
