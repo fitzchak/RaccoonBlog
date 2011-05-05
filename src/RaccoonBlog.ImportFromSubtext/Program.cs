@@ -99,9 +99,9 @@ namespace RaccoonBlog.ImportFromSubtext
                 {
                     var ravenPost = new Web.Models.Post
                         {
-                            Author = usersList
+                            AuthorId = usersList
                                     .Where(u=> u.FullName == post.Author)
-                                    .Select(u => new Web.Models.Post.AuthorReference{FullName = u.FullName, Id = u.Id})
+                                    .Select(u => u.Id)
                                     .FirstOrDefault(),
                             CreatedAt = new DateTimeOffset(post.DateAdded),
                             PublishAt = new DateTimeOffset(post.DateSyndicated ?? post.DateAdded),

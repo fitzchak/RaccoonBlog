@@ -42,6 +42,8 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
                 ;
 
             Mapper.CreateMap<HttpRequestWrapper, RequestValues>();
+
+            Mapper.CreateMap<User, PostViewModel.UserDetails>();
         }
     }
 }

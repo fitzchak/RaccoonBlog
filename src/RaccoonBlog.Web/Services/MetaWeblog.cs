@@ -48,7 +48,7 @@ namespace RaccoonBlog.Web.Services
 
             var newPost = new Models.Post
             {
-                Author = user.MapTo<Models.Post.AuthorReference>(),
+                AuthorId = user.Id,
                 Body = post.description,
                 CommentsId = comments.Id,
                 CreatedAt = DateTimeOffset.Now,
@@ -71,16 +71,14 @@ namespace RaccoonBlog.Web.Services
             if (postToEdit == null)
                 throw new XmlRpcFaultException(0, "Post does not exists");
 
-            var author = user.MapTo<Models.Post.AuthorReference>();
-            if (postToEdit.Author == null || string.IsNullOrEmpty(postToEdit.Author.FullName))
-                postToEdit.Author = author;
+            if (string.IsNullOrEmpty(postToEdit.AuthorId))
+                postToEdit.AuthorId = user.Id;
             else
             {
-                postToEdit.LastEditedBy = author;
+                postToEdit.LastEditedByUserId = user.Id;
                 postToEdit.LastEditedAt = DateTimeOffset.Now;
             }
 
-            postToEdit.Author = user.MapTo<Models.Post.AuthorReference>();
             postToEdit.Body = post.description;
             if (
                 // don't bother moving things if we are already talking about something that is fixed

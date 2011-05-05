@@ -19,12 +19,12 @@ namespace RaccoonBlog.Web.Models
         public string Body { get; set; }
         public string[] Tags { get; set; }
 
-        public AuthorReference Author { get; set; }
+        public string AuthorId { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset PublishAt { get; set; }
         public bool SkipAutoReschedule { get; set; }
 
-        public AuthorReference LastEditedBy { get; set; }
+        public string LastEditedByUserId { get; set; }
         public DateTimeOffset? LastEditedAt { get; set; }
 
         public bool IsDeleted { get; set; }
@@ -69,12 +69,6 @@ namespace RaccoonBlog.Web.Models
                 return false;
 
             return maybeKey == ShowPostEvenIfPrivate;
-        }
-
-        public class AuthorReference
-        {
-            public string Id { get; set; }
-            public string FullName { get; set; }
         }
     }
 }

@@ -90,14 +90,14 @@ namespace RaccoonBlog.Web.Controllers
         	var post = Session.Load<Post>(input.Id) ?? new Post();
         	input.MapPropertiesToInstance(post);
 
-        	var author = Session.GetCurrentUser().MapTo<Post.AuthorReference>();
-        	if (post.Author == null || string.IsNullOrEmpty(post.Author.FullName))
+        	var user = Session.GetCurrentUser();
+            if (string.IsNullOrEmpty(post.AuthorId))
         	{
-        		post.Author = author;
+                post.AuthorId = user.Id;
         	}
         	else
         	{
-        		post.LastEditedBy = author;
+        		post.LastEditedByUserId = user.Id;
         		post.LastEditedAt = DateTimeOffset.Now;
         	}
 
