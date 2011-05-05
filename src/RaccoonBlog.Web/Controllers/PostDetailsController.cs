@@ -20,9 +20,10 @@ namespace RaccoonBlog.Web.Controllers
 
         public ActionResult Details(int id, string slug)
         {
-            var post = Session
-                .Include<Post>(x => x.CommentsId)
-                .Load(id);
+        	var post = Session
+        		.Include<Post>(x => x.CommentsId)
+        		.Include(x => x.AuthorId)
+        		.Load(id);
 
             if (post == null)
                 return HttpNotFound();
@@ -41,8 +42,8 @@ namespace RaccoonBlog.Web.Controllers
 				PreviousPost = Session.GetPostReference(x => x.PublishAt < post.PublishAt),
 				AreCommentsClosed = comments.AreCommentsClosed(post),
 			};
-            var author = Session.Load<User>(post.AuthorId) ?? new User();
-            vm.Post.Author = author.MapTo<PostViewModel.UserDetails>();
+
+        	vm.Post.Author = GetAuthor(post).MapTo<PostViewModel.UserDetails>();
 
         	if (vm.Post.Slug != slug)
 				return RedirectToActionPermanent("Details", new { id, vm.Post.Slug });
@@ -52,7 +53,17 @@ namespace RaccoonBlog.Web.Controllers
         	return View("Details", vm);
         }
 
-        [ValidateInput(false)]
+    	private User GetAuthor(Post post)
+    	{
+    		User author = null;
+    		if (post.AuthorId != null)
+    			author = Session.Load<User>(post.AuthorId);
+    		if(author == null)
+    			author = new User();
+    		return author;
+    	}
+
+    	[ValidateInput(false)]
     	[HttpPost]
         public ActionResult Comment(CommentInput input, int id)
         {
