@@ -8,6 +8,11 @@
     <link href="@Url.Content("~/Content/css/ResetCss.css")" rel="stylesheet" type="text/css">
     <link href="@Url.Content("~/Content/css/main.css")" rel="stylesheet" type="text/css">
     @RenderSection("Style", false)
+    @if (string.IsNullOrEmpty(ViewBag.CustomCss) == false) { 
+		<text>
+			<link href="@Url.Content(string.Format("~/Content/css/custom/{0}/{0}.css", @ViewBag.CustomCss))" rel="stylesheet" type="text/css">
+		</text>
+	}
 
 	<link id="Rsd" rel="EditURI" type="application/rsd+xml" title="RSD" href="@Url.Action("Rsd", "Syndication")">
     <link id="AtomLink" title="RSS" type="application/rss+xml" rel="alternate" href="@Url.Action("Rss", "Syndication")">
