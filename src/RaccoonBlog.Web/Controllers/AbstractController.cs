@@ -22,7 +22,7 @@ namespace RaccoonBlog.Web.Controllers
         {
             ViewBag.MetaDescription = ConfigurationManager.AppSettings["MetaDescription"];
             ViewBag.MetaKeywords = ConfigurationManager.AppSettings["MetaKeywords"];
-            ViewBag.CustomCss = ConfigurationManager.AppSettings["CustomCss"];
+            ViewBag.CustomCss = ConfigurationManager.AppSettings["CustomCss"].ToLowerInvariant();
         }
         
         protected int CurrentPage
