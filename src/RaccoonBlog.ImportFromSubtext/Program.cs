@@ -23,11 +23,29 @@ namespace RaccoonBlog.ImportFromSubtext
             {
                 ImportDatabase(store);
                 CreateSections(store);
+            	CreateConfig(store);
             }
             Console.WriteLine("Done importing");
         }
 
-        private static void CreateSections(IDocumentStore store)
+    	private static void CreateConfig(IDocumentStore store)
+    	{
+			using (IDocumentSession s = store.OpenSession())
+			{
+				s.Store(new BlogConfig
+				{
+					 Id = "Blog/Config",
+					 CustomCss = "ayende",
+					 Subtitle = "Unnatural acts on source code",
+					 Title = "Ayende @ Rahien",
+					 Copyright = "Ayende Rahien",
+					 AkismetKey = "43f0db211711",
+				});
+				s.SaveChanges();
+			}
+    	}
+
+    	private static void CreateSections(IDocumentStore store)
         {
             Console.WriteLine("Creating sections");
             using (IDocumentSession s = store.OpenSession())
