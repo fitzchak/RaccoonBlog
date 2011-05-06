@@ -20,9 +20,9 @@ namespace RaccoonBlog.Web.Controllers
 
     	protected AbstractController()
         {
-            ViewBag.MetaDescription = "";
-            ViewBag.MetaKeywords = "";
-            ViewBag.CustomCss = ConfigurationManager.AppSettings["CustomCss"] ?? Request.Url.Authority.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
+            ViewBag.MetaDescription = ConfigurationManager.AppSettings["MetaDescription"];
+            ViewBag.MetaKeywords = ConfigurationManager.AppSettings["MetaKeywords"];
+            ViewBag.CustomCss = ConfigurationManager.AppSettings["CustomCss"];
         }
         
         protected int CurrentPage
