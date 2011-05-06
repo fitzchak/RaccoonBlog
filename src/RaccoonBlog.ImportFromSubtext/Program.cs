@@ -101,7 +101,8 @@ namespace RaccoonBlog.ImportFromSubtext
                             AuthorId = usersList
                                     .Where(u=> u.FullName == post.Author)
                                     .Select(u => u.Id)
-                                    .FirstOrDefault(),
+                                    .FirstOrDefault() ?? 
+                                    usersList.First().Id,
                             CreatedAt = new DateTimeOffset(post.DateAdded),
                             PublishAt = new DateTimeOffset(post.DateSyndicated ?? post.DateAdded),
                             Body = post.Text,
