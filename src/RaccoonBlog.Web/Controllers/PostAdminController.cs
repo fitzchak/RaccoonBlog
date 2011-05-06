@@ -199,11 +199,4 @@ namespace RaccoonBlog.Web.Controllers
             return RedirectToAction("List");
         }
     }
-
-    public enum CommentCommandOptions
-    {
-        Delete,
-        MarkHam,
-        MarkSpam
-    }
 }

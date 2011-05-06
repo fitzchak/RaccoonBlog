@@ -26,10 +26,4 @@ namespace RaccoonBlog.Web.ViewModels
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
 		public string NewPassConfirmation { get; set; }
 	}
-
-    public class ChangePassViewModel
-	{
-        public string FullName { get; set; }
-        public UserPasswordInput Input { get; set; }
-	}
 }

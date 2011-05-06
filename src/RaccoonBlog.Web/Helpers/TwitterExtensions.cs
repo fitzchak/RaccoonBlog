@@ -47,11 +47,4 @@ namespace RaccoonBlog.Web.Helpers
 			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
 		}
 	}
-
-	public enum TwitterButtonDataCount
-	{
-		None,
-		Horizental,
-		Vertical,
-	}
 }
