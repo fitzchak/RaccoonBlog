@@ -21,9 +21,10 @@ namespace RaccoonBlog.ImportFromSubtext
                     Url = "http://localhost:8080",
                 }.Initialize())
             {
-                CreateSections(store);
                 ImportDatabase(store);
+                CreateSections(store);
             }
+            Console.WriteLine("Done importing");
         }
 
         private static void CreateSections(IDocumentStore store)
