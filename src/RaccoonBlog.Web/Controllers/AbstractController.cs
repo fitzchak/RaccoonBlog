@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Configuration;
+using System.Linq;
 using System.Web.Mvc;
 using System.Xml.Linq;
 using Newtonsoft.Json;
@@ -20,6 +22,7 @@ namespace RaccoonBlog.Web.Controllers
         {
             ViewBag.MetaDescription = "";
             ViewBag.MetaKeywords = "";
+            ViewBag.CustomCss = ConfigurationManager.AppSettings["MainUrl"] ?? Request.Url.Authority.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
         }
         
         protected int CurrentPage

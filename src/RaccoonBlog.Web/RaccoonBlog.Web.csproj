@@ -117,6 +117,7 @@
     <Compile Include="Common\DocumentSessionExtensions.cs" />
     <Compile Include="Common\RouteCollectionExtension.cs" />
     <Compile Include="Common\UrlHelperExtensions.cs" />
+    <Content Include="Content\css\custom\hibernatingrhinos\hibernatingrhinos.css" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Common\DateTimeOffsetUtil.cs" />
     <Compile Include="Controllers\ElmahController.cs" />
@@ -224,6 +225,7 @@
     <Compile Include="Helpers\Attributes\ValidatePasswordLengthAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\custom\ayende\ayende.css" />
     <Content Include="Content\css\images\printer.png" />
     <Content Include="Content\css\main.css" />
     <Content Include="Content\css\ResetCss.css" />
