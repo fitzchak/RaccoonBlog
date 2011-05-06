@@ -3,8 +3,15 @@
     Layout = "";    
 }
 <ul>
-    @foreach (var futurePost in Model)
-    {
+@if (Model.Count > 0)
+{
+    foreach (var futurePost in Model)
+	{
         <li>@futurePost.Title - @futurePost.Time</li>
-    }
+	}
+}
+else
+{
+	<li>No future posts</li>
+}
 </ul>
