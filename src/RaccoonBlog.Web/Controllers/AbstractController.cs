@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using RaccoonBlog.Web.Helpers.Results;
 using RaccoonBlog.Web.Infrastructure.ActionResults;
+using RaccoonBlog.Web.Models;
 using Raven.Client;
 
 namespace RaccoonBlog.Web.Controllers
@@ -22,8 +23,16 @@ namespace RaccoonBlog.Web.Controllers
         {
             ViewBag.MetaDescription = "";
             ViewBag.MetaKeywords = "";
-            ViewBag.CustomCss = ConfigurationManager.AppSettings["MainUrl"] ?? Request.Url.Authority.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
         }
+
+		protected override void OnActionExecuted(ActionExecutedContext filterContext)
+		{
+			var blogConfig = Session.Load<BlogConfig>("Blog/Config");
+
+			ViewBag.CustomCss = blogConfig.CustomCss;
+			ViewBag.BlogTitle = blogConfig.Title;
+			ViewBag.BlogSubtitle = blogConfig.Subtitle;
+		}
         
         protected int CurrentPage
         {

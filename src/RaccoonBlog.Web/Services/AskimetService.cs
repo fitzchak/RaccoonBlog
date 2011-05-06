@@ -2,16 +2,27 @@
 using System.Configuration;
 using Joel.Net;
 using RaccoonBlog.Web.Models;
+using Raven.Client;
 
 namespace RaccoonBlog.Web.Services
 {
     public class AskimetService
     {
-        public bool CheckForSpam(PostComments.Comment comment)
+    	private IDocumentSession session;
+    	private string akismetKey;
+
+    	public AskimetService(IDocumentSession session)
+    	{
+    		this.session = session;
+
+    		akismetKey = session.Load<BlogConfig>("Blog/Config").AkismetKey;
+    	}
+
+    	public bool CheckForSpam(PostComments.Comment comment)
         {
             //Create a new instance of the Akismet API and verify your key is valid.
             string blog = ConfigurationManager.AppSettings["MainUrl"];
-            var api = new Akismet(ConfigurationManager.AppSettings["AkismetKey"], blog, comment.UserAgent);
+            var api = new Akismet(akismetKey, blog, comment.UserAgent);
             if (!api.VerifyKey()) throw new Exception("Akismet API key invalid.");
 
             var akismetComment = new AkismetComment
@@ -34,7 +45,7 @@ namespace RaccoonBlog.Web.Services
         {
             //Create a new instance of the Akismet API and verify your key is valid.
             string blog = ConfigurationManager.AppSettings["MainUrl"];
-            var api = new Akismet(ConfigurationManager.AppSettings["AkismetKey"], blog, comment.UserAgent);
+			var api = new Akismet(akismetKey, blog, comment.UserAgent);
             if (!api.VerifyKey()) throw new Exception("Akismet API key invalid.");
 
             var akismetComment = new AkismetComment
@@ -58,7 +69,7 @@ namespace RaccoonBlog.Web.Services
         {
             //Create a new instance of the Akismet API and verify your key is valid.
             string blog = ConfigurationManager.AppSettings["MainUrl"];
-            var api = new Akismet(ConfigurationManager.AppSettings["AkismetKey"], blog, comment.UserAgent);
+			var api = new Akismet(akismetKey, blog, comment.UserAgent);
             if (!api.VerifyKey()) throw new Exception("Akismet API key invalid.");
 
             var akismetComment = new AkismetComment
