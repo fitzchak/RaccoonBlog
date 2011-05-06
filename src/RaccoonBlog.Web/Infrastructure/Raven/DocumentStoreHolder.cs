@@ -14,7 +14,7 @@ namespace RaccoonBlog.Web.Infrastructure.Raven
     /// </summary>
     public class DocumentStoreHolder
     {
-        public static IDocumentStore documentStore;
+    	private static IDocumentStore documentStore;
 
     	public static IDocumentStore DocumentStore
     	{
