@@ -34,16 +34,6 @@ namespace RaccoonBlog.Web.Controllers
             }
         }
 
-        protected new HttpNotFoundWithViewResult HttpNotFound(string statusDescription = null)
-        {
-            return new HttpNotFoundWithViewResult(statusDescription);
-        }
-
-        protected HttpUnauthorizedWithViewResult HttpUnauthorized(string statusDescription = null)
-        {
-            return new HttpUnauthorizedWithViewResult(statusDescription);
-        }
-
 		protected HttpStatusCodeResult HttpNotModified()
 		{
 			return new HttpStatusCodeResult(304);

@@ -186,9 +186,6 @@
     <Compile Include="Commands\SendEmailCommand.cs" />
     <Compile Include="Controllers\AbstractController.cs" />
     <Compile Include="Helpers\RecaptchHelperExtensions.cs" />
-    <Compile Include="Helpers\Results\HttpNotFoundWithViewResult.cs" />
-    <Compile Include="Helpers\Results\HttpStatusCodeWithViewResult.cs" />
-    <Compile Include="Helpers\Results\HttpUnauthorizedWithViewResult.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
