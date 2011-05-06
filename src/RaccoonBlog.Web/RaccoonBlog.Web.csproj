@@ -135,6 +135,7 @@
     <Content Include="Content\css\custom\hibernatingrhinos.css" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Common\DateTimeOffsetUtil.cs" />
+    <Compile Include="Controllers\CommentCommandOptions.cs" />
     <Compile Include="Controllers\ElmahController.cs" />
     <Compile Include="Helpers\Attributes\ElmahHandleErrorAttribute.cs" />
     <Compile Include="Helpers\Results\ElmahResult.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="EnsureLowerCaseRouteModule.cs" />
     <Compile Include="Helpers\Attributes\AjaxOnlyAttribute.cs" />
     <Compile Include="Helpers\ModelStateExtensions.cs" />
+    <Compile Include="Helpers\TwitterButtonDataCount.cs" />
     <Compile Include="Helpers\TwitterExtensions.cs" />
     <Compile Include="Helpers\UrlHelperExtensions.cs" />
     <Compile Include="Helpers\Validation\RequiredIfAttribute.cs" />
@@ -216,6 +218,7 @@
     <Compile Include="Common\SlugConverter.cs" />
     <Compile Include="Services\RssModels\UserInfo.cs" />
     <Compile Include="ViewModels\AdminPostDetailsViewModel.cs" />
+    <Compile Include="ViewModels\ChangePassViewModel.cs" />
     <Compile Include="ViewModels\CommentInput.cs" />
     <Compile Include="ViewModels\CurrentUserViewModel.cs" />
     <Compile Include="ViewModels\EditPostViewModel.cs" />
@@ -342,7 +345,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>28564</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
