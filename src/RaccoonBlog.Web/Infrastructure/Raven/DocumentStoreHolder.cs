@@ -25,7 +25,7 @@ namespace RaccoonBlog.Web.Infrastructure.Raven
         {
             var store = new DocumentStore
                 {
-                    Url = "http://localhost:8080"
+					ConnectionStringName = "RavenDB"
                 }.Initialize();
 
             IndexCreation.CreateIndexes(typeof(Tags_Count).Assembly, store);
