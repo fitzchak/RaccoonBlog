@@ -9,8 +9,6 @@ namespace RaccoonBlog.Web.Models
 		public string Subtitle { get; set; }
 		public string CustomCss { get; set; }
 		public string Copyright { get; set; }
-		public string ReCaptchaPrivateKey { get; set; }
-		public string ReCaptchaPublicKey { get; set; }
 		public string AkismetKey { get; set; }
 	}
 }
