@@ -151,3 +151,12 @@ article header h1 a
 #headerPrevNext li em { color: #cc8514; font-family: Georgia; padding-right: 3px }
 #headerPrevNext a { color: inherit; padding: 2px; text-decoration: none; }
 #headerPrevNext a:hover, #headerPrevNext a:hover em { background-color: #993300; color: #ffffff; }
+
+
+#logoimage
+{
+	width: 300px;
+	height: 92px;
+	background-repeat: no-repeat;
+	background-image: url('http://www.ayende.com/Images/logo.jpg');
+}

@@ -183,3 +183,12 @@ article header h1 a:link
 #headerPrevNext li em { color: #cc8514; font-family: Georgia; padding-right: 3px }
 #headerPrevNext a { color: inherit; padding: 2px; text-decoration: none; }
 #headerPrevNext a:hover, #headerPrevNext a:hover em { background-color: #262626; color: #ffffff; }
+
+
+#logoimage
+{
+	width: 182px;
+	height: 85px;
+	background-repeat: no-repeat;
+	background-image: url('http://blog.hibernatingrhinos.com/Content/HibernatingRhinosLogoFull-Small.png');
+}
