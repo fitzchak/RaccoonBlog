@@ -120,6 +120,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Common\DateTimeOffsetUtil.cs" />
     <Compile Include="Controllers\ElmahController.cs" />
+    <Compile Include="Helpers\Attributes\ElmahHandleErrorAttribute.cs" />
     <Compile Include="Helpers\Results\ElmahResult.cs" />
     <Compile Include="Controllers\PostDetailsController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -241,6 +242,9 @@
     <Compile Include="Controllers\PostController.cs" />
     <Content Include="Views\MailTemplates\_Layout.cshtml" />
     <Content Include="Views\Section\FuturePosts.cshtml" />
+    <Content Include="Views\Shared\500.cshtml" />
+    <Content Include="Views\Error\500.htm" />
+    <Content Include="Views\Error\404.htm" />
     <None Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\HiddenInput.cshtml" />
     <None Include="Views\Shared\DisplayTemplates\String.cshtml" />
