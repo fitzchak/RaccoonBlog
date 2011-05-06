@@ -44,8 +44,10 @@ namespace RaccoonBlog.Web.Controllers
 												   1, 0, 0, 0,
 												   DateTimeOffset.Now.Offset);
 
+			var blogConfig = Session.Load<BlogConfig>("Blog/Config");
+
 			var tagCounts = Session.Query<TagCount, Tags_Count>()
-				.Where(x => x.Count > 20 && x.LastSeenAt > mostRecentTag)
+				.Where(x => x.Count > blogConfig.MinNumberOfPostForSignificantTag && x.LastSeenAt > mostRecentTag)
 				.OrderBy(x => x.Name)
 				.As<TempTagCount>();
 			var tags = tagCounts
