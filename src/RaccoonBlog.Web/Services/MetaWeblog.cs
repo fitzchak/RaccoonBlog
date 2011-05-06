@@ -135,7 +135,7 @@ namespace RaccoonBlog.Web.Services
                                                    DateTimeOffset.Now.Offset);
 
             var categoryInfos = session.Query<TagCount, Tags_Count>()
-                .Where(x => x.Count > 20 && x.LastSeenAt > mostRecentTag)
+                .Where(x => x.LastSeenAt > mostRecentTag)
                 .ToList();
 
             return categoryInfos.Select(x => new CategoryInfo
