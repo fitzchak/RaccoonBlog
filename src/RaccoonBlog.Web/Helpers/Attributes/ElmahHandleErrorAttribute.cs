@@ -13,7 +13,6 @@ namespace RaccoonBlog.Web.Helpers.Attributes
 			
 			ErrorLog.GetDefault(HttpContext.Current).Log(new Error(context.Exception, HttpContext.Current));
 
-			context.HttpContext.Response.TrySkipIisCustomErrors = true;
 
 			BlogConfig blogConfig;
 			using(var session = DocumentStoreHolder.DocumentStore.OpenSession())
@@ -21,16 +20,27 @@ namespace RaccoonBlog.Web.Helpers.Attributes
 				blogConfig = session.Load<BlogConfig>("Blog/Config");
 			}
 
-        	new ViewResult
-			{
-				ViewName = "500",
-				ViewBag =
-					{
-						CustomCss = blogConfig.CustomCss,
-						BlogTitle = blogConfig.Title,
-						BlogSubtitle = blogConfig.Subtitle,
-					}
-			}.ExecuteResult(context);
-        }
+			var controllerName = (string) context.RouteData.Values["controller"];
+            var actionName = (string) context.RouteData.Values["action"];
+
+        	var viewResult = new ViewResult
+        	{
+        		ViewName = "500",
+        		ViewData = new ViewDataDictionary(new HandleErrorInfo(context.Exception, controllerName, actionName)),
+        		ViewBag =
+        			{
+        				CustomCss = blogConfig.CustomCss,
+        				BlogTitle = blogConfig.Title,
+        				BlogSubtitle = blogConfig.Subtitle,
+        			}
+        	};
+
+        	context.ExceptionHandled = true;
+        	context.HttpContext.Response.StatusCode = 500;
+			context.HttpContext.Response.TrySkipIisCustomErrors = true;
+			context.HttpContext.Response.Clear();
+
+			context.Result = viewResult;
+		}
     }
 }
