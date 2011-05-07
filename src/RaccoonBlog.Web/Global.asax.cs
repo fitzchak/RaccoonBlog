@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using System.Web.Routing;
 using RaccoonBlog.Web.Helpers;
+using RaccoonBlog.Web.Helpers.Attributes;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Controllers;
 

@@ -21,9 +21,12 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <ExcludeApp_Data>true</ExcludeApp_Data>
+    <PublishDatabases>false</PublishDatabases>
+    <IncludeIisSettings>false</IncludeIisSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -129,9 +132,10 @@
     <Compile Include="Common\DocumentSessionExtensions.cs" />
     <Compile Include="Common\RouteCollectionExtension.cs" />
     <Compile Include="Common\UrlHelperExtensions.cs" />
-    <Content Include="Content\css\custom\hibernatingrhinos\hibernatingrhinos.css" />
+    <Content Include="Content\css\custom\hibernatingrhinos.css" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Common\DateTimeOffsetUtil.cs" />
+    <Compile Include="Controllers\CommentCommandOptions.cs" />
     <Compile Include="Controllers\ElmahController.cs" />
     <Compile Include="Helpers\Attributes\ElmahHandleErrorAttribute.cs" />
     <Compile Include="Helpers\Results\ElmahResult.cs" />
@@ -146,6 +150,7 @@
     <Compile Include="EnsureLowerCaseRouteModule.cs" />
     <Compile Include="Helpers\Attributes\AjaxOnlyAttribute.cs" />
     <Compile Include="Helpers\ModelStateExtensions.cs" />
+    <Compile Include="Helpers\TwitterButtonDataCount.cs" />
     <Compile Include="Helpers\TwitterExtensions.cs" />
     <Compile Include="Helpers\UrlHelperExtensions.cs" />
     <Compile Include="Helpers\Validation\RequiredIfAttribute.cs" />
@@ -166,6 +171,7 @@
     <Compile Include="Infrastructure\Indexes\PostCountByMonth.cs" />
     <Compile Include="Infrastructure\Indexes\TagCount.cs" />
     <Compile Include="Infrastructure\Indexes\TempTagCount.cs" />
+    <Compile Include="Models\BlogConfig.cs" />
     <Compile Include="Models\PostComments.cs" />
     <Compile Include="Models\Commenter.cs" />
     <Compile Include="Models\Post.cs" />
@@ -187,9 +193,6 @@
     <Compile Include="Commands\SendEmailCommand.cs" />
     <Compile Include="Controllers\AbstractController.cs" />
     <Compile Include="Helpers\RecaptchHelperExtensions.cs" />
-    <Compile Include="Helpers\Results\HttpNotFoundWithViewResult.cs" />
-    <Compile Include="Helpers\Results\HttpStatusCodeWithViewResult.cs" />
-    <Compile Include="Helpers\Results\HttpUnauthorizedWithViewResult.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -215,6 +218,7 @@
     <Compile Include="Common\SlugConverter.cs" />
     <Compile Include="Services\RssModels\UserInfo.cs" />
     <Compile Include="ViewModels\AdminPostDetailsViewModel.cs" />
+    <Compile Include="ViewModels\ChangePassViewModel.cs" />
     <Compile Include="ViewModels\CommentInput.cs" />
     <Compile Include="ViewModels\CurrentUserViewModel.cs" />
     <Compile Include="ViewModels\EditPostViewModel.cs" />
@@ -237,7 +241,7 @@
     <Compile Include="Helpers\Attributes\ValidatePasswordLengthAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\css\custom\ayende\ayende.css" />
+    <Content Include="Content\css\custom\ayende.css" />
     <Content Include="Content\css\images\printer.png" />
     <Content Include="Content\css\main.css" />
     <Content Include="Content\css\ResetCss.css" />

@@ -1,54 +1,46 @@
-using System;
 using System.Web;
 using System.Web.Mvc;
 using Elmah;
+using RaccoonBlog.Web.Infrastructure.Raven;
+using RaccoonBlog.Web.Models;
 
-namespace RaccoonBlog.Web.Helpers
+namespace RaccoonBlog.Web.Helpers.Attributes
 {
-    public class ElmahHandleErrorAttribute : HandleErrorAttribute
+    public class ElmahHandleErrorAttribute : FilterAttribute, IExceptionFilter
     {
-        public override void OnException(ExceptionContext context)
+        public void OnException(ExceptionContext context)
         {
-            View = "500";   // Look for 500 view in shared folder.
-            base.OnException(context);
+			
+			ErrorLog.GetDefault(HttpContext.Current).Log(new Error(context.Exception, HttpContext.Current));
 
-            var e = context.Exception;
-            if (!context.ExceptionHandled   // if unhandled, will be logged anyhow
-                || RaiseErrorSignal(e)      // prefer signaling, if possible
-                || IsFiltered(context))     // filtered?
-                return;
 
-            LogException(e);
-        }
+			BlogConfig blogConfig;
+			using(var session = DocumentStoreHolder.DocumentStore.OpenSession())
+			{
+				blogConfig = session.Load<BlogConfig>("Blog/Config");
+			}
 
-        private static bool RaiseErrorSignal(Exception e)
-        {
-            var context = HttpContext.Current;
-            if (context == null)
-                return false;
-            var signal = ErrorSignal.FromContext(context);
-            if (signal == null)
-                return false;
-            signal.Raise(e, context);
-            return true;
-        }
+			var controllerName = (string) context.RouteData.Values["controller"];
+            var actionName = (string) context.RouteData.Values["action"];
 
-        private static bool IsFiltered(ExceptionContext context)
-        {
-            var config = context.HttpContext.GetSection("elmah/errorFilter") as ErrorFilterConfiguration;
+        	var viewResult = new ViewResult
+        	{
+        		ViewName = "500",
+        		ViewData = new ViewDataDictionary(new HandleErrorInfo(context.Exception, controllerName, actionName)),
+        		ViewBag =
+        			{
+        				CustomCss = blogConfig.CustomCss,
+        				BlogTitle = blogConfig.Title,
+        				BlogSubtitle = blogConfig.Subtitle,
+        			}
+        	};
 
-            if (config == null)
-                return false;
+        	context.ExceptionHandled = true;
+        	context.HttpContext.Response.StatusCode = 500;
+			context.HttpContext.Response.TrySkipIisCustomErrors = true;
+			context.HttpContext.Response.Clear();
 
-            var testContext = new ErrorFilterModule.AssertionHelperContext(context.Exception, HttpContext.Current);
-
-            return config.Assertion.Test(testContext);
-        }
-
-        private static void LogException(Exception e)
-        {
-            var context = HttpContext.Current;
-            ErrorLog.GetDefault(context).Log(new Error(e, context));
-        }
+			context.Result = viewResult;
+		}
     }
 }

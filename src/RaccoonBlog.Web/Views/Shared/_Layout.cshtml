@@ -7,12 +7,10 @@
     <title>@ViewBag.Title</title>
     <link href="@Url.Content("~/Content/css/ResetCss.css")" rel="stylesheet" type="text/css">
     <link href="@Url.Content("~/Content/css/main.css")" rel="stylesheet" type="text/css">
-    @RenderSection("Style", false)
-    @if (string.IsNullOrEmpty(ViewBag.CustomCss) == false) { 
-		<text>
-			<link href="@Url.Content(string.Format("~/Content/css/custom/{0}/{0}.css", @ViewBag.CustomCss))" rel="stylesheet" type="text/css">
-		</text>
+	@if (ViewBag.CustomCss != null) {
+		@:<link href="@Url.Content("~/Content/css/custom/" + ViewBag.CustomCss + ".css")" rel="stylesheet" type="text/css" >
 	}
+    @RenderSection("Style", false)
 
 	<link id="Rsd" rel="EditURI" type="application/rsd+xml" title="RSD" href="@Url.Action("Rsd", "Syndication")">
     <link id="AtomLink" title="RSS" type="application/rss+xml" rel="alternate" href="@Url.Action("Rss", "Syndication")">
@@ -22,9 +20,9 @@
     <div class="containter page">
         <header id="headermain">
 			<div id="logoarea">
-				<div id="logoimage"><a href="@Url.RouteUrl("Default")"><img alt="Ayende's Logo" class="topLogo" src="http://www.ayende.com/Images/logo.jpg"></a></div>
-				<h1><a href="@Url.RouteUrl("Default")">@ViewBag.Title</a></h1>
-				<h2>@ViewBag.SubTitle</h2>
+				<div id="logoimage"></div>
+				<h1><a href="@Url.RouteUrl("Default")">@ViewBag.BlogTitle</a></h1>
+				<h2>@ViewBag.BlogSubtitle</h2>
 			</div>
 		</header>
         <div id="mainBody">

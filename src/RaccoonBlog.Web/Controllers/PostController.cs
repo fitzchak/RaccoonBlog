@@ -35,7 +35,7 @@ namespace RaccoonBlog.Web.Controllers
 				.Include(x => x.AuthorId)
 				.Statistics(out stats)
 				.WhereIsPublicPost()
-				.Where(post => post.Tags.Any(postTag => postTag == slug))
+				.Where(post => post.TagsAsSlugs.Any(postTag => postTag == slug))
 				.OrderByDescending(post => post.PublishAt)
 				.Paging(CurrentPage, DefaultPage, PageSize)
 				.ToList();

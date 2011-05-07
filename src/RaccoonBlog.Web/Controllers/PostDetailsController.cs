@@ -43,7 +43,7 @@ namespace RaccoonBlog.Web.Controllers
 				AreCommentsClosed = comments.AreCommentsClosed(post),
 			};
 
-        	vm.Post.Author = GetAuthor(post).MapTo<PostViewModel.UserDetails>();
+			vm.Post.Author = Session.Load<User>(post.AuthorId).MapTo<PostViewModel.UserDetails>();
 
         	if (vm.Post.Slug != slug)
 				return RedirectToActionPermanent("Details", new { id, vm.Post.Slug });
@@ -53,17 +53,7 @@ namespace RaccoonBlog.Web.Controllers
         	return View("Details", vm);
         }
 
-    	private User GetAuthor(Post post)
-    	{
-    		User author = null;
-    		if (post.AuthorId != null)
-    			author = Session.Load<User>(post.AuthorId);
-    		if(author == null)
-    			author = new User();
-    		return author;
-    	}
-
-    	[ValidateInput(false)]
+		[ValidateInput(false)]
     	[HttpPost]
         public ActionResult Comment(CommentInput input, int id)
         {

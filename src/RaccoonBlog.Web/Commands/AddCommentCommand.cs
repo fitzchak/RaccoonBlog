@@ -47,7 +47,7 @@ namespace RaccoonBlog.Web.Commands
                 UserAgent = _requestValues.UserAgent,
                 UserHostAddress = _requestValues.UserHostAddress
             };
-            comment.IsSpam = new AskimetService().CheckForSpam(comment);
+            comment.IsSpam = new AskimetService(Session).CheckForSpam(comment);
 
         	if (comment.IsSpam)
         		comments.Spam.Add(comment);
@@ -57,12 +57,12 @@ namespace RaccoonBlog.Web.Commands
             SendNewCommentEmail(post, comment);
         }
 
-    	private static void SendNewCommentEmail(Post post, PostComments.Comment comment)
+    	private void SendNewCommentEmail(Post post, PostComments.Comment comment)
     	{
     		var viewModel = comment.MapTo<NewCommentEmailViewModel>();
     		viewModel.PostId = RavenIdResolver.Resolve(post.Id);
     		viewModel.PostTitle = post.Title;
-    		viewModel.BlogName = ConfigurationManager.AppSettings["BlogName"];
+    		viewModel.BlogName = Session.Load<BlogConfig>("Blog/Config").Title;
 
     		var subject = string.Format("Comment on: {0} from {1}", viewModel.PostTitle, viewModel.BlogName);
 

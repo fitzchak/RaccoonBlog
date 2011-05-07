@@ -158,7 +158,7 @@ namespace RaccoonBlog.Web.Controllers
                     comments.Spam.RemoveAll(spams.Contains);
                     foreach (var comment in spams)
                     {
-                        new AskimetService().MarkSpam(comment);
+                        new AskimetService(Session).MarkSpam(comment);
                     }
                     break;
 
@@ -171,7 +171,7 @@ namespace RaccoonBlog.Web.Controllers
                     foreach (var comment in ham)
                     {
                         comment.IsSpam = false;
-                        new AskimetService().MarkHam(comment);
+                        new AskimetService(Session).MarkHam(comment);
                     }
                     comments.Comments.AddRange(ham);
                     break;
@@ -198,12 +198,5 @@ namespace RaccoonBlog.Web.Controllers
             }
             return RedirectToAction("List");
         }
-    }
-
-    public enum CommentCommandOptions
-    {
-        Delete,
-        MarkHam,
-        MarkSpam
     }
 }

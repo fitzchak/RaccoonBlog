@@ -1,6 +1,5 @@
 ﻿@model PostsViewModel
 @{
-    ViewBag.Title = "Ayende @ Rahien blog";
     ViewBag.CurrentAction = @ViewContext.Controller.ValueProvider.GetValue("action").RawValue.ToString();
 }
 
@@ -49,5 +48,4 @@
 
 @section script {
 	<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-}
 }

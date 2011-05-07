@@ -6,6 +6,7 @@
 *.suo
 *.sln.cache
 _ReSharper.*/
+Output/
 *.resharper
 resharper.settings.xml
 *.user
@@ -21,3 +22,4 @@ temp-war-deps
 StyleCop.Cache
 /Server
 App_Data/
+/src/RaccoonBlog.Web/RaccoonBlog.Web.Publish.xml
