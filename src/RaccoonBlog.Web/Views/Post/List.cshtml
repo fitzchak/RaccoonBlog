@@ -1,5 +1,6 @@
 ﻿@model PostsViewModel
 @{
+    ViewBag.Title = ViewBag.BlogTitle;
     ViewBag.CurrentAction = @ViewContext.Controller.ValueProvider.GetValue("action").RawValue.ToString();
 }
 
