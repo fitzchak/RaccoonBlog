@@ -17,7 +17,7 @@ body
 {
 	margin: 20px;
 	font-family: georgia, verdana, arial, Sans-Serif;
-	color: @foregroundColor;
+	color: #333;
 	background: @backgroundColor;
 }
 
