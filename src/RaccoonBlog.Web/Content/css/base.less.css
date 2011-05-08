@@ -441,9 +441,13 @@ footer p
     margin: 5px 0;    
 }
 
-footer .share .twitter, footer .share .facebook
+footer .share .twitter, footer .share .facebook, footer .share .facebook-share
 {
     padding-top: 5px;
+}
+footer .share .facebook, footer .share .facebook-share {
+	float: left;
+	margin-right: 5px;
 }
 
 footer .published, footer .created, footer .feedback
@@ -475,4 +479,10 @@ div.commentsClosedMessage
 {
     font-style: italic;
     padding-top: 10px;
+}
+
+.rounded_corners(@radius: 5px) {
+	-moz-border-radius: @radius;
+	-webkit-border-radius: @radius;
+	border-radius: @radius;
 }
