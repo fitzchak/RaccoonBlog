@@ -69,11 +69,11 @@ div.captcha label{display:inline;float:left}
 div.captcha input{margin-left:4px;display:inline}
 body{margin:20px;background:#fdf6e9;font-family:georgia,verdana,arial,Sans-Serif;color:#333}
 h1{margin-bottom:10px}
-A{color:#930;font-family:verdana,arial,Sans-Serif;text-decoration:none}
-A:link{color:#930;text-decoration:none}
-A:visited{color:#935;text-decoration:none}
-A:active{color:#F00}
-A:hover{color:#F00}
+a{color:#930;font-family:verdana,arial,sans-serif;text-decoration:none}
+a:link{color:#930;text-decoration:none}
+a:visited{color:#935;text-decoration:none}
+a:active{color:#f00}
+a:hover{color:#f00}
 select,input,textarea{font-family:Arial,Helvetica,sans-serif;font-size:.8em}
 td{font-size:.9em}
 blockquote{margin:1em 40px}

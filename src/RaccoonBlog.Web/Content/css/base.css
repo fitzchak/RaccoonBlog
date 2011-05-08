@@ -306,24 +306,24 @@ body {
 h1 {
   margin-bottom: 10px;
 }
-A {
+a {
   color: #993300;
-  font-family: verdana, arial, Sans-Serif;
+  font-family: verdana, arial, sans-serif;
   text-decoration: none;
 }
-A:link {
+a:link {
   color: #993300;
   text-decoration: none;
 }
-A:visited {
+a:visited {
   color: #993355;
   text-decoration: none;
 }
-A:active {
-  color: #FF0000;
+a:active {
+  color: #ff0000;
 }
-A:hover {
-  color: #FF0000;
+a:hover {
+  color: #ff0000;
 }
 select, input, textarea {
   font-family: Arial, Helvetica, sans-serif;
