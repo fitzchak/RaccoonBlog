@@ -61,36 +61,19 @@ header#headermain h2
 
 #content
 {
-	float: left;
-	width: 75%;
-	padding: 15px;
-	background: #fff;
-	border: 1px dotted #262626;
-	z-index: 5;
+	border-color: #262626;
 }
 
 article header h1 a
 {
-	white-space: nowrap;
-	border-top: solid;
-	border-bottom: solid;
-	border-width: 1px;
-	padding-top: 1px;
-	padding-bottom: 1px;
 	border-color: #FF8000;
 	border-width: 2px;
     background-color: #8A2E00;
-	font-size: 12pt;
-	font-family: Times New Roman, verdana, arial, Sans-Serif;
-	font-weight: normal;
 }
-
 article header h1 a:visited
 {
 	color: #CCCCB2;
 }
-
-
 article header h1 a:link
 {
 	color: #FFF;
@@ -99,12 +82,7 @@ article header h1 a:link
 
 
 #headerPrevNext { color: #262626; font-family: Verdana; }
-#headerPrevNext h1 { background-color: #ffcc66; border-bottom: 1px solid #999999; font-family: Georgia; font-size: 0.9em; padding: 4px; text-align: center; }
-#headerPrevNext ul { margin-top: 3px; margin-left: 3px; color: #262626 }
-#headerPrevNext li { display: inline; font-size: 0.7em; color: #4c1a00; }
-#headerPrevNext li em { color: #cc8514; font-family: Georgia; padding-right: 3px }
-#headerPrevNext a { color: inherit; padding: 2px; text-decoration: none; }
-#headerPrevNext a:hover, #headerPrevNext a:hover em { background-color: #262626; color: #ffffff; }
+#headerPrevNext h1 { background-color: #ffcc66; }
 
 
 #logoimage a

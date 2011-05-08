@@ -233,11 +233,11 @@ article.post footer, postToolbar
 }
 #content
 {
+	background: #fff;
 	float: left;
 	width: 75%;
 	padding: 15px;
-	background: #fff;
-	border: 1px dotted #993300;
+	border: 1px dotted transparent;
 	z-index: 5;
 }
 .post_body div
@@ -258,11 +258,9 @@ article header h1 a
 	border-width: 1px;
 	padding-top: 1px;
 	padding-bottom: 1px;
-	border-color: #FF8000;
 	font-size: 12pt;
 	font-family: Times New Roman, verdana, arial, Sans-Serif;
 	font-weight: normal;
-	background-color: #FFEAB0;
 }
 .previousNext
 {
@@ -385,13 +383,13 @@ article header h1 a
 
 
 
-#headerPrevNext { color: #993300; font-family: Verdana; }
+#headerPrevNext { color: @linkColor; font-family: Verdana; }
 #headerPrevNext h1 { background-color: #ffcc66; border-bottom: 1px solid #999999; font-family: Georgia; font-size: 0.9em; padding: 4px; text-align: center; }
-#headerPrevNext ul { margin-top: 3px; margin-left: 3px; color: #993300 }
+#headerPrevNext ul { margin-top: 3px; margin-left: 3px; color: @linkColor }
 #headerPrevNext li { display: inline; font-size: 0.7em; color: #4c1a00; }
 #headerPrevNext li em { color: #cc8514; font-family: Georgia; padding-right: 3px }
 #headerPrevNext a { color: inherit; padding: 2px; text-decoration: none; }
-#headerPrevNext a:hover, #headerPrevNext a:hover em { background-color: #993300; color: #ffffff; }
+#headerPrevNext a:hover, #headerPrevNext a:hover em { background-color: @linkColor; color: #ffffff; }
 
 ul.admin-list
 {
