@@ -2,7 +2,7 @@
     ViewBag.Message = TempData["Message"] as string;
     var blogConfig = ViewBag.BlogConfig as BlogConfigViewModel;
     if (blogConfig == null) {
-        throw new NullReferenceException();
+        throw new InvalidOperationException("Couldn't find blog config");
     }
 }
 <!DOCTYPE html>
