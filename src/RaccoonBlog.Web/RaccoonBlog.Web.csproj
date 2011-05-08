@@ -160,7 +160,7 @@
     <Compile Include="Infrastructure\Raven\DocumentStoreHolder.cs" />
     <Compile Include="Infrastructure\Controllers\RavenActionFilterAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Infrastructure\Commands\CommandExcucator.cs" />
+    <Compile Include="Infrastructure\Commands\CommandExecutor.cs" />
     <Compile Include="Infrastructure\Commands\ICommand.cs" />
     <Compile Include="Services\AskimetService.cs" />
     <Compile Include="Common\DateTimeOffsetExtensions.cs" />

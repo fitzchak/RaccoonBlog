@@ -59,7 +59,7 @@ namespace RaccoonBlog.Web.Commands
 
             var emailContents = Razor.Run(vm, "NewComment");
 
-            CommandExcucator.ExcuteLater(new SendEmailCommand()
+            CommandExecutor.ExcuteLater(new SendEmailCommand()
                                              {
                                                  Subject = "Comment: " + post.Title,
                                                  Contents = emailContents
