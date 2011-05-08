@@ -25,22 +25,24 @@
         </div>
 
         <footer>
-            Posted @@ <time pubdate>@post.CreatedAt.ToString("r")</time>
-            @if (post.CommentsCount > 0) {
-                <text>
-                    | <a href="@postUrl#feedback">Feedback (@post.CommentsCount)</a>
-                </text>
+            <p class="published">Published at <time pubdate>@post.PublishedAt.ToString("r")</time></p>
+            @if (post.PublishedAt != post.CreatedAt) { 
+                <p class="created">Originally posted at <time>@post.CreatedAt.ToString("r")</time></p>
             }
-        </footer>
+            @if (post.CommentsCount > 0) {
+                <p class="feedback"><a href="@postUrl#feedback">Feedback (@post.CommentsCount)</a></p>
+            }
+            <div class="clr"></div>
 
-		 <div class="share">
-            <div class="twitter">
-                @Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, post.Author)
+            <div class="share">
+                <div class="twitter">
+                    @Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, post.Author)
+                </div>
+                <div class="facebook">
+                    <iframe src="http://www.facebook.com/plugins/like.php?href=@(postUrl)&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px;" allowTransparency="true"></iframe>
+                </div>
             </div>
-            <div class="facebook">
-                <iframe src="http://www.facebook.com/plugins/like.php?href=@(postUrl)&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px;" allowTransparency="true"></iframe>
-            </div>
-        </div>
+        </footer>
     </article>
 }
 

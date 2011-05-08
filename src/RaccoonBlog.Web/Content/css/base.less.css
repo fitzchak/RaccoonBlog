@@ -21,6 +21,11 @@ body
 	background: @backgroundColor;
 }
 
+.clr 
+{
+    clear: both;    
+}
+
 h1
 {
 	margin-bottom: 10px;
@@ -435,25 +440,22 @@ footer p
 {
     margin: 5px 0;    
 }
-footer .share
-{
-    clear: both;
-}
+
 footer .share .twitter, footer .share .facebook
 {
     padding-top: 5px;
 }
 
-footer .published
+footer .published, footer .created, footer .feedback
 {
     float: left;
-    border-right: solid 1px #000;
-    padding-right: 10px;
-    margin-right: 10px;
 }
-footer .created
+footer .created, footer .feedback
 {
     float: left;
+    border-left: solid 1px #000;
+    padding-left: 10px;
+    margin-left: 10px;
 }
 
 .commands-section ul li 

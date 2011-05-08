@@ -36,13 +36,14 @@
         </ul>
     </div>
     
-
     <footer>
         <p class="author">Posted By: @Model.Post.Author.FullName</p>
         <p class="published">Published at <time pubdate>@Model.Post.PublishedAt.ToString("r")</time></p>
         @if (Model.Post.PublishedAt != Model.Post.CreatedAt) { 
             <p class="created">Originally posted at <time>@Model.Post.CreatedAt.ToString("r")</time></p>
         }
+        <div class="clr"></div>
+
         <div class="share">
             <div class="twitter">
                 @Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, Model.Post.Author)
