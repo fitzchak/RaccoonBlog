@@ -175,6 +175,7 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\TagsResolver.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\UserAdminMapperProfile.cs" />
     <Compile Include="Common\LowercaseRoute.cs" />
+    <Compile Include="Infrastructure\Commands\CommandExecutor.cs" />
     <Compile Include="Infrastructure\Indexes\PostCountByMonth.cs" />
     <Compile Include="Infrastructure\Indexes\TagCount.cs" />
     <Compile Include="Infrastructure\Indexes\TempTagCount.cs" />
@@ -207,7 +208,6 @@
     <Compile Include="Infrastructure\Raven\DocumentStoreHolder.cs" />
     <Compile Include="Infrastructure\Controllers\RavenActionFilterAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Infrastructure\Commands\CommandExcucator.cs" />
     <Compile Include="Infrastructure\Commands\ICommand.cs" />
     <Compile Include="Services\AskimetService.cs" />
     <Compile Include="Common\DateTimeOffsetExtensions.cs" />
