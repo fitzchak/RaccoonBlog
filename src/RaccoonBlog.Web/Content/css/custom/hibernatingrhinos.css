@@ -185,10 +185,9 @@ article header h1 a:link
 #headerPrevNext a:hover, #headerPrevNext a:hover em { background-color: #262626; color: #ffffff; }
 
 
-#logoimage
+#logoimage a
 {
 	width: 182px;
 	height: 85px;
-	background-repeat: no-repeat;
 	background-image: url('http://blog.hibernatingrhinos.com/Content/HibernatingRhinosLogoFull-Small.png');
 }

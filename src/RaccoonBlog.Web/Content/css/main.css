@@ -160,6 +160,11 @@ header#headermain h2
 	right: 10px;
 	padding: 2px;
 }
+#logoimage a
+{
+    display: block;
+    background: transparent none no-repeat 0 0;
+}
 article.post footer, postToolbar
 {
     margin: 1em 0px;
