@@ -118,7 +118,7 @@ header#headermain
 	border-left: 1px dotted #FFF;
 	border-right: 1px dotted #FFF;
 	border-top: 1px dotted #FFF;
-	background: #FF9933;
+	background: @headerBackgroundColor;
 	padding: 20px;
 	margin: 0;
 }
