@@ -141,7 +141,6 @@ namespace RaccoonBlog.Web.Controllers
             }
 
             var comments = Session.Load<PostComments>(id);
-            var requestValues = Request.MapTo<RequestValues>();
             switch (command)
             {
                 case CommentCommandOptions.Delete:
@@ -150,7 +149,7 @@ namespace RaccoonBlog.Web.Controllers
                     break;
 
                 case CommentCommandOptions.MarkSpam: 
-                    var spams = comments.Comments
+                    var spams = comments.Comments.Concat(comments.Spam)
                         .Where(c => commentIds.Contains(c.Id))
                         .ToArray();
 
