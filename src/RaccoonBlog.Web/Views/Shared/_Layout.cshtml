@@ -1,14 +1,17 @@
 ﻿@{
     ViewBag.Message = TempData["Message"] as string;
+    var blogConfig = ViewBag.BlogConfig as BlogConfigViewModel;
+    if (blogConfig == null)
+        throw new NullReferenceException();
 }
 <!DOCTYPE html>
 <html>
 <head>
-    <title>@ViewBag.Title</title>
+    <title>@blogConfig.Title</title>
     <link href="@Url.Content("~/Content/css/ResetCss.css")" rel="stylesheet" type="text/css">
     <link href="@Url.Content("~/Content/css/main.css")" rel="stylesheet" type="text/css">
-	@if (ViewBag.CustomCss != null) {
-		@:<link href="@Url.Content("~/Content/css/custom/" + ViewBag.CustomCss + ".css")" rel="stylesheet" type="text/css" >
+	@if (string.IsNullOrEmpty(blogConfig.CustomCss) == false) {
+		@:<link href="@Url.Content("~/Content/css/custom/" + blogConfig.CustomCss + ".css")" rel="stylesheet" type="text/css" >
 	}
     @RenderSection("Style", false)
 
@@ -21,8 +24,8 @@
         <header id="headermain">
 			<div id="logoarea">
 				<div id="logoimage"></div>
-				<h1><a href="@Url.RouteUrl("Default")">@ViewBag.BlogTitle</a></h1>
-				<h2>@ViewBag.BlogSubtitle</h2>
+				<h1><a href="@Url.RouteUrl("Default")">@blogConfig.Title</a></h1>
+				<h2>@blogConfig.Subtitle</h2>
 			</div>
 		</header>
         <div id="mainBody">
