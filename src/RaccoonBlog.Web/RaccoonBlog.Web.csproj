@@ -242,6 +242,7 @@
     <Compile Include="ViewModels\SectionDetails.cs" />
     <Compile Include="ViewModels\SectionInput.cs" />
     <Compile Include="ViewModels\SectionSummery.cs" />
+    <Compile Include="ViewModels\TagDetails.cs" />
     <Compile Include="ViewModels\TagsListViewModel.cs" />
     <Compile Include="ViewModels\UserInput.cs" />
     <Compile Include="ViewModels\UserPasswordInput.cs" />
@@ -271,9 +272,6 @@
     <Content Include="Views\Shared\500.cshtml" />
     <Content Include="Views\Error\500.htm" />
     <Content Include="Views\Error\404.htm" />
-    <None Include="Infrastructure\Chirpy.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\HiddenInput.cshtml" />
     <None Include="Views\Shared\DisplayTemplates\String.cshtml" />
