@@ -141,7 +141,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Common\DateTimeOffsetUtil.cs" />
     <Compile Include="Controllers\CommentCommandOptions.cs" />
-    <Compile Include="Controllers\CssLessController.cs" />
+    <Compile Include="Controllers\CssController.cs" />
     <Compile Include="Controllers\ElmahController.cs" />
     <Compile Include="Helpers\Attributes\ElmahHandleErrorAttribute.cs" />
     <Compile Include="Helpers\Results\ElmahResult.cs" />

@@ -176,6 +176,12 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
         }
 
         [Fact]
+        public void CssControllerRoutes()
+        {
+            "~/css".ShouldMapTo<CssController>(c => c.Merge(null));
+        }
+
+        [Fact]
         public void IgnoreRoutes()
         {
             "~/WebResource.axd".ShouldBeIgnored();

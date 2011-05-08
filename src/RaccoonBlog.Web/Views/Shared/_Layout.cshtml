@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>@blogConfig.Title</title>
-	<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/" + blogConfig.CustomCss + ".css")">
+	<link rel="stylesheet" type="text/css" href="@Url.ActionLinkWithArray("Merge", "Css", new { files = new[] { "ResetCss.css", "custom/" + blogConfig.CustomCss + ".settings.less.css", "base.less.css", "custom/" + blogConfig.CustomCss + ".less.css" } })">
     @RenderSection("Style", false)
 
     <meta name="description" content="@blogConfig.MetaDescription">
