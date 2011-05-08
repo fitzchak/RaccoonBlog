@@ -15,6 +15,9 @@
 	}
     @RenderSection("Style", false)
 
+    <meta name="description" content="@blogConfig.MetaDescription" />
+    <meta name="keywords" content="@blogConfig.MetaKeywords" />
+        
 	<link id="Rsd" rel="EditURI" type="application/rsd+xml" title="RSD" href="@Url.Action("Rsd", "Syndication")">
     <link id="AtomLink" title="RSS" type="application/rss+xml" rel="alternate" href="@Url.Action("Rss", "Syndication")">
   

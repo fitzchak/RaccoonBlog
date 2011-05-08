@@ -21,12 +21,6 @@ namespace RaccoonBlog.Web.Controllers
 
         public new IDocumentSession Session { get; set; }
 
-    	protected AbstractController()
-        {
-            ViewBag.MetaDescription = "";
-            ViewBag.MetaKeywords = "";
-        }
-
 		protected override void OnActionExecuted(ActionExecutedContext filterContext)
 		{
 			var blogConfig = Session.Load<BlogConfig>("Blog/Config");
