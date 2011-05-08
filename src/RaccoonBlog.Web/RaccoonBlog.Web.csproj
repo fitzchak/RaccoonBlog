@@ -132,6 +132,12 @@
     <Compile Include="Common\DocumentSessionExtensions.cs" />
     <Compile Include="Common\RouteCollectionExtension.cs" />
     <Compile Include="Common\UrlHelperExtensions.cs" />
+    <Content Include="Content\css\base.css">
+      <DependentUpon>base.less.css</DependentUpon>
+    </Content>
+    <Content Include="Content\css\base.min.css">
+      <DependentUpon>base.less.css</DependentUpon>
+    </Content>
     <Content Include="Content\css\custom\ayende.css">
       <DependentUpon>ayende.less.css</DependentUpon>
     </Content>
@@ -257,13 +263,7 @@
       <DependentUpon>hibernatingrhinos.less.css</DependentUpon>
     </Content>
     <Content Include="Content\css\images\printer.png" />
-    <Content Include="Content\css\main.css">
-      <DependentUpon>main.less.css</DependentUpon>
-    </Content>
-    <Content Include="Content\css\main.less.css" />
-    <Content Include="Content\css\main.min.css">
-      <DependentUpon>main.less.css</DependentUpon>
-    </Content>
+    <Content Include="Content\css\base.less.css" />
     <Content Include="Content\css\ResetCss.css" />
     <Content Include="Content\css\fullcalendar.css" />
     <Content Include="Content\js\RequiredIfValidation.js" />
