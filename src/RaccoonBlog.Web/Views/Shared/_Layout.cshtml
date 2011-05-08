@@ -1,8 +1,9 @@
 ﻿@{
     ViewBag.Message = TempData["Message"] as string;
     var blogConfig = ViewBag.BlogConfig as BlogConfigViewModel;
-    if (blogConfig == null)
+    if (blogConfig == null) {
         throw new NullReferenceException();
+    }
 }
 <!DOCTYPE html>
 <html>
