@@ -51,6 +51,9 @@
             <div class="facebook">
                 <iframe src="http://www.facebook.com/plugins/like.php?href=@(Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px;" allowTransparency="true"></iframe>
             </div>
+            <div>
+                <a href="http://www.facebook.com/sharer.php?u=@(Url.Abs((string)ViewBag.CurrentUrl))&ref=fbshare&t=@(Model.Post.Title)">Share</a>
+            </div>
         </div>
     </footer>
 
