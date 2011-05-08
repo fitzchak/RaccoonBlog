@@ -59,10 +59,9 @@ namespace RaccoonBlog.Web.Services
                 CommentAuthorEmail = comment.Email,
                 CommentAuthorUrl = comment.Url,
             };
-
-            #if Release
+#if !DEBUG
             api.SubmitHam(akismetComment);
-            #endif
+#endif
         }
 
         public void MarkSpam(PostComments.Comment comment)
@@ -84,9 +83,9 @@ namespace RaccoonBlog.Web.Services
                 CommentAuthorUrl = comment.Url,
             };
 
-            #if Release
+#if !DEBUG
             api.SubmitSpam(akismetComment);
-            #endif
+#endif
         }
     }
 }
