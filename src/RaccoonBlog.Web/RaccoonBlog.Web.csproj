@@ -272,9 +272,9 @@
     <Content Include="Views\Shared\500.cshtml" />
     <Content Include="Views\Error\500.htm" />
     <Content Include="Views\Error\404.htm" />
-    <None Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\HiddenInput.cshtml" />
-    <None Include="Views\Shared\DisplayTemplates\String.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\String.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\HiddenInput.cshtml" />
     <Content Include="Views\MailTemplates\NewComment.cshtml" />
     <Content Include="Views\Section\TagsList.cshtml" />
@@ -291,9 +291,9 @@
     <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
     <Content Include="Views\Section\List.cshtml" />
     <Content Include="Views\SectionAdmin\List.cshtml" />
-    <None Include="Views\Shared\EditorTemplates\MultilineText.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\MultilineText.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
-    <None Include="Views\Shared\EditorTemplates\String.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
