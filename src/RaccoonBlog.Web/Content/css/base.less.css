@@ -431,13 +431,29 @@ article.post-detalis footer .author
 {
 }
 
+footer p 
+{
+    margin: 5px 0;    
+}
 footer .share
 {
+    clear: both;
+}
+footer .share .twitter, footer .share .facebook
+{
+    padding-top: 5px;
 }
 
-footer .share .facebook
+footer .published
 {
-    margin-top: 5px;
+    float: left;
+    border-right: solid 1px #000;
+    padding-right: 10px;
+    margin-right: 10px;
+}
+footer .created
+{
+    float: left;
 }
 
 .commands-section ul li 
