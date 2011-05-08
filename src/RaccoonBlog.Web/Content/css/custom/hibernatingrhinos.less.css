@@ -1,0 +1,93 @@
+header#headermain h1 a
+{
+	color: #7A3D00;
+}
+ 
+header#headermain h2
+{
+	color: #D17519;
+	background: #930;
+}
+
+
+#logoarea
+{
+	border-color: white;
+}
+
+
+.comments h1
+{
+    border-color: #1F0A00;
+    background-color: #AD5C33;
+    color: White;
+}
+
+.comments .comment_title a
+{
+	color : #F0D1B2;
+}
+
+.comments .comment_title a:visited
+{
+	color : #E6B280;
+}
+
+.comments .comment_title
+{
+    color: White;
+    border-color: #1F0A00;
+    background-color: #AD5C33;
+}
+
+
+#sidebar
+{
+	background: #4C1A00;
+	color: White;
+	border-color: #FFF;
+}
+
+.section a 
+{
+	color: #D6AD99;
+}
+
+.section h1
+{
+    border-color: #FF8000;
+    background-color: #8A2E00;
+}
+
+#content
+{
+	border-color: #262626;
+}
+
+article header h1 a
+{
+	border-color: #FF8000;
+	border-width: 2px;
+    background-color: #8A2E00;
+}
+article header h1 a:visited
+{
+	color: #CCCCB2;
+}
+article header h1 a:link
+{
+	color: #FFF;
+}
+
+
+
+#headerPrevNext { color: #262626; font-family: Verdana; }
+#headerPrevNext h1 { background-color: #ffcc66; }
+
+
+#logoimage a
+{
+	width: 182px;
+	height: 85px;
+	background-image: url('http://blog.hibernatingrhinos.com/Content/HibernatingRhinosLogoFull-Small.png');
+}

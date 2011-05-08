@@ -38,7 +38,7 @@ namespace RaccoonBlog.Web.ViewModels
             public DateTimeOffset PublishedAt { get; set; }
             public bool IsCommentAllowed { get; set; }
 
-            public ICollection<string> Tags { get; set; }
+            public ICollection<TagDetails> Tags { get; set; }
 
             public UserDetails Author { get; set; }
         }

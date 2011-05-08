@@ -1,17 +1,20 @@
 ﻿@{
     ViewBag.Message = TempData["Message"] as string;
+    var blogConfig = ViewBag.BlogConfig as BlogConfigViewModel;
+    if (blogConfig == null) {
+        throw new InvalidOperationException("Couldn't find blog config");
+    }
 }
 <!DOCTYPE html>
 <html>
 <head>
-    <title>@ViewBag.Title</title>
-    <link href="@Url.Content("~/Content/css/ResetCss.css")" rel="stylesheet" type="text/css">
-    <link href="@Url.Content("~/Content/css/main.css")" rel="stylesheet" type="text/css">
-	@if (ViewBag.CustomCss != null) {
-		@:<link href="@Url.Content("~/Content/css/custom/" + ViewBag.CustomCss + ".css")" rel="stylesheet" type="text/css" >
-	}
+    <title>@blogConfig.Title</title>
+	<link rel="stylesheet" type="text/css" href="@Url.ActionLinkWithArray("Merge", "Css", new { files = new[] { "ResetCss.css", "custom/" + blogConfig.CustomCss + ".settings.less.css", "base.less.css", "custom/" + blogConfig.CustomCss + ".less.css" } })">
     @RenderSection("Style", false)
 
+    <meta name="description" content="@blogConfig.MetaDescription">
+    <meta name="keywords" content="@blogConfig.MetaKeywords">
+        
 	<link id="Rsd" rel="EditURI" type="application/rsd+xml" title="RSD" href="@Url.Action("Rsd", "Syndication")">
     <link id="AtomLink" title="RSS" type="application/rss+xml" rel="alternate" href="@Url.Action("Rss", "Syndication")">
   
@@ -20,9 +23,9 @@
     <div class="containter page">
         <header id="headermain">
 			<div id="logoarea">
-				<div id="logoimage"></div>
-				<h1><a href="@Url.RouteUrl("Default")">@ViewBag.BlogTitle</a></h1>
-				<h2>@ViewBag.BlogSubtitle</h2>
+				<div id="logoimage"><a href="@Url.RouteUrl("Default")"></a></div>
+				<h1><a href="@Url.RouteUrl("Default")">@blogConfig.Title</a></h1>
+				<h2>@blogConfig.Subtitle</h2>
 			</div>
 		</header>
         <div id="mainBody">

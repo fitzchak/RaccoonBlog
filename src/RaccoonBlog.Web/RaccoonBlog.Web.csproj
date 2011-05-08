@@ -58,6 +58,9 @@
     <Reference Include="CookComputing.XmlRpcV2">
       <HintPath>..\packages\xmlrpcnet.2.5.0\lib\net20\CookComputing.XmlRpcV2.dll</HintPath>
     </Reference>
+    <Reference Include="dotless.Core">
+      <HintPath>..\packages\dotless.1.1.0\lib\dotless.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Elmah">
       <HintPath>..\packages\elmah.1.1\lib\Elmah.dll</HintPath>
     </Reference>
@@ -132,10 +135,13 @@
     <Compile Include="Common\DocumentSessionExtensions.cs" />
     <Compile Include="Common\RouteCollectionExtension.cs" />
     <Compile Include="Common\UrlHelperExtensions.cs" />
-    <Content Include="Content\css\custom\hibernatingrhinos.css" />
+    <Content Include="Content\css\custom\ayende.less.css" />
+    <Content Include="Content\css\custom\hibernatingrhinos.settings.less.css" />
+    <Content Include="Content\css\custom\hibernatingrhinos.less.css" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Common\DateTimeOffsetUtil.cs" />
     <Compile Include="Controllers\CommentCommandOptions.cs" />
+    <Compile Include="Controllers\CssController.cs" />
     <Compile Include="Controllers\ElmahController.cs" />
     <Compile Include="Helpers\Attributes\ElmahHandleErrorAttribute.cs" />
     <Compile Include="Helpers\Results\ElmahResult.cs" />
@@ -157,6 +163,7 @@
     <Compile Include="Helpers\Results\JsonNetResult.cs" />
     <Compile Include="Infrastructure\ActionResults\XmlResult.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\AbstractProfile.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\BlogConfigMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\EmailViewModelMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\GuidToStringConverter.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\SectionAdminMapperProfile.cs" />
@@ -218,6 +225,7 @@
     <Compile Include="Common\SlugConverter.cs" />
     <Compile Include="Services\RssModels\UserInfo.cs" />
     <Compile Include="ViewModels\AdminPostDetailsViewModel.cs" />
+    <Compile Include="ViewModels\BlogConfigViewModel.cs" />
     <Compile Include="ViewModels\ChangePassViewModel.cs" />
     <Compile Include="ViewModels\CommentInput.cs" />
     <Compile Include="ViewModels\CurrentUserViewModel.cs" />
@@ -234,6 +242,7 @@
     <Compile Include="ViewModels\SectionDetails.cs" />
     <Compile Include="ViewModels\SectionInput.cs" />
     <Compile Include="ViewModels\SectionSummery.cs" />
+    <Compile Include="ViewModels\TagDetails.cs" />
     <Compile Include="ViewModels\TagsListViewModel.cs" />
     <Compile Include="ViewModels\UserInput.cs" />
     <Compile Include="ViewModels\UserPasswordInput.cs" />
@@ -241,9 +250,9 @@
     <Compile Include="Helpers\Attributes\ValidatePasswordLengthAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\css\custom\ayende.css" />
+    <Content Include="Content\css\custom\ayende.settings.less.css" />
     <Content Include="Content\css\images\printer.png" />
-    <Content Include="Content\css\main.css" />
+    <Content Include="Content\css\base.less.css" />
     <Content Include="Content\css\ResetCss.css" />
     <Content Include="Content\css\fullcalendar.css" />
     <Content Include="Content\js\RequiredIfValidation.js" />

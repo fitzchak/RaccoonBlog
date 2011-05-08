@@ -32,6 +32,8 @@ namespace RaccoonBlog.Web
 
     	    ConfigureLogin();
 
+    	    ConfigureCss();
+
             ConfigureUserAdmin();
 
             ConfigureElmah();
@@ -51,6 +53,14 @@ namespace RaccoonBlog.Web
             routes.MapRouteLowerCase("ElmahController-internal",
                 "admin/elmah/{type}",
                 new { controller = "Elmah", action = "Index", type = UrlParameter.Optional }
+                );
+        }
+
+        private void ConfigureCss()
+        {
+            routes.MapRouteLowerCase("CssController",
+                "css",
+                new { controller = "Css", action = "Merge" }
                 );
         }
 

@@ -1,8 +1,10 @@
 using System.Web;
 using System.Web.Mvc;
 using Elmah;
+using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Raven;
 using RaccoonBlog.Web.Models;
+using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Helpers.Attributes
 {
@@ -29,9 +31,7 @@ namespace RaccoonBlog.Web.Helpers.Attributes
         		ViewData = new ViewDataDictionary(new HandleErrorInfo(context.Exception, controllerName, actionName)),
         		ViewBag =
         			{
-        				CustomCss = blogConfig.CustomCss,
-        				BlogTitle = blogConfig.Title,
-        				BlogSubtitle = blogConfig.Subtitle,
+                        BlogConfig = blogConfig.MapTo<BlogConfigViewModel>()
         			}
         	};
 

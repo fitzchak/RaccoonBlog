@@ -7,7 +7,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using RaccoonBlog.Web.Helpers.Results;
 using RaccoonBlog.Web.Infrastructure.ActionResults;
+using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Models;
+using RaccoonBlog.Web.ViewModels;
 using Raven.Client;
 
 namespace RaccoonBlog.Web.Controllers
@@ -19,19 +21,10 @@ namespace RaccoonBlog.Web.Controllers
 
         public new IDocumentSession Session { get; set; }
 
-    	protected AbstractController()
-        {
-            ViewBag.MetaDescription = "";
-            ViewBag.MetaKeywords = "";
-        }
-
 		protected override void OnActionExecuted(ActionExecutedContext filterContext)
 		{
 			var blogConfig = Session.Load<BlogConfig>("Blog/Config");
-
-			ViewBag.CustomCss = blogConfig.CustomCss;
-			ViewBag.BlogTitle = blogConfig.Title;
-			ViewBag.BlogSubtitle = blogConfig.Subtitle;
+            ViewBag.BlogConfig = blogConfig.MapTo<BlogConfigViewModel>();
 		}
         
         protected int CurrentPage
