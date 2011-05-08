@@ -9,11 +9,7 @@
 <html>
 <head>
     <title>@blogConfig.Title</title>
-    <link href="@Url.Content("~/Content/css/ResetCss.css")" rel="stylesheet" type="text/css">
-    <link href="@Url.Content("~/Content/css/base.css")" rel="stylesheet" type="text/css">
-	@if (string.IsNullOrEmpty(blogConfig.CustomCss) == false) {
-		@:<link href="@Url.Content("~/Content/css/custom/" + blogConfig.CustomCss + ".css")" rel="stylesheet" type="text/css" >
-	}
+	<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/" + blogConfig.CustomCss + ".css")">
     @RenderSection("Style", false)
 
     <meta name="description" content="@blogConfig.MetaDescription">

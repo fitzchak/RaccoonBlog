@@ -1,3 +1,108 @@
+/* 
+html5doctor.com Reset Stylesheet
+v1.6.1
+Last Updated: 2010-09-17
+Author: Richard Clark - http://richclarkdesign.com 
+Twitter: @rich_clark
+*/
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+body {
+    line-height:1;
+}
+
+article,aside,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section { 
+    display:block;
+}
+
+nav ul {
+    list-style:none;
+}
+
+blockquote, q {
+    quotes:none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content:'';
+    content:none;
+}
+
+a {
+    margin:0;
+    padding:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+/* change colours to suit your needs */
+ins {
+    background-color:#ff9;
+    color:#000;
+    text-decoration:none;
+}
+
+/* change colours to suit your needs */
+mark {
+    background-color:#ff9;
+    color:#000; 
+    font-style:italic;
+    font-weight:bold;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+abbr[title], dfn[title] {
+    border-bottom:1px dotted;
+    cursor:help;
+}
+
+table {
+    border-collapse:collapse;
+    border-spacing:0;
+}
+
+/* change border colour to suit your needs */
+hr {
+    display:block;
+    height:1px;
+    border:0;   
+    border-top:1px solid #cccccc;
+    margin:1em 0;
+    padding:0;
+}
+
+input, select {
+    vertical-align:middle;
+}
+@foregroundColor: #333;
+@backgroundColor: #fdf6e9;
+@linkColor: #993300;
 /*
 Href: /Blog/skins/_System/csharp.css, Media: 
 Href: /Blog/skins/_System/commonstyle.css, Media: 
@@ -466,4 +571,110 @@ div.commentsClosedMessage
 {
     font-style: italic;
     padding-top: 10px;
+}
+.comments h1
+{
+    white-space: nowrap;
+    border-top: solid;
+    border-bottom: solid;
+    border-width: 1px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    border-color: #FF8000;
+    background-color: #FFEAC0;
+    font-size: 1.0em;
+}
+
+.comments h1
+{
+    white-space: nowrap;
+    border-top: solid;
+    border-bottom: solid;
+    border-width: 1px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    border-color: #FF8000;
+    background-color: #FFEAC0;
+    font-size: 1.0em;
+}
+
+.comments .comment_title
+{
+    white-space: nowrap;
+    border-top: solid;
+    border-bottom: solid;
+    border-width: 1px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    border-color: #FF8000;
+    background-color: #FFEAC0;
+    font-size: 0.9em;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+
+#sidebar
+{
+	right: 20px;
+	float: right;
+	width: 20%;
+	background: #FFCC66;
+	border: 1px dotted #FFF;
+}
+
+.section h1
+{
+	margin-bottom: 4px;
+	white-space: nowrap;
+    border-top: solid;
+    border-bottom: solid;
+    border-width: 1px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    border-color: #FF8000;
+    background-color: #FFEAC0;
+    font-size: 1.0em;
+}
+#content
+{
+	float: left;
+	width: 75%;
+	padding: 15px;
+	background: #fff;
+	border: 1px dotted #993300;
+	z-index: 5;
+}
+
+
+
+article header h1 a
+{
+	white-space: nowrap;
+	border-top: solid;
+	border-bottom: solid;
+	border-width: 1px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	border-color: #FF8000;
+	font-size: 12pt;
+	font-family: Times New Roman, verdana, arial, Sans-Serif;
+	font-weight: normal;
+	background-color: #FFEAB0;
+}
+
+#headerPrevNext { color: #993300; font-family: Verdana; }
+#headerPrevNext h1 { background-color: #ffcc66; border-bottom: 1px solid #999999; font-family: Georgia; font-size: 0.9em; padding: 4px; text-align: center; }
+#headerPrevNext ul { margin-top: 3px; margin-left: 3px; color: #993300 }
+#headerPrevNext li { display: inline; font-size: 0.7em; color: #4c1a00; }
+#headerPrevNext li em { color: #cc8514; font-family: Georgia; padding-right: 3px }
+#headerPrevNext a { color: inherit; padding: 2px; text-decoration: none; }
+#headerPrevNext a:hover, #headerPrevNext a:hover em { background-color: #993300; color: #ffffff; }
+
+
+#logoimage a
+{
+	width: 300px;
+	height: 92px;
+	background-image: url('http://www.ayende.com/Images/logo.jpg');
 }

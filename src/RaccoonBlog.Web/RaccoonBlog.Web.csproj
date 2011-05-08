@@ -132,7 +132,7 @@
     <Compile Include="Common\DocumentSessionExtensions.cs" />
     <Compile Include="Common\RouteCollectionExtension.cs" />
     <Compile Include="Common\UrlHelperExtensions.cs" />
-    <Content Include="Content\css\all.css">
+    <Content Include="Content\css\ayende.css">
       <DependentUpon>ayende.chirp.config</DependentUpon>
     </Content>
     <Content Include="Content\css\base.css">
@@ -147,17 +147,17 @@
     <Content Include="Content\css\custom\ayende.min.css">
       <DependentUpon>ayende.less.css</DependentUpon>
     </Content>
-    <Content Include="Content\css\custom\ayende_settings.css">
-      <DependentUpon>ayende_settings.less.css</DependentUpon>
-    </Content>
-    <Content Include="Content\css\custom\ayende_settings.min.css">
-      <DependentUpon>ayende_settings.less.css</DependentUpon>
-    </Content>
     <Content Include="Content\css\custom\ayende.less.css" />
-    <Content Include="Content\css\custom\hibernatingrhinos_settings.css">
-      <DependentUpon>hibernatingrhinos_settings.less.css</DependentUpon>
+    <Content Include="Content\css\custom\ayende.settings.css">
+      <DependentUpon>ayende.settings.less.css</DependentUpon>
     </Content>
-    <Content Include="Content\css\custom\hibernatingrhinos_settings.less.css" />
+    <Content Include="Content\css\custom\ayende.settings.min.css">
+      <DependentUpon>ayende.settings.less.css</DependentUpon>
+    </Content>
+    <Content Include="Content\css\custom\hibernatingrhinos.settings.css">
+      <DependentUpon>hibernatingrhinos.settings.less.css</DependentUpon>
+    </Content>
+    <Content Include="Content\css\custom\hibernatingrhinos.settings.less.css" />
     <Content Include="Content\css\custom\hibernatingrhinos.css">
       <DependentUpon>hibernatingrhinos.less.css</DependentUpon>
     </Content>
@@ -272,12 +272,15 @@
     <Compile Include="Helpers\Attributes\ValidatePasswordLengthAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\css\custom\ayende_settings.less.css" />
+    <Content Include="Content\css\custom\ayende.settings.less.css" />
     <Content Include="Content\css\custom\hibernatingrhinos.min.css">
       <DependentUpon>hibernatingrhinos.less.css</DependentUpon>
     </Content>
-    <Content Include="Content\css\custom\hibernatingrhinos_settings.min.css">
-      <DependentUpon>hibernatingrhinos_settings.less.css</DependentUpon>
+    <Content Include="Content\css\custom\hibernatingrhinos.settings.min.css">
+      <DependentUpon>hibernatingrhinos.settings.less.css</DependentUpon>
+    </Content>
+    <Content Include="Content\css\hibernatingrhinos.css">
+      <DependentUpon>hibernatingrhinos.chirp.config</DependentUpon>
     </Content>
     <Content Include="Content\css\images\printer.png" />
     <Content Include="Content\css\base.less.css" />
