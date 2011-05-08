@@ -1,25 +1,5 @@
-body
-{
-	margin: 20px;
-	background: #E0E0D6;
-	font-family: georgia, verdana, arial, Sans-Serif;
-	color: #333;
-}
-
-
-A
-{
-	color: #262626;
-	font-family: verdana, arial, Sans-Serif;
-	text-decoration: none;
-}
-
-A:link
-{
-	color: #262626;
-	text-decoration: none;
-}
-
+@backgroundColor: #E0E0D6;
+@linkColor: #262626;
 
 header#headermain
 {

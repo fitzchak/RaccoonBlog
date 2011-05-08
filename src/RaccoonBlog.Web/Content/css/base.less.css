@@ -18,9 +18,9 @@ Href: /Blog/Skins/Ayende/style.css, Media:
 body
 {
 	margin: 20px;
-	background: #fdf6e9;
 	font-family: georgia, verdana, arial, Sans-Serif;
-	color: #333;
+	color: @foregroundColor;
+	background: @backgroundColor;
 }
 
 h1
@@ -30,13 +30,13 @@ h1
 
 a
 {
-	color: #993300;
+	color: @linkColor;
 	font-family: verdana, arial, sans-serif;
 	text-decoration: none;
 }
 a:link
 {
-	color: #993300;
+	color: @linkColor;
 	text-decoration: none;
 }
 a:visited
