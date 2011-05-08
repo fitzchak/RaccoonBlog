@@ -4,7 +4,6 @@ using System.Web.Mvc;
 using RaccoonBlog.Web.Common;
 using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Helpers.Attributes;
-using RaccoonBlog.Web.Infrastructure;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.Services;
@@ -91,14 +90,14 @@ namespace RaccoonBlog.Web.Controllers
         	var post = Session.Load<Post>(input.Id) ?? new Post();
         	input.MapPropertiesToInstance(post);
 
-        	var author = Session.GetCurrentUser().MapTo<Post.AuthorReference>();
-        	if (post.Author == null || string.IsNullOrEmpty(post.Author.FullName))
+        	var user = Session.GetCurrentUser();
+            if (string.IsNullOrEmpty(post.AuthorId))
         	{
-        		post.Author = author;
+                post.AuthorId = user.Id;
         	}
         	else
         	{
-        		post.LastEditedBy = author;
+        		post.LastEditedByUserId = user.Id;
         		post.LastEditedAt = DateTimeOffset.Now;
         	}
 
@@ -122,7 +121,7 @@ namespace RaccoonBlog.Web.Controllers
         }
         
         [HttpPost]
-        public ActionResult CommentsAdmin(int id, CommentCommandOptions commandOptions, int[] commentIds)
+        public ActionResult CommentsAdmin(int id, CommentCommandOptions command, int[] commentIds)
         {
             if (commentIds.Length < 1)
                 ModelState.AddModelError("CommentIdsAreEmpty", "Not comments was selected.");
@@ -143,7 +142,7 @@ namespace RaccoonBlog.Web.Controllers
 
             var comments = Session.Load<PostComments>(id);
             var requestValues = Request.MapTo<RequestValues>();
-            switch (commandOptions)
+            switch (command)
             {
                 case CommentCommandOptions.Delete:
                     comments.Comments.RemoveAll(c => commentIds.Contains(c.Id));
@@ -159,7 +158,7 @@ namespace RaccoonBlog.Web.Controllers
                     comments.Spam.RemoveAll(spams.Contains);
                     foreach (var comment in spams)
                     {
-                        new AskimetService(requestValues).MarkSpam(comment);
+                        new AskimetService(Session).MarkSpam(comment);
                     }
                     break;
 
@@ -172,12 +171,12 @@ namespace RaccoonBlog.Web.Controllers
                     foreach (var comment in ham)
                     {
                         comment.IsSpam = false;
-                        new AskimetService(requestValues).MarkHam(comment);
+                        new AskimetService(Session).MarkHam(comment);
                     }
                     comments.Comments.AddRange(ham);
                     break;
                 default:
-                    throw new InvalidOperationException(commandOptions + " command is not recognized.");
+                    throw new InvalidOperationException(command + " command is not recognized.");
             }
 
             if (Request.IsAjaxRequest())
@@ -199,12 +198,5 @@ namespace RaccoonBlog.Web.Controllers
             }
             return RedirectToAction("List");
         }
-
-		public enum CommentCommandOptions
-		{
-			Delete,
-			MarkHam,
-			MarkSpam
-		}
     }
 }

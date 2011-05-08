@@ -18,6 +18,7 @@ namespace RaccoonBlog.Web.ViewModels
 
         public class Comment
         {
+            public int Id { get; set; }
             public MvcHtmlString Body { get; set; }
             public string Author { get; set; }
             public string Url { get; set; }    // Look for HTML injection.
@@ -38,6 +39,17 @@ namespace RaccoonBlog.Web.ViewModels
             public bool IsCommentAllowed { get; set; }
 
             public ICollection<string> Tags { get; set; }
+
+            public UserDetails Author { get; set; }
+        }
+
+        public class UserDetails
+        {
+            public string FullName { get; set; }
+
+            public string TwitterNick { get; set; }
+            public string RelatedTwitterNick { get; set; }
+            public string RelatedTwitterNickDesc { get; set; }
         }
     }
 }

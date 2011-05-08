@@ -12,6 +12,7 @@ namespace RaccoonBlog.Web.Controllers
         public ActionResult List()
         {
             var sections = Session.Query<Section>()
+                .OrderBy(x => x.Position)
                 .ToList();
 
             return View(sections.MapTo<SectionSummery>());
@@ -42,6 +43,22 @@ namespace RaccoonBlog.Web.Controllers
         	input.MapPropertiesToInstance(section);
         	Session.Store(section);
         	return RedirectToAction("List");
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            var section = Session.Load<Section>(id);
+            if (section == null)
+                return HttpNotFound("Section does not exist.");
+          
+            Session.Delete(section);
+            
+            if (Request.IsAjaxRequest())
+            {
+                return Json(new { Success = true });
+            }
+            return RedirectToAction("List");
         }
 
         [AjaxOnly]

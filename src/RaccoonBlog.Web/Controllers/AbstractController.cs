@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Configuration;
+using System.Linq;
 using System.Web.Mvc;
 using System.Xml.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using RaccoonBlog.Web.Helpers.Results;
 using RaccoonBlog.Web.Infrastructure.ActionResults;
+using RaccoonBlog.Web.Models;
 using Raven.Client;
 
 namespace RaccoonBlog.Web.Controllers
@@ -21,6 +24,15 @@ namespace RaccoonBlog.Web.Controllers
             ViewBag.MetaDescription = "";
             ViewBag.MetaKeywords = "";
         }
+
+		protected override void OnActionExecuted(ActionExecutedContext filterContext)
+		{
+			var blogConfig = Session.Load<BlogConfig>("Blog/Config");
+
+			ViewBag.CustomCss = blogConfig.CustomCss;
+			ViewBag.BlogTitle = blogConfig.Title;
+			ViewBag.BlogSubtitle = blogConfig.Subtitle;
+		}
         
         protected int CurrentPage
         {
@@ -32,16 +44,6 @@ namespace RaccoonBlog.Web.Controllers
                     return Math.Max(DefaultPage, result);
                 return DefaultPage;
             }
-        }
-
-        protected new HttpNotFoundWithViewResult HttpNotFound(string statusDescription = null)
-        {
-            return new HttpNotFoundWithViewResult(statusDescription);
-        }
-
-        protected HttpUnauthorizedWithViewResult HttpUnauthorized(string statusDescription = null)
-        {
-            return new HttpUnauthorizedWithViewResult(statusDescription);
         }
 
 		protected HttpStatusCodeResult HttpNotModified()

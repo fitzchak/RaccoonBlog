@@ -1,0 +1,194 @@
+body
+{
+	margin: 20px;
+	background: #E0E0D6;
+	font-family: georgia, verdana, arial, Sans-Serif;
+	color: #333;
+}
+
+
+A
+{
+	color: #262626;
+	font-family: verdana, arial, Sans-Serif;
+	text-decoration: none;
+}
+
+A:link
+{
+	color: #262626;
+	text-decoration: none;
+}
+
+
+header#headermain
+{
+	font-size: 18px;
+	font-family: georgia, verdana, arial, Sans-Serif;
+	color: #FF8000;
+	font-weight: bold;
+	border-left: 1px dotted #FFF;
+	border-right: 1px dotted #FFF;
+	border-top: 1px dotted #FFF;
+	background: #3D1400;
+	padding: 20px;
+	margin: 0;
+}
+
+header#headermain h1
+{
+    font-size: 2em;
+    text-align: left;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+header#headermain h1 a
+{
+	color: #7A3D00;
+}
+
+header#headermain h2
+{
+	font-family: georgia, verdana, arial, Sans-Serif;
+	color: #D17519;
+	font-size: 18px;
+	font-weight: bold;
+	text-align: center;
+	width: 330px;
+}
+
+#logoarea
+{
+	width: 100%;
+	height: 100px;
+	border: 2px dotted white;
+	padding: 2px;
+	position: relative;
+}
+
+.comments h1
+{
+    white-space: nowrap;
+    border-top: solid;
+    border-bottom: solid;
+    border-width: 1px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    border-color: #1F0A00;
+    background-color: #AD5C33;
+    color: White;
+    font-size: 1.0em;
+}
+
+.comments .comment_title a
+{
+	color : #F0D1B2;
+}
+
+.comments .comment_title a:visited
+{
+	color : #E6B280;
+}
+
+.comments .comment_title
+{
+    white-space: nowrap;
+    border-top: solid;
+    border-bottom: solid;
+    border-width: 1px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    color: White;
+    border-color: #1F0A00;
+    background-color: #AD5C33;
+    font-size: 0.9em;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+
+#sidebar
+{
+	right: 20px;
+	float: right;
+	width: 20%;
+	background: #4C1A00;
+	color: White;
+	border: 1px dotted #FFF;
+}
+
+.section a 
+{
+	color: #D6AD99;
+}
+
+.section h1
+{
+	margin-bottom: 4px;
+	white-space: nowrap;
+    border-top: solid;
+    border-bottom: solid;
+    border-width: 1px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    border-color: #FF8000;
+    background-color: #8A2E00;
+    font-size: 1.0em;
+}
+
+#content
+{
+	float: left;
+	width: 75%;
+	padding: 15px;
+	background: #fff;
+	border: 1px dotted #262626;
+	z-index: 5;
+}
+
+article header h1 a
+{
+	white-space: nowrap;
+	border-top: solid;
+	border-bottom: solid;
+	border-width: 1px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	border-color: #FF8000;
+	border-width: 2px;
+    background-color: #8A2E00;
+	font-size: 12pt;
+	font-family: Times New Roman, verdana, arial, Sans-Serif;
+	font-weight: normal;
+}
+
+article header h1 a:visited
+{
+	color: #CCCCB2;
+}
+
+
+article header h1 a:link
+{
+	color: #FFF;
+}
+
+
+
+#headerPrevNext { color: #262626; font-family: Verdana; }
+#headerPrevNext h1 { background-color: #ffcc66; border-bottom: 1px solid #999999; font-family: Georgia; font-size: 0.9em; padding: 4px; text-align: center; }
+#headerPrevNext ul { margin-top: 3px; margin-left: 3px; color: #262626 }
+#headerPrevNext li { display: inline; font-size: 0.7em; color: #4c1a00; }
+#headerPrevNext li em { color: #cc8514; font-family: Georgia; padding-right: 3px }
+#headerPrevNext a { color: inherit; padding: 2px; text-decoration: none; }
+#headerPrevNext a:hover, #headerPrevNext a:hover em { background-color: #262626; color: #ffffff; }
+
+
+#logoimage
+{
+	width: 182px;
+	height: 85px;
+	background-repeat: no-repeat;
+	background-image: url('http://blog.hibernatingrhinos.com/Content/HibernatingRhinosLogoFull-Small.png');
+}

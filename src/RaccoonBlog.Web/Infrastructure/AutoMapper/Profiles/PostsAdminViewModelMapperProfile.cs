@@ -24,14 +24,14 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
             
             Mapper.CreateMap<PostInput, Post>()
                 .ForMember(x => x.Id, o => o.Ignore())
-                .ForMember(x => x.Author, o => o.Ignore())
+                .ForMember(x => x.AuthorId, o => o.Ignore())
                 .ForMember(x => x.LegacySlug, o => o.Ignore())
                 .ForMember(x => x.ShowPostEvenIfPrivate, o => o.Ignore())
                 .ForMember(x => x.SkipAutoReschedule, o => o.Ignore())
                 .ForMember(x => x.IsDeleted, o => o.Ignore())
                 .ForMember(x => x.CommentsCount, o => o.Ignore())
                 .ForMember(x => x.CommentsId, o => o.Ignore())
-                .ForMember(x => x.LastEditedBy, o => o.Ignore())
+                .ForMember(x => x.LastEditedByUserId, o => o.Ignore())
                 .ForMember(x => x.LastEditedAt, o => o.Ignore())
                 .ForMember(x => x.Tags, o => o.MapFrom(m => TagsResolver.ResolveTagsInput(m.Tags)))
                 ;
@@ -47,9 +47,6 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
                 .ForMember(x => x.Body, o => o.MapFrom(m => MarkdownResolver.Resolve(m.Body)))
                 .ForMember(x => x.EmailHash, o => o.MapFrom(m => EmailHashResolver.Resolve(m.Email)))
                 .ForMember(x => x.IsImportant, o => o.MapFrom(m => m.Important))
-                ;
-            
-            Mapper.CreateMap<User, Post.AuthorReference>()
                 ;
         }
     }

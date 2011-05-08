@@ -12,6 +12,19 @@ namespace RaccoonBlog.Web.Controllers
 	public class SectionController : AbstractController
 	{
 		[ChildActionOnly]
+		public ActionResult FuturePosts()
+		{
+			var futurePosts = Session.Query<Post>()
+				.Where(x => x.IsDeleted == false && x.PublishAt > DateTimeOffset.Now)
+				.Select(x => new FuturePostViewModel {Title = x.Title, PublishAt = x.PublishAt})
+				.OrderBy(x => x.PublishAt)
+				.Take(15)
+				.ToList();
+
+			return View(futurePosts);
+		}
+
+		[ChildActionOnly]
 		public ActionResult List()
 		{
 			var sections = Session.Query<Section>()
@@ -31,8 +44,10 @@ namespace RaccoonBlog.Web.Controllers
 												   1, 0, 0, 0,
 												   DateTimeOffset.Now.Offset);
 
+			var blogConfig = Session.Load<BlogConfig>("Blog/Config");
+
 			var tagCounts = Session.Query<TagCount, Tags_Count>()
-				.Where(x => x.Count > 20 && x.LastSeenAt > mostRecentTag)
+				.Where(x => x.Count > blogConfig.MinNumberOfPostForSignificantTag && x.LastSeenAt > mostRecentTag)
 				.OrderBy(x => x.Name)
 				.As<TempTagCount>();
 			var tags = tagCounts

@@ -21,9 +21,12 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <ExcludeApp_Data>true</ExcludeApp_Data>
+    <PublishDatabases>false</PublishDatabases>
+    <IncludeIisSettings>false</IncludeIisSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -34,8 +37,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AsyncCtpLibrary, Version=1.0.4107.18181, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\RavenDB.1.0.0.360\lib\net40\AsyncCtpLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="AutoMapper">
       <HintPath>..\packages\AutoMapper.1.1.0.118\lib\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.1.2.0\lib\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.DynamicProxy2">
+      <HintPath>..\packages\Castle.DynamicProxy.2.2.0\lib\Castle.DynamicProxy2.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Services.Logging.log4netIntegration">
+      <HintPath>..\packages\Castle.Core.1.2.0\lib\Castle.Services.Logging.log4netIntegration.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Services.Logging.NLogIntegration">
+      <HintPath>..\packages\Castle.Core.1.2.0\lib\Castle.Services.Logging.NLogIntegration.dll</HintPath>
     </Reference>
     <Reference Include="CookComputing.XmlRpcV2">
       <HintPath>..\packages\xmlrpcnet.2.5.0\lib\net20\CookComputing.XmlRpcV2.dll</HintPath>
@@ -43,22 +61,38 @@
     <Reference Include="Elmah">
       <HintPath>..\packages\elmah.1.1\lib\Elmah.dll</HintPath>
     </Reference>
-    <Reference Include="Glimpse.Net, Version=0.79.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glimpse.Net, Version=0.80.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Glimpse.0.79\lib\net40\Glimpse.Net.dll</HintPath>
+      <HintPath>..\packages\Glimpse.0.80\lib\net40\Glimpse.Net.dll</HintPath>
     </Reference>
     <Reference Include="Joel.Net.Akismet">
       <HintPath>..\packages\Joel.Net.Akismet\Joel.Net.Akismet.dll</HintPath>
     </Reference>
-    <Reference Include="MarkdownDeep">
-      <HintPath>..\packages\MarkdownDeep.NET.1.4\lib\.NetFramework 3.5\MarkdownDeep.dll</HintPath>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="MarkdownSharp">
+      <HintPath>..\packages\MarkdownSharp.1.13.0.0\lib\35\MarkdownSharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.4.0.1\lib\40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="MissingBitsFromClientProfile, Version=0.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <HintPath>..\packages\RavenDB.1.0.0.360\lib\net40\MissingBitsFromClientProfile.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.0.2.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.4.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.1.0.0.505\lib\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <HintPath>..\packages\RavenDB.1.0.0.360\lib\net40\Raven.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Client.Lightweight, Version=1.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
-      <HintPath>..\packages\raven\Client\Raven.Client.Lightweight.dll</HintPath>
+      <HintPath>..\packages\RavenDB.1.0.0.360\lib\net40\Raven.Client.Lightweight.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Json, Version=1.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <HintPath>..\packages\RavenDB.1.0.0.360\lib\net40\Raven.Json.dll</HintPath>
     </Reference>
     <Reference Include="RazorEngine">
       <HintPath>..\packages\RazorEngine.2.1\lib\.NetFramework 4.0\RazorEngine.dll</HintPath>
@@ -97,9 +131,13 @@
   <ItemGroup>
     <Compile Include="Common\DocumentSessionExtensions.cs" />
     <Compile Include="Common\RouteCollectionExtension.cs" />
+    <Compile Include="Common\UrlHelperExtensions.cs" />
+    <Content Include="Content\css\custom\hibernatingrhinos.css" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Common\DateTimeOffsetUtil.cs" />
+    <Compile Include="Controllers\CommentCommandOptions.cs" />
     <Compile Include="Controllers\ElmahController.cs" />
+    <Compile Include="Helpers\Attributes\ElmahHandleErrorAttribute.cs" />
     <Compile Include="Helpers\Results\ElmahResult.cs" />
     <Compile Include="Controllers\PostDetailsController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -112,10 +150,14 @@
     <Compile Include="EnsureLowerCaseRouteModule.cs" />
     <Compile Include="Helpers\Attributes\AjaxOnlyAttribute.cs" />
     <Compile Include="Helpers\ModelStateExtensions.cs" />
+    <Compile Include="Helpers\TwitterButtonDataCount.cs" />
+    <Compile Include="Helpers\TwitterExtensions.cs" />
+    <Compile Include="Helpers\UrlHelperExtensions.cs" />
     <Compile Include="Helpers\Validation\RequiredIfAttribute.cs" />
     <Compile Include="Helpers\Results\JsonNetResult.cs" />
     <Compile Include="Infrastructure\ActionResults\XmlResult.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\AbstractProfile.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\EmailViewModelMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\GuidToStringConverter.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\SectionAdminMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\SectionMapperProfile.cs" />
@@ -129,6 +171,7 @@
     <Compile Include="Infrastructure\Indexes\PostCountByMonth.cs" />
     <Compile Include="Infrastructure\Indexes\TagCount.cs" />
     <Compile Include="Infrastructure\Indexes\TempTagCount.cs" />
+    <Compile Include="Models\BlogConfig.cs" />
     <Compile Include="Models\PostComments.cs" />
     <Compile Include="Models\Commenter.cs" />
     <Compile Include="Models\Post.cs" />
@@ -150,9 +193,6 @@
     <Compile Include="Commands\SendEmailCommand.cs" />
     <Compile Include="Controllers\AbstractController.cs" />
     <Compile Include="Helpers\RecaptchHelperExtensions.cs" />
-    <Compile Include="Helpers\Results\HttpNotFoundWithViewResult.cs" />
-    <Compile Include="Helpers\Results\HttpStatusCodeWithViewResult.cs" />
-    <Compile Include="Helpers\Results\HttpUnauthorizedWithViewResult.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -160,7 +200,7 @@
     <Compile Include="Infrastructure\Raven\DocumentStoreHolder.cs" />
     <Compile Include="Infrastructure\Controllers\RavenActionFilterAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Infrastructure\Commands\CommandExecutor.cs" />
+    <Compile Include="Infrastructure\Commands\CommandExcucator.cs" />
     <Compile Include="Infrastructure\Commands\ICommand.cs" />
     <Compile Include="Services\AskimetService.cs" />
     <Compile Include="Common\DateTimeOffsetExtensions.cs" />
@@ -178,9 +218,11 @@
     <Compile Include="Common\SlugConverter.cs" />
     <Compile Include="Services\RssModels\UserInfo.cs" />
     <Compile Include="ViewModels\AdminPostDetailsViewModel.cs" />
+    <Compile Include="ViewModels\ChangePassViewModel.cs" />
     <Compile Include="ViewModels\CommentInput.cs" />
     <Compile Include="ViewModels\CurrentUserViewModel.cs" />
     <Compile Include="ViewModels\EditPostViewModel.cs" />
+    <Compile Include="ViewModels\FuturePostViewModel.cs" />
     <Compile Include="ViewModels\LoginInput.cs" />
     <Compile Include="ViewModels\NewCommentEmailViewModel.cs" />
     <Compile Include="ViewModels\PostInput.cs" />
@@ -199,6 +241,7 @@
     <Compile Include="Helpers\Attributes\ValidatePasswordLengthAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\custom\ayende.css" />
     <Content Include="Content\css\images\printer.png" />
     <Content Include="Content\css\main.css" />
     <Content Include="Content\css\ResetCss.css" />
@@ -206,19 +249,25 @@
     <Content Include="Content\js\RequiredIfValidation.js" />
     <Content Include="Content\js\fullcalendar.min.js" />
     <Content Include="Content\js\jquery-ui-1.8.12.custom.min.js" />
+    <Content Include="Content\js\showdown.js" />
     <Content Include="Global.asax" />
-    <Content Include="Content\js\jquery-1.5.2-vsdoc.js" />
-    <Content Include="Content\js\jquery-1.5.2.js" />
-    <Content Include="Content\js\jquery-1.5.2.min.js" />
     <Content Include="Content\js\jquery.ui.core.js" />
     <Content Include="Content\js\jquery.ui.core.min.js" />
+    <Content Include="Content\js\jquery-1.6-vsdoc.js" />
+    <Content Include="Content\js\jquery-1.6.js" />
+    <Content Include="Content\js\jquery-1.6.min.js" />
     <Content Include="Views\SectionAdmin\Edit.cshtml" />
     <Compile Include="Controllers\PostController.cs" />
+    <Content Include="Views\MailTemplates\_Layout.cshtml" />
+    <Content Include="Views\Section\FuturePosts.cshtml" />
+    <Content Include="Views\Shared\500.cshtml" />
+    <Content Include="Views\Error\500.htm" />
+    <Content Include="Views\Error\404.htm" />
     <None Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\HiddenInput.cshtml" />
     <None Include="Views\Shared\DisplayTemplates\String.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\HiddenInput.cshtml" />
-    <Content Include="EmailViews\NewComment.cshtml" />
+    <Content Include="Views\MailTemplates\NewComment.cshtml" />
     <Content Include="Views\Section\TagsList.cshtml" />
     <Content Include="Views\Section\ArchivesList.cshtml" />
     <Content Include="Services\MetaWeblogAPI.ashx" />

@@ -3,7 +3,7 @@
     ViewBag.Title = @Model.Post.Title;
 }
 
-<article class="post">
+<article class="post-detalis">
     <header>
         <h1><a href="@Url.Action("Details", new { Model.Post.Id, Model.Post.Slug })">@Model.Post.Title</a></h1>
     </header>
@@ -26,39 +26,42 @@
         @Model.Post.Body
     </div>
 
-    <footer>
-        Published at <time pubdate>@Model.Post.PublishedAt.ToString("r")</time>
-
-        @if (Model.Post.PublishedAt != Model.Post.CreatedAt)
-        { 
-            <span>
-            | Originally posted at <time>@Model.Post.CreatedAt.ToString("r")</time>
-            </span>
-        }
-    </footer>
-
-	
-    <div class="tags">
+	<div class="tags">
         <ul>
             @foreach (var name in Model.Post.Tags)
             {
-                <li><a href="@Url.Action("Tag", new { name })">@name</a></li>
+                <li><a href="@Url.Action("Tag", "Post", new { name })">@name</a></li>
             }
         </ul>
     </div>
     
 
+    <footer>
+        <p class="author">Posted By: @Model.Post.Author.FullName</p>
+        <p class="published">Published at <time pubdate>@Model.Post.PublishedAt.ToString("r")</time></p>
+        @if (Model.Post.PublishedAt != Model.Post.CreatedAt) { 
+            <p class="created">Originally posted at <time>@Model.Post.CreatedAt.ToString("r")</time></p>
+        }
+        <p class="share">
+            @Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, Model.Post.Author)
+        </p>
+    </footer>
+
+	
+ 
     <section class="comments">
         <header>
             <a name="feedback"></a>
             <h1>Feedback</h1>
         </header>
-        @if (Model.Comments.Count == 0) { 
+        @if (Model.Comments.Count == 0)
+        { 
             <p>No comments posted yet.</p>
         }
         @foreach (var comment in Model.Comments)
         {
             <article class="comment@(comment.IsImportant ? " important" : null)">
+                <a name="comment@(comment.Id)"></a>
                 <img class="avatar" src="http://www.gravatar.com/avatar.php?gravatar_id=@(comment.EmailHash)&amp;size=50&amp;default=identicon" alt="Gravatar" style="border-width:0px;">
 
                 <div class="comment_title">
@@ -74,21 +77,27 @@
         <article id="postComment">
             <div class="messageWrapper"><div id="message" style="visibility:hidden"></div></div>
 
-            @if (Model.Post.IsCommentAllowed = false || Model.AreCommentsClosed) { 
+            @if (Model.Post.IsCommentAllowed = false || Model.AreCommentsClosed)
+            { 
                 <div class="commentsClosedMessage">Comments have been closed on this topic.</div>
-            } else {
-                if (ViewData.ModelState.IsValid == false) { 
+            }
+            else
+            {
+                if (ViewData.ModelState.IsValid == false)
+                { 
                     <div class="form-error">
                         @Html.ValidationSummary(true)
                     </div>
                 }
-                using (@Html.BeginForm("Comment", "Post", new { Model.Post.Id })) {
+                using (@Html.BeginForm("Comment", "PostDetails", new { Model.Post.Id }))
+                {
                     @Html.EditorFor(x => x.Input.Name)
                     @Html.EditorFor(x => x.Input.Email)
                     @Html.EditorFor(x => x.Input.Url)
                     @Html.EditorFor(x => x.Input.Body)
     
-                    if (!Model.IsTrustedCommenter) { 
+                    if (!Model.IsTrustedCommenter)
+                    { 
                         <div class="form_item">
                             <label>
                                 <span class="form_item_name">Are you human?</span>
@@ -105,9 +114,13 @@
     </section>
 </article>
 
+@section Style {
+    <link rel="canonical" href="@Url.AbsoluteAction("Details", new { Model.Post.Id, Model.Post.Slug })">}
 @section Script {
-    <script src="@Url.Content("~/Content/js/jquery.validate.min.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Content/js/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script type="text/javascript" src="@Url.Content("~/Content/js/jquery.validate.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Content/js/jquery.validate.unobtrusive.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Content/js/showdown.js")"></script>
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
     <script type="text/javascript">
         $(function () {
             $('#postComment form').submit(function () {
@@ -125,11 +138,12 @@
                 return false;
             });
 
-            function setMessage(message, cssClass) {
-                var m = $('#message').html(message);
-                if (cssClass) m.addClass(cssClass);
-                m.css('visibility', 'visible');
-            }
+            var $textarea = $('textarea[name$="Body"]'),
+            $preview = $('<div id="preview"></div>').insertAfter($textarea),
+            converter = new Showdown.converter();
+            $textarea.keyup(function () {
+                $preview.html(converter.makeHtml($textarea.val()));
+            }).trigger('keyup');
         });
     </script>
 }

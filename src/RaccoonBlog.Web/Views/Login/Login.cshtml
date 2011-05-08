@@ -3,7 +3,11 @@
 	ViewBag.Title = "Login";
 }
 <article id="login">
-	@Html.ValidationSummary("form-error")
+    @if (ViewData.ModelState.IsValid == false) { 
+        <div class="form-error">
+            @Html.ValidationSummary(true)
+        </div>
+    }
 
 	<form action="@Url.Action("Login")" method="post">
 		@Html.EditorFor(x => x.Email)

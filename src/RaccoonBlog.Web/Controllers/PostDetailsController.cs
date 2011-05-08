@@ -20,9 +20,10 @@ namespace RaccoonBlog.Web.Controllers
 
         public ActionResult Details(int id, string slug)
         {
-            var post = Session
-                .Include<Post>(x => x.CommentsId)
-                .Load(id);
+        	var post = Session
+        		.Include<Post>(x => x.CommentsId)
+        		.Include(x => x.AuthorId)
+        		.Load(id);
 
             if (post == null)
                 return HttpNotFound();
@@ -42,6 +43,8 @@ namespace RaccoonBlog.Web.Controllers
 				AreCommentsClosed = comments.AreCommentsClosed(post),
 			};
 
+			vm.Post.Author = Session.Load<User>(post.AuthorId).MapTo<PostViewModel.UserDetails>();
+
         	if (vm.Post.Slug != slug)
 				return RedirectToActionPermanent("Details", new { id, vm.Post.Slug });
 
@@ -50,7 +53,7 @@ namespace RaccoonBlog.Web.Controllers
         	return View("Details", vm);
         }
 
-    	
+		[ValidateInput(false)]
     	[HttpPost]
         public ActionResult Comment(CommentInput input, int id)
         {
@@ -73,7 +76,7 @@ namespace RaccoonBlog.Web.Controllers
     		if (ModelState.IsValid == false)
     			return PostingCommentFailed(post, input);
 
-    		CommandExecutor.ExcuteLater(new AddCommentCommand(input, Request.MapTo<RequestValues>(), id));
+        	CommandExcucator.ExcuteLater(new AddCommentCommand(input, Request.MapTo<RequestValues>(), id));
 
             SetCommenterCookie(commenter);
 

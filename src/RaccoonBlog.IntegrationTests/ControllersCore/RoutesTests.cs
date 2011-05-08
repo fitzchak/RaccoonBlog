@@ -40,27 +40,33 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
         {
             "~/".ShouldMapTo<PostController>(c => c.List());
 
-			"~/1024".ShouldMapTo<PostDetailsController>(c => c.Details(1024, null));
-			"~/1024/blog-post-title".ShouldMapTo<PostDetailsController>(c => c.Details(1024, "blog-post-title"));
-
-            "~/1024/comment"
-                .WithMethod(HttpVerbs.Get)
-				.ShouldMapTo<PostDetailsController>(c => c.Details(1024, "comment"));
-
-            "~/1024/comment"
-                .WithMethod(HttpVerbs.Post)
-                .ShouldMapTo<PostDetailsController>(c => c.Comment(null, 1024));
-
-            "~/section/tagslist".ShouldMapTo<SectionController>(c => c.TagsList());
-			"~/section/archiveslist".ShouldMapTo<SectionController>(c => c.ArchivesList());
-
             "~/tags/tag-name".ShouldMapTo<PostController>(c => c.Tag("tag-name"));
 
             // "~/archive".ShouldMapTo<ErrorController>(c => c.404());
             "~/archive/2011".ShouldMapTo<PostController>(c => c.Archive(2011, null,null));
 			"~/archive/2011/4".ShouldMapTo<PostController>(c => c.Archive(2011, 4, null));
             "~/archive/2011/4/24".ShouldMapTo<PostController>(c => c.Archive(2011, 4, 24));
+        }
+
+        [Fact]
+        public void LegacyPostControllerRoutes()
+        {
             "~/archive/2011/4/24/legacy-post-title.aspx".ShouldMapTo<LegacyPostController>(c => c.RedirectLegacyPost(2011, 4, 24, "legacy-post-title"));
+        }
+
+        [Fact]
+        public void PostDetailsControllerRoutes()
+        {
+            "~/1024".ShouldMapTo<PostDetailsController>(c => c.Details(1024, null));
+            "~/1024/blog-post-title".ShouldMapTo<PostDetailsController>(c => c.Details(1024, "blog-post-title"));
+
+            "~/1024/comment"
+                .WithMethod(HttpVerbs.Get)
+                .ShouldMapTo<PostDetailsController>(c => c.Details(1024, "comment"));
+
+            "~/1024/comment"
+                .WithMethod(HttpVerbs.Post)
+                .ShouldMapTo<PostDetailsController>(c => c.Comment(null, 1024));
         }
 
         [Fact]
@@ -103,7 +109,8 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
                 .ShouldMapTo<PostAdminController>(c => c.Details(1024, "setpostdate"));
 
             var commentsadmin = "~/admin/posts/1024/commentsadmin".WithMethod(HttpVerbs.Post);
-            commentsadmin.ShouldMapTo<PostAdminController>(c => c.CommentsAdmin(1024, PostAdminController.CommentCommandOptions.Delete, null));
+            commentsadmin.Values["command"] = "Delete";
+            commentsadmin.ShouldMapTo<PostAdminController>(c => c.CommentsAdmin(1024, CommentCommandOptions.Delete, null));
 
             "~/admin/posts/1024/commentsadmin"
                 .WithMethod(HttpVerbs.Get)
@@ -137,6 +144,9 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
         public void SectionControllerRoutes()
         {
             "~/section/list".ShouldMapTo<SectionController>(c => c.List());
+
+            "~/section/tagslist".ShouldMapTo<SectionController>(c => c.TagsList());
+            "~/section/archiveslist".ShouldMapTo<SectionController>(c => c.ArchivesList());
         }
 
         [Fact]
@@ -146,6 +156,12 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
 
             "~/admin/sections/add".ShouldMapTo<SectionAdminController>(c => c.Add());
             "~/admin/sections/4/edit".ShouldMapTo<SectionAdminController>(c => c.Edit(4));
+
+            "~/admin/sections/update".ShouldMapTo<SectionAdminController>(c => c.Update(null));
+
+            var delete = "~/admin/sections/delete".WithMethod(HttpVerbs.Post);
+            delete.Values["id"] = 4;
+            delete.ShouldMapTo<SectionAdminController>(c => c.Delete(4));
 
             var setpostdate = "~/admin/sections/4/setposition".WithMethod(HttpVerbs.Post);
             setpostdate.Values["newPosition"] = 0;

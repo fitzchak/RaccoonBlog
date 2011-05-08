@@ -15,6 +15,9 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
                 .ForMember(x => x.Slug, o => o.MapFrom(m => SlugConverter.TitleToSlag(m.Title)))
                 .ForMember(x => x.PublishedAt, o => o.MapFrom(m => m.PublishAt))
                 ;
+
+			Mapper.CreateMap<User, PostsViewModel.PostSummary.UserDetails>();
+    
         }
     }
 }

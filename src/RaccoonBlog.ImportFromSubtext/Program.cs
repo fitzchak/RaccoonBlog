@@ -21,23 +21,40 @@ namespace RaccoonBlog.ImportFromSubtext
                     Url = "http://localhost:8080",
                 }.Initialize())
             {
-                CreateSections(store);
                 ImportDatabase(store);
+                CreateSections(store);
+            	CreateConfig(store);
             }
+            Console.WriteLine("Done importing");
         }
 
-        private static void CreateSections(IDocumentStore store)
+    	private static void CreateConfig(IDocumentStore store)
+    	{
+			using (IDocumentSession s = store.OpenSession())
+			{
+				s.Store(new BlogConfig
+				{
+					 Id = "Blog/Config",
+					 CustomCss = "ayende",
+					 Subtitle = "Unnatural acts on source code",
+					 Title = "Ayende @ Rahien",
+					 Copyright = "Ayende Rahien",
+					 AkismetKey = "43f0db211711",
+				});
+				s.SaveChanges();
+			}
+    	}
+
+    	private static void CreateSections(IDocumentStore store)
         {
             Console.WriteLine("Creating sections");
             using (IDocumentSession s = store.OpenSession())
             {
                 var sections = new[]
                     {
-                        new Section {Title = "Title", Body = string.Format("Text 1{0}{0}Text 2{0}{0}", Environment.NewLine)},
-                        new Section {Title = "Recent Comments", Body = "Recent Comments"},
+                        new Section {Title = "Future Posts", ControllerName = "Section", ActionName = "FuturePosts"},
                         new Section {Title = "Tags", ControllerName = "Section", ActionName = "TagsList"},
                         new Section {Title = "Archive", ControllerName = "Section", ActionName = "ArchivesList"},
-                        new Section {Title = "Login", ControllerName = "Login", ActionName = "CurrentUser"},
                     };
 
                 var i = 0;
@@ -75,8 +92,8 @@ namespace RaccoonBlog.ImportFromSubtext
                 {
                     var users = new[]
                     {
-                        new {Email = "ayende@ayende.com", FullName = "Ayende Rahien"},
-                        new {Email = "fitzchak@ayende.com", FullName = "Fitzchak Yitzchaki"},
+                        new {Email = "ayende@ayende.com", FullName = "Ayende Rahien", TwitterNick = "ayende", RelatedTwitterNick=(string)null},
+                        new {Email = "fitzchak@ayende.com", FullName = "Fitzchak Yitzchaki", TwitterNick = "fitzchak", RelatedTwitterNick="ayende"},
                     };
                     for (int i = 0; i < users.Length; i++)
                     {
@@ -85,6 +102,8 @@ namespace RaccoonBlog.ImportFromSubtext
                                 Id = "users/" + (i + 1),
                                 Email = users[i].Email,
                                 FullName = users[i].FullName,
+                                TwitterNick = users[i].TwitterNick,
+                                RelatedTwitterNick = users[i].RelatedTwitterNick,
                                 Enabled = true,
                             };
                         user.SetPassword("123456");
@@ -98,10 +117,11 @@ namespace RaccoonBlog.ImportFromSubtext
                 {
                     var ravenPost = new Web.Models.Post
                         {
-                            Author = usersList
+                            AuthorId = usersList
                                     .Where(u=> u.FullName == post.Author)
-                                    .Select(u => new Web.Models.Post.AuthorReference{FullName = u.FullName, Id = u.Id})
-                                    .FirstOrDefault(),
+                                    .Select(u => u.Id)
+                                    .FirstOrDefault() ?? 
+                                    usersList.First().Id,
                             CreatedAt = new DateTimeOffset(post.DateAdded),
                             PublishAt = new DateTimeOffset(post.DateSyndicated ?? post.DateAdded),
                             Body = post.Text,
@@ -126,8 +146,10 @@ namespace RaccoonBlog.ImportFromSubtext
                                     Body = ConvertCommentToMarkdown(comment.Body),
                                     CreatedAt = comment.DateCreated,
                                     Email = comment.Email,
-                                    Important = comment.IsBlogAuthor ?? false,
                                     Url = comment.Url,
+                                    Important = comment.IsBlogAuthor ?? false,
+                                    UserAgent = comment.UserAgent,
+                                    UserHostAddress = comment.IpAddress,
                                     IsSpam = false
                                 }
                         ).ToList();
@@ -142,8 +164,10 @@ namespace RaccoonBlog.ImportFromSubtext
                                     Body = ConvertCommentToMarkdown(comment.Body),
                                     CreatedAt = comment.DateCreated,
                                     Email = comment.Email,
-                                    Important = comment.IsBlogAuthor ?? false,
                                     Url = comment.Url,
+                                    Important = comment.IsBlogAuthor ?? false,
+                                    UserAgent = comment.UserAgent,
+                                    UserHostAddress = comment.IpAddress,
                                     IsSpam = true
                                 }
                         ).ToList();
@@ -226,7 +250,6 @@ namespace RaccoonBlog.ImportFromSubtext
                             case "img":
                                 break;
                             default:
-                                Console.WriteLine(sgmlReader.LocalName);
                                 outputEndElement = true;
                                 sb.Append("<").Append(sgmlReader.LocalName);
                                 break;

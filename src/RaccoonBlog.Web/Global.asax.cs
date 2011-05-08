@@ -1,6 +1,8 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using RaccoonBlog.Web.Helpers;
+using RaccoonBlog.Web.Helpers.Attributes;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Controllers;
 
@@ -21,7 +23,7 @@ namespace RaccoonBlog.Web
 
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
+            filters.Add(new ElmahHandleErrorAttribute());
             filters.Add(new RavenActionFilterAttribute());
         }
 

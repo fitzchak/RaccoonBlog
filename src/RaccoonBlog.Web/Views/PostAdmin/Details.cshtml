@@ -8,8 +8,8 @@
         <h1><a href="@Url.Action("Details", new { Model.Post.Id, Model.Post.Slug })">@Model.Post.Title</a></h1>
         <div id="post-admin">
             <ul>
-                <li><a href="@Url.Action("Details", "Post")">View</a></li>
-                <li><a href="@Url.Action("Details", "Post", new { key = @Model.Post.Key })">Private View</a></li>
+                <li><a href="@Url.Action("Details", "PostDetails")">View</a></li>
+                <li><a href="@Url.Action("Details", "PostDetails", new { key = @Model.Post.Key })">Private View</a></li>
                 <li><a href="@Url.Action("Edit")">Edit</a></li>
                 <li>
                     <form action="@Url.Action("Delete", new { Model.Post.Id })" method="post">
@@ -53,7 +53,7 @@
     <div class="tags">
         <ul>
             @foreach (var name in Model.Post.Tags) {
-                <li><a href="@Url.Action("Tag", new { name })">@name</a></li>
+                <li><a href="@Url.Action("Tag", "Post", new { name })">@name</a></li>
             }
         </ul>
     </div>
@@ -70,6 +70,7 @@
         <form action="@Url.Action("CommentsAdmin", new { id = Model.Post.Id })" method="post">
             @foreach (var comment in Model.Comments) {
                 <article class="comment@(comment.IsImportant ? " important" : null)@(comment.IsSpam ? " spam" : null)">
+                    <a name="comment@(comment.Id)"></a>
                     <input type="checkbox" name="commentIds" value="@comment.Id">
 
                     <img class="avatar" src="http://www.gravatar.com/avatar.php?gravatar_id=@(comment.EmailHash)&amp;size=50&amp;default=identicon" alt="Gravatar" style="border-width:0px;">
@@ -85,8 +86,8 @@
             }
             <div id="comments-admin">
                 <input type="submit" name="command" value="Delete" class="confirm">
-                <input type="submit" name="command" value="Mark Spam" class="confirm">
-                <input type="submit" name="command" value="Mark Ham" class="confirm">
+                <input type="submit" name="command" value="MarkSpam" class="confirm">
+                <input type="submit" name="command" value="MarkHam" class="confirm">
             </div>
         </form>
     </section>

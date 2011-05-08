@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using MarkdownSharp;
 
 namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers
 {
@@ -6,7 +7,14 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers
     {
         public static MvcHtmlString Resolve(string inputBody)
         {
-            var md = new MarkdownDeep.Markdown {SafeMode = true};
+        	var md = new MarkdownSharp.Markdown(new MarkdownOptions
+        	{
+        		AutoHyperlink = true,
+        		AutoNewLines = true,
+        		EncodeProblemUrlCharacters = true,
+        		LinkEmails = false,
+        		StrictBoldItalic = true
+        	});
             var result = md.Transform(inputBody);
             return MvcHtmlString.Create(result);
         }

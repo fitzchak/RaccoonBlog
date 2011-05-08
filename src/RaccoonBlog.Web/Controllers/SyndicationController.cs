@@ -96,14 +96,14 @@ namespace RaccoonBlog.Web.Controllers
             return Url.Action("Details", "PostDetails", new { Id = postReference.DomainId, postReference.Slug });
 	    }
 
-	    private static string GetBlogCopyright()
+	    private string GetBlogCopyright()
 		{
-			return ConfigurationManager.AppSettings["Copyright"];
+			return Session.Load<BlogConfig>("Blog/Config").Copyright;
 		}
 
-		private static string GetBlogTitle()
+		private string GetBlogTitle()
 		{
-			return ConfigurationManager.AppSettings["BlogName"];
+			return Session.Load<BlogConfig>("Blog/Config").Title;
 		}
 	}
 }

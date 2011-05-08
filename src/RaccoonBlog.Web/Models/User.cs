@@ -14,6 +14,11 @@ namespace RaccoonBlog.Web.Models
 		protected string HashedPassword { get; private set; }
 		public bool Enabled { get; set; }
 
+        // User's settings
+        public string TwitterNick { get; set; }
+        public string RelatedTwitterNick { get; set; }
+        public string RelatedTwitterNickDesc { get; set; }
+
 		private Guid passwordSalt;
 		private Guid PasswordSalt
 		{

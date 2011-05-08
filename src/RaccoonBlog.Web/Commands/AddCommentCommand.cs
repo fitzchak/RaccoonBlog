@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Web.Mvc;
+using System.Configuration;
+using RaccoonBlog.Web.Infrastructure.AutoMapper;
+using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Infrastructure.Commands;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.Services;
 using RaccoonBlog.Web.ViewModels;
 using Raven.Client;
-using RazorEngine;
 
 namespace RaccoonBlog.Web.Commands
 {
@@ -26,6 +27,9 @@ namespace RaccoonBlog.Web.Commands
 
         public void Execute()
         {
+            if (Session == null)
+                throw new NullReferenceException();
+
             var post = Session.Load<Post>(_postId);
             var comments = Session.Load<PostComments>(_postId);
 
@@ -36,34 +40,36 @@ namespace RaccoonBlog.Web.Commands
                 Id = comments.GenerateNewCommentId(),
                 Author = _commentInput.Name,
                 Body = _commentInput.Body,
-                CreatedAt = DateTimeOffset.Now,  
+                CreatedAt = DateTimeOffset.Now,
                 Email = _commentInput.Email,
-                Important = _requestValues.IsAuthenticated,
                 Url = _commentInput.Url,
-                IsSpam = new AskimetService(_requestValues).CheckForSpam(_commentInput),
+                Important = _requestValues.IsAuthenticated,
+                UserAgent = _requestValues.UserAgent,
+                UserHostAddress = _requestValues.UserHostAddress
             };
+            comment.IsSpam = new AskimetService(Session).CheckForSpam(comment);
 
         	if (comment.IsSpam)
         		comments.Spam.Add(comment);
         	else
         		comments.Comments.Add(comment);
 
-        	var vm = new NewCommentEmailViewModel
-            {
-                Author = comment.Author,
-                Body = MvcHtmlString.Create(comment.Body),
-                CreatedAt = comment.CreatedAt,
-                Email = comment.Email,
-                Url = comment.Url,
-            };
-
-            var emailContents = Razor.Run(vm, "NewComment");
-
-            CommandExecutor.ExcuteLater(new SendEmailCommand()
-                                             {
-                                                 Subject = "Comment: " + post.Title,
-                                                 Contents = emailContents
-                                             });
+            SendNewCommentEmail(post, comment);
         }
+
+    	private void SendNewCommentEmail(Post post, PostComments.Comment comment)
+    	{
+    		var viewModel = comment.MapTo<NewCommentEmailViewModel>();
+    		viewModel.PostId = RavenIdResolver.Resolve(post.Id);
+    		viewModel.PostTitle = post.Title;
+    		viewModel.BlogName = Session.Load<BlogConfig>("Blog/Config").Title;
+
+    		var subject = string.Format("Comment on: {0} from {1}", viewModel.PostTitle, viewModel.BlogName);
+
+			if(comment.IsSpam)
+				subject = "Spam " + subject;
+
+    		CommandExcucator.ExcuteLater(new SendEmailCommand(viewModel.Email,subject, "NewComment", viewModel));
+    	}
     }
 }

@@ -11,7 +11,7 @@ namespace RaccoonBlog.Web.Helpers.Attributes
         {
             var request = filterContext.HttpContext.Request;
             if (!request.IsAjaxRequest())
-                filterContext.Result = new HttpNotFoundWithViewResult("Only Ajax calls are permitted.");
+                filterContext.Result = new HttpNotFoundResult("Only Ajax calls are permitted.");
         } 
     }
 }

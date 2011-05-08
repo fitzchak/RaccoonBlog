@@ -52,25 +52,29 @@ namespace RaccoonBlog.Web.Controllers
             var user = Session.Load<User>(id);
             if (user == null)
                 return HttpNotFound("User does not exist.");
-            return View(new UserPasswordInput { Id = RavenIdResolver.Resolve(user.Id) });
+
+            return View(new ChangePassViewModel
+                            {
+                                FullName = user.FullName,
+                                Input = new UserPasswordInput {Id = RavenIdResolver.Resolve(user.Id)}
+                            });
         }
 
 		[HttpPost]
 		public ActionResult ChangePass(UserPasswordInput input)
 		{
-		    if (ModelState.IsValid == false)
-                return View(input);
-
-            var user = Session.Load<User>(input.Id);
-		    if (user == null)
-		        return HttpNotFound("User does not exist.");
+			var user = Session.Load<User>(input.Id);
+			if (user == null)
+				return HttpNotFound("User does not exist.");
 
 		    if (user.ValidatePassword(input.OldPass) == false)
 		    {
 		        ModelState.AddModelError("OldPass", "Old password did not match existing password");
-                return View(input);
 		    }
-		    
+
+			if (ModelState.IsValid == false)
+				return View(new ChangePassViewModel { FullName = user.FullName, Input = input });
+
             user.SetPassword(input.NewPass);
 		    return RedirectToAction("List");
 		}

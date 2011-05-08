@@ -17,6 +17,7 @@ namespace RaccoonBlog.Web.ViewModels
         [Display(Name = "Url")]
         public string Url { get; set; }
 
+        [AllowHtml]
         [Required]
         [Display(Name = "Comments")]
         [DataType(DataType.MultilineText)]
