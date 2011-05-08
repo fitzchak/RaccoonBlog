@@ -1,6 +1,7 @@
 ﻿@model PostViewModel
 @{
     ViewBag.Title = @Model.Post.Title;
+    ViewBag.CurrentUrl = Url.Action("Details", new {Model.Post.Id, Model.Post.Slug});
 }
 
 <article class="post-detalis">
@@ -35,16 +36,22 @@
         </ul>
     </div>
     
-
     <footer>
         <p class="author">Posted By: @Model.Post.Author.FullName</p>
         <p class="published">Published at <time pubdate>@Model.Post.PublishedAt.ToString("r")</time></p>
         @if (Model.Post.PublishedAt != Model.Post.CreatedAt) { 
             <p class="created">Originally posted at <time>@Model.Post.CreatedAt.ToString("r")</time></p>
         }
-        <p class="share">
-            @Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, Model.Post.Author)
-        </p>
+        <div class="clr"></div>
+
+        <div class="share">
+            <div class="twitter">
+                @Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, Model.Post.Author)
+            </div>
+            <div class="facebook">
+                <iframe src="http://www.facebook.com/plugins/like.php?href=@(ViewBag.CurrentUrl)&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px;" allowTransparency="true"></iframe>
+            </div>
+        </div>
     </footer>
 
 	
@@ -77,7 +84,7 @@
         <article id="postComment">
             <div class="messageWrapper"><div id="message" style="visibility:hidden"></div></div>
 
-            @if (Model.Post.IsCommentAllowed = false || Model.AreCommentsClosed)
+            @if (Model.Post.IsCommentAllowed == false || Model.AreCommentsClosed)
             { 
                 <div class="commentsClosedMessage">Comments have been closed on this topic.</div>
             }
