@@ -431,8 +431,13 @@ article.post-detalis footer .author
 {
 }
 
-article.post-detalis footer .share
+footer .share
 {
+}
+
+footer .share .facebook
+{
+    margin-top: 5px;
 }
 
 .commands-section ul li 

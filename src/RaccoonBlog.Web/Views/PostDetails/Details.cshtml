@@ -43,14 +43,14 @@
         @if (Model.Post.PublishedAt != Model.Post.CreatedAt) { 
             <p class="created">Originally posted at <time>@Model.Post.CreatedAt.ToString("r")</time></p>
         }
-        <p class="share">
+        <div class="share">
             <div class="twitter">
                 @Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, Model.Post.Author)
             </div>
             <div class="facebook">
                 <iframe src="http://www.facebook.com/plugins/like.php?href=@(ViewBag.CurrentUrl)&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px;" allowTransparency="true"></iframe>
             </div>
-        </p>
+        </div>
     </footer>
 
 	
