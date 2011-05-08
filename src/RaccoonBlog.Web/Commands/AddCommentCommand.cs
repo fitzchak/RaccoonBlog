@@ -69,7 +69,7 @@ namespace RaccoonBlog.Web.Commands
 			if(comment.IsSpam)
 				subject = "Spam " + subject;
 
-    		CommandExcucator.ExcuteLater(new SendEmailCommand(viewModel.Email,subject, "NewComment", viewModel));
+    		CommandExecutor.ExcuteLater(new SendEmailCommand(viewModel.Email,subject, "NewComment", viewModel));
     	}
     }
 }
