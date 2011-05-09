@@ -179,6 +179,8 @@ namespace RaccoonBlog.Web.Controllers
                     throw new InvalidOperationException(command + " command is not recognized.");
             }
 
+            post.CommentsCount = comments.Comments.Count;
+
             if (Request.IsAjaxRequest())
             {
                 return Json(new {Success = true});
