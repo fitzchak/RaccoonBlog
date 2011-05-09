@@ -125,7 +125,6 @@ namespace RaccoonBlog.ImportFromSubtext
                             CreatedAt = new DateTimeOffset(post.DateAdded),
                             PublishAt = new DateTimeOffset(post.DateSyndicated ?? post.DateAdded),
                             Body = post.Text,
-                            CommentsCount = post.FeedBackCount,
                             LegacySlug = post.EntryName,
                             Title = post.Title,
                             Tags = post.Links.Select(x => x.Categories.Title)
@@ -171,6 +170,8 @@ namespace RaccoonBlog.ImportFromSubtext
                                     IsSpam = true
                                 }
                         ).ToList();
+
+                    ravenPost.CommentsCount = commentsCollection.Comments.Count;
 
                     using (IDocumentSession s = store.OpenSession())
                     {
