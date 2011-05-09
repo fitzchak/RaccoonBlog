@@ -77,7 +77,7 @@
                 <div class="comment_title">
                     @comment.CreatedAt by
                     <address>
-                        <a title="@(string.IsNullOrEmpty(comment.Url) ? "Comment by " + comment.Author : comment.Url)" @if(string.IsNullOrEmpty(comment.Url) == false) { <text> href="@comment.Url"</text> }>@comment.Author</a>
+						@Html.Link(comment.Author, @comment.Url, new { title = string.IsNullOrEmpty(comment.Url) ? "Comment by " + comment.Author : comment.Url})
                     </address>
                 </div>
                 <p>@comment.Body</p>
