@@ -5,6 +5,12 @@
 <div id="postsCalendar">
 
 </div>
+<div>
+	<label>
+		<input type="checkbox" id="showAllWeek">
+		<span class="form_item_name">Show weekends</span>
+	</label>
+</div>
 @section Style {
     <link href="@Url.Content("~/Content/css/fullcalendar.css")" rel="stylesheet" type="text/css">
 }
@@ -12,37 +18,43 @@
     <script src="@Url.Content("~/Content/js/jquery-ui-1.8.12.custom.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Content/js/fullcalendar.min.js")" type="text/javascript"></script>
     <script type="text/javascript">
-        $(function () {
-            var listFeed = '@Url.Action("ListFeed")';
-            $('#postsCalendar').fullCalendar({
-                header: {
-				    left: 'prev,next today',
-				    center: 'title',
-				    right: 'month,agendaWeek,agendaDay'
-			    },
-                weekends: false,
-                editable: true,
-                disableResizing: true,
-                eventSources: [{
-                    url: listFeed,
-                    type: 'POST',
-                    error: function(xhr, ajaxOptions, error) {
-                        alert('There was an error while fetching events! Error Code: ' + xhr.status + ' Error: ' + error);
-                    }
-                }],
-                eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
-                    var jqxhr = $.post('/admin/posts/' + event.id + '/setpostdate', {date: event.start.valueOf()}, null, 'json');
-                    jqxhr.error(failAction);
-                    jqxhr.success(function(data, textStatus, jqXHR){ 
-                        if (!data.success) failAction();
-                        else setMessage('Change post date succeed: ' + event.title);
-                    });
-                    function failAction(){
-                        revertFunc(); 
-                        setMessage('Change post date failed: ' + event.title, 'fail');
-                    }
-                }
-            });
-        });
+    	$(function () {
+    		renderCalander(false);
+    		$('#showAllWeek').change(function () {
+    			renderCalander($(this).is(':checked'));
+    		});
+    	});
+		function renderCalander(weekends) {
+			var listFeed = '@Url.Action("ListFeed")';
+			$('#postsCalendar').empty().fullCalendar({
+				header: {
+					left: 'prev,next today',
+					center: 'title',
+					right: 'month,agendaWeek,agendaDay'
+				},
+				weekends: weekends,
+				editable: true,
+				disableResizing: true,
+				eventSources: [{
+					url: listFeed,
+					type: 'POST',
+					error: function (xhr, ajaxOptions, error) {
+						alert('There was an error while fetching events! Error Code: ' + xhr.status + ' Error: ' + error);
+					}
+				}],
+				eventDrop: function (event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
+					var jqxhr = $.post('/admin/posts/' + event.id + '/setpostdate', { date: event.start.valueOf() }, null, 'json');
+					jqxhr.error(failAction);
+					jqxhr.success(function (data, textStatus, jqXHR) {
+						if (!data.success) failAction();
+						else setMessage('Change post date succeed: ' + event.title);
+					});
+					function failAction() {
+						revertFunc();
+						setMessage('Change post date failed: ' + event.title, 'fail');
+					}
+				}
+			});
+		}
     </script>
 }
