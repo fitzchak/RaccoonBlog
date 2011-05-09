@@ -34,8 +34,7 @@ namespace RaccoonBlog.Web.Controllers
 			{
 				Post = post.MapTo<AdminPostDetailsViewModel.PostDetails>(),
 				
-				Comments = comments
-					.Comments
+				Comments = comments.Comments
 					.Concat(comments.Spam)
 					.OrderBy(comment => comment.CreatedAt)
 					.MapTo<AdminPostDetailsViewModel.Comment>(),
@@ -141,7 +140,6 @@ namespace RaccoonBlog.Web.Controllers
             }
 
             var comments = Session.Load<PostComments>(id);
-            var requestValues = Request.MapTo<RequestValues>();
             switch (command)
             {
                 case CommentCommandOptions.Delete:
