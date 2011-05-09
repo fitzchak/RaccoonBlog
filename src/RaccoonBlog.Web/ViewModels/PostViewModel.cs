@@ -21,6 +21,7 @@ namespace RaccoonBlog.Web.ViewModels
             public int Id { get; set; }
             public MvcHtmlString Body { get; set; }
             public string Author { get; set; }
+            public string Tooltip { get; set; }
             public string Url { get; set; }    // Look for HTML injection.
             public string EmailHash { get; set; }
             public DateTimeOffset CreatedAt { get; set; }
