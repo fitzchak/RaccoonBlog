@@ -231,7 +231,7 @@ article.post footer, postToolbar
 {
     border: solid 1px transparent;
     padding: 10px;
-    min-height: 100px;
+    min-height: 50px;
     margin: 5px 0;
 }
 input[type="submit"]
