@@ -376,9 +376,7 @@ article header h1 a
     background-color: #FFF1A8;
     border: 3px solid #FFF1A8;
     text-align: center;
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
+    .rounded_corners(3px);
 }
 #message.fail 
 {
