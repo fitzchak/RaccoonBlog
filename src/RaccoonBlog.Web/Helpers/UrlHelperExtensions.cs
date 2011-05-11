@@ -24,6 +24,11 @@ namespace RaccoonBlog.Web.Helpers
 			return AbsoluteAction(url, url.Action(action, controller, routeValues));
 		}
 
+        public static string RelativeToAbsolute(this UrlHelper url, string relativeUrl)
+        {
+            return AbsoluteAction(url, relativeUrl);
+        }
+
     	private static string AbsoluteAction(UrlHelper url, string relativeUrl)
         {
             Uri requestUrl = url.RequestContext.HttpContext.Request.Url;

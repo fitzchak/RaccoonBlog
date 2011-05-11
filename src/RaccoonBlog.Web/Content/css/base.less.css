@@ -21,6 +21,11 @@ body
 	background: @backgroundColor;
 }
 
+.clr 
+{
+    clear: both;    
+}
+
 h1
 {
 	margin-bottom: 10px;
@@ -161,7 +166,7 @@ article.post footer, postToolbar
     margin: 1em 0px;
 }
 
-.comments h1
+.comments header h1
 {
     white-space: nowrap;
     border-top: solid;
@@ -173,7 +178,12 @@ article.post footer, postToolbar
     background-color: #FFEAC0;
     font-size: 1.0em;
 }
-.comments .comment_title
+
+.comment
+{
+    min-height: 60px;
+}
+.comment header
 {
     white-space: nowrap;
     border-top: solid;
@@ -184,16 +194,11 @@ article.post footer, postToolbar
     font-size: 0.9em;
     margin-top: 2px;
     margin-bottom: 2px;
-}
-.comments .comment_title
-{
-    white-space: nowrap;
-    font-size: 0.9em;
     font-style: normal;
     font-weight: bold;
 }
 
-.comments address
+.comment header address
 {
     display: inline;
 }
@@ -206,6 +211,33 @@ article.post footer, postToolbar
     float: right;
 }
 
+.comment-body
+{
+}
+
+.comment-body p
+{
+    margin: 0.7em 0px;
+}
+
+.markdown-preview-containter
+{
+    margin: 10px 0;
+}
+.markdown-preview-containter .form_item_name
+{
+}
+.markdown-preview
+{
+    border: solid 1px transparent;
+    padding: 10px;
+    min-height: 50px;
+    margin: 5px 0;
+}
+input[type="submit"]
+{
+    float: right;
+}
 
 #sidebar
 {
@@ -275,10 +307,10 @@ article header h1 a
 
 .form_item 
 {
-    margin-top: 4px;
+    margin: 2px 0;
 }
 
-.form_item span.form_item_name
+.form_item label span.form_item_name
 {
     width: 200px;
     display: block;
@@ -338,14 +370,13 @@ article header h1 a
 {
     color: #930;
     padding: 0 7px;
+    margin: 5px 0;
     display: inline-block;
     position: relative;
     background-color: #FFF1A8;
     border: 3px solid #FFF1A8;
     text-align: center;
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
+    .rounded_corners(3px);
 }
 #message.fail 
 {
@@ -422,7 +453,7 @@ article.sectionadmin-list .commands-section
 	margin-top: -54px;
 }
 
-article.post-detalis footer
+article.post-detalis footer, article.postSummery footer
 {
 	margin-left: 25px;
 }
@@ -431,8 +462,30 @@ article.post-detalis footer .author
 {
 }
 
-article.post-detalis footer .share
+footer p 
 {
+    margin: 5px 0;    
+}
+
+footer .share .twitter, footer .share .facebook, footer .share .facebook-share
+{
+    padding-top: 5px;
+}
+footer .share .facebook, footer .share .facebook-share {
+	float: left;
+	margin-right: 5px;
+}
+
+footer .published, footer .created, footer .feedback
+{
+    float: left;
+}
+footer .created, footer .feedback
+{
+    float: left;
+    border-left: solid 1px #000;
+    padding-left: 10px;
+    margin-left: 10px;
 }
 
 .commands-section ul li 
@@ -452,4 +505,16 @@ div.commentsClosedMessage
 {
     font-style: italic;
     padding-top: 10px;
+}
+
+.rounded_corners(@radius: 5px) {
+	-moz-border-radius: @radius;
+	-webkit-border-radius: @radius;
+	border-radius: @radius;
+}
+
+#login
+{
+    width: 360px;
+    margin: 0 auto;
 }

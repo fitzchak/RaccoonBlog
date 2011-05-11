@@ -12,9 +12,7 @@ namespace RaccoonBlog.Web.Helpers.Attributes
     {
         public void OnException(ExceptionContext context)
         {
-			
 			ErrorLog.GetDefault(HttpContext.Current).Log(new Error(context.Exception, HttpContext.Current));
-
 
 			BlogConfig blogConfig;
 			using(var session = DocumentStoreHolder.DocumentStore.OpenSession())

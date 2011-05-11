@@ -33,6 +33,8 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
             "~/rss".ShouldMapTo<SyndicationController>(c => c.Rss());
             "~/rss/tag-name".ShouldMapTo<SyndicationController>(c => c.Tag("tag-name"));
             "~/rsd".ShouldMapTo<SyndicationController>(c => c.Rsd());
+
+            "~/rss.aspx".ShouldMapTo<SyndicationController>(c => c.LegacyRss());
         }
 
         [Fact]
@@ -52,6 +54,7 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
         public void LegacyPostControllerRoutes()
         {
             "~/archive/2011/4/24/legacy-post-title.aspx".ShouldMapTo<LegacyPostController>(c => c.RedirectLegacyPost(2011, 4, 24, "legacy-post-title"));
+            "~/archive/2011/4/24.aspx".ShouldMapTo<LegacyPostController>(c => c.RedirectLegacyArchive(2011, 4, 24));
         }
 
         [Fact]

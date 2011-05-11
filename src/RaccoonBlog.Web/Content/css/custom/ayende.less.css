@@ -13,18 +13,15 @@ header#headermain h2
 	border-color: #993300;
 }
 
-.comments h1
+.comment header, .comments header h1
 {
     border-color: #FF8000;
     background-color: #FFEAC0;
 }
-
-.comments .comment_title
+.markdown-preview
 {
-    border-color: #FF8000;
-    background-color: #FFEAC0;
+    border-color: #FFEAC0;
 }
-
 
 #sidebar
 {

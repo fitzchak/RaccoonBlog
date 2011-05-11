@@ -1,7 +1,5 @@
-using System;
 using System.Threading.Tasks;
 using Elmah;
-using System.Diagnostics;
 using RaccoonBlog.Web.Infrastructure.Raven;
 
 namespace RaccoonBlog.Web.Infrastructure.Commands

@@ -34,8 +34,7 @@ namespace RaccoonBlog.Web.Controllers
 			{
 				Post = post.MapTo<AdminPostDetailsViewModel.PostDetails>(),
 				
-				Comments = comments
-					.Comments
+				Comments = comments.Comments
 					.Concat(comments.Spam)
 					.OrderBy(comment => comment.CreatedAt)
 					.MapTo<AdminPostDetailsViewModel.Comment>(),
@@ -177,6 +176,8 @@ namespace RaccoonBlog.Web.Controllers
                 default:
                     throw new InvalidOperationException(command + " command is not recognized.");
             }
+
+            post.CommentsCount = comments.Comments.Count;
 
             if (Request.IsAjaxRequest())
             {

@@ -144,6 +144,8 @@
     <Compile Include="Controllers\CssController.cs" />
     <Compile Include="Controllers\ElmahController.cs" />
     <Compile Include="Helpers\Attributes\ElmahHandleErrorAttribute.cs" />
+    <Compile Include="Helpers\Binders\RemoveSpacesEnumBinder.cs" />
+    <Compile Include="Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Helpers\Results\ElmahResult.cs" />
     <Compile Include="Controllers\PostDetailsController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -166,6 +168,7 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\BlogConfigMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\EmailViewModelMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\GuidToStringConverter.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\UrlResolver.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\SectionAdminMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\SectionMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\TagsListViewModelMapperProfile.cs" />
@@ -255,6 +258,7 @@
     <Content Include="Content\css\base.less.css" />
     <Content Include="Content\css\ResetCss.css" />
     <Content Include="Content\css\fullcalendar.css" />
+    <Content Include="Content\js\jquery.md5.js" />
     <Content Include="Content\js\RequiredIfValidation.js" />
     <Content Include="Content\js\fullcalendar.min.js" />
     <Content Include="Content\js\jquery-ui-1.8.12.custom.min.js" />
@@ -265,6 +269,8 @@
     <Content Include="Content\js\jquery-1.6-vsdoc.js" />
     <Content Include="Content\js\jquery-1.6.js" />
     <Content Include="Content\js\jquery-1.6.min.js" />
+    <Content Include="Content\js\jquery.tmpl.js" />
+    <Content Include="Content\js\jquery.tmpl.min.js" />
     <Content Include="Views\SectionAdmin\Edit.cshtml" />
     <Compile Include="Controllers\PostController.cs" />
     <Content Include="Views\MailTemplates\_Layout.cshtml" />
@@ -272,9 +278,9 @@
     <Content Include="Views\Shared\500.cshtml" />
     <Content Include="Views\Error\500.htm" />
     <Content Include="Views\Error\404.htm" />
-    <None Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\HiddenInput.cshtml" />
-    <None Include="Views\Shared\DisplayTemplates\String.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\String.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\HiddenInput.cshtml" />
     <Content Include="Views\MailTemplates\NewComment.cshtml" />
     <Content Include="Views\Section\TagsList.cshtml" />
@@ -291,9 +297,9 @@
     <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
     <Content Include="Views\Section\List.cshtml" />
     <Content Include="Views\SectionAdmin\List.cshtml" />
-    <None Include="Views\Shared\EditorTemplates\MultilineText.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\MultilineText.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
-    <None Include="Views\Shared\EditorTemplates\String.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

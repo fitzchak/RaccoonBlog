@@ -16,30 +16,26 @@ header#headermain h2
 }
 
 
-.comments h1
-{
-    border-color: #1F0A00;
-    background-color: #AD5C33;
-    color: White;
-}
-
-.comments .comment_title a
+.comment header a
 {
 	color : #F0D1B2;
 }
 
-.comments .comment_title a:visited
+.comment header a:visited
 {
 	color : #E6B280;
 }
 
-.comments .comment_title
+.comment header, .comments header h1
 {
     color: White;
     border-color: #1F0A00;
     background-color: #AD5C33;
 }
-
+.markdown-preview
+{
+    border-color: #AD5C33;
+}
 
 #sidebar
 {
