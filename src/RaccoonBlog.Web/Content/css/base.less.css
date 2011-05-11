@@ -178,6 +178,11 @@ article.post footer, postToolbar
     background-color: #FFEAC0;
     font-size: 1.0em;
 }
+
+.comment
+{
+    min-height: 60px;
+}
 .comment header
 {
     white-space: nowrap;
