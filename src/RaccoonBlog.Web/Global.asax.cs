@@ -1,4 +1,4 @@
-﻿using System.Web;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using RaccoonBlog.Web.Controllers;

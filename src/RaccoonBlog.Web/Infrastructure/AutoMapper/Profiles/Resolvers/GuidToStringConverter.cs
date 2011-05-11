@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using AutoMapper;
 
 namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers

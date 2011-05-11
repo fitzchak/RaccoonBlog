@@ -1,4 +1,4 @@
-Ôªøusing System.Globalization;
+using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -51,7 +51,7 @@ namespace RaccoonBlog.Web.Common
         private static string ReplaceNonWordWithDashes(string title)
         {
             // Remove Apostrophe Tags
-            title = Regex.Replace(title, "[‚Äô'‚Äú‚Äù\"&]{1,}", "", RegexOptions.None);
+            title = Regex.Replace(title, "[í'ìî\"&]{1,}", "", RegexOptions.None);
 
             // Replaces all non-alphanumeric character by a space
             var builder = new StringBuilder();

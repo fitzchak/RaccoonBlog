@@ -1,4 +1,4 @@
-﻿using RaccoonBlog.Web.Common;
+using RaccoonBlog.Web.Common;
 
 namespace RaccoonBlog.Web.ViewModels
 {

@@ -1,4 +1,4 @@
-﻿namespace RaccoonBlog.Web.Infrastructure.Commands
+namespace RaccoonBlog.Web.Infrastructure.Commands
 {
     public interface ICommand
     {

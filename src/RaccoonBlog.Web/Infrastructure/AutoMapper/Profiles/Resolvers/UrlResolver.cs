@@ -1,4 +1,4 @@
-﻿namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers
+namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers
 {
     public class UrlResolver
     {

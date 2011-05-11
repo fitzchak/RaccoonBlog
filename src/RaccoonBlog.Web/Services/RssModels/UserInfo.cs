@@ -1,4 +1,4 @@
-﻿namespace RaccoonBlog.Web.Services.RssModels
+namespace RaccoonBlog.Web.Services.RssModels
 {
 	public struct UserInfo
 	{
