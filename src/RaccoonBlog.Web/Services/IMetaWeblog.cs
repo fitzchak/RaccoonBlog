@@ -1,4 +1,4 @@
-﻿using CookComputing.XmlRpc;
+using CookComputing.XmlRpc;
 using RaccoonBlog.Web.Services.RssModels;
 
 namespace RaccoonBlog.Web.Services

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Configuration;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;

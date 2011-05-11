@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Indexes;
 using RaccoonBlog.Web.ViewModels;
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Configuration;
 using Joel.Net;
 using RaccoonBlog.Web.Models;

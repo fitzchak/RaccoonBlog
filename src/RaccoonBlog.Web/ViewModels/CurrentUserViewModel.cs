@@ -1,4 +1,4 @@
-﻿namespace RaccoonBlog.Web.ViewModels
+namespace RaccoonBlog.Web.ViewModels
 {
     public class CurrentUserViewModel
     {
