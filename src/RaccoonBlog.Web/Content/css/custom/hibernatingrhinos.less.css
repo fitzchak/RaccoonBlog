@@ -26,7 +26,7 @@ header#headermain h2
 	color : #E6B280;
 }
 
-.comment header
+.comment header, .comments header h1
 {
     color: White;
     border-color: #1F0A00;
