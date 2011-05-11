@@ -16,6 +16,12 @@
 	<form action="@Url.Action("Update")" method="post">
 		@Html.EditorFor(x => x.Title)
 		@Html.EditorFor(x => x.Body)
+        <div class="markdown-preview-containter" style="display: none">
+            <span class="form_item_name">Preview Body</span>
+            <div class="section markdown-preview"></div>
+        </div>
+        <div class="clr"></div>
+
 		@Html.EditorFor(x => x.ControllerName)
 		@Html.EditorFor(x => x.ActionName)
 		@Html.EditorFor(x => x.IsActive)
@@ -24,3 +30,18 @@
 		<input type="submit" value="@ViewBag.SubmitButtonText">
 	</form>
 </article>
+@section Script {
+    <script type="text/javascript" src="@Url.Content("~/Content/js/showdown.js")"></script>
+    <script type="text/javascript">
+        $(function () {
+            var $textarea = $('textarea[name$="Body"]').keydown(function () {
+                $('.markdown-preview-containter').show('medium');
+            });
+            $preview = $('.markdown-preview');
+            converter = new Showdown.converter();
+            $textarea.keyup(function () {
+                $preview.html(converter.makeHtml($textarea.val()));
+            }).trigger('keyup');
+        });
+    </script>
+}
