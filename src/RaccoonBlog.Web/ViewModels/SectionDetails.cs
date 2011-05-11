@@ -12,7 +12,7 @@ namespace RaccoonBlog.Web.ViewModels
 
         public bool IsActionSection()
         {
-            return Body == MvcHtmlString.Empty;
+            return MvcHtmlString.IsNullOrEmpty(Body);
         }
     }
 }
