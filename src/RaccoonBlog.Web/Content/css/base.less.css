@@ -302,7 +302,7 @@ article header h1 a
 
 .form_item 
 {
-    margin-top: 4px;
+    margin: 2px 0;
 }
 
 .form_item label span.form_item_name
@@ -507,4 +507,10 @@ div.commentsClosedMessage
 	-moz-border-radius: @radius;
 	-webkit-border-radius: @radius;
 	border-radius: @radius;
+}
+
+#login
+{
+    width: 360px;
+    margin: 0 auto;
 }
