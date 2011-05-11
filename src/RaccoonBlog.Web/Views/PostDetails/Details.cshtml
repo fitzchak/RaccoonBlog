@@ -80,7 +80,7 @@
 						@Html.Link(comment.Author, @comment.Url, new { title = comment.Tooltip, target = "_blank" })
                     </address>
                 </header>
-                <p class="comment-body">@comment.Body</p>
+                <div class="comment-body raw_html">@comment.Body</div>
             </article>
         }
 
@@ -149,7 +149,7 @@
             });
 
             var $textarea = $('textarea[name$="Body"]'),
-            $preview = $('<div id="preview" class="comment-body"></div>').insertAfter($textarea),
+            $preview = $('<div id="preview" class="comment-body markdown-preview raw_html"></div>').insertAfter($textarea),
             converter = new Showdown.converter();
             $textarea.keyup(function () {
                 $preview.html(converter.makeHtml($textarea.val()));
