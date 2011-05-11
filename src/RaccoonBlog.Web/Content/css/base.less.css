@@ -215,14 +215,19 @@ article.post footer, postToolbar
     margin: 0.7em 0px;
 }
 
+.markdown-preview-containter
+{
+    margin: 10px 0;
+}
+.markdown-preview-containter .form_item_name
+{
+}
 .markdown-preview
 {
     border: solid 1px transparent;
     padding: 10px;
     min-height: 100px;
-
-    float: left;
-    width: 80%;
+    margin: 5px 0;
 }
 
 #sidebar
@@ -296,7 +301,7 @@ article header h1 a
     margin-top: 4px;
 }
 
-.form_item span.form_item_name
+.form_item label span.form_item_name
 {
     width: 200px;
     display: block;
