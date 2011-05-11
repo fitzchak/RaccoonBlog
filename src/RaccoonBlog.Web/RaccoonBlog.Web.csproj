@@ -268,6 +268,8 @@
     <Content Include="Content\js\jquery-1.6-vsdoc.js" />
     <Content Include="Content\js\jquery-1.6.js" />
     <Content Include="Content\js\jquery-1.6.min.js" />
+    <Content Include="Content\js\jquery.tmpl.js" />
+    <Content Include="Content\js\jquery.tmpl.min.js" />
     <Content Include="Views\SectionAdmin\Edit.cshtml" />
     <Compile Include="Controllers\PostController.cs" />
     <Content Include="Views\MailTemplates\_Layout.cshtml" />

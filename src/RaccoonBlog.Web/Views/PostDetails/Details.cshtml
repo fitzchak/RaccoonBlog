@@ -49,7 +49,8 @@
                 @Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, Model.Post.Author)
             </div>
             <div class="facebook-share">
-				<a name="fb_share" type="box_count" share_url="@(Url.Abs((string)ViewBag.CurrentUrl))" href="http://www.facebook.com/sharer.php?u=@(Url.Abs((string)ViewBag.CurrentUrl))&t=@(Model.Post.Title)"></a>            </div>
+				<a name="fb_share" type="box_count" share_url="@(Url.Abs((string)ViewBag.CurrentUrl))" href="http://www.facebook.com/sharer.php?u=@(Url.Abs((string)ViewBag.CurrentUrl))&t=@(Model.Post.Title)"></a>
+            </div>
 			<div class="facebook">
                 <iframe src="http://www.facebook.com/plugins/like.php?href=@(Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px;" allowTransparency="true"></iframe>
             </div>
@@ -84,9 +85,8 @@
             </article>
         }
 
+        <div class="messageWrapper"><div id="message" style="visibility:hidden"></div></div>
         <article id="postComment">
-            <div class="messageWrapper"><div id="message" style="visibility:hidden"></div></div>
-
             @if (Model.Post.IsCommentAllowed == false || Model.AreCommentsClosed)
             { 
                 <div class="commentsClosedMessage">Comments have been closed on this topic.</div>
@@ -130,13 +130,16 @@
 </article>
 
 @section Style {
-    <link rel="canonical" href="@Url.AbsoluteAction("Details", new { Model.Post.Id, Model.Post.Slug })">}
+    <link rel="canonical" href="@Url.AbsoluteAction("Details", new { Model.Post.Id, Model.Post.Slug })">
+}
 @section Script {
     <script type="text/javascript" src="@Url.Content("~/Content/js/jquery.validate.min.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Content/js/jquery.validate.unobtrusive.min.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Content/js/showdown.js")"></script>
     <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-	<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>    <script type="text/javascript">
+	<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+    <script type="text/javascript" src="@Url.Content("~/Content/js/jquery.tmpl.min.js")"></script>
+    <script type="text/javascript">
         $(function () {
             $('#postComment form').submit(function () {
                 var t = $(this);
@@ -147,7 +150,19 @@
                     });
                     jqxhr.success(function (data, textStatus, jqXHR) {
                         if (!data.success) setMessage('An error occurred while posing your feedback: ' + data.message, 'fail');
-                        else setMessage(data.message);
+                        else {
+                            setMessage(data.message);
+                            var now = new Date();
+                            var comment = {
+                                author: $('article#postComment input[name$="Name"]').val(),
+                                emailHash: $('article#postComment input[name$="Email"]').val(),
+                                url: $('article#postComment input[name$="Url"]').val(),
+                                body: $('article#postComment textarea[name$="Body"]').val(),
+                                createdAt: now.getMonth() + '/' + now.getDay() + '/' + now.getYear() + ' ' + now.getHours() + ':' + now.getMinutes()
+                            };
+                            $('article#postComment').remove();
+                            $('#commentTemplate').tmpl(comment).appendTo('section.comments');
+                        }
                     });
                 }
                 return false;
@@ -160,5 +175,17 @@
                 $preview.html(converter.makeHtml($textarea.val()));
             }).trigger('keyup');
         });
+    </script>
+    <script id="commentTemplate" type="text/html">
+        <article class="comment">
+            <img class="avatar" src="http://www.gravatar.com/avatar.php?gravatar_id=${emailHash}&amp;size=50&amp;default=identicon" alt="Gravatar" style="border-width:0px;">
+            <header>
+                ${createdAt} by
+                <address>
+                    <a target="_blank"  href="${url}">${author}</a>
+                </address>
+            </header>
+            <div class="comment-body raw_html">${body}</div>
+        </article>
     </script>
 }
