@@ -105,7 +105,7 @@
                     @Html.EditorFor(x => x.Input.Email)
                     @Html.EditorFor(x => x.Input.Url)
                     @Html.EditorFor(x => x.Input.Body)
-                    <div class="markdown-preview-containter">
+                    <div class="markdown-preview-containter" style="display: none">
                         <span class="form_item_name">Preview Comment</span>
                         <div class="comment-body markdown-preview raw_html"></div>
                     </div>
@@ -169,7 +169,9 @@
                 return false;
             });
 
-            var $textarea = $('textarea[name$="Body"]');
+            var $textarea = $('textarea[name$="Body"]').keydown(function () {
+                $('.markdown-preview-containter').show('medium');
+            });
             $preview = $('.markdown-preview');
             converter = new Showdown.converter();
             $textarea.keyup(function () {
