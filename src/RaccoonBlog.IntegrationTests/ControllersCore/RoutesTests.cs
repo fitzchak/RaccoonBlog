@@ -52,6 +52,7 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
         public void LegacyPostControllerRoutes()
         {
             "~/archive/2011/4/24/legacy-post-title.aspx".ShouldMapTo<LegacyPostController>(c => c.RedirectLegacyPost(2011, 4, 24, "legacy-post-title"));
+            "~/archive/2011/4/24.aspx".ShouldMapTo<LegacyPostController>(c => c.RedirectLegacyArchive(2011, 4, 24));
         }
 
         [Fact]

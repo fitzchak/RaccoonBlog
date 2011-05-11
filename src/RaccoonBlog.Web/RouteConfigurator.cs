@@ -196,6 +196,12 @@ namespace RaccoonBlog.Web
                 new { controller = "LegacyPost", action = "RedirectLegacyPost" },
                 new { Year = MatchPositiveInteger, Month = MatchPositiveInteger, Day = MatchPositiveInteger }
                 );
+
+            routes.MapRouteLowerCase("LegacyPostController-RedirectLegacyArchive",
+               "archive/{year}/{month}/{day}.aspx",
+               new { controller = "LegacyPost", action = "RedirectLegacyArchive" },
+               new { Year = MatchPositiveInteger, Month = MatchPositiveInteger, Day = MatchPositiveInteger }
+               );
         }
 
         private void ConfigurePostDetails()
