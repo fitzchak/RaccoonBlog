@@ -16,17 +16,17 @@ header#headermain h2
 }
 
 
-.comments .comment_title a
+.comment header a
 {
 	color : #F0D1B2;
 }
 
-.comments .comment_title a:visited
+.comment header a:visited
 {
 	color : #E6B280;
 }
 
-.comments .comment_title
+.comment header
 {
     color: White;
     border-color: #1F0A00;

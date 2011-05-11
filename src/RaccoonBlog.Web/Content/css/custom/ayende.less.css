@@ -13,7 +13,7 @@ header#headermain h2
 	border-color: #993300;
 }
 
-.comments .comment_title
+.comment header
 {
     border-color: #FF8000;
     background-color: #FFEAC0;
