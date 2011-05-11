@@ -16,13 +16,6 @@ header#headermain h2
 }
 
 
-.comments h1
-{
-    border-color: #1F0A00;
-    background-color: #AD5C33;
-    color: White;
-}
-
 .comments .comment_title a
 {
 	color : #F0D1B2;

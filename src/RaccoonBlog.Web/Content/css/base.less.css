@@ -166,7 +166,7 @@ article.post footer, postToolbar
     margin: 1em 0px;
 }
 
-.comments h1
+.comments header h1
 {
     white-space: nowrap;
     border-top: solid;
@@ -189,11 +189,6 @@ article.post footer, postToolbar
     font-size: 0.9em;
     margin-top: 2px;
     margin-bottom: 2px;
-}
-.comments .comment_title
-{
-    white-space: nowrap;
-    font-size: 0.9em;
     font-style: normal;
     font-weight: bold;
 }
@@ -211,6 +206,9 @@ article.post footer, postToolbar
     float: right;
 }
 
+.comment-body
+{
+    }
 
 #sidebar
 {
