@@ -33,6 +33,8 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
             "~/rss".ShouldMapTo<SyndicationController>(c => c.Rss());
             "~/rss/tag-name".ShouldMapTo<SyndicationController>(c => c.Tag("tag-name"));
             "~/rsd".ShouldMapTo<SyndicationController>(c => c.Rsd());
+
+            "~/rss.aspx".ShouldMapTo<SyndicationController>(c => c.LegacyRss());
         }
 
         [Fact]

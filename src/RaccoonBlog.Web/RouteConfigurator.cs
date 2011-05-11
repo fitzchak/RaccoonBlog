@@ -236,6 +236,11 @@ namespace RaccoonBlog.Web
 			  "rsd",
 			  new { controller = "Syndication", action = "Rsd" }
 			  );
+
+            routes.MapRouteLowerCase("RssFeed-LegacyUrl",
+              "rss.aspx",
+              new { controller = "Syndication", action = "LegacyRss" }
+              );
     	}
     }
 }
