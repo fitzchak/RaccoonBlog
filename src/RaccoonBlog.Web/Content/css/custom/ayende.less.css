@@ -18,7 +18,10 @@ header#headermain h2
     border-color: #FF8000;
     background-color: #FFEAC0;
 }
-
+.markdown-preview
+{
+    border-color: #FFEAC0;
+}
 
 #sidebar
 {

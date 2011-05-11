@@ -105,7 +105,12 @@
                     @Html.EditorFor(x => x.Input.Email)
                     @Html.EditorFor(x => x.Input.Url)
                     @Html.EditorFor(x => x.Input.Body)
-    
+                    <div class="form_item">
+                        <span class="form_item_name">Preview Comment</span>
+                        <div class="comment-body markdown-preview raw_html"></div>
+                    </div>
+                    <div class="clr"></div>
+                
                     if (!Model.IsTrustedCommenter)
                     { 
                         <div class="form_item">
@@ -143,13 +148,13 @@
                     jqxhr.success(function (data, textStatus, jqXHR) {
                         if (!data.success) setMessage('An error occurred while posing your feedback: ' + data.message, 'fail');
                         else setMessage(data.message);
-                    });       
+                    });
                 }
                 return false;
             });
 
-            var $textarea = $('textarea[name$="Body"]'),
-            $preview = $('<div id="preview" class="comment-body markdown-preview raw_html"></div>').insertAfter($textarea),
+            var $textarea = $('textarea[name$="Body"]');
+            $preview = $('.markdown-preview');
             converter = new Showdown.converter();
             $textarea.keyup(function () {
                 $preview.html(converter.makeHtml($textarea.val()));

@@ -217,9 +217,12 @@ article.post footer, postToolbar
 
 .markdown-preview
 {
-    border: solid 1px #AD5C33;
+    border: solid 1px transparent;
     padding: 10px;
     min-height: 100px;
+
+    float: left;
+    width: 80%;
 }
 
 #sidebar

@@ -32,7 +32,10 @@ header#headermain h2
     border-color: #1F0A00;
     background-color: #AD5C33;
 }
-
+.markdown-preview
+{
+    border-color: #AD5C33;
+}
 
 #sidebar
 {
