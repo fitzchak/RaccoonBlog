@@ -24,7 +24,7 @@ namespace RaccoonBlog.Web.ViewModels
             public string Tooltip { get; set; }
             public string Url { get; set; }    // Look for HTML injection.
             public string EmailHash { get; set; }
-            public DateTimeOffset CreatedAt { get; set; }
+            public string CreatedAt { get; set; }
             public bool IsImportant { get; set; }
         }
 
