@@ -139,6 +139,7 @@
     <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 	<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
     <script type="text/javascript" src="@Url.Content("~/Content/js/jquery.tmpl.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Content/js/jquery.md5.js")"></script>
     <script type="text/javascript">
         $(function () {
             $('#postComment form').submit(function () {
@@ -155,7 +156,7 @@
                             var now = new Date();
                             var comment = {
                                 author: $('article#postComment input[name$="Name"]').val(),
-                                emailHash: $('article#postComment input[name$="Email"]').val(),
+                                emailHash: $.md5($('article#postComment input[name$="Email"]').val()),
                                 url: $('article#postComment input[name$="Url"]').val(),
                                 body: $('article#postComment textarea[name$="Body"]').val(),
                                 createdAt: now.getMonth() + '/' + now.getDay() + '/' + now.getYear() + ' ' + now.getHours() + ':' + now.getMinutes()
