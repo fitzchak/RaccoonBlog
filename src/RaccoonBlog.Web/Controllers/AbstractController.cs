@@ -24,6 +24,11 @@ namespace RaccoonBlog.Web.Controllers
 		protected override void OnActionExecuted(ActionExecutedContext filterContext)
 		{
 			var blogConfig = Session.Load<BlogConfig>("Blog/Config");
+		    if (blogConfig == null)
+		    {
+		        blogConfig = new BlogConfig();
+                Session.Store(blogConfig);
+		    }
             ViewBag.BlogConfig = blogConfig.MapTo<BlogConfigViewModel>();
 		}
         
