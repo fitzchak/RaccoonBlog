@@ -229,6 +229,10 @@ article.post footer, postToolbar
     min-height: 100px;
     margin: 5px 0;
 }
+input[type="submit"]
+{
+    float: right;
+}
 
 #sidebar
 {
