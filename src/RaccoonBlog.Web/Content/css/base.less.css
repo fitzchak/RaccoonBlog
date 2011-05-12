@@ -386,6 +386,10 @@ article header h1 a
 }
 
 
+.tags ul 
+{
+    display: inline;
+}
 .tags li 
 {
     display: inline;
