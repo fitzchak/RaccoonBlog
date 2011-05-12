@@ -152,7 +152,7 @@
                         setMessage('An error occurred while posing your comment', 'fail');
                     });
                     jqxhr.success(function (data, textStatus, jqXHR) {
-                    	if (!data.success) setMessage('An error occurred while posing your comment: ' + data.message, 'fail');
+                    	if (!data.success) setMessage('An error occurred while posting your comment: ' + data.message, 'fail');
                         else {
                             setMessage(data.message);
                             var now = new Date();
