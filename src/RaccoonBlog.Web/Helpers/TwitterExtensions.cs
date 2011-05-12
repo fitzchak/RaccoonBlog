@@ -36,7 +36,10 @@ namespace RaccoonBlog.Web.Helpers
 			}
 
 			if (string.IsNullOrEmpty(url) == false)
+			{
 				tag.Attributes["data-url"] = url;
+				tag.Attributes["data-counturl"] = url;
+			}
 
 
 			if (string.IsNullOrEmpty(title) == false)
