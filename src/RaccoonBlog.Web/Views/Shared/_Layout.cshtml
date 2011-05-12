@@ -9,15 +9,14 @@
 <html>
 <head>
     <title>@if (ViewBag.Title != null) { <text> @ViewBag.Title - </text> }@blogConfig.Title</title>
-	<link rel="stylesheet" type="text/css" href="@Url.ActionLinkWithArray("Merge", "Css", new { files = new[] { "ResetCss.css", "custom/" + blogConfig.CustomCss + ".settings.less.css", "base.less.css", "custom/" + blogConfig.CustomCss + ".less.css" } })">
-    @RenderSection("Style", false)
-
     <meta name="description" content="@blogConfig.MetaDescription">
     <meta name="keywords" content="@blogConfig.MetaKeywords">
 
     <!--[if lt IE 9]>
     <script src="@Url.Content("~/Content/js/html5shim.js")"></script>
     <![endif]-->
+    <link rel="stylesheet" type="text/css" href="@Url.ActionLinkWithArray("Merge", "Css", new { files = new[] { "ResetCss.css", "custom/" + blogConfig.CustomCss + ".settings.less.css", "base.less.css", "custom/" + blogConfig.CustomCss + ".less.css" } })">
+    @RenderSection("Style", false)
         
 	<link id="Rsd" rel="EditURI" type="application/rsd+xml" title="RSD" href="@Url.Action("Rsd", "Syndication")">
     <link id="AtomLink" title="RSS" type="application/rss+xml" rel="alternate" href="@Url.Action("Rss", "Syndication")">
