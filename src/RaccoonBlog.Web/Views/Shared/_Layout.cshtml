@@ -32,8 +32,6 @@
 			</div>
 		</header>
         <div id="mainBody">
-                @{Html.RenderAction("List", "Section");}
-            
             <div id="content">
                 @if (!string.IsNullOrEmpty(ViewBag.Message))
                 { 
@@ -41,6 +39,7 @@
                 }
                 @RenderBody()
             </div>
+			@{Html.RenderAction("List", "Section");}
         </div>
     </div>
     @if (IsSectionDefined("Script")) {
