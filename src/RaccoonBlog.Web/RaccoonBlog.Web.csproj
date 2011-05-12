@@ -58,6 +58,9 @@
     <Reference Include="CookComputing.XmlRpcV2">
       <HintPath>..\packages\xmlrpcnet.2.5.0\lib\net20\CookComputing.XmlRpcV2.dll</HintPath>
     </Reference>
+    <Reference Include="dotless.Core">
+      <HintPath>..\packages\dotless.1.1.0\lib\dotless.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Elmah">
       <HintPath>..\packages\elmah.1.1\lib\Elmah.dll</HintPath>
     </Reference>
@@ -132,12 +135,17 @@
     <Compile Include="Common\DocumentSessionExtensions.cs" />
     <Compile Include="Common\RouteCollectionExtension.cs" />
     <Compile Include="Common\UrlHelperExtensions.cs" />
-    <Content Include="Content\css\custom\hibernatingrhinos.css" />
+    <Content Include="Content\css\custom\ayende.less.css" />
+    <Content Include="Content\css\custom\hibernatingrhinos.settings.less.css" />
+    <Content Include="Content\css\custom\hibernatingrhinos.less.css" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Common\DateTimeOffsetUtil.cs" />
     <Compile Include="Controllers\CommentCommandOptions.cs" />
+    <Compile Include="Controllers\CssController.cs" />
     <Compile Include="Controllers\ElmahController.cs" />
     <Compile Include="Helpers\Attributes\ElmahHandleErrorAttribute.cs" />
+    <Compile Include="Helpers\Binders\RemoveSpacesEnumBinder.cs" />
+    <Compile Include="Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Helpers\Results\ElmahResult.cs" />
     <Compile Include="Controllers\PostDetailsController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -157,8 +165,10 @@
     <Compile Include="Helpers\Results\JsonNetResult.cs" />
     <Compile Include="Infrastructure\ActionResults\XmlResult.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\AbstractProfile.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\BlogConfigMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\EmailViewModelMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\GuidToStringConverter.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\UrlResolver.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\SectionAdminMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\SectionMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\TagsListViewModelMapperProfile.cs" />
@@ -168,6 +178,7 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\TagsResolver.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\UserAdminMapperProfile.cs" />
     <Compile Include="Common\LowercaseRoute.cs" />
+    <Compile Include="Infrastructure\Commands\CommandExecutor.cs" />
     <Compile Include="Infrastructure\Indexes\PostCountByMonth.cs" />
     <Compile Include="Infrastructure\Indexes\TagCount.cs" />
     <Compile Include="Infrastructure\Indexes\TempTagCount.cs" />
@@ -200,7 +211,6 @@
     <Compile Include="Infrastructure\Raven\DocumentStoreHolder.cs" />
     <Compile Include="Infrastructure\Controllers\RavenActionFilterAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Infrastructure\Commands\CommandExcucator.cs" />
     <Compile Include="Infrastructure\Commands\ICommand.cs" />
     <Compile Include="Services\AskimetService.cs" />
     <Compile Include="Common\DateTimeOffsetExtensions.cs" />
@@ -218,6 +228,7 @@
     <Compile Include="Common\SlugConverter.cs" />
     <Compile Include="Services\RssModels\UserInfo.cs" />
     <Compile Include="ViewModels\AdminPostDetailsViewModel.cs" />
+    <Compile Include="ViewModels\BlogConfigViewModel.cs" />
     <Compile Include="ViewModels\ChangePassViewModel.cs" />
     <Compile Include="ViewModels\CommentInput.cs" />
     <Compile Include="ViewModels\CurrentUserViewModel.cs" />
@@ -234,6 +245,7 @@
     <Compile Include="ViewModels\SectionDetails.cs" />
     <Compile Include="ViewModels\SectionInput.cs" />
     <Compile Include="ViewModels\SectionSummery.cs" />
+    <Compile Include="ViewModels\TagDetails.cs" />
     <Compile Include="ViewModels\TagsListViewModel.cs" />
     <Compile Include="ViewModels\UserInput.cs" />
     <Compile Include="ViewModels\UserPasswordInput.cs" />
@@ -241,11 +253,12 @@
     <Compile Include="Helpers\Attributes\ValidatePasswordLengthAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\css\custom\ayende.css" />
+    <Content Include="Content\css\custom\ayende.settings.less.css" />
     <Content Include="Content\css\images\printer.png" />
-    <Content Include="Content\css\main.css" />
+    <Content Include="Content\css\base.less.css" />
     <Content Include="Content\css\ResetCss.css" />
     <Content Include="Content\css\fullcalendar.css" />
+    <Content Include="Content\js\jquery.md5.js" />
     <Content Include="Content\js\RequiredIfValidation.js" />
     <Content Include="Content\js\fullcalendar.min.js" />
     <Content Include="Content\js\jquery-ui-1.8.12.custom.min.js" />
@@ -256,6 +269,8 @@
     <Content Include="Content\js\jquery-1.6-vsdoc.js" />
     <Content Include="Content\js\jquery-1.6.js" />
     <Content Include="Content\js\jquery-1.6.min.js" />
+    <Content Include="Content\js\jquery.tmpl.js" />
+    <Content Include="Content\js\jquery.tmpl.min.js" />
     <Content Include="Views\SectionAdmin\Edit.cshtml" />
     <Compile Include="Controllers\PostController.cs" />
     <Content Include="Views\MailTemplates\_Layout.cshtml" />
@@ -263,9 +278,9 @@
     <Content Include="Views\Shared\500.cshtml" />
     <Content Include="Views\Error\500.htm" />
     <Content Include="Views\Error\404.htm" />
-    <None Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\HiddenInput.cshtml" />
-    <None Include="Views\Shared\DisplayTemplates\String.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\String.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\HiddenInput.cshtml" />
     <Content Include="Views\MailTemplates\NewComment.cshtml" />
     <Content Include="Views\Section\TagsList.cshtml" />
@@ -282,9 +297,9 @@
     <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
     <Content Include="Views\Section\List.cshtml" />
     <Content Include="Views\SectionAdmin\List.cshtml" />
-    <None Include="Views\Shared\EditorTemplates\MultilineText.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\MultilineText.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
-    <None Include="Views\Shared\EditorTemplates\String.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

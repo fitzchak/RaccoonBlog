@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using RaccoonBlog.Web.Helpers.Validation;
 

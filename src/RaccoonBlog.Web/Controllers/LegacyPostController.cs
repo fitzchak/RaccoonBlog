@@ -23,5 +23,10 @@ namespace RaccoonBlog.Web.Controllers
             var postReference = post.MapTo<PostReference>();
             return RedirectToActionPermanent("Details", "PostDetails", new { Id = postReference.DomainId, postReference.Slug });
         }
+
+        public ActionResult RedirectLegacyArchive(int year, int month, int day)
+        {
+            return RedirectToActionPermanent("Archive", "Post", new { year, month, day });
+        }
     }
 }

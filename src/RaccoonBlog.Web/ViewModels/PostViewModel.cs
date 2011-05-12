@@ -21,9 +21,10 @@ namespace RaccoonBlog.Web.ViewModels
             public int Id { get; set; }
             public MvcHtmlString Body { get; set; }
             public string Author { get; set; }
+            public string Tooltip { get; set; }
             public string Url { get; set; }    // Look for HTML injection.
             public string EmailHash { get; set; }
-            public DateTimeOffset CreatedAt { get; set; }
+            public string CreatedAt { get; set; }
             public bool IsImportant { get; set; }
         }
 
@@ -38,7 +39,7 @@ namespace RaccoonBlog.Web.ViewModels
             public DateTimeOffset PublishedAt { get; set; }
             public bool IsCommentAllowed { get; set; }
 
-            public ICollection<string> Tags { get; set; }
+            public ICollection<TagDetails> Tags { get; set; }
 
             public UserDetails Author { get; set; }
         }

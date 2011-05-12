@@ -1,8 +1,10 @@
-﻿using System.Web;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using RaccoonBlog.Web.Controllers;
 using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Helpers.Attributes;
+using RaccoonBlog.Web.Helpers.Binders;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Controllers;
 
@@ -33,6 +35,7 @@ namespace RaccoonBlog.Web
 
             RegisterGlobalFilters(GlobalFilters.Filters);
 			new RouteConfigurator(RouteTable.Routes).Configure();
+            ModelBinders.Binders.Add(typeof(CommentCommandOptions), new RemoveSpacesEnumBinder());
 
             AutoMapperConfiguration.Configure();
         }

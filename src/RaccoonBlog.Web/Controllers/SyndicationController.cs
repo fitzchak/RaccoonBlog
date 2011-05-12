@@ -105,5 +105,10 @@ namespace RaccoonBlog.Web.Controllers
 		{
 			return Session.Load<BlogConfig>("Blog/Config").Title;
 		}
+
+        public ActionResult LegacyRss()
+        {
+            return RedirectToActionPermanent("Rss", "Syndication");
+        }
 	}
 }

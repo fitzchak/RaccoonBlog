@@ -1,4 +1,4 @@
-﻿using System.Web.Mvc;
+using System.Web.Mvc;
 using MarkdownSharp;
 
 namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers

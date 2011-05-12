@@ -1,4 +1,4 @@
-﻿namespace RaccoonBlog.Web.Controllers
+namespace RaccoonBlog.Web.Controllers
 {
 	public enum CommentCommandOptions
 	{

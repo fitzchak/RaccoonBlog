@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+using System.Configuration;
+using System.Linq;
 using System.Web;
 using AutoMapper;
 using RaccoonBlog.Web.Common;
@@ -18,12 +19,16 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
                 .ForMember(x => x.PublishedAt, o => o.MapFrom(m => m.PublishAt))
                 .ForMember(x => x.IsCommentAllowed, o => o.MapFrom(m => m.AllowComments))
                 .ForMember(x => x.Author, o => o.Ignore())
+                .ForMember(x => x.Tags, o => o.MapFrom(m => m.Tags.Select(name => new TagDetails { Name = name })))
                 ;
 
             Mapper.CreateMap<PostComments.Comment, PostViewModel.Comment>()
                 .ForMember(x => x.Body, o => o.MapFrom(m => MarkdownResolver.Resolve(m.Body)))
                 .ForMember(x => x.EmailHash, o => o.MapFrom(m => EmailHashResolver.Resolve(m.Email)))
                 .ForMember(x => x.IsImportant, o => o.MapFrom(m => m.Important))
+                .ForMember(x => x.Url, o => o.MapFrom(m => UrlResolver.Resolve(m.Url)))
+                .ForMember(x => x.Tooltip, o => o.MapFrom(m => string.IsNullOrEmpty(m.Url) ? "Comment by " + m.Author : m.Url))
+                .ForMember(x => x.CreatedAt, o => o.MapFrom(m => m.CreatedAt.ToString("MM/dd/yyyy hh:mm tt")))
                 ;
 
             Mapper.CreateMap<Post, PostReference>()

@@ -35,7 +35,7 @@ namespace RaccoonBlog.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                FormsAuthentication.SetAuthCookie(input.Email, false);
+                FormsAuthentication.SetAuthCookie(input.Email, true);
                 return RedirectFromLoginPage(input.ReturnUrl);
             }
 

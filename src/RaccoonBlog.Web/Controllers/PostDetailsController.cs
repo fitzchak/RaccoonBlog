@@ -76,7 +76,7 @@ namespace RaccoonBlog.Web.Controllers
     		if (ModelState.IsValid == false)
     			return PostingCommentFailed(post, input);
 
-        	CommandExcucator.ExcuteLater(new AddCommentCommand(input, Request.MapTo<RequestValues>(), id));
+			CommandExecutor.ExcuteLater(new AddCommentCommand(input, Request.MapTo<RequestValues>(), id));
 
             SetCommenterCookie(commenter);
 

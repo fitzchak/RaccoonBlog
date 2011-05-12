@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Web.Mvc;
 using RaccoonBlog.Web.Common;
@@ -34,8 +34,7 @@ namespace RaccoonBlog.Web.Controllers
 			{
 				Post = post.MapTo<AdminPostDetailsViewModel.PostDetails>(),
 				
-				Comments = comments
-					.Comments
+				Comments = comments.Comments
 					.Concat(comments.Spam)
 					.OrderBy(comment => comment.CreatedAt)
 					.MapTo<AdminPostDetailsViewModel.Comment>(),
@@ -141,7 +140,6 @@ namespace RaccoonBlog.Web.Controllers
             }
 
             var comments = Session.Load<PostComments>(id);
-            var requestValues = Request.MapTo<RequestValues>();
             switch (command)
             {
                 case CommentCommandOptions.Delete:
@@ -150,7 +148,7 @@ namespace RaccoonBlog.Web.Controllers
                     break;
 
                 case CommentCommandOptions.MarkSpam: 
-                    var spams = comments.Comments
+                    var spams = comments.Comments.Concat(comments.Spam)
                         .Where(c => commentIds.Contains(c.Id))
                         .ToArray();
 
@@ -178,6 +176,8 @@ namespace RaccoonBlog.Web.Controllers
                 default:
                     throw new InvalidOperationException(command + " command is not recognized.");
             }
+
+            post.CommentsCount = comments.Comments.Count;
 
             if (Request.IsAjaxRequest())
             {

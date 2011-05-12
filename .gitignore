@@ -1,7 +1,6 @@
 *resharper.user
 [Dd]ebug/
 [Rr]elease/
-build/
 [Bb]in/
 [Oo]bj/
 *.suo
@@ -11,7 +10,6 @@ Output/
 *.resharper
 resharper.settings.xml
 *.user
-[Bb]uild*
 [Dd]ist
 junit-report
 junit

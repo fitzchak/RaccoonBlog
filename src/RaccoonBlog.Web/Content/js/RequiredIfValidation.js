@@ -1,4 +1,4 @@
-﻿/// <reference path="jquery-1.4.4-vsdoc.js" />
+/// <reference path="jquery-1.4.4-vsdoc.js" />
 /// <reference path="jquery.validate.unobtrusive.js" />
 
 $.validator.addMethod('requiredif',

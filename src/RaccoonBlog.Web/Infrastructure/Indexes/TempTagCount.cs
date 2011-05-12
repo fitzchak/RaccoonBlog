@@ -1,4 +1,4 @@
-﻿namespace RaccoonBlog.Web.Infrastructure.Indexes
+namespace RaccoonBlog.Web.Infrastructure.Indexes
 {
 	public class TempTagCount
 	{

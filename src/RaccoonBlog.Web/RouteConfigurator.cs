@@ -32,6 +32,8 @@ namespace RaccoonBlog.Web
 
     	    ConfigureLogin();
 
+    	    ConfigureCss();
+
             ConfigureUserAdmin();
 
             ConfigureElmah();
@@ -51,6 +53,14 @@ namespace RaccoonBlog.Web
             routes.MapRouteLowerCase("ElmahController-internal",
                 "admin/elmah/{type}",
                 new { controller = "Elmah", action = "Index", type = UrlParameter.Optional }
+                );
+        }
+
+        private void ConfigureCss()
+        {
+            routes.MapRouteLowerCase("CssController",
+                "css",
+                new { controller = "Css", action = "Merge" }
                 );
         }
 
@@ -186,6 +196,12 @@ namespace RaccoonBlog.Web
                 new { controller = "LegacyPost", action = "RedirectLegacyPost" },
                 new { Year = MatchPositiveInteger, Month = MatchPositiveInteger, Day = MatchPositiveInteger }
                 );
+
+            routes.MapRouteLowerCase("LegacyPostController-RedirectLegacyArchive",
+               "archive/{year}/{month}/{day}.aspx",
+               new { controller = "LegacyPost", action = "RedirectLegacyArchive" },
+               new { Year = MatchPositiveInteger, Month = MatchPositiveInteger, Day = MatchPositiveInteger }
+               );
         }
 
         private void ConfigurePostDetails()
@@ -220,6 +236,11 @@ namespace RaccoonBlog.Web
 			  "rsd",
 			  new { controller = "Syndication", action = "Rsd" }
 			  );
+
+            routes.MapRouteLowerCase("RssFeed-LegacyUrl",
+              "rss.aspx",
+              new { controller = "Syndication", action = "LegacyRss" }
+              );
     	}
     }
 }

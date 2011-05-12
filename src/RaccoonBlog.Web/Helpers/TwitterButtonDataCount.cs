@@ -1,4 +1,4 @@
-﻿namespace RaccoonBlog.Web.Helpers
+namespace RaccoonBlog.Web.Helpers
 {
 	public enum TwitterButtonDataCount
 	{

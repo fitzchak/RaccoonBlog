@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Configuration;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
@@ -33,8 +33,6 @@ namespace RaccoonBlog.Web.Commands
             var post = Session.Load<Post>(_postId);
             var comments = Session.Load<PostComments>(_postId);
 
-            post.CommentsCount++;
-
             var comment = new PostComments.Comment
             {
                 Id = comments.GenerateNewCommentId(),
@@ -49,10 +47,13 @@ namespace RaccoonBlog.Web.Commands
             };
             comment.IsSpam = new AskimetService(Session).CheckForSpam(comment);
 
-        	if (comment.IsSpam)
-        		comments.Spam.Add(comment);
-        	else
-        		comments.Comments.Add(comment);
+            if (comment.IsSpam)
+                comments.Spam.Add(comment);
+            else
+            {
+                post.CommentsCount++;
+                comments.Comments.Add(comment);
+            }
 
             SendNewCommentEmail(post, comment);
         }
@@ -69,7 +70,7 @@ namespace RaccoonBlog.Web.Commands
 			if(comment.IsSpam)
 				subject = "Spam " + subject;
 
-    		CommandExcucator.ExcuteLater(new SendEmailCommand(viewModel.Email,subject, "NewComment", viewModel));
+    		CommandExecutor.ExcuteLater(new SendEmailCommand(viewModel.Email,subject, "NewComment", viewModel));
     	}
     }
 }

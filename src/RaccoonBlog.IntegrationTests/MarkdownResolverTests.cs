@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using Xunit;
 

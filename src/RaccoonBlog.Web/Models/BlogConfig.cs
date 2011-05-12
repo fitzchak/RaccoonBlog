@@ -11,5 +11,8 @@ namespace RaccoonBlog.Web.Models
 		public string Copyright { get; set; }
 		public string AkismetKey { get; set; }
 		public int MinNumberOfPostForSignificantTag { get; set; }
+
+        public string MetaDescription { get; set; }
+        public string MetaKeywords { get; set; }
 	}
 }

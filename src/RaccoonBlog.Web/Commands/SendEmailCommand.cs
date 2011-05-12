@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Configuration;
@@ -88,6 +88,11 @@ namespace RaccoonBlog.Web.Commands
 			{
 				get { return items; }
 			}
+
+            public override System.Web.Caching.Cache Cache
+            {
+                get { return HttpRuntime.Cache; }
+            }
 
 			public override HttpResponseBase Response
 			{

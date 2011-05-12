@@ -1,6 +1,7 @@
 ﻿@model PostViewModel
 @{
     ViewBag.Title = @Model.Post.Title;
+    ViewBag.CurrentUrl = Url.Action("Details", new {Model.Post.Id, Model.Post.Slug});
 }
 
 <article class="post-detalis">
@@ -28,23 +29,33 @@
 
 	<div class="tags">
         <ul>
-            @foreach (var name in Model.Post.Tags)
+            @foreach (var tag in Model.Post.Tags)
             {
-                <li><a href="@Url.Action("Tag", "Post", new { name })">@name</a></li>
+                <li><a href="@Url.Action("Tag", "Post", new { tag.Slug })">@tag.Name</a></li>
             }
         </ul>
     </div>
     
-
     <footer>
         <p class="author">Posted By: @Model.Post.Author.FullName</p>
         <p class="published">Published at <time pubdate>@Model.Post.PublishedAt.ToString("r")</time></p>
         @if (Model.Post.PublishedAt != Model.Post.CreatedAt) { 
             <p class="created">Originally posted at <time>@Model.Post.CreatedAt.ToString("r")</time></p>
         }
-        <p class="share">
-            @Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, Model.Post.Author)
-        </p>
+        <div class="clr"></div>
+
+        <div class="share">
+            <div class="twitter">
+                @Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, Model.Post.Author)
+            </div>
+            <div class="facebook-share">
+				<a name="fb_share" type="box_count" share_url="@(Url.Abs((string)ViewBag.CurrentUrl))" href="http://www.facebook.com/sharer.php?u=@(Url.Abs((string)ViewBag.CurrentUrl))&t=@(Model.Post.Title)"></a>
+            </div>
+			<div class="facebook">
+                <iframe src="http://www.facebook.com/plugins/like.php?href=@(Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px;" allowTransparency="true"></iframe>
+            </div>
+			<div class="clr"></div>
+        </div>
     </footer>
 
 	
@@ -64,20 +75,19 @@
                 <a name="comment@(comment.Id)"></a>
                 <img class="avatar" src="http://www.gravatar.com/avatar.php?gravatar_id=@(comment.EmailHash)&amp;size=50&amp;default=identicon" alt="Gravatar" style="border-width:0px;">
 
-                <div class="comment_title">
+                <header>
                     @comment.CreatedAt by
                     <address>
-                        <a title="@(string.IsNullOrEmpty(comment.Url) ? "Comment by " + comment.Author : comment.Url)" href="@comment.Url">@comment.Author</a>
+						@Html.Link(comment.Author, @comment.Url, new { title = comment.Tooltip, target = "_blank" })
                     </address>
-                </div>
-                <p>@comment.Body</p>
+                </header>
+                <div class="comment-body raw_html">@comment.Body</div>
             </article>
         }
 
+        <div class="messageWrapper"><div id="message" style="visibility:hidden"></div></div>
         <article id="postComment">
-            <div class="messageWrapper"><div id="message" style="visibility:hidden"></div></div>
-
-            @if (Model.Post.IsCommentAllowed = false || Model.AreCommentsClosed)
+            @if (Model.Post.IsCommentAllowed == false || Model.AreCommentsClosed)
             { 
                 <div class="commentsClosedMessage">Comments have been closed on this topic.</div>
             }
@@ -95,7 +105,12 @@
                     @Html.EditorFor(x => x.Input.Email)
                     @Html.EditorFor(x => x.Input.Url)
                     @Html.EditorFor(x => x.Input.Body)
-    
+                    <div class="markdown-preview-containter" style="display: none">
+                        <span class="form_item_name">Preview Comment</span>
+                        <div class="comment-body markdown-preview raw_html"></div>
+                    </div>
+                    <div class="clr"></div>
+                
                     if (!Model.IsTrustedCommenter)
                     { 
                         <div class="form_item">
@@ -115,12 +130,16 @@
 </article>
 
 @section Style {
-    <link rel="canonical" href="@Url.AbsoluteAction("Details", new { Model.Post.Id, Model.Post.Slug })">}
+    <link rel="canonical" href="@Url.AbsoluteAction("Details", new { Model.Post.Id, Model.Post.Slug })">
+}
 @section Script {
     <script type="text/javascript" src="@Url.Content("~/Content/js/jquery.validate.min.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Content/js/jquery.validate.unobtrusive.min.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Content/js/showdown.js")"></script>
     <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+	<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+    <script type="text/javascript" src="@Url.Content("~/Content/js/jquery.tmpl.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Content/js/jquery.md5.js")"></script>
     <script type="text/javascript">
         $(function () {
             $('#postComment form').submit(function () {
@@ -132,18 +151,44 @@
                     });
                     jqxhr.success(function (data, textStatus, jqXHR) {
                         if (!data.success) setMessage('An error occurred while posing your feedback: ' + data.message, 'fail');
-                        else setMessage(data.message);
-                    });       
+                        else {
+                            setMessage(data.message);
+                            var now = new Date();
+                            var comment = {
+                                author: $('article#postComment input[name$="Name"]').val(),
+                                emailHash: $.md5($('article#postComment input[name$="Email"]').val()),
+                                url: $('article#postComment input[name$="Url"]').val(),
+                                body: $('article#postComment textarea[name$="Body"]').val(),
+                                createdAt: now.getMonth() + '/' + now.getDay() + '/' + now.getYear() + ' ' + now.getHours() + ':' + now.getMinutes()
+                            };
+                            $('article#postComment').remove();
+                            $('#commentTemplate').tmpl(comment).appendTo('section.comments');
+                        }
+                    });
                 }
                 return false;
             });
 
-            var $textarea = $('textarea[name$="Body"]'),
-            $preview = $('<div id="preview"></div>').insertAfter($textarea),
+            var $textarea = $('textarea[name$="Body"]').keydown(function () {
+                $('.markdown-preview-containter').show('medium');
+            });
+            $preview = $('.markdown-preview');
             converter = new Showdown.converter();
             $textarea.keyup(function () {
                 $preview.html(converter.makeHtml($textarea.val()));
             }).trigger('keyup');
         });
+    </script>
+    <script id="commentTemplate" type="text/html">
+        <article class="comment">
+            <img class="avatar" src="http://www.gravatar.com/avatar.php?gravatar_id=${emailHash}&amp;size=50&amp;default=identicon" alt="Gravatar" style="border-width:0px;">
+            <header>
+                ${createdAt} by
+                <address>
+                    <a target="_blank"  href="${url}">${author}</a>
+                </address>
+            </header>
+            <div class="comment-body raw_html">${body}</div>
+        </article>
     </script>
 }
