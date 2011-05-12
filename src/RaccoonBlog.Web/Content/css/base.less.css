@@ -389,6 +389,7 @@ article header h1 a
 .tags ul 
 {
     display: inline;
+	margin-left: 5px;
 }
 .tags li 
 {
@@ -397,12 +398,14 @@ article header h1 a
 }
 .tags a 
 {
-    padding: 3px 4px;
+    padding: 2px 6px;
     margin: 2px 2px 2px 0;
     text-decoration: none;
     font-size: 90%;
     line-height: 2.4;
-    white-space: nowrap;   
+    white-space: nowrap;
+	border: #FF8000 solid 1px;
+	.rounded_corners(3px);
 }
 
 .section ul 
