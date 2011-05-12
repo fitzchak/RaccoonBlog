@@ -271,6 +271,7 @@ input[type="submit"]
 	padding: 15px;
 	border: 1px dotted transparent;
 	z-index: 5;
+	min-height: 200px;
 }
 .post_body div
 {
@@ -523,7 +524,7 @@ div.commentsClosedMessage
 #login
 {
     width: 360px;
-    margin: 0 auto;
+    margin: 50px auto 0;
 }
 
 #post-list footer.post-list-footer
