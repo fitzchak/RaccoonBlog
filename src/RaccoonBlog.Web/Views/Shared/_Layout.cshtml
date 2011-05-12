@@ -44,13 +44,23 @@
     </div>
     @if (IsSectionDefined("Script")) {
         <script src="@Url.Content("~/Content/js/jquery-1.6.min.js")" type="text/javascript"></script>
-        <script type="text/javascript">
-            function setMessage(message, cssClass) {
-                var m = $('#message').html(message);
-                if (cssClass) m.removeClass().addClass(cssClass);
-                m.css('visibility', 'visible');
-            }
-        </script>
+		<script src="@Url.Content("~/Content/js/jquery.ae.image.resize.min.js")" type="text/javascript"></script>		<script type="text/javascript">
+			$(function () {
+				var timer;
+				function resizeImagesToScreen() {
+					$('#content img').aeImageResize({ width: $('#content').width() });
+				}
+				resizeImagesToScreen();
+				$(window).resize(function () {
+					clearTimeout(timer);
+					timer = setTimeout(resizeImagesToScreen, 50);
+				});
+			});
+			function setMessage(message, cssClass) {
+				var m = $('#message').html(message);
+				if (cssClass) m.removeClass().addClass(cssClass);
+				m.css('visibility', 'visible');
+			}		</script>
         @RenderSection("Script")
     }
 </body>
