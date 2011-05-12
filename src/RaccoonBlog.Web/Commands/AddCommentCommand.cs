@@ -27,9 +27,6 @@ namespace RaccoonBlog.Web.Commands
 
         public void Execute()
         {
-            if (Session == null)
-                throw new NullReferenceException();
-
             var post = Session.Load<Post>(_postId);
             var comments = Session.Load<PostComments>(_postId);
 
