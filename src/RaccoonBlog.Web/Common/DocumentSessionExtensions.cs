@@ -23,13 +23,15 @@ namespace RaccoonBlog.Web.Common
 
 			var postReference = queryable
 			  
-			  .Select(p => new { p.Id, p.Title })
+			  .Select(p => new PostReference{ Id = p.Id, Title = p.Title })
 			  .FirstOrDefault();
 
 			if (postReference == null)
 				return null;
 
-			return postReference.DynamicMapTo<PostReference>();
+			postReference.Title = HttpUtility.HtmlDecode(postReference.Title);
+
+			return postReference;
 		}
 
 		public static User GetCurrentUser(this IDocumentSession session)
