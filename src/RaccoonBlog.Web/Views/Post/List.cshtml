@@ -38,7 +38,7 @@
 
 				<div class="share">
 					<div class="twitter">
-						@Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, post.Author, postUrl, post.Title)
+						@Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, postUrl, post.Title.ToHtmlString(), post.Author)
 					</div>
 					<div class="facebook-share">
 						<a name="fb_share" type="box_count" share_url="@(Url.Abs((string)postUrl))" href="http://www.facebook.com/sharer.php?u=@(Url.Abs((string)postUrl))&t=@(post.Title)"></a>					</div>
