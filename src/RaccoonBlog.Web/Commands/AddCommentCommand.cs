@@ -1,5 +1,6 @@
 using System;
 using System.Configuration;
+using System.Web;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Infrastructure.Commands;
@@ -62,7 +63,7 @@ namespace RaccoonBlog.Web.Commands
     		viewModel.PostTitle = post.Title;
     		viewModel.BlogName = Session.Load<BlogConfig>("Blog/Config").Title;
 
-    		var subject = string.Format("Comment on: {0} from {1}", viewModel.PostTitle, viewModel.BlogName);
+			var subject = string.Format("Comment on: {0} from {1}", HttpUtility.HtmlDecode(viewModel.PostTitle), viewModel.BlogName);
 
 			if(comment.IsSpam)
 				subject = "Spam " + subject;
