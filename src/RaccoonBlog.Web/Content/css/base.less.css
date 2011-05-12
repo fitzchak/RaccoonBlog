@@ -476,11 +476,11 @@ footer .share .facebook, footer .share .facebook-share {
 	margin-right: 5px;
 }
 
-footer .published, footer .created, footer .feedback
+footer .published, footer .created, footer .comment-count
 {
     float: left;
 }
-footer .created, footer .feedback
+footer .created, footer .comment-count
 {
     float: left;
     border-left: solid 1px #000;

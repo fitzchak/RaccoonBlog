@@ -62,8 +62,8 @@
  
     <section class="comments">
         <header>
-            <a name="feedback"></a>
-            <h1>Feedback</h1>
+            <a name="comments"></a>
+            <h1>Comments</h1>
         </header>
         @if (Model.Comments.Count == 0)
         { 
@@ -147,10 +147,10 @@
                 if (t.valid()) {
                     var jqxhr = $.post(t.attr('action'), t.serializeArray(), null, 'json');
                     jqxhr.error(function (data, textStatus, jqXHR) {
-                        setMessage('An error occurred while posing your feedback', 'fail');
+                        setMessage('An error occurred while posing your comment', 'fail');
                     });
                     jqxhr.success(function (data, textStatus, jqXHR) {
-                        if (!data.success) setMessage('An error occurred while posing your feedback: ' + data.message, 'fail');
+                    	if (!data.success) setMessage('An error occurred while posing your comment: ' + data.message, 'fail');
                         else {
                             setMessage(data.message);
                             var now = new Date();
