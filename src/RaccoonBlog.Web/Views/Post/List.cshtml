@@ -16,16 +16,17 @@
 				@post.Body
 			</div>
 
-			<div class="tags">
-				<ul>
-					@foreach (var tag in post.Tags)
-					{
-						<li><a href="@Url.Action("Tag", new { @tag.Slug })">@tag.Name</a></li>
-					}
-				</ul>
-			</div>
-
 			<footer>
+				<div class="tags">
+					<span>Tags:</span>
+					<ul>
+						@foreach (var tag in post.Tags)
+						{
+							<li><a href="@Url.Action("Tag", "Post", new { tag.Slug })">@tag.Name</a></li>
+						}
+					</ul>
+				</div>
+
 				<p class="published">Published at <time pubdate>@post.PublishedAt.ToString("r")</time></p>
 				@if (post.PublishedAt != post.CreatedAt) { 
 					<p class="created">Originally posted at <time>@post.CreatedAt.ToString("r")</time></p>
