@@ -26,17 +26,17 @@
     <div class="post_body raw_html">
         @Model.Post.Body
     </div>
-
-	<div class="tags">
-        <ul>
-            @foreach (var tag in Model.Post.Tags)
-            {
-                <li><a href="@Url.Action("Tag", "Post", new { tag.Slug })">@tag.Name</a></li>
-            }
-        </ul>
-    </div>
     
     <footer>
+		<div class="tags">
+			<ul>
+				@foreach (var tag in Model.Post.Tags)
+				{
+					<li><a href="@Url.Action("Tag", "Post", new { tag.Slug })">@tag.Name</a></li>
+				}
+			</ul>
+		</div>
+
         <p class="author">Posted By: @Model.Post.Author.FullName</p>
         <p class="published">Published at <time pubdate>@Model.Post.PublishedAt.ToString("r")</time></p>
         @if (Model.Post.PublishedAt != Model.Post.CreatedAt) { 
