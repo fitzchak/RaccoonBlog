@@ -179,6 +179,12 @@ article.post footer, postToolbar
     font-size: 1.0em;
 }
 
+
+.important
+{
+	background-color: @importantCommentColor;
+}
+
 .comment
 {
     min-height: 60px;
@@ -206,6 +212,7 @@ article.post footer, postToolbar
 {
     background-color: Gray;
 }
+
 .comment input[type=checkbox]
 {
     float: right;

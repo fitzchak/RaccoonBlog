@@ -69,7 +69,7 @@
         }
         <form action="@Url.Action("CommentsAdmin", new { id = Model.Post.Id })" method="post">
             @foreach (var comment in Model.Comments) {
-                <article class="comment@(comment.IsImportant ? " important" : null)@(comment.IsSpam ? " spam" : null)">
+                <article class="comment @(comment.IsImportant ? " important" : null)@(comment.IsSpam ? " spam" : null)">
                     <a name="comment@(comment.Id)"></a>
                     <input type="checkbox" name="commentIds" value="@comment.Id">
 
