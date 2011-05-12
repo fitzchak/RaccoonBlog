@@ -106,12 +106,7 @@
                     @Html.EditorFor(x => x.Input.Email)
                     @Html.EditorFor(x => x.Input.Url)
                     @Html.EditorFor(x => x.Input.Body)
-                    <div class="markdown-preview-containter" style="display: none">
-                        <span class="form_item_name">Preview Comment</span>
-                        <div class="comment-body markdown-preview raw_html"></div>
-                    </div>
-                    <div class="clr"></div>
-                
+                    
                     if (!Model.IsTrustedCommenter)
                     { 
                         <div class="form_item">
@@ -124,9 +119,15 @@
                     }
                     @Html.EditorFor(x => x.Input.CommenterKey)
                     <input type="submit" value="Post Comment" />
-                }
-            }
+					<div class="clr"></div>
+				}
+			}
         </article>
+		<div class="markdown-preview-containter" style="display: none">
+            <span class="form_item_name">Preview Comment</span>
+            <div class="comment-body markdown-preview raw_html"></div>
+        </div>
+        <div class="clr"></div>
     </section>
 </article>
 

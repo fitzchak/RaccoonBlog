@@ -531,12 +531,18 @@ div.commentsClosedMessage
 	position: relative;
 	width: 100%;
 	float: left;
-	margin-top: 15px; 
-
-	.prev {
-		float: left;
-	}
-	.next {
-		float: right;
-	}
+	margin-top: 15px;
 }
+#post-list footer.post-list-footer.prev {
+	float: left;
+}
+#post-list footer.post-list-footer .next {
+	float: right;
+}
+
+#postComment {
+	width: 645px;
+}
+#postComment textarea {
+	width: 436px;
+} 
