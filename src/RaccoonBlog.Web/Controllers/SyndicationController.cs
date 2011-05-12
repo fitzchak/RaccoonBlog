@@ -8,6 +8,7 @@ using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
 using Raven.Client.Linq;
+using RaccoonBlog.Web.Helpers;
 
 namespace RaccoonBlog.Web.Controllers
 {
@@ -93,7 +94,7 @@ namespace RaccoonBlog.Web.Controllers
 	    private string GetPostLink(Post post)
 	    {
             var postReference = post.MapTo<PostReference>();
-            return Url.Action("Details", "PostDetails", new { Id = postReference.DomainId, postReference.Slug });
+			return Url.RelativeToAbsolute(Url.Action("Details", "PostDetails", new { Id = postReference.DomainId, postReference.Slug }));
 	    }
 
 	    private string GetBlogCopyright()

@@ -48,9 +48,9 @@ namespace RaccoonBlog.Web.Commands
     		{
     			IsBodyHtml = true,
 				Body = stringWriter.GetStringBuilder().ToString(),
-				Subject = subject
+				Subject = subject,
     		};
-			if(string.IsNullOrEmpty(replyTo))
+			if(string.IsNullOrEmpty(replyTo) == false)
 			{
 				try
 				{
