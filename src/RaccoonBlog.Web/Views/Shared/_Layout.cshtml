@@ -13,7 +13,7 @@
     <meta name="keywords" content="@blogConfig.MetaKeywords">
 
     <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="@Url.Content("~/Content/js/html5shim.js")"></script>
     <![endif]-->
     <link rel="stylesheet" type="text/css" href="@Url.ActionLinkWithArray("Merge", "Css", new { files = new[] { "ResetCss.css", "custom/" + blogConfig.CustomCss + ".settings.less.css", "base.less.css", "custom/" + blogConfig.CustomCss + ".less.css" } })">
     @RenderSection("Style", false)

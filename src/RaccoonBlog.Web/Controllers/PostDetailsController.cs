@@ -85,7 +85,7 @@ namespace RaccoonBlog.Web.Controllers
 
     	private ActionResult PostingCommentSucceeded(Post post)
     	{
-    		const string successMessage = "You feedback will be posted soon. Thanks!";
+    		const string successMessage = "Your comment will be posted soon. Thanks!";
     		if (Request.IsAjaxRequest())
     			return Json(new { Success = true, message = successMessage });
 
