@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Web;
@@ -39,7 +40,11 @@ namespace RaccoonBlog.Web.Services
         string IMetaWeblog.AddPost(string blogid, string username, string password, Post post, bool publish)
         {
             var user = ValidateUser(username, password);
-            var comments = new PostComments();
+            var comments = new PostComments
+            {
+            	Comments = new List<PostComments.Comment>(),
+				Spam = new List<PostComments.Comment>()
+            };
             session.Store(comments);
 
             var publishDate = post.dateCreated == null
