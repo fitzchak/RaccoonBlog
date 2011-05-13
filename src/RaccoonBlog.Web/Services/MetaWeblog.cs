@@ -62,6 +62,7 @@ namespace RaccoonBlog.Web.Services
                 Tags = post.categories,
                 Title = post.title,
                 CommentsCount = 0,
+				AllowComments = true,
             };
             session.Store(newPost);
             session.SaveChanges();
