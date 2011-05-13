@@ -143,7 +143,7 @@ namespace RaccoonBlog.Web.Services
                 categoryid = x.Name,
                 description = x.Name,
                 title = x.Name,
-                htmlUrl = Url.Action("Tag", "Post", new { x.Name }),
+                htmlUrl = Url.Action("Tag", "Post", new { slug = x.Name }),
                 rssUrl = Url.Action("Tag", "Syndication", new { x.Name }),
             }).ToArray();
         }
