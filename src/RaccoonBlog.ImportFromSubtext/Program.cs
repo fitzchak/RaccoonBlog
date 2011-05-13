@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Web;
 using System.Xml;
 using RaccoonBlog.Web.Models;
 using Raven.Client;
@@ -126,7 +127,7 @@ namespace RaccoonBlog.ImportFromSubtext
                             PublishAt = new DateTimeOffset(post.DateSyndicated ?? post.DateAdded),
                             Body = post.Text,
                             LegacySlug = post.EntryName,
-                            Title = post.Title,
+							Title = HttpUtility.HtmlDecode(post.Title),
                             Tags = post.Links.Select(x => x.Categories.Title)
                                 .Where(x => x != "Uncategorized")
                                 .ToArray(),
