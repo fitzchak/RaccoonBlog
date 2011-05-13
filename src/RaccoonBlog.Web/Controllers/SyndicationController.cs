@@ -28,7 +28,7 @@ namespace RaccoonBlog.Web.Controllers
 			           	                                       new XAttribute("name", "MetaWeblog"),
 			           	                                       new XAttribute("preferred", "true"),
 			           	                                       new XAttribute("blogID", "0"),
-			           	                                       new XAttribute("apiLink",Url.Content("~/Services/MetaWeblogAPI.ashx"))
+			           	                                       new XAttribute("apiLink",Url.Content("~/services/metaweblogapi.ashx"))
 			           	                          	)
 			           	             	)
 			           		)
