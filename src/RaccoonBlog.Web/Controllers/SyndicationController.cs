@@ -82,6 +82,7 @@ namespace RaccoonBlog.Web.Controllers
 				                                              new XElement("title", post.Title),
 				                                              new XElement("description", post.Body),
 				                                              new XElement("link", GetPostLink(post)),
+																new XElement("guid", GetPostLink(post)),
 				                                              new XElement("pubDate", post.PublishAt.ToString("R"))
 				                          	)
 				             	)
