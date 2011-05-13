@@ -29,8 +29,6 @@ namespace RaccoonBlog.Web.Common
 			if (postReference == null)
 				return null;
 
-			postReference.Title = HttpUtility.HtmlDecode(postReference.Title);
-
 			return postReference;
 		}
 
