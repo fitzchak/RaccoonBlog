@@ -170,6 +170,8 @@ namespace RaccoonBlog.Web.Services
             }).ToArray();
         }
 
+
+
         MediaObjectInfo IMetaWeblog.NewMediaObject(string blogid, string username, string password,
             MediaObject mediaObject)
         {
@@ -190,7 +192,13 @@ namespace RaccoonBlog.Web.Services
             };
         }
 
-        bool IMetaWeblog.DeletePost(string key, string postid, string username, string password, bool publish)
+		int IMetaWeblog.newCategory(string blogid, string username, string password, WordpressCategory category)
+    	{
+			ValidateUser(username, password);
+			return 1;// we don't support explicit categories
+    	}
+
+    	bool IMetaWeblog.DeletePost(string key, string postid, string username, string password, bool publish)
         {
             ValidateUser(username, password);
             var thePost = session.Load<Models.Post>(postid);
