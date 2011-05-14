@@ -53,6 +53,9 @@ namespace RaccoonBlog.Web.Commands
                 comments.Comments.Add(comment);
             }
 
+			if (_requestValues.IsAuthenticated)
+				return; // we don't send email for authenticated users
+
             SendNewCommentEmail(post, comment);
         }
 
