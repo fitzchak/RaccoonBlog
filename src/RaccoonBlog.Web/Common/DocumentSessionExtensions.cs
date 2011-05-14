@@ -15,6 +15,7 @@ namespace RaccoonBlog.Web.Common
 		public static PostReference GetPostReference(this IDocumentSession session, Expression<Func<Post, bool>> expression, bool desc)
 		{
 			var queryable = session.Query<Post>()
+				.WhereIsPublicPost()
 				.Where(expression);
 
 			queryable = desc ? 
