@@ -159,11 +159,11 @@
 								author: $('article#postComment input[name$="Name"]').val(),
 								emailHash: $.md5($('article#postComment input[name$="Email"]').val()),
 								url: $('article#postComment input[name$="Url"]').val(),
-								body: $('article#postComment textarea[name$="Body"]').val(),
+								body: converter.makeHtml($('article#postComment textarea[name$="Body"]').val()),
 								createdAt: now.getMonth() + '/' + now.getDay() + '/' + now.getYear() + ' ' + now.getHours() + ':' + now.getMinutes()
 							};
 							$('article#postComment').remove();
-							$('#commentTemplate').tmpl(comment).appendTo('section.comments');
+							$('#commentTemplate').tmpl(comment).appendTo('section.comments').show('medium');
 						}
 					});
 				}
@@ -181,7 +181,7 @@
 		});
 	</script>
 	<script id="commentTemplate" type="text/html">
-        <article class="comment">
+        <article class="comment" style="display: none">
             <img class="avatar" src="http://www.gravatar.com/avatar.php?gravatar_id=${emailHash}&amp;size=50&amp;default=identicon" alt="Gravatar" style="border-width:0px;">
             <header>
                 ${createdAt} by
@@ -189,7 +189,7 @@
                     <a target="_blank"  href="${url}">${author}</a>
                 </address>
             </header>
-            <div class="comment-body raw_html">${body}</div>
+            <div class="comment-body raw_html">{{html body}}</div>
         </article>
 	</script>
 }
