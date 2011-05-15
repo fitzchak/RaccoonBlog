@@ -67,8 +67,12 @@ namespace RaccoonBlog.IntegrationTests
             var tags = blacklistTags.Split('|').Select(tag => string.Format("<{0}>{0}</{0}>", tag));
             foreach (var tag in tags)
             {
+                if (tag.Contains( "script"))
+                {
+                    var a = "";
+                }
                 var result = MarkdownResolve(tag);
-                Assert.DoesNotContain(string.Format("<{0}>{0}</{0}>", tag), result);
+                Assert.DoesNotContain(tag, result);
             }
         }
     }
