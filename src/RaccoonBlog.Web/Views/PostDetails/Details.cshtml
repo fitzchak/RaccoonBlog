@@ -163,7 +163,7 @@
 								createdAt: now.getMonth() + '/' + now.getDay() + '/' + now.getYear() + ' ' + now.getHours() + ':' + now.getMinutes()
 							};
 							$('article#postComment').remove();
-							$('#commentTemplate').tmpl(comment).appendTo('section.comments');
+							$('#commentTemplate').tmpl(comment).appendTo('section.comments').show('medium');
 						}
 					});
 				}
@@ -181,7 +181,7 @@
 		});
 	</script>
 	<script id="commentTemplate" type="text/html">
-        <article class="comment">
+        <article class="comment" style="display: none">
             <img class="avatar" src="http://www.gravatar.com/avatar.php?gravatar_id=${emailHash}&amp;size=50&amp;default=identicon" alt="Gravatar" style="border-width:0px;">
             <header>
                 ${createdAt} by
