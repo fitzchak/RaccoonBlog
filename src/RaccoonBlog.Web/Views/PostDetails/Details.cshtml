@@ -159,7 +159,7 @@
 								author: $('article#postComment input[name$="Name"]').val(),
 								emailHash: $.md5($('article#postComment input[name$="Email"]').val()),
 								url: $('article#postComment input[name$="Url"]').val(),
-								body: $('article#postComment textarea[name$="Body"]').val(),
+								body: converter.makeHtml($('article#postComment textarea[name$="Body"]').val()),
 								createdAt: now.getMonth() + '/' + now.getDay() + '/' + now.getYear() + ' ' + now.getHours() + ':' + now.getMinutes()
 							};
 							$('article#postComment').remove();
@@ -189,7 +189,7 @@
                     <a target="_blank"  href="${url}">${author}</a>
                 </address>
             </header>
-            <div class="comment-body raw_html">${body}</div>
+            <div class="comment-body raw_html">{{html body}}</div>
         </article>
 	</script>
 }
