@@ -11,6 +11,7 @@ namespace RaccoonBlog.Web.Controllers
 {
 	public class SectionController : AbstractController
 	{
+		[ChildActionOnly]
 		public ActionResult FuturePosts()
 		{
 			var futurePosts = Session.Query<Post>()
@@ -34,7 +35,7 @@ namespace RaccoonBlog.Web.Controllers
 			return View(sections.MapTo<SectionDetails>());
 		}
 
-
+		[ChildActionOnly]
 		public ActionResult TagsList()
 		{
 			var mostRecentTag = new DateTimeOffset(DateTimeOffset.Now.Year - 2,
@@ -54,6 +55,7 @@ namespace RaccoonBlog.Web.Controllers
 			return View(tags.MapTo<TagsListViewModel>());
 		}
 
+		[ChildActionOnly]
 		public ActionResult ArchivesList()
 		{
 			var dates = Session.Query<PostCountByMonth, Posts_ByMonthPublished_Count>()
