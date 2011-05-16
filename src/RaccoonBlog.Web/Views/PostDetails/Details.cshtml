@@ -122,12 +122,12 @@
 					<div class="clr"></div>
 				}
 			}
-			<div class="markdown-preview-containter" style="display: none">
-				<span class="form_item_name">Preview Comment</span>
-				<div class="comment-body markdown-preview raw_html"></div>
-			</div>
-			<div class="clr"></div>
         </article>
+		<div class="markdown-preview-containter" style="display: none">
+			<span class="form_item_name">Preview Comment</span>
+			<div class="comment-body markdown-preview raw_html"></div>
+		</div>
+		<div class="clr"></div>
     </section>
 </article>
 @section Style {
@@ -162,7 +162,7 @@
 								body: converter.makeHtml($('article#postComment textarea[name$="Body"]').val()),
 								createdAt: now.getMonth() + '/' + now.getDay() + '/' + now.getYear() + ' ' + now.getHours() + ':' + now.getMinutes()
 							};
-							$('article#postComment').remove();
+				            $('article#postComment, div.markdown-preview-containter').remove();
 							$('#commentTemplate').tmpl(comment).appendTo('section.comments').show('medium');
 						}
 					});
