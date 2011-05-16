@@ -23,3 +23,4 @@ StyleCop.Cache
 /Server
 App_Data/
 /src/RaccoonBlog.Web/RaccoonBlog.Web.Publish.xml
+/src/*.docstates
