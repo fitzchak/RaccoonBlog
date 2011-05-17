@@ -26,6 +26,14 @@ namespace RaccoonBlog.Web.Services
         MediaObjectInfo NewMediaObject(string blogid, string username, string password,
             MediaObject mediaObject);
 
+		[XmlRpcMethod("wp.newCategory",
+		   Description = "Adds a new category to the blog engine.")]
+		int newCategory(
+			string blogid,
+			string username,
+			string password,
+			WordpressCategory category);
+
         #endregion
 
         #region Blogger API

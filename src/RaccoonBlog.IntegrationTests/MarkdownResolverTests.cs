@@ -63,12 +63,24 @@ namespace RaccoonBlog.IntegrationTests
         [Fact]
         public void BlockAllOtherHtmlTags()
         {
-            var blacklistTags = "abbr|acronym|address|applet|area|base|basefont|bdo|big|body|button|caption|center|cite|code|col|colgroup|dd|del|dir|div|dfn|dl|dt|embed|fieldset|font|form|frame|frameset|head|html|iframe|img|input|ins|isindex|kbd|label|legend|link|map|menu|meta|noframes|noscript|object|optgroup|option|param|pre|q|s|samp|script|select|small|span|strike|style|table|tbody|td|textarea|tfoot|th|thead|title|tr|tt|var|xmp";
+            var blacklistTags = "abbr|acronym|address|applet|area|base|basefont|bdo|big|body|button|caption|center|cite|col|colgroup|dir|div|dfn|embed|fieldset|font|form|frame|frameset|head|html|iframe|img|input|ins|isindex|label|legend|link|map|menu|meta|noframes|noscript|object|optgroup|option|param|q|samp|script|select|small|span|style|table|tbody|td|textarea|tfoot|th|thead|title|tr|tt|var|xmp";
             var tags = blacklistTags.Split('|').Select(tag => string.Format("<{0}>{0}</{0}>", tag));
             foreach (var tag in tags)
             {
                 var result = MarkdownResolve(tag);
-                Assert.DoesNotContain(string.Format("<{0}>{0}</{0}>", tag), result);
+                Assert.DoesNotContain(tag, result);
+            }
+        }
+
+        [Fact]
+        public void WhitlistHtmlTags()
+        {
+            var blacklistTags = "code|dd|del|dl|dt|kbd|pre|s|strike";
+            var tags = blacklistTags.Split('|').Select(tag => string.Format("<{0}>{0}</{0}>", tag));
+            foreach (var tag in tags)
+            {
+                var result = MarkdownResolve(tag);
+                Assert.Contains(tag, result);
             }
         }
     }

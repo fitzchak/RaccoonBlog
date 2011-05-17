@@ -7,16 +7,23 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers
     {
         public static MvcHtmlString Resolve(string inputBody)
         {
-        	var md = new MarkdownSharp.Markdown(new MarkdownOptions
+            var html = FormatMarkdown(inputBody);
+            html = SanitizeHtml.Sanitize(html);
+            return MvcHtmlString.Create(html);
+        }
+
+        public static string FormatMarkdown(string content)
+        {
+            var md = new Markdown(new MarkdownOptions
         	{
         		AutoHyperlink = true,
         		AutoNewLines = true,
         		EncodeProblemUrlCharacters = true,
         		LinkEmails = false,
-        		StrictBoldItalic = true
+        		StrictBoldItalic = true,
         	});
-            var result = md.Transform(inputBody);
-            return MvcHtmlString.Create(result);
+            
+            return md.Transform(content);
         }
     }
 }

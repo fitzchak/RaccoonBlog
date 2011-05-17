@@ -38,8 +38,8 @@ namespace RaccoonBlog.Web.Controllers
 				Comments = comments.Comments
 					.OrderBy(comment => comment.CreatedAt)
 					.MapTo<PostViewModel.Comment>(),
-				NextPost = Session.GetPostReference(x => x.PublishAt > post.PublishAt),
-				PreviousPost = Session.GetPostReference(x => x.PublishAt < post.PublishAt),
+				NextPost = Session.GetPostReference(x => x.PublishAt > post.PublishAt, desc: false),
+				PreviousPost = Session.GetPostReference(x => x.PublishAt < post.PublishAt, desc: true),
 				AreCommentsClosed = comments.AreCommentsClosed(post),
 			};
 
@@ -85,7 +85,7 @@ namespace RaccoonBlog.Web.Controllers
 
     	private ActionResult PostingCommentSucceeded(Post post)
     	{
-    		const string successMessage = "You feedback will be posted soon. Thanks!";
+    		const string successMessage = "Your comment will be posted soon. Thanks!";
     		if (Request.IsAjaxRequest())
     			return Json(new { Success = true, message = successMessage });
 

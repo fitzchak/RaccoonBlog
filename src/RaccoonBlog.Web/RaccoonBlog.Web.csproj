@@ -167,6 +167,7 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\BlogConfigMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\EmailViewModelMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\GuidToStringConverter.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\SanitizeHtml.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\UrlResolver.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\SectionAdminMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\SectionMapperProfile.cs" />
@@ -226,6 +227,7 @@
     <Compile Include="Services\RssModels\BlogInfo.cs" />
     <Compile Include="Common\SlugConverter.cs" />
     <Compile Include="Services\RssModels\UserInfo.cs" />
+    <Compile Include="Services\RssModels\WordpressCategory.cs" />
     <Compile Include="ViewModels\AdminPostDetailsViewModel.cs" />
     <Compile Include="ViewModels\BlogConfigViewModel.cs" />
     <Compile Include="ViewModels\ChangePassViewModel.cs" />
@@ -257,7 +259,12 @@
     <Content Include="Content\css\base.less.css" />
     <Content Include="Content\css\ResetCss.css" />
     <Content Include="Content\css\fullcalendar.css" />
+    <Content Include="Content\js\html5shim.js" />
+    <Content Include="Content\js\jquery.ae.image.resize.js" />
+    <Content Include="Content\js\jquery.ae.image.resize.min.js" />
     <Content Include="Content\js\jquery.md5.js" />
+    <Content Include="Content\js\jquery.myimgscale-0.2.js" />
+    <Content Include="Content\js\jquery.myimgscale-0.2.min.js" />
     <Content Include="Content\js\RequiredIfValidation.js" />
     <Content Include="Content\js\fullcalendar.min.js" />
     <Content Include="Content\js\jquery-ui-1.8.12.custom.min.js" />

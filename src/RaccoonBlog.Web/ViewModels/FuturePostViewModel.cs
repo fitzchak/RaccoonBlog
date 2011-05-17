@@ -26,7 +26,7 @@ namespace RaccoonBlog.Web.ViewModels
 			}
 			else if (minutes < 50)
 			{
-				return minutes + " minutes";
+				return Math.Round(minutes) + " minutes";
 			}
 			else if (minutes < 90)
 			{

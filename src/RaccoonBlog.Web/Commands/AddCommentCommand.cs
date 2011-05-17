@@ -1,5 +1,6 @@
 using System;
 using System.Configuration;
+using System.Web;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Infrastructure.Commands;
@@ -27,9 +28,6 @@ namespace RaccoonBlog.Web.Commands
 
         public void Execute()
         {
-            if (Session == null)
-                throw new NullReferenceException();
-
             var post = Session.Load<Post>(_postId);
             var comments = Session.Load<PostComments>(_postId);
 
@@ -55,6 +53,9 @@ namespace RaccoonBlog.Web.Commands
                 comments.Comments.Add(comment);
             }
 
+			if (_requestValues.IsAuthenticated)
+				return; // we don't send email for authenticated users
+
             SendNewCommentEmail(post, comment);
         }
 
@@ -65,7 +66,7 @@ namespace RaccoonBlog.Web.Commands
     		viewModel.PostTitle = post.Title;
     		viewModel.BlogName = Session.Load<BlogConfig>("Blog/Config").Title;
 
-    		var subject = string.Format("Comment on: {0} from {1}", viewModel.PostTitle, viewModel.BlogName);
+			var subject = string.Format("Comment on: {0} from {1}", viewModel.PostTitle, viewModel.BlogName);
 
 			if(comment.IsSpam)
 				subject = "Spam " + subject;

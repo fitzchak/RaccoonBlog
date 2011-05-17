@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Web;
@@ -39,7 +40,11 @@ namespace RaccoonBlog.Web.Services
         string IMetaWeblog.AddPost(string blogid, string username, string password, Post post, bool publish)
         {
             var user = ValidateUser(username, password);
-            var comments = new PostComments();
+            var comments = new PostComments
+            {
+            	Comments = new List<PostComments.Comment>(),
+				Spam = new List<PostComments.Comment>()
+            };
             session.Store(comments);
 
             var publishDate = post.dateCreated == null
@@ -57,6 +62,7 @@ namespace RaccoonBlog.Web.Services
                 Tags = post.categories,
                 Title = post.title,
                 CommentsCount = 0,
+				AllowComments = true,
             };
             session.Store(newPost);
             session.SaveChanges();
@@ -143,7 +149,7 @@ namespace RaccoonBlog.Web.Services
                 categoryid = x.Name,
                 description = x.Name,
                 title = x.Name,
-                htmlUrl = Url.Action("Tag", "Post", new { x.Name }),
+                htmlUrl = Url.Action("Tag", "Post", new { slug = x.Name }),
                 rssUrl = Url.Action("Tag", "Syndication", new { x.Name }),
             }).ToArray();
         }
@@ -170,6 +176,8 @@ namespace RaccoonBlog.Web.Services
             }).ToArray();
         }
 
+
+
         MediaObjectInfo IMetaWeblog.NewMediaObject(string blogid, string username, string password,
             MediaObject mediaObject)
         {
@@ -190,7 +198,13 @@ namespace RaccoonBlog.Web.Services
             };
         }
 
-        bool IMetaWeblog.DeletePost(string key, string postid, string username, string password, bool publish)
+		int IMetaWeblog.newCategory(string blogid, string username, string password, WordpressCategory category)
+    	{
+			ValidateUser(username, password);
+			return 1;// we don't support explicit categories
+    	}
+
+    	bool IMetaWeblog.DeletePost(string key, string postid, string username, string password, bool publish)
         {
             ValidateUser(username, password);
             var thePost = session.Load<Models.Post>(postid);

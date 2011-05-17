@@ -39,8 +39,8 @@ namespace RaccoonBlog.Web.Controllers
 					.OrderBy(comment => comment.CreatedAt)
 					.MapTo<AdminPostDetailsViewModel.Comment>(),
 
-				NextPost = Session.GetPostReference(x => x.PublishAt > post.PublishAt),
-				PreviousPost = Session.GetPostReference(x => x.PublishAt < post.PublishAt),
+				NextPost = Session.GetPostReference(x => x.PublishAt > post.PublishAt, desc: false),
+				PreviousPost = Session.GetPostReference(x => x.PublishAt < post.PublishAt, desc: true),
 				AreCommentsClosed = comments.AreCommentsClosed(post),
 			};
 

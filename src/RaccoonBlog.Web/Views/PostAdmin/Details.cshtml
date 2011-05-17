@@ -61,15 +61,15 @@
 
     <section class="comments">
         <header>
-            <a name="feedback"></a>
-            <h1>Feedback</h1>
+            <a name="comments"></a>
+            <h1>Comments</h1>
         </header>
         @if (Model.Comments.Count == 0) { 
             <p>No comments posted yet.</p>
         }
         <form action="@Url.Action("CommentsAdmin", new { id = Model.Post.Id })" method="post">
             @foreach (var comment in Model.Comments) {
-                <article class="comment@(comment.IsImportant ? " important" : null)@(comment.IsSpam ? " spam" : null)">
+                <article class="comment @(comment.IsImportant ? " important" : null)@(comment.IsSpam ? " spam" : null)">
                     <a name="comment@(comment.Id)"></a>
                     <input type="checkbox" name="commentIds" value="@comment.Id">
 

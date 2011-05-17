@@ -8,6 +8,7 @@ using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
 using Raven.Client.Linq;
+using RaccoonBlog.Web.Helpers;
 
 namespace RaccoonBlog.Web.Controllers
 {
@@ -27,7 +28,7 @@ namespace RaccoonBlog.Web.Controllers
 			           	                                       new XAttribute("name", "MetaWeblog"),
 			           	                                       new XAttribute("preferred", "true"),
 			           	                                       new XAttribute("blogID", "0"),
-			           	                                       new XAttribute("apiLink",Url.Content("~/Services/MetaWeblogAPI.ashx"))
+			           	                                       new XAttribute("apiLink",Url.Content("~/services/metaweblogapi.ashx"))
 			           	                          	)
 			           	             	)
 			           		)
@@ -81,6 +82,7 @@ namespace RaccoonBlog.Web.Controllers
 				                                              new XElement("title", post.Title),
 				                                              new XElement("description", post.Body),
 				                                              new XElement("link", GetPostLink(post)),
+																new XElement("guid", GetPostLink(post)),
 				                                              new XElement("pubDate", post.PublishAt.ToString("R"))
 				                          	)
 				             	)
@@ -93,7 +95,7 @@ namespace RaccoonBlog.Web.Controllers
 	    private string GetPostLink(Post post)
 	    {
             var postReference = post.MapTo<PostReference>();
-            return Url.Action("Details", "PostDetails", new { Id = postReference.DomainId, postReference.Slug });
+			return Url.RelativeToAbsolute(Url.Action("Details", "PostDetails", new { Id = postReference.DomainId, postReference.Slug }));
 	    }
 
 	    private string GetBlogCopyright()

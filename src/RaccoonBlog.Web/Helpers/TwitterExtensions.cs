@@ -9,15 +9,15 @@ namespace RaccoonBlog.Web.Helpers
 		  TwitterButtonDataCount dataCount,
 		  dynamic author)
 		{
-			return TwitterButton(html, content, dataCount, author, null, null);
+			return TwitterButton(html, content, dataCount, null, null, author);
 		}
 
 		public static MvcHtmlString TwitterButton(this HtmlHelper html,
 			string content,
 			TwitterButtonDataCount dataCount,
-			dynamic author,
 			string url, 
-			string title)
+			string title,
+			dynamic author			)
 		{
 			var tag = new TagBuilder("a");
 			tag.AddCssClass("twitter-share-button");
@@ -36,7 +36,10 @@ namespace RaccoonBlog.Web.Helpers
 			}
 
 			if (string.IsNullOrEmpty(url) == false)
+			{
 				tag.Attributes["data-url"] = url;
+				tag.Attributes["data-counturl"] = url;
+			}
 
 
 			if (string.IsNullOrEmpty(title) == false)
