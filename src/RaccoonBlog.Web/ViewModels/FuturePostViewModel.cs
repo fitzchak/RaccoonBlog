@@ -17,9 +17,11 @@ namespace RaccoonBlog.Web.ViewModels
 			}
 		}
 
-
-		static string DistanceOfTimeInWords(double minutes)
+		string DistanceOfTimeInWords(double minutes)
 		{
+			if (minutes < 0)
+				throw new InvalidOperationException(string.Format("Future post error: the post is already published. Post Id: {0}, PublishAt: {1}, Now: {2}", Title, PublishAt, DateTimeOffset.Now));
+
 			if (minutes < 1)
 			{
 				return "less than a minute";
