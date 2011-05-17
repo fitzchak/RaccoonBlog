@@ -129,7 +129,7 @@ namespace RaccoonBlog.Web.Controllers
             if (post == null)
                 return HttpNotFound();
 
-            var slug =  SlugConverter.TitleToSlag(post.Title);
+            var slug =  SlugConverter.TitleToSlug(post.Title);
 
             if (ModelState.IsValid == false)
             {

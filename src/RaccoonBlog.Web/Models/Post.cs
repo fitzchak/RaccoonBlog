@@ -54,7 +54,7 @@ namespace RaccoonBlog.Web.Models
                     yield break;
                 foreach (var tag in Tags)
                 {
-                    yield return SlugConverter.TitleToSlag(tag);
+                    yield return SlugConverter.TitleToSlug(tag);
                 }
             }
         }

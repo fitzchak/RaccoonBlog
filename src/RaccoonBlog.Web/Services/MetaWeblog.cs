@@ -117,7 +117,7 @@ namespace RaccoonBlog.Web.Services
 
             return new Post
             {
-                wp_slug = SlugConverter.TitleToSlag(thePost.Title),
+                wp_slug = SlugConverter.TitleToSlug(thePost.Title),
                 description = thePost.Body,
                 dateCreated = thePost.PublishAt.DateTime,
                 categories = thePost.Tags.ToArray(),
@@ -161,7 +161,7 @@ namespace RaccoonBlog.Web.Services
 
             return list.Select(thePost => new Post
             {
-                wp_slug = SlugConverter.TitleToSlag(thePost.Title),
+                wp_slug = SlugConverter.TitleToSlug(thePost.Title),
                 description = thePost.Body,
                 dateCreated = thePost.PublishAt.DateTime,
                 categories = thePost.Tags.ToArray(),

@@ -22,7 +22,7 @@ namespace RaccoonBlog.Web.ViewModels
         private string _slug;
         public string Slug
         {
-            get { return _slug ?? (_slug = SlugConverter.TitleToSlag(Title)); }
+            get { return _slug ?? (_slug = SlugConverter.TitleToSlug(Title)); }
             set { _slug = value; }
         }
     }

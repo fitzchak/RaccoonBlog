@@ -13,7 +13,7 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
         {
             Mapper.CreateMap<Post, PostsViewModel.PostSummary>()
                 .ForMember(x => x.Id, o => o.MapFrom(m => RavenIdResolver.Resolve(m.Id)))
-                .ForMember(x => x.Slug, o => o.MapFrom(m => SlugConverter.TitleToSlag(m.Title)))
+                .ForMember(x => x.Slug, o => o.MapFrom(m => SlugConverter.TitleToSlug(m.Title)))
                 .ForMember(x => x.PublishedAt, o => o.MapFrom(m => m.PublishAt))
                 .ForMember(x => x.Tags, o => o.MapFrom(m => m.Tags.Select(name => new TagDetails { Name = name })))
                 ;

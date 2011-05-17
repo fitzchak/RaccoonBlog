@@ -14,7 +14,7 @@ namespace RaccoonBlog.IntegrationTests
 
         private string C(string title)
         {
-            return SlugConverter.TitleToSlag(title);
+            return SlugConverter.TitleToSlug(title);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace RaccoonBlog.Web.ViewModels
         {
             get
             {
-                return _slug ?? (_slug = SlugConverter.TitleToSlag(Name));
+                return _slug ?? (_slug = SlugConverter.TitleToSlug(Name));
             }
         }
 

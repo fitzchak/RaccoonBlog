@@ -6,7 +6,7 @@ namespace RaccoonBlog.Web.Common
 {
     public class SlugConverter
     {
-        public static string TitleToSlag(string title)
+        public static string TitleToSlug(string title)
         {
             // 2 - Strip diacritical marks using Michael Kaplan's function or equivalent
             title = RemoveDiacritics(title);
