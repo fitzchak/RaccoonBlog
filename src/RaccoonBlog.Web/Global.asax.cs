@@ -12,18 +12,7 @@ namespace RaccoonBlog.Web
 {
     public class MvcApplication : HttpApplication
     {
-        public override void Init()
-        {
-            base.Init();
-            RegisterHttpModules(this);
-        }
-
-        public static void RegisterHttpModules(HttpApplication context)
-        {
-            new EnsureLowerCaseRouteModule().Init(context);
-        }
-
-        public static void RegisterGlobalFilters(GlobalFilterCollection filters)
+    	public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new ElmahHandleErrorAttribute());
             filters.Add(new RavenActionFilterAttribute());

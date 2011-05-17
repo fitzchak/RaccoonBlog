@@ -155,7 +155,6 @@
     <Compile Include="Controllers\SectionController.cs" />
     <Compile Include="Controllers\SyndicationController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
-    <Compile Include="EnsureLowerCaseRouteModule.cs" />
     <Compile Include="Helpers\Attributes\AjaxOnlyAttribute.cs" />
     <Compile Include="Helpers\ModelStateExtensions.cs" />
     <Compile Include="Helpers\TwitterButtonDataCount.cs" />
