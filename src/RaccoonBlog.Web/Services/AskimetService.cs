@@ -8,13 +8,10 @@ namespace RaccoonBlog.Web.Services
 {
     public class AskimetService
     {
-    	private IDocumentSession session;
-    	private string akismetKey;
+    	private readonly string akismetKey;
 
     	public AskimetService(IDocumentSession session)
     	{
-    		this.session = session;
-
     		akismetKey = session.Load<BlogConfig>("Blog/Config").AkismetKey;
     	}
 
