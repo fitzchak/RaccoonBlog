@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using RaccoonBlog.Web.Common;
@@ -140,42 +141,7 @@ namespace RaccoonBlog.Web.Controllers
             }
 
             var comments = Session.Load<PostComments>(id);
-            switch (command)
-            {
-                case CommentCommandOptions.Delete:
-                    comments.Comments.RemoveAll(c => commentIds.Contains(c.Id));
-                    comments.Spam.RemoveAll(c => commentIds.Contains(c.Id));
-                    break;
-
-                case CommentCommandOptions.MarkSpam: 
-                    var spams = comments.Comments.Concat(comments.Spam)
-                        .Where(c => commentIds.Contains(c.Id))
-                        .ToArray();
-
-                    comments.Comments.RemoveAll(spams.Contains);
-                    comments.Spam.RemoveAll(spams.Contains);
-                    foreach (var comment in spams)
-                    {
-                        new AskimetService(Session).MarkSpam(comment);
-                    }
-                    break;
-
-                case CommentCommandOptions.MarkHam:
-                    var ham = comments.Spam
-                        .Where(c => commentIds.Contains(c.Id))
-                        .ToArray();
-
-                    comments.Spam.RemoveAll(ham.Contains);
-                    foreach (var comment in ham)
-                    {
-                        comment.IsSpam = false;
-                        new AskimetService(Session).MarkHam(comment);
-                    }
-                    comments.Comments.AddRange(ham);
-                    break;
-                default:
-                    throw new InvalidOperationException(command + " command is not recognized.");
-            }
+            ExecuteCommentCommand(commentIds, command, comments);
 
             post.CommentsCount = comments.Comments.Count;
 
@@ -185,6 +151,46 @@ namespace RaccoonBlog.Web.Controllers
             }
             return RedirectToAction("Details", new { id, slug });
         }
+
+    	private void ExecuteCommentCommand(IEnumerable<int> commentIds, CommentCommandOptions command, PostComments comments)
+    	{
+    		switch (command)
+    		{
+    			case CommentCommandOptions.Delete:
+    				comments.Comments.RemoveAll(c => commentIds.Contains(c.Id));
+    				comments.Spam.RemoveAll(c => commentIds.Contains(c.Id));
+    				break;
+
+    			case CommentCommandOptions.MarkSpam: 
+    				var spams = comments.Comments.Concat(comments.Spam)
+    					.Where(c => commentIds.Contains(c.Id))
+    					.ToArray();
+
+    				comments.Comments.RemoveAll(spams.Contains);
+    				comments.Spam.RemoveAll(spams.Contains);
+    				foreach (var comment in spams)
+    				{
+    					new AskimetService(Session).MarkSpam(comment);
+    				}
+    				break;
+
+    			case CommentCommandOptions.MarkHam:
+    				var ham = comments.Spam
+    					.Where(c => commentIds.Contains(c.Id))
+    					.ToArray();
+
+    				comments.Spam.RemoveAll(ham.Contains);
+    				foreach (var comment in ham)
+    				{
+    					comment.IsSpam = false;
+    					new AskimetService(Session).MarkHam(comment);
+    				}
+    				comments.Comments.AddRange(ham);
+    				break;
+    			default:
+    				throw new InvalidOperationException(command + " command is not recognized.");
+    		}
+    	}
 
     	[HttpPost]
         public ActionResult Delete(int id)
