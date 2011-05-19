@@ -1,6 +1,6 @@
 using System.Web.Mvc;
 
-namespace RaccoonBlog.Web.Helpers.Binders
+namespace RaccoonBlog.Web.Infrastructure.Binders
 {
     public class RemoveSpacesEnumBinder : DefaultModelBinder
     {

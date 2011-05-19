@@ -1,6 +1,6 @@
 using System.Web.Routing;
 
-namespace RaccoonBlog.Web.Common
+namespace RaccoonBlog.Web.Infrastructure
 {
     public class LowercaseRoute : Route
     {

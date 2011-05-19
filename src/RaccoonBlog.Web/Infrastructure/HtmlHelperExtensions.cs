@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 
-namespace RaccoonBlog.Web.Helpers
+namespace RaccoonBlog.Web.Infrastructure
 {
     public static class HtmlHelperExtensions
     {

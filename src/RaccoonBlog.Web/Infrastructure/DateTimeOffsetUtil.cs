@@ -1,6 +1,6 @@
 using System;
 
-namespace RaccoonBlog.Web.Common
+namespace RaccoonBlog.Web.Infrastructure
 {
 	public class DateTimeOffsetUtil
 	{

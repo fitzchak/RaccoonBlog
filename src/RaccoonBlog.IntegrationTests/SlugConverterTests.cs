@@ -1,5 +1,5 @@
 using RaccoonBlog.Web;
-using RaccoonBlog.Web.Common;
+using RaccoonBlog.Web.Infrastructure;
 using Xunit;
 
 namespace RaccoonBlog.IntegrationTests

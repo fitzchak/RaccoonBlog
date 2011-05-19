@@ -1,11 +1,10 @@
 using System;
 using System.Linq;
 using RaccoonBlog.Web.Commands;
-using RaccoonBlog.Web.Common;
-using RaccoonBlog.Web.Helpers;
-using RaccoonBlog.Web.Helpers.Validation;
+using RaccoonBlog.Web.Infrastructure;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Commands;
+using RaccoonBlog.Web.Infrastructure.Validation;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
 using Raven.Client.Linq;

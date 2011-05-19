@@ -5,7 +5,7 @@
 // //-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
-using RaccoonBlog.Web.Common;
+using RaccoonBlog.Web.Infrastructure;
 
 namespace RaccoonBlog.Web.Models
 {

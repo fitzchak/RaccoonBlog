@@ -132,36 +132,35 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\DocumentSessionExtensions.cs" />
-    <Compile Include="Common\RouteCollectionExtension.cs" />
-    <Compile Include="Common\UrlHelperExtensions.cs" />
+    <Compile Include="Infrastructure\DocumentSessionExtensions.cs" />
+    <Compile Include="Infrastructure\RouteCollectionExtension.cs" />
     <Content Include="Content\css\custom\ayende.less.css" />
     <Content Include="Content\css\custom\hibernatingrhinos.settings.less.css" />
     <Content Include="Content\css\custom\hibernatingrhinos.less.css" />
     <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Common\DateTimeOffsetUtil.cs" />
+    <Compile Include="Infrastructure\DateTimeOffsetUtil.cs" />
     <Compile Include="Controllers\CommentCommandOptions.cs" />
     <Compile Include="Controllers\CssController.cs" />
     <Compile Include="Controllers\ElmahController.cs" />
-    <Compile Include="Helpers\Attributes\ElmahHandleErrorAttribute.cs" />
-    <Compile Include="Helpers\Binders\RemoveSpacesEnumBinder.cs" />
-    <Compile Include="Helpers\HtmlHelperExtensions.cs" />
-    <Compile Include="Helpers\Results\ElmahResult.cs" />
+    <Compile Include="Infrastructure\Attributes\ElmahHandleErrorAttribute.cs" />
+    <Compile Include="Infrastructure\Binders\RemoveSpacesEnumBinder.cs" />
+    <Compile Include="Infrastructure\HtmlHelperExtensions.cs" />
+    <Compile Include="Infrastructure\Results\ElmahResult.cs" />
     <Compile Include="Controllers\PostDetailsController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PostAdminController.cs" />
-    <Compile Include="Common\QueryableExtensions.cs" />
+    <Compile Include="Infrastructure\QueryableExtensions.cs" />
     <Compile Include="Controllers\SectionAdminController.cs" />
     <Compile Include="Controllers\SectionController.cs" />
     <Compile Include="Controllers\SyndicationController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
-    <Compile Include="Helpers\Attributes\AjaxOnlyAttribute.cs" />
-    <Compile Include="Helpers\ModelStateExtensions.cs" />
-    <Compile Include="Helpers\TwitterButtonDataCount.cs" />
-    <Compile Include="Helpers\TwitterExtensions.cs" />
-    <Compile Include="Helpers\UrlHelperExtensions.cs" />
-    <Compile Include="Helpers\Validation\RequiredIfAttribute.cs" />
-    <Compile Include="Helpers\Results\JsonNetResult.cs" />
+    <Compile Include="Infrastructure\Attributes\AjaxOnlyAttribute.cs" />
+    <Compile Include="Infrastructure\ModelStateExtensions.cs" />
+    <Compile Include="Infrastructure\TwitterButtonDataCount.cs" />
+    <Compile Include="Infrastructure\TwitterExtensions.cs" />
+    <Compile Include="Infrastructure\UrlHelperExtensions.cs" />
+    <Compile Include="Infrastructure\Validation\RequiredIfAttribute.cs" />
+    <Compile Include="Infrastructure\Results\JsonNetResult.cs" />
     <Compile Include="Infrastructure\ActionResults\XmlResult.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\AbstractProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\BlogConfigMapperProfile.cs" />
@@ -177,7 +176,7 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\MvcHtmlStringConverter.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\TagsResolver.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\UserAdminMapperProfile.cs" />
-    <Compile Include="Common\LowercaseRoute.cs" />
+    <Compile Include="Infrastructure\LowercaseRoute.cs" />
     <Compile Include="Infrastructure\Commands\CommandExecutor.cs" />
     <Compile Include="Infrastructure\Indexes\PostCountByMonth.cs" />
     <Compile Include="Infrastructure\Indexes\TagCount.cs" />
@@ -190,7 +189,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="RouteConfigurator.cs" />
     <Compile Include="Controllers\LegacyPostController.cs" />
-    <Compile Include="Helpers\Validation\RecaptchaValidatorWrapper.cs" />
+    <Compile Include="Infrastructure\Validation\RecaptchaValidatorWrapper.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\MarkdownResolver.cs" />
     <Compile Include="Infrastructure\Indexes\Posts_ByMonthPublished_Count.cs" />
     <Compile Include="Infrastructure\Indexes\Tags_Count.cs" />
@@ -200,10 +199,10 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\PostViewModelMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\RavenIdResolver.cs" />
     <Compile Include="Commands\AddCommentCommand.cs" />
-    <Compile Include="Common\EnumerableExtensions.cs" />
+    <Compile Include="Infrastructure\EnumerableExtensions.cs" />
     <Compile Include="Commands\SendEmailCommand.cs" />
     <Compile Include="Controllers\AbstractController.cs" />
-    <Compile Include="Helpers\RecaptchHelperExtensions.cs" />
+    <Compile Include="Infrastructure\RecaptchHelperExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -213,7 +212,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Infrastructure\Commands\ICommand.cs" />
     <Compile Include="Services\AskimetService.cs" />
-    <Compile Include="Common\DateTimeOffsetExtensions.cs" />
+    <Compile Include="Infrastructure\DateTimeOffsetExtensions.cs" />
     <Compile Include="Services\IMetaWeblog.cs" />
     <Compile Include="Services\MetaWeblog.cs" />
     <Compile Include="Services\PostSchedulingStrategy.cs" />
@@ -225,7 +224,7 @@
     <Compile Include="Services\RssModels\Post.cs" />
     <Compile Include="Services\RssModels\Source.cs" />
     <Compile Include="Services\RssModels\BlogInfo.cs" />
-    <Compile Include="Common\SlugConverter.cs" />
+    <Compile Include="Infrastructure\SlugConverter.cs" />
     <Compile Include="Services\RssModels\UserInfo.cs" />
     <Compile Include="Services\RssModels\WordpressCategory.cs" />
     <Compile Include="ViewModels\AdminPostDetailsViewModel.cs" />
@@ -251,7 +250,7 @@
     <Compile Include="ViewModels\UserInput.cs" />
     <Compile Include="ViewModels\UserPasswordInput.cs" />
     <Compile Include="ViewModels\UserSummeryViewModel.cs" />
-    <Compile Include="Helpers\Attributes\ValidatePasswordLengthAttribute.cs" />
+    <Compile Include="Infrastructure\Attributes\ValidatePasswordLengthAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\custom\ayende.settings.less.css" />

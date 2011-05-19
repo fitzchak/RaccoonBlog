@@ -9,7 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Elmah;
-using RaccoonBlog.Web.Common;
+using RaccoonBlog.Web.Infrastructure;
 using RaccoonBlog.Web.Infrastructure.Commands;
 
 namespace RaccoonBlog.Web.Commands

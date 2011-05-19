@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
-using RaccoonBlog.Web.Helpers.Validation;
+using RaccoonBlog.Web.Infrastructure.Validation;
 
 namespace RaccoonBlog.Web.ViewModels
 {

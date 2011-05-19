@@ -1,5 +1,5 @@
 using System.Linq;
-using RaccoonBlog.Web.Common;
+using RaccoonBlog.Web.Infrastructure;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;

@@ -1,7 +1,7 @@
 using System.Web;
 using System.Web.Mvc;
 
-namespace RaccoonBlog.Web.Helpers.Results
+namespace RaccoonBlog.Web.Infrastructure.Results
 {
 	public class ElmahResult : ActionResult
 	{

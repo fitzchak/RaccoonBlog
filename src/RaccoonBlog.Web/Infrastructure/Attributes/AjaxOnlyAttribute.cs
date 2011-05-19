@@ -1,8 +1,7 @@
 using System;
 using System.Web.Mvc;
-using RaccoonBlog.Web.Helpers.Results;
 
-namespace RaccoonBlog.Web.Helpers.Attributes
+namespace RaccoonBlog.Web.Infrastructure.Attributes
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public sealed class AjaxOnlyAttribute : ActionFilterAttribute

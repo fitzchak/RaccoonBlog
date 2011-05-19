@@ -4,11 +4,11 @@ using System.Configuration;
 using System.Web.Mvc;
 using System.Xml.Linq;
 using System.Linq;
+using RaccoonBlog.Web.Infrastructure;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
 using Raven.Client.Linq;
-using RaccoonBlog.Web.Helpers;
 
 namespace RaccoonBlog.Web.Controllers
 {

@@ -1,6 +1,6 @@
 using System.Linq;
 using System.Web.Mvc;
-using RaccoonBlog.Web.Helpers.Attributes;
+using RaccoonBlog.Web.Infrastructure.Attributes;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;

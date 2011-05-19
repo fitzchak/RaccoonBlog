@@ -1,5 +1,5 @@
 using System.Web.Mvc;
-using RaccoonBlog.Web.Helpers.Results;
+using RaccoonBlog.Web.Infrastructure.Results;
 
 namespace RaccoonBlog.Web.Controllers
 {
