@@ -46,7 +46,8 @@
       <HintPath>..\packages\RavenDB.1.0.0.360\lib\net40\Raven.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Client.Lightweight, Version=1.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
-      <HintPath>..\packages\raven\Client\Raven.Client.Lightweight.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RavenDB.1.0.0.360\lib\net40\Raven.Client.Lightweight.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Json">
       <HintPath>..\packages\RavenDB.1.0.0.360\lib\net40\Raven.Json.dll</HintPath>
