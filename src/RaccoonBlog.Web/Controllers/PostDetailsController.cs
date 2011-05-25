@@ -31,7 +31,7 @@ namespace RaccoonBlog.Web.Controllers
 			if (post.IsPublicPost(Request.QueryString["key"]) == false)
 				return HttpNotFound();  
 
-			var comments = Session.Load<PostComments>(post.CommentsId);
+			var comments = Session.Load<PostComments>(post.CommentsId) ?? new PostComments();
 			var vm = new PostViewModel
 			{
 				Post = post.MapTo<PostViewModel.PostDetails>(),
