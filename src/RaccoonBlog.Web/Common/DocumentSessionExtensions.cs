@@ -12,18 +12,25 @@ namespace RaccoonBlog.Web.Common
 {
 	public static class DocumentSessionExtensions
 	{
-		public static PostReference GetPostReference(this IDocumentSession session, Expression<Func<Post, bool>> expression, bool desc)
+		public static PostReference GetNextPrevPost(this IDocumentSession session, Post compareTo, bool isNext)
 		{
 			var queryable = session.Query<Post>()
-				.WhereIsPublicPost()
-				.Where(expression);
+				.WhereIsPublicPost();
 
-			queryable = desc ? 
-				queryable.OrderByDescending(post => post.PublishAt) : 
-				queryable.OrderBy(post => post.PublishAt);
-
+			if (isNext)
+			{
+				queryable = queryable
+					.Where(post => post.PublishAt > compareTo.PublishAt)
+					.OrderBy(post => post.PublishAt);
+			}
+			else
+			{
+				queryable = queryable
+					.Where(post => post.PublishAt < compareTo.PublishAt)
+					.OrderByDescending(post => post.PublishAt);
+			}
+			
 			var postReference = queryable
-			  
 			  .Select(p => new PostReference{ Id = p.Id, Title = p.Title })
 			  .FirstOrDefault();
 
