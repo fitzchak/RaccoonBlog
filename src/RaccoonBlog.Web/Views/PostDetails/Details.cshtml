@@ -141,6 +141,7 @@
 	<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
 	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.tmpl.min.js")"></script>
 	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.md5.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Content/js/date.f-0.5.0.min.js")"></script>
 	<script type="text/javascript">
 		$(function () {
 			$('#postComment form').submit(function () {
@@ -160,7 +161,7 @@
 								emailHash: $.md5($('article#postComment input[name$="Email"]').val()),
 								url: $('article#postComment input[name$="Url"]').val(),
 								body: converter.makeHtml($('article#postComment textarea[name$="Body"]').val()),
-								createdAt: now.getMonth() + '/' + now.getDay() + '/' + now.getYear() + ' ' + now.getHours() + ':' + now.getMinutes()
+								createdAt: now.f("MM/dd/yyyy HH:mm")
 							};
 				            $('article#postComment, div.markdown-preview-containter').remove();
 							$('#commentTemplate').tmpl(comment).appendTo('section.comments').show('medium');

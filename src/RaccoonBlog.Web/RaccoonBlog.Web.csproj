@@ -259,6 +259,8 @@
     <Content Include="Content\css\base.less.css" />
     <Content Include="Content\css\ResetCss.css" />
     <Content Include="Content\css\fullcalendar.css" />
+    <Content Include="Content\js\date.f-0.5.0.js" />
+    <Content Include="Content\js\date.f-0.5.0.min.js" />
     <Content Include="Content\js\html5shim.js" />
     <Content Include="Content\js\jquery.ae.image.resize.js" />
     <Content Include="Content\js\jquery.ae.image.resize.min.js" />
