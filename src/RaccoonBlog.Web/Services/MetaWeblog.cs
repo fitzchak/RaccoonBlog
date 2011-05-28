@@ -183,7 +183,7 @@ namespace RaccoonBlog.Web.Services
         {
             ValidateUser(username, password);
             var imagePhysicalPath = Context.Server.MapPath(ConfigurationManager.AppSettings["uploadsPath"]);
-            var imageWebPath = ConfigurationManager.AppSettings["UploadsPath"].Replace("~", Context.Request.ApplicationPath);
+            var imageWebPath = VirtualPathUtility.ToAbsolute(ConfigurationManager.AppSettings["UploadsPath"]);
 
             imagePhysicalPath = Path.Combine(imagePhysicalPath, mediaObject.name);
             var directoryPath = Path.GetDirectoryName(imagePhysicalPath).Replace("/", "\\");
