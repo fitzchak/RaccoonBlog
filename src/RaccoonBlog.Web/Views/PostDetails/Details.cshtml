@@ -53,7 +53,7 @@
 				<a name="fb_share" type="box_count" share_url="@(Url.Abs((string)ViewBag.CurrentUrl))" href="http://www.facebook.com/sharer.php?u=@(Url.Abs((string)ViewBag.CurrentUrl))&t=@(Model.Post.Title)"></a>
             </div>
 			<div class="facebook">
-                <iframe src="http://www.facebook.com/plugins/like.php?href=@(Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px;" allowTransparency="true"></iframe>
+                <iframe src="http://www.facebook.com/plugins/like.php?href=@(Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))&send=false&layout=button_count&width=450&show_faces=true&action=like&colorscheme=light&font&height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px;" allowTransparency="true"></iframe>
             </div>
 			<div class="clr"></div>
         </div>
@@ -74,7 +74,7 @@
 		{
             <article class="comment @(comment.IsImportant ? " important" : null)">
                 <a name="comment@(comment.Id)"></a>
-                <img class="avatar" src="http://www.gravatar.com/avatar.php?gravatar_id=@(comment.EmailHash)&amp;size=50&amp;default=identicon" alt="Gravatar" style="border-width:0px;">
+                <img class="avatar" src="http://www.gravatar.com/avatar.php?gravatar_id=@(comment.EmailHash)&size=50&default=identicon" alt="Gravatar" style="border-width:0px;">
 
                 <header>
                     @comment.CreatedAt by
@@ -158,6 +158,8 @@
 	        });
 
 	        function insertComment() {
+	            if ($('.livecomment').length > 0) return;
+	            
 	            var now = new Date();
 	            var comment = {
 	                author: $('article#postComment input[name$="Name"]').val(),
@@ -172,17 +174,26 @@
 	        var $preview = null;
 	        var converter = new Showdown.converter();
 	        $('textarea[name$="Body"]').keydown(function () {
-	            if ($preview == null || $preview.length < 1) {
+	            if ($preview == null) {
 	                insertComment();
 	                $preview = $('.livecomment .comment-body');
 	            }
 	            $preview.html(converter.makeHtml($(this).val()));
 	        });
+	        var $email = null;
+	        $('input[name$="Email"]').keyup(function () {
+	            if ($email == null) {
+	                insertComment();
+	                $email = $('.livecomment .avatar');
+	            }
+	            $email.attr('src', 'http://www.gravatar.com/avatar.php?gravatar_id=' + $.md5($(this).val()) + '&size=50&default=identicon');
+	        });
+	        
 	    });
 	</script>
 	<script id="commentTemplate" type="text/html">
         <article class="comment livecomment" style="display: none">
-            <img class="avatar" src="http://www.gravatar.com/avatar.php?gravatar_id=${emailHash}&amp;size=50&amp;default=identicon" alt="Gravatar" style="border-width:0px;">
+            <img class="avatar" src="http://www.gravatar.com/avatar.php?gravatar_id=${emailHash}&size=50&default=identicon" alt="Gravatar" style="border-width:0px;">
             <header>
                 ${createdAt} by
                 <address>
