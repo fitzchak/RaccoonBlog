@@ -123,11 +123,6 @@
 				}
 			}
         </article>
-		<div class="markdown-preview-containter" style="display: none">
-			<span class="form_item_name">Preview Comment</span>
-			<div class="comment-body markdown-preview raw_html"></div>
-		</div>
-		<div class="clr"></div>
     </section>
 </article>
 @section Style {
@@ -143,46 +138,52 @@
 	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.md5.js")"></script>
 	<script type="text/javascript" src="@Url.Content("~/Content/js/date.f-0.5.0.min.js")"></script>
 	<script type="text/javascript">
-		$(function () {
-			$('#postComment form').submit(function () {
-				var t = $(this);
-				if (t.valid()) {
-					var jqxhr = $.post(t.attr('action'), t.serializeArray(), null, 'json');
-					jqxhr.error(function (data, textStatus, jqXHR) {
-						setMessage('An error occurred while posing your comment', 'fail');
-					});
-					jqxhr.success(function (data, textStatus, jqXHR) {
-						if (!data.success) setMessage('An error occurred while posting your comment: ' + data.message, 'fail');
-						else {
-							setMessage(data.message);
-							var now = new Date();
-							var comment = {
-								author: $('article#postComment input[name$="Name"]').val(),
-								emailHash: $.md5($('article#postComment input[name$="Email"]').val()),
-								url: $('article#postComment input[name$="Url"]').val(),
-								body: converter.makeHtml($('article#postComment textarea[name$="Body"]').val()),
-								createdAt: now.f("MM/dd/yyyy HH:mm")
-							};
-				            $('article#postComment, div.markdown-preview-containter').remove();
-							$('#commentTemplate').tmpl(comment).appendTo('section.comments').show('medium');
-						}
-					});
-				}
-				return false;
-			});
+	    $(function () {
+	        $('#postComment form').submit(function () {
+	            var t = $(this);
+	            if (t.valid()) {
+	                var jqxhr = $.post(t.attr('action'), t.serializeArray(), null, 'json');
+	                jqxhr.error(function (data, textStatus, jqXHR) {
+	                    setMessage('An error occurred while posing your comment', 'fail');
+	                });
+	                jqxhr.success(function (data, textStatus, jqXHR) {
+	                    if (!data.success) setMessage('An error occurred while posting your comment: ' + data.message, 'fail');
+	                    else {
+	                        setMessage(data.message);
+	                        $('article#postComment, article.markdown-preview-container').remove();
+	                    }
+	                });
+	            }
+	            return false;
+	        });
 
-			var $textarea = $('textarea[name$="Body"]').keydown(function () {
-				$('.markdown-preview-containter').show('medium');
-			});
-			$preview = $('.markdown-preview');
-			converter = new Showdown.converter();
-			$textarea.keyup(function () {
-				$preview.html(converter.makeHtml($textarea.val()));
-			}).trigger('keyup');
-		});
+	        function insertComment() {
+	            var now = new Date();
+	            var comment = {
+	                author: $('article#postComment input[name$="Name"]').val(),
+	                emailHash: $.md5($('article#postComment input[name$="Email"]').val()),
+	                url: $('article#postComment input[name$="Url"]').val(),
+	                body: converter.makeHtml($('article#postComment textarea[name$="Body"]').val()),
+	                createdAt: now.f("MM/dd/yyyy HH:mm")
+	            };
+	            $('#commentTemplate').tmpl(comment).appendTo('section.comments').show('medium');
+	        };
+
+	        $preview = null;
+	        converter = new Showdown.converter();
+	        $('textarea[name$="Body"]').keydown(function () {
+	            $('.markdown-preview-container').show('medium');
+	        }).keyup(function () {
+	            if ($preview == null || $preview.length < 1) {
+	                insertComment();
+	                $preview = $('.livecomment comment-body');
+	            }
+	            $preview.html(converter.makeHtml($(this).val()));
+	        }).trigger('keyup');
+	    });
 	</script>
 	<script id="commentTemplate" type="text/html">
-        <article class="comment" style="display: none">
+        <article class="comment livecomment" style="display: none">
             <img class="avatar" src="http://www.gravatar.com/avatar.php?gravatar_id=${emailHash}&amp;size=50&amp;default=identicon" alt="Gravatar" style="border-width:0px;">
             <header>
                 ${createdAt} by
