@@ -169,17 +169,15 @@
 	            $('#commentTemplate').tmpl(comment).appendTo('section.comments').show('medium');
 	        };
 
-	        $preview = null;
-	        converter = new Showdown.converter();
+	        var $preview = null;
+	        var converter = new Showdown.converter();
 	        $('textarea[name$="Body"]').keydown(function () {
-	            $('.markdown-preview-container').show('medium');
-	        }).keyup(function () {
 	            if ($preview == null || $preview.length < 1) {
 	                insertComment();
-	                $preview = $('.livecomment comment-body');
+	                $preview = $('.livecomment .comment-body');
 	            }
 	            $preview.html(converter.makeHtml($(this).val()));
-	        }).trigger('keyup');
+	        });
 	    });
 	</script>
 	<script id="commentTemplate" type="text/html">
