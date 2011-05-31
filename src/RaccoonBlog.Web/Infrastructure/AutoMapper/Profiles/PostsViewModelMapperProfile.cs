@@ -1,4 +1,3 @@
-using System.Linq;
 using AutoMapper;
 using RaccoonBlog.Web.Common;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
@@ -16,10 +15,13 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
                 .ForMember(x => x.Slug, o => o.MapFrom(m => SlugConverter.TitleToSlug(m.Title)))
                 .ForMember(x => x.Author, o => o.Ignore())
                 .ForMember(x => x.PublishedAt, o => o.MapFrom(m => m.PublishAt))
-                .ForMember(x => x.Tags, o => o.MapFrom(m => m.Tags.Select(name => new TagDetails { Name = name })))
                 ;
 
 			Mapper.CreateMap<User, PostsViewModel.PostSummary.UserDetails>();
+
+        	Mapper.CreateMap<string, TagDetails>()
+				.ForMember(x => x.Name, o => o.MapFrom(m => m))
+        		;
         }
     }
 }
