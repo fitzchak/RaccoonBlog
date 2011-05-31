@@ -268,6 +268,7 @@
     <Content Include="Content\js\jquery.md5.js" />
     <Content Include="Content\js\jquery.myimgscale-0.2.js" />
     <Content Include="Content\js\jquery.myimgscale-0.2.min.js" />
+    <Content Include="Content\js\raccoon-blog.js" />
     <Content Include="Content\js\RequiredIfValidation.js" />
     <Content Include="Content\js\fullcalendar.min.js" />
     <Content Include="Content\js\jquery-ui-1.8.12.custom.min.js" />
@@ -371,7 +372,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>28564</DevelopmentServerPort>
+          <DevelopmentServerPort>3387</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost/RaccoonBlog.Web</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
