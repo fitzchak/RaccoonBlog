@@ -227,6 +227,7 @@
     <Compile Include="Infrastructure\SlugConverter.cs" />
     <Compile Include="Services\RssModels\UserInfo.cs" />
     <Compile Include="Services\RssModels\WordpressCategory.cs" />
+    <Compile Include="ViewModels\AbstractViewModel.cs" />
     <Compile Include="ViewModels\AdminPostDetailsViewModel.cs" />
     <Compile Include="ViewModels\BlogConfigViewModel.cs" />
     <Compile Include="ViewModels\ChangePassViewModel.cs" />
@@ -258,12 +259,16 @@
     <Content Include="Content\css\base.less.css" />
     <Content Include="Content\css\ResetCss.css" />
     <Content Include="Content\css\fullcalendar.css" />
+    <Content Include="Content\js\date.f-0.5.0.js" />
+    <Content Include="Content\js\date.f-0.5.0.min.js" />
     <Content Include="Content\js\html5shim.js" />
     <Content Include="Content\js\jquery.ae.image.resize.js" />
     <Content Include="Content\js\jquery.ae.image.resize.min.js" />
+    <Content Include="Content\js\jquery.datalink.js" />
     <Content Include="Content\js\jquery.md5.js" />
     <Content Include="Content\js\jquery.myimgscale-0.2.js" />
     <Content Include="Content\js\jquery.myimgscale-0.2.min.js" />
+    <Content Include="Content\js\raccoon-blog.js" />
     <Content Include="Content\js\RequiredIfValidation.js" />
     <Content Include="Content\js\fullcalendar.min.js" />
     <Content Include="Content\js\jquery-ui-1.8.12.custom.min.js" />
@@ -367,7 +372,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>28564</DevelopmentServerPort>
+          <DevelopmentServerPort>3387</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost/RaccoonBlog.Web</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
