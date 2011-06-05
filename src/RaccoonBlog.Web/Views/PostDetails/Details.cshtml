@@ -77,7 +77,9 @@
 		{
             <article class="comment @(comment.IsImportant ? " important" : null)">
                 <a name="comment@(comment.Id)"></a>
-                <img class="avatar" src="http://www.gravatar.com/avatar.php?gravatar_id=@(comment.EmailHash)&size=50&default=identicon" alt="Gravatar" style="border-width:0px;">
+                <div class="avatar">
+                    <img src="http://www.gravatar.com/avatar.php?gravatar_id=@(comment.EmailHash)&size=50&default=identicon" alt="Gravatar">
+                </div>
 
                 <header>
                     @comment.CreatedAt by
@@ -147,7 +149,9 @@
 	</script>
 	<script id="commentTemplate" type="text/html">
         <article class="comment livecomment" style="display: none">
-            <img class="avatar" src="http://www.gravatar.com/avatar.php?gravatar_id=${emailHash}&size=50&default=identicon" alt="Gravatar" style="border-width:0px;">
+            <div class="avatar">
+                <img src="http://www.gravatar.com/avatar.php?gravatar_id=${emailHash}&size=50&default=identicon" alt="Gravatar">
+            </div>
             <header>
                 ${createdAt} by
                 <address>
