@@ -75,6 +75,25 @@ String.prototype.isNullOrEmpty = function () {
                 $url.attr('title', name);
             }
         });
+        
+        
+        $('#postComment form').submit(function () {
+	        var t = $(this);
+	        if (t.valid()) {
+	            var jqxhr = $.post(t.attr('action'), t.serializeArray(), null, 'json');
+	            jqxhr.error(function (data, textStatus, jqXHR) {
+	                setMessage('An error occurred while posing your comment', 'fail');
+	            });
+	            jqxhr.success(function (data, textStatus, jqXHR) {
+	                if (!data.success) setMessage('An error occurred while posting your comment: ' + data.message, 'fail');
+	                else {
+	                    setMessage(data.message);
+	                    $('article#postComment, article.markdown-preview-container').remove();
+	                }
+	            });
+	        }
+	        return false;
+	    });
     };
     
     window.Raccoon = Raccoon;
