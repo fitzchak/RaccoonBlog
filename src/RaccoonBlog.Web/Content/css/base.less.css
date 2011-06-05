@@ -220,6 +220,7 @@ article.post footer, postToolbar
 
 .comment-body
 {
+    padding: 1px;
 }
 
 .comment-body p
