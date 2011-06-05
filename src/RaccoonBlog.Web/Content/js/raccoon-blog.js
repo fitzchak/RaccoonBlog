@@ -53,7 +53,7 @@ String.prototype.isNullOrEmpty = function () {
         $('input[name$="Email"]').keyup(function () {
             if ($email == null) {
                 insertComment();
-                $email = $('.livecomment .avatar');
+                $email = $('.livecomment .avatar img');
             }
             $email.attr('src', 'http://www.gravatar.com/avatar.php?gravatar_id=' + $.md5($(this).val()) + '&size=50&default=identicon');
         });
