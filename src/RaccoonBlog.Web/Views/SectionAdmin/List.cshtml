@@ -42,11 +42,11 @@
                     jqxhr.error(failAction);
                     jqxhr.success(function (data, textStatus, jqXHR) {
                         if (!data.success) failAction();
-                        else setMessage('Change section position succeed: ' + title);
+                        else Raccoon.Util.Views.setMessage('Change section position succeed: ' + title);
                     });
                     function failAction(data, textStatus, jqXHR) {
                         t.sortable('cancel');
-                        setMessage('Change section position failed: ' + (data.message ? data.message : title), 'fail');
+                        Raccoon.Util.Views.setMessage('Change section position failed: ' + (data.message ? data.message : title), 'fail');
                     }
                 }
             });

@@ -17,6 +17,13 @@ String.prototype.isNullOrEmpty = function () {
         return "http://" + url;
     };
 
+    Raccoon.Util.Views = {};
+    Raccoon.Util.Views.setMessage = function setMessage(message, cssClass) {
+        var m = $('#message').html(message);
+        if (cssClass) m.removeClass().addClass(cssClass);
+        m.css('visibility', 'visible');
+    };
+    
     Raccoon.Views = {};
     Raccoon.Views.Details = function() {
         function insertComment() {
@@ -82,12 +89,12 @@ String.prototype.isNullOrEmpty = function () {
 	        if (t.valid()) {
 	            var jqxhr = $.post(t.attr('action'), t.serializeArray(), null, 'json');
 	            jqxhr.error(function (data, textStatus, jqXHR) {
-	                setMessage('An error occurred while posing your comment', 'fail');
+	                Raccoon.Util.Views.setMessage('An error occurred while posing your comment', 'fail');
 	            });
 	            jqxhr.success(function (data, textStatus, jqXHR) {
-	                if (!data.success) setMessage('An error occurred while posting your comment: ' + data.message, 'fail');
+	                if (!data.success) Raccoon.Util.Views.setMessage('An error occurred while posting your comment: ' + data.message, 'fail');
 	                else {
-	                    setMessage(data.message);
+	                    Raccoon.Util.Views.setMessage(data.message);
 	                    $('article#postComment, article.markdown-preview-container').remove();
 	                }
 	            });
