@@ -45,7 +45,7 @@ namespace RaccoonBlog.Web.Commands
             };
             comment.IsSpam = new AskimetService(Session).CheckForSpam(comment);
 
-            if (comment.IsSpam)
+			if (_requestValues.IsAuthenticated == false && comment.IsSpam)
                 comments.Spam.Add(comment);
             else
             {
