@@ -2,7 +2,7 @@ using System;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace RaccoonBlog.Web.Common
+namespace RaccoonBlog.Web.Helpers.Routes
 {
 	public static class RouteCollectionExtension
 	{

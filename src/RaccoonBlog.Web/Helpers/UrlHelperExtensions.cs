@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -75,5 +76,15 @@ namespace RaccoonBlog.Web.Helpers
             }
             return MvcHtmlString.Create(href);
         }
+
+		public static string Abs(this UrlHelper urlHelper, string relativeOrAbsoluteUrl)
+		{
+			var uri = new Uri(relativeOrAbsoluteUrl, UriKind.RelativeOrAbsolute);
+			if (uri.IsAbsoluteUri)
+			{
+				return relativeOrAbsoluteUrl;
+			}
+			return ConfigurationManager.AppSettings["MainUrl"] + relativeOrAbsoluteUrl;
+		}
     }
 }
