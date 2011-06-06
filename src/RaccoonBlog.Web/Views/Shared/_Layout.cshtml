@@ -4,6 +4,7 @@
     if (blogConfig == null) {
         throw new InvalidOperationException("Couldn't find blog config");
     }
+	int revisionNumber = 1;
 }
 <!DOCTYPE html>
 <html>
@@ -45,7 +46,7 @@
     @if (IsSectionDefined("Script")) {
         <script src="@Url.Content("~/Content/js/jquery-1.6.min.js")" type="text/javascript"></script>
 		<script src="@Url.Content("~/Content/js/jquery.ae.image.resize.min.js")" type="text/javascript"></script>
-	    <script type="text/javascript" src="@Url.Content("~/Content/js/raccoon-blog.js")"></script>
+	    <script type="text/javascript" src="@Url.Script("raccoon-blog")"></script>
 		<script type="text/javascript">
 			$(function () {
 				var timer;
