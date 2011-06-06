@@ -13,7 +13,7 @@ namespace RaccoonBlog.Web.Helpers
 			if (!fileName.EndsWith(".css") && !fileName.EndsWith(".less"))
 				fileName += ".css";
 
-			return urlHelper.Content(string.Format("{0}/{1}?version={2}", CssDir.TrimEnd('/'), fileName.TrimStart('/'), RevisionNumber));
+			return urlHelper.Content(string.Format("~/Content/{0}/{1}?version={2}", CssDir, fileName, RevisionNumber));
 		}
 
 		public static string Script(this UrlHelper urlHelper, string fileName)
@@ -21,7 +21,7 @@ namespace RaccoonBlog.Web.Helpers
 			if (!fileName.EndsWith(".js"))
 				fileName += ".js";
 
-			return urlHelper.Content(string.Format("{0}/{1}?version={2}", ScriptDir.TrimEnd('/'), fileName.TrimStart('/'), RevisionNumber));
+			return urlHelper.Content(string.Format("~/Content/{0}/{1}?version={2}", ScriptDir, fileName, RevisionNumber));
 		}
 	}
 }
