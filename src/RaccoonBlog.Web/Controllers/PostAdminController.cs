@@ -129,14 +129,14 @@ namespace RaccoonBlog.Web.Controllers
             if (post == null)
                 return HttpNotFound();
 
-            var slug =  SlugConverter.TitleToSlug(post.Title);
+			var postReference = post.MapTo<PostReference>();
 
             if (ModelState.IsValid == false)
             {
                 if (Request.IsAjaxRequest())
                     return Json(new {Success = false, message = ModelState.GetFirstErrorMessage()});
 
-                return Details(id, slug);
+				return Details(id, postReference.Slug);
             }
 
             var comments = Session.Load<PostComments>(id);
@@ -183,7 +183,7 @@ namespace RaccoonBlog.Web.Controllers
             {
                 return Json(new {Success = true});
             }
-            return RedirectToAction("Details", new { id, slug });
+			return RedirectToAction("Details", new { id, postReference.Slug });
         }
 
     	[HttpPost]
