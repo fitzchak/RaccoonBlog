@@ -42,7 +42,7 @@ String.prototype.isNullOrEmpty = function () {
         
         var $preview = null;
         var converter = new Showdown.converter();
-        $('textarea[name$="Body"]').keydown(function () {
+        $('textarea[name$="Body"]').keyup(function () {
             if ($preview == null) {
                 insertComment();
                 $preview = $('.livecomment .comment-body');
