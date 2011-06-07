@@ -68,7 +68,11 @@ namespace RaccoonBlog.Web.Controllers
 			if (comments == null)
 				return HttpNotFound();
 			
-			var commenter = GetCommenter(input.CommenterKey) ?? new Commenter { Key = Guid.NewGuid() };
+			var commenter = Session.GetCommenter(input.CommenterKey);
+			if (commenter == null)
+			{
+				input.CommenterKey = Guid.NewGuid().MapTo<string>();
+			}
 			
     		ValidateCommentsAllowed(post, comments);
 			ValidateCaptcha(input, commenter);
@@ -78,7 +82,7 @@ namespace RaccoonBlog.Web.Controllers
 
 			CommandExecutor.ExcuteLater(new AddCommentCommand(input, Request.MapTo<RequestValues>(), id));
 
-            SetCommenterCookie(commenter);
+			SetCommenterCookie(input);
 
     		return PostingCommentSucceeded(post);
         }
@@ -94,9 +98,9 @@ namespace RaccoonBlog.Web.Controllers
     		return RedirectToAction("Details", new { Id = postReference.DomainId, postReference.Slug });
     	}
 
-    	private void SetCommenterCookie(Commenter commenter)
+		private void SetCommenterCookie(CommentInput commentInput)
     	{
-    		var cookie = new HttpCookie(CommenterCookieName, commenter.Key.ToString())
+			var cookie = new HttpCookie(CommenterCookieName, commentInput.CommenterKey)
     		{Expires = DateTime.Now.AddYears(1)};
     		Response.Cookies.Add(cookie);
     	}
@@ -111,8 +115,8 @@ namespace RaccoonBlog.Web.Controllers
 
     	private void ValidateCaptcha(CommentInput input, Commenter commenter)
     	{
-    		if (Request.IsAuthenticated || 
-				commenter.IsTrustedCommenter == true)
+    		if (Request.IsAuthenticated ||
+				(commenter != null && commenter.IsTrustedCommenter == true))
 				return;
 
     		if (RecaptchaValidatorWrapper.Validate(ControllerContext.HttpContext)) 
@@ -153,22 +157,12 @@ namespace RaccoonBlog.Web.Controllers
 			if (cookie == null)
 				return;
 
-			var commenter = GetCommenter(cookie.Value);
+			var commenter = Session.GetCommenter(cookie.Value);
 			if (commenter == null)
 				return;
 
 			vm.Input = commenter.MapTo<CommentInput>();
 			vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
 		}
-		
-		private Commenter GetCommenter(string commenterKey)
-        {
-            Guid guid;
-            if (Guid.TryParse(commenterKey, out guid) == false)
-                return null;
-            return Session.Query<Commenter>()
-                        .Where(x => x.Key == guid)
-                        .FirstOrDefault();
-        }
     }
 }

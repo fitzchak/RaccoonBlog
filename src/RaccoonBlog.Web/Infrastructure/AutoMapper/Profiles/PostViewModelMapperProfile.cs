@@ -39,6 +39,12 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
                 .ForMember(x => x.CommenterKey, o => o.MapFrom(m => m.Key))
                 ;
 
+			Mapper.CreateMap<CommentInput, Commenter>()
+				.ForMember(x => x.Id, o => o.Ignore())
+				.ForMember(x => x.IsTrustedCommenter, o => o.Ignore())
+				.ForMember(x => x.Key, o => o.Ignore())
+				;
+
             Mapper.CreateMap<User, CommentInput>()
                 .ForMember(x => x.Name, o => o.MapFrom(m => m.FullName))
                 .ForMember(x => x.Url, o => o.MapFrom(m => ConfigurationManager.AppSettings["MainUrl"] + UrlHelper.RouteUrl("Default")))

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Web;
 using RaccoonBlog.Web.Models;
@@ -52,6 +53,22 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 			return session.Query<User>()
 				.Where(u => u.Email == email)
 				.FirstOrDefault();
+		}
+
+
+		public static Commenter GetCommenter(this IDocumentSession session, string commenterKey)
+		{
+			Guid guid;
+			if (Guid.TryParse(commenterKey, out guid) == false)
+				return null;
+			return GetCommenter(session, guid);
+		}
+
+		public static Commenter GetCommenter(this IDocumentSession session, Guid commenterKey)
+		{
+			return session.Query<Commenter>()
+						.Where(x => x.Key == commenterKey)
+						.FirstOrDefault();
 		}
 	}
 }

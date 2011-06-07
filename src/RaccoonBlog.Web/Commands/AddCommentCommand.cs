@@ -4,6 +4,7 @@ using System.Web;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Infrastructure.Commands;
+using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.Services;
 using RaccoonBlog.Web.ViewModels;
@@ -53,14 +54,27 @@ namespace RaccoonBlog.Web.Commands
                 comments.Comments.Add(comment);
             }
 
-			if (_requestValues.IsAuthenticated)
-				return; // we don't send email for authenticated users
+        	SetCommenter();
 
-            SendNewCommentEmail(post, comment);
+        	SendNewCommentEmail(post, comment);
         }
+
+    	private void SetCommenter()
+    	{
+			Guid guid;
+			if (Guid.TryParse(_commentInput.CommenterKey, out guid) == false)
+				return;
+
+			var commenter = Session.GetCommenter(_commentInput.CommenterKey) ?? new Commenter { Key = guid };
+			_commentInput.MapPropertiesToInstance(commenter);
+			Session.Store(commenter);
+    	}
 
     	private void SendNewCommentEmail(Post post, PostComments.Comment comment)
     	{
+			if (_requestValues.IsAuthenticated)
+				return; // we don't send email for authenticated users
+
     		var viewModel = comment.MapTo<NewCommentEmailViewModel>();
     		viewModel.PostId = RavenIdResolver.Resolve(post.Id);
     		viewModel.PostTitle = post.Title;
