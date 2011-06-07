@@ -54,12 +54,12 @@ namespace RaccoonBlog.Web.Commands
                 comments.Comments.Add(comment);
             }
 
-        	SetCommenter();
+			SetCommenter(comment.IsSpam == false);
 
         	SendNewCommentEmail(post, comment);
         }
 
-    	private void SetCommenter()
+		private void SetCommenter(bool isTrusted)
     	{
     		if (_requestValues.IsAuthenticated)
     			return;
@@ -70,6 +70,7 @@ namespace RaccoonBlog.Web.Commands
 
 			var commenter = Session.GetCommenter(_commentInput.CommenterKey) ?? new Commenter { Key = guid };
 			_commentInput.MapPropertiesToInstance(commenter);
+			commenter.IsTrustedCommenter = isTrusted;
 			Session.Store(commenter);
     	}
 
