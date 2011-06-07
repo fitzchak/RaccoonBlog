@@ -92,7 +92,10 @@ String.prototype.isNullOrEmpty = function () {
 	                Raccoon.Util.Views.setMessage('An error occurred while posing your comment', 'fail');
 	            });
 	            jqxhr.success(function (data, textStatus, jqXHR) {
-	                if (!data.success) Raccoon.Util.Views.setMessage('An error occurred while posting your comment: ' + data.message, 'fail');
+	                if (!data.success) {
+	                    Raccoon.Util.Views.setMessage('An error occurred while posting your comment: ' + data.message, 'fail');
+	                    if ($('#recaptcha_widget_div').length > 0) Recaptcha.reload();
+	                }
 	                else {
 	                    Raccoon.Util.Views.setMessage(data.message);
 	                    $('article#postComment, article.markdown-preview-container').remove();
