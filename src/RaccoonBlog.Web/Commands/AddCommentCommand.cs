@@ -61,6 +61,9 @@ namespace RaccoonBlog.Web.Commands
 
     	private void SetCommenter()
     	{
+    		if (_requestValues.IsAuthenticated)
+    			return;
+    		
 			Guid guid;
 			if (Guid.TryParse(_commentInput.CommenterKey, out guid) == false)
 				return;
