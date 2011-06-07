@@ -19,8 +19,8 @@ String.prototype.isNullOrEmpty = function () {
 
     Raccoon.Util.Views = {};
     Raccoon.Util.Views.setMessage = function setMessage(message, cssClass) {
-        var m = $('#message').html(message);
-        if (cssClass) m.removeClass().addClass(cssClass);
+        var m = $('#message').html(message).removeClass();
+        if (cssClass) m.addClass(cssClass);
         m.css('visibility', 'visible');
     };
     
