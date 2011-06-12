@@ -132,6 +132,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Helpers\StaticFileUrlHelperExtensions.cs" />
     <Compile Include="Infrastructure\Common\DocumentSessionExtensions.cs" />
     <Compile Include="Helpers\Routes\RouteCollectionExtension.cs" />
@@ -355,6 +356,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Search\SearchResult.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Search\GoogleCse.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

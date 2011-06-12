@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "search";
+}
+
+@section Script {
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load('search', '1');
+        google.setOnLoadCallback(function () {
+            var customSearchControl = new google.search.CustomSearchControl({ 'crefUrl': '@Url.AbsoluteAction("GoogleCse")' });
+
+            customSearchControl.setLinkTarget(google.search.Search.LINK_TARGET_SELF);
+            customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
+            customSearchControl.draw('cse');
+            if (window._search)
+                customSearchControl.execute(window._search);
+
+            new google.search.CustomSearchControl().draw('cse');
+        });
+    </script>
+}
