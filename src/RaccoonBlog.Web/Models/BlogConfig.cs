@@ -14,5 +14,7 @@ namespace RaccoonBlog.Web.Models
 
         public string MetaDescription { get; set; }
         public string MetaKeywords { get; set; }
+
+		public int NumberOfDayToCloseComments { get; set; }
 	}
 }

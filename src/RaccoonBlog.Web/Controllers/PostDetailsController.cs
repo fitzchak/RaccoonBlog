@@ -40,7 +40,7 @@ namespace RaccoonBlog.Web.Controllers
 					.MapTo<PostViewModel.Comment>(),
 				NextPost = Session.GetNextPrevPost(post, true),
 				PreviousPost = Session.GetNextPrevPost(post, false),
-				AreCommentsClosed = comments.AreCommentsClosed(post),
+				AreCommentsClosed = comments.AreCommentsClosed(post, BlogConfig.NumberOfDayToCloseComments),
 			};
 
 			vm.Post.Author = Session.Load<User>(post.AuthorId).MapTo<PostViewModel.UserDetails>();
@@ -107,7 +107,7 @@ namespace RaccoonBlog.Web.Controllers
 
     	private void ValidateCommentsAllowed(Post post, PostComments comments)
     	{
-    		if (comments.AreCommentsClosed(post))
+    		if (comments.AreCommentsClosed(post, BlogConfig.NumberOfDayToCloseComments))
     			ModelState.AddModelError("CommentsClosed", "This post is closed for new comments.");
     		if (post.AllowComments == false)
     			ModelState.AddModelError("CommentsClosed", "This post does not allow comments.");

@@ -41,7 +41,7 @@ namespace RaccoonBlog.Web.Controllers
 
 				NextPost = Session.GetNextPrevPost(post, true),
 				PreviousPost = Session.GetNextPrevPost(post, false),
-				AreCommentsClosed = comments.AreCommentsClosed(post),
+				AreCommentsClosed = comments.AreCommentsClosed(post, BlogConfig.NumberOfDayToCloseComments),
 			};
 
 
