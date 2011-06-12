@@ -4,9 +4,10 @@ namespace RaccoonBlog.Web.Controllers
 {
 	public class SearchController : AbstractController
     {
-        public ActionResult SearchResult()
+        public ActionResult SearchResult(string q)
         {
-        	return View();
+			object model = q;
+			return View(model);
         } 
 		
 		public ActionResult GoogleCse()
