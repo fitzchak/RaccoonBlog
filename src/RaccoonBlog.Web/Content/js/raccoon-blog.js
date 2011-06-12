@@ -3,6 +3,9 @@
 String.prototype.startsWith = function (str) {
     return this.substr(0, str.length) === str;
 };
+String.prototype.endsWith = function (str) {
+    return this.indexOf(str, this.length - str.length) !== -1;
+};
 String.prototype.isNullOrEmpty = function () {
     return this == false || this === '';
 };
@@ -21,7 +24,15 @@ String.prototype.isNullOrEmpty = function () {
     Raccoon.Util.Showdown.convert = function (content) {
         if (!Raccoon.Util.Showdown.converter)
             Raccoon.Util.Showdown.converter = new Showdown.converter();
-        return Raccoon.Util.Showdown.converter.makeHtml(content);
+        
+        var lines = content.split(/\r\n|\r|\n/);
+        var c = '';
+        $.each(lines, function(n, elem) {
+            if (!elem.endsWith('  '))
+                elem += '  ';
+            c += elem + '\r\n';
+        });
+        return Raccoon.Util.Showdown.converter.makeHtml(c);
     };
 
     Raccoon.Util.Views = {};
