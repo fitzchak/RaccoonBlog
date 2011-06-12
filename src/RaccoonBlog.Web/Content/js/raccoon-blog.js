@@ -16,6 +16,13 @@ String.prototype.isNullOrEmpty = function () {
         if (url.startsWith("http://") || url.startsWith("https://")) return url;
         return "http://" + url;
     };
+    
+    Raccoon.Util.Showdown = {};
+    Raccoon.Util.Showdown.convert = function (content) {
+        if (!Raccoon.Util.Showdown.converter)
+            Raccoon.Util.Showdown.converter = new Showdown.converter();
+        return Raccoon.Util.Showdown.converter.makeHtml(content);
+    };
 
     Raccoon.Util.Views = {};
     Raccoon.Util.Views.setMessage = function setMessage(message, cssClass) {
@@ -34,20 +41,19 @@ String.prototype.isNullOrEmpty = function () {
                 author: $('article#postComment input[name$="Name"]').val(),
                 emailHash: $.md5($('article#postComment input[name$="Email"]').val()),
                 url: $('article#postComment input[name$="Url"]').val(),
-                body: converter.makeHtml($('article#postComment textarea[name$="Body"]').val()),
+                body: Raccoon.Util.Showdown.convert($('article#postComment textarea[name$="Body"]').val()),
                 createdAt: now.f("MM/dd/yyyy HH:mm")
             };
             $('#commentTemplate').tmpl(comment).appendTo('section.comments').show('medium');
         };
         
         var $preview = null;
-        var converter = new Showdown.converter();
         $('textarea[name$="Body"]').keyup(function () {
             if ($preview == null) {
                 insertComment();
                 $preview = $('.livecomment .comment-body');
             }
-            $preview.html(converter.makeHtml($(this).val()));
+            $preview.html(Raccoon.Util.Showdown.convert($(this).val()));
         });
         var $email = null;
         $('input[name$="Email"]').keyup(function () {
