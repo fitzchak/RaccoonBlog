@@ -89,7 +89,7 @@ String.prototype.isNullOrEmpty = function () {
 	        if (t.valid()) {
 	            var jqxhr = $.post(t.attr('action'), t.serializeArray(), null, 'json');
 	            jqxhr.error(function (data, textStatus, jqXHR) {
-	                Raccoon.Util.Views.setMessage('An error occurred while posing your comment', 'fail');
+	                Raccoon.Util.Views.setMessage('An error occurred while posting your comment', 'fail');
 	            });
 	            jqxhr.success(function (data, textStatus, jqXHR) {
 	                if (!data.success) {
