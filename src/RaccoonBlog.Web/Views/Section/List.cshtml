@@ -3,6 +3,15 @@
     Layout = "";    
 }
 <div id="sidebar">
+    <aside class="section">
+        <form action="@Url.Action("SearchResult", "Search")">
+            <label>
+                <span>Search:</span>
+                <input id="search" type="search" name="q" size="32" placeholder="Search">
+            </label>
+        </form>
+    </aside>
+
     @{Html.RenderAction("AdministrationPanel", "Login");}
 
     @foreach (var section in Model) {

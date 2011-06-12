@@ -558,3 +558,7 @@ div.commentsClosedMessage
 #postComment textarea {
 	width: 436px;
 } 
+#search 
+{
+    width: 100%;
+}
