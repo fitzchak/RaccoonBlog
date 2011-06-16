@@ -9,7 +9,7 @@ using Xunit;
 
 namespace RaccoonBlog.IntegrationTests.Web.Services
 {
-	public class PostSchedulingStrategyTests
+	public class PostSchedulingStrategyTests : IDisposable
 	{
 		protected DateTimeOffset Now { get; private set; }
 		protected IDocumentStore DocumentStore { get; private set; }
@@ -23,7 +23,7 @@ namespace RaccoonBlog.IntegrationTests.Web.Services
 			Session = DocumentStore.OpenSession();
 		}
 
-		~PostSchedulingStrategyTests()
+		public void Dispose()
 		{
 			Session.Dispose();
 			DocumentStore.Dispose();
@@ -33,11 +33,10 @@ namespace RaccoonBlog.IntegrationTests.Web.Services
 		public void WhenPostingNewPostWithoutPublishDateSpecified_AndTheLastPostPublishDateIsAFewDaysAgo_ScheduleItForToday()
 		{
 			Session.Store(new Post { PublishAt = Now.AddDays(-3) });
-			Assert.Equal(1, Session.Query<Post>().Count());
 
 			var rescheduler = new PostSchedulingStrategy(Session, Now);
 
-			var scheduleDate = Now.AddDays(1).AtNoon();
+			var scheduleDate = Now.AtNoon();
 			var scheduled = rescheduler.Schedule();
 			Assert.Equal(scheduleDate, scheduled);
 		}
