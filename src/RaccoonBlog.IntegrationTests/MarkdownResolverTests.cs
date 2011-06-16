@@ -23,6 +23,12 @@ namespace RaccoonBlog.IntegrationTests
             return MarkdownResolver.Resolve(input).ToString();
         }
 
+		[Fact]
+		public void ImagesCannotContainScriptsCode()
+		{
+			Assert.DoesNotContain("img", MarkdownResolve("<img src=\"javascript:alert('hack!')\">"));
+		}
+
         [Fact]
         public void AllowMarkdownBold()
         {
