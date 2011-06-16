@@ -45,9 +45,8 @@ namespace RaccoonBlog.IntegrationTests.Web.Services
 			var rescheduler = new PostSchedulingStrategy(Session, now);
 
 			var scheduleDate = now.AddHours(1);
-			var scheduled = rescheduler.Schedule(scheduleDate);
-			Assert.Equal(scheduleDate, scheduled);
-			Assert.NotEqual(scheduleDate.AddDays(-2), scheduled);
+			Assert.Equal(scheduleDate, rescheduler.Schedule(scheduleDate));
+			Assert.NotEqual(scheduleDate.AddDays(-2), rescheduler.Schedule(scheduleDate));
 		}
 	}
 }
