@@ -6,9 +6,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using CookComputing.XmlRpc;
-using RaccoonBlog.Web.Common;
 using RaccoonBlog.Web.Controllers;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
+using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Infrastructure.Indexes;
 using RaccoonBlog.Web.Infrastructure.Raven;
 using RaccoonBlog.Web.Models;
@@ -183,7 +183,7 @@ namespace RaccoonBlog.Web.Services
         {
             ValidateUser(username, password);
             var imagePhysicalPath = Context.Server.MapPath(ConfigurationManager.AppSettings["uploadsPath"]);
-            var imageWebPath = ConfigurationManager.AppSettings["UploadsPath"].Replace("~", Context.Request.ApplicationPath);
+            var imageWebPath = VirtualPathUtility.ToAbsolute(ConfigurationManager.AppSettings["UploadsPath"]);
 
             imagePhysicalPath = Path.Combine(imagePhysicalPath, mediaObject.name);
             var directoryPath = Path.GetDirectoryName(imagePhysicalPath).Replace("/", "\\");

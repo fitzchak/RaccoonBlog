@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace RaccoonBlog.Web.Common
+namespace RaccoonBlog.Web.Infrastructure.Common
 {
     public static class EnumerableExtensions
     {

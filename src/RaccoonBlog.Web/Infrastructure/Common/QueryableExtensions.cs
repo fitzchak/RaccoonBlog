@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using RaccoonBlog.Web.Models;
 
-namespace RaccoonBlog.Web.Common
+namespace RaccoonBlog.Web.Infrastructure.Common
 {
     public static class QueryableExtensions
     {

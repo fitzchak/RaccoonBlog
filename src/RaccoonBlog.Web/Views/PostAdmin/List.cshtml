@@ -38,11 +38,11 @@
 					jqxhr.error(failAction);
 					jqxhr.success(function (data, textStatus, jqXHR) {
 						if (!data.success) failAction();
-						else setMessage('Change post date succeed: ' + event.title);
+						else Raccoon.Util.Views.setMessage('Change post date succeed: ' + event.title);
 					});
 					function failAction() {
 						revertFunc();
-						setMessage('Change post date failed: ' + event.title, 'fail');
+						Raccoon.Util.Views.setMessage('Change post date failed: ' + event.title, 'fail');
 					}
 				}
 			});

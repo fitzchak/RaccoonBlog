@@ -9,7 +9,7 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
         protected override void Configure()
         {
             Mapper.CreateMap<BlogConfig, BlogConfigViewModel>()
-                .ForMember(x => x.CustomCss, o => o.MapFrom(m => m.CustomCss.ToLowerInvariant()))
+                .ForMember(x => x.CustomCss, o => o.MapFrom(m => (m.CustomCss ?? "").ToLowerInvariant()))
                 ;
         }
     }

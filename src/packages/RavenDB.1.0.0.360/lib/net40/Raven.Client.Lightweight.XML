@@ -484,6 +484,11 @@
             </summary>
             <value>The response status code.</value>
         </member>
+        <member name="P:Raven.Client.Connection.HttpJsonRequest.SkipServerCheck">
+            <summary>
+             Whatever we can skip the server check and directly return the cached result
+            </summary>
+        </member>
         <member name="T:Raven.Client.Connection.HttpJsonRequestFactory">
             <summary>
              Create the HTTP Json Requests to the RavenDB Server
@@ -528,6 +533,11 @@
             <summary>
             The number of requests that we got 304 for 
             and were able to handle purely from the cache
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Connection.HttpJsonRequestFactory.AggressiveCacheDuration">
+            <summary>
+             The aggressive cache duration
             </summary>
         </member>
         <member name="T:Raven.Client.Connection.IDatabaseCommands">
@@ -703,6 +713,14 @@
             </summary>
             <param name="credentialsForSession">The credentials for session.</param>
         </member>
+        <member name="M:Raven.Client.Connection.IDatabaseCommands.DeleteByIndex(System.String,Raven.Abstractions.Data.IndexQuery)">
+            <summary>
+            Perform a set based deletes using the specified index, not allowing the operation
+            if the index is stale
+            </summary>
+            <param name="indexName">Name of the index.</param>
+            <param name="queryToDelete">The query to delete.</param>
+        </member>
         <member name="M:Raven.Client.Connection.IDatabaseCommands.DeleteByIndex(System.String,Raven.Abstractions.Data.IndexQuery,System.Boolean)">
             <summary>
             Perform a set based deletes using the specified index.
@@ -710,6 +728,15 @@
             <param name="indexName">Name of the index.</param>
             <param name="queryToDelete">The query to delete.</param>
             <param name="allowStale">if set to <c>true</c> [allow stale].</param>
+        </member>
+        <member name="M:Raven.Client.Connection.IDatabaseCommands.UpdateByIndex(System.String,Raven.Abstractions.Data.IndexQuery,Raven.Abstractions.Data.PatchRequest[])">
+            <summary>
+            Perform a set based update using the specified index, not allowing the operation
+            if the index is stale
+            </summary>
+            <param name="indexName">Name of the index.</param>
+            <param name="queryToUpdate">The query to update.</param>
+            <param name="patchRequests">The patch requests.</param>
         </member>
         <member name="M:Raven.Client.Connection.IDatabaseCommands.UpdateByIndex(System.String,Raven.Abstractions.Data.IndexQuery,Raven.Abstractions.Data.PatchRequest[],System.Boolean)">
             <summary>
@@ -746,6 +773,21 @@
              starting point for the next query
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Connection.IDatabaseCommands.Patch(System.String,Raven.Abstractions.Data.PatchRequest[])">
+            <summary>
+            Sends a patch request for a specific document, ignoring the document's Etag
+            </summary>
+            <param name="key">Id of the document to patch</param>
+            <param name="patches">Array of patch requests</param>
+        </member>
+        <member name="M:Raven.Client.Connection.IDatabaseCommands.Patch(System.String,Raven.Abstractions.Data.PatchRequest[],System.Nullable{System.Guid})">
+            <summary>
+            Sends a patch request for a specific document
+            </summary>
+            <param name="key">Id of the document to patch</param>
+            <param name="patches">Array of patch requests</param>
+            <param name="etag">Require specific Etag [null to ignore]</param>
         </member>
         <member name="P:Raven.Client.Connection.IDatabaseCommands.OperationsHeaders">
             <summary>
@@ -1193,6 +1235,23 @@
             <param name="queryToDelete">The query to delete.</param>
             <param name="allowStale">if set to <c>true</c> [allow stale].</param>
         </member>
+        <member name="M:Raven.Client.Connection.ServerClient.UpdateByIndex(System.String,Raven.Abstractions.Data.IndexQuery,Raven.Abstractions.Data.PatchRequest[])">
+            <summary>
+            Perform a set based update using the specified index, not allowing the operation
+            if the index is stale
+            </summary>
+            <param name="indexName">Name of the index.</param>
+            <param name="queryToUpdate">The query to update.</param>
+            <param name="patchRequests">The patch requests.</param>
+        </member>
+        <member name="M:Raven.Client.Connection.ServerClient.DeleteByIndex(System.String,Raven.Abstractions.Data.IndexQuery)">
+            <summary>
+            Perform a set based deletes using the specified index, not allowing the operation
+            if the index is stale
+            </summary>
+            <param name="indexName">Name of the index.</param>
+            <param name="queryToDelete">The query to delete.</param>
+        </member>
         <member name="M:Raven.Client.Connection.ServerClient.UpdateByIndex(System.String,Raven.Abstractions.Data.IndexQuery,Raven.Abstractions.Data.PatchRequest[],System.Boolean)">
             <summary>
             Perform a set based update using the specified index.
@@ -1217,6 +1276,21 @@
              starting point for the next query
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Connection.ServerClient.Patch(System.String,Raven.Abstractions.Data.PatchRequest[])">
+            <summary>
+            Sends a patch request for a specific document, ignoring the document's Etag
+            </summary>
+            <param name="key">Id of the document to patch</param>
+            <param name="patches">Array of patch requests</param>
+        </member>
+        <member name="M:Raven.Client.Connection.ServerClient.Patch(System.String,Raven.Abstractions.Data.PatchRequest[],System.Nullable{System.Guid})">
+            <summary>
+            Sends a patch request for a specific document
+            </summary>
+            <param name="key">Id of the document to patch</param>
+            <param name="patches">Array of patch requests</param>
+            <param name="etag">Require specific Etag [null to ignore]</param>
         </member>
         <member name="P:Raven.Client.Connection.ServerClient.ReplicationInformer">
             <summary>
@@ -1415,6 +1489,22 @@
         <member name="T:Raven.Client.IDocumentQueryCustomization">
             <summary>
             Customize the document query
+            </summary>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryCustomization.WaitForNonStaleResultsAsOfLastWrite">
+            <summary>
+            Instructs the query to wait for non stale results as of the last write made by any session belonging to the 
+            current document store.
+            This ensures that you'll always get the most relevant results for your scenarios using simple indexes (map only or dynamic queries).
+            However, when used to query map/reduce indexes, it does NOT guarantee that the document that this etag belong to is actually considered for the results. 
+            </summary>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryCustomization.WaitForNonStaleResultsAsOfLastWrite(System.TimeSpan)">
+            <summary>
+            Instructs the query to wait for non stale results as of the last write made by any session belonging to the 
+            current document store.
+            This ensures that you'll always get the most relevant results for your scenarios using simple indexes (map only or dynamic queries).
+            However, when used to query map/reduce indexes, it does NOT guarantee that the document that this etag belong to is actually considered for the results. 
             </summary>
         </member>
         <member name="M:Raven.Client.IDocumentQueryCustomization.WaitForNonStaleResultsAsOfNow">
@@ -1867,6 +1957,11 @@
             Fields to group on
             </summary>
         </member>
+        <member name="F:Raven.Client.Document.AbstractDocumentQuery`2.queryStats">
+            <summary>
+            Holds the query stats
+            </summary>
+        </member>
         <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.#ctor(Raven.Client.Document.InMemoryDocumentSessionOperations,Raven.Client.Connection.IDatabaseCommands,System.String,System.String[],Raven.Client.Listeners.IDocumentQueryListener[])">
             <summary>
               Initializes a new instance of the <see cref="T:Raven.Client.Document.DocumentQuery`1"/> class.
@@ -1883,7 +1978,7 @@
         </member>
         <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.#ctor(Raven.Client.Document.AbstractDocumentQuery{`0,`1})">
             <summary>
-              Initializes a new instance of the <see cref="T:Raven.Client.Document.DocumentQuery`1"/> class.
+              Initializes a new instance of the <see cref="T:Raven.Client.IDocumentQuery`1"/> class.
             </summary>
             <param name="other">The other.</param>
         </member>
@@ -2208,6 +2303,22 @@
             <param name = "waitTimeout">The wait timeout.</param>
             <returns></returns>
         </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.Raven#Client#IDocumentQueryCustomization#WaitForNonStaleResultsAsOfLastWrite">
+            <summary>
+            Instructs the query to wait for non stale results as of the last write made by any session belonging to the 
+            current document store.
+            This ensures that you'll always get the most relevant results for your scenarios using simple indexes (map only or dynamic queries).
+            However, when used to query map/reduce indexes, it does NOT guarantee that the document that this etag belong to is actually considered for the results. 
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.Raven#Client#IDocumentQueryCustomization#WaitForNonStaleResultsAsOfLastWrite(System.TimeSpan)">
+            <summary>
+            Instructs the query to wait for non stale results as of the last write made by any session belonging to the 
+            current document store.
+            This ensures that you'll always get the most relevant results for your scenarios using simple indexes (map only or dynamic queries).
+            However, when used to query map/reduce indexes, it does NOT guarantee that the document that this etag belong to is actually considered for the results. 
+            </summary>
+        </member>
         <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.Raven#Client#IDocumentQueryCustomization#WaitForNonStaleResultsAsOf(System.DateTime)">
             <summary>
               Instructs the query to wait for non stale results as of the cutoff date.
@@ -2249,10 +2360,41 @@
             <param name = "cutOff">The cut off.</param>
             <param name = "waitTimeout">The wait timeout.</param>
         </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.WaitForNonStaleResultsAsOfLastWrite">
+            <summary>
+            Instructs the query to wait for non stale results as of the last write made by any session belonging to the 
+            current document store.
+            This ensures that you'll always get the most relevant results for your scenarios using simple indexes (map only or dynamic queries).
+            However, when used to query map/reduce indexes, it does NOT guarantee that the document that this etag belong to is actually considered for the results. 
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.WaitForNonStaleResultsAsOfLastWrite(System.TimeSpan)">
+            <summary>
+            Instructs the query to wait for non stale results as of the last write made by any session belonging to the 
+            current document store.
+            This ensures that you'll always get the most relevant results for your scenarios using simple indexes (map only or dynamic queries).
+            However, when used to query map/reduce indexes, it does NOT guarantee that the document that this etag belong to is actually considered for the results. 
+            </summary>
+        </member>
         <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.WaitForNonStaleResults">
             <summary>
               EXPERT ONLY: Instructs the query to wait for non stale results.
               This shouldn't be used outside of unit tests unless you are well aware of the implications
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.Statistics(Raven.Client.Linq.RavenQueryStatistics@)">
+            <summary>
+            Provide statistics about the query, such as total count of matching records
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.AfterQueryExecuted(System.Action{Raven.Abstractions.Data.QueryResult})">
+            <summary>
+            Callback to get the results of the query
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.InvokeAfterQueryExecuted(Raven.Abstractions.Data.QueryResult)">
+            <summary>
+            Called externally to raise the after query executed callback
             </summary>
         </member>
         <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.GetQueryResult">
@@ -2564,6 +2706,22 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.WaitForNonStaleResultsAsOfLastWrite">
+            <summary>
+            Instructs the query to wait for non stale results as of the last write made by any session belonging to the 
+            current document store.
+            This ensures that you'll always get the most relevant results for your scenarios using simple indexes (map only or dynamic queries).
+            However, when used to query map/reduce indexes, it does NOT guarantee that the document that this etag belong to is actually considered for the results. 
+            </summary>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.WaitForNonStaleResultsAsOfLastWrite(System.TimeSpan)">
+            <summary>
+            Instructs the query to wait for non stale results as of the last write made by any session belonging to the 
+            current document store.
+            This ensures that you'll always get the most relevant results for your scenarios using simple indexes (map only or dynamic queries).
+            However, when used to query map/reduce indexes, it does NOT guarantee that the document that this etag belong to is actually considered for the results. 
+            </summary>
+        </member>
         <member name="M:Raven.Client.IDocumentQueryBase`2.WaitForNonStaleResultsAsOfNow(System.TimeSpan)">
             <summary>
               Instructs the query to wait for non stale results as of now for the specified timeout.
@@ -2632,6 +2790,21 @@
             <remarks>
               This is only valid on dynamic indexes queries
             </remarks>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.AfterQueryExecuted(System.Action{Raven.Abstractions.Data.QueryResult})">
+            <summary>
+            Callback to get the results of the query
+            </summary>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.InvokeAfterQueryExecuted(Raven.Abstractions.Data.QueryResult)">
+            <summary>
+            Called externally to raise the after query executed callback
+            </summary>
+        </member>
+        <member name="M:Raven.Client.IDocumentQueryBase`2.Statistics(Raven.Client.Linq.RavenQueryStatistics@)">
+            <summary>
+            Provide statistics about the query, such as total count of matching records
+            </summary>
         </member>
         <member name="P:Raven.Client.IDocumentQueryBase`2.DocumentConvention">
             <summary>
@@ -2883,6 +3056,22 @@
             <param name="cutOff">The cut off.</param>
             <returns></returns>
         </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#WaitForNonStaleResultsAsOfLastWrite">
+            <summary>
+            Instructs the query to wait for non stale results as of the last write made by any session belonging to the 
+            current document store.
+            This ensures that you'll always get the most relevant results for your scenarios using simple indexes (map only or dynamic queries).
+            However, when used to query map/reduce indexes, it does NOT guarantee that the document that this etag belong to is actually considered for the results. 
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#WaitForNonStaleResultsAsOfLastWrite(System.TimeSpan)">
+            <summary>
+            Instructs the query to wait for non stale results as of the last write made by any session belonging to the 
+            current document store.
+            This ensures that you'll always get the most relevant results for your scenarios using simple indexes (map only or dynamic queries).
+            However, when used to query map/reduce indexes, it does NOT guarantee that the document that this etag belong to is actually considered for the results. 
+            </summary>
+        </member>
         <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#WaitForNonStaleResultsAsOf(System.DateTime,System.TimeSpan)">
             <summary>
             Instructs the query to wait for non stale results as of the cutoff date for the specified timeout
@@ -2951,6 +3140,11 @@
              <remarks>
              This is only valid on dynamic indexes queries
              </remarks>
+        </member>
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#Statistics(Raven.Client.Linq.RavenQueryStatistics@)">
+            <summary>
+            Provide statistics about the query, such as total count of matching records
+            </summary>
         </member>
         <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.GenerateQueryWithinRadiusOf(System.Double,System.Double,System.Double)">
             <summary>
@@ -3024,11 +3218,6 @@
         <member name="F:Raven.Client.Document.InMemoryDocumentSessionOperations.entitiesByKey">
             <summary>
             Translate between a key and its associated entity
-            </summary>
-        </member>
-        <member name="F:Raven.Client.Document.InMemoryDocumentSessionOperations.documentStore">
-            <summary>
-            The document store associated with this session
             </summary>
         </member>
         <member name="F:Raven.Client.Document.InMemoryDocumentSessionOperations.queryListeners">
@@ -3223,6 +3412,11 @@
             Clears the enlistment.
             </summary>
         </member>
+        <member name="P:Raven.Client.Document.InMemoryDocumentSessionOperations.DocumentStore">
+            <summary>
+             The document store associated with this session
+            </summary>
+        </member>
         <member name="P:Raven.Client.Document.InMemoryDocumentSessionOperations.NumberOfRequests">
             <summary>
             Gets the number of requests for this session
@@ -3399,7 +3593,7 @@
             Or whatever your conventions specify.
             </remarks>
         </member>
-        <member name="M:Raven.Client.IAsyncDocumentSession.MultiLoadAsync``1(System.String[])">
+        <member name="M:Raven.Client.IAsyncDocumentSession.LoadAsync``1(System.String[])">
             <summary>
             Begins the async multi load operation
             </summary>
@@ -3490,6 +3684,11 @@
             <returns>
             	<c>true</c> if the specified entity has changed; otherwise, <c>false</c>.
             </returns>
+        </member>
+        <member name="P:Raven.Client.IAdvancedDocumentSessionOperations.DocumentStore">
+            <summary>
+            The document store associated with this session
+            </summary>
         </member>
         <member name="P:Raven.Client.IAdvancedDocumentSessionOperations.StoreIdentifier">
             <summary>
@@ -3640,7 +3839,7 @@
             <param name="id">The id.</param>
             <returns></returns>
         </member>
-        <member name="M:Raven.Client.Document.Async.AsyncDocumentSession.MultiLoadAsync``1(System.String[])">
+        <member name="M:Raven.Client.Document.Async.AsyncDocumentSession.LoadAsync``1(System.String[])">
             <summary>
             Begins the async multi load operation
             </summary>
@@ -3816,6 +4015,12 @@
             </summary>
             <value>The max number of requests per session.</value>
         </member>
+        <member name="P:Raven.Client.Document.DocumentConvention.DefaultQueryingConsistency">
+            <summary>
+            The consistency options used when querying the database by default
+            Note that this option impact only queries, since we have Strong Consistency model for the documents
+            </summary>
+        </member>
         <member name="P:Raven.Client.Document.DocumentConvention.FindClrType">
             <summary>
             Gets or sets the function to find the clr type of a document.
@@ -3872,6 +4077,26 @@
             Gets or sets the document key generator.
             </summary>
             <value>The document key generator.</value>
+        </member>
+        <member name="T:Raven.Client.Document.ConsistencyOptions">
+            <summary>
+            The consistency options for all queries, fore more details about the consistency options, see:
+            http://www.allthingsdistributed.com/2008/12/eventually_consistent.html
+            
+            Note that this option impact only queries, since we have Strong Consistency model for the documents
+            </summary>
+        </member>
+        <member name="F:Raven.Client.Document.ConsistencyOptions.MonotonicRead">
+            <summary>
+            Ensures that after querying an index at time T, you will never see the results
+            of the index at a time prior to T.
+            This is ensured by the server, and require no action from the client
+            </summary>
+        </member>
+        <member name="F:Raven.Client.Document.ConsistencyOptions.QueryYourWrites">
+            <summary>
+             After updating a documents, will only accept queries which already indexed the updated value.
+            </summary>
         </member>
         <member name="T:Raven.Client.Document.DocumentQuery`1">
             <summary>
@@ -3960,6 +4185,11 @@
              <remarks>
              This is only valid on dynamic indexes queries
              </remarks>
+        </member>
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#Statistics(Raven.Client.Linq.RavenQueryStatistics@)">
+            <summary>
+            Provide statistics about the query, such as total count of matching records
+            </summary>
         </member>
         <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#Include(System.String)">
             <summary>
@@ -4164,6 +4394,22 @@
             Instructs the query to wait for non stale results as of now.
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#WaitForNonStaleResultsAsOfLastWrite">
+            <summary>
+            Instructs the query to wait for non stale results as of the last write made by any session belonging to the 
+            current document store.
+            This ensures that you'll always get the most relevant results for your scenarios using simple indexes (map only or dynamic queries).
+            However, when used to query map/reduce indexes, it does NOT guarantee that the document that this etag belong to is actually considered for the results. 
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#WaitForNonStaleResultsAsOfLastWrite(System.TimeSpan)">
+            <summary>
+            Instructs the query to wait for non stale results as of the last write made by any session belonging to the 
+            current document store.
+            This ensures that you'll always get the most relevant results for your scenarios using simple indexes (map only or dynamic queries).
+            However, when used to query map/reduce indexes, it does NOT guarantee that the document that this etag belong to is actually considered for the results. 
+            </summary>
         </member>
         <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#WaitForNonStaleResultsAsOfNow(System.TimeSpan)">
             <summary>
@@ -4593,6 +4839,27 @@
             Interface for managing access to RavenDB and open sessions.
             </summary>
         </member>
+        <member name="M:Raven.Client.IDocumentStore.AggressivelyCacheFor(System.TimeSpan)">
+            <summary>
+            Setup the context for aggressive caching.
+            </summary>
+            <param name="cahceDuration">Specify the aggressive cache duration</param>
+            <remarks>
+            Aggressive caching means that we will not check the server to see whatever the response
+            we provide is current or not, but will serve the information directly from the local cache
+            without touching the server.
+            </remarks>
+        </member>
+        <member name="M:Raven.Client.IDocumentStore.DisableAggressiveCaching">
+            <summary>
+            Setup the context for no aggressive caching
+            </summary>
+            <remarks>
+            This is mainly useful for internal use inside RavenDB, when we are executing
+            queries that has been marked with WaitForNonStaleResults, we temporarily disable
+            aggressive caching.
+            </remarks>
+        </member>
         <member name="M:Raven.Client.IDocumentStore.Initialize">
             <summary>
             Initializes this instance.
@@ -4632,6 +4899,12 @@
             Opens the session with the specified credentials.
             </summary>
             <param name="credentialsForSession">The credentials for session.</param>
+        </member>
+        <member name="M:Raven.Client.IDocumentStore.GetLastWrittenEtag">
+            <summary>
+             Gets the etag of the last document written by any session belonging to this 
+             document store
+            </summary>
         </member>
         <member name="P:Raven.Client.IDocumentStore.SharedOperationsHeaders">
             <summary>
@@ -4673,6 +4946,11 @@
             </summary>
             <value>The conventions.</value>
         </member>
+        <member name="P:Raven.Client.IDocumentStore.Url">
+            <summary>
+            Gets the URL.
+            </summary>
+        </member>
         <member name="F:Raven.Client.Document.DocumentStore.databaseCommandsGenerator">
             <summary>
             Generate new instance of database commands
@@ -4685,12 +4963,18 @@
         </member>
         <member name="M:Raven.Client.Document.DocumentStore.ParseConnectionString(System.String)">
             <summary>
-             Parse a given connection string
+            Set document store settings based on a given connection string.
+            </summary>
+            <param name="connString">The connection string to parse</param>
+        </member>
+        <member name="M:Raven.Client.Document.DocumentStore.SetConnectionStringSettings(Raven.Abstractions.Data.RavenConnectionStringOptions)">
+            <summary>
+            Copy the relevant connection string settings
             </summary>
         </member>
-        <member name="M:Raven.Client.Document.DocumentStore.ProcessConnectionStringOption(System.Net.NetworkCredential,System.String,System.String)">
+        <member name="M:Raven.Client.Document.DocumentStore.GetConnectionStringOptions">
             <summary>
-            Parse the connection string option
+            Create the connection string parser
             </summary>
         </member>
         <member name="M:Raven.Client.Document.DocumentStore.Dispose">
@@ -4755,6 +5039,27 @@
             Registers the convertion listener.
             </summary>
         </member>
+        <member name="M:Raven.Client.Document.DocumentStore.DisableAggressiveCaching">
+            <summary>
+            Setup the context for no aggressive caching
+            </summary>
+            <remarks>
+            This is mainly useful for internal use inside RavenDB, when we are executing
+            queries that has been marked with WaitForNonStaleResults, we temporarily disable
+            aggressive caching.
+            </remarks>
+        </member>
+        <member name="M:Raven.Client.Document.DocumentStore.AggressivelyCacheFor(System.TimeSpan)">
+            <summary>
+            Setup the context for aggressive caching.
+            </summary>
+            <param name="cacheDuration">Specify the aggressive cache duration</param>
+            <remarks>
+            Aggressive caching means that we will not check the server to see whatever the response
+            we provide is current or not, but will serve the information directly from the local cache
+            without touching the server.
+            </remarks>
+        </member>
         <member name="M:Raven.Client.Document.DocumentStore.OpenAsyncSession">
             <summary>
             Opens the async session.
@@ -4766,6 +5071,12 @@
             Opens the async session.
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.DocumentStore.GetLastWrittenEtag">
+            <summary>
+             Gets the etag of the last document written by any session belonging to this 
+             document store
+            </summary>
         </member>
         <member name="P:Raven.Client.Document.DocumentStore.SharedOperationsHeaders">
             <summary>
@@ -4821,7 +5132,6 @@
             <summary>
             Gets or sets the URL.
             </summary>
-            <value>The URL.</value>
         </member>
         <member name="P:Raven.Client.Document.DocumentStore.DefaultDatabase">
             <summary>
@@ -5426,6 +5736,22 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Raven.Client.Document.ShardedDocumentQuery`1.WaitForNonStaleResultsAsOfLastWrite">
+            <summary>
+            Instructs the query to wait for non stale results as of the last write made by any session belonging to the 
+            current document store.
+            This ensures that you'll always get the most relevant results for your scenarios using simple indexes (map only or dynamic queries).
+            However, when used to query map/reduce indexes, it does NOT guarantee that the document that this etag belong to is actually considered for the results. 
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.ShardedDocumentQuery`1.WaitForNonStaleResultsAsOfLastWrite(System.TimeSpan)">
+            <summary>
+            Instructs the query to wait for non stale results as of the last write made by any session belonging to the 
+            current document store.
+            This ensures that you'll always get the most relevant results for your scenarios using simple indexes (map only or dynamic queries).
+            However, when used to query map/reduce indexes, it does NOT guarantee that the document that this etag belong to is actually considered for the results. 
+            </summary>
+        </member>
         <member name="M:Raven.Client.Document.ShardedDocumentQuery`1.WaitForNonStaleResultsAsOfNow(System.TimeSpan)">
             <summary>
             Instructs the query to wait for non stale results as of now for the specified timeout.
@@ -5524,6 +5850,21 @@
              <remarks>
              This is only valid on dynamic indexes queries
              </remarks>
+        </member>
+        <member name="M:Raven.Client.Document.ShardedDocumentQuery`1.AfterQueryExecuted(System.Action{Raven.Abstractions.Data.QueryResult})">
+            <summary>
+            Callback to get the results of the query
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.ShardedDocumentQuery`1.InvokeAfterQueryExecuted(Raven.Abstractions.Data.QueryResult)">
+            <summary>
+            Called externally to raise the after query executed callback
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.ShardedDocumentQuery`1.Statistics(Raven.Client.Linq.RavenQueryStatistics@)">
+            <summary>
+            Provide statistics about the query, such as total count of matching records
+            </summary>
         </member>
         <member name="M:Raven.Client.Document.ShardedDocumentQuery`1.CloseSubclause">
             <summary>
@@ -6069,7 +6410,7 @@
             Based off of System.Linq.Expressions.ExpressionStringBuilder
             </summary>
         </member>
-        <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.ExpressionToString(Raven.Client.Document.DocumentConvention,System.Boolean,System.String,System.Linq.Expressions.Expression)">
+        <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.ExpressionToString(Raven.Client.Document.DocumentConvention,System.Boolean,System.Type,System.String,System.Linq.Expressions.Expression)">
             <summary>
             Convert the expression to a string
             </summary>
@@ -6423,9 +6764,7 @@
         </member>
         <member name="T:Raven.Client.Indexes.IndexDefinitionBuilder`2">
             <summary>
-            This class attempts to provide a strongly typed index definition on the client.
-            It is here solely as a convenience, and it is _expected_ to fail in some scenarios.
-            The recommended way is to define indexes outside your code, using the Web UI.
+            This class provides a way to define a strongly typed index on the client.
             </summary>
         </member>
         <member name="M:Raven.Client.Indexes.IndexDefinitionBuilder`2.#ctor">
@@ -6483,9 +6822,7 @@
         </member>
         <member name="T:Raven.Client.Indexes.IndexDefinitionBuilder`1">
             <summary>
-            This class attempts to provide a strongly typed index definition on the client.
-            It is here solely as a convenience, and it is _expected_ to fail in some scenarios.
-            The recommended way is to define indexes outside your code, using the Web UI.
+            This class provides a way to define a strongly typed index on the client.
             </summary>
         </member>
         <member name="T:Raven.Client.Indexes.IndexDefinitionHelper">
@@ -6493,7 +6830,7 @@
             Generate index defintion from linq expressions
             </summary>
         </member>
-        <member name="M:Raven.Client.Indexes.IndexDefinitionHelper.PruneToFailureLinqQueryAsStringToWorkableCode(System.Linq.Expressions.LambdaExpression,Raven.Client.Document.DocumentConvention,System.String,System.Boolean)">
+        <member name="M:Raven.Client.Indexes.IndexDefinitionHelper.PruneToFailureLinqQueryAsStringToWorkableCode``1(System.Linq.Expressions.LambdaExpression,Raven.Client.Document.DocumentConvention,System.String,System.Boolean)">
             <summary>
             Perform the actual generation
             </summary>
@@ -7146,6 +7483,11 @@
             Such as how many records match the query
             </summary>
         </member>
+        <member name="M:Raven.Client.Linq.RavenQueryStatistics.UpdateQueryStats(Raven.Abstractions.Data.QueryResult)">
+            <summary>
+            Update the query stats from the query results
+            </summary>
+        </member>
         <member name="P:Raven.Client.Linq.RavenQueryStatistics.IsStale">
             <summary>
             Whatever the query returned potentially stale results
@@ -7164,6 +7506,21 @@
         <member name="P:Raven.Client.Linq.RavenQueryStatistics.Timestamp">
             <summary>
             The time when the query results were unstale.
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Linq.RavenQueryStatistics.IndexName">
+            <summary>
+            The name of the index queried
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Linq.RavenQueryStatistics.IndexTimestamp">
+            <summary>
+            The timestamp of the queried index
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Linq.RavenQueryStatistics.IndexEtag">
+            <summary>
+            The etag of the queried index
             </summary>
         </member>
         <member name="T:Raven.Client.Shard.ShardedDocumentSession">
@@ -7201,12 +7558,13 @@
             	<c>true</c> if the specified entity has changed; otherwise, <c>false</c>.
             </returns>
         </member>
-        <member name="M:Raven.Client.Shard.ShardedDocumentSession.#ctor(Raven.Client.Shard.ShardStrategy.IShardStrategy,Raven.Client.IDocumentSession[])">
+        <member name="M:Raven.Client.Shard.ShardedDocumentSession.#ctor(Raven.Client.Shard.ShardStrategy.IShardStrategy,Raven.Client.IDocumentSession[],Raven.Client.Shard.ShardedDocumentStore)">
             <summary>
             Initializes a new instance of the <see cref="T:Raven.Client.Shard.ShardedDocumentSession"/> class.
             </summary>
             <param name="shardStrategy">The shard strategy.</param>
             <param name="shardSessions">The shard sessions.</param>
+            <param name="documentStore"></param>
         </member>
         <member name="M:Raven.Client.Shard.ShardedDocumentSession.Load``1(System.String)">
             <summary>
@@ -7429,6 +7787,11 @@
             </summary>
             <value>The async database commands.</value>
         </member>
+        <member name="P:Raven.Client.Shard.ShardedDocumentSession.DocumentStore">
+            <summary>
+            The document store associated with this session
+            </summary>
+        </member>
         <member name="P:Raven.Client.Shard.ShardedDocumentSession.Advanced">
             <summary>
             Get the accessor for advanced operations
@@ -7494,6 +7857,27 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Raven.Client.Shard.ShardedDocumentStore.AggressivelyCacheFor(System.TimeSpan)">
+            <summary>
+            Setup the context for aggressive caching.
+            </summary>
+            <param name="cacheDuration">Specify the aggressive cache duration</param>
+            <remarks>
+            aggressive caching means that we will not check the server to see whatever the response
+            we provide is current or not, but will serve the information directly from the local cache
+            without touching the server.
+            </remarks>
+        </member>
+        <member name="M:Raven.Client.Shard.ShardedDocumentStore.DisableAggressiveCaching">
+            <summary>
+            Setup the context for no aggressive caching
+            </summary>
+            <remarks>
+            This is mainly useful for internal use inside RavenDB, when we are executing
+            queries that has been marked with WaitForNonStaleResults, we temporarily disable
+            aggressive caching.
+            </remarks>
+        </member>
         <member name="M:Raven.Client.Shard.ShardedDocumentStore.OpenSession">
             <summary>
             Opens the session.
@@ -7515,6 +7899,12 @@
             Opens the session with the specified credentials.
             </summary>
             <param name="credentialsForSession">The credentials for session.</param>
+        </member>
+        <member name="M:Raven.Client.Shard.ShardedDocumentStore.GetLastWrittenEtag">
+            <summary>
+             Gets the etag of the last document written by any session belonging to this 
+             document store
+            </summary>
         </member>
         <member name="M:Raven.Client.Shard.ShardedDocumentStore.Initialize">
             <summary>
@@ -7561,6 +7951,11 @@
             Gets the conventions.
             </summary>
             <value>The conventions.</value>
+        </member>
+        <member name="P:Raven.Client.Shard.ShardedDocumentStore.Url">
+            <summary>
+            Gets or sets the URL.
+            </summary>
         </member>
         <member name="T:Raven.Client.Shard.Shards">
             <summary>

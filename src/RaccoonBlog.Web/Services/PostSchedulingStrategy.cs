@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using RaccoonBlog.Web.Common;
+using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
 using Raven.Client;
 

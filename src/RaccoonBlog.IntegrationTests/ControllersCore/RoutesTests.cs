@@ -153,6 +153,13 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
         }
 
         [Fact]
+        public void SearchControllerRoutes()
+        {
+            "~/search".ShouldMapTo<SearchController>(c => c.SearchResult(null));
+			"~/search/google_cse.xml".ShouldMapTo<SearchController>(c => c.GoogleCse());
+        }
+
+        [Fact]
         public void SectionAdminControllerRoutes()
         {
             "~/admin/sections".ShouldMapTo<SectionAdminController>(c => c.List());

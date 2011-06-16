@@ -23,7 +23,7 @@
   
 </head>
 <body>
-    <div class="containter page">
+    <div class="container page">
         <header id="headermain">
 			<div id="logoarea">
 				<div id="logoimage"><a href="@Url.RouteUrl("Default")"></a></div>
@@ -44,7 +44,9 @@
     </div>
     @if (IsSectionDefined("Script")) {
         <script src="@Url.Content("~/Content/js/jquery-1.6.min.js")" type="text/javascript"></script>
-		<script src="@Url.Content("~/Content/js/jquery.ae.image.resize.min.js")" type="text/javascript"></script>		<script type="text/javascript">
+		<script src="@Url.Content("~/Content/js/jquery.ae.image.resize.min.js")" type="text/javascript"></script>
+	    <script type="text/javascript" src="@Url.Script("raccoon-blog")"></script>
+		<script type="text/javascript">
 			$(function () {
 				var timer;
 				function resizeImagesToScreen() {
@@ -56,12 +58,23 @@
 					timer = setTimeout(resizeImagesToScreen, 50);
 				});
 			});
-			function setMessage(message, cssClass) {
-				var m = $('#message').html(message);
-				if (cssClass) m.removeClass().addClass(cssClass);
-				m.css('visibility', 'visible');
-			}		</script>
+		</script>
         @RenderSection("Script")
+        
+        if (string.IsNullOrEmpty(blogConfig.GoogleAnalyticsKey) == false)
+        { 
+            <script type="text/javascript">
+                var _gaq = _gaq || [];
+                _gaq.push(['_setAccount', '@blogConfig.GoogleAnalyticsKey']);
+                _gaq.push(['_trackPageview']);
+
+                (function () {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            </script>
+        }
     }
 </body>
 </html>

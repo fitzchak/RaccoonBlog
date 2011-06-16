@@ -1,6 +1,6 @@
 using System.Web.Mvc;
 using System.Web.Security;
-using RaccoonBlog.Web.Common;
+using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Controllers

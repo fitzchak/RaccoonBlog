@@ -16,7 +16,7 @@
 	<form action="@Url.Action("Update")" method="post">
 		@Html.EditorFor(x => x.Title)
 		@Html.EditorFor(x => x.Body)
-        <div class="markdown-preview-containter" style="display: none">
+        <div class="markdown-preview-container" style="display: none">
             <span class="form_item_name">Preview Body</span>
             <div class="section markdown-preview"></div>
         </div>
@@ -35,7 +35,7 @@
     <script type="text/javascript">
         $(function () {
             var $textarea = $('textarea[name$="Body"]').keydown(function () {
-                $('.markdown-preview-containter').show('medium');
+                $('.markdown-preview-container').show('medium');
             });
             $preview = $('.markdown-preview');
             converter = new Showdown.converter();

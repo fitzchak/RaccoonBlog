@@ -26,13 +26,7 @@ namespace RaccoonBlog.Web.Controllers
             if (filterContext.IsChildAction)
                 return;
 
-			var blogConfig = Session.Load<BlogConfig>("Blog/Config");
-		    if (blogConfig == null)
-		    {
-		        blogConfig = new BlogConfig();
-                Session.Store(blogConfig);
-		    }
-            ViewBag.BlogConfig = blogConfig.MapTo<BlogConfigViewModel>();
+			ViewBag.BlogConfig = BlogConfig.MapTo<BlogConfigViewModel>();
 		}
         
         protected int CurrentPage
@@ -62,5 +56,23 @@ namespace RaccoonBlog.Web.Controllers
             var settings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
             return new JsonNetResult(data, settings);
         }
+
+    	private BlogConfig blogConfig;
+    	public BlogConfig BlogConfig
+    	{
+    		get
+    		{
+				if (blogConfig == null)
+				{
+					blogConfig = Session.Load<BlogConfig>("Blog/Config");
+					if (blogConfig == null)
+					{
+						blogConfig = new BlogConfig();
+						Session.Store(blogConfig);
+					}
+				}
+				return blogConfig;
+    		}
+    	}
     }
 }

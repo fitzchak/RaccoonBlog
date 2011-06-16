@@ -5,7 +5,7 @@
 // //-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
-using RaccoonBlog.Web.Common;
+using RaccoonBlog.Web.Infrastructure.Common;
 
 namespace RaccoonBlog.Web.Models
 {
@@ -17,7 +17,7 @@ namespace RaccoonBlog.Web.Models
         public string LegacySlug { get; set; }
 
         public string Body { get; set; }
-        public string[] Tags { get; set; }
+        public ICollection<string> Tags { get; set; }
 
         public string AuthorId { get; set; }
         public DateTimeOffset CreatedAt { get; set; }

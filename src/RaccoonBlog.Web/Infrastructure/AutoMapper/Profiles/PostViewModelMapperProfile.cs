@@ -2,8 +2,8 @@ using System.Configuration;
 using System.Linq;
 using System.Web;
 using AutoMapper;
-using RaccoonBlog.Web.Common;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
+using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
 
@@ -19,7 +19,6 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
                 .ForMember(x => x.PublishedAt, o => o.MapFrom(m => m.PublishAt))
                 .ForMember(x => x.IsCommentAllowed, o => o.MapFrom(m => m.AllowComments))
                 .ForMember(x => x.Author, o => o.Ignore())
-                .ForMember(x => x.Tags, o => o.MapFrom(m => m.Tags.Select(name => new TagDetails { Name = name })))
                 ;
 
             Mapper.CreateMap<PostComments.Comment, PostViewModel.Comment>()
@@ -39,6 +38,12 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
                 .ForMember(x => x.Body, o => o.Ignore())
                 .ForMember(x => x.CommenterKey, o => o.MapFrom(m => m.Key))
                 ;
+
+			Mapper.CreateMap<CommentInput, Commenter>()
+				.ForMember(x => x.Id, o => o.Ignore())
+				.ForMember(x => x.IsTrustedCommenter, o => o.Ignore())
+				.ForMember(x => x.Key, o => o.Ignore())
+				;
 
             Mapper.CreateMap<User, CommentInput>()
                 .ForMember(x => x.Name, o => o.MapFrom(m => m.FullName))

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -11,25 +12,30 @@ namespace RaccoonBlog.Web.Helpers
     {
         public static string AbsoluteAction(this UrlHelper url, string action, object routeValues)
         {
-            return AbsoluteAction(url, url.Action(action, routeValues));
+            return AbsoluteActionUtil(url, url.Action(action, routeValues));
+        }
+
+        public static string AbsoluteAction(this UrlHelper url, string action)
+        {
+            return AbsoluteActionUtil(url, url.Action(action));
         }
 
         public static string AbsoluteAction(this UrlHelper url, string action, string controller)
         {
-            return AbsoluteAction(url, url.Action(action, controller));
+            return AbsoluteActionUtil(url, url.Action(action, controller));
         }
 
 		public static string AbsoluteAction(this UrlHelper url, string action, string controller, object routeValues)
 		{
-			return AbsoluteAction(url, url.Action(action, controller, routeValues));
+			return AbsoluteActionUtil(url, url.Action(action, controller, routeValues));
 		}
 
         public static string RelativeToAbsolute(this UrlHelper url, string relativeUrl)
         {
-            return AbsoluteAction(url, relativeUrl);
+            return AbsoluteActionUtil(url, relativeUrl);
         }
 
-    	private static string AbsoluteAction(UrlHelper url, string relativeUrl)
+    	private static string AbsoluteActionUtil(UrlHelper url, string relativeUrl)
         {
             Uri requestUrl = url.RequestContext.HttpContext.Request.Url;
             string absoluteAction = string.Format("{0}://{1}{2}",
@@ -75,5 +81,15 @@ namespace RaccoonBlog.Web.Helpers
             }
             return MvcHtmlString.Create(href);
         }
+
+		public static string Abs(this UrlHelper urlHelper, string relativeOrAbsoluteUrl)
+		{
+			var uri = new Uri(relativeOrAbsoluteUrl, UriKind.RelativeOrAbsolute);
+			if (uri.IsAbsoluteUri)
+			{
+				return relativeOrAbsoluteUrl;
+			}
+			return ConfigurationManager.AppSettings["MainUrl"] + relativeOrAbsoluteUrl;
+		}
     }
 }

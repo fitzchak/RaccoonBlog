@@ -1,10 +1,10 @@
 using System;
 using System.Linq;
 using System.Web.Mvc;
-using RaccoonBlog.Web.Common;
 using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Helpers.Attributes;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
+using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.Services;
 using RaccoonBlog.Web.ViewModels;
@@ -39,9 +39,9 @@ namespace RaccoonBlog.Web.Controllers
 					.OrderBy(comment => comment.CreatedAt)
 					.MapTo<AdminPostDetailsViewModel.Comment>(),
 
-				NextPost = Session.GetPostReference(x => x.PublishAt > post.PublishAt, desc: false),
-				PreviousPost = Session.GetPostReference(x => x.PublishAt < post.PublishAt, desc: true),
-				AreCommentsClosed = comments.AreCommentsClosed(post),
+				NextPost = Session.GetNextPrevPost(post, true),
+				PreviousPost = Session.GetNextPrevPost(post, false),
+				AreCommentsClosed = comments.AreCommentsClosed(post, BlogConfig.NumberOfDayToCloseComments),
 			};
 
 
@@ -129,14 +129,14 @@ namespace RaccoonBlog.Web.Controllers
             if (post == null)
                 return HttpNotFound();
 
-            var slug =  SlugConverter.TitleToSlug(post.Title);
+			var postReference = post.MapTo<PostReference>();
 
             if (ModelState.IsValid == false)
             {
                 if (Request.IsAjaxRequest())
                     return Json(new {Success = false, message = ModelState.GetFirstErrorMessage()});
 
-                return Details(id, slug);
+				return Details(id, postReference.Slug);
             }
 
             var comments = Session.Load<PostComments>(id);
@@ -183,7 +183,7 @@ namespace RaccoonBlog.Web.Controllers
             {
                 return Json(new {Success = true});
             }
-            return RedirectToAction("Details", new { id, slug });
+			return RedirectToAction("Details", new { id, postReference.Slug });
         }
 
     	[HttpPost]

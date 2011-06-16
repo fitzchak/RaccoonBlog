@@ -1,6 +1,6 @@
 using System.Web.Mvc;
 using System.Web.Routing;
-using RaccoonBlog.Web.Common;
+using RaccoonBlog.Web.Helpers.Routes;
 
 namespace RaccoonBlog.Web
 {
@@ -29,6 +29,8 @@ namespace RaccoonBlog.Web
             
     	    ConfigureSection();
     	    ConfigureSectionAdmin();
+
+    	    ConfigureSearch();
 
     	    ConfigureLogin();
 
@@ -147,6 +149,20 @@ namespace RaccoonBlog.Web
             routes.MapRouteLowerCase("PostAdminController-List",
                "admin/posts",
                new { controller = "PostAdmin", action = "list" }
+               );
+        }
+
+        private void ConfigureSearch()
+        {
+			routes.MapRouteLowerCase("SearchController-GoogleCse",
+			   "search/google_cse.xml",
+			   new { controller = "Search", action = "GoogleCse" }
+			   );
+
+            routes.MapRouteLowerCase("SearchController",
+               "search/{action}",
+			   new { controller = "Search", action = "SearchResult" },
+			   new { action = "SearchResult" }
                );
         }
 

@@ -27,15 +27,18 @@
     </div>
     
     <footer>
-		<div class="tags">
-			<span>Tags:</span>
-			<ul>
-				@foreach (var tag in Model.Post.Tags)
-	{
-					<li><a href="@Url.Action("Tag", "Post", new { tag.Slug })">@tag.Name</a></li>
-	}
-			</ul>
-		</div>
+        @if (Model.Post.Tags.Count > 0)
+		{
+			<div class="tags">
+				<span>Tags:</span>
+				<ul>
+					@foreach (var tag in Model.Post.Tags)
+					{
+						<li><a href="@Url.Action("Tag", "Post", new {tag.Slug})">@tag.Name</a></li>
+					}
+				</ul>
+			</div>
+		}
 
         <p class="author">Posted By: @Model.Post.Author.FullName</p>
         <p class="published">Published at <time pubdate>@Model.Post.PublishedAt.ToString("r")</time></p>
@@ -53,7 +56,7 @@
 				<a name="fb_share" type="box_count" share_url="@(Url.Abs((string)ViewBag.CurrentUrl))" href="http://www.facebook.com/sharer.php?u=@(Url.Abs((string)ViewBag.CurrentUrl))&t=@(Model.Post.Title)"></a>
             </div>
 			<div class="facebook">
-                <iframe src="http://www.facebook.com/plugins/like.php?href=@(Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px;" allowTransparency="true"></iframe>
+                <iframe src="http://www.facebook.com/plugins/like.php?href=@(Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))&send=false&layout=button_count&width=450&show_faces=true&action=like&colorscheme=light&font&height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px;" allowTransparency="true"></iframe>
             </div>
 			<div class="clr"></div>
         </div>
@@ -74,7 +77,9 @@
 		{
             <article class="comment @(comment.IsImportant ? " important" : null)">
                 <a name="comment@(comment.Id)"></a>
-                <img class="avatar" src="http://www.gravatar.com/avatar.php?gravatar_id=@(comment.EmailHash)&amp;size=50&amp;default=identicon" alt="Gravatar" style="border-width:0px;">
+                <div class="avatar">
+                    <img src="http://www.gravatar.com/avatar.php?gravatar_id=@(comment.EmailHash)&size=50&default=identicon" alt="Gravatar">
+                </div>
 
                 <header>
                     @comment.CreatedAt by
@@ -123,11 +128,6 @@
 				}
 			}
         </article>
-		<div class="markdown-preview-containter" style="display: none">
-			<span class="form_item_name">Preview Comment</span>
-			<div class="comment-body markdown-preview raw_html"></div>
-		</div>
-		<div class="clr"></div>
     </section>
 </article>
 @section Style {
@@ -137,56 +137,25 @@
 	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.validate.min.js")"></script>
 	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.validate.unobtrusive.min.js")"></script>
 	<script type="text/javascript" src="@Url.Content("~/Content/js/showdown.js")"></script>
-	<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-	<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
 	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.tmpl.min.js")"></script>
 	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.md5.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Content/js/date.f-0.5.0.min.js")"></script>
 	<script type="text/javascript">
-		$(function () {
-			$('#postComment form').submit(function () {
-				var t = $(this);
-				if (t.valid()) {
-					var jqxhr = $.post(t.attr('action'), t.serializeArray(), null, 'json');
-					jqxhr.error(function (data, textStatus, jqXHR) {
-						setMessage('An error occurred while posing your comment', 'fail');
-					});
-					jqxhr.success(function (data, textStatus, jqXHR) {
-						if (!data.success) setMessage('An error occurred while posting your comment: ' + data.message, 'fail');
-						else {
-							setMessage(data.message);
-							var now = new Date();
-							var comment = {
-								author: $('article#postComment input[name$="Name"]').val(),
-								emailHash: $.md5($('article#postComment input[name$="Email"]').val()),
-								url: $('article#postComment input[name$="Url"]').val(),
-								body: converter.makeHtml($('article#postComment textarea[name$="Body"]').val()),
-								createdAt: now.getMonth() + '/' + now.getDay() + '/' + now.getYear() + ' ' + now.getHours() + ':' + now.getMinutes()
-							};
-				            $('article#postComment, div.markdown-preview-containter').remove();
-							$('#commentTemplate').tmpl(comment).appendTo('section.comments').show('medium');
-						}
-					});
-				}
-				return false;
-			});
-
-			var $textarea = $('textarea[name$="Body"]').keydown(function () {
-				$('.markdown-preview-containter').show('medium');
-			});
-			$preview = $('.markdown-preview');
-			converter = new Showdown.converter();
-			$textarea.keyup(function () {
-				$preview.html(converter.makeHtml($textarea.val()));
-			}).trigger('keyup');
-		});
+	    $(function () {
+	        Raccoon.Views.Details();
+	    });
 	</script>
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+	<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
 	<script id="commentTemplate" type="text/html">
-        <article class="comment" style="display: none">
-            <img class="avatar" src="http://www.gravatar.com/avatar.php?gravatar_id=${emailHash}&amp;size=50&amp;default=identicon" alt="Gravatar" style="border-width:0px;">
+        <article class="comment livecomment" style="display: none">
+            <div class="avatar">
+                <img src="http://www.gravatar.com/avatar.php?gravatar_id=${emailHash}&size=50&default=identicon" alt="Gravatar">
+            </div>
             <header>
                 ${createdAt} by
                 <address>
-                    <a target="_blank"  href="${url}">${author}</a>
+                    <a target="_blank" href="${url}">${author}</a>
                 </address>
             </header>
             <div class="comment-body raw_html">{{html body}}</div>
