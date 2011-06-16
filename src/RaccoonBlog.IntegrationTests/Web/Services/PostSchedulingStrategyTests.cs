@@ -12,19 +12,21 @@ namespace RaccoonBlog.IntegrationTests.Web.Services
 	public class PostSchedulingStrategyTests
 	{
 		protected DateTimeOffset Now { get; private set; }
+		protected IDocumentStore DocumentStore { get; private set; }
 		protected IDocumentSession Session { get; private set; }
 
 		public PostSchedulingStrategyTests()
 		{
 			Now = DateTimeOffset.Now;
 
-			var documentStore = new EmbeddableDocumentStore { RunInMemory = true }.Initialize();
-			Session = documentStore.OpenSession();
+			DocumentStore = new EmbeddableDocumentStore { RunInMemory = true }.Initialize();
+			Session = DocumentStore.OpenSession();
 		}
 
 		~PostSchedulingStrategyTests()
 		{
 			Session.Dispose();
+			DocumentStore.Dispose();
 		}
 
 		[Fact]
