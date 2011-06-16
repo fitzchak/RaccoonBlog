@@ -9,13 +9,15 @@ namespace RaccoonBlog.Web.Services
 	public class PostSchedulingStrategy
 	{
 		private readonly IDocumentSession session;
+		private readonly DateTimeOffset now;
 
-	    public PostSchedulingStrategy(IDocumentSession session)
-        {
-            this.session = session;
-        }
+		public PostSchedulingStrategy(IDocumentSession session, DateTimeOffset? now = null)
+		{
+			this.session = session;
+			this.now = now ?? DateTimeOffset.Now;
+		}
 
-	    /// <summary>
+		/// <summary>
 		/// The rules are simple:
 		/// * If there is no set date, schedule in at the end of the queue, but on a Monday - Friday 
 		/// * If there is a set date, move all the posts from that day one day forward
@@ -60,7 +62,7 @@ namespace RaccoonBlog.Web.Services
 	    		.Select(post => new {post.PublishAt})
 	    		.FirstOrDefault();
 
-	        return p != null ? p.PublishAt : DateTimeOffset.Now;
+	        return p != null ? p.PublishAt : now;
 	    }
 	}
 }
