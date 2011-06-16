@@ -12,7 +12,7 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers
             return MvcHtmlString.Create(html);
         }
 
-        public static string FormatMarkdown(string content)
+    	private static string FormatMarkdown(string content)
         {
             var md = new Markdown(new MarkdownOptions
         	{
