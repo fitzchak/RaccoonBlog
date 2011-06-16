@@ -11,10 +11,10 @@ namespace RaccoonBlog.Web.Services
 		private readonly IDocumentSession session;
 		private readonly DateTimeOffset now;
 
-		public PostSchedulingStrategy(IDocumentSession session, DateTimeOffset? now = null)
+		public PostSchedulingStrategy(IDocumentSession session, DateTimeOffset now)
 		{
 			this.session = session;
-			this.now = now ?? DateTimeOffset.Now;
+			this.now = now;
 		}
 
 		/// <summary>
@@ -30,14 +30,21 @@ namespace RaccoonBlog.Web.Services
 		{
             if (requestedDate == null)
             {
-            	return GetLastScheduledPostDate()
+            	var lastScheduledPostDate = GetLastScheduledPostDate();
+				if (lastScheduledPostDate == null || lastScheduledPostDate <= now)
+					return now
+						.SkipToNextWorkDay()
+						.AtNoon();
+
+
+            	return lastScheduledPostDate.Value
             		.AddDays(1)
 					.SkipToNextWorkDay()
             		.AtNoon();
             }
 
-	    	var postsQuery = from p in session.Query<Post>()
-	                         where p.PublishAt > requestedDate && p.SkipAutoReschedule == false
+			var postsQuery = from p in session.Query<Post>()
+	                         where p.PublishAt > requestedDate && p.SkipAutoReschedule == false && p.PublishAt > now
 	                         orderby p.PublishAt
 	                         select p;
 
@@ -55,14 +62,14 @@ namespace RaccoonBlog.Web.Services
 	    	return requestedDate.Value;
 		}
 
-	    private DateTimeOffset GetLastScheduledPostDate()
+	    private DateTimeOffset? GetLastScheduledPostDate()
 	    {
 	    	var p = session.Query<Post>()
 	    		.OrderByDescending(post => post.PublishAt)
 	    		.Select(post => new {post.PublishAt})
 	    		.FirstOrDefault();
 
-	        return p != null ? p.PublishAt : now;
+	    	return p != null ? p.PublishAt : (DateTimeOffset?)null;
 	    }
 	}
 }
