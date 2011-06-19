@@ -30,14 +30,13 @@ namespace RaccoonBlog.Web.Services
 		{
             if (requestedDate == null)
             {
-            	var lastScheduledPostDate = GetLastScheduledPostDate();
-				if (lastScheduledPostDate == null || lastScheduledPostDate <= now)
-					return now
-						.SkipToNextWorkDay()
-						.AtNoon();
+            	var p = session.Query<Post>()
+            		.OrderByDescending(post => post.PublishAt)
+            		.Select(post => new {post.PublishAt})
+            		.FirstOrDefault();
 
-
-            	return lastScheduledPostDate.Value
+            	var lastScheduledPostDate = p == null || p.PublishAt < now ? now : p.PublishAt;
+            	return lastScheduledPostDate
             		.AddDays(1)
 					.SkipToNextWorkDay()
             		.AtNoon();
@@ -61,15 +60,5 @@ namespace RaccoonBlog.Web.Services
 
 	    	return requestedDate.Value;
 		}
-
-	    private DateTimeOffset? GetLastScheduledPostDate()
-	    {
-	    	var p = session.Query<Post>()
-	    		.OrderByDescending(post => post.PublishAt)
-	    		.Select(post => new {post.PublishAt})
-	    		.FirstOrDefault();
-
-	    	return p != null ? p.PublishAt : (DateTimeOffset?)null;
-	    }
 	}
 }
