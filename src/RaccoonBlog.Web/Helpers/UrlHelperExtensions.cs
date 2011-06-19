@@ -38,9 +38,6 @@ namespace RaccoonBlog.Web.Helpers
     	private static string AbsoluteActionUtil(UrlHelper url, string relativeUrl)
     	{
     		var request = url.RequestContext.HttpContext.Request;
-			var applicationPath = request.ApplicationPath;
-			if (applicationPath != "/")
-				relativeUrl = applicationPath + relativeUrl;
     		Uri requestUrl = request.Url;
             string absoluteAction = string.Format("{0}://{1}{2}",
                                                   requestUrl.Scheme,
