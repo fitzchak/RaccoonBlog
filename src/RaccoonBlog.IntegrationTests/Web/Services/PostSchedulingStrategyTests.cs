@@ -9,7 +9,7 @@ using Xunit;
 
 namespace RaccoonBlog.IntegrationTests.Web.Services
 {
-	public class PostSchedulingStrategyTests
+	public class PostSchedulingStrategyTests : IDisposable
 	{
 		protected DateTimeOffset Now { get; private set; }
 		protected IDocumentStore DocumentStore { get; private set; }
@@ -23,7 +23,7 @@ namespace RaccoonBlog.IntegrationTests.Web.Services
 			Session = DocumentStore.OpenSession();
 		}
 
-		~PostSchedulingStrategyTests()
+		public void Dispose()
 		{
 			Session.Dispose();
 			DocumentStore.Dispose();
@@ -33,11 +33,11 @@ namespace RaccoonBlog.IntegrationTests.Web.Services
 		public void WhenPostingNewPostWithoutPublishDateSpecified_AndTheLastPostPublishDateIsAFewDaysAgo_ScheduleItForToday()
 		{
 			Session.Store(new Post { PublishAt = Now.AddDays(-3) });
-			Assert.Equal(1, Session.Query<Post>().Count());
+			Session.SaveChanges();
 
 			var rescheduler = new PostSchedulingStrategy(Session, Now);
 
-			var scheduleDate = Now.AddDays(1).AtNoon();
+			var scheduleDate = Now.AtNoon();
 			var scheduled = rescheduler.Schedule();
 			Assert.Equal(scheduleDate, scheduled);
 		}
@@ -47,7 +47,7 @@ namespace RaccoonBlog.IntegrationTests.Web.Services
 		{
 			var rescheduler = new PostSchedulingStrategy(Session, Now);
 
-			var scheduleDate = Now.AddDays(1).AtNoon();
+			var scheduleDate = Now.AtNoon();
 			var scheduled = rescheduler.Schedule();
 			Assert.Equal(scheduleDate, scheduled);
 		}
@@ -56,13 +56,14 @@ namespace RaccoonBlog.IntegrationTests.Web.Services
 		public void WhenPostingNewPostWithPublishDateSpecified_AndTheLastPostPublishDateIsAFewDaysAgo_ScheduleItForSpecifiedDate()
 		{
 			Session.Store(new Post { PublishAt = Now.AddDays(-3) });
-			Assert.Equal(1, Session.Query<Post>().Count());
+			Session.SaveChanges();
 
 			var rescheduler = new PostSchedulingStrategy(Session, Now);
 
 			var scheduleDate = Now.AddHours(1);
-			Assert.Equal(scheduleDate, rescheduler.Schedule(scheduleDate));
-			Assert.NotEqual(scheduleDate.AddDays(-2), rescheduler.Schedule(scheduleDate));
+			var result = rescheduler.Schedule(scheduleDate);
+			Assert.Equal(scheduleDate, result);
+			Assert.NotEqual(scheduleDate.AddDays(-2), result);
 		}
 
 		[Fact]
@@ -71,8 +72,9 @@ namespace RaccoonBlog.IntegrationTests.Web.Services
 			var rescheduler = new PostSchedulingStrategy(Session, Now);
 
 			var scheduleDate = Now.AddHours(1);
-			Assert.Equal(scheduleDate, rescheduler.Schedule(scheduleDate));
-			Assert.NotEqual(scheduleDate.AddDays(-2), rescheduler.Schedule(scheduleDate));
+			var result = rescheduler.Schedule(scheduleDate);
+			Assert.Equal(scheduleDate, result);
+			Assert.NotEqual(scheduleDate.AddDays(-2), result);
 		}
 
 		[Fact]
@@ -80,12 +82,25 @@ namespace RaccoonBlog.IntegrationTests.Web.Services
 		{
 			Session.Store(new Post { PublishAt = Now.AddDays(-3) });
 			Session.Store(new Post { PublishAt = Now.AddHours(-1) });
-			Assert.Equal(2, Session.Query<Post>().Count());
+			Session.SaveChanges();
 
 			var rescheduler = new PostSchedulingStrategy(Session, Now);
 			rescheduler.Schedule();
 
-			Assert.False(Session.Query<Post>().Any(post => post.PublishAt < Now));
+			Assert.Empty(Session.Query<Post>().Where(post => post.PublishAt > Now));
+		}
+
+		[Fact]
+		public void WhenPostingNewPostWithPublishDateSpecified_BeforePostsAlreadyPublished_DoNotReschedulePublishedPosts()
+		{
+			Session.Store(new Post { PublishAt = Now.AddDays(-3) });
+			Session.Store(new Post { PublishAt = Now.AddHours(-1) });
+			Session.SaveChanges();
+
+			var rescheduler = new PostSchedulingStrategy(Session, Now);
+			rescheduler.Schedule(Now.AddHours(-2));
+
+			Assert.Empty(Session.Query<Post>().Where(post => post.PublishAt > Now));
 		}
 	}
 }
