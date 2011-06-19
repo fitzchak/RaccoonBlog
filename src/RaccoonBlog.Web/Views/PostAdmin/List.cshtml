@@ -16,7 +16,7 @@
     		renderCalander(true);
     	});
 		function renderCalander(weekends) {
-			var listFeed = '@Url.Action("ListFeed")';
+			var listFeed = '@Url.AbsoluteAction("ListFeed")';
 			$('#postsCalendar').empty().fullCalendar({
 				header: {
 					left: 'prev,next today',
