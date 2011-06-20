@@ -5,7 +5,7 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers
 {
     public static class SanitizeHtml
     {
-        private static readonly Regex Tags = new Regex("<[^>]*(>|$)",
+        private static readonly Regex Tags = new Regex("<[^> ]*(>|$)",
                                                RegexOptions.Singleline | RegexOptions.ExplicitCapture |
                                                RegexOptions.Compiled);
 

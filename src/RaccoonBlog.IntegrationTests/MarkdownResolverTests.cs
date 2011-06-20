@@ -89,5 +89,19 @@ namespace RaccoonBlog.IntegrationTests
                 Assert.Contains(tag, result);
             }
         }
+
+		[Fact]
+		public void DoNotSanitizeTheLowerThenTag_InCaseThatItsContainsASpace()
+		{
+			const string input = @"
+<pre>string s = """";
+for (int i = 0; i < 13000; i++)
+{
+    s += (char) i;
+}</pre>";
+			
+			var result = MarkdownResolve(input);
+			Assert.Contains("for (int i = 0; i < 13000; i++)", result);
+		}
     }
 }
