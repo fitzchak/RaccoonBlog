@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Indexes;
@@ -20,6 +21,11 @@ namespace RaccoonBlog.Web.Controllers
 				.OrderBy(x => x.PublishAt)
 				.Take(15)
 				.ToList();
+
+			foreach (var futurePostViewModel in futurePosts)
+			{
+				futurePostViewModel.Title = HttpUtility.HtmlDecode(futurePostViewModel.Title);
+			}
 
 			return View(futurePosts);
 		}
