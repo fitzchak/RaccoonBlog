@@ -5,6 +5,7 @@ using RaccoonBlog.Web.Infrastructure.Indexes;
 using Raven.Client;
 using Raven.Client.Document;
 using Raven.Client.Indexes;
+using Raven.Client.MvcIntegration;
 
 namespace RaccoonBlog.Web.Infrastructure.Raven
 {
@@ -29,6 +30,10 @@ namespace RaccoonBlog.Web.Infrastructure.Raven
                 }.Initialize();
 
             IndexCreation.CreateIndexes(typeof(Tags_Count).Assembly, store);
+
+			RavenProfiler.InitializeFor(store, 
+				//Fields to filter out of the output
+				"Email", "HashedPassword", "AkismetKey", "GoogleAnalyticsKey", "ShowPostEvenIfPrivate", "PasswordSalt");
 
             return store;
         }
