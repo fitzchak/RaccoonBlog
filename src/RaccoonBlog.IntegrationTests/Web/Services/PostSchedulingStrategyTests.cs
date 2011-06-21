@@ -30,26 +30,24 @@ namespace RaccoonBlog.IntegrationTests.Web.Services
 		}
 
 		[Fact]
-		public void WhenPostingNewPostWithoutPublishDateSpecified_AndTheLastPostPublishDateIsAFewDaysAgo_ScheduleItForToday()
+		public void WhenPostingNewPostWithoutPublishDateSpecified_AndTheLastPostPublishDateIsAFewDaysAgo_ScheduleItForTomorrowAtNoot()
 		{
 			Session.Store(new Post { PublishAt = Now.AddDays(-3) });
 			Session.SaveChanges();
 
 			var rescheduler = new PostSchedulingStrategy(Session, Now);
 
-			var scheduleDate = Now.AtNoon();
-			var scheduled = rescheduler.Schedule();
-			Assert.Equal(scheduleDate, scheduled);
+			var result = rescheduler.Schedule();
+			Assert.Equal(Now.AddDays(1).AtNoon(), result);
 		}
 
 		[Fact]
-		public void WhenPostingNewPostWithoutPublishDateSpecified_AndThereIsNoLastPost_ScheduleItForToday()
+		public void WhenPostingNewPostWithoutPublishDateSpecified_AndThereIsNoLastPost_ScheduleItForTomorrowAtNoot()
 		{
 			var rescheduler = new PostSchedulingStrategy(Session, Now);
 
-			var scheduleDate = Now.AtNoon();
-			var scheduled = rescheduler.Schedule();
-			Assert.Equal(scheduleDate, scheduled);
+			var result = rescheduler.Schedule();
+			Assert.Equal(Now.AddDays(1).AtNoon(), result);
 		}
 
 		[Fact]
@@ -74,7 +72,6 @@ namespace RaccoonBlog.IntegrationTests.Web.Services
 			var scheduleDate = Now.AddHours(1);
 			var result = rescheduler.Schedule(scheduleDate);
 			Assert.Equal(scheduleDate, result);
-			Assert.NotEqual(scheduleDate.AddDays(-2), result);
 		}
 
 		[Fact]

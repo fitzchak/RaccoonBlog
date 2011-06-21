@@ -323,6 +323,11 @@
             <param name="patches">Array of patch requests</param>
             <param name="etag">Require specific Etag [null to ignore]</param>
         </member>
+        <member name="M:Raven.Client.Embedded.EmbeddedDatabaseCommands.DisableAllCaching">
+            <summary>
+            Disable all caching within the given scope
+            </summary>
+        </member>
         <member name="M:Raven.Client.Embedded.EmbeddedDatabaseCommands.SpinBackgroundWorkers">
             <summary>
             Spin the background worker for indexing

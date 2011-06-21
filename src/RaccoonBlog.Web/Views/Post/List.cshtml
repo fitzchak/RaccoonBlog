@@ -6,7 +6,7 @@
 <article id="post-list">
 	@foreach (var post in Model.Posts)
 	{
-		var postUrl = Url.AbsoluteAction("Details", "PostDetails", new { post.Id, post.Slug });
+		var postUrl = Url.Action("Details", "PostDetails", new { post.Id, post.Slug });
 		<article class="postSummery">
 			<header>
 				<h1><a href="@postUrl">@post.Title</a></h1>

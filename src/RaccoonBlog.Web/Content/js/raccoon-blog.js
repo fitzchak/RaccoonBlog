@@ -20,10 +20,26 @@ String.prototype.isNullOrEmpty = function () {
         return "http://" + url;
     };
     
-    Raccoon.Util.Showdown = {};
-    Raccoon.Util.Showdown.convert = function (content) {
-        if (!Raccoon.Util.Showdown.converter)
-            Raccoon.Util.Showdown.converter = new Showdown.converter();
+    Raccoon.Util.Markdown = {};
+    Raccoon.Util.Markdown.settings = {
+        onShiftEnter: { keepDefault: false, replaceWith: '<br />\n' },
+        onCtrlEnter: { keepDefault: false, openWith: '\n<p>', closeWith: '</p>' },
+        onTab: { keepDefault: false, replaceWith: '    ' },
+        markupSet: [
+            { name: 'Bold', key: 'B', openWith: '(!(<strong>|!|<b>)!)', closeWith: '(!(</strong>|!|</b>)!)' },
+            { name: 'Italic', key: 'I', openWith: '(!(<em>|!|<i>)!)', closeWith: '(!(</em>|!|</i>)!)' },
+            { name: 'Stroke through', key: 'S', openWith: '<del>', closeWith: '</del>' },
+            { separator: '---------------' },
+            { name: 'Picture', key: 'P', replaceWith: '<img src="[![Source:!:http://]!]" alt="[![Alternative text]!]" />' },
+            { name: 'Link', key: 'L', openWith: '<a href="[![Link:!:http://]!]"(!( title="[![Title]!]")!)>', closeWith: '</a>', placeHolder: 'Your text to link...' },
+            { separator: '---------------' },
+            { name: 'Clean', className: 'clean', replaceWith: function(markitup) { return markitup.selection.replace( /<(.*?)>/g , "") } },
+            { name: 'Preview', className: 'preview', call: 'preview' }
+        ]
+    };
+    Raccoon.Util.Markdown.convert = function (content) {
+        if (!Raccoon.Util.Markdown.showdownConverter)
+            Raccoon.Util.Markdown.showdownConverter = new Showdown.converter();
         
         var lines = content.split(/\r\n|\r|\n/);
         var c = '';
@@ -32,7 +48,7 @@ String.prototype.isNullOrEmpty = function () {
                 elem += '  ';
             c += elem + '\r\n';
         });
-        return Raccoon.Util.Showdown.converter.makeHtml(c);
+        return Raccoon.Util.Markdown.showdownConverter.makeHtml(c);
     };
 
     Raccoon.Util.Views = {};
@@ -52,7 +68,7 @@ String.prototype.isNullOrEmpty = function () {
                 author: $('article#postComment input[name$="Name"]').val(),
                 emailHash: $.md5($('article#postComment input[name$="Email"]').val()),
                 url: $('article#postComment input[name$="Url"]').val(),
-                body: Raccoon.Util.Showdown.convert($('article#postComment textarea[name$="Body"]').val()),
+                body: Raccoon.Util.Markdown.convert($('article#postComment textarea[name$="Body"]').val()),
                 createdAt: now.f("MM/dd/yyyy HH:mm")
             };
             $('#commentTemplate').tmpl(comment).appendTo('section.comments').show('medium');
@@ -64,7 +80,7 @@ String.prototype.isNullOrEmpty = function () {
                 insertComment();
                 $preview = $('.livecomment .comment-body');
             }
-            $preview.html(Raccoon.Util.Showdown.convert($(this).val()));
+            $preview.html(Raccoon.Util.Markdown.convert($(this).val()));
         });
         var $email = null;
         $('input[name$="Email"]').keyup(function () {

@@ -14,11 +14,12 @@ namespace RaccoonBlog.Web.Helpers.Results
 
 		public override void ExecuteResult(ControllerContext context)
 		{
+			var url = new UrlHelper(HttpContext.Current.Request.RequestContext);
 			var factory = new Elmah.ErrorLogPageFactory();
 			if (!string.IsNullOrEmpty(_resouceType))
 			{
 				var pathInfo = "." + _resouceType;
-				HttpContext.Current.RewritePath("/admin/elmah", pathInfo, HttpContext.Current.Request.QueryString.ToString());
+				HttpContext.Current.RewritePath(url.AbsoluteAction("Index", "Elmah"), pathInfo, HttpContext.Current.Request.QueryString.ToString());
 			}
 
 			var handler = factory.GetHandler(HttpContext.Current, null, null, null);

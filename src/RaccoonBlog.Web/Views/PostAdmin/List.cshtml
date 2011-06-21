@@ -16,7 +16,6 @@
     		renderCalander(true);
     	});
 		function renderCalander(weekends) {
-			var listFeed = '@Url.Action("ListFeed")';
 			$('#postsCalendar').empty().fullCalendar({
 				header: {
 					left: 'prev,next today',
@@ -27,14 +26,14 @@
 				editable: true,
 				disableResizing: true,
 				eventSources: [{
-					url: listFeed,
+					url: '@Url.AbsoluteAction("ListFeed")',
 					type: 'POST',
 					error: function (xhr, ajaxOptions, error) {
 						alert('There was an error while fetching events! Error Code: ' + xhr.status + ' Error: ' + error);
 					}
 				}],
 				eventDrop: function (event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
-					var jqxhr = $.post('/admin/posts/' + event.id + '/setpostdate', { date: event.start.valueOf() }, null, 'json');
+				    var jqxhr = $.post('@Url.AbsoluteAction("SetPostDate", new { id = 1024})'.replace('/1024/', '/' + event.id + '/'), { date: event.start.valueOf() }, null, 'json');
 					jqxhr.error(failAction);
 					jqxhr.success(function (data, textStatus, jqXHR) {
 						if (!data.success) failAction();

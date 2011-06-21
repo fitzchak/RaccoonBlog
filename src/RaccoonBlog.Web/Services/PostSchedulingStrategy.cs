@@ -6,6 +6,15 @@ using Raven.Client;
 
 namespace RaccoonBlog.Web.Services
 {
+	/// <summary>
+	/// The rules are simple:
+	/// * If there is no set date, schedule in at the end of the queue, but on a Monday - Friday 
+	/// * If there is a set date, move all the posts from that day one day forward
+	///  * only to Monday - Friday
+	///  * don't touch posts that are marked with SkipAutoReschedule = true
+	/// * If we are moving a current post, we need to:
+	///  * trim all the holes in the schedule
+	/// </summary>
 	public class PostSchedulingStrategy
 	{
 		private readonly IDocumentSession session;
@@ -16,39 +25,29 @@ namespace RaccoonBlog.Web.Services
 			this.session = session;
 			this.now = now;
 		}
-
-		/// <summary>
-		/// The rules are simple:
-		/// * If there is no set date, schedule in at the end of the queue, but on a Monday - Friday 
-		/// * If there is a set date, move all the posts from that day one day forward
-		///  * only to Monday - Friday
-		///  * don't touch posts that are marked with SkipAutoReschedule = true
-		/// * If we are moving a current post, we need to:
-		///  * trim all the holes in the schedule
-		/// </summary>
-        public DateTimeOffset Schedule(DateTimeOffset? requestedDate = null)
+		
+		public DateTimeOffset Schedule()
 		{
-            if (requestedDate == null)
-            {
-            	var lastScheduledPostDate = GetLastScheduledPostDate();
-				if (lastScheduledPostDate == null || lastScheduledPostDate <= now)
-					return now
-						.SkipToNextWorkDay()
-						.AtNoon();
+			var p = session.Query<Post>()
+					.OrderByDescending(post => post.PublishAt)
+					.Select(post => new { post.PublishAt })
+					.FirstOrDefault();
 
+			var lastScheduledPostDate = p == null || p.PublishAt < now ? now : p.PublishAt;
+			return lastScheduledPostDate
+				.AddDays(1)
+				.SkipToNextWorkDay()
+				.AtNoon();
+		}
 
-            	return lastScheduledPostDate.Value
-            		.AddDays(1)
-					.SkipToNextWorkDay()
-            		.AtNoon();
-            }
-
+		public DateTimeOffset Schedule(DateTimeOffset requestedDate)
+		{
 			var postsQuery = from p in session.Query<Post>()
 	                         where p.PublishAt > requestedDate && p.SkipAutoReschedule == false && p.PublishAt > now
 	                         orderby p.PublishAt
 	                         select p;
 
-	    	var nextPostDate = requestedDate.Value;
+	    	var nextPostDate = requestedDate;
 	        foreach (var post in postsQuery)
 	        {
 				post.PublishAt
@@ -59,17 +58,7 @@ namespace RaccoonBlog.Web.Services
 						.AtTime(post.PublishAt);
 	        }
 
-	    	return requestedDate.Value;
+	    	return requestedDate;
 		}
-
-	    private DateTimeOffset? GetLastScheduledPostDate()
-	    {
-	    	var p = session.Query<Post>()
-	    		.OrderByDescending(post => post.PublishAt)
-	    		.Select(post => new {post.PublishAt})
-	    		.FirstOrDefault();
-
-	    	return p != null ? p.PublishAt : (DateTimeOffset?)null;
-	    }
 	}
 }
