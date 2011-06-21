@@ -38,8 +38,8 @@ String.prototype.isNullOrEmpty = function () {
         ]
     };
     Raccoon.Util.Markdown.convert = function (content) {
-        if (!Raccoon.Util.Showdown.converter)
-            Raccoon.Util.Showdown.converter = new Showdown.converter();
+        if (!Raccoon.Util.Markdown.showdownConverter)
+            Raccoon.Util.Markdown.showdownConverter = new Showdown.converter();
         
         var lines = content.split(/\r\n|\r|\n/);
         var c = '';
@@ -48,7 +48,7 @@ String.prototype.isNullOrEmpty = function () {
                 elem += '  ';
             c += elem + '\r\n';
         });
-        return Raccoon.Util.Showdown.converter.makeHtml(c);
+        return Raccoon.Util.Markdown.showdownConverter.makeHtml(c);
     };
 
     Raccoon.Util.Views = {};
