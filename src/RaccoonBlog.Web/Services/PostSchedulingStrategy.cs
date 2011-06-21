@@ -9,13 +9,15 @@ namespace RaccoonBlog.Web.Services
 	public class PostSchedulingStrategy
 	{
 		private readonly IDocumentSession session;
+		private readonly DateTimeOffset now;
 
-	    public PostSchedulingStrategy(IDocumentSession session)
-        {
-            this.session = session;
-        }
+		public PostSchedulingStrategy(IDocumentSession session, DateTimeOffset now)
+		{
+			this.session = session;
+			this.now = now;
+		}
 
-	    /// <summary>
+		/// <summary>
 		/// The rules are simple:
 		/// * If there is no set date, schedule in at the end of the queue, but on a Monday - Friday 
 		/// * If there is a set date, move all the posts from that day one day forward
@@ -28,14 +30,21 @@ namespace RaccoonBlog.Web.Services
 		{
             if (requestedDate == null)
             {
-            	return GetLastScheduledPostDate()
+            	var lastScheduledPostDate = GetLastScheduledPostDate();
+				if (lastScheduledPostDate == null || lastScheduledPostDate <= now)
+					return now
+						.SkipToNextWorkDay()
+						.AtNoon();
+
+
+            	return lastScheduledPostDate.Value
             		.AddDays(1)
 					.SkipToNextWorkDay()
             		.AtNoon();
             }
 
-	    	var postsQuery = from p in session.Query<Post>()
-	                         where p.PublishAt > requestedDate && p.SkipAutoReschedule == false
+			var postsQuery = from p in session.Query<Post>()
+	                         where p.PublishAt > requestedDate && p.SkipAutoReschedule == false && p.PublishAt > now
 	                         orderby p.PublishAt
 	                         select p;
 
@@ -53,14 +62,14 @@ namespace RaccoonBlog.Web.Services
 	    	return requestedDate.Value;
 		}
 
-	    private DateTimeOffset GetLastScheduledPostDate()
+	    private DateTimeOffset? GetLastScheduledPostDate()
 	    {
 	    	var p = session.Query<Post>()
 	    		.OrderByDescending(post => post.PublishAt)
 	    		.Select(post => new {post.PublishAt})
 	    		.FirstOrDefault();
 
-	        return p != null ? p.PublishAt : DateTimeOffset.Now;
+	    	return p != null ? p.PublishAt : (DateTimeOffset?)null;
 	    }
 	}
 }

@@ -27,7 +27,7 @@ namespace RaccoonBlog.Web.Services
         public MetaWeblog()
         {
             session = DocumentStoreHolder.DocumentStore.OpenSession();
-            postScheduleringStrategy = new PostSchedulingStrategy(session);
+            postScheduleringStrategy = new PostSchedulingStrategy(session, DateTimeOffset.Now);
         }
 
         private UrlHelper Url
