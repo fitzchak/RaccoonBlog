@@ -9,6 +9,7 @@ using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
 using Raven.Client.Linq;
 using RaccoonBlog.Web.Helpers;
+using RaccoonBlog.Web.Infrastructure.Common;
 
 namespace RaccoonBlog.Web.Controllers
 {
@@ -40,7 +41,7 @@ namespace RaccoonBlog.Web.Controllers
 			RavenQueryStatistics stats;
 			var posts = Session.Query<Post>()
 				.Statistics(out stats)
-				.Where(x => x.PublishAt < DateTimeOffset.Now && x.Tags.Any(tag => tag == name))
+				.Where(x => x.PublishAt < DateTimeOffset.Now.AsMinutes() && x.Tags.Any(tag => tag == name))
 				.OrderByDescending(x => x.PublishAt)
 				.Take(20)
 				.ToList();
@@ -53,7 +54,7 @@ namespace RaccoonBlog.Web.Controllers
 			RavenQueryStatistics stats;
 			var posts = Session.Query<Post>()
 				.Statistics(out stats)
-				.Where(x => x.PublishAt < DateTimeOffset.Now)
+				.Where(x => x.PublishAt < DateTimeOffset.Now.AsMinutes())
 				.OrderByDescending(x => x.PublishAt)
 				.Take(20)
 				.ToList();

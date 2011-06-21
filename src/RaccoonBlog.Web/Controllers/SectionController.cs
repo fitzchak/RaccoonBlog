@@ -7,6 +7,7 @@ using RaccoonBlog.Web.Infrastructure.Indexes;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
 using Raven.Client.Linq;
+using RaccoonBlog.Web.Infrastructure.Common;
 
 namespace RaccoonBlog.Web.Controllers
 {
@@ -16,7 +17,7 @@ namespace RaccoonBlog.Web.Controllers
 		public ActionResult FuturePosts()
 		{
 			var futurePosts = Session.Query<Post>()
-				.Where(x => x.IsDeleted == false && x.PublishAt > DateTimeOffset.Now)
+				.Where(x => x.IsDeleted == false && x.PublishAt > DateTimeOffset.Now.AsMinutes())
 				.Select(x => new FuturePostViewModel {Title = x.Title, PublishAt = x.PublishAt})
 				.OrderBy(x => x.PublishAt)
 				.Take(15)
