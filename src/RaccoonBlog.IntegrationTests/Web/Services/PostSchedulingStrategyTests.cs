@@ -99,5 +99,25 @@ namespace RaccoonBlog.IntegrationTests.Web.Services
 
 			Assert.Empty(Session.Query<Post>().Where(post => post.PublishAt > Now));
 		}
+
+		[Fact]
+		public void UpdatePublishDateOfExistintPost_WillUpdateTheDateAndTimeCorrectly()
+		{
+			Session.Store(new Post { PublishAt = Now.AddDays(-3) });
+			Session.Store(new Post { PublishAt = Now.AddHours(-1) });
+			Session.Store(new Post { PublishAt = Now.AddHours(12) });
+			Session.SaveChanges();
+
+			var lastPost = Session.Query<Post>()
+				.OrderByDescending(post => post.PublishAt)
+				.First();
+			Assert.Equal(Now.AddHours(12), lastPost.PublishAt);
+
+			var rescheduler = new PostSchedulingStrategy(Session, Now);
+			lastPost.PublishAt = rescheduler.Schedule(Now.AddHours(6));
+			Session.SaveChanges();
+
+			Assert.Equal(Now.AddHours(6), lastPost.PublishAt);
+		}
 	}
 }
