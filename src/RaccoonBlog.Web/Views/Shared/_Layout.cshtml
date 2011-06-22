@@ -21,6 +21,9 @@
 	<link id="Rsd" rel="EditURI" type="application/rsd+xml" title="RSD" href="@Url.Action("Rsd", "Syndication")">
     <link id="AtomLink" title="RSS" type="application/rss+xml" rel="alternate" href="@Url.Action("Rss", "Syndication")">
   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+    @Raven.Client.MvcIntegration.RavenProfiler.CurrentRequestSessions()
+
 </head>
 <body>
     <div class="container page">
