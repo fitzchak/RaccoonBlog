@@ -35,7 +35,7 @@ namespace RaccoonBlog.Web.Infrastructure.Raven
 
 			RavenProfiler.InitializeFor(store, 
 				//Fields to filter out of the output
-				"Email", "HashedPassword", "AkismetKey", "GoogleAnalyticsKey", "ShowPostEvenIfPrivate", "PasswordSalt");
+				"Email", "HashedPassword", "AkismetKey", "GoogleAnalyticsKey", "ShowPostEvenIfPrivate", "PasswordSalt", "UserHostAddress");
 
             return store;
         }
