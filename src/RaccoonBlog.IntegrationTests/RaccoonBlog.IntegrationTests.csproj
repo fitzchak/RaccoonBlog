@@ -38,10 +38,10 @@
       <HintPath>..\packages\MvcContrib.Mvc3.TestHelper-ci.3.0.68.0\lib\MvcContrib.TestHelper.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Client.Embedded">
-      <HintPath>..\..\lib\RavenDB\EmbeddedClient\Raven.Client.Embedded.dll</HintPath>
+      <HintPath>..\..\lib\RavenDB\Client\Raven.Client.Embedded.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Client.Lightweight, Version=1.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
-      <HintPath>..\..\lib\RavenDB\EmbeddedClient\Raven.Client.Lightweight.dll</HintPath>
+      <HintPath>..\..\lib\RavenDB\Client\Raven.Client.Lightweight.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Storage.Managed">
       <HintPath>..\..\lib\RavenDB\EmbeddedClient\Raven.Storage.Managed.dll</HintPath>
