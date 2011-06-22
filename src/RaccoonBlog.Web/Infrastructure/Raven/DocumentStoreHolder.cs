@@ -31,6 +31,8 @@ namespace RaccoonBlog.Web.Infrastructure.Raven
 
             IndexCreation.CreateIndexes(typeof(Tags_Count).Assembly, store);
 
+			RavenProfilingHandler.SourcePath = @"C:\Work\ravendb\Raven.Client.MvcIntegration";
+
 			RavenProfiler.InitializeFor(store, 
 				//Fields to filter out of the output
 				"Email", "HashedPassword", "AkismetKey", "GoogleAnalyticsKey", "ShowPostEvenIfPrivate", "PasswordSalt");

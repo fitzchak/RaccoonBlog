@@ -3968,12 +3968,6 @@
             <summary>
             Initializes a new instance of the <see cref="T:Raven.Client.Connection.ServerClient"/> class.
             </summary>
-            <param name="url">The URL.</param>
-            <param name="convention">The convention.</param>
-            <param name="credentials">The credentials.</param>
-            <param name="replicationInformer">The replication informer.</param>
-            <param name="jsonRequestFactory"></param>
-            <param name="currentSessionId"></param>
         </member>
         <member name="M:Raven.Client.Connection.ServerClient.Get(System.String)">
             <summary>
@@ -7226,6 +7220,11 @@
             Information about a particular session
             </summary>
         </member>
+        <member name="M:Raven.Client.Connection.Profiling.ProfilingInformation.CreateProfilingInformation(System.Nullable{System.Guid})">
+            <summary>
+             Create a new instance of profiling information and provide additional context information
+            </summary>
+        </member>
         <member name="F:Raven.Client.Connection.Profiling.ProfilingInformation.Requests">
             <summary>
              The requests made by this session
@@ -7244,6 +7243,16 @@
         <member name="M:Raven.Client.Connection.Profiling.ProfilingInformation.#ctor(System.Nullable{System.Guid})">
             <summary>
              Create a new instance of this class
+            </summary>
+        </member>
+        <member name="E:Raven.Client.Connection.Profiling.ProfilingInformation.OnContextCreated">
+            <summary>
+             A hook that allows extension to provide additional infomration about the created context
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Connection.Profiling.ProfilingInformation.Context">
+            <summary>
+            Additional information that is added by extension
             </summary>
         </member>
         <member name="T:Raven.Client.Connection.Profiling.ProfilingContext">
