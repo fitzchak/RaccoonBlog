@@ -100,13 +100,6 @@ namespace RaccoonBlog.Web.Services
             postToEdit.Tags = post.categories;
             postToEdit.Title = post.title;
 
-            {
-                // schedule all the future posts up 
-                postToEdit.PublishAt = postScheduleringStrategy.Schedule(new DateTimeOffset(post.dateCreated.Value));
-            }
-            postToEdit.Tags = post.categories;
-            postToEdit.Title = post.title;
-
             session.SaveChanges();
 
             return true;
