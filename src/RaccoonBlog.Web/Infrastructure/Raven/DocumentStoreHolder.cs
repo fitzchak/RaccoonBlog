@@ -29,14 +29,6 @@ namespace RaccoonBlog.Web.Infrastructure.Raven
 					ConnectionStringName = "RavenDB"
                 }.Initialize();
 
-            IndexCreation.CreateIndexes(typeof(Tags_Count).Assembly, store);
-
-			//RavenProfilingHandler.SourcePath = @"C:\Work\ravendb\Raven.Client.MvcIntegration";
-
-			RavenProfiler.InitializeFor(store, 
-				//Fields to filter out of the output
-				"Email", "HashedPassword", "AkismetKey", "GoogleAnalyticsKey", "ShowPostEvenIfPrivate", "PasswordSalt", "UserHostAddress");
-
             return store;
         }
 
@@ -90,5 +82,17 @@ namespace RaccoonBlog.Web.Infrastructure.Raven
             public Action<object, IDocumentSession> Set;
             public Func<object, IDocumentSession> Get;
         }
+
+    	public static void Initailize()
+    	{
+			IndexCreation.CreateIndexes(typeof(Tags_Count).Assembly, DocumentStore);
+
+			//RavenProfilingHandler.SourcePath = @"C:\Work\ravendb\Raven.Client.MvcIntegration";
+
+			RavenProfiler.InitializeFor(DocumentStore,
+				//Fields to filter out of the output
+				"Email", "HashedPassword", "AkismetKey", "GoogleAnalyticsKey", "ShowPostEvenIfPrivate", "PasswordSalt", "UserHostAddress");
+    		
+    	}
     }
 }

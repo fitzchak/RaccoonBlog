@@ -7,6 +7,7 @@ using RaccoonBlog.Web.Helpers.Attributes;
 using RaccoonBlog.Web.Helpers.Binders;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Controllers;
+using RaccoonBlog.Web.Infrastructure.Raven;
 
 namespace RaccoonBlog.Web
 {
@@ -23,6 +24,7 @@ namespace RaccoonBlog.Web
             AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);
+        	DocumentStoreHolder.Initailize();
 			new RouteConfigurator(RouteTable.Routes).Configure();
             ModelBinders.Binders.Add(typeof(CommentCommandOptions), new RemoveSpacesEnumBinder());
 
