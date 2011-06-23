@@ -82,15 +82,5 @@ namespace RaccoonBlog.Web.Helpers
             }
             return MvcHtmlString.Create(href);
         }
-
-		public static string Abs(this UrlHelper urlHelper, string relativeOrAbsoluteUrl)
-		{
-			var uri = new Uri(relativeOrAbsoluteUrl, UriKind.RelativeOrAbsolute);
-			if (uri.IsAbsoluteUri)
-			{
-				return relativeOrAbsoluteUrl;
-			}
-			return ConfigurationManager.AppSettings["MainUrl"] + relativeOrAbsoluteUrl;
-		}
     }
 }

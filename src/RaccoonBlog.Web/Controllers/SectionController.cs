@@ -17,7 +17,7 @@ namespace RaccoonBlog.Web.Controllers
 		public ActionResult FuturePosts()
 		{
 			var futurePosts = Session.Query<Post>()
-				.Where(x => x.IsDeleted == false && x.PublishAt > DateTimeOffset.Now.AsMinutes())
+				.Where(x => x.PublishAt > DateTimeOffset.Now.AsMinutes() && x.IsDeleted == false)
 				.Select(x => new FuturePostViewModel {Title = x.Title, PublishAt = x.PublishAt})
 				.OrderBy(x => x.PublishAt)
 				.Take(15)
