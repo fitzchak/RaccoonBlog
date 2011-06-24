@@ -425,6 +425,10 @@ article header h1 a
     list-style-type: disc;
     padding-left: 40px;
 }
+.section ol 
+{
+    padding-left: 40px;
+}
 .section li
 {
     margin: 1px 0;
