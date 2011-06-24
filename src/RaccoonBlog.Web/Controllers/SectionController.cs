@@ -16,19 +16,29 @@ namespace RaccoonBlog.Web.Controllers
 		[ChildActionOnly]
 		public ActionResult FuturePosts()
 		{
+			RavenQueryStatistics stats;
 			var futurePosts = Session.Query<Post>()
+				.Statistics(out stats)
 				.Where(x => x.PublishAt > DateTimeOffset.Now.AsMinutes() && x.IsDeleted == false)
 				.Select(x => new Post {Title = x.Title, PublishAt = x.PublishAt})
 				.OrderBy(x => x.PublishAt)
-				.Take(15)
+				.Take(5)
 				.ToList();
 
-			return View(futurePosts.MapTo<FuturePostViewModel>());
+			return View(
+				new FuturePostsViewModel
+				{
+					TotalCount = stats.TotalResults,
+					Posts = futurePosts.MapTo<FuturePostViewModel>()
+				});
 		}
 
 		[ChildActionOnly]
 		public ActionResult List()
 		{
+			if (true.Equals(HttpContext.Items["CurrentlyProcessingException"]))
+				return View(new SectionDetails[0]);
+
 			var sections = Session.Query<Section>()
 				.Where(s => s.IsActive)
 				.OrderBy(x => x.Position)

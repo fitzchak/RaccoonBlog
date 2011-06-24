@@ -1,7 +1,14 @@
 using System;
+using System.Collections.Generic;
 
 namespace RaccoonBlog.Web.ViewModels
 {
+	public class FuturePostsViewModel
+	{
+		public int TotalCount { get; set; }
+		public List<FuturePostViewModel> Posts { get; set; }
+	}
+
 	public class FuturePostViewModel
 	{
 		public string Title { get; set; }

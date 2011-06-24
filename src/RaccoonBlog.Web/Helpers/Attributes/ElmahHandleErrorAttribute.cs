@@ -12,6 +12,9 @@ namespace RaccoonBlog.Web.Helpers.Attributes
     {
         public void OnException(ExceptionContext context)
         {
+			if (HttpContext.Current != null)
+				HttpContext.Current.Items["CurrentlyProcessingException"] = true;
+
 			ErrorLog.GetDefault(HttpContext.Current).Log(new Error(context.Exception, HttpContext.Current));
 
 			BlogConfig blogConfig;
