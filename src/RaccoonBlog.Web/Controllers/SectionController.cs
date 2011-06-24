@@ -18,17 +18,12 @@ namespace RaccoonBlog.Web.Controllers
 		{
 			var futurePosts = Session.Query<Post>()
 				.Where(x => x.PublishAt > DateTimeOffset.Now.AsMinutes() && x.IsDeleted == false)
-				.Select(x => new FuturePostViewModel {Title = x.Title, PublishAt = x.PublishAt})
+				.Select(x => new Post {Title = x.Title, PublishAt = x.PublishAt})
 				.OrderBy(x => x.PublishAt)
 				.Take(15)
 				.ToList();
 
-			foreach (var futurePostViewModel in futurePosts)
-			{
-				futurePostViewModel.Title = HttpUtility.HtmlDecode(futurePostViewModel.Title);
-			}
-
-			return View(futurePosts);
+			return View(futurePosts.MapTo<FuturePostViewModel>());
 		}
 
 		[ChildActionOnly]
