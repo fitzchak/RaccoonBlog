@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Linq;
+using System.Web.Mvc;
 using RaccoonBlog.Web.Infrastructure.Indexes;
 using Raven.Client;
 using Raven.Client.Document;
@@ -51,14 +53,17 @@ namespace RaccoonBlog.Web.Infrastructure.Raven
         }
 
 
-        public static void TryAddSession(object instance)
+		public static IDocumentSession TryAddSession(object instance)
         {
             var accessors = AccessorsCache.GetOrAdd(instance.GetType(), CreateAccessorsForType);
 
-            if (accessors == null)
-                return;
+			if (accessors == null)
+				return null;
 
-            accessors.Set(instance, DocumentStore.OpenSession());
+			var documentSession = DocumentStore.OpenSession();
+			accessors.Set(instance, documentSession);
+
+			return documentSession;
         }
 
         public static void TryComplete(object instance, bool succcessfully)
@@ -93,6 +98,16 @@ namespace RaccoonBlog.Web.Infrastructure.Raven
 				//Fields to filter out of the output
 				"Email", "HashedPassword", "AkismetKey", "GoogleAnalyticsKey", "ShowPostEvenIfPrivate", "PasswordSalt", "UserHostAddress");
     		
+    	}
+
+		public static void TrySetSession(object instance, IDocumentSession documentSession)
+    	{
+			var accessors = AccessorsCache.GetOrAdd(instance.GetType(), CreateAccessorsForType);
+
+			if (accessors == null)
+				return;
+
+			accessors.Set(instance, documentSession);
     	}
     }
 }
