@@ -105,7 +105,7 @@
                         @Html.ValidationSummary(true)
                     </div>
 				}
-				using (@Html.BeginForm("Comment", "PostDetails", new { Model.Post.Id }))
+				using (@Html.BeginForm("Comment", "PostDetails", new { Model.Post.Id, Key = Request.QueryString["Key"] }))
 				{
                     @Html.EditorFor(x => x.Input.Name)
                     @Html.EditorFor(x => x.Input.Email)
