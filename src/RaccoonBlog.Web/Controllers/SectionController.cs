@@ -81,9 +81,6 @@ namespace RaccoonBlog.Web.Controllers
 			var statistics = Session.Query<PostsStatistics, Posts_Statistics>()
 				.FirstOrDefault();
 
-			if (statistics == null)
-				return new EmptyResult();
-
 			return View(statistics.MapTo<PostsStatisticsViewModel>());
 		}
 	}
