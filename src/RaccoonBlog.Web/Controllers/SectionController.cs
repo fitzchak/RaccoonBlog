@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Indexes;
@@ -57,12 +56,10 @@ namespace RaccoonBlog.Web.Controllers
 
 			var blogConfig = Session.Load<BlogConfig>("Blog/Config");
 
-			var tagCounts = Session.Query<TagCount, Tags_Count>()
+			var tags = Session.Query<TagCount, Tags_Count>()
 				.Where(x => x.Count > blogConfig.MinNumberOfPostForSignificantTag && x.LastSeenAt > mostRecentTag)
 				.OrderBy(x => x.Name)
-				.As<TempTagCount>();
-			var tags = tagCounts
-				.ToList();
+                .ToList();
 
 			return View(tags.MapTo<TagsListViewModel>());
 		}
