@@ -182,6 +182,7 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
         public void ElmahControllerRoutes()
         {
             "~/admin/elmah".ShouldMapTo<ElmahController>(c => c.Index(null));
+            "~/admin/elmah/detail".ShouldMapTo<ElmahController>(c => c.Index("detail"));
             "~/admin/elmah/stylesheet".ShouldMapTo<ElmahController>(c => c.Index("stylesheet"));
         }
 
