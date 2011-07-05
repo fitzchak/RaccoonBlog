@@ -59,7 +59,7 @@ namespace RaccoonBlog.Web.Controllers
 			var tags = Session.Query<TagCount, Tags_Count>()
 				.Where(x => x.Count > blogConfig.MinNumberOfPostForSignificantTag && x.LastSeenAt > mostRecentTag)
 				.OrderBy(x => x.Name)
-                .ToList();
+				.ToList();
 
 			return View(tags.MapTo<TagsListViewModel>());
 		}
@@ -73,6 +73,18 @@ namespace RaccoonBlog.Web.Controllers
 				.ToList();
 
 			return View(dates);
+		}
+
+		[ChildActionOnly]
+		public ActionResult PostsStatistics()
+		{
+			var statistics = Session.Query<PostsStatistics, Posts_Statistics>()
+				.FirstOrDefault();
+
+			if (statistics == null)
+				return new EmptyResult();
+
+			return View(statistics.MapTo<PostsStatisticsViewModel>());
 		}
 	}
 }
