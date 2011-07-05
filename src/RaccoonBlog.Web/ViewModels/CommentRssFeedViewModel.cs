@@ -6,14 +6,12 @@ namespace RaccoonBlog.Web.ViewModels
 	{
 		public string Body { get; set; }
 		public string Author { get; set; }
-		public DateTimeOffset CreatedAt { get; set; }
+		public string CreatedAt { get; set; }
 
-		public PostSummary Post { get; set; }
+		public int PostId { get; set; }
+		public string PostTitle { get; set; }
+		public string PostSlug { get; set; }
 
-		public class PostSummary
-		{
-			public int Id { get; set; }
-			public string Title { get; set; }
-		}
+		public string Title { get { return string.Format("New comment on post: {0}, by {1}", PostTitle, Author); }}
 	}
 }

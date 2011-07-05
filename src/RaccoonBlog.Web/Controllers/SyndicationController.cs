@@ -18,39 +18,10 @@ namespace RaccoonBlog.Web.Controllers
 	{
 		public ActionResult Rsd()
 		{
-			var ns = XNamespace.Get("http://archipelago.phrasewise.com/rsd");
-
-			return Xml(new XDocument(
-			           	new XElement(ns + "service",
-			           	             new XElement(ns + "engineName", "Raccoon Blog"),
-			           	             new XElement(ns + "engineLink", "http://hibernatingrhinos.com"),
-			           	             new XElement(ns + "homePageLink", Url.RouteUrl("Default")),
-			           	             new XElement(ns + "apis",
-			           	                          new XElement(ns + "api",
-			           	                                       new XAttribute("name", "MetaWeblog"),
-			           	                                       new XAttribute("preferred", "true"),
-			           	                                       new XAttribute("blogID", "0"),
-			           	                                       new XAttribute("apiLink",Url.Content("~/services/metaweblogapi.ashx"))
-			           	                          	)
-			           	             	)
-			           		)
-			           	), typeof (SyndicationController).FullName);
+			return XmlView();
 		}
 
-		public ActionResult Tag(string name)
-		{
-			RavenQueryStatistics stats;
-			var posts = Session.Query<Post>()
-				.Statistics(out stats)
-				.Where(x => x.PublishAt < DateTimeOffset.Now.AsMinutes() && x.Tags.Any(tag => tag == name))
-				.OrderByDescending(x => x.PublishAt)
-				.Take(20)
-				.ToList();
-
-			return Rss(stats, posts);
-		}
-
-		public ActionResult Rss(Guid key)
+		public ActionResult Rss(string tag, Guid key)
 		{
 			RavenQueryStatistics stats;
 			var postsQuery = Session.Query<Post>()
@@ -65,11 +36,19 @@ namespace RaccoonBlog.Web.Controllers
 				postsQuery = postsQuery.Where(x => x.PublishAt < DateTimeOffset.Now.AsMinutes());
 			}
 
+			if (string.IsNullOrWhiteSpace(tag) == false)
+				postsQuery = postsQuery.Where(x => x.Tags.Any(tagName => tagName == tag));
+
 			var posts = postsQuery.OrderByDescending(x => x.PublishAt)
 				.Take(20)
 				.ToList();
 
-			return Rss(stats, posts);
+			string requestETagHeader = Request.Headers["If-None-Match"] ?? string.Empty;
+			var responseETagHeader = stats.Timestamp.ToString("o");
+			if (requestETagHeader == responseETagHeader)
+				return HttpNotModified();
+
+			return XmlView(posts.MapTo<PostRssFeedViewModel>(), responseETagHeader);
 		}
 
 		public ActionResult CommentsRss(Guid key)
@@ -94,7 +73,7 @@ namespace RaccoonBlog.Web.Controllers
 					if (comment != null)
 					{
 						var model = comment.MapTo<CommentRssFeedViewModel>();
-						model.Post = post.MapTo<CommentRssFeedViewModel.PostSummary>();
+						post.MapPropertiesToInstance(model);
 						results.Add(model);
 					}
 				}
@@ -103,46 +82,10 @@ namespace RaccoonBlog.Web.Controllers
 			return View(results);
 		}
 
-		private ActionResult Rss(RavenQueryStatistics stats, IEnumerable<Post> posts)
+		private string GetPostLink(Post post)
 		{
-			string requestETagHeader = Request.Headers["If-None-Match"] ?? string.Empty;
-			var responseETagHeader = stats.Timestamp.ToString("o");
-			if (requestETagHeader == responseETagHeader)
-				return HttpNotModified();
-
-			var rss = new XDocument(
-				new XElement("rss",
-				             new XAttribute("version", "2.0"),
-				             new XElement("channel",
-				                          new XElement("title", GetBlogTitle()),
-										  new XElement("link", Url.RelativeToAbsolute(Url.RouteUrl("Default"))),
-				                          new XElement("description", GetBlogTitle()),
-				                          new XElement("copyright", String.Format("{0} (c) {1}", GetBlogCopyright(), DateTime.Now.Year)),
-				                          new XElement("ttl", "60"),
-				                          from post in posts
-				                          select new XElement("item",
-				                                              new XElement("title", post.Title),
-				                                              new XElement("description", post.Body),
-				                                              new XElement("link", GetPostLink(post)),
-																new XElement("guid", GetPostLink(post)),
-				                                              new XElement("pubDate", post.PublishAt.ToString("R"))
-				                          	)
-				             	)
-					)
-				);
-
-			return Xml(rss, responseETagHeader);
-		}
-
-	    private string GetPostLink(Post post)
-	    {
-            var postReference = post.MapTo<PostReference>();
+			var postReference = post.MapTo<PostReference>();
 			return Url.RelativeToAbsolute(Url.Action("Details", "PostDetails", new { Id = postReference.DomainId, postReference.Slug }));
-	    }
-
-	    private string GetBlogCopyright()
-		{
-			return BlogConfig.Copyright;
 		}
 
 		private string GetBlogTitle()
@@ -150,9 +93,9 @@ namespace RaccoonBlog.Web.Controllers
 			return BlogConfig.Title;
 		}
 
-        public ActionResult LegacyRss()
-        {
-            return RedirectToActionPermanent("Rss", "Syndication");
-        }
+		public ActionResult LegacyRss()
+		{
+			return RedirectToActionPermanent("Rss", "Syndication");
+		}
 	}
 }

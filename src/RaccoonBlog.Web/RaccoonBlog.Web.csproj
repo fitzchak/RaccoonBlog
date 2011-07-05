@@ -256,6 +256,7 @@
     <Compile Include="ViewModels\NewCommentEmailViewModel.cs" />
     <Compile Include="ViewModels\PostInput.cs" />
     <Compile Include="ViewModels\PostReference.cs" />
+    <Compile Include="ViewModels\PostRssFeedViewModel.cs" />
     <Compile Include="ViewModels\PostsStatisticsViewModel.cs" />
     <Compile Include="ViewModels\PostSummaryJson.cs" />
     <Compile Include="ViewModels\PostViewModel.cs" />
@@ -382,6 +383,24 @@
   <ItemGroup>
     <Content Include="Views\Section\PostsStatistics.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Syndication\CommentsRss.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Syndication\_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Syndication\Rss.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Syndication\Rsd.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Syndication\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MailTemplates\_ViewStart.cshtml" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -399,7 +418,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>11921</DevelopmentServerPort>
+          <DevelopmentServerPort>23167</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost/RaccoonBlog.Web</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

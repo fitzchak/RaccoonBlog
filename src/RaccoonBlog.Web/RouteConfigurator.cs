@@ -238,15 +238,9 @@ namespace RaccoonBlog.Web
     	private void ConfigureSyndication()
     	{
 			routes.MapRouteLowerCase("RssFeed",
-			  "rss",
-			  new { controller = "Syndication", action = "Rss" }
+			  "rss/{tag}",
+			  new { controller = "Syndication", action = "Rss", tag = UrlParameter.Optional }
 			  );
-
-			routes.MapRouteLowerCase("RssFeedByTag",
-			  "rss/{name}",
-			  new { controller = "Syndication", action = "Tag" }
-			  );
-
 
 			routes.MapRouteLowerCase("RsdFeed",
 			  "rsd",
