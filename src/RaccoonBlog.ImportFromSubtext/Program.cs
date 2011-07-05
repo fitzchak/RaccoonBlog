@@ -54,6 +54,7 @@ namespace RaccoonBlog.ImportFromSubtext
                 var sections = new[]
                     {
                         new Section {Title = "Future Posts", ControllerName = "Section", ActionName = "FuturePosts"},
+                        new Section {Title = "Statistics", ControllerName = "Section", ActionName = "PostsStatistics"},
                         new Section {Title = "Tags", ControllerName = "Section", ActionName = "TagsList"},
                         new Section {Title = "Archive", ControllerName = "Section", ActionName = "ArchivesList"},
                     };
