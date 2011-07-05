@@ -1,5 +1,5 @@
 @model NewCommentEmailViewModel
-<h1>A new comment on @Model.BlogName blog</h1>
+<h1>A new @(Model.IsSpam ? "spam" : null) comment on @Model.BlogName blog</h1>
 <strong>Post:</strong> <a href="@Url.RelativeToAbsolute(Url.Action("Details", "PostDetails", new { id = Model.PostId, key = Model.Key }))">@Model.PostTitle</a>
 <ul>
 	<li><strong>Author:</strong> @Model.Author</li>
