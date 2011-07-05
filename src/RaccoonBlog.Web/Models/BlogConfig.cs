@@ -12,6 +12,7 @@ namespace RaccoonBlog.Web.Models
 		public string AkismetKey { get; set; }
 		public string GoogleAnalyticsKey { get; set; }
 		public Guid RssFuturePostsKey { get; set; }
+		public int RssFutureDaysAllowed { get; set; }
 
 		public string MetaDescription { get; set; }
 		public string MetaKeywords { get; set; }
@@ -23,7 +24,8 @@ namespace RaccoonBlog.Web.Models
 		{
 			return new BlogConfig
 			       	{
-			       		RssFuturePostsKey = Guid.NewGuid()
+			       		RssFuturePostsKey = Guid.NewGuid(),
+						RssFutureDaysAllowed = 7
 			       	};
 		}
 	}

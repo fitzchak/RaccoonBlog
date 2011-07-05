@@ -30,7 +30,10 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
         [Fact]
         public void SyndicationControllerRoutes()
         {
-            "~/rss".ShouldMapTo<SyndicationController>(c => c.Rss());
+            var rss = "~/rss".WithMethod(HttpVerbs.Get);
+			rss.Values["key"] = "1cc68283-ccd1-44ab-885d-473f3962962c";
+			rss.ShouldMapTo<SyndicationController>(c => c.Rss(new Guid("1cc68283-ccd1-44ab-885d-473f3962962c")));
+
             "~/rss/tag-name".ShouldMapTo<SyndicationController>(c => c.Tag("tag-name"));
             "~/rsd".ShouldMapTo<SyndicationController>(c => c.Rsd());
 

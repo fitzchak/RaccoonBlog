@@ -49,13 +49,22 @@ namespace RaccoonBlog.Web.Controllers
 			return Rss(stats, posts);
 		}
 
-		public ActionResult Rss()
+		public ActionResult Rss(Guid key)
 		{
 			RavenQueryStatistics stats;
-			var posts = Session.Query<Post>()
-				.Statistics(out stats)
-				.Where(x => x.PublishAt < DateTimeOffset.Now.AsMinutes())
-				.OrderByDescending(x => x.PublishAt)
+			var postsQuery = Session.Query<Post>()
+				.Statistics(out stats);
+
+			if (key != Guid.Empty && key == BlogConfig.RssFuturePostsKey)
+			{
+				postsQuery = postsQuery.Where(x => x.PublishAt < DateTimeOffset.Now.AddDays(BlogConfig.RssFutureDaysAllowed).AsMinutes());
+			}
+			else
+			{
+				postsQuery = postsQuery.Where(x => x.PublishAt < DateTimeOffset.Now.AsMinutes());
+			}
+
+			var posts = postsQuery.OrderByDescending(x => x.PublishAt)
 				.Take(20)
 				.ToList();
 
