@@ -1,15 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Web.Mvc;
-using System.Xml.Linq;
 using System.Linq;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Indexes;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
 using Raven.Client.Linq;
-using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Infrastructure.Common;
 
 namespace RaccoonBlog.Web.Controllers
@@ -87,17 +84,6 @@ namespace RaccoonBlog.Web.Controllers
 				return HttpNotModified();
 
 			return XmlView(results, responseETagHeader);
-		}
-
-		private string GetPostLink(Post post)
-		{
-			var postReference = post.MapTo<PostReference>();
-			return Url.RelativeToAbsolute(Url.Action("Details", "PostDetails", new { Id = postReference.DomainId, postReference.Slug }));
-		}
-
-		private string GetBlogTitle()
-		{
-			return BlogConfig.Title;
 		}
 
 		public ActionResult LegacyRss()
