@@ -53,7 +53,9 @@ namespace RaccoonBlog.Web.Controllers
 
 		public ActionResult CommentsRss(Guid key)
 		{
+			RavenQueryStatistics stats;
 			var commentsIdentifiersQuery = Session.Query<PostCommentsIdentifier, PostComments_CreationDate>()
+				.Statistics(out stats)
 				.Include(comment => comment.PostCollectionId)
 				.Include(comment => comment.PostId);
 
@@ -79,7 +81,12 @@ namespace RaccoonBlog.Web.Controllers
 				}
 			}
 
-			return View(results);
+			string requestETagHeader = Request.Headers["If-None-Match"] ?? string.Empty;
+			var responseETagHeader = stats.Timestamp.ToString("o");
+			if (requestETagHeader == responseETagHeader)
+				return HttpNotModified();
+
+			return XmlView(results, responseETagHeader);
 		}
 
 		private string GetPostLink(Post post)
