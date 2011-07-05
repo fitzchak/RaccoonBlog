@@ -67,8 +67,7 @@ namespace RaccoonBlog.Web.Controllers
 					blogConfig = Session.Load<BlogConfig>("Blog/Config");
 					if (blogConfig == null)
 					{
-						blogConfig = new BlogConfig();
-						Session.Store(blogConfig);
+						Session.Store(blogConfig = BlogConfig.New());
 					}
 				}
 				return blogConfig;
