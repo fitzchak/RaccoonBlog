@@ -101,12 +101,12 @@ namespace RaccoonBlog.Web.Controllers
 
 	    private string GetBlogCopyright()
 		{
-			return Session.Load<BlogConfig>("Blog/Config").Copyright;
+			return BlogConfig.Copyright;
 		}
 
 		private string GetBlogTitle()
 		{
-			return Session.Load<BlogConfig>("Blog/Config").Title;
+			return BlogConfig.Title;
 		}
 
         public ActionResult LegacyRss()
