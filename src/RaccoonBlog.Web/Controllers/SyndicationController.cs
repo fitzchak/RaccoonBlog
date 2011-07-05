@@ -37,7 +37,7 @@ namespace RaccoonBlog.Web.Controllers
 			}
 
 			if (string.IsNullOrWhiteSpace(tag) == false)
-				postsQuery = postsQuery.Where(x => x.Tags.Any(tagName => tagName == tag));
+				postsQuery = postsQuery.Where(x => x.TagsAsSlugs.Any(postTag => postTag == tag));
 
 			var posts = postsQuery.OrderByDescending(x => x.PublishAt)
 				.Take(20)

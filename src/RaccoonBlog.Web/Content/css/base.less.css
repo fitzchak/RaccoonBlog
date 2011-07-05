@@ -566,3 +566,8 @@ div.commentsClosedMessage
 {
     width: 100%;
 }
+
+li span.rss {
+	margin-left: 1px;
+	font-size: 11px;
+}
