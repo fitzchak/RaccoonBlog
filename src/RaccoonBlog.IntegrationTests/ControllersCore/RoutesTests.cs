@@ -11,6 +11,8 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
 {
     public class RoutesTests : IDisposable
     {
+		private static readonly Guid TestGuid = Guid.NewGuid();
+
         public RoutesTests()
         {
             new RouteConfigurator(RouteTable.Routes).Configure();
@@ -31,8 +33,8 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
         public void SyndicationControllerRoutes()
         {
             var rss = "~/rss".WithMethod(HttpVerbs.Get);
-			rss.Values["key"] = "1cc68283-ccd1-44ab-885d-473f3962962c";
-			rss.ShouldMapTo<SyndicationController>(c => c.Rss(new Guid("1cc68283-ccd1-44ab-885d-473f3962962c")));
+			rss.Values["key"] = TestGuid;
+			rss.ShouldMapTo<SyndicationController>(c => c.Rss(TestGuid));
 
             "~/rss/tag-name".ShouldMapTo<SyndicationController>(c => c.Tag("tag-name"));
             "~/rsd".ShouldMapTo<SyndicationController>(c => c.Rsd());
@@ -63,19 +65,21 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
         [Fact]
         public void PostDetailsControllerRoutes()
         {
-            "~/1024".ShouldMapTo<PostDetailsController>(c => c.Details(1024, null));
-            "~/1024/blog-post-title".ShouldMapTo<PostDetailsController>(c => c.Details(1024, "blog-post-title"));
+			GetMethod("~/1024").ShouldMapTo<PostDetailsController>(c => c.Details(1024, null, TestGuid));
+			GetMethod("~/1024/blog-post-title").ShouldMapTo<PostDetailsController>(c => c.Details(1024, "blog-post-title", TestGuid));
 
-            "~/1024/comment"
-                .WithMethod(HttpVerbs.Get)
-                .ShouldMapTo<PostDetailsController>(c => c.Details(1024, "comment"));
-
-            "~/1024/comment"
-                .WithMethod(HttpVerbs.Post)
-                .ShouldMapTo<PostDetailsController>(c => c.Comment(null, 1024));
+			GetMethod("~/1024/comment").ShouldMapTo<PostDetailsController>(c => c.Details(1024, "comment", TestGuid));
+			GetMethod("~/1024/comment", HttpVerbs.Post).ShouldMapTo<PostDetailsController>(c => c.Comment(null, 1024, TestGuid));
         }
 
-        [Fact]
+		private RouteData GetMethod(string url, HttpVerbs method = HttpVerbs.Get)
+    	{
+			var route = url.WithMethod(method);
+			route.Values["key"] = TestGuid;
+    		return route;	
+    	}
+
+    	[Fact]
         public void LoginControllerRoutes()
         {
             "~/users/login".ShouldMapTo<LoginController>(c => c.Login((string)null));
