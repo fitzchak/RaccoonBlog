@@ -144,6 +144,7 @@
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Helpers\Binders\GuidBinder.cs" />
     <Compile Include="Helpers\StaticFileUrlHelperExtensions.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\SyndicationMapperProfile.cs" />
     <Compile Include="Infrastructure\Common\DocumentSessionExtensions.cs" />
     <Compile Include="Helpers\Routes\RouteCollectionExtension.cs" />
     <Content Include="Content\css\custom\ayende.less.css" />
@@ -190,6 +191,8 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\UserAdminMapperProfile.cs" />
     <Compile Include="Helpers\Routes\LowercaseRoute.cs" />
     <Compile Include="Infrastructure\Commands\CommandExecutor.cs" />
+    <Compile Include="Infrastructure\Indexes\PostComments_CreationDate.cs" />
+    <Compile Include="Infrastructure\Indexes\PostCommentsIdentifier.cs" />
     <Compile Include="Infrastructure\Indexes\PostCountByMonth.cs" />
     <Compile Include="Infrastructure\Indexes\Statistics_Count.cs" />
     <Compile Include="Infrastructure\Indexes\TagCount.cs" />
@@ -249,6 +252,7 @@
     <Compile Include="ViewModels\EditPostViewModel.cs" />
     <Compile Include="ViewModels\FuturePostViewModel.cs" />
     <Compile Include="ViewModels\LoginInput.cs" />
+    <Compile Include="ViewModels\CommentRssFeedViewModel.cs" />
     <Compile Include="ViewModels\NewCommentEmailViewModel.cs" />
     <Compile Include="ViewModels\PostInput.cs" />
     <Compile Include="ViewModels\PostReference.cs" />

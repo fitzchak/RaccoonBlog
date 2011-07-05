@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using System.Xml.Linq;
 using System.Linq;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
+using RaccoonBlog.Web.Infrastructure.Indexes;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
 using Raven.Client.Linq;
@@ -69,6 +70,37 @@ namespace RaccoonBlog.Web.Controllers
 				.ToList();
 
 			return Rss(stats, posts);
+		}
+
+		public ActionResult CommentsRss(Guid key)
+		{
+			var commentsIdentifiersQuery = Session.Query<PostCommentsIdentifier, PostComments_CreationDate>()
+				.Include(comment => comment.PostCollectionId)
+				.Include(comment => comment.PostId);
+
+			var commentsIdentifiers = commentsIdentifiersQuery.OrderByDescending(x => x.CreatedAt)
+				.Take(30)
+				.AsProjection<PostCommentsIdentifier>()
+				.ToList();
+			
+			var results = new List<CommentRssFeedViewModel>();
+			foreach (var commentIdentifier in commentsIdentifiers)
+			{
+				var comments = Session.Load<PostComments>(commentIdentifier.PostId);
+				var post = Session.Load<Post>(commentIdentifier.PostId);
+				if (comments != null && post != null)
+				{
+					var comment = comments.Comments.FirstOrDefault(x => x.Id == commentIdentifier.CommentId);
+					if (comment != null)
+					{
+						var model = comment.MapTo<CommentRssFeedViewModel>();
+						model.Post = post.MapTo<CommentRssFeedViewModel.PostSummary>();
+						results.Add(model);
+					}
+				}
+			}
+
+			return View(results);
 		}
 
 		private ActionResult Rss(RavenQueryStatistics stats, IEnumerable<Post> posts)
