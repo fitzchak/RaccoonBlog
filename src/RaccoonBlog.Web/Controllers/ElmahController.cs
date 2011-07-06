@@ -9,10 +9,5 @@ namespace RaccoonBlog.Web.Controllers
         {
             return new ElmahResult(type);
         }
-
-        public ActionResult Detail(string type)
-        {
-            return new ElmahResult(type);
-        }
     }
 }

@@ -6,7 +6,7 @@ namespace RaccoonBlog.Web.Helpers
 	{
 		private const string CssDir = "css";
 		private const string ScriptDir = "js";
-		private const int RevisionNumber = 1;
+		private const int RevisionNumber = 2;
 
 		public static string Css(this UrlHelper urlHelper, string fileName)
 		{

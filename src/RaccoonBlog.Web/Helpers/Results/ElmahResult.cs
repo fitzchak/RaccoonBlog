@@ -19,7 +19,8 @@ namespace RaccoonBlog.Web.Helpers.Results
 			if (!string.IsNullOrEmpty(_resouceType))
 			{
 				var pathInfo = "." + _resouceType;
-				HttpContext.Current.RewritePath(url.AbsoluteAction("Index", "Elmah"), pathInfo, HttpContext.Current.Request.QueryString.ToString());
+			    var action = url.Action("Index", "Elmah", new {type = (string) null});
+				HttpContext.Current.RewritePath(action, pathInfo, HttpContext.Current.Request.QueryString.ToString());
 			}
 
 			var handler = factory.GetHandler(HttpContext.Current, null, null, null);
