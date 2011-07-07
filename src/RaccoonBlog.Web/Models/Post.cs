@@ -61,7 +61,10 @@ namespace RaccoonBlog.Web.Models
 
         public bool IsPublicPost(string key)
         {
-            if (PublishAt <= DateTimeOffset.Now && IsDeleted == false)
+			if (IsDeleted)
+				return false;
+
+            if (PublishAt <= DateTimeOffset.Now)
                 return true;
 
             Guid maybeKey;
