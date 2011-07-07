@@ -99,6 +99,17 @@
 			}
 			else
 			{
+                if (Model.IsTrustedCommenter == false)
+				{
+					<div class="socialauth">
+						<h3>Social login</h3>
+						<div class="links">
+							<a class="google" title="log in with Google"><span>Google</span></a>
+							<a class="facebook" title="log in with Facebook"><span>Facebook</span></a>
+						</div>
+						<div class="clr"></div>
+					</div>
+				}
 				if (ViewData.ModelState.IsValid == false)
 				{ 
 					<div class="form-error">
@@ -125,13 +136,6 @@
 					@Html.EditorFor(x => x.Input.CommenterKey)
 					<input type="submit" value="Post Comment" />
 					<div class="clr"></div>
-				}
-				if (Model.IsTrustedCommenter == false)
-				{
-					<div class="socialauth">
-						<a class="google" title="log in with Google"><span>Google</span></a>
-						<a class="facebook" title="log in with Facebook"><span>Facebook</span></a>
-					</div>
 				}
 			}
 		</article>
