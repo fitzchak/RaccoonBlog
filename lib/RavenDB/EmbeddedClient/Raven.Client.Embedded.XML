@@ -328,6 +328,11 @@
             Disable all caching within the given scope
             </summary>
         </member>
+        <member name="M:Raven.Client.Embedded.EmbeddedDatabaseCommands.MultiGet(Raven.Abstractions.Data.GetRequest[])">
+            <summary>
+            Perform a single POST requst containing multiple nested GET requests
+            </summary>
+        </member>
         <member name="M:Raven.Client.Embedded.EmbeddedDatabaseCommands.SpinBackgroundWorkers">
             <summary>
             Spin the background worker for indexing
