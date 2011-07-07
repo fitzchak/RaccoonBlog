@@ -72,11 +72,15 @@ namespace RaccoonBlog.Web.Controllers
 			var summaries = posts.MapTo<PostsViewModel.PostSummary>();
 			foreach (var post in posts)
 			{
-				var author = Session.Load<User>(post.AuthorId)
-					.MapTo<PostsViewModel.PostSummary.UserDetails>();
+				if (string.IsNullOrWhiteSpace(post.AuthorId))
+					continue;
+				
+				var author = Session.Load<User>(post.AuthorId);
+				if (author == null)
+					continue;
 
 				var postSummary = summaries.First(x => x.Id == RavenIdResolver.Resolve(post.Id));
-				postSummary.Author = author;
+				postSummary.Author = author.MapTo<PostsViewModel.PostSummary.UserDetails>();
 			}
 			return View("List", new PostsViewModel
 			{

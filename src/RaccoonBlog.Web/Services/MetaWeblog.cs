@@ -65,6 +65,8 @@ namespace RaccoonBlog.Web.Services
 				AllowComments = true,
             };
             session.Store(newPost);
+        	comments.PostId = newPost.Id;
+
             session.SaveChanges();
 
             return newPost.Id;

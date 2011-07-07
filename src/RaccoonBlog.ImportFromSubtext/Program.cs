@@ -33,15 +33,15 @@ namespace RaccoonBlog.ImportFromSubtext
     	{
 			using (IDocumentSession s = store.OpenSession())
 			{
-				s.Store(new BlogConfig
-				{
-					 Id = "Blog/Config",
-					 CustomCss = "ayende",
-					 Subtitle = "Unnatural acts on source code",
-					 Title = "Ayende @ Rahien",
-					 Copyright = "Ayende Rahien",
-					 AkismetKey = "43f0db211711",
-				});
+				var config = BlogConfig.New();
+				config.Id = "Blog/Config";
+				config.CustomCss = "ayende";
+				config.Subtitle = "Unnatural acts on source code";
+				config.Title = "Ayende @ Rahien";
+				config.Copyright = "Ayende Rahien";
+				config.AkismetKey = "43f0db211711";
+
+				s.Store(config);
 				s.SaveChanges();
 			}
     	}
@@ -54,6 +54,7 @@ namespace RaccoonBlog.ImportFromSubtext
                 var sections = new[]
                     {
                         new Section {Title = "Future Posts", ControllerName = "Section", ActionName = "FuturePosts"},
+                        new Section {Title = "Statistics", ControllerName = "Section", ActionName = "PostsStatistics"},
                         new Section {Title = "Tags", ControllerName = "Section", ActionName = "TagsList"},
                         new Section {Title = "Archive", ControllerName = "Section", ActionName = "ArchivesList"},
                     };
@@ -180,6 +181,7 @@ namespace RaccoonBlog.ImportFromSubtext
                         ravenPost.CommentsId = commentsCollection.Id;
 
                         s.Store(ravenPost);
+                    	commentsCollection.PostId = ravenPost.Id;
 
                         s.SaveChanges();
                     }

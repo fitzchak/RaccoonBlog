@@ -1,0 +1,11 @@
+﻿@model IList<CommentRssFeedViewModel>
+@foreach (var comment in Model)
+{
+	<item>
+		<title>@comment.Title</title>
+		<description>@comment.Body</description>
+		<link>@Url.AbsoluteAction("Details", "PostDetails", new { comment.PostId, comment.PostSlug })</link>
+		<guid>@Url.AbsoluteAction("Details", "PostDetails", new { comment.PostId, comment.PostSlug })</guid>
+		<pubDate>@comment.CreatedAt</pubDate>
+	</item>
+}

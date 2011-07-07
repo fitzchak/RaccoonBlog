@@ -11,11 +11,22 @@ namespace RaccoonBlog.Web.Models
 		public string Copyright { get; set; }
 		public string AkismetKey { get; set; }
 		public string GoogleAnalyticsKey { get; set; }
+		public Guid RssFuturePostsKey { get; set; }
+		public int RssFutureDaysAllowed { get; set; }
 
 		public string MetaDescription { get; set; }
 		public string MetaKeywords { get; set; }
 
 		public int MinNumberOfPostForSignificantTag { get; set; }
 		public int NumberOfDayToCloseComments { get; set; }
+
+		public static BlogConfig New()
+		{
+			return new BlogConfig
+			       	{
+			       		RssFuturePostsKey = Guid.NewGuid(),
+						RssFutureDaysAllowed = 7
+			       	};
+		}
 	}
 }

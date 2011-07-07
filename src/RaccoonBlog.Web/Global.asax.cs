@@ -1,3 +1,4 @@
+using System;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -27,6 +28,7 @@ namespace RaccoonBlog.Web
         	DocumentStoreHolder.Initailize();
 			new RouteConfigurator(RouteTable.Routes).Configure();
             ModelBinders.Binders.Add(typeof(CommentCommandOptions), new RemoveSpacesEnumBinder());
+			ModelBinders.Binders.Add(typeof(Guid), new GuidBinder());
 
             AutoMapperConfiguration.Configure();
         }

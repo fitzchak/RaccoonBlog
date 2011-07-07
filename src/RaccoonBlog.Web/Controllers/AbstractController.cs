@@ -46,9 +46,20 @@ namespace RaccoonBlog.Web.Controllers
 			return new HttpStatusCodeResult(304);
 		}
 
-		protected ActionResult Xml(XDocument document, string etag)
+		
+		protected ActionResult XmlView(object model = null, string etag = null)
 		{
-			return new XmlResult(document, etag);
+			if (model != null)
+				ViewData.Model = model;
+
+			return new XmlViewResult
+			{
+				ETag = etag,
+				ViewName = null,
+				MasterName = null,
+				ViewData = ViewData,
+				TempData = TempData
+			};
 		}
 
         protected new JsonNetResult Json(object data)
@@ -67,8 +78,7 @@ namespace RaccoonBlog.Web.Controllers
 					blogConfig = Session.Load<BlogConfig>("Blog/Config");
 					if (blogConfig == null)
 					{
-						blogConfig = new BlogConfig();
-						Session.Store(blogConfig);
+						Session.Store(blogConfig = BlogConfig.New());
 					}
 				}
 				return blogConfig;

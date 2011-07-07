@@ -18,7 +18,7 @@ namespace RaccoonBlog.Web.Controllers
     {
         public const string CommenterCookieName = "commenter";
 
-        public ActionResult Details(int id, string slug)
+		public ActionResult Details(int id, string slug, Guid key)
         {
         	var post = Session
         		.Include<Post>(x => x.CommentsId)
@@ -28,7 +28,7 @@ namespace RaccoonBlog.Web.Controllers
             if (post == null)
                 return HttpNotFound();
 
-			if (post.IsPublicPost(Request.QueryString["key"]) == false)
+			if (post.IsPublicPost(key) == false)
 				return HttpNotFound();  
 
 			var comments = Session.Load<PostComments>(post.CommentsId);
@@ -55,13 +55,13 @@ namespace RaccoonBlog.Web.Controllers
 
 		[ValidateInput(false)]
     	[HttpPost]
-        public ActionResult Comment(CommentInput input, int id)
+        public ActionResult Comment(CommentInput input, int id, Guid key)
         {
 			var post = Session
 				.Include<Post>(x => x.CommentsId)
 				.Load(id);
 
-			if (post == null || post.IsPublicPost(Request.QueryString["key"]) == false)
+			if (post == null || post.IsPublicPost(key) == false)
 				return HttpNotFound();
 
         	var comments = Session.Load<PostComments>(post.CommentsId);
@@ -78,7 +78,7 @@ namespace RaccoonBlog.Web.Controllers
 			ValidateCaptcha(input, commenter);
 
     		if (ModelState.IsValid == false)
-    			return PostingCommentFailed(post, input);
+    			return PostingCommentFailed(post, input, key);
 
 			CommandExecutor.ExcuteLater(new AddCommentCommand(input, Request.MapTo<RequestValues>(), id));
 
@@ -128,13 +128,13 @@ namespace RaccoonBlog.Web.Controllers
     		                         "You did not type the verification word correctly. Please try again.");
     	}
 
-    	private ActionResult PostingCommentFailed(Post post, CommentInput input)
+		private ActionResult PostingCommentFailed(Post post, CommentInput input, Guid key)
     	{
 			if (Request.IsAjaxRequest())
 				return Json(new { Success = false, message = ModelState.GetFirstErrorMessage() });
 
 			var postReference = post.MapTo<PostReference>();
-			var result = Details(postReference.DomainId, postReference.Slug);
+			var result = Details(postReference.DomainId, postReference.Slug, key);
 			var model = result as ViewResult;
 			if (model != null)
 			{

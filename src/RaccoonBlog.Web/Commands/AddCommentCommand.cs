@@ -83,6 +83,7 @@ namespace RaccoonBlog.Web.Commands
     		viewModel.PostId = RavenIdResolver.Resolve(post.Id);
 			viewModel.PostTitle = HttpUtility.HtmlDecode(post.Title);
     		viewModel.BlogName = Session.Load<BlogConfig>("Blog/Config").Title;
+    	    viewModel.Key = post.ShowPostEvenIfPrivate.MapTo<string>();
 
 			var subject = string.Format("Comment on: {0} from {1}", viewModel.PostTitle, viewModel.BlogName);
 

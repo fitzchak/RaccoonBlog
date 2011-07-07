@@ -11,9 +11,11 @@ namespace RaccoonBlog.Web.ViewModels
         public string Email { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
         public MvcHtmlString Body { get; set; }
+        public bool IsSpam { get; set; }
 
         public int PostId { get; set; }
         public string PostTitle { get; set; }
         public string BlogName { get; set; }
+        public string Key { get; set; }
     }
 }

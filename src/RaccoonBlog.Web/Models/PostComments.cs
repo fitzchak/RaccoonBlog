@@ -7,6 +7,7 @@ namespace RaccoonBlog.Web.Models
 	public class PostComments
 	{
 		public string Id { get; set; }
+		public string PostId { get; set; }
 		public List<Comment> Comments { get; set; }
 		public List<Comment> Spam { get; set; }
 

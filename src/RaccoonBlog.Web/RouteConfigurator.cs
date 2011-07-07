@@ -71,7 +71,7 @@ namespace RaccoonBlog.Web
             routes.MapRouteLowerCase("SectionController-internal",
                 "{controller}/{action}",
                 new { },
-                new { controller = "Section", action = "List|TagsList|ArchivesList|FuturePosts" }
+                new { controller = "Section", action = "List|TagsList|ArchivesList|FuturePosts|PostsStatistics" }
                 );
         }
 
@@ -238,15 +238,9 @@ namespace RaccoonBlog.Web
     	private void ConfigureSyndication()
     	{
 			routes.MapRouteLowerCase("RssFeed",
-			  "rss",
-			  new { controller = "Syndication", action = "Rss" }
+			  "rss/{tag}",
+			  new { controller = "Syndication", action = "Rss", tag = UrlParameter.Optional }
 			  );
-
-			routes.MapRouteLowerCase("RssFeedByTag",
-			  "rss/{name}",
-			  new { controller = "Syndication", action = "Tag" }
-			  );
-
 
 			routes.MapRouteLowerCase("RsdFeed",
 			  "rsd",

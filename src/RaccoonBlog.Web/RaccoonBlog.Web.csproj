@@ -142,7 +142,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Helpers\Binders\GuidBinder.cs" />
     <Compile Include="Helpers\StaticFileUrlHelperExtensions.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\SyndicationMapperProfile.cs" />
     <Compile Include="Infrastructure\Common\DocumentSessionExtensions.cs" />
     <Compile Include="Helpers\Routes\RouteCollectionExtension.cs" />
     <Content Include="Content\css\custom\ayende.less.css" />
@@ -172,7 +174,7 @@
     <Compile Include="Helpers\UrlHelperExtensions.cs" />
     <Compile Include="Helpers\Validation\RequiredIfAttribute.cs" />
     <Compile Include="Helpers\Results\JsonNetResult.cs" />
-    <Compile Include="Infrastructure\ActionResults\XmlResult.cs" />
+    <Compile Include="Infrastructure\ActionResults\XmlViewResult.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\AbstractProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\BlogConfigMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\EmailViewModelMapperProfile.cs" />
@@ -189,9 +191,12 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\UserAdminMapperProfile.cs" />
     <Compile Include="Helpers\Routes\LowercaseRoute.cs" />
     <Compile Include="Infrastructure\Commands\CommandExecutor.cs" />
+    <Compile Include="Infrastructure\Indexes\PostComments_CreationDate.cs" />
+    <Compile Include="Infrastructure\Indexes\PostCommentsIdentifier.cs" />
     <Compile Include="Infrastructure\Indexes\PostCountByMonth.cs" />
+    <Compile Include="Infrastructure\Indexes\Statistics_Count.cs" />
     <Compile Include="Infrastructure\Indexes\TagCount.cs" />
-    <Compile Include="Infrastructure\Indexes\TempTagCount.cs" />
+    <Compile Include="Infrastructure\Indexes\PostsStatistics.cs" />
     <Compile Include="Models\BlogConfig.cs" />
     <Compile Include="Models\PostComments.cs" />
     <Compile Include="Models\Commenter.cs" />
@@ -247,9 +252,12 @@
     <Compile Include="ViewModels\EditPostViewModel.cs" />
     <Compile Include="ViewModels\FuturePostViewModel.cs" />
     <Compile Include="ViewModels\LoginInput.cs" />
+    <Compile Include="ViewModels\CommentRssFeedViewModel.cs" />
     <Compile Include="ViewModels\NewCommentEmailViewModel.cs" />
     <Compile Include="ViewModels\PostInput.cs" />
     <Compile Include="ViewModels\PostReference.cs" />
+    <Compile Include="ViewModels\PostRssFeedViewModel.cs" />
+    <Compile Include="ViewModels\PostsStatisticsViewModel.cs" />
     <Compile Include="ViewModels\PostSummaryJson.cs" />
     <Compile Include="ViewModels\PostViewModel.cs" />
     <Compile Include="ViewModels\PostsViewModel.cs" />
@@ -372,6 +380,27 @@
   <ItemGroup>
     <Content Include="Views\Search\GoogleCse.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Section\PostsStatistics.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Syndication\CommentsRss.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Syndication\_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Syndication\Rss.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Syndication\Rsd.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Syndication\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MailTemplates\_ViewStart.cshtml" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -389,7 +418,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>11921</DevelopmentServerPort>
+          <DevelopmentServerPort>23167</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost/RaccoonBlog.Web</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
