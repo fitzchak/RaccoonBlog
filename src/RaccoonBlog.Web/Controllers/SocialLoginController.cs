@@ -3,12 +3,18 @@
 //      Copyright (c) Hibernating Rhinos LTD. All rights reserved.
 //  </copyright>
 // -----------------------------------------------------------------------
+
+using System;
+using System.Linq;
 using System.Web.Mvc;
 using DotNetOpenAuth.Messaging;
 using DotNetOpenAuth.OpenId;
 using DotNetOpenAuth.OpenId.Extensions.SimpleRegistration;
 using DotNetOpenAuth.OpenId.RelyingParty;
 using RaccoonBlog.Web.Helpers;
+using RaccoonBlog.Web.Infrastructure.AutoMapper;
+using RaccoonBlog.Web.Models;
+using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Controllers
 {
@@ -16,7 +22,7 @@ namespace RaccoonBlog.Web.Controllers
 	{
 		private static readonly OpenIdRelyingParty openid = new OpenIdRelyingParty();
 
-		public ActionResult Authenticate(string identifier)
+		public ActionResult Authenticate(string openid_identifier)
 		{
 			string returnUrl = Url.RouteUrl("default");
 			if (Request.UrlReferrer != null)
@@ -26,7 +32,7 @@ namespace RaccoonBlog.Web.Controllers
 			if (response == null)
 			{
 				Identifier id;
-				if (Identifier.TryParse(identifier, out id) == false)
+				if (Identifier.TryParse(openid_identifier, out id) == false)
 					ModelState.AddModelError("identifier", "The specified login identifier is invalid");
 
 				if (ModelState.IsValid == false)
@@ -40,8 +46,8 @@ namespace RaccoonBlog.Web.Controllers
 
 				try
 				{
-					var request = openid.CreateRequest(identifier);
-					request.AddExtension(new ClaimsRequest { });
+					var request = openid.CreateRequest(openid_identifier);
+					request.AddExtension(new ClaimsRequest { Email = DemandLevel.Require, FullName = DemandLevel.Require });
 					return request.RedirectingResponse.AsActionResult();
 				}
 				catch (ProtocolException ex)
@@ -55,6 +61,26 @@ namespace RaccoonBlog.Web.Controllers
 			switch (response.Status)
 			{
 				case AuthenticationStatus.Authenticated:
+					var claimedIdentifier = response.ClaimedIdentifier.ToString();
+					var claimsResponse = response.GetExtension<ClaimsResponse>();
+					if (claimsResponse != null)
+					{
+						var commenter = Session.Query<Commenter>()
+						                	.Where(c => c.OpenId == claimedIdentifier)
+						                	.FirstOrDefault() ?? new Commenter
+						                	                     	{
+						                	                     		Key = Guid.NewGuid(),
+						                	                     		OpenId = claimedIdentifier,
+						                	                     	};
+
+						if (string.IsNullOrWhiteSpace(claimsResponse.FullName) == false)
+							commenter.Name = claimsResponse.FullName;
+						if (string.IsNullOrWhiteSpace(claimsResponse.Email) == false)
+							commenter.Email = claimsResponse.Email;
+
+						Session.Store(commenter);
+						CommenterUtil.SetCommenterCookie(Response, commenter.Key.MapTo<string>());
+					}
 					return Redirect(returnUrl);
 				case AuthenticationStatus.Canceled:
 					TempData["Message"] = "Canceled at provider";

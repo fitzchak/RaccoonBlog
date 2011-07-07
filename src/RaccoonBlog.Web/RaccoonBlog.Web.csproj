@@ -251,6 +251,7 @@
     <Compile Include="ViewModels\AdminPostDetailsViewModel.cs" />
     <Compile Include="ViewModels\BlogConfigViewModel.cs" />
     <Compile Include="ViewModels\ChangePassViewModel.cs" />
+    <Compile Include="ViewModels\CommenterUtil.cs" />
     <Compile Include="ViewModels\CommentInput.cs" />
     <Compile Include="ViewModels\CurrentUserViewModel.cs" />
     <Compile Include="ViewModels\EditPostViewModel.cs" />

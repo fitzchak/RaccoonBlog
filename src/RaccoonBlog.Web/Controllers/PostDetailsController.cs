@@ -15,7 +15,6 @@ namespace RaccoonBlog.Web.Controllers
 {
     public class PostDetailsController : AbstractController
     {
-        public const string CommenterCookieName = "commenter";
 
 		public ActionResult Details(int id, string slug, Guid key)
         {
@@ -81,7 +80,7 @@ namespace RaccoonBlog.Web.Controllers
 
 			CommandExecutor.ExcuteLater(new AddCommentCommand(input, Request.MapTo<RequestValues>(), id));
 
-			SetCommenterCookie(input);
+			CommenterUtil.SetCommenterCookie(Response, input.CommenterKey);
 
     		return PostingCommentSucceeded(post);
         }
@@ -95,13 +94,6 @@ namespace RaccoonBlog.Web.Controllers
     		TempData["message"] = successMessage;
     		var postReference = post.MapTo<PostReference>();
     		return RedirectToAction("Details", new { Id = postReference.DomainId, postReference.Slug });
-    	}
-
-		private void SetCommenterCookie(CommentInput commentInput)
-    	{
-			var cookie = new HttpCookie(CommenterCookieName, commentInput.CommenterKey)
-    		{Expires = DateTime.Now.AddYears(1)};
-    		Response.Cookies.Add(cookie);
     	}
 
     	private void ValidateCommentsAllowed(Post post, PostComments comments)
@@ -152,27 +144,18 @@ namespace RaccoonBlog.Web.Controllers
 				return;
 			}
 
-			var cookie = Request.Cookies[CommenterCookieName];
-    		if (cookie != null)
+			var cookie = Request.Cookies[CommenterUtil.CommenterCookieName];
+    		if (cookie == null) return;
+    		
+			var commenter = Session.GetCommenter(cookie.Value);
+    		if (commenter == null)
     		{
-    			var commenter = Session.GetCommenter(cookie.Value);
-				if (commenter == null)
-				{
-					Response.Cookies.Set(new HttpCookie(CommenterCookieName) {Expires = DateTime.Now.AddYears(-1)});
-					return;
-				}
-
-    			vm.Input = commenter.MapTo<CommentInput>();
-    			vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
-				return;
+    			Response.Cookies.Set(new HttpCookie(CommenterUtil.CommenterCookieName) { Expires = DateTime.Now.AddYears(-1) });
+    			return;
     		}
 
-			//var socialUser = SocialAuthUser.GetCurrentUser();
-			//if (socialUser != null)
-			//{
-			//    var profile = socialUser.GetProfile();
-			//    vm.Input = profile.MapTo<CommentInput>();
-			//}
+    		vm.Input = commenter.MapTo<CommentInput>();
+    		vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
 		}
     }
 }
