@@ -6,6 +6,7 @@ using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
+using RaccoonBlog.Web.Helpers;
 
 namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 {
@@ -47,7 +48,7 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 
             Mapper.CreateMap<User, CommentInput>()
                 .ForMember(x => x.Name, o => o.MapFrom(m => m.FullName))
-                .ForMember(x => x.Url, o => o.MapFrom(m => ConfigurationManager.AppSettings["MainUrl"] + UrlHelper.RouteUrl("Default")))
+				.ForMember(x => x.Url, o => o.MapFrom(m => UrlHelper.RelativeToAbsolute(UrlHelper.RouteUrl("Default"))))
                 .ForMember(x => x.Body, o => o.Ignore())
                 .ForMember(x => x.CommenterKey, o => o.Ignore())
                 ;

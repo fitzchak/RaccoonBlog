@@ -101,7 +101,9 @@ namespace RaccoonBlog.Web.Controllers
 		private void SetCommenterCookie(CommentInput commentInput)
     	{
 			var cookie = new HttpCookie(CommenterCookieName, commentInput.CommenterKey)
-    		{Expires = DateTime.Now.AddYears(1)};
+			{
+				Expires = DateTime.Now.AddYears(1)
+			};
     		Response.Cookies.Add(cookie);
     	}
 
