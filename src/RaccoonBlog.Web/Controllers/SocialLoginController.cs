@@ -21,7 +21,10 @@ namespace RaccoonBlog.Web.Controllers
 			if (socialAuthUser.IsLoggedIn == false)
 				socialAuthUser.Login(returnUrl);
 
-			return Redirect(returnUrl);
+			if (Response.IsRequestBeingRedirected == false)
+				return Redirect(returnUrl);
+
+			return new EmptyResult();
 		}	
 	}
 }
