@@ -4,30 +4,30 @@
 	ViewBag.CurrentUrl = Url.Action("Details", new { Model.Post.Id, Model.Post.Slug });
 }
 <article class="post-detalis">
-    <header>
-        <h1><a href="@Url.Action("Details", new { Model.Post.Id, Model.Post.Slug })">@Model.Post.Title</a></h1>
-    </header>
-    
-    <nav id="headerPrevNext">
-        <ul>
-            @if (Model.PreviousPost != null)
+	<header>
+		<h1><a href="@Url.Action("Details", new { Model.Post.Id, Model.Post.Slug })">@Model.Post.Title</a></h1>
+	</header>
+	
+	<nav id="headerPrevNext">
+		<ul>
+			@if (Model.PreviousPost != null)
 			{ 
-                <li><a href="@Url.Action("Details", new { id = Model.PreviousPost.DomainId, Model.PreviousPost.Slug })">previous: @Model.PreviousPost.Title</a></li>
+				<li><a href="@Url.Action("Details", new { id = Model.PreviousPost.DomainId, Model.PreviousPost.Slug })">previous: @Model.PreviousPost.Title</a></li>
 			}
-        
-            @if (Model.NextPost != null)
+		
+			@if (Model.NextPost != null)
 			{ 
-                <li><a href="@Url.Action("Details", new { id = Model.NextPost.DomainId, Model.NextPost.Slug })">next: @Model.NextPost.Title</a></li>
+				<li><a href="@Url.Action("Details", new { id = Model.NextPost.DomainId, Model.NextPost.Slug })">next: @Model.NextPost.Title</a></li>
 			}
-        </ul>
-    </nav>
+		</ul>
+	</nav>
 
-    <div class="post_body raw_html">
-        @Model.Post.Body
-    </div>
-    
-    <footer>
-        @if (Model.Post.Tags.Count > 0)
+	<div class="post_body raw_html">
+		@Model.Post.Body
+	</div>
+	
+	<footer>
+		@if (Model.Post.Tags.Count > 0)
 		{
 			<div class="tags">
 				<span>Tags:</span>
@@ -40,72 +40,72 @@
 			</div>
 		}
 
-        <p class="author">Posted By: @Model.Post.Author.FullName</p>
-        <p class="published">Published at <time pubdate>@Model.Post.PublishedAt.ToString("r")</time></p>
-        @if (Model.Post.PublishedAt != Model.Post.CreatedAt)
+		<p class="author">Posted By: @Model.Post.Author.FullName</p>
+		<p class="published">Published at <time pubdate>@Model.Post.PublishedAt.ToString("r")</time></p>
+		@if (Model.Post.PublishedAt != Model.Post.CreatedAt)
 		{ 
-            <p class="created">Originally posted at <time>@Model.Post.CreatedAt.ToString("r")</time></p>
+			<p class="created">Originally posted at <time>@Model.Post.CreatedAt.ToString("r")</time></p>
 		}
-        <div class="clr"></div>
+		<div class="clr"></div>
 
-        <div class="share">
-            <div class="twitter">
-                @Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, Model.Post.Author)
-            </div>
-            <div class="facebook-share">
+		<div class="share">
+			<div class="twitter">
+				@Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, Model.Post.Author)
+			</div>
+			<div class="facebook-share">
 				<a name="fb_share" type="box_count" share_url="@(Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))" href="http://www.facebook.com/sharer.php?u=@(Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))&t=@(Model.Post.Title)"></a>
-            </div>
+			</div>
 			<div class="facebook">
-                <iframe src="http://www.facebook.com/plugins/like.php?href=@(Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))&send=false&layout=button_count&width=450&show_faces=true&action=like&colorscheme=light&font&height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px;" allowTransparency="true"></iframe>
-            </div>
+				<iframe src="http://www.facebook.com/plugins/like.php?href=@(Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))&send=false&layout=button_count&width=450&show_faces=true&action=like&colorscheme=light&font&height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px;" allowTransparency="true"></iframe>
+			</div>
 			<div class="clr"></div>
-        </div>
-    </footer>
+		</div>
+	</footer>
 
 	
  
-    <section class="comments">
-        <header>
-            <a name="comments"></a>
-            <h1>Comments</h1>
-        </header>
-        @if (Model.Comments.Count == 0)
+	<section class="comments">
+		<header>
+			<a name="comments"></a>
+			<h1>Comments</h1>
+		</header>
+		@if (Model.Comments.Count == 0)
 		{ 
-            <p>No comments posted yet.</p>
+			<p>No comments posted yet.</p>
 		}
-        @foreach (var comment in Model.Comments)
+		@foreach (var comment in Model.Comments)
 		{
-            <article class="comment @(comment.IsImportant ? " important" : null)">
-                <a name="comment@(comment.Id)"></a>
-                <div class="avatar">
-                    <img src="http://www.gravatar.com/avatar.php?gravatar_id=@(comment.EmailHash)&size=50&default=identicon" alt="Gravatar">
-                </div>
+			<article class="comment @(comment.IsImportant ? " important" : null)">
+				<a name="comment@(comment.Id)"></a>
+				<div class="avatar">
+					<img src="http://www.gravatar.com/avatar.php?gravatar_id=@(comment.EmailHash)&size=50&default=identicon" alt="Gravatar">
+				</div>
 
-                <header>
-                    @comment.CreatedAt by
-                    <address>
+				<header>
+					@comment.CreatedAt by
+					<address>
 						@Html.Link(comment.Author, @comment.Url, new { title = comment.Tooltip, target = "_blank" })
-                    </address>
-                </header>
-                <div class="comment-body raw_html">@comment.Body</div>
-            </article>
+					</address>
+				</header>
+				<div class="comment-body raw_html">@comment.Body</div>
+			</article>
 		}
 
-        <div class="messageWrapper"><div id="message" style="visibility:hidden"></div></div>
-        <article id="postComment">
-            @if (Model.Post.IsCommentAllowed == false || Model.AreCommentsClosed)
+		<div class="messageWrapper"><div id="message" style="visibility:hidden"></div></div>
+		<article id="postComment">
+			@if (Model.Post.IsCommentAllowed == false || Model.AreCommentsClosed)
 			{ 
-                <div class="commentsClosedMessage">Comments have been closed on this topic.</div>
+				<div class="commentsClosedMessage">Comments have been closed on this topic.</div>
 			}
 			else
 			{
 				if (ViewData.ModelState.IsValid == false)
 				{ 
-                    <div class="form-error">
-                        @Html.ValidationSummary(true)
-                    </div>
+					<div class="form-error">
+						@Html.ValidationSummary(true)
+					</div>
 				}
-                using (@Html.BeginForm("Comment", "PostDetails", new { Model.Post.Id }))
+				using (@Html.BeginForm("Comment", "PostDetails", new { Model.Post.Id }))
 				{
 					@Html.EditorFor(x => x.Input.Name)
 					@Html.EditorFor(x => x.Input.Email)
@@ -126,16 +126,19 @@
 					<input type="submit" value="Post Comment" />
 					<div class="clr"></div>
 				}
-                <div class="socialauth">
-                    <a class="google" title="log in with Google">Google</a>
-                    <a class="facebook" title="log in with Facebook">Facebook</a>
-                    <a class="msn" title="log in with MSN">MSN</a>
-                    <a class="yahoo" title="log in with Yahoo">Yahoo</a>
-                    <a class="yahoo"></a>
-                </div>
+				if (Model.IsTrustedCommenter == false)
+				{
+					<div class="socialauth">
+						<a class="google" title="log in with Google">Google</a>
+						<a class="facebook" title="log in with Facebook">Facebook</a>
+						<a class="msn" title="log in with MSN">MSN</a>
+						<a class="yahoo" title="log in with Yahoo">Yahoo</a>
+						<a class="yahoo"></a>
+					</div>
+				}
 			}
-        </article>
-    </section>
+		</article>
+	</section>
 </article>
 @section Style {
 	<link rel="canonical" href="@Url.AbsoluteAction("Details", new { Model.Post.Id, Model.Post.Slug })">
@@ -148,24 +151,24 @@
 	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.md5.js")"></script>
 	<script type="text/javascript" src="@Url.Content("~/Content/js/date.f-0.5.0.min.js")"></script>
 	<script type="text/javascript">
-	    $(function () {
-	        Raccoon.Views.Details();
-	    });
+		$(function () {
+			Raccoon.Views.Details();
+		});
 	</script>
-    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+	<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 	<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
 	<script id="commentTemplate" type="text/html">
-        <article class="comment livecomment" style="display: none">
-            <div class="avatar">
-                <img src="http://www.gravatar.com/avatar.php?gravatar_id=${emailHash}&size=50&default=identicon" alt="Gravatar">
-            </div>
-            <header>
-                ${createdAt} by
-                <address>
-                    <a target="_blank" href="${url}">${author}</a>
-                </address>
-            </header>
-            <div class="comment-body raw_html">{{html body}}</div>
-        </article>
+		<article class="comment livecomment" style="display: none">
+			<div class="avatar">
+				<img src="http://www.gravatar.com/avatar.php?gravatar_id=${emailHash}&size=50&default=identicon" alt="Gravatar">
+			</div>
+			<header>
+				${createdAt} by
+				<address>
+					<a target="_blank" href="${url}">${author}</a>
+				</address>
+			</header>
+			<div class="comment-body raw_html">{{html body}}</div>
+		</article>
 	</script>
 }
