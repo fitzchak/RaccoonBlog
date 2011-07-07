@@ -71,7 +71,7 @@ namespace RaccoonBlog.Web
         {
 			routes.MapRouteLowerCase("SocialLoginController",
 				"users/authenticate",
-				new { controller = "SocialLogin", action = "Login" }
+				new { controller = "SocialLogin", action = "Authenticate" }
                 );
         }
 
