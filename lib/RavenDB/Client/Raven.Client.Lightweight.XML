@@ -1250,6 +1250,11 @@
             The request Url
             </summary>
         </member>
+        <member name="P:Raven.Client.Connection.Profiling.RequestResultArgs.DurationMilliseconds">
+            <summary>
+            How long this request took
+            </summary>
+        </member>
         <member name="P:Raven.Client.Connection.Profiling.RequestResultArgs.Method">
             <summary>
             The request method
@@ -3317,6 +3322,11 @@
             Create a new query for <typeparam name="T"/>
             </summary>
         </member>
+        <member name="M:Raven.Client.Document.DocumentSession.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
         <member name="M:Raven.Client.Document.DocumentSession.Raven#Client#Linq#IDocumentQueryGenerator#AsyncQuery``1(System.String)">
             <summary>
             Create a new query for <typeparam name="T"/>
@@ -4251,6 +4261,17 @@
         <member name="M:Raven.Client.Connection.ServerClient.DisableAllCaching">
             <summary>
             Disable all caching within the given scope
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Connection.ServerClient.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+            <filterpriority>2</filterpriority>
+        </member>
+        <member name="M:Raven.Client.Connection.ServerClient.Finalize">
+            <summary>
+            Allows an <see cref="T:System.Object"/> to attempt to free resources and perform other cleanup operations before the <see cref="T:System.Object"/> is reclaimed by garbage collection.
             </summary>
         </member>
         <member name="P:Raven.Client.Connection.ServerClient.ReplicationInformer">
@@ -6763,7 +6784,7 @@
         </member>
         <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.With(System.Net.ICredentials)">
             <summary>
-            Returns a new <see cref="T:Raven.Client.Connection.IDatabaseCommands"/> using the specified credentials
+            Returns a new <see cref="T:Raven.Client.Connection.Async.IAsyncDatabaseCommands"/> using the specified credentials
             </summary>
             <param name="credentialsForSession">The credentials for session.</param>
         </member>
@@ -6841,7 +6862,7 @@
         </member>
         <member name="M:Raven.Client.Connection.Async.AsyncServerClient.With(System.Net.ICredentials)">
             <summary>
-            Returns a new <see cref="T:Raven.Client.Connection.IDatabaseCommands"/> using the specified credentials
+            Returns a new <see cref="T:Raven.Client.Connection.Async.IAsyncDatabaseCommands"/> using the specified credentials
             </summary>
             <param name="credentialsForSession">The credentials for session.</param>
         </member>
@@ -7238,6 +7259,11 @@
         <member name="F:Raven.Client.Connection.Profiling.ProfilingInformation.At">
             <summary>
             The time when the session was created
+            </summary>
+        </member>
+        <member name="F:Raven.Client.Connection.Profiling.ProfilingInformation.DurationMilliseconds">
+            <summary>
+            The duration this session was opened
             </summary>
         </member>
         <member name="M:Raven.Client.Connection.Profiling.ProfilingInformation.#ctor(System.Nullable{System.Guid})">
