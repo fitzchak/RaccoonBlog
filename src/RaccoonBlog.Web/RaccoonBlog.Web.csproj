@@ -283,7 +283,7 @@
     <Content Include="Content\css\images\SocialAuthIcons\facebook.jpg" />
     <Content Include="Content\css\images\SocialAuthIcons\google.jpg" />
     <Content Include="Content\css\images\SocialAuthIcons\msn.jpg" />
-    <Content Include="Content\css\images\SocialAuthIcons\Yahoo.jpg" />
+    <Content Include="Content\css\images\SocialAuthIcons\yahoo.jpg" />
     <Content Include="Content\css\ResetCss.css" />
     <Content Include="Content\css\fullcalendar.css" />
     <Content Include="Content\js\date.f-0.5.0.js" />
