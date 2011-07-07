@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using Brickred.SocialAuth.NET.Core.BusinessObjects;
 using RaccoonBlog.Web.Commands;
 using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Helpers.Validation;
@@ -9,7 +8,6 @@ using RaccoonBlog.Web.Infrastructure.Commands;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
-using Raven.Client.Linq;
 using System.Web.Mvc;
 using System.Web;
 
@@ -169,12 +167,12 @@ namespace RaccoonBlog.Web.Controllers
 				return;
     		}
 
-    		var socialUser = SocialAuthUser.GetCurrentUser();
-			if (socialUser != null)
-    		{
-				var profile = socialUser.GetProfile();
-				vm.Input = profile.MapTo<CommentInput>();
-    		}
+			//var socialUser = SocialAuthUser.GetCurrentUser();
+			//if (socialUser != null)
+			//{
+			//    var profile = socialUser.GetProfile();
+			//    vm.Input = profile.MapTo<CommentInput>();
+			//}
 		}
     }
 }

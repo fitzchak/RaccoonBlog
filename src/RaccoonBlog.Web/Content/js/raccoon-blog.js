@@ -137,11 +137,6 @@ String.prototype.isNullOrEmpty = function () {
 	        }
 	        return false;
 	    });
-
-        $('.socialauth a').click(function() {
-            var provider = $(this).attr('class');
-            window.location.href = window.RaccoonRoutes.socialLogin + '?provider=' + provider;
-        });
     };
     
     window.Raccoon = Raccoon;
