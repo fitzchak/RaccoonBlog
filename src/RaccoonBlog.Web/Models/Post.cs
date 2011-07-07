@@ -59,7 +59,7 @@ namespace RaccoonBlog.Web.Models
 			}
 		}
 
-        public bool IsPublicPost(string key)
+        public bool IsPublicPost(Guid key)
         {
 			if (IsDeleted)
 				return false;
