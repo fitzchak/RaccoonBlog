@@ -105,27 +105,34 @@
                         @Html.ValidationSummary(true)
                     </div>
 				}
-				using (@Html.BeginForm("Comment", "PostDetails", new { Model.Post.Id }))
+                using (@Html.BeginForm("Comment", "PostDetails", new { Model.Post.Id }))
 				{
-                    @Html.EditorFor(x => x.Input.Name)
-                    @Html.EditorFor(x => x.Input.Email)
-                    @Html.EditorFor(x => x.Input.Url)
-                    @Html.EditorFor(x => x.Input.Body)
-                    
-			   if (!Model.IsTrustedCommenter)
-			   { 
-                        <div class="form_item">
-                            <label>
-                                <span class="form_item_name">Are you human?</span>
-                                @Html.GenerateCaptcha()
-                                @Html.ValidationMessage("CaptchaNotValid")
-                            </label>
-                        </div>
-			   }
-                    @Html.EditorFor(x => x.Input.CommenterKey)
-                    <input type="submit" value="Post Comment" />
+					@Html.EditorFor(x => x.Input.Name)
+					@Html.EditorFor(x => x.Input.Email)
+					@Html.EditorFor(x => x.Input.Url)
+					@Html.EditorFor(x => x.Input.Body)
+
+					if (!Model.IsTrustedCommenter)
+					{
+						<div class="form_item">
+							<label>
+								<span class="form_item_name">Are you human?</span>
+								@Html.GenerateCaptcha()
+								@Html.ValidationMessage("CaptchaNotValid")
+							</label>
+						</div>
+					}
+					@Html.EditorFor(x => x.Input.CommenterKey)
+					<input type="submit" value="Post Comment" />
 					<div class="clr"></div>
 				}
+                <div class="socialauth">
+                    <a class="google" title="log in with Google">Google</a>
+                    <a class="facebook" title="log in with Facebook">Facebook</a>
+                    <a class="msn" title="log in with MSN">MSN</a>
+                    <a class="yahoo" title="log in with Yahoo">Yahoo</a>
+                    <a class="yahoo"></a>
+                </div>
 			}
         </article>
     </section>

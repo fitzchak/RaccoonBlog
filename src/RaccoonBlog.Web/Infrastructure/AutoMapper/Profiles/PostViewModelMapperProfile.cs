@@ -2,6 +2,7 @@ using System.Configuration;
 using System.Linq;
 using System.Web;
 using AutoMapper;
+using Brickred.SocialAuth.NET.Core.BusinessObjects;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
@@ -51,6 +52,13 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
                 .ForMember(x => x.Body, o => o.Ignore())
                 .ForMember(x => x.CommenterKey, o => o.Ignore())
                 ;
+
+			Mapper.CreateMap<UserProfile, CommentInput>()
+				.ForMember(x => x.Name, o => o.MapFrom(m => m.FirstName + " " + m.LastName))
+				.ForMember(x => x.Url, o => o.MapFrom(m => m.ProfileURL))
+				.ForMember(x => x.Body, o => o.Ignore())
+				.ForMember(x => x.CommenterKey, o => o.Ignore())
+				;
 
             Mapper.CreateMap<HttpRequestWrapper, RequestValues>();
 

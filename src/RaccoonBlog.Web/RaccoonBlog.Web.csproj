@@ -113,6 +113,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\recaptcha.1.0.5.0\lib\.NetFramework 4.0\Recaptcha.dll</HintPath>
     </Reference>
+    <Reference Include="SocialAuth-net">
+      <HintPath>..\..\lib\SocialAuth\SocialAuth-net.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -141,6 +144,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\SocialLoginController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Helpers\Binders\GuidBinder.cs" />
     <Compile Include="Helpers\StaticFileUrlHelperExtensions.cs" />
@@ -276,6 +280,10 @@
     <Content Include="Content\css\custom\ayende.settings.less.css" />
     <Content Include="Content\css\images\printer.png" />
     <Content Include="Content\css\base.less.css" />
+    <Content Include="Content\css\images\SocialAuthIcons\facebook.jpg" />
+    <Content Include="Content\css\images\SocialAuthIcons\google.jpg" />
+    <Content Include="Content\css\images\SocialAuthIcons\msn.jpg" />
+    <Content Include="Content\css\images\SocialAuthIcons\Yahoo.jpg" />
     <Content Include="Content\css\ResetCss.css" />
     <Content Include="Content\css\fullcalendar.css" />
     <Content Include="Content\js\date.f-0.5.0.js" />

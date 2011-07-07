@@ -1,6 +1,7 @@
 using System;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Brickred.SocialAuth.NET.Core.BusinessObjects;
 using MvcContrib.TestHelper;
 using RaccoonBlog.Web;
 using RaccoonBlog.Web.Controllers;
@@ -197,6 +198,14 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
 		public void CssControllerRoutes()
 		{
 			"~/css".ShouldMapTo<CssController>(c => c.Merge(null));
+		}
+
+		[Fact]
+		public void SocialLoginControllerRoutes()
+		{
+			var authenticate = "~/users/authenticate".WithMethod(HttpVerbs.Get);
+			authenticate.Values["provider"] = PROVIDER_TYPE.GOOGLE;
+			authenticate.ShouldMapTo<SocialLoginController>(c => c.Login(PROVIDER_TYPE.GOOGLE));
 		}
 
 		[Fact]

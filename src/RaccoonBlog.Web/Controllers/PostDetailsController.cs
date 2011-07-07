@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Brickred.SocialAuth.NET.Core.BusinessObjects;
 using RaccoonBlog.Web.Commands;
 using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Helpers.Validation;
@@ -154,15 +155,26 @@ namespace RaccoonBlog.Web.Controllers
 			}
 
 			var cookie = Request.Cookies[CommenterCookieName];
-			if (cookie == null)
-				return;
+    		if (cookie != null)
+    		{
+    			var commenter = Session.GetCommenter(cookie.Value);
+				if (commenter == null)
+				{
+					Response.Cookies.Set(new HttpCookie(CommenterCookieName) {Expires = DateTime.Now.AddYears(-1)});
+					return;
+				}
 
-			var commenter = Session.GetCommenter(cookie.Value);
-			if (commenter == null)
+    			vm.Input = commenter.MapTo<CommentInput>();
+    			vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
 				return;
+    		}
 
-			vm.Input = commenter.MapTo<CommentInput>();
-			vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
+    		var socialUser = SocialAuthUser.GetCurrentUser();
+			if (socialUser != null)
+    		{
+				var profile = socialUser.GetProfile();
+				vm.Input = profile.MapTo<CommentInput>();
+    		}
 		}
     }
 }
