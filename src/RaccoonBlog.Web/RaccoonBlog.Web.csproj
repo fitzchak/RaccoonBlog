@@ -279,28 +279,27 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\custom\ayende.settings.less.css" />
+    <Content Include="Content\css\images\aolW.png" />
+    <Content Include="Content\css\images\blogger.png" />
+    <Content Include="Content\css\images\claimid.png" />
+    <Content Include="Content\css\images\facebookW.png" />
+    <Content Include="Content\css\images\fadegrey.png" />
+    <Content Include="Content\css\images\flickr.png" />
+    <Content Include="Content\css\images\flickrW.png" />
+    <Content Include="Content\css\images\googleW.png" />
+    <Content Include="Content\css\images\livejournal.png" />
+    <Content Include="Content\css\images\myopenid.png" />
+    <Content Include="Content\css\images\myopenidW.png" />
+    <Content Include="Content\css\images\myspaceW.png" />
+    <Content Include="Content\css\images\openidico.png" />
+    <Content Include="Content\css\images\openidW.png" />
     <Content Include="Content\css\images\printer.png" />
     <Content Include="Content\css\base.less.css" />
-    <Content Include="Content\css\openid\openid.css" />
-    <Content Include="Content\css\openid\images\aolW.png" />
-    <Content Include="Content\css\openid\images\blogger.png" />
-    <Content Include="Content\css\openid\images\claimid.png" />
-    <Content Include="Content\css\openid\images\facebookW.png" />
-    <Content Include="Content\css\openid\images\fadegrey.png" />
-    <Content Include="Content\css\openid\images\flickr.png" />
-    <Content Include="Content\css\openid\images\flickrW.png" />
-    <Content Include="Content\css\openid\images\googleW.png" />
-    <Content Include="Content\css\openid\images\livejournal.png" />
-    <Content Include="Content\css\openid\images\myopenid.png" />
-    <Content Include="Content\css\openid\images\myopenidW.png" />
-    <Content Include="Content\css\openid\images\myspaceW.png" />
-    <Content Include="Content\css\openid\images\openidico.png" />
-    <Content Include="Content\css\openid\images\openidW.png" />
-    <Content Include="Content\css\openid\images\technorati.png" />
-    <Content Include="Content\css\openid\images\verisign.png" />
-    <Content Include="Content\css\openid\images\vidoop.png" />
-    <Content Include="Content\css\openid\images\wordpress.png" />
-    <Content Include="Content\css\openid\images\yahooW.png" />
+    <Content Include="Content\css\images\technorati.png" />
+    <Content Include="Content\css\images\verisign.png" />
+    <Content Include="Content\css\images\vidoop.png" />
+    <Content Include="Content\css\images\wordpress.png" />
+    <Content Include="Content\css\images\yahooW.png" />
     <Content Include="Content\css\ResetCss.css" />
     <Content Include="Content\css\fullcalendar.css" />
     <Content Include="Content\js\date.f-0.5.0.js" />
@@ -309,6 +308,7 @@
     <Content Include="Content\js\jquery.ae.image.resize.js" />
     <Content Include="Content\js\jquery.ae.image.resize.min.js" />
     <Content Include="Content\js\jquery.datalink.js" />
+    <Content Include="Content\js\jquery.markitup.js" />
     <Content Include="Content\js\jquery.md5.js" />
     <Content Include="Content\js\jquery.myimgscale-0.2.js" />
     <Content Include="Content\js\jquery.myimgscale-0.2.min.js" />
@@ -390,6 +390,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\css\openid\images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\PostDetails\Details.cshtml" />
@@ -426,9 +427,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\MailTemplates\_ViewStart.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Content\css\openid\images\OneNote Table Of Contents.onetoc2" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
