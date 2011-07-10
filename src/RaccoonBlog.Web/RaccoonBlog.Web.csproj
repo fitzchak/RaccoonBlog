@@ -281,10 +281,6 @@
     <Content Include="Content\css\custom\ayende.settings.less.css" />
     <Content Include="Content\css\images\printer.png" />
     <Content Include="Content\css\base.less.css" />
-    <Content Include="Content\css\images\SocialAuthIcons\facebook.jpg" />
-    <Content Include="Content\css\images\SocialAuthIcons\google.jpg" />
-    <Content Include="Content\css\images\SocialAuthIcons\msn.jpg" />
-    <Content Include="Content\css\images\SocialAuthIcons\yahoo.jpg" />
     <Content Include="Content\css\openid\openid.css" />
     <Content Include="Content\css\openid\images\aolW.png" />
     <Content Include="Content\css\openid\images\blogger.png" />
