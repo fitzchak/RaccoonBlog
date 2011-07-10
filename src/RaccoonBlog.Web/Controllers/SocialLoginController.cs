@@ -47,7 +47,7 @@ namespace RaccoonBlog.Web.Controllers
 				try
 				{
 					var request = openid.CreateRequest(openid_identifier);
-					request.AddExtension(new ClaimsRequest { Email = DemandLevel.Require, FullName = DemandLevel.Require });
+					request.AddExtension(new ClaimsRequest { Email = DemandLevel.Request, FullName = DemandLevel.Request });
 					return request.RedirectingResponse.AsActionResult();
 				}
 				catch (ProtocolException ex)
