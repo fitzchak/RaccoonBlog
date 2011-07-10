@@ -99,10 +99,11 @@
 			}
 			else
 			{
-                if (Model.IsTrustedCommenter == false)
+                if (Model.IsLoggedInCommenter == false)
                 {
                     <form class="openid" method="post" action="@Url.Action("Authenticate", "SocialLogin")">
-                        <div>
+                        <h3>Social login</h3>
+                        <div class="links">
                             <ul class="providers">
                                 <li class="openid" title="OpenID">
                                     <img src="@Url.Content("~/Content/css/openid/images/openidW.png")" alt="icon" />
