@@ -200,6 +200,12 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
 		}
 
 		[Fact]
+		public void SocialLoginControllerRoutes()
+		{
+			"~/users/authenticate".ShouldMapTo<SocialLoginController>(c => c.Authenticate(null));
+		}
+
+		[Fact]
 		public void IgnoreRoutes()
 		{
 			"~/WebResource.axd".ShouldBeIgnored();

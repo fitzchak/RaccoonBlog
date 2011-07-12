@@ -8,7 +8,6 @@ using RaccoonBlog.Web.Infrastructure.Commands;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
-using Raven.Client.Linq;
 using System.Web.Mvc;
 using System.Web;
 
@@ -16,7 +15,6 @@ namespace RaccoonBlog.Web.Controllers
 {
     public class PostDetailsController : AbstractController
     {
-        public const string CommenterCookieName = "commenter";
 
 		public ActionResult Details(int id, string slug, Guid key)
         {
@@ -82,7 +80,7 @@ namespace RaccoonBlog.Web.Controllers
 
 			CommandExecutor.ExcuteLater(new AddCommentCommand(input, Request.MapTo<RequestValues>(), id));
 
-			SetCommenterCookie(input);
+			CommenterUtil.SetCommenterCookie(Response, input.CommenterKey);
 
     		return PostingCommentSucceeded(post);
         }
@@ -155,16 +153,18 @@ namespace RaccoonBlog.Web.Controllers
 				return;
 			}
 
-			var cookie = Request.Cookies[CommenterCookieName];
-			if (cookie == null)
-				return;
-
+			var cookie = Request.Cookies[CommenterUtil.CommenterCookieName];
+    		if (cookie == null) return;
+    		
 			var commenter = Session.GetCommenter(cookie.Value);
-			if (commenter == null)
-				return;
+    		if (commenter == null)
+    		{
+    			Response.Cookies.Set(new HttpCookie(CommenterUtil.CommenterCookieName) { Expires = DateTime.Now.AddYears(-1) });
+    			return;
+    		}
 
-			vm.Input = commenter.MapTo<CommentInput>();
-			vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
+    		vm.Input = commenter.MapTo<CommentInput>();
+    		vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
 		}
     }
 }

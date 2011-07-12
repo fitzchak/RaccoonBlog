@@ -35,7 +35,7 @@ namespace RaccoonBlog.ImportFromSubtext
 			{
 				var config = BlogConfig.New();
 				config.Id = "Blog/Config";
-				config.CustomCss = "ayende";
+				config.CustomCss = "hibernatingrhinos";
 				config.Subtitle = "Unnatural acts on source code";
 				config.Title = "Ayende @ Rahien";
 				config.Copyright = "Ayende Rahien";

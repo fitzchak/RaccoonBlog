@@ -26,6 +26,7 @@ namespace RaccoonBlog.Web
             ConfigureLegacyPost();
             ConfigurePostDetails();
             ConfigurePostAdmin();
+            ConfigureSocialLogin();
             
     	    ConfigureSection();
     	    ConfigureSectionAdmin();
@@ -63,6 +64,14 @@ namespace RaccoonBlog.Web
             routes.MapRouteLowerCase("CssController",
                 "css",
                 new { controller = "Css", action = "Merge" }
+                );
+        }
+
+		private void ConfigureSocialLogin()
+        {
+			routes.MapRouteLowerCase("SocialLoginController",
+				"users/authenticate",
+				new { controller = "SocialLogin", action = "Authenticate" }
                 );
         }
 

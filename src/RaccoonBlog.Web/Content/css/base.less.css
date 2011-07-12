@@ -571,3 +571,40 @@ li span.rss {
 	margin-left: 1px;
 	font-size: 11px;
 }
+
+.socialauth {
+    border: solid 1px @backgroundColor;
+    position: absolute;
+    left: 780px;
+    width: 300px;
+    padding: 10px;
+}
+.socialauth h3 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.socialauth .links a {
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    background: transparent no-repeat 0 0;
+    display: block;
+    float: left;
+    margin-left: 10px;
+}
+.socialauth .links a span {
+    display: none;
+}
+.socialauth .links .google {
+    background-image: formatString("url({0}images/SocialAuthIcons/google.jpg)", @siteRoot);
+}
+.socialauth .links .facebook {
+    background-image: formatString("url({0}images/SocialAuthIcons/facebook.jpg)", @siteRoot);
+}
+.socialauth .links .msn {
+    background-image: formatString("url({0}images/SocialAuthIcons/msn.jpg)", @siteRoot);
+}
+.socialauth .links .yahoo {
+    background-image: formatString("url({0}images/SocialAuthIcons/yahoo.jpg)", @siteRoot);
+}

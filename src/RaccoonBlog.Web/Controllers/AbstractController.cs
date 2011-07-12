@@ -1,8 +1,5 @@
 using System;
-using System.Configuration;
-using System.Linq;
 using System.Web.Mvc;
-using System.Xml.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using RaccoonBlog.Web.Helpers.Results;
@@ -14,32 +11,32 @@ using Raven.Client;
 
 namespace RaccoonBlog.Web.Controllers
 {
-    public abstract class AbstractController : Controller
-    {
-        public const int DefaultPage = 1;
-        public const int PageSize = 25;
+	public abstract class AbstractController : Controller
+	{
+		public const int DefaultPage = 1;
+		public const int PageSize = 25;
 
-        public new IDocumentSession Session { get; set; }
+		public new IDocumentSession Session { get; set; }
 
 		protected override void OnActionExecuted(ActionExecutedContext filterContext)
 		{
-            if (filterContext.IsChildAction)
-                return;
+			if (filterContext.IsChildAction)
+				return;
 
 			ViewBag.BlogConfig = BlogConfig.MapTo<BlogConfigViewModel>();
 		}
-        
-        protected int CurrentPage
-        {
-            get
-            {
-                var s = Request.QueryString["page"];
-                int result;
-                if (int.TryParse(s, out result))
-                    return Math.Max(DefaultPage, result);
-                return DefaultPage;
-            }
-        }
+		
+		protected int CurrentPage
+		{
+			get
+			{
+				var s = Request.QueryString["page"];
+				int result;
+				if (int.TryParse(s, out result))
+					return Math.Max(DefaultPage, result);
+				return DefaultPage;
+			}
+		}
 
 		protected HttpStatusCodeResult HttpNotModified()
 		{
@@ -62,17 +59,17 @@ namespace RaccoonBlog.Web.Controllers
 			};
 		}
 
-        protected new JsonNetResult Json(object data)
-        {
-            var settings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
-            return new JsonNetResult(data, settings);
-        }
+		protected new JsonNetResult Json(object data)
+		{
+			var settings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
+			return new JsonNetResult(data, settings);
+		}
 
-    	private BlogConfig blogConfig;
-    	public BlogConfig BlogConfig
-    	{
-    		get
-    		{
+		private BlogConfig blogConfig;
+		public BlogConfig BlogConfig
+		{
+			get
+			{
 				if (blogConfig == null)
 				{
 					blogConfig = Session.Load<BlogConfig>("Blog/Config");
@@ -82,7 +79,7 @@ namespace RaccoonBlog.Web.Controllers
 					}
 				}
 				return blogConfig;
-    		}
-    	}
-    }
+			}
+		}
+	}
 }

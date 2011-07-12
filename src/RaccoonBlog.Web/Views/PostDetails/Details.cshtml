@@ -4,30 +4,30 @@
 	ViewBag.CurrentUrl = Url.Action("Details", new { Model.Post.Id, Model.Post.Slug });
 }
 <article class="post-detalis">
-    <header>
-        <h1><a href="@Url.Action("Details", new { Model.Post.Id, Model.Post.Slug })">@Model.Post.Title</a></h1>
-    </header>
-    
-    <nav id="headerPrevNext">
-        <ul>
-            @if (Model.PreviousPost != null)
+	<header>
+		<h1><a href="@Url.Action("Details", new { Model.Post.Id, Model.Post.Slug })">@Model.Post.Title</a></h1>
+	</header>
+	
+	<nav id="headerPrevNext">
+		<ul>
+			@if (Model.PreviousPost != null)
 			{ 
-                <li><a href="@Url.Action("Details", new { id = Model.PreviousPost.DomainId, Model.PreviousPost.Slug })">previous: @Model.PreviousPost.Title</a></li>
+				<li><a href="@Url.Action("Details", new { id = Model.PreviousPost.DomainId, Model.PreviousPost.Slug })">previous: @Model.PreviousPost.Title</a></li>
 			}
-        
-            @if (Model.NextPost != null)
+		
+			@if (Model.NextPost != null)
 			{ 
-                <li><a href="@Url.Action("Details", new { id = Model.NextPost.DomainId, Model.NextPost.Slug })">next: @Model.NextPost.Title</a></li>
+				<li><a href="@Url.Action("Details", new { id = Model.NextPost.DomainId, Model.NextPost.Slug })">next: @Model.NextPost.Title</a></li>
 			}
-        </ul>
-    </nav>
+		</ul>
+	</nav>
 
-    <div class="post_body raw_html">
-        @Model.Post.Body
-    </div>
-    
-    <footer>
-        @if (Model.Post.Tags.Count > 0)
+	<div class="post_body raw_html">
+		@Model.Post.Body
+	</div>
+	
+	<footer>
+		@if (Model.Post.Tags.Count > 0)
 		{
 			<div class="tags">
 				<span>Tags:</span>
@@ -40,95 +40,169 @@
 			</div>
 		}
 
-        <p class="author">Posted By: @Model.Post.Author.FullName</p>
-        <p class="published">Published at <time pubdate>@Model.Post.PublishedAt.ToString("r")</time></p>
-        @if (Model.Post.PublishedAt != Model.Post.CreatedAt)
+		<p class="author">Posted By: @Model.Post.Author.FullName</p>
+		<p class="published">Published at <time pubdate>@Model.Post.PublishedAt.ToString("r")</time></p>
+		@if (Model.Post.PublishedAt != Model.Post.CreatedAt)
 		{ 
-            <p class="created">Originally posted at <time>@Model.Post.CreatedAt.ToString("r")</time></p>
+			<p class="created">Originally posted at <time>@Model.Post.CreatedAt.ToString("r")</time></p>
 		}
-        <div class="clr"></div>
+		<div class="clr"></div>
 
-        <div class="share">
-            <div class="twitter">
-                @Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, Model.Post.Author)
-            </div>
-            <div class="facebook-share">
+		<div class="share">
+			<div class="twitter">
+				@Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, Model.Post.Author)
+			</div>
+			<div class="facebook-share">
 				<a name="fb_share" type="box_count" share_url="@(Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))" href="http://www.facebook.com/sharer.php?u=@(Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))&t=@(Model.Post.Title)"></a>
-            </div>
+			</div>
 			<div class="facebook">
-                <iframe src="http://www.facebook.com/plugins/like.php?href=@(Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))&send=false&layout=button_count&width=450&show_faces=true&action=like&colorscheme=light&font&height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px;" allowTransparency="true"></iframe>
-            </div>
+				<iframe src="http://www.facebook.com/plugins/like.php?href=@(Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))&send=false&layout=button_count&width=450&show_faces=true&action=like&colorscheme=light&font&height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px;" allowTransparency="true"></iframe>
+			</div>
 			<div class="clr"></div>
-        </div>
-    </footer>
+		</div>
+	</footer>
 
 	
  
-    <section class="comments">
-        <header>
-            <a name="comments"></a>
-            <h1>Comments</h1>
-        </header>
-        @if (Model.Comments.Count == 0)
+	<section class="comments">
+		<header>
+			<a name="comments"></a>
+			<h1>Comments</h1>
+		</header>
+		@if (Model.Comments.Count == 0)
 		{ 
-            <p>No comments posted yet.</p>
+			<p>No comments posted yet.</p>
 		}
-        @foreach (var comment in Model.Comments)
+		@foreach (var comment in Model.Comments)
 		{
-            <article class="comment @(comment.IsImportant ? " important" : null)">
-                <a name="comment@(comment.Id)"></a>
-                <div class="avatar">
-                    <img src="http://www.gravatar.com/avatar.php?gravatar_id=@(comment.EmailHash)&size=50&default=identicon" alt="Gravatar">
-                </div>
+			<article class="comment @(comment.IsImportant ? " important" : null)">
+				<a name="comment@(comment.Id)"></a>
+				<div class="avatar">
+					<img src="http://www.gravatar.com/avatar.php?gravatar_id=@(comment.EmailHash)&size=50&default=identicon" alt="Gravatar">
+				</div>
 
-                <header>
-                    @comment.CreatedAt by
-                    <address>
+				<header>
+					@comment.CreatedAt by
+					<address>
 						@Html.Link(comment.Author, @comment.Url, new { title = comment.Tooltip, target = "_blank" })
-                    </address>
-                </header>
-                <div class="comment-body raw_html">@comment.Body</div>
-            </article>
+					</address>
+				</header>
+				<div class="comment-body raw_html">@comment.Body</div>
+			</article>
 		}
 
-        <div class="messageWrapper"><div id="message" style="visibility:hidden"></div></div>
-        <article id="postComment">
-            @if (Model.Post.IsCommentAllowed == false || Model.AreCommentsClosed)
+		<div class="messageWrapper"><div id="message" style="visibility:hidden"></div></div>
+		<article id="postComment">
+			@if (Model.Post.IsCommentAllowed == false || Model.AreCommentsClosed)
 			{ 
-                <div class="commentsClosedMessage">Comments have been closed on this topic.</div>
+				<div class="commentsClosedMessage">Comments have been closed on this topic.</div>
 			}
 			else
 			{
-				if (ViewData.ModelState.IsValid == false)
-				{ 
-                    <div class="form-error">
-                        @Html.ValidationSummary(true)
-                    </div>
-				}
-				using (@Html.BeginForm("Comment", "PostDetails", new { Model.Post.Id, Key = Request.QueryString["Key"] }))
-				{
-                    @Html.EditorFor(x => x.Input.Name)
-                    @Html.EditorFor(x => x.Input.Email)
-                    @Html.EditorFor(x => x.Input.Url)
-                    @Html.EditorFor(x => x.Input.Body)
-                    
-			   if (!Model.IsTrustedCommenter)
-			   { 
-                        <div class="form_item">
-                            <label>
-                                <span class="form_item_name">Are you human?</span>
-                                @Html.GenerateCaptcha()
-                                @Html.ValidationMessage("CaptchaNotValid")
-                            </label>
+                if (Model.IsTrustedCommenter == false)
+                {
+                    <form class="openid" method="post" action="@Url.Action("Authenticate", "SocialLogin")">
+                        <div>
+                            <ul class="providers">
+                                <li class="openid" title="OpenID">
+                                    <img src="@Url.Content("~/Content/css/openid/images/openidW.png")" alt="icon" />
+                                    <span><strong>http://{your-openid-url}</strong></span>
+                                </li>
+                                <li class="direct" title="Google">
+                                    <img src="@Url.Content("~/Content/css/openid/images/googleW.png")" alt="icon" />
+                                    <span>https://www.google.com/accounts/o8/id</span>
+                                </li>
+                                <li class="direct" title="Yahoo">
+                                    <img src="@Url.Content("~/Content/css/openid/images/yahooW.png")" alt="icon" />
+                                    <span>http://yahoo.com/</span>
+                                </li>
+                                <li class="username" title="AOL screen name">
+                                    <img src="@Url.Content("~/Content/css/openid/images/aolW.png")" alt="icon" />
+                                    <span>http://openid.aol.com/<strong>username</strong></span>
+                                </li>
+                                <li class="username" title="MyOpenID user name">
+                                    <img src="@Url.Content("~/Content/css/openid/images/myopenid.png")" alt="icon" />
+                                    <span>http://<strong>username</strong>.myopenid.com/</span>
+                                </li>
+                                <li class="username" title="Flickr user name">
+                                    <img src="@Url.Content("~/Content/css/openid/images/flickr.png")" alt="icon" />
+                                    <span>http://flickr.com/<strong>username</strong>/</span>
+                                </li>
+                                <li class="username" title="Technorati user name">
+                                    <img src="@Url.Content("~/Content/css/openid/images/technorati.png")" alt="icon" />
+                                    <span>http://technorati.com/people/technorati/<strong>username</strong>/</span>
+                                </li>
+                                <li class="username" title="Wordpress blog name">
+                                    <img src="@Url.Content("~/Content/css/openid/images/wordpress.png")" alt="icon" />
+                                    <span>http://<strong>username</strong>.wordpress.com</span>
+                                </li>
+                                <li class="username" title="Blogger blog name">
+                                    <img src="@Url.Content("~/Content/css/openid/images/blogger.png")" alt="icon" />
+                                    <span>http://<strong>username</strong>.blogspot.com/</span>
+                                </li>
+                                <li class="username" title="LiveJournal blog name">
+                                    <img src="@Url.Content("~/Content/css/openid/images/livejournal.png")" alt="icon" />
+                                    <span>http://<strong>username</strong>.livejournal.com</span>
+                                </li>
+                                <li class="username" title="ClaimID user name">
+                                    <img src="@Url.Content("~/Content/css/openid/images/claimid.png")" alt="icon" />
+                                    <span>http://claimid.com/<strong>username</strong></span>
+                                </li>
+                                <li class="username" title="Vidoop user name">
+                                    <img src="@Url.Content("~/Content/css/openid/images/vidoop.png")" alt="icon" />
+                                    <span>http://<strong>username</strong>.myvidoop.com/</span>
+                                </li>
+                                <li class="username" title="Verisign user name">
+                                    <img src="@Url.Content("~/Content/css/openid/images/verisign.png")" alt="icon" />
+                                    <span>http://<strong>username</strong>.pip.verisignlabs.com/</span>
+                                </li>
+                            </ul>
                         </div>
-			   }
-                    @Html.EditorFor(x => x.Input.CommenterKey)
-                    <input type="submit" value="Post Comment" />
+                        <fieldset>
+                            <label for="openid_username">Enter your <span>Provider user name</span></label>
+                            <div>
+                                <input type="text" name="openid_username" />
+                                <input type="submit" value="Login" /></div>
+                        </fieldset>
+                        <fieldset>
+                            <label for="openid_identifier">Enter your <a class="openid_logo" href="http://openid.net">OpenID</a></label>
+                            <div>
+                                <input type="text" name="openid_identifier" />
+                                <input type="submit" value="Login" />
+                            </div>
+                        </fieldset>
+                    </form>
+                }
+                if (ViewData.ModelState.IsValid == false)
+                { 
+					<div class="form-error">
+						@Html.ValidationSummary(true)
+					</div>
+                }
+                using (@Html.BeginForm("Comment", "PostDetails", new { Model.Post.Id }))
+                {
+					@Html.EditorFor(x => x.Input.Name)
+					@Html.EditorFor(x => x.Input.Email)
+					@Html.EditorFor(x => x.Input.Url)
+					@Html.EditorFor(x => x.Input.Body)
+
+                    if (!Model.IsTrustedCommenter)
+                    {
+						<div class="form_item">
+							<label>
+								<span class="form_item_name">Are you human?</span>
+								@Html.GenerateCaptcha()
+								@Html.ValidationMessage("CaptchaNotValid")
+							</label>
+						</div>
+                    }
+					@Html.EditorFor(x => x.Input.CommenterKey)
+					<input type="submit" value="Post Comment" />
 					<div class="clr"></div>
-				}
-			}
-        </article>
-    </section>
+                }
+            }
+		</article>
+	</section>
 </article>
 @section Style {
 	<link rel="canonical" href="@Url.AbsoluteAction("Details", new { Model.Post.Id, Model.Post.Slug })">
@@ -140,25 +214,28 @@
 	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.tmpl.min.js")"></script>
 	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.md5.js")"></script>
 	<script type="text/javascript" src="@Url.Content("~/Content/js/date.f-0.5.0.min.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.openid.js")"></script>
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/openid/openid.css")" />
 	<script type="text/javascript">
-	    $(function () {
-	        Raccoon.Views.Details();
-	    });
+		$(function () {
+		    Raccoon.Views.Details();
+		    $("form.openid:eq(0)").openid();
+		});
 	</script>
-    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+	<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 	<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
 	<script id="commentTemplate" type="text/html">
-        <article class="comment livecomment" style="display: none">
-            <div class="avatar">
-                <img src="http://www.gravatar.com/avatar.php?gravatar_id=${emailHash}&size=50&default=identicon" alt="Gravatar">
-            </div>
-            <header>
-                ${createdAt} by
-                <address>
-                    <a target="_blank" href="${url}">${author}</a>
-                </address>
-            </header>
-            <div class="comment-body raw_html">{{html body}}</div>
-        </article>
+		<article class="comment livecomment" style="display: none">
+			<div class="avatar">
+				<img src="http://www.gravatar.com/avatar.php?gravatar_id=${emailHash}&size=50&default=identicon" alt="Gravatar">
+			</div>
+			<header>
+				${createdAt} by
+				<address>
+					<a target="_blank" href="${url}">${author}</a>
+				</address>
+			</header>
+			<div class="comment-body raw_html">{{html body}}</div>
+		</article>
 	</script>
 }
