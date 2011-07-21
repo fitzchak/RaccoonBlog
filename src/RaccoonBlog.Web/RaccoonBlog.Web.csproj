@@ -279,27 +279,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\custom\ayende.settings.less.css" />
-    <Content Include="Content\css\images\aolW.png" />
-    <Content Include="Content\css\images\blogger.png" />
-    <Content Include="Content\css\images\claimid.png" />
-    <Content Include="Content\css\images\facebookW.png" />
-    <Content Include="Content\css\images\fadegrey.png" />
-    <Content Include="Content\css\images\flickr.png" />
-    <Content Include="Content\css\images\flickrW.png" />
-    <Content Include="Content\css\images\googleW.png" />
-    <Content Include="Content\css\images\livejournal.png" />
-    <Content Include="Content\css\images\myopenid.png" />
-    <Content Include="Content\css\images\myopenidW.png" />
-    <Content Include="Content\css\images\myspaceW.png" />
-    <Content Include="Content\css\images\openidico.png" />
-    <Content Include="Content\css\images\openidW.png" />
+    <Content Include="Content\css\images\openid-inputicon.gif" />
+    <Content Include="Content\css\images\openid-providers-en.png" />
     <Content Include="Content\css\images\printer.png" />
     <Content Include="Content\css\base.less.css" />
-    <Content Include="Content\css\images\technorati.png" />
-    <Content Include="Content\css\images\verisign.png" />
-    <Content Include="Content\css\images\vidoop.png" />
-    <Content Include="Content\css\images\wordpress.png" />
-    <Content Include="Content\css\images\yahooW.png" />
     <Content Include="Content\css\ResetCss.css" />
     <Content Include="Content\css\fullcalendar.css" />
     <Content Include="Content\js\date.f-0.5.0.js" />
@@ -312,7 +295,8 @@
     <Content Include="Content\js\jquery.md5.js" />
     <Content Include="Content\js\jquery.myimgscale-0.2.js" />
     <Content Include="Content\js\jquery.myimgscale-0.2.min.js" />
-    <Content Include="Content\js\jquery.openid.js" />
+    <Content Include="Content\js\openid-en.js" />
+    <Content Include="Content\js\openid-jquery.js" />
     <Content Include="Content\js\raccoon-blog.js" />
     <Content Include="Content\js\RequiredIfValidation.js" />
     <Content Include="Content\js\fullcalendar.min.js" />

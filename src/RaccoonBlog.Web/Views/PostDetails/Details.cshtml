@@ -101,78 +101,23 @@
 			{
                 if (Model.IsLoggedInCommenter == false)
                 {
-                    <form class="openid" method="post" action="@Url.Action("Authenticate", "SocialLogin")">
-                        <h3>Social login</h3>
-                        <div class="links">
-                            <ul class="providers">
-                                <li class="openid" title="OpenID">
-                                    <img src="@Url.Content("~/Content/css/images/openidW.png")" alt="icon" />
-                                    <span><strong>http://{your-openid-url}</strong></span>
-                                </li>
-                                <li class="direct" title="Google">
-                                    <img src="@Url.Content("~/Content/css/images/googleW.png")" alt="icon" />
-                                    <span>https://www.google.com/accounts/o8/id</span>
-                                </li>
-                                <li class="direct" title="Yahoo">
-                                    <img src="@Url.Content("~/Content/css/images/yahooW.png")" alt="icon" />
-                                    <span>http://yahoo.com/</span>
-                                </li>
-                                <li class="username" title="AOL screen name">
-                                    <img src="@Url.Content("~/Content/css/images/aolW.png")" alt="icon" />
-                                    <span>http://openid.aol.com/<strong>username</strong></span>
-                                </li>
-                                <li class="username" title="MyOpenID user name">
-                                    <img src="@Url.Content("~/Content/css/images/myopenid.png")" alt="icon" />
-                                    <span>http://<strong>username</strong>.myopenid.com/</span>
-                                </li>
-                                <li class="username" title="Flickr user name">
-                                    <img src="@Url.Content("~/Content/css/images/flickr.png")" alt="icon" />
-                                    <span>http://flickr.com/<strong>username</strong>/</span>
-                                </li>
-                                <li class="username" title="Technorati user name">
-                                    <img src="@Url.Content("~/Content/css/images/technorati.png")" alt="icon" />
-                                    <span>http://technorati.com/people/technorati/<strong>username</strong>/</span>
-                                </li>
-                                <li class="username" title="Wordpress blog name">
-                                    <img src="@Url.Content("~/Content/css/images/wordpress.png")" alt="icon" />
-                                    <span>http://<strong>username</strong>.wordpress.com</span>
-                                </li>
-                                <li class="username" title="Blogger blog name">
-                                    <img src="@Url.Content("~/Content/css/images/blogger.png")" alt="icon" />
-                                    <span>http://<strong>username</strong>.blogspot.com/</span>
-                                </li>
-                                <li class="username" title="LiveJournal blog name">
-                                    <img src="@Url.Content("~/Content/css/images/livejournal.png")" alt="icon" />
-                                    <span>http://<strong>username</strong>.livejournal.com</span>
-                                </li>
-                                <li class="username" title="ClaimID user name">
-                                    <img src="@Url.Content("~/Content/css/images/claimid.png")" alt="icon" />
-                                    <span>http://claimid.com/<strong>username</strong></span>
-                                </li>
-                                <li class="username" title="Vidoop user name">
-                                    <img src="@Url.Content("~/Content/css/images/vidoop.png")" alt="icon" />
-                                    <span>http://<strong>username</strong>.myvidoop.com/</span>
-                                </li>
-                                <li class="username" title="Verisign user name">
-                                    <img src="@Url.Content("~/Content/css/images/verisign.png")" alt="icon" />
-                                    <span>http://<strong>username</strong>.pip.verisignlabs.com/</span>
-                                </li>
-                            </ul>
-                        </div>
-                        <fieldset>
-                            <label for="openid_username">Enter your <span>Provider user name</span></label>
-                            <div>
-                                <input type="text" name="openid_username" />
-                                <input type="submit" value="Login" /></div>
-                        </fieldset>
-                        <fieldset>
-                            <label for="openid_identifier">Enter your <a class="openid_logo" href="http://openid.net">OpenID</a></label>
-                            <div>
-                                <input type="text" name="openid_identifier" />
-                                <input type="submit" value="Login" />
-                            </div>
-                        </fieldset>
-                    </form>
+                    <form id="openid_form" action="@Url.Action("Authenticate", "SocialLogin")" method="post">
+                        <noscript>
+				            <p>OpenID is service that allows you to log-on to many different websites using a single identity.
+				            Find out <a href="http://openid.net/what/">more about OpenID</a> and <a href="http://openid.net/get/">how to get an OpenID enabled account</a>.</p>
+			            </noscript>
+
+		                <input type="hidden" name="action" value="verify" />
+
+			            <div id="openid_choice">
+				            <p>Please click your account provider:</p>
+				            <div id="openid_btns"></div>
+			            </div>
+			            <div id="openid_input_area">
+				            <input id="openid_identifier" name="openid_identifier" type="text" value="http://" />
+				            <input id="openid_submit" type="submit" value="Sign In"/>
+			            </div>
+	                </form>
                 }
                 if (ViewData.ModelState.IsValid == false)
                 { 
@@ -215,13 +160,14 @@
 	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.tmpl.min.js")"></script>
 	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.md5.js")"></script>
 	<script type="text/javascript" src="@Url.Content("~/Content/js/date.f-0.5.0.min.js")"></script>
-	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.openid.js")"></script>
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/openid/openid.css")" />
+	<script type="text/javascript" src="@Url.Content("~/Content/js/openid-jquery.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Content/js/openid-en.js")"></script>
 	<script type="text/javascript">
-		$(function () {
-		    Raccoon.Views.Details();
-		    $("form.openid:eq(0)").openid();
-		});
+	    $(function () {
+	        Raccoon.Views.Details();
+	        openid.img_path = '@Url.Content("~/Content/css/images/")';
+	        openid.init('openid_identifier');
+	    });
 	</script>
 	<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 	<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>

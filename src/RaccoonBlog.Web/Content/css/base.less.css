@@ -590,21 +590,174 @@ li span.rss {
     width: 100%;
 }
 
-form.openid ul { text-align:center; list-style-type:none; display:inline;}
-form.openid ul li {float:left; padding:4px}
-form.openid ul li span {padding:0 1em 0 3px}
-form.openid fieldset {clear:both; padding:1em 0}
-form.openid div+fieldset {display:none}
-form.openid label {display:block; font-weight:bold; font-size:larger; margin-bottom:.5em}
-input[name=openid_username] {width:8em}
-input[name=openid_identifier] {width:18em}
-form.openid ul li.highlight { -moz-border-radius:4px; -webkit-border-radius:4px; background-color: #FD6}
-form.openid fieldset div {font-family:arial;-moz-border-radius:4px; -webkit-border-radius:4px; 
-                          background: #DCDCDC url(images/fadegrey.png); padding:10px;display:inline-block}
-form.openid input[type='submit'] {margin-left:1em;}
+/*
+	Simple OpenID Plugin
+	http://code.google.com/p/openid-selector/
+	
+	This code is licensed under the New BSD License.
+*/
 
-.openid_logo{color:#F7931E;padding:6px 0px 8px 28px; background: url(images/openidico.png) no-repeat}
+#openid_form {
+	width: 580px;
+}
 
-#openid_login{float:left; font-size:larger; width:30%; margin:2em 1em; text-align:center}
-#openid_login div{margin-top:0.5em}
-#openid_login div+span{font-size:smaller}
+#openid_form legend {
+	font-weight: bold;
+}
+
+#openid_choice {
+	display: none;
+}
+
+#openid_input_area {
+	clear: both;
+	padding: 10px;
+}
+
+#openid_btns, #openid_btns br {
+	clear: both;
+}
+
+#openid_highlight {
+	padding: 3px;
+	background-color: #FFFCC9;
+	float: left;
+}
+
+.openid_large_btn {
+	width: 100px;
+	height: 60px;
+/* fix for IE 6 only: http://en.wikipedia.org/wiki/CSS_filter#Underscore_hack */
+	_width: 102px;
+	_height: 62px;
+
+	border: 1px solid #DDD;
+	margin: 3px;
+	float: left;
+}
+
+.openid_small_btn {
+	width: 24px;
+	height: 24px;
+/* fix for IE 6 only: http://en.wikipedia.org/wiki/CSS_filter#Underscore_hack */
+	_width: 26px;
+	_height: 26px;
+
+	border: 1px solid #DDD;
+	margin: 3px;
+	float: left;
+}
+
+a.openid_large_btn:focus {
+	outline: none;
+}
+
+a.openid_large_btn:focus {
+	-moz-outline-style: none;
+}
+
+.openid_selected {
+	border: 4px solid #DDD;
+}
+
+/*
+	Simple OpenID Plugin
+	http://code.google.com/p/openid-selector/
+	
+	This code is licensed under the New BSD License.
+*/
+
+#openid_form {
+	width: 590px;
+}
+
+#openid_form legend {
+	font-weight: bold;
+}
+
+#openid_choice {
+	display: none;
+}
+
+#openid_input_area {
+	clear: both;
+	padding: 10px;
+}
+
+#openid_btns, #openid_btns br {
+	clear: both;
+}
+
+#openid_highlight {
+	padding: 3px;
+	background-color: #FFFCC9;
+	float: left;
+}
+
+.openid_large_btn {
+	width: 100px;
+	height: 60px;
+/* fix for IE 6 only: http://en.wikipedia.org/wiki/CSS_filter#Underscore_hack */
+	_width: 104px;
+	_height: 64px;
+
+	border: 2px solid #DDD;
+	border-right: 2px solid #ccc;
+	border-bottom: 2px solid #ccc;
+	margin: 3px;
+	float: left;
+	border-radius: 5px;	
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	box-shadow: 2px 2px 4px #ddd;
+	-moz-box-shadow: 2px 2px 4px #ddd;
+	-webkit-box-shadow: 2px 2px 4px #ddd;
+}
+
+.openid_large_btn:hover {
+	margin: 4px 0 0 6px;
+	border: 2px solid #999;
+	box-shadow: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+}
+
+.openid_small_btn {
+	width: 24px;
+	height: 24px;
+/* fix for IE 6 only: http://en.wikipedia.org/wiki/CSS_filter#Underscore_hack */
+	_width: 28px;
+	_height: 28px;
+
+	border: 2px solid #DDD;
+	border-right: 2px solid #ccc;
+	border-bottom: 2px solid #ccc;
+	margin: 3px;
+	float: left;
+	border-radius: 5px;	
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	box-shadow: 2px 2px 4px #ddd;
+	-moz-box-shadow: 2px 2px 4px #ddd;
+	-webkit-box-shadow: 2px 2px 4px #ddd;
+}
+
+.openid_small_btn:hover {
+	margin: 4px 0 0 6px;
+	border: 2px solid #999;
+	box-shadow: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+}
+
+a.openid_large_btn:focus {
+	outline: none;
+}
+
+a.openid_large_btn:focus {
+	-moz-outline-style: none;
+}
+
+.openid_selected {
+	border: 4px solid #DDD;
+}
