@@ -7,7 +7,8 @@ namespace RaccoonBlog.Web.Models
 	public class PostComments
 	{
 		public string Id { get; set; }
-		public string PostId { get; set; }
+		public PostReference Post { get; set; }
+		
 		public List<Comment> Comments { get; set; }
 		public List<Comment> Spam { get; set; }
 
@@ -25,6 +26,12 @@ namespace RaccoonBlog.Web.Models
 			
 			DateTimeOffset lastCommentDate = Comments.Count == 0 ? post.CreatedAt : Comments.Max(x => x.CreatedAt);
 			return DateTimeOffset.Now - lastCommentDate > TimeSpan.FromDays(numberOfDayToCloseComments);
+		}
+
+		public class PostReference
+		{
+			public string Id { get; set; }
+			public DateTimeOffset PublishAt { get; set; }
 		}
 
 		public class Comment
