@@ -181,7 +181,11 @@ namespace RaccoonBlog.ImportFromSubtext
                         ravenPost.CommentsId = commentsCollection.Id;
 
                         s.Store(ravenPost);
-                    	commentsCollection.PostId = ravenPost.Id;
+                    	commentsCollection.Post = new PostComments.PostReference
+                    	{
+                    		Id = ravenPost.Id,
+							PublishAt = ravenPost.PublishAt
+                    	};
 
                         s.SaveChanges();
                     }
