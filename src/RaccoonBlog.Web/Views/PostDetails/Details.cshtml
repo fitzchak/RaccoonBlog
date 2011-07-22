@@ -156,19 +156,23 @@
 	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.md5.js")"></script>
 	<script type="text/javascript" src="@Url.Content("~/Content/js/date.f-0.5.0.min.js")"></script>
 	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.openid.js")"></script>
-	<script type="text/javascript">
-	    $(function () {
-	        $('#openid').openid({
-	            img_path: '@Url.Content("~/Content/css/images/")',
-	            txt: {
-	                label: 'Select your Open ID provider',
-	                username: 'Username',
-	                title: 'Social Login',
-	                sign: 'Sing In'
-	            }
-	        });
-	    });
-	</script>
+	@if (Model.IsLoggedInCommenter == false)
+	{
+		<script type="text/javascript">
+	    
+	    		$(function () {
+				$('#openid').openid({
+					img_path: '@Url.Content("~/Content/css/images/")',
+					txt: {
+						label: 'Select your Open ID provider',
+						username: 'Username',
+						title: 'Social Login',
+						sign: 'Sing In'
+					}
+				});
+			});
+		</script>
+	}
 	<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 	<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
 	<script id="commentTemplate" type="text/html">
