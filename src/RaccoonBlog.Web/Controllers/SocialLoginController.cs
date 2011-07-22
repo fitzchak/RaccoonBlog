@@ -61,14 +61,17 @@ namespace RaccoonBlog.Web.Controllers
 			{
 				case AuthenticationStatus.Authenticated:
 					var claimedIdentifier = response.ClaimedIdentifier.ToString();
+					var commenter = Session.Query<Commenter>()
+					                	.Where(c => c.OpenId == claimedIdentifier)
+					                	.FirstOrDefault() ?? new Commenter
+					                	                     	{
+					                	                     		Key = Guid.NewGuid(),
+					                	                     		OpenId = claimedIdentifier,
+					                	                     	};
+
 					var claimsResponse = response.GetExtension<ClaimsResponse>();
 					if (claimsResponse != null)
 					{
-						var commenter = Session.Query<Commenter>()
-						                	.Where(c => c.OpenId == claimedIdentifier)
-						                	.FirstOrDefault() ?? Commenter.CreateNew();
-
-						commenter.OpenId = claimedIdentifier;
 						if (string.IsNullOrWhiteSpace(claimsResponse.FullName) == false)
 							commenter.Name = claimsResponse.FullName;
 						if (string.IsNullOrWhiteSpace(claimsResponse.Email) == false)

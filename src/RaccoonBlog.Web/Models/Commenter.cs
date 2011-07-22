@@ -13,10 +13,5 @@ namespace RaccoonBlog.Web.Models
 		public string Url { get; set; }
 
 		public string OpenId { get; set; }
-
-		public static Commenter CreateNew()
-		{
-			return new Commenter { Key = Guid.NewGuid() };
-		}
 	}
 }
