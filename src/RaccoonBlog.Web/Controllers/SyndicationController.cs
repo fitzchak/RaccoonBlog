@@ -49,10 +49,10 @@ namespace RaccoonBlog.Web.Controllers
 			return XmlView(posts.MapTo<PostRssFeedViewModel>(), responseETagHeader);
 		}
 
-		public ActionResult CommentsRss()
+		public ActionResult CommentsRss(Guid key)
 		{
 			RavenQueryStatistics stats;
-			var commentsIdentifiers = Session.QueryForRecentComments(30, out stats);
+			var commentsTuples = Session.QueryForRecentComments(key, 30, out stats);
 
 			string requestETagHeader = Request.Headers["If-None-Match"] ?? string.Empty;
 			var responseETagHeader = stats.Timestamp.ToString("o");
@@ -60,23 +60,13 @@ namespace RaccoonBlog.Web.Controllers
 				return HttpNotModified();
 
 			var results = new List<CommentRssFeedViewModel>();
-			foreach (var commentIdentifier in commentsIdentifiers)
+			foreach (var tuple in commentsTuples)
 			{
-				var comments = Session.Load<PostComments>(commentIdentifier.PostId);
-				var post = Session.Load<Post>(commentIdentifier.PostId);
-				if (comments == null || post == null)  // the post / comments got deleted in the meantime?
-					continue;
-
-				var comment = comments.Comments.FirstOrDefault(x => x.Id == commentIdentifier.CommentId);
-
-				if (comment == null) // we couldn't get the comment, maybe it was removed
-					continue;
-
-				var model = comment.MapTo<CommentRssFeedViewModel>();
-				post.MapPropertiesToInstance(model);
+				var model = tuple.Item1.MapTo<CommentRssFeedViewModel>();
+				tuple.Item2.MapPropertiesToInstance(model);
 				results.Add(model);
 			}
-
+			
 			return XmlView(results, responseETagHeader);
 		}
 

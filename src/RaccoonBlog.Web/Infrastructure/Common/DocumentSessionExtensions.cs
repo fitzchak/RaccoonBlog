@@ -12,7 +12,7 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 {
 	public static class DocumentSessionExtensions
 	{
-		public static IList<PostCommentsIdentifier> QueryForRecentComments(this IDocumentSession documentSession, int pageSize, out RavenQueryStatistics stats)
+		public static IList<Tuple<PostComments.Comment, Post>> QueryForRecentComments(this IDocumentSession documentSession, Guid key, int pageSize, out RavenQueryStatistics stats)
 		{
 			var commentsIdentifiersQuery = documentSession.Query<PostCommentsIdentifier, PostComments_CreationDate>()
 				.Statistics(out stats)
@@ -23,7 +23,15 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 				.Take(pageSize)
 				.AsProjection<PostCommentsIdentifier>()
 				.ToList();
-			return commentsIdentifiers;
+
+			return (from commentIdentifier in commentsIdentifiers
+			        let comments = documentSession.Load<PostComments>(commentIdentifier.PostId)
+			        let post = documentSession.Load<Post>(commentIdentifier.PostId)
+			        where comments != null && post != null && post.IsPublicPost(key)
+			        let comment = comments.Comments.FirstOrDefault(x => x.Id == commentIdentifier.CommentId)
+			        where comment != null
+			        select Tuple.Create(comment, post))
+				.ToList();
 		}
 
 		public static PostReference GetNextPrevPost(this IDocumentSession session, Post compareTo, bool isNext)
