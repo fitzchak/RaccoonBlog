@@ -646,3 +646,18 @@ a.openid_large_btn:focus {
   outline: none;
   -moz-outline-style: none;
 }
+
+ul.recent-comments
+{
+	font-size: smaller;
+}
+
+ul li.recent-comments-author {
+	font-style: italic;
+}
+ul li.recent-comments-post-title {
+	font-style: oblique;
+}
+ul li div.recent-comments-body {
+	
+}

@@ -14,20 +14,20 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 	{
 		public static IList<Tuple<PostComments.Comment, Post>> QueryForRecentComments(this IDocumentSession documentSession, Guid key, int pageSize, out RavenQueryStatistics stats)
 		{
-			var commentsIdentifiersQuery = documentSession.Query<PostCommentsIdentifier, PostComments_CreationDate>()
-				.Statistics(out stats)
-				.Include(comment => comment.PostCollectionId)
-				.Include(comment => comment.PostId);
-
-			var commentsIdentifiers = commentsIdentifiersQuery.OrderByDescending(x => x.CreatedAt)
-				.Take(pageSize)
-				.AsProjection<PostCommentsIdentifier>()
+			var commentsIdentifiers = documentSession
+					.Query<PostCommentsIdentifier, PostComments_CreationDate>()
+					.Statistics(out stats)
+					.Include(comment => comment.PostCommentsId)
+					.Include(comment => comment.PostId)
+					.OrderByDescending(x => x.PostPublishAt)
+						.ThenByDescending(x => x.CreatedAt)
+					.Take(pageSize)
+					.AsProjection<PostCommentsIdentifier>()
 				.ToList();
 
 			return (from commentIdentifier in commentsIdentifiers
-			        let comments = documentSession.Load<PostComments>(commentIdentifier.PostId)
+			        let comments = documentSession.Load<PostComments>(commentIdentifier.PostCommentsId)
 			        let post = documentSession.Load<Post>(commentIdentifier.PostId)
-			        where comments != null && post != null && post.IsPublicPost(key)
 			        let comment = comments.Comments.FirstOrDefault(x => x.Id == commentIdentifier.CommentId)
 			        where comment != null
 			        select Tuple.Create(comment, post))

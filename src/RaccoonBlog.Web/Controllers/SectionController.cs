@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
@@ -80,6 +81,22 @@ namespace RaccoonBlog.Web.Controllers
 				.FirstOrDefault() ?? new PostsStatistics();
 
 			return View(statistics.MapTo<PostsStatisticsViewModel>());
+		}
+
+		[ChildActionOnly]
+		public ActionResult RecentComments()
+		{
+			RavenQueryStatistics stats;
+			var commentsTuples = Session.QueryForRecentComments(Guid.Empty, 5, out stats);
+
+			var result = new List<RecentCommentViewModel>();
+			foreach (var commentsTuple in commentsTuples)
+			{
+				var recentCommentViewModel = commentsTuple.Item1.MapTo<RecentCommentViewModel>();
+				commentsTuple.Item2.MapPropertiesToInstance(recentCommentViewModel);
+				result.Add(recentCommentViewModel);
+			}
+			return View(result);
 		}
 	}
 }

@@ -90,7 +90,7 @@ namespace RaccoonBlog.Web
             routes.MapRouteLowerCase("SectionController-internal",
                 "{controller}/{action}",
                 new { },
-                new { controller = "Section", action = "List|TagsList|ArchivesList|FuturePosts|PostsStatistics" }
+                new { controller = "Section", action = "List|TagsList|ArchivesList|FuturePosts|PostsStatistics|RecentComments" }
                 );
         }
 
