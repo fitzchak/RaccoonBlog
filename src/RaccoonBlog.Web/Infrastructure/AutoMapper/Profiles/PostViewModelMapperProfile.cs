@@ -44,6 +44,7 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 				.ForMember(x => x.Id, o => o.Ignore())
 				.ForMember(x => x.IsTrustedCommenter, o => o.Ignore())
 				.ForMember(x => x.Key, o => o.Ignore())
+				.ForMember(x => x.OpenId, o => o.Ignore())
 				;
 
             Mapper.CreateMap<User, CommentInput>()

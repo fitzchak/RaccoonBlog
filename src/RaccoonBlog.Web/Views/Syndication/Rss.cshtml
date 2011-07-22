@@ -2,10 +2,10 @@
 @foreach (var post in Model)
 {
 	<item>
-		<title>@post.Title</title>
-		<description>@post.Body</description>
-		<link>@Url.AbsoluteAction("Details", "PostDetails", new { post.Id, post.Slug })</link>
-		<guid>@Url.AbsoluteAction("Details", "PostDetails", new { post.Id, post.Slug })</guid>
-		<pubDate>@post.PublishedAt</pubDate>
+		<title>@XmlHelper.Content(post.Title)</title>
+		<description>@XmlHelper.Content(post.Body)</description>
+		<link>@XmlHelper.Content(Url.AbsoluteAction("Details", "PostDetails", new { post.Id, post.Slug }))</link>
+		<guid>@XmlHelper.Content(Url.AbsoluteAction("Details", "PostDetails", new { post.Id, post.Slug }))</guid>
+		<pubDate>@XmlHelper.Content(post.PublishedAt)</pubDate>
 	</item>
 }

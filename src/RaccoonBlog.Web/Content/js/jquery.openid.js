@@ -1,84 +1,181 @@
-//jQuery OpenID Plugin 1.1 Copyright 2009 Jarrett Vance http://jvance.com/pages/jQueryOpenIdPlugin.xhtml
-$.fn.openid = function() {
-  var $this = $(this);
-  var $usr = $this.find('input[name=openid_username]');
-  var $id = $this.find('input[name=openid_identifier]');
-  var $front = $this.find('div:has(input[name=openid_username])>span:eq(0)');
-  var $end = $this.find('div:has(input[name=openid_username])>span:eq(1)');
-  var $usrfs = $this.find('fieldset:has(input[name=openid_username])');
-  var $idfs = $this.find('fieldset:has(input[name=openid_identifier])');
+/*
+OpenID Plugin
+http://code.google.com/p/openid-realselector/
 
-  var submitusr = function() {
-    if ($usr.val().length < 1) {
-      $usr.focus();
+Martin Conte Mac Donell <Reflejo@gmail.com>
+*/
+
+(function($) {
+  $.fn.openid = function(opt) {
+    var gprovider;
+    var INPUTID = 'openid_username';
+    var inputarea = $('#openid_inputarea').length ? $('#openid_inputarea'): $('<div id="openid_inputarea" />');
+  
+    var defaults = {
+      txt: {
+        label: 'Enter your {provider} {username}',
+        username: 'username',
+        title: 'Select your openID provider',
+        sign: 'Sign-In'
+      },
+      /*
+       Default providers with url. "big" variable means that icon
+       will be big.
+      */
+      providers: [
+        {
+          name: 'Google',
+          url: 'https://www.google.com/accounts/o8/id',
+          label: null,
+          big: true
+        },
+        {
+          name: 'Yahoo',
+          url: 'http://yahoo.com/',
+          label: null,
+          big: true
+        },    
+        {
+          name: 'AOL',
+          username_txt: 'screenname',
+          url: 'http://openid.aol.com/{username}',
+          big: true
+        },
+        {
+          name: 'OpenID',
+          username_txt: 'url',
+          big: true
+        },
+        {
+          name: 'MyOpenID',
+          url: 'http://{username}.myopenid.com/'
+        },
+        {
+          name: 'Flickr',
+          url: 'http://flickr.com/{username}/'
+        },
+        {
+          name: 'Technorati',
+          url: 'http://technorati.com/people/technorati/{username}/'
+        },
+        {
+          name: 'Wordpress',
+          url: 'http://{username}.wordpress.com/'
+        },
+        {
+          name: 'Blogger',
+          url: 'http://{username}.blogspot.com/'
+        },
+        {
+          name: 'Verisign',
+          url: 'http://{username}.pip.verisignlabs.com/'
+        },
+        {
+          name: 'Vidoop',
+          url: 'http://{username}.myvidoop.com/'
+        },
+        {
+          name: 'ClaimID',
+          url: 'http://claimid.com/{username}'
+        },
+        {
+          name: 'LiveJournal',
+          url: 'http://{username}.livejournal.com'
+        },
+        {
+          name: 'MySpace',
+          url: 'http://www.myspace.com/{username}'
+        }
+      ],
+      cookie_expires: 6 * 30, // in days.
+      cookie_path: '/',
+      img_path: '/img/'
+    };
+  
+    var getBox = function(provider, idx, box_size) {
+      var a = $('<a title="' + provider + '" href="#" id="btn_' + idx + 
+                '" class="openid_' + box_size + '_btn ' + provider + '" />');
+      return a.click(signIn);
+    };
+  
+    var setCookie = function(value) {
+      var date = new Date();
+      date.setTime(date.getTime() + (settings.cookie_expires * 24 * 60 * 60 * 1000));
+      document.cookie = "openid_prov=" + value + "; expires=" + date.toGMTString() + 
+                        "; path=" + settings.cookie_path;
+    };
+  
+    var readCookie = function(){
+      var c = document.cookie.split(';');
+      for(i in c){
+        if ((pos = c[i].indexOf("openid_prov=")) != -1) 
+          return $.trim(c[i].slice(pos + 12));
+      }
+    };
+  
+    var signIn = function(obj, tidx) {
+      var idx = $(tidx || this).attr('id').replace('btn_', '');
+      if (!(gprovider = settings.providers[idx]))
+        return;
+    
+      // Hightlight
+      if (highlight = $('#openid_highlight'))
+        highlight.replaceWith($('#openid_highlight a')[0]);
+   
+      $('#btn_' + idx).wrap('<div id="openid_highlight" />');
+      setCookie(idx);
+  
+      // prompt user for input?
+      showInputBox();
+      if (gprovider.label === null) {
+        inputarea.text(settings.txt.title);
+        if (!tidx) {
+          inputarea.fadeOut();
+          form.submit();
+        }
+      }
       return false;
-    }
-    $id.val($front.text() + $usr.val() + $end.text());
-    return true;
-  };
-
-  var submitid = function() {
-    if ($id.val().length < 1) {
-      $id.focus();
-      return false;
-    }
-    return true;
-
-  };
-  var direct = function() {
-    var $li = $(this);
-    $li.parent().find('li').removeClass('highlight');
-    $li.addClass('highlight');
-    $usrfs.fadeOut();
-    $idfs.fadeOut();
-
-    $this.unbind('submit').submit(function() {
-      $id.val($this.find("li.highlight span").text());
+    };
+  
+    var showInputBox = function() {
+      var lbl = (gprovider.label || settings.txt.label).replace(
+        '{username}', (gprovider.username_txt !== undefined) ? gprovider.username_txt: settings.txt.username
+      ).replace('{provider}', gprovider.name);
+  
+      inputarea.empty().show().append('<span class="oidlabel">' + lbl + '</span><input id="' + INPUTID + '" type="text" ' +
+        ' name="username_txt" class="Verisign"/><input type="submit" value="' + settings.txt.sign + '"/>');
+  
+      $('#' + INPUTID).focus();
+    };
+  
+    var submit = function(){
+      var prov = (gprovider.url) ? gprovider.url.replace('{username}', $('#' + INPUTID).val()): $('#' + INPUTID).val();
+      form.append($('<input type="hidden" name="url" value="' + prov + '" />'));
+    };
+  
+    var settings = $.extend(defaults, opt || {});
+    var btns = $('<div id="openid_btns" />');
+  
+    // Add box for each provider
+    var addbr = true;
+    $.each(settings.providers, function(i, val) {
+      if (!val.big && addbr) {
+        btns.append('<br />');
+        addbr = false;
+      }
+      btns.append(getBox(val.name, i, (val.big) ? 'large': 'small'));
     });
-    $this.submit();
-    return false;
+  
+    var form = this;
+    form.css({'background-image': 'none'});
+    form.append(btns).submit(submit);
+    btns.append(inputarea);
+  
+    if (idx = readCookie())
+      signIn(null, '#btn_' + idx);
+    else
+  	inputarea.text(settings.txt.title).show();
+  
+    return this;
   };
-
-  var openid = function() {
-    var $li = $(this);
-    $li.parent().find('li').removeClass('highlight');
-    $li.addClass('highlight');
-    $usrfs.hide();
-    $idfs.show();
-    $id.focus();
-    $this.unbind('submit').submit(submitid);
-    return false;
-  };
-
-  var username = function() {
-    var $li = $(this);
-    $li.parent().find('li').removeClass('highlight');
-    $li.addClass('highlight');
-    $idfs.hide();
-    $usrfs.show();
-    $this.find('label[for=openid_username] span').text($li.attr("title"));
-    $front.text($li.find("span").text().split("username")[0]);
-    $end.text("").text($li.find("span").text().split("username")[1]);
-    $id.focus();
-    $this.unbind('submit').submit(submitusr);
-    return false;
-  };
-
-  $this.find('li.direct').click(direct);
-  $this.find('li.openid').click(openid);
-  $this.find('li.username').click(username);
-  $id.keypress(function(e) {
-    if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
-      return submitid();
-    }
-  });
-  $usr.keypress(function(e) {
-    if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
-      return submitusr();
-    }
-  });
-  $this.find('li span').hide();
-  $this.find('li').css('line-height', 0).css('cursor', 'pointer');
-  $this.find('li:eq(0)').click();
-  return this;
-};
+})(jQuery);

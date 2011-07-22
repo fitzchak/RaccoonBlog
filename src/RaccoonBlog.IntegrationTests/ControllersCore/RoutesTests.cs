@@ -202,13 +202,19 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
 		[Fact]
 		public void SocialLoginControllerRoutes()
 		{
-			"~/users/authenticate".ShouldMapTo<SocialLoginController>(c => c.Authenticate(null));
+			"~/users/authenticate".ShouldMapTo<SocialLoginController>(c => c.Authenticate(null, null));
 		}
 
 		[Fact]
 		public void IgnoreRoutes()
 		{
 			"~/WebResource.axd".ShouldBeIgnored();
+		}
+
+		[Fact]
+		public void ConfigurationAdminControllerRoutes()
+		{
+			"~/admin/configuration".ShouldMapTo<ConfigurationAdminController>(c => c.Index());
 		}
 	}
 }

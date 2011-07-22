@@ -15,6 +15,7 @@ namespace RaccoonBlog.Web.ViewModels
 
         public bool AreCommentsClosed { get; set; }
         public bool IsTrustedCommenter { get; set; }
+        public bool IsLoggedInCommenter { get; set; }
 
         public class Comment
         {

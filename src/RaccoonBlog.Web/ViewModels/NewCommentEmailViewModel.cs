@@ -15,6 +15,7 @@ namespace RaccoonBlog.Web.ViewModels
 
         public int PostId { get; set; }
         public string PostTitle { get; set; }
+        public string PostSlug { get; set; }
         public string BlogName { get; set; }
         public string Key { get; set; }
     }

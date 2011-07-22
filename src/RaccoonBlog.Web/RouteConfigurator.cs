@@ -39,6 +39,8 @@ namespace RaccoonBlog.Web
 
             ConfigureUserAdmin();
 
+			ConfigureConfigurationAdmin();
+
             ConfigureElmah();
 
             #region "Default"
@@ -51,7 +53,15 @@ namespace RaccoonBlog.Web
             #endregion
         }
 
-        private void ConfigureElmah()
+    	private void ConfigureConfigurationAdmin()
+    	{
+			routes.MapRouteLowerCase("ConfigureConfigurationAdmin",
+				"admin/configuration",
+				new { controller = "ConfigurationAdmin", action = "Index" }
+				);
+    	}
+
+    	private void ConfigureElmah()
         {
             routes.MapRouteLowerCase("ElmahController-internal",
                 "admin/elmah/{type}",

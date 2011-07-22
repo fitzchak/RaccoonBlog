@@ -77,7 +77,7 @@ namespace RaccoonBlog.Web.Controllers
 		public ActionResult PostsStatistics()
 		{
 			var statistics = Session.Query<PostsStatistics, Posts_Statistics>()
-				.FirstOrDefault();
+				.FirstOrDefault() ?? new PostsStatistics();
 
 			return View(statistics.MapTo<PostsStatisticsViewModel>());
 		}

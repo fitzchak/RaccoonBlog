@@ -81,6 +81,7 @@ namespace RaccoonBlog.Web.Commands
 			var viewModel = comment.MapTo<NewCommentEmailViewModel>();
 			viewModel.PostId = RavenIdResolver.Resolve(post.Id);
 			viewModel.PostTitle = HttpUtility.HtmlDecode(post.Title);
+			viewModel.PostSlug = SlugConverter.TitleToSlug(post.Title);
 			viewModel.BlogName = Session.Load<BlogConfig>("Blog/Config").Title;
 			viewModel.Key = post.ShowPostEvenIfPrivate.MapTo<string>();
 

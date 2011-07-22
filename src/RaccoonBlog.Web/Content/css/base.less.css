@@ -556,10 +556,10 @@ div.commentsClosedMessage
 	float: right;
 }
 
-#postComment {
+#postComment .comment-form-wrapper {
 	width: 645px;
 }
-#postComment textarea {
+#postComment .comment-form-wrapper textarea {
 	width: 436px;
 } 
 #search 
@@ -572,39 +572,77 @@ li span.rss {
 	font-size: 11px;
 }
 
-.socialauth {
-    border: solid 1px @backgroundColor;
-    position: absolute;
-    left: 780px;
-    width: 300px;
-    padding: 10px;
+.openid-wrapper {
+    float: right;
 }
-.socialauth h3 {
-    text-align: center;
-    margin-bottom: 10px;
+#openid {
+  background: formatString("url({0}images/indicator.gif)", @siteRoot) center center no-repeat;
+  margin: 0 auto;
+  width: 440px;
+  height: 162px;
 }
 
-.socialauth .links a {
-    cursor: pointer;
-    width: 50px;
-    height: 50px;
-    background: transparent no-repeat 0 0;
-    display: block;
-    float: left;
-    margin-left: 10px;
+#openid_inputarea {
+  clear: both;
+  display: none;
+  background: formatString("url({0}images/balloon.png)", @siteRoot) no-repeat;
+  width: 410px;
+  height: 48px;
+  color: white;
+  text-align: center;
+  margin-top: 35px;
+  padding-top: 17px;
 }
-.socialauth .links a span {
-    display: none;
+
+#openid_inputarea #openid_username {
+  margin: 0 4px 0 8px;
+  width: 120px;
 }
-.socialauth .links .google {
-    background-image: formatString("url({0}images/SocialAuthIcons/google.jpg)", @siteRoot);
+
+#openid_btns, #openid_btns br {
+  clear: both;
 }
-.socialauth .links .facebook {
-    background-image: formatString("url({0}images/SocialAuthIcons/facebook.jpg)", @siteRoot);
+
+#openid_highlight {
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  padding: 2px;
+  background-color: #FFFCC9;
+  float: left;
 }
-.socialauth .links .msn {
-    background-image: formatString("url({0}images/SocialAuthIcons/msn.jpg)", @siteRoot);
+
+.openid_large_btn, .openid_small_btn {
+  background: formatString("url({0}images/openid-icons.png)", @siteRoot) no-repeat;
+  margin: 3px;
+  float: left;
 }
-.socialauth .links .yahoo {
-    background-image: formatString("url({0}images/SocialAuthIcons/yahoo.jpg)", @siteRoot);
+
+.openid_large_btn {
+  width: 91px;
+  height: 51px;
+}
+
+.openid_small_btn {
+  width: 16px;
+  height: 16px;
+}  
+
+.Google { background-position: 0 0; }
+.Yahoo { background-position: 0 -51px; }
+.AOL { background-position: 0 -102px; }
+.OpenID { background-position: 0 -153px; }
+.MyOpenID { background-position: 0 -204px; }
+.Flickr { background-position: 0 -220px; }
+.Technorati { background-position: -17px -220px; }
+.Wordpress { background-position: -17px -204px; }
+.Blogger { background-position: -34px -204px; }
+.Verisign { background-position: -51px -220px; }
+.Vidoop { background-position: -34px -220px; }
+.ClaimID { background-position: -68px -204px; }
+.LiveJournal { background-position: -51px -204px; }
+.MySpace { background-position: -68px -220px; }
+
+a.openid_large_btn:focus {
+  outline: none;
+  -moz-outline-style: none;
 }

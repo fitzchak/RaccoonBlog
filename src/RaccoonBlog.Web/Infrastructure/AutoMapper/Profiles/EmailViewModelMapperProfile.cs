@@ -14,6 +14,7 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 				.ForMember(x=>x.Body, o=>o.MapFrom(x=>MarkdownResolver.Resolve(x.Body)))
                 .ForMember(x => x.PostId, o => o.Ignore())
                 .ForMember(x => x.PostTitle, o => o.Ignore())
+                .ForMember(x => x.PostSlug, o => o.Ignore())
                 .ForMember(x => x.BlogName, o => o.Ignore())
                 .ForMember(x => x.Key, o => o.Ignore())
                 ;

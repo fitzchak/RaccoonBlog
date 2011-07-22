@@ -144,10 +144,15 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ConfigurationAdminController.cs" />
     <Compile Include="Controllers\SocialLoginController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Helpers\Binders\GuidBinder.cs" />
     <Compile Include="Helpers\StaticFileUrlHelperExtensions.cs" />
+    <Compile Include="Helpers\Validation\NonEmptyGuid.cs" />
+    <Compile Include="Helpers\XmlHelper.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\BlogConfigAdminViewModelMapperProfile.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\StringToGuidConverter.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\SyndicationMapperProfile.cs" />
     <Compile Include="Infrastructure\Common\DocumentSessionExtensions.cs" />
     <Compile Include="Helpers\Routes\RouteCollectionExtension.cs" />
@@ -249,6 +254,7 @@
     <Compile Include="Services\RssModels\WordpressCategory.cs" />
     <Compile Include="ViewModels\AbstractViewModel.cs" />
     <Compile Include="ViewModels\AdminPostDetailsViewModel.cs" />
+    <Compile Include="ViewModels\BlogConfigurationInput.cs" />
     <Compile Include="ViewModels\BlogConfigViewModel.cs" />
     <Compile Include="ViewModels\ChangePassViewModel.cs" />
     <Compile Include="ViewModels\CommenterUtil.cs" />
@@ -279,32 +285,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\custom\ayende.settings.less.css" />
+    <Content Include="Content\css\images\balloon.png" />
+    <Content Include="Content\css\images\indicator.gif" />
+    <Content Include="Content\css\images\openid-icons.png" />
+    <Content Include="Content\css\images\openid-inputicon.gif" />
+    <Content Include="Content\css\images\openid-providers-en.png" />
     <Content Include="Content\css\images\printer.png" />
     <Content Include="Content\css\base.less.css" />
-    <Content Include="Content\css\images\SocialAuthIcons\facebook.jpg" />
-    <Content Include="Content\css\images\SocialAuthIcons\google.jpg" />
-    <Content Include="Content\css\images\SocialAuthIcons\msn.jpg" />
-    <Content Include="Content\css\images\SocialAuthIcons\yahoo.jpg" />
-    <Content Include="Content\css\openid\openid.css" />
-    <Content Include="Content\css\openid\images\aolW.png" />
-    <Content Include="Content\css\openid\images\blogger.png" />
-    <Content Include="Content\css\openid\images\claimid.png" />
-    <Content Include="Content\css\openid\images\facebookW.png" />
-    <Content Include="Content\css\openid\images\fadegrey.png" />
-    <Content Include="Content\css\openid\images\flickr.png" />
-    <Content Include="Content\css\openid\images\flickrW.png" />
-    <Content Include="Content\css\openid\images\googleW.png" />
-    <Content Include="Content\css\openid\images\livejournal.png" />
-    <Content Include="Content\css\openid\images\myopenid.png" />
-    <Content Include="Content\css\openid\images\myopenidW.png" />
-    <Content Include="Content\css\openid\images\myspaceW.png" />
-    <Content Include="Content\css\openid\images\openidico.png" />
-    <Content Include="Content\css\openid\images\openidW.png" />
-    <Content Include="Content\css\openid\images\technorati.png" />
-    <Content Include="Content\css\openid\images\verisign.png" />
-    <Content Include="Content\css\openid\images\vidoop.png" />
-    <Content Include="Content\css\openid\images\wordpress.png" />
-    <Content Include="Content\css\openid\images\yahooW.png" />
     <Content Include="Content\css\ResetCss.css" />
     <Content Include="Content\css\fullcalendar.css" />
     <Content Include="Content\js\date.f-0.5.0.js" />
@@ -313,10 +300,14 @@
     <Content Include="Content\js\jquery.ae.image.resize.js" />
     <Content Include="Content\js\jquery.ae.image.resize.min.js" />
     <Content Include="Content\js\jquery.datalink.js" />
+    <Content Include="Content\js\jquery.markitup.js" />
     <Content Include="Content\js\jquery.md5.js" />
     <Content Include="Content\js\jquery.myimgscale-0.2.js" />
     <Content Include="Content\js\jquery.myimgscale-0.2.min.js" />
     <Content Include="Content\js\jquery.openid.js" />
+    <Content Include="Content\js\jquery.openid.min.js" />
+    <Content Include="Content\js\openid-en.js" />
+    <Content Include="Content\js\openid-jquery.js" />
     <Content Include="Content\js\raccoon-blog.js" />
     <Content Include="Content\js\RequiredIfValidation.js" />
     <Content Include="Content\js\fullcalendar.min.js" />
@@ -394,6 +385,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\css\openid\images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\PostDetails\Details.cshtml" />
@@ -432,7 +424,7 @@
     <Content Include="Views\MailTemplates\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Content\css\openid\images\OneNote Table Of Contents.onetoc2" />
+    <Content Include="Views\ConfigurationAdmin\Index.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

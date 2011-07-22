@@ -2,10 +2,10 @@
 @foreach (var comment in Model)
 {
 	<item>
-		<title>@comment.Title</title>
-		<description>@comment.Body</description>
-		<link>@Url.AbsoluteAction("Details", "PostDetails", new { comment.PostId, comment.PostSlug })</link>
-		<guid>@Url.AbsoluteAction("Details", "PostDetails", new { comment.PostId, comment.PostSlug })</guid>
-		<pubDate>@comment.CreatedAt</pubDate>
+		<title>@XmlHelper.Content(comment.Title)</title>
+		<description>@XmlHelper.Content(comment.Body)</description>
+		<link>@XmlHelper.Content(Url.AbsoluteAction("Details", "PostDetails", new { comment.PostId, comment.PostSlug }))</link>
+		<guid>@XmlHelper.Content(Url.AbsoluteAction("Details", "PostDetails", new { comment.PostId, comment.PostSlug }))</guid>
+		<pubDate>@XmlHelper.Content(comment.CreatedAt)</pubDate>
 	</item>
 }
