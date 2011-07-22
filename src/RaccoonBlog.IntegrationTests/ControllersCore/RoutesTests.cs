@@ -202,7 +202,7 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
 		[Fact]
 		public void SocialLoginControllerRoutes()
 		{
-			"~/users/authenticate".ShouldMapTo<SocialLoginController>(c => c.Authenticate(null));
+			"~/users/authenticate".ShouldMapTo<SocialLoginController>(c => c.Authenticate(null, null));
 		}
 
 		[Fact]

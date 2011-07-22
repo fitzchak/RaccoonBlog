@@ -107,6 +107,8 @@
 				                <p>OpenID is service that allows you to log-on to many different websites using a single identity.
 				                Find out <a href="http://openid.net/what/">more about OpenID</a> and <a href="http://openid.net/get/">how to get an OpenID enabled account</a>.</p>
 			                </noscript>
+
+                            @Html.Hidden("returnUrl", Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))
 	                    </form>
                     </div>
                 }
@@ -153,7 +155,7 @@
 	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.tmpl.min.js")"></script>
 	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.md5.js")"></script>
 	<script type="text/javascript" src="@Url.Content("~/Content/js/date.f-0.5.0.min.js")"></script>
-	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.openid.min.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.openid.js")"></script>
 	<script type="text/javascript">
 	    $(function () {
 	        $('#openid').openid({

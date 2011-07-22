@@ -22,11 +22,10 @@ namespace RaccoonBlog.Web.Controllers
 	{
 		private static readonly OpenIdRelyingParty openid = new OpenIdRelyingParty();
 
-		public ActionResult Authenticate(string url)
+		public ActionResult Authenticate(string url, string returnUrl)
 		{
-			string returnUrl = Url.RouteUrl("default");
-			if (Request.UrlReferrer != null)
-				returnUrl = Request.UrlReferrer.ToString();
+			if (string.IsNullOrWhiteSpace(returnUrl))
+				returnUrl = Request.UrlReferrer != null ? Request.UrlReferrer.ToString() : Url.RouteUrl("default");
 
 			var response = openid.GetResponse();
 			if (response == null)
@@ -47,7 +46,7 @@ namespace RaccoonBlog.Web.Controllers
 				try
 				{
 					var request = openid.CreateRequest(url);
-					request.AddExtension(new ClaimsRequest { Email = DemandLevel.Request, FullName = DemandLevel.Request });
+					request.AddExtension(new ClaimsRequest { Email = DemandLevel.Require, FullName = DemandLevel.Require });
 					return request.RedirectingResponse.AsActionResult();
 				}
 				catch (ProtocolException ex)
@@ -67,17 +66,14 @@ namespace RaccoonBlog.Web.Controllers
 					{
 						var commenter = Session.Query<Commenter>()
 						                	.Where(c => c.OpenId == claimedIdentifier)
-						                	.FirstOrDefault() ?? new Commenter
-						                	                     	{
-						                	                     		Key = Guid.NewGuid(),
-						                	                     		OpenId = claimedIdentifier,
-						                	                     	};
+						                	.FirstOrDefault() ?? Commenter.CreateNew();
 
+						commenter.OpenId = claimedIdentifier;
 						if (string.IsNullOrWhiteSpace(claimsResponse.FullName) == false)
 							commenter.Name = claimsResponse.FullName;
 						if (string.IsNullOrWhiteSpace(claimsResponse.Email) == false)
 							commenter.Email = claimsResponse.Email;
-
+						
 						Session.Store(commenter);
 						CommenterUtil.SetCommenterCookie(Response, commenter.Key.MapTo<string>());
 					}
