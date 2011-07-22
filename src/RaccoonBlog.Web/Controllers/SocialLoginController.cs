@@ -22,7 +22,7 @@ namespace RaccoonBlog.Web.Controllers
 	{
 		private static readonly OpenIdRelyingParty openid = new OpenIdRelyingParty();
 
-		public ActionResult Authenticate(string openid_identifier)
+		public ActionResult Authenticate(string url)
 		{
 			string returnUrl = Url.RouteUrl("default");
 			if (Request.UrlReferrer != null)
@@ -32,7 +32,7 @@ namespace RaccoonBlog.Web.Controllers
 			if (response == null)
 			{
 				Identifier id;
-				if (Identifier.TryParse(openid_identifier, out id) == false)
+				if (Identifier.TryParse(url, out id) == false)
 					ModelState.AddModelError("identifier", "The specified login identifier is invalid");
 
 				if (ModelState.IsValid == false)
@@ -46,7 +46,7 @@ namespace RaccoonBlog.Web.Controllers
 
 				try
 				{
-					var request = openid.CreateRequest(openid_identifier);
+					var request = openid.CreateRequest(url);
 					request.AddExtension(new ClaimsRequest { Email = DemandLevel.Request, FullName = DemandLevel.Request });
 					return request.RedirectingResponse.AsActionResult();
 				}
