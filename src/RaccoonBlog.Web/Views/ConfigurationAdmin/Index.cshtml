@@ -3,5 +3,27 @@
     ViewBag.Title = "Blog Configuration";
 }
 <article>
-    @Html.DisplayForModel()
+    <p>
+        @Html.DisplayFor(config => config.Title)
+        @Html.DisplayFor(config => config.Subtitle)
+        @Html.DisplayFor(config => config.MetaDescription)
+        @Html.DisplayFor(config => config.MetaKeywords)
+        @Html.DisplayFor(config => config.Copyright)
+        @Html.DisplayFor(config => config.CustomCss)
+    </p>
+
+    <p>
+        @Html.DisplayFor(config => config.AkismetKey)
+        @Html.DisplayFor(config => config.GoogleAnalyticsKey)
+    </p>
+
+    <p>
+        @Html.DisplayFor(config => config.RssFuturePostsKey)
+        @Html.DisplayFor(config => config.RssFutureDaysAllowed)
+    </p>
+
+    <p>
+        @Html.DisplayFor(config => config.MinNumberOfPostForSignificantTag)
+        @Html.DisplayFor(config => config.NumberOfDayToCloseComments)
+    </p>
 </article>
