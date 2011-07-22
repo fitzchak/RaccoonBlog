@@ -28,33 +28,9 @@ namespace RaccoonBlog.Web.Controllers
 			var response = new OpenIdRelyingParty().GetResponse();
 			if (response == null)
 			{
-				Identifier id;
-				if (Identifier.TryParse(url, out id) == false)
-					ModelState.AddModelError("identifier", "The specified login identifier is invalid");
-
-				if (ModelState.IsValid == false)
-				{
-					if (Request.IsAjaxRequest())
-						return Json(new { Success = false, message = ModelState.GetFirstErrorMessage() });
-
-					TempData["Message"] = ModelState.GetFirstErrorMessage();
-					return Redirect(returnUrl);
-				}
-
-				try
-				{
-					var request = new OpenIdRelyingParty().CreateRequest(url);
-					request.AddExtension(new ClaimsRequest { Email = DemandLevel.Require, FullName = DemandLevel.Require });
-					return request.RedirectingResponse.AsActionResult();
-				}
-				catch (ProtocolException ex)
-				{
-					if (Request.IsAjaxRequest())
-						return Json(new { message = ex.Message });
-					TempData["Message"] = ex.Message;
-					return Redirect(returnUrl);
-				}
+				return HandleNullResponse(url, returnUrl);
 			}
+
 			switch (response.Status)
 			{
 				case AuthenticationStatus.Authenticated:
@@ -70,7 +46,9 @@ namespace RaccoonBlog.Web.Controllers
 					var claimsResponse = response.GetExtension<ClaimsResponse>();
 					if (claimsResponse != null)
 					{
-						if (string.IsNullOrWhiteSpace(claimsResponse.FullName) == false)
+						if (string.IsNullOrWhiteSpace(claimsResponse.Nickname) == false)
+							commenter.Name = claimsResponse.Nickname;
+						else if (string.IsNullOrWhiteSpace(claimsResponse.FullName) == false)
 							commenter.Name = claimsResponse.FullName;
 						if (string.IsNullOrWhiteSpace(claimsResponse.Email) == false)
 							commenter.Email = claimsResponse.Email;
@@ -87,6 +65,41 @@ namespace RaccoonBlog.Web.Controllers
 					return Redirect(returnUrl);
 			}
 			return new EmptyResult();
+		}
+
+		private ActionResult HandleNullResponse(string url, string returnUrl)
+		{
+			Identifier id;
+			if (Identifier.TryParse(url, out id) == false)
+				ModelState.AddModelError("identifier", "The specified login identifier is invalid");
+
+			if (ModelState.IsValid == false)
+			{
+				if (Request.IsAjaxRequest())
+					return Json(new {Success = false, message = ModelState.GetFirstErrorMessage()});
+
+				TempData["Message"] = ModelState.GetFirstErrorMessage();
+				return Redirect(returnUrl);
+			}
+
+			try
+			{
+				var request = new OpenIdRelyingParty().CreateRequest(url);
+				request.AddExtension(new ClaimsRequest
+				{
+					Email = DemandLevel.Request,
+					FullName = DemandLevel.Request,
+					Nickname = DemandLevel.Require
+				});
+				return request.RedirectingResponse.AsActionResult();
+			}
+			catch (ProtocolException ex)
+			{
+				if (Request.IsAjaxRequest())
+					return Json(new {message = ex.Message});
+				TempData["Message"] = ex.Message;
+				return Redirect(returnUrl);
+			}
 		}
 	}
 }
