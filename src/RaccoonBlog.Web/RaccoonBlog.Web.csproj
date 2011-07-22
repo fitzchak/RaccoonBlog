@@ -279,6 +279,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\custom\ayende.settings.less.css" />
+    <Content Include="Content\css\images\balloon.png" />
+    <Content Include="Content\css\images\indicator.gif" />
+    <Content Include="Content\css\images\openid-icons.png" />
     <Content Include="Content\css\images\openid-inputicon.gif" />
     <Content Include="Content\css\images\openid-providers-en.png" />
     <Content Include="Content\css\images\printer.png" />
@@ -295,6 +298,8 @@
     <Content Include="Content\js\jquery.md5.js" />
     <Content Include="Content\js\jquery.myimgscale-0.2.js" />
     <Content Include="Content\js\jquery.myimgscale-0.2.min.js" />
+    <Content Include="Content\js\jquery.openid.js" />
+    <Content Include="Content\js\jquery.openid.min.js" />
     <Content Include="Content\js\openid-en.js" />
     <Content Include="Content\js\openid-jquery.js" />
     <Content Include="Content\js\raccoon-blog.js" />

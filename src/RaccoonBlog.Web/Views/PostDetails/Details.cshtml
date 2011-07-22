@@ -101,23 +101,15 @@
 			{
                 if (Model.IsLoggedInCommenter == false)
                 {
-                    <form id="openid_form" action="@Url.Action("Authenticate", "SocialLogin")" method="post">
-                        <noscript>
-				            <p>OpenID is service that allows you to log-on to many different websites using a single identity.
-				            Find out <a href="http://openid.net/what/">more about OpenID</a> and <a href="http://openid.net/get/">how to get an OpenID enabled account</a>.</p>
-			            </noscript>
-
-		                <input type="hidden" name="action" value="verify" />
-
-			            <div id="openid_choice">
-				            <p>Please click your account provider:</p>
-				            <div id="openid_btns"></div>
-			            </div>
-			            <div id="openid_input_area">
-				            <input id="openid_identifier" name="openid_identifier" type="text" value="http://" />
-				            <input id="openid_submit" type="submit" value="Sign In"/>
-			            </div>
-	                </form>
+                    <div class="openid-wrapper">
+                        <form id="openid" action="@Url.Action("Authenticate", "SocialLogin")" method="post">
+                            <noscript>
+				                <p>OpenID is service that allows you to log-on to many different websites using a single identity.
+				                Find out <a href="http://openid.net/what/">more about OpenID</a> and <a href="http://openid.net/get/">how to get an OpenID enabled account</a>.</p>
+			                </noscript>
+	                    </form>
+                    </div>
+                    <div class="clr"></div>
                 }
                 if (ViewData.ModelState.IsValid == false)
                 { 
@@ -160,13 +152,18 @@
 	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.tmpl.min.js")"></script>
 	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.md5.js")"></script>
 	<script type="text/javascript" src="@Url.Content("~/Content/js/date.f-0.5.0.min.js")"></script>
-	<script type="text/javascript" src="@Url.Content("~/Content/js/openid-jquery.js")"></script>
-	<script type="text/javascript" src="@Url.Content("~/Content/js/openid-en.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.openid.min.js")"></script>
 	<script type="text/javascript">
 	    $(function () {
-	        Raccoon.Views.Details();
-	        openid.img_path = '@Url.Content("~/Content/css/images/")';
-	        openid.init('openid_identifier');
+	        $('#openid').openid({
+	            img_path: '@Url.Content("~/Content/css/images/")',
+	            txt: {
+	                label: 'Select your Open ID provider',
+	                username: 'Username',
+	                title: 'Social Login',
+	                sign: 'Sing In'
+	            }
+	        });
 	    });
 	</script>
 	<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
