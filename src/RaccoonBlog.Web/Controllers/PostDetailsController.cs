@@ -165,7 +165,7 @@ namespace RaccoonBlog.Web.Controllers
 
     		vm.Input = commenter.MapTo<CommentInput>();
     		vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
-			vm.IsLoggedInCommenter = string.IsNullOrEmpty(commenter.OpenId) == false;
+    		vm.IsLoggedInCommenter = string.IsNullOrEmpty(commenter.OpenId) == false || commenter.IsTrustedCommenter == true;
 		}
     }
 }
