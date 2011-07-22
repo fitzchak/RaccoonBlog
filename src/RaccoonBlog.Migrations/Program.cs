@@ -5,6 +5,7 @@ using System.Text;
 using System.Web;
 using RaccoonBlog.Web.Models;
 using Raven.Client.Document;
+using Raven.Client.Linq;
 
 namespace RaccoonBlog.Migrations
 {
@@ -12,14 +13,16 @@ namespace RaccoonBlog.Migrations
 	{
 		static void Main()
 		{
-			using(var store = new DocumentStore{Url = "http://localhost:9191"}.Initialize())
+			using (var store = new DocumentStore { ConnectionStringName = "RavenDB" }.Initialize())
 			{
 				int start = 0;
 				while (true)
 				{
-					using(var session = store.OpenSession())
+					using (var session = store.OpenSession())
 					{
 						var posts = session.Query<Post>()
+							.OrderBy(x => x.CreatedAt)
+							.Include(x => x.CommentsId)
 							.Skip(start)
 							.Take(128)
 							.ToList();
@@ -29,13 +32,18 @@ namespace RaccoonBlog.Migrations
 
 						foreach (var post in posts)
 						{
-							post.Title = HttpUtility.HtmlDecode(post.Title);
+							session.Load<PostComments>(post.CommentsId).Post = new PostComments.PostReference
+							{
+								Id = post.Id,
+								PublishAt = post.PublishAt
+							};
 						}
 
 						session.SaveChanges();
+						start += posts.Count;
+						Console.WriteLine("Migrated {0}", start);
 					}
 
-					start += 128;
 				}
 			}
 		}
