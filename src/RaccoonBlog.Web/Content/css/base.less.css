@@ -556,10 +556,10 @@ div.commentsClosedMessage
 	float: right;
 }
 
-#postComment {
+#postComment .comment-form-wrapper {
 	width: 645px;
 }
-#postComment textarea {
+#postComment .comment-form-wrapper textarea {
 	width: 436px;
 } 
 #search 

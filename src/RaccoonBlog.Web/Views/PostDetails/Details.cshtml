@@ -109,7 +109,6 @@
 			                </noscript>
 	                    </form>
                     </div>
-                    <div class="clr"></div>
                 }
                 if (ViewData.ModelState.IsValid == false)
                 { 
@@ -117,27 +116,29 @@
 						@Html.ValidationSummary(true)
 					</div>
                 }
-                using (@Html.BeginForm("Comment", "PostDetails", new { Model.Post.Id }))
-                {
-					@Html.EditorFor(x => x.Input.Name)
-					@Html.EditorFor(x => x.Input.Email)
-					@Html.EditorFor(x => x.Input.Url)
-					@Html.EditorFor(x => x.Input.Body)
-
-                    if (!Model.IsTrustedCommenter)
+                <div class="comment-form-wrapper">
+                    @using (Html.BeginForm("Comment", "PostDetails", new { Model.Post.Id }))
                     {
-						<div class="form_item">
-							<label>
-								<span class="form_item_name">Are you human?</span>
-								@Html.GenerateCaptcha()
-								@Html.ValidationMessage("CaptchaNotValid")
-							</label>
-						</div>
+					    @Html.EditorFor(x => x.Input.Name)
+					    @Html.EditorFor(x => x.Input.Email)
+					    @Html.EditorFor(x => x.Input.Url)
+					    @Html.EditorFor(x => x.Input.Body)
+
+                        if (!Model.IsTrustedCommenter)
+                        {
+						    <div class="form_item">
+							    <label>
+								    <span class="form_item_name">Are you human?</span>
+								    @Html.GenerateCaptcha()
+								    @Html.ValidationMessage("CaptchaNotValid")
+							    </label>
+						    </div>
+                        }
+					    @Html.EditorFor(x => x.Input.CommenterKey)
+					    <input type="submit" value="Post Comment" />
+					    <div class="clr"></div>
                     }
-					@Html.EditorFor(x => x.Input.CommenterKey)
-					<input type="submit" value="Post Comment" />
-					<div class="clr"></div>
-                }
+                </div>
             }
 		</article>
 	</section>
