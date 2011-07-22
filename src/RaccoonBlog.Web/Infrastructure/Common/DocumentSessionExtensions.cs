@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using RaccoonBlog.Web.Infrastructure.Indexes;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
 using Raven.Client;
@@ -10,6 +12,20 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 {
 	public static class DocumentSessionExtensions
 	{
+		public static IList<PostCommentsIdentifier> QueryForRecentComments(this IDocumentSession documentSession, int pageSize, out RavenQueryStatistics stats)
+		{
+			var commentsIdentifiersQuery = documentSession.Query<PostCommentsIdentifier, PostComments_CreationDate>()
+				.Statistics(out stats)
+				.Include(comment => comment.PostCollectionId)
+				.Include(comment => comment.PostId);
+
+			var commentsIdentifiers = commentsIdentifiersQuery.OrderByDescending(x => x.CreatedAt)
+				.Take(pageSize)
+				.AsProjection<PostCommentsIdentifier>()
+				.ToList();
+			return commentsIdentifiers;
+		}
+
 		public static PostReference GetNextPrevPost(this IDocumentSession session, Post compareTo, bool isNext)
 		{
 			var queryable = session.Query<Post>()

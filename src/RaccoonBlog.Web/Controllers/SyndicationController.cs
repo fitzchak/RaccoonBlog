@@ -6,6 +6,7 @@ using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Indexes;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
+using Raven.Client;
 using Raven.Client.Linq;
 using RaccoonBlog.Web.Infrastructure.Common;
 
@@ -51,15 +52,7 @@ namespace RaccoonBlog.Web.Controllers
 		public ActionResult CommentsRss()
 		{
 			RavenQueryStatistics stats;
-			var commentsIdentifiersQuery = Session.Query<PostCommentsIdentifier, PostComments_CreationDate>()
-				.Statistics(out stats)
-				.Include(comment => comment.PostCollectionId)
-				.Include(comment => comment.PostId);
-
-			var commentsIdentifiers = commentsIdentifiersQuery.OrderByDescending(x => x.CreatedAt)
-				.Take(30)
-				.AsProjection<PostCommentsIdentifier>()
-				.ToList();
+			var commentsIdentifiers = Session.QueryForRecentComments(30, out stats);
 
 			string requestETagHeader = Request.Headers["If-None-Match"] ?? string.Empty;
 			var responseETagHeader = stats.Timestamp.ToString("o");
