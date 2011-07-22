@@ -37,11 +37,17 @@ namespace RaccoonBlog.Web.Controllers
 					var claimedIdentifier = response.ClaimedIdentifier.ToString();
 					var commenter = Session.Query<Commenter>()
 					                	.Where(c => c.OpenId == claimedIdentifier)
-					                	.FirstOrDefault() ?? new Commenter
-					                	                     	{
-					                	                     		Key = Guid.NewGuid(),
-					                	                     		OpenId = claimedIdentifier,
-					                	                     	};
+					                	.FirstOrDefault();
+				
+					if(commenter == null)
+					{
+						commenter = new Commenter
+						{
+							Key = Guid.NewGuid(),
+							OpenId = claimedIdentifier,
+						};
+						Session.Store(commenter);
+					}
 
 					var claimsResponse = response.GetExtension<ClaimsResponse>();
 					if (claimsResponse != null)
@@ -53,7 +59,6 @@ namespace RaccoonBlog.Web.Controllers
 						if (string.IsNullOrWhiteSpace(claimsResponse.Email) == false)
 							commenter.Email = claimsResponse.Email;
 						
-						Session.Store(commenter);
 						CommenterUtil.SetCommenterCookie(Response, commenter.Key.MapTo<string>());
 					}
 					return Redirect(returnUrl);
