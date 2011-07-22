@@ -13,6 +13,7 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 			Mapper.CreateMap<PostComments.Comment, CommentRssFeedViewModel>()
 				.ForMember(x => x.CreatedAt, o => o.MapFrom(m => m.CreatedAt.ToString("R")))
 				.ForMember(x => x.PostId, o => o.Ignore())
+				.ForMember(x => x.CommentId, o => o.MapFrom(x=>x.Id))
 				.ForMember(x => x.PostTitle, o => o.Ignore())
 				.ForMember(x => x.PostSlug, o => o.Ignore())
 				;

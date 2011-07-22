@@ -4,8 +4,8 @@
 	<item>
 		<title>@XmlHelper.Content(comment.Title)</title>
 		<description>@XmlHelper.Content(comment.Body)</description>
-		<link>Url.AbsoluteAction("Details", "PostDetails", new { comment.PostId, comment.PostSlug })</link>
-		<guid>Url.AbsoluteAction("Details", "PostDetails", new { comment.PostId, comment.PostSlug })</guid>
+		<link>Url.AbsoluteAction("Details", "PostDetails", new { comment.PostId, comment.PostSlug})#comment@comment.CommentId</link>
+		<guid>Url.AbsoluteAction("Details", "PostDetails", new { comment.PostId, comment.PostSlug})#comment@comment.CommentId</guid>
 		<pubDate>comment.CreatedAt</pubDate>
 	</item>
 }
