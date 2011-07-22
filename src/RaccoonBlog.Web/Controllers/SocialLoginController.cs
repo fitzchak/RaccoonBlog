@@ -9,6 +9,7 @@ using System.Linq;
 using System.Web.Mvc;
 using DotNetOpenAuth.Messaging;
 using DotNetOpenAuth.OpenId;
+using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
 using DotNetOpenAuth.OpenId.Extensions.SimpleRegistration;
 using DotNetOpenAuth.OpenId.RelyingParty;
 using RaccoonBlog.Web.Helpers;
@@ -37,30 +38,20 @@ namespace RaccoonBlog.Web.Controllers
 					var claimedIdentifier = response.ClaimedIdentifier.ToString();
 					var commenter = Session.Query<Commenter>()
 					                	.Where(c => c.OpenId == claimedIdentifier)
-					                	.FirstOrDefault();
-				
-					if(commenter == null)
+					                	.FirstOrDefault() ?? new Commenter
+					                	{
+					                		Key = Guid.NewGuid(),
+					                		OpenId = claimedIdentifier,
+					                	};
+
+					SetCommenterValuesFromOpenIdResponse(response, commenter);
+
+					if (string.IsNullOrWhiteSpace(commenter.Email) == false && string.IsNullOrWhiteSpace(commenter.Name) == false)
 					{
-						commenter = new Commenter
-						{
-							Key = Guid.NewGuid(),
-							OpenId = claimedIdentifier,
-						};
+						CommenterUtil.SetCommenterCookie(Response, commenter.Key.MapTo<string>());
 						Session.Store(commenter);
 					}
 
-					var claimsResponse = response.GetExtension<ClaimsResponse>();
-					if (claimsResponse != null)
-					{
-						if (string.IsNullOrWhiteSpace(claimsResponse.Nickname) == false)
-							commenter.Name = claimsResponse.Nickname;
-						else if (string.IsNullOrWhiteSpace(claimsResponse.FullName) == false)
-							commenter.Name = claimsResponse.FullName;
-						if (string.IsNullOrWhiteSpace(claimsResponse.Email) == false)
-							commenter.Email = claimsResponse.Email;
-						
-						CommenterUtil.SetCommenterCookie(Response, commenter.Key.MapTo<string>());
-					}
 					return Redirect(returnUrl);
 				case AuthenticationStatus.Canceled:
 					TempData["Message"] = "Canceled at provider";
@@ -70,6 +61,32 @@ namespace RaccoonBlog.Web.Controllers
 					return Redirect(returnUrl);
 			}
 			return new EmptyResult();
+		}
+
+		private static void SetCommenterValuesFromOpenIdResponse(IAuthenticationResponse response, Commenter commenter)
+		{
+			var claimsResponse = response.GetExtension<ClaimsResponse>();
+			if (claimsResponse != null)
+			{
+				if (string.IsNullOrWhiteSpace(claimsResponse.Nickname) == false)
+					commenter.Name = claimsResponse.Nickname;
+				else if (string.IsNullOrWhiteSpace(claimsResponse.FullName) == false)
+					commenter.Name = claimsResponse.FullName;
+				if (string.IsNullOrWhiteSpace(claimsResponse.Email) == false)
+					commenter.Email = claimsResponse.Email;
+			}
+			var fetchResponse = response.GetExtension<FetchResponse>();
+			if (fetchResponse != null) // let us try from the attributes
+			{
+				commenter.Email = fetchResponse.GetAttributeValue(WellKnownAttributes.Contact.Email);
+				commenter.Name = fetchResponse.GetAttributeValue(WellKnownAttributes.Name.FullName) ??
+				                 fetchResponse.GetAttributeValue(WellKnownAttributes.Name.First) + " " +
+				                 fetchResponse.GetAttributeValue(WellKnownAttributes.Name.Last);
+
+				commenter.Url = fetchResponse.GetAttributeValue(WellKnownAttributes.Contact.Web.Blog) ??
+				                fetchResponse.GetAttributeValue(WellKnownAttributes.Contact.Web.Homepage);
+
+			}
 		}
 
 		private ActionResult HandleNullResponse(string url, string returnUrl)
@@ -89,12 +106,29 @@ namespace RaccoonBlog.Web.Controllers
 
 			try
 			{
-				var request = new OpenIdRelyingParty().CreateRequest(url);
-				request.AddExtension(new ClaimsRequest
+				var theReturnUrlForOpenId = new UriBuilder(Url.AbsoluteAction("Authenticate"))
 				{
-					Email = DemandLevel.Request,
-					FullName = DemandLevel.Request,
-					Nickname = DemandLevel.Require
+					Query = "returnUrl=" + Uri.EscapeUriString(returnUrl)
+				}.Uri;
+				
+				var request = new OpenIdRelyingParty().CreateRequest(url, Realm.AutoDetect, theReturnUrlForOpenId);
+				request.AddExtension(new FetchRequest  // requires for Google 
+				{
+					Attributes =
+				                     	{
+				                     		new AttributeRequest(WellKnownAttributes.Name.First, true),
+											new AttributeRequest(WellKnownAttributes.Name.Last, true),
+											new AttributeRequest(WellKnownAttributes.Contact.Email, true),
+											new AttributeRequest(WellKnownAttributes.Contact.Web.Blog, true),
+											new AttributeRequest(WellKnownAttributes.Contact.Web.Homepage, true),
+											new AttributeRequest(WellKnownAttributes.Name.FullName, false),
+				                     	}
+				});
+				request.AddExtension(new ClaimsRequest // other providers
+				{
+					Email = DemandLevel.Require,
+					FullName = DemandLevel.Require,
+					Nickname = DemandLevel.Require,
 				});
 				return request.RedirectingResponse.AsActionResult();
 			}
