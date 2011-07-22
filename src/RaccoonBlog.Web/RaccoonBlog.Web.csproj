@@ -150,6 +150,7 @@
     <Compile Include="Helpers\Binders\GuidBinder.cs" />
     <Compile Include="Helpers\StaticFileUrlHelperExtensions.cs" />
     <Compile Include="Helpers\XmlHelper.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\BlogConfigAdminViewModelMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\SyndicationMapperProfile.cs" />
     <Compile Include="Infrastructure\Common\DocumentSessionExtensions.cs" />
     <Compile Include="Helpers\Routes\RouteCollectionExtension.cs" />
@@ -251,6 +252,7 @@
     <Compile Include="Services\RssModels\WordpressCategory.cs" />
     <Compile Include="ViewModels\AbstractViewModel.cs" />
     <Compile Include="ViewModels\AdminPostDetailsViewModel.cs" />
+    <Compile Include="ViewModels\BlogConfigAdminViewModel.cs" />
     <Compile Include="ViewModels\BlogConfigViewModel.cs" />
     <Compile Include="ViewModels\ChangePassViewModel.cs" />
     <Compile Include="ViewModels\CommenterUtil.cs" />
