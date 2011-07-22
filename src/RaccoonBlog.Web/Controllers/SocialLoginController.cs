@@ -20,14 +20,12 @@ namespace RaccoonBlog.Web.Controllers
 {
 	public class SocialLoginController : AbstractController
 	{
-		private static readonly OpenIdRelyingParty openid = new OpenIdRelyingParty();
-
 		public ActionResult Authenticate(string url, string returnUrl)
 		{
 			if (string.IsNullOrWhiteSpace(returnUrl))
 				returnUrl = Request.UrlReferrer != null ? Request.UrlReferrer.ToString() : Url.RouteUrl("default");
 
-			var response = openid.GetResponse();
+			var response = new OpenIdRelyingParty().GetResponse();
 			if (response == null)
 			{
 				Identifier id;
@@ -45,7 +43,7 @@ namespace RaccoonBlog.Web.Controllers
 
 				try
 				{
-					var request = openid.CreateRequest(url);
+					var request = new OpenIdRelyingParty().CreateRequest(url);
 					request.AddExtension(new ClaimsRequest { Email = DemandLevel.Require, FullName = DemandLevel.Require });
 					return request.RedirectingResponse.AsActionResult();
 				}
