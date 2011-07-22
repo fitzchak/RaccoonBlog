@@ -1,29 +1,33 @@
-﻿@model BlogConfigAdminViewModel
+﻿@model BlogConfigurationInput
 @{
-    ViewBag.Title = "Blog Configuration";
+	ViewBag.Title = "Blog Configuration";
 }
 <article>
-    <p>
-        @Html.DisplayFor(config => config.Title)
-        @Html.DisplayFor(config => config.Subtitle)
-        @Html.DisplayFor(config => config.MetaDescription)
-        @Html.DisplayFor(config => config.MetaKeywords)
-        @Html.DisplayFor(config => config.Copyright)
-        @Html.DisplayFor(config => config.CustomCss)
-    </p>
+	@using (Html.BeginForm())
+	{
+		<p>
+			@Html.EditorFor(config => config.Title)
+			@Html.EditorFor(config => config.Subtitle)
+			@Html.EditorFor(config => config.MetaDescription)
+			@Html.EditorFor(config => config.MetaKeywords)
+			@Html.EditorFor(config => config.Copyright)
+			@Html.EditorFor(config => config.CustomCss)
+		</p>
 
-    <p>
-        @Html.DisplayFor(config => config.AkismetKey)
-        @Html.DisplayFor(config => config.GoogleAnalyticsKey)
-    </p>
+		<p>
+			@Html.EditorFor(config => config.AkismetKey)
+			@Html.EditorFor(config => config.GoogleAnalyticsKey)
+		</p>
 
-    <p>
-        @Html.DisplayFor(config => config.RssFuturePostsKey)
-        @Html.DisplayFor(config => config.RssFutureDaysAllowed)
-    </p>
+		<p>
+			@Html.EditorFor(config => config.RssFuturePostsKey)
+			@Html.EditorFor(config => config.RssFutureDaysAllowed)
+		</p>
 
-    <p>
-        @Html.DisplayFor(config => config.MinNumberOfPostForSignificantTag)
-        @Html.DisplayFor(config => config.NumberOfDayToCloseComments)
-    </p>
+		<p>
+			@Html.EditorFor(config => config.MinNumberOfPostForSignificantTag)
+			@Html.EditorFor(config => config.NumberOfDayToCloseComments)
+		</p>
+		<input type="submit" value="Save" />
+	}
 </article>

@@ -1,12 +1,16 @@
+using System;
 using System.ComponentModel.DataAnnotations;
+using RaccoonBlog.Web.Helpers.Validation;
 
 namespace RaccoonBlog.Web.ViewModels
 {
-	public class BlogConfigAdminViewModel
+	public class BlogConfigurationInput
 	{
+		[Required]
 		[Display(Name = "Title")]
 		public string Title { get; set; }
 
+		[Required]
 		[Display(Name = "Subtitle")]
 		public string Subtitle { get; set; }
 
@@ -22,6 +26,8 @@ namespace RaccoonBlog.Web.ViewModels
 		[Display(Name = "GoogleAnalyticsKey")]
 		public string GoogleAnalyticsKey { get; set; }
 
+		[Required]
+		[NonEmptyGuid]
 		[Display(Name = "RssFuturePostsKey")]
 		public string RssFuturePostsKey { get; set; }
 

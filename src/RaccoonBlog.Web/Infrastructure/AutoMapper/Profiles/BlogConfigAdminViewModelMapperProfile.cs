@@ -8,7 +8,11 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 	{
 		public BlogConfigAdminViewModelMapperProfile()
 		{
-			Mapper.CreateMap<BlogConfig, BlogConfigAdminViewModel>()
+			Mapper.CreateMap<BlogConfig, BlogConfigurationInput>()
+				;
+
+			Mapper.CreateMap<BlogConfigurationInput, BlogConfig>()
+				.ForMember(x => x.Id, o => o.Ignore())
 				;
 		}
 	}
