@@ -3,6 +3,13 @@
 	ViewBag.Title = "Blog Configuration";
 }
 <article>
+	@if (ViewData.ModelState.IsValid == false)
+	{
+		<div class="form-error">
+			@Html.ValidationSummary(true)
+		</div>
+	}
+
 	@using (Html.BeginForm())
 	{
 		<p>
