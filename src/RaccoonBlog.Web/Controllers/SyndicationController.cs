@@ -48,7 +48,7 @@ namespace RaccoonBlog.Web.Controllers
 			return XmlView(posts.MapTo<PostRssFeedViewModel>(), responseETagHeader);
 		}
 
-		public ActionResult CommentsRss(Guid key)
+		public ActionResult CommentsRss()
 		{
 			RavenQueryStatistics stats;
 			var commentsIdentifiersQuery = Session.Query<PostCommentsIdentifier, PostComments_CreationDate>()
@@ -60,28 +60,29 @@ namespace RaccoonBlog.Web.Controllers
 				.Take(30)
 				.AsProjection<PostCommentsIdentifier>()
 				.ToList();
-			
-			var results = new List<CommentRssFeedViewModel>();
-			foreach (var commentIdentifier in commentsIdentifiers)
-			{
-				var comments = Session.Load<PostComments>(commentIdentifier.PostId);
-				var post = Session.Load<Post>(commentIdentifier.PostId);
-				if (comments != null && post != null)
-				{
-					var comment = comments.Comments.FirstOrDefault(x => x.Id == commentIdentifier.CommentId);
-					if (comment != null)
-					{
-						var model = comment.MapTo<CommentRssFeedViewModel>();
-						post.MapPropertiesToInstance(model);
-						results.Add(model);
-					}
-				}
-			}
 
 			string requestETagHeader = Request.Headers["If-None-Match"] ?? string.Empty;
 			var responseETagHeader = stats.Timestamp.ToString("o");
 			if (requestETagHeader == responseETagHeader)
 				return HttpNotModified();
+
+			var results = new List<CommentRssFeedViewModel>();
+			foreach (var commentIdentifier in commentsIdentifiers)
+			{
+				var comments = Session.Load<PostComments>(commentIdentifier.PostId);
+				var post = Session.Load<Post>(commentIdentifier.PostId);
+				if (comments == null || post == null)  // the post / comments got deleted in the meantime?
+					continue;
+
+				var comment = comments.Comments.FirstOrDefault(x => x.Id == commentIdentifier.CommentId);
+
+				if (comment == null) // we couldn't get the comment, maybe it was removed
+					continue;
+
+				var model = comment.MapTo<CommentRssFeedViewModel>();
+				post.MapPropertiesToInstance(model);
+				results.Add(model);
+			}
 
 			return XmlView(results, responseETagHeader);
 		}
