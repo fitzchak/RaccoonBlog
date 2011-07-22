@@ -5,8 +5,8 @@
 <service xmlns="http://archipelago.phrasewise.com/rsd">
 	<engineName>Raccoon Blog</engineName>
 	<engineLink>http://hibernatingrhinos.com</engineLink>
-	<homePageLink>@Url.RelativeToAbsolute(Url.RouteUrl("Default"))</homePageLink>
+	<homePageLink>@XmlHelper.Content(Url.RelativeToAbsolute(Url.RouteUrl("Default")))</homePageLink>
 	<apis>
-		<api name="MetaWeblog" preferred="true" blogID="0" apiLink="@Url.RelativeToAbsolute(Url.Content("~/services/metaweblogapi.ashx"))" />
+		<api name="MetaWeblog" preferred="true" blogID="0" apiLink="@XmlHelper.Attribute(Url.RelativeToAbsolute(Url.Content("~/services/metaweblogapi.ashx")))" />
 	</apis>
 </service>

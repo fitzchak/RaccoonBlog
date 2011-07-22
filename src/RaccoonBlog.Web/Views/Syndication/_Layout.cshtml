@@ -7,10 +7,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0">
 	<channel>
-		<title>@blogConfig.Title</title>
-		<link>@Url.RelativeToAbsolute(Url.RouteUrl("Default"))</link>
-		<description>@blogConfig.Title</description>
-		<copyright>@blogConfig.Copyright</copyright>
+		<title>@XmlHelper.Content(@blogConfig.Title)</title>
+		<link>@XmlHelper.Content(@Url.RelativeToAbsolute(Url.RouteUrl("Default")))</link>
+		<description>@XmlHelper.Content(@blogConfig.Title)</description>
+		<copyright>@XmlHelper.Content(blogConfig.Copyright)</copyright>
 		<ttl>60</ttl>
 		@RenderBody()
 	</channel>

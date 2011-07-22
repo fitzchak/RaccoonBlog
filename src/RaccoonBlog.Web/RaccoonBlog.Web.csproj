@@ -148,6 +148,7 @@
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Helpers\Binders\GuidBinder.cs" />
     <Compile Include="Helpers\StaticFileUrlHelperExtensions.cs" />
+    <Compile Include="Helpers\XmlHelper.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\SyndicationMapperProfile.cs" />
     <Compile Include="Infrastructure\Common\DocumentSessionExtensions.cs" />
     <Compile Include="Helpers\Routes\RouteCollectionExtension.cs" />
