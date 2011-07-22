@@ -210,5 +210,11 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
 		{
 			"~/WebResource.axd".ShouldBeIgnored();
 		}
+
+		[Fact]
+		public void ConfigurationAdminControllerRoutes()
+		{
+			"~/admin/configuration".ShouldMapTo<ConfigurationAdminController>(c => c.Index());
+		}
 	}
 }
