@@ -11,6 +11,7 @@ namespace RaccoonBlog.Web.Infrastructure.Indexes
 		{
 			Map = postComments => from postComment in postComments
 								  from comment in postComment.Comments
+								  where comment.IsSpam == false
 								  select new
 								  {
 								  	comment.CreatedAt, 
