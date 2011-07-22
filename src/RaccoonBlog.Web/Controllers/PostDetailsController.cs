@@ -96,15 +96,6 @@ namespace RaccoonBlog.Web.Controllers
     		return RedirectToAction("Details", new { Id = postReference.DomainId, postReference.Slug });
     	}
 
-		private void SetCommenterCookie(CommentInput commentInput)
-    	{
-			var cookie = new HttpCookie(CommenterCookieName, commentInput.CommenterKey)
-			{
-				Expires = DateTime.Now.AddYears(1)
-			};
-    		Response.Cookies.Add(cookie);
-    	}
-
     	private void ValidateCommentsAllowed(Post post, PostComments comments)
     	{
     		if (comments.AreCommentsClosed(post, BlogConfig.NumberOfDayToCloseComments))
