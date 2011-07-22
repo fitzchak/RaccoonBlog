@@ -11,14 +11,28 @@ namespace RaccoonBlog.Web.Controllers
     {
         public ActionResult RedirectLegacyPost(int year, int month, int day, string slug)
         {
-            var postQuery = Session.Query<Post>()
-                .WhereIsPublicPost()
-                .Where(post1 => post1.LegacySlug == slug &&
-                        (post1.PublishAt.Year == year && post1.PublishAt.Month == month && post1.PublishAt.Day == day));
+			// attempt to find a post with match slug in the given date, but will back off the exact date if we can't find it
+        	var post = Session.Query<Post>()
+        	           	.WhereIsPublicPost()
+        	           	.Where(p => p.LegacySlug == slug && (p.PublishAt.Year == year && p.PublishAt.Month == month && p.PublishAt.Day == day))
+        	           	.FirstOrDefault() ??
+        	          Session.Query<Post>()
+        	           	.WhereIsPublicPost()
+        	           	.Where(p => p.LegacySlug == slug && p.PublishAt.Year == year && p.PublishAt.Month == month)
+        	           	.FirstOrDefault() ??
+        	         Session.Query<Post>()
+        	           	.WhereIsPublicPost()
+        	           	.Where(p => p.LegacySlug == slug && p.PublishAt.Year == year)
+        	           	.FirstOrDefault() ??
+        	         Session.Query<Post>()
+        	           	.WhereIsPublicPost()
+        	           	.Where(p => p.LegacySlug == slug)
+        	           	.FirstOrDefault();
 
-            var post = postQuery.FirstOrDefault();
-            if (post == null)
-                return HttpNotFound();
+            if (post == null) 
+            {
+				return HttpNotFound();
+            }
 
             var postReference = post.MapTo<PostReference>();
             return RedirectToActionPermanent("Details", "PostDetails", new { Id = postReference.DomainId, postReference.Slug });
