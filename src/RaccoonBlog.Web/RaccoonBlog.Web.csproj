@@ -286,6 +286,7 @@
   <ItemGroup>
     <Content Include="Content\css\custom\ayende.settings.less.css" />
     <Content Include="Content\css\images\balloon.png" />
+    <Content Include="Content\css\images\feed-icon-14x14.png" />
     <Content Include="Content\css\images\indicator.gif" />
     <Content Include="Content\css\images\openid-icons.png" />
     <Content Include="Content\css\images\openid-inputicon.gif" />
