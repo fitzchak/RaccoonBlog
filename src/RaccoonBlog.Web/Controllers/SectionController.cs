@@ -25,9 +25,17 @@ namespace RaccoonBlog.Web.Controllers
 				.Take(5)
 				.ToList();
 
+			var lastPost = Session.Query<Post>()
+				.Where(x => x.IsDeleted == false)
+				.OrderByDescending(x => x.PublishAt)
+				.Select(x => new Post { PublishAt = x.PublishAt })
+				.FirstOrDefault();
+				
+
 			return View(
 				new FuturePostsViewModel
 				{
+					LastPostDate = lastPost == null ? null : (DateTimeOffset?)lastPost.PublishAt,
 					TotalCount = stats.TotalResults,
 					Posts = futurePosts.MapTo<FuturePostViewModel>()
 				});
