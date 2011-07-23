@@ -652,6 +652,11 @@ ul.recent-comments
 	font-size: smaller;
 }
 
+ul.recent-comments li
+{
+	margin-left: -15px;
+}
+
 ul li.recent-comments-author {
 	font-style: italic;
 }
