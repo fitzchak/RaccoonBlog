@@ -661,3 +661,9 @@ ul li.recent-comments-post-title {
 ul li div.recent-comments-body {
 	
 }
+div.comments-rss 
+{
+	background: formatString("url({0}images/feed-icon-14x14.png)", @siteRoot) left no-repeat;
+	font-size: smaller;
+	padding-left: 15px;
+}

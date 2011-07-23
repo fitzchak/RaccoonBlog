@@ -60,6 +60,9 @@
 			</div>
 			<div class="clr"></div>
 		</div>
+		<div class="comments-rss">
+			<a rel="alternate" type="application/rss+xml" href="@Url.Action("CommentsRss", "Syndication", new { id = Model.Post.Id })">Comments Feed</a>
+		</div>
 	</footer>
 
 	
