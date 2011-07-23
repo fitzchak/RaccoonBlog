@@ -43,7 +43,6 @@ namespace RaccoonBlog.Migrations
 						start += posts.Count;
 						Console.WriteLine("Migrated {0}", start);
 					}
-
 				}
 			}
 		}
