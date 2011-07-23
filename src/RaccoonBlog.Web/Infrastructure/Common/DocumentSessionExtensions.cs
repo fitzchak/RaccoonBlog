@@ -22,6 +22,7 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 				.Include(comment => comment.PostId)
 				.OrderByDescending(x => x.PostPublishAt)
 				.ThenByDescending(x => x.CreatedAt)
+				.Where(x=>x.PostPublishAt < DateTimeOffset.Now.AsMinutes())
 				.AsProjection<PostCommentsIdentifier>();
 
 			var commentsIdentifiers = processQuery(query)
@@ -31,7 +32,7 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 			        let comments = documentSession.Load<PostComments>(commentIdentifier.PostCommentsId)
 			        let post = documentSession.Load<Post>(commentIdentifier.PostId)
 			        let comment = comments.Comments.FirstOrDefault(x => x.Id == commentIdentifier.CommentId)
-			        where comment != null
+			        where comment != null && post.IsDeleted == false
 			        select Tuple.Create(comment, post))
 				.ToList();
 		}
