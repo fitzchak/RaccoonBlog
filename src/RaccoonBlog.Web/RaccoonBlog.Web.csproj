@@ -150,10 +150,8 @@
     <Compile Include="Helpers\Binders\GuidBinder.cs" />
     <Compile Include="Helpers\StaticFileUrlHelperExtensions.cs" />
     <Compile Include="Helpers\Validation\NonEmptyGuid.cs" />
-    <Compile Include="Helpers\XmlHelper.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\BlogConfigAdminViewModelMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\StringToGuidConverter.cs" />
-    <Compile Include="Infrastructure\AutoMapper\Profiles\SyndicationMapperProfile.cs" />
     <Compile Include="Infrastructure\Common\DocumentSessionExtensions.cs" />
     <Compile Include="Helpers\Routes\RouteCollectionExtension.cs" />
     <Content Include="Content\css\custom\ayende.less.css" />
@@ -183,7 +181,7 @@
     <Compile Include="Helpers\UrlHelperExtensions.cs" />
     <Compile Include="Helpers\Validation\RequiredIfAttribute.cs" />
     <Compile Include="Helpers\Results\JsonNetResult.cs" />
-    <Compile Include="Infrastructure\ActionResults\XmlViewResult.cs" />
+    <Compile Include="Infrastructure\ActionResults\XmlResult.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\AbstractProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\BlogConfigMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\EmailViewModelMapperProfile.cs" />
@@ -263,11 +261,9 @@
     <Compile Include="ViewModels\EditPostViewModel.cs" />
     <Compile Include="ViewModels\FuturePostViewModel.cs" />
     <Compile Include="ViewModels\LoginInput.cs" />
-    <Compile Include="ViewModels\CommentRssFeedViewModel.cs" />
     <Compile Include="ViewModels\NewCommentEmailViewModel.cs" />
     <Compile Include="ViewModels\PostInput.cs" />
     <Compile Include="ViewModels\PostReference.cs" />
-    <Compile Include="ViewModels\PostRssFeedViewModel.cs" />
     <Compile Include="ViewModels\PostsStatisticsViewModel.cs" />
     <Compile Include="ViewModels\PostSummaryJson.cs" />
     <Compile Include="ViewModels\PostViewModel.cs" />
@@ -406,21 +402,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Section\PostsStatistics.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Syndication\CommentsRss.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Syndication\_Layout.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Syndication\Rss.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Syndication\Rsd.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Syndication\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\MailTemplates\_ViewStart.cshtml" />

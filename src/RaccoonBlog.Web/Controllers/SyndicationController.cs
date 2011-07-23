@@ -1,14 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Linq;
-using RaccoonBlog.Web.Infrastructure.AutoMapper;
-using RaccoonBlog.Web.Infrastructure.Indexes;
+using System.Xml.Linq;
 using RaccoonBlog.Web.Models;
-using RaccoonBlog.Web.ViewModels;
-using Raven.Client;
 using Raven.Client.Linq;
 using RaccoonBlog.Web.Infrastructure.Common;
+using RaccoonBlog.Web.Helpers;
 
 namespace RaccoonBlog.Web.Controllers
 {
@@ -16,7 +13,24 @@ namespace RaccoonBlog.Web.Controllers
 	{
 		public ActionResult Rsd()
 		{
-			return XmlView();
+			var ns = XNamespace.Get("http://archipelago.phrasewise.com/rsd");
+
+			return Xml(new XDocument(
+						new XElement(ns + "service",
+									 new XElement(ns + "engineName", "Raccoon Blog"),
+									 new XElement(ns + "engineLink", "http://hibernatingrhinos.com"),
+									 new XElement(ns + "homePageLink", Url.RelativeToAbsolute(Url.RouteUrl("Default"))),
+									 new XElement(ns + "apis",
+												  new XElement(ns + "api",
+															   new XAttribute("name", "MetaWeblog"),
+															   new XAttribute("preferred", "true"),
+															   new XAttribute("blogID", "0"),
+															   new XAttribute("apiLink", Url.RelativeToAbsolute(Url.Content("~/services/metaweblogapi.ashx")))
+													)
+										)
+							)
+						), typeof(SyndicationController).FullName);
+
 		}
 
 		public ActionResult Rss(string tag, Guid key)
@@ -46,13 +60,36 @@ namespace RaccoonBlog.Web.Controllers
 			if (requestETagHeader == responseETagHeader)
 				return HttpNotModified();
 
-			return XmlView(posts.MapTo<PostRssFeedViewModel>(), responseETagHeader);
+			var rss = new XDocument(
+				new XElement("rss",
+							 new XAttribute("version", "2.0"),
+							 new XElement("channel",
+										  new XElement("title", BlogConfig.Title),
+										  new XElement("link", Url.RelativeToAbsolute(Url.RouteUrl("Default"))),
+										  new XElement("description", BlogConfig.MetaDescription ?? BlogConfig.Title),
+										  new XElement("copyright", String.Format("{0} (c) {1}", BlogConfig.Copyright, DateTime.Now.Year)),
+										  new XElement("ttl", "60"),
+										  from post in posts
+										  let postLink = Url.AbsoluteAction("Details", "PostDetails", new { post.Id, Slug = SlugConverter.TitleToSlug(post.Title) })
+										  select new XElement("item",
+															  new XElement("title", post.Title),
+															  new XElement("description", post.Body),
+															  new XElement("link", postLink),
+																new XElement("guid", postLink),
+															  new XElement("pubDate", post.PublishAt.ToString("R"))
+											)
+								)
+					)
+				);
+
+			return Xml(rss, responseETagHeader);
 		}
+
 
 		public ActionResult CommentsRss(int? id)
 		{
 			RavenQueryStatistics stats = null;
-			var commentsTuples = Session.QueryForRecentComments(q=>
+			var commentsTuples = Session.QueryForRecentComments(q =>
 			{
 				if (id != null)
 				{
@@ -67,15 +104,32 @@ namespace RaccoonBlog.Web.Controllers
 			if (requestETagHeader == responseETagHeader)
 				return HttpNotModified();
 
-			var results = new List<CommentRssFeedViewModel>();
-			foreach (var tuple in commentsTuples)
-			{
-				var model = tuple.Item1.MapTo<CommentRssFeedViewModel>();
-				tuple.Item2.MapPropertiesToInstance(model);
-				results.Add(model);
-			}
-			
-			return XmlView(results, responseETagHeader);
+			var rss = new XDocument(
+			new XElement("rss",
+						 new XAttribute("version", "2.0"),
+						 new XElement("channel",
+									  new XElement("title", BlogConfig.Title),
+									  new XElement("link", Url.RelativeToAbsolute(Url.RouteUrl("Default"))),
+									  new XElement("description", BlogConfig.MetaDescription ?? BlogConfig.Title),
+									  new XElement("copyright", String.Format("{0} (c) {1}", BlogConfig.Copyright, DateTime.Now.Year)),
+									  new XElement("ttl", "60"),
+									  from commentsTuple in commentsTuples
+									  let comment = commentsTuple.Item1
+									  let post = commentsTuple.Item2
+									  let link = Url.AbsoluteAction("Details", "PostDetails", new { post.Id, Slug = SlugConverter.TitleToSlug(post.Title) }) + "#comment" + comment.Id
+									  select new XElement("item",
+														  new XElement("title", comment.Author +" commented on " + post.Title),
+														  new XElement("description", comment.Body),
+														  new XElement("link", link),
+															new XElement("guid", link),
+														  new XElement("pubDate", comment.CreatedAt.ToString("R"))
+										)
+							)
+				)
+			);
+
+			return Xml(rss, responseETagHeader);
+
 		}
 
 		public ActionResult LegacyRss()

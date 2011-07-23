@@ -1,5 +1,6 @@
 using System;
 using System.Web.Mvc;
+using System.Xml.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using RaccoonBlog.Web.Helpers.Results;
@@ -42,21 +43,10 @@ namespace RaccoonBlog.Web.Controllers
 		{
 			return new HttpStatusCodeResult(304);
 		}
-
 		
-		protected ActionResult XmlView(object model = null, string etag = null)
+		protected ActionResult Xml(XDocument xml, string etag)
 		{
-			if (model != null)
-				ViewData.Model = model;
-
-			return new XmlViewResult
-			{
-				ETag = etag,
-				ViewName = null,
-				MasterName = null,
-				ViewData = ViewData,
-				TempData = TempData
-			};
+			return new XmlResult(xml, etag);
 		}
 
 		protected new JsonNetResult Json(object data)
