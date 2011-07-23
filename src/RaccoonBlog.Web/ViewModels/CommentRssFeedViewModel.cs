@@ -13,6 +13,6 @@ namespace RaccoonBlog.Web.ViewModels
 		public string PostTitle { get; set; }
 		public string PostSlug { get; set; }
 
-		public string Title { get { return string.Format("New comment on post: {0}, by {1}", PostTitle, Author); }}
+		public string Title { get { return string.Format("{1} commented on {0}", PostTitle, Author); }}
 	}
 }
