@@ -86,8 +86,7 @@ namespace RaccoonBlog.Web.Controllers
 		[ChildActionOnly]
 		public ActionResult RecentComments()
 		{
-			RavenQueryStatistics stats;
-			var commentsTuples = Session.QueryForRecentComments(Guid.Empty, 5, out stats);
+			var commentsTuples = Session.QueryForRecentComments(q=> q.Take(5));
 
 			var result = new List<RecentCommentViewModel>();
 			foreach (var commentsTuple in commentsTuples)
