@@ -66,9 +66,13 @@ namespace RaccoonBlog.Web.Controllers
 		[ChildActionOnly]
 		public ActionResult ArchivesList()
 		{
+			var now = DateTime.Now;
+
 			var dates = Session.Query<PostCountByMonth, Posts_ByMonthPublished_Count>()
 				.OrderByDescending(x => x.Year)
 				.ThenByDescending(x => x.Month)
+				// filter future stats
+				.Where(x=> x.Year < now.Year || x.Year == now.Year && x.Month <= now.Month)
 				.ToList();
 
 			return View(dates);
