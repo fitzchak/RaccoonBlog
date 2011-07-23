@@ -49,10 +49,18 @@ namespace RaccoonBlog.Web.Controllers
 			return XmlView(posts.MapTo<PostRssFeedViewModel>(), responseETagHeader);
 		}
 
-		public ActionResult CommentsRss(Guid key)
+		public ActionResult CommentsRss(int? id)
 		{
-			RavenQueryStatistics stats;
-			var commentsTuples = Session.QueryForRecentComments(key, 30, out stats);
+			RavenQueryStatistics stats = null;
+			var commentsTuples = Session.QueryForRecentComments(q=>
+			{
+				if (id != null)
+				{
+					var postId = "posts/" + id;
+					q = q.Where(x => x.PostId == postId);
+				}
+				return q.Statistics(out stats).Take(30);
+			});
 
 			string requestETagHeader = Request.Headers["If-None-Match"] ?? string.Empty;
 			var responseETagHeader = stats.Timestamp.ToString("o");
