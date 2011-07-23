@@ -12,10 +12,15 @@
 }
 else
 {
-	<li>No future posts</li>
+	<li>No future posts left, oh my!</li>
 }
 </ol>
 @if (Model.TotalCount > Model.Posts.Count)
 {
 	<p>And @(Model.TotalCount - Model.Posts.Count) more posts are pending...</p>
+}
+
+@if (Model.Posts.Count > 0)
+{
+	<p>There are posts all the way to @Model.Posts.Last().PublishAt.ToString("MMM, dd yyyy")</p>
 }

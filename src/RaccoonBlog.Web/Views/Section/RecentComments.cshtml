@@ -8,13 +8,14 @@
 		var postUrl = Url.Action("Details", "PostDetails", new { Id = comment.PostId, Slug = comment.PostSlug });
 		
 		<li>
-			<div class="recent-comments-body">@comment.ShortBody</div>
-			<div>By <span class="recent-comments-author">@comment.Author</span> on <span class="recent-comments-post-title">@comment.PostTitle</span></div>
-			<div>
+			<div class="recent-comments-body">@comment.ShortBody 
 			<a href="@(postUrl)#comment@(comment.CommentId)">
-				More...
+				Read all.
 			</a>
 			</div>
+			<p/>
+			<div><b>By</b> @comment.Author on <i>@comment.PostTitle</i></div>
+			<p/>
 		</li>
 	}
 </ul>
