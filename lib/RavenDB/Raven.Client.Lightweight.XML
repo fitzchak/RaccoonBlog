@@ -1143,8 +1143,8 @@
         <member name="M:Raven.Client.Connection.ReplicationInformer.RefreshReplicationInformation(Raven.Client.Connection.ServerClient)">
             <summary>
             Refreshes the replication information.
+            Expert use only.
             </summary>
-            <param name="commands">The commands.</param>
         </member>
         <member name="M:Raven.Client.Connection.ReplicationInformer.ResetFailureCount(System.String)">
             <summary>
@@ -1886,7 +1886,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Raven.Client.Document.IAbstractDocumentQuery`1.WhereEquals(Raven.Client.WhereEqualsParams)">
+        <member name="M:Raven.Client.Document.IAbstractDocumentQuery`1.WhereEquals(Raven.Client.WhereParams)">
             <summary>
               Matches exact value
             </summary>
@@ -2255,6 +2255,12 @@
             instance that will evaluate the query only when needed
             </summary>
         </member>
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.Lazily(System.Action{System.Collections.Generic.IEnumerable{`0}})">
+            <summary>
+            Register the query as a lazy query in the session and return a lazy
+            instance that will evaluate the query only when needed
+            </summary>
+        </member>
         <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.GetProjectionFields">
             <summary>
               Gets the fields for projection
@@ -2367,7 +2373,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.WhereEquals(Raven.Client.WhereEqualsParams)">
+        <member name="M:Raven.Client.Document.AbstractDocumentQuery`2.WhereEquals(Raven.Client.WhereParams)">
             <summary>
               Matches exact value
             </summary>
@@ -2765,7 +2771,7 @@
               Defaults to allow wildcards only if analyzed
             </remarks>
         </member>
-        <member name="M:Raven.Client.IDocumentQueryBase`2.WhereEquals(Raven.Client.WhereEqualsParams)">
+        <member name="M:Raven.Client.IDocumentQueryBase`2.WhereEquals(Raven.Client.WhereParams)">
             <summary>
               Matches exact value
             </summary>
@@ -3101,7 +3107,7 @@
             	Defaults to allow wildcards only if analyzed
             </remarks>
         </member>
-        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#WhereEquals(Raven.Client.WhereEqualsParams)">
+        <member name="M:Raven.Client.Document.AsyncDocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IAsyncDocumentQuery{T}}#WhereEquals(Raven.Client.WhereParams)">
             <summary>
             	Matches exact value
             </summary>
@@ -3437,6 +3443,15 @@
             Initializes a new instance of the <see cref="T:Raven.Client.Document.InMemoryDocumentSessionOperations"/> class.
             </summary>
         </member>
+        <member name="M:Raven.Client.Document.InMemoryDocumentSessionOperations.GetEtagFor``1(``0)">
+            <summary>
+            Gets the ETag for the specified entity.
+            If the entity is transient, it will load the etag from the store
+            and associate the current state of the entity with the etag from the server.
+            </summary>
+            <param name="instance">The instance.</param>
+            <returns></returns>
+        </member>
         <member name="M:Raven.Client.Document.InMemoryDocumentSessionOperations.GetMetadataFor``1(``0)">
             <summary>
             Gets the metadata for the specified entity.
@@ -3519,7 +3534,11 @@
             <summary>
             Stores the specified entity in the session. The entity will be saved when SaveChanges is called.
             </summary>
-            <param name="entity">The entity.</param>
+        </member>
+        <member name="M:Raven.Client.Document.InMemoryDocumentSessionOperations.Store(System.Object,System.Guid)">
+            <summary>
+            Stores the specified entity in the session. The entity will be saved when SaveChanges is called.
+            </summary>
         </member>
         <member name="M:Raven.Client.Document.InMemoryDocumentSessionOperations.GetOrGenerateDocumentKey(System.Object)">
             <summary>
@@ -3764,9 +3783,15 @@
             </summary>
             <param name="path">The path.</param>
         </member>
+        <member name="M:Raven.Client.IAsyncDocumentSession.Store(System.Object,System.Guid)">
+            <summary>
+            Stores the specified entity with the specified etag.
+            The entity will be saved when <see cref="M:Raven.Client.IAsyncDocumentSession.SaveChangesAsync"/> is called.
+            </summary>
+        </member>
         <member name="M:Raven.Client.IAsyncDocumentSession.Store(System.Object)">
             <summary>
-            Stores the specified entity in the session. The entity will be saved when <see cref="M:Raven.Client.IDocumentSession.SaveChanges"/> is called.
+            Stores the specified entity in the session. The entity will be saved when <see cref="M:Raven.Client.IAsyncDocumentSession.SaveChangesAsync"/> is called.
             </summary>
             <param name="entity">The entity.</param>
         </member>
@@ -3867,6 +3892,15 @@
             Gets the metadata for the specified entity.
             If the entity is transient, it will load the metadata from the store
             and associate the current state of the entity with the metadata from the server.
+            </summary>
+            <param name="instance">The instance.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.IAdvancedDocumentSessionOperations.GetEtagFor``1(``0)">
+            <summary>
+            Gets the ETag for the specified entity.
+            If the entity is transient, it will load the etag from the store
+            and associate the current state of the entity with the etag from the server.
             </summary>
             <param name="instance">The instance.</param>
             <returns></returns>
@@ -4360,18 +4394,37 @@
             <summary>
             Loads the specified ids.
             </summary>
-            <param name="ids">The ids.</param>
-            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.Batches.ILazySessionOperations.Load``1(System.Collections.Generic.IEnumerable{System.String},System.Action{``0[]})">
+            <summary>
+            Loads the specified ids and a function to call when it is evaluated
+            </summary>
         </member>
         <member name="M:Raven.Client.Document.Batches.ILazySessionOperations.Load``1(System.String)">
             <summary>
             Loads the specified id.
             </summary>
-            <typeparam name="TResult"></typeparam>
-            <param name="id">The id.</param>
-            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.Batches.ILazySessionOperations.Load``1(System.String,System.Action{``0})">
+            <summary>
+            Loads the specified id and a function to call when it is evaluated
+            </summary>
         </member>
         <member name="M:Raven.Client.Document.Batches.ILazySessionOperations.Load``1(System.ValueType)">
+            <summary>
+            Loads the specified entities with the specified id after applying
+            conventions on the provided id to get the real document id.
+            </summary>
+            <remarks>
+            This method allows you to call:
+            Load{Post}(1)
+            And that call will internally be translated to 
+            Load{Post}("posts/1");
+            
+            Or whatever your conventions specify.
+            </remarks>
+        </member>
+        <member name="M:Raven.Client.Document.Batches.ILazySessionOperations.Load``1(System.ValueType,System.Action{``0})">
             <summary>
             Loads the specified entities with the specified id after applying
             conventions on the provided id to get the real document id.
@@ -4417,7 +4470,6 @@
             <summary>
             Loads the specified id.
             </summary>
-            <param name="id">The id.</param>
         </member>
         <member name="M:Raven.Client.Document.Batches.LazyMultiLoaderWithInclude`1.Load(System.ValueType)">
             <summary>
@@ -4697,6 +4749,13 @@
             instance that will evaluate the query only when needed
             </summary>
         </member>
+        <member name="M:Raven.Client.IDocumentQuery`1.Lazily(System.Action{System.Collections.Generic.IEnumerable{`0}})">
+            <summary>
+            Register the query as a lazy query in the session and return a lazy
+            instance that will evaluate the query only when needed.
+            Also provide a function to execute when the value is evaluated
+            </summary>
+        </member>
         <member name="P:Raven.Client.IDocumentQuery`1.QueryResult">
             <summary>
             Gets the query result
@@ -4821,7 +4880,7 @@
             	Defaults to allow wildcards only if analyzed
             </remarks>
         </member>
-        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#WhereEquals(Raven.Client.WhereEqualsParams)">
+        <member name="M:Raven.Client.Document.DocumentQuery`1.Raven#Client#IDocumentQueryBase{T@Raven#Client#IDocumentQuery{T}}#WhereEquals(Raven.Client.WhereParams)">
             <summary>
             	Matches exact value
             </summary>
@@ -5129,6 +5188,11 @@
             Saves all the changes to the Raven server.
             </summary>
         </member>
+        <member name="M:Raven.Client.IDocumentSession.Store(System.Object,System.Guid)">
+            <summary>
+            Stores the specified entity with the specified etag
+            </summary>
+        </member>
         <member name="M:Raven.Client.IDocumentSession.Store(System.Object)">
             <summary>
             Stores the specified dynamic entity.
@@ -5266,6 +5330,20 @@
             <typeparam name="T"></typeparam>
             <param name="id">The id.</param>
             <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Document.DocumentSession.Raven#Client#Document#Batches#ILazySessionOperations#Load``1(System.ValueType,System.Action{``0})">
+            <summary>
+            Loads the specified entities with the specified id after applying
+            conventions on the provided id to get the real document id.
+            </summary>
+            <remarks>
+            This method allows you to call:
+            Load{Post}(1)
+            And that call will internally be translated to 
+            Load{Post}("posts/1");
+            
+            Or whatever your conventions specify.
+            </remarks>
         </member>
         <member name="M:Raven.Client.Document.DocumentSession.Raven#Client#Document#Batches#ILazySessionOperations#Include(System.String)">
             <summary>
@@ -5441,7 +5519,7 @@
             Create a new query for <typeparam name="T"/>
             </summary>
         </member>
-        <member name="M:Raven.Client.Document.DocumentSession.LazyLoadInternal``1(System.String[],System.String[])">
+        <member name="M:Raven.Client.Document.DocumentSession.LazyLoadInternal``1(System.String[],System.String[],System.Action{``0[]})">
             <summary>
             Register to lazily load documents and include
             </summary>
@@ -6294,7 +6372,7 @@
             	Defaults to allow wildcards only if analyzed
             </remarks>
         </member>
-        <member name="M:Raven.Client.Document.ShardedDocumentQuery`1.WhereEquals(Raven.Client.WhereEqualsParams)">
+        <member name="M:Raven.Client.Document.ShardedDocumentQuery`1.WhereEquals(Raven.Client.WhereParams)">
             <summary>
             	Matches exact value
             </summary>
@@ -6506,6 +6584,13 @@
             <summary>
             Register the query as a lazy query in the session and return a lazy
             instance that will evaluate the query only when needed
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Document.ShardedDocumentQuery`1.Lazily(System.Action{System.Collections.Generic.IEnumerable{`0}})">
+            <summary>
+            Register the query as a lazy query in the session and return a lazy
+            instance that will evaluate the query only when needed.
+            Also provide a function to execute when the value is evaluated
             </summary>
         </member>
         <member name="M:Raven.Client.Document.ShardedDocumentQuery`1.ToListAsync">
@@ -7839,11 +7924,6 @@
             Callback to get the results of the query
             </summary>
         </member>
-        <member name="M:Raven.Client.Linq.IRavenQueryProvider.InvokeAfterQueryExecuted(Raven.Abstractions.Data.QueryResult)">
-            <summary>
-            Called externally to raise the after query executed callback
-            </summary>
-        </member>
         <member name="M:Raven.Client.Linq.IRavenQueryProvider.Customize(System.Action{Raven.Client.IDocumentQueryCustomization})">
             <summary>
             Customizes the query using the specified action
@@ -7860,9 +7940,14 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Raven.Client.Linq.IRavenQueryProvider.Lazily``1(System.Linq.Expressions.Expression)">
+        <member name="M:Raven.Client.Linq.IRavenQueryProvider.Lazily``1(System.Linq.Expressions.Expression,System.Action{System.Collections.Generic.IEnumerable{``0}})">
             <summary>
-            Convert the Linq query to a lazy Lucene query
+            Convert the Linq query to a lazy Lucene query and provide a function to execute when it is being evaluate
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Linq.IRavenQueryProvider.MoveAfterQueryExecuted``1(Raven.Client.IAsyncDocumentQuery{``0})">
+            <summary>
+            Move the registered after query actions
             </summary>
         </member>
         <member name="P:Raven.Client.Linq.IRavenQueryProvider.IndexName">
@@ -7894,6 +7979,11 @@
         <member name="M:Raven.Client.Linq.DynamicRavenQueryProvider`1.ToLuceneQuery``1(System.Linq.Expressions.Expression)">
             <summary>
             Convert the expression to a Lucene query
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Linq.DynamicRavenQueryProvider`1.MoveAfterQueryExecuted``1(Raven.Client.IAsyncDocumentQuery{``0})">
+            <summary>
+            Move the registered after query actions
             </summary>
         </member>
         <member name="M:Raven.Client.Linq.DynamicRavenQueryProvider`1.ToAsyncLuceneQuery``1(System.Linq.Expressions.Expression)">
@@ -7930,11 +8020,6 @@
         <member name="M:Raven.Client.Linq.DynamicRavenQueryProvider`1.AfterQueryExecuted(System.Action{Raven.Abstractions.Data.QueryResult})">
             <summary>
             Callback to get the results of the query
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Linq.DynamicRavenQueryProvider`1.InvokeAfterQueryExecuted(Raven.Abstractions.Data.QueryResult)">
-            <summary>
-            Called externally to raise the after query executed callback
             </summary>
         </member>
         <member name="M:Raven.Client.Linq.DynamicRavenQueryProvider`1.Customize(System.Action{Raven.Client.IDocumentQueryCustomization})">
@@ -8045,6 +8130,13 @@
             <summary>
             Register the query as a lazy query in the session and return a lazy
             instance that will evaluate the query only when needed
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Linq.LinqExtensions.Lazily``1(System.Linq.IQueryable{``0},System.Action{System.Collections.Generic.IEnumerable{``0}})">
+            <summary>
+            Register the query as a lazy query in the session and return a lazy
+            instance that will evaluate the query only when needed
+            As well as a function to execute when the value is evaluated
             </summary>
         </member>
         <member name="M:Raven.Client.Linq.LinqExtensions.ToListAsync``1(System.Linq.IQueryable{``0})">
@@ -8165,23 +8257,23 @@
             Callback to get the results of the query
             </summary>
         </member>
-        <member name="M:Raven.Client.Linq.RavenQueryProvider`1.InvokeAfterQueryExecuted(Raven.Abstractions.Data.QueryResult)">
-            <summary>
-            Called externally to raise the after query executed callback
-            </summary>
-        </member>
         <member name="M:Raven.Client.Linq.RavenQueryProvider`1.Customize(System.Action{Raven.Client.IDocumentQueryCustomization})">
             <summary>
             Customizes the query using the specified action
             </summary>
             <param name="action">The action.</param>
         </member>
+        <member name="M:Raven.Client.Linq.RavenQueryProvider`1.MoveAfterQueryExecuted``1(Raven.Client.IAsyncDocumentQuery{``0})">
+            <summary>
+            Move the registered after query actions
+            </summary>
+        </member>
         <member name="M:Raven.Client.Linq.RavenQueryProvider`1.ToAsyncLuceneQuery``1(System.Linq.Expressions.Expression)">
             <summary>
             Convert the expression to a Lucene query
             </summary>
         </member>
-        <member name="M:Raven.Client.Linq.RavenQueryProvider`1.Lazily``1(System.Linq.Expressions.Expression)">
+        <member name="M:Raven.Client.Linq.RavenQueryProvider`1.Lazily``1(System.Linq.Expressions.Expression,System.Action{System.Collections.Generic.IEnumerable{``0}})">
             <summary>
             Register the query as a lazy query in the session and return a lazy
             instance that will evaluate the query only when needed
@@ -8270,6 +8362,15 @@
             Gets the metadata for the specified entity.
             </summary>
             <typeparam name="T"></typeparam>
+            <param name="instance">The instance.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Shard.ShardedDocumentSession.GetEtagFor``1(``0)">
+            <summary>
+            Gets the ETag for the specified entity.
+            If the entity is transient, it will load the etag from the store
+            and associate the current state of the entity with the etag from the server.
+            </summary>
             <param name="instance">The instance.</param>
             <returns></returns>
         </member>
@@ -8389,6 +8490,11 @@
             </summary>
             <typeparam name="T"></typeparam>
             <param name="entity">The entity.</param>
+        </member>
+        <member name="M:Raven.Client.Shard.ShardedDocumentSession.Store(System.Object,System.Guid)">
+            <summary>
+            Stores the specified entity with the specified etag
+            </summary>
         </member>
         <member name="M:Raven.Client.Shard.ShardedDocumentSession.Store(System.Object)">
             <summary>
@@ -8930,37 +9036,37 @@
             </returns>
             <param name="obj">The object for which to get a hash code.</param><exception cref="T:System.ArgumentNullException">The type of <paramref name="obj"/> is a reference type and <paramref name="obj"/> is null.</exception>
         </member>
-        <member name="T:Raven.Client.WhereEqualsParams">
+        <member name="T:Raven.Client.WhereParams">
             <summary>
             Parameters for the Where Equals call
             </summary>
         </member>
-        <member name="M:Raven.Client.WhereEqualsParams.#ctor">
+        <member name="M:Raven.Client.WhereParams.#ctor">
             <summary>
             Create a new instance 
             </summary>
         </member>
-        <member name="P:Raven.Client.WhereEqualsParams.FieldName">
+        <member name="P:Raven.Client.WhereParams.FieldName">
             <summary>
             The field name
             </summary>
         </member>
-        <member name="P:Raven.Client.WhereEqualsParams.Value">
+        <member name="P:Raven.Client.WhereParams.Value">
             <summary>
             The field value
             </summary>
         </member>
-        <member name="P:Raven.Client.WhereEqualsParams.IsAnalyzed">
+        <member name="P:Raven.Client.WhereParams.IsAnalyzed">
             <summary>
             Should the field be analyzed
             </summary>
         </member>
-        <member name="P:Raven.Client.WhereEqualsParams.AllowWildcards">
+        <member name="P:Raven.Client.WhereParams.AllowWildcards">
             <summary>
             Should the field allow wildcards
             </summary>
         </member>
-        <member name="P:Raven.Client.WhereEqualsParams.IsNestedPath">
+        <member name="P:Raven.Client.WhereParams.IsNestedPath">
             <summary>
             Is this a root property or not?
             </summary>
