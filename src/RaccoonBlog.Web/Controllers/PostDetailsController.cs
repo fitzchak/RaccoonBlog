@@ -141,22 +141,25 @@ namespace RaccoonBlog.Web.Controllers
 				var user = Session.GetCurrentUser();
 				vm.Input = user.MapTo<CommentInput>();
 				vm.IsTrustedCommenter = true;
+				vm.IsLoggedInCommenter = true;
 				return;
 			}
 
 			var cookie = Request.Cookies[CommenterUtil.CommenterCookieName];
     		if (cookie == null) return;
+
     		
 			var commenter = Session.GetCommenter(cookie.Value);
-    		if (commenter == null)
-    		{
+			if (commenter == null)
+			{
+				vm.IsLoggedInCommenter = false;
     			Response.Cookies.Set(new HttpCookie(CommenterUtil.CommenterCookieName) { Expires = DateTime.Now.AddYears(-1) });
     			return;
     		}
 
+    		vm.IsLoggedInCommenter = string.IsNullOrWhiteSpace(commenter.OpenId) == false;
     		vm.Input = commenter.MapTo<CommentInput>();
     		vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
-    		vm.IsLoggedInCommenter = string.IsNullOrEmpty(commenter.OpenId) == false || commenter.IsTrustedCommenter == true;
 		}
     }
 }
