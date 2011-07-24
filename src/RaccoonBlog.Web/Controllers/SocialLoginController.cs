@@ -47,12 +47,9 @@ namespace RaccoonBlog.Web.Controllers
 						                	};
 
 						SetCommenterValuesFromOpenIdResponse(response, commenter);
-
-						if (string.IsNullOrWhiteSpace(commenter.Email) == false && string.IsNullOrWhiteSpace(commenter.Name) == false)
-						{
-							CommenterUtil.SetCommenterCookie(Response, commenter.Key.MapTo<string>());
-							Session.Store(commenter);
-						}
+						
+						CommenterUtil.SetCommenterCookie(Response, commenter.Key.MapTo<string>());
+						Session.Store(commenter);
 
 						return Redirect(returnUrl);
 					case AuthenticationStatus.Canceled:
