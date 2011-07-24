@@ -68,24 +68,30 @@ namespace RaccoonBlog.Web.Controllers
 			var claimsResponse = response.GetExtension<ClaimsResponse>();
 			if (claimsResponse != null)
 			{
-				if (string.IsNullOrWhiteSpace(claimsResponse.Nickname) == false)
+				if (string.IsNullOrWhiteSpace(commenter.Name) && string.IsNullOrWhiteSpace(claimsResponse.Nickname) == false)
 					commenter.Name = claimsResponse.Nickname;
-				else if (string.IsNullOrWhiteSpace(claimsResponse.FullName) == false)
+				else if (string.IsNullOrWhiteSpace(commenter.Name) && string.IsNullOrWhiteSpace(claimsResponse.FullName) == false)
 					commenter.Name = claimsResponse.FullName;
-				if (string.IsNullOrWhiteSpace(claimsResponse.Email) == false)
+				if (string.IsNullOrWhiteSpace(commenter.Email) && string.IsNullOrWhiteSpace(claimsResponse.Email) == false)
 					commenter.Email = claimsResponse.Email;
 			}
 			var fetchResponse = response.GetExtension<FetchResponse>();
 			if (fetchResponse != null) // let us try from the attributes
 			{
-				commenter.Email = fetchResponse.GetAttributeValue(WellKnownAttributes.Contact.Email);
-				commenter.Name = fetchResponse.GetAttributeValue(WellKnownAttributes.Name.FullName) ??
-				                 fetchResponse.GetAttributeValue(WellKnownAttributes.Name.First) + " " +
-				                 fetchResponse.GetAttributeValue(WellKnownAttributes.Name.Last);
+				if (string.IsNullOrWhiteSpace(commenter.Email))
+					commenter.Email = fetchResponse.GetAttributeValue(WellKnownAttributes.Contact.Email);
+				if (string.IsNullOrWhiteSpace(commenter.Name))
+				{
+					commenter.Name = fetchResponse.GetAttributeValue(WellKnownAttributes.Name.FullName) ??
+					                 fetchResponse.GetAttributeValue(WellKnownAttributes.Name.First) + " " +
+					                 fetchResponse.GetAttributeValue(WellKnownAttributes.Name.Last);
+				}
 
-				commenter.Url = fetchResponse.GetAttributeValue(WellKnownAttributes.Contact.Web.Blog) ??
+				if (string.IsNullOrWhiteSpace(commenter.Url))
+				{
+					commenter.Url = fetchResponse.GetAttributeValue(WellKnownAttributes.Contact.Web.Blog) ??
 				                fetchResponse.GetAttributeValue(WellKnownAttributes.Contact.Web.Homepage);
-
+				}
 			}
 		}
 
