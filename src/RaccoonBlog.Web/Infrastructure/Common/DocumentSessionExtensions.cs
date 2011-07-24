@@ -18,10 +18,10 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 		{
 			var query = documentSession
 				.Query<PostCommentsIdentifier, PostComments_CreationDate>()
-				.Include(comment => comment.PostCommentsId)
-				.Include(comment => comment.PostId)
+					.Include(comment => comment.PostCommentsId)
+					.Include(comment => comment.PostId)
 				.OrderByDescending(x => x.PostPublishAt)
-				.ThenByDescending(x => x.CreatedAt)
+					.ThenByDescending(x => x.CreatedAt)
 				.Where(x=>x.PostPublishAt < DateTimeOffset.Now.AsMinutes())
 				.AsProjection<PostCommentsIdentifier>();
 
