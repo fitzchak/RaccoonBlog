@@ -2,6 +2,7 @@ using System;
 using System.Web.Mvc;
 using System.Linq;
 using System.Xml.Linq;
+using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Models;
 using Raven.Client.Linq;
 using RaccoonBlog.Web.Infrastructure.Common;
@@ -11,6 +12,8 @@ namespace RaccoonBlog.Web.Controllers
 {
 	public class SyndicationController : AbstractController
 	{
+		private static readonly string EtagInitValue = Guid.NewGuid().ToString();
+
 		public ActionResult Rsd()
 		{
 			var ns = XNamespace.Get("http://archipelago.phrasewise.com/rsd");
@@ -55,9 +58,8 @@ namespace RaccoonBlog.Web.Controllers
 				.Take(20)
 				.ToList();
 
-			string requestETagHeader = Request.Headers["If-None-Match"] ?? string.Empty;
-			var responseETagHeader = stats.Timestamp.ToString("o");
-			if (requestETagHeader == responseETagHeader)
+			string responseETagHeader;
+			if (CheckEtag(stats, out responseETagHeader))
 				return HttpNotModified();
 
 			var rss = new XDocument(
@@ -70,7 +72,7 @@ namespace RaccoonBlog.Web.Controllers
 										  new XElement("copyright", String.Format("{0} (c) {1}", BlogConfig.Copyright, DateTime.Now.Year)),
 										  new XElement("ttl", "60"),
 										  from post in posts
-										  let postLink = Url.AbsoluteAction("Details", "PostDetails", new { post.Id, Slug = SlugConverter.TitleToSlug(post.Title) })
+										  let postLink = Url.AbsoluteAction("Details", "PostDetails", new { Id = RavenIdResolver.Resolve(post.Id), Slug = SlugConverter.TitleToSlug(post.Title) })
 										  select new XElement("item",
 															  new XElement("title", post.Title),
 															  new XElement("description", post.Body),
@@ -99,9 +101,8 @@ namespace RaccoonBlog.Web.Controllers
 				return q.Statistics(out stats).Take(30);
 			});
 
-			string requestETagHeader = Request.Headers["If-None-Match"] ?? string.Empty;
-			var responseETagHeader = stats.Timestamp.ToString("o");
-			if (requestETagHeader == responseETagHeader)
+			string responseETagHeader;
+			if (CheckEtag(stats, out responseETagHeader))
 				return HttpNotModified();
 
 			var rss = new XDocument(
@@ -116,7 +117,7 @@ namespace RaccoonBlog.Web.Controllers
 									  from commentsTuple in commentsTuples
 									  let comment = commentsTuple.Item1
 									  let post = commentsTuple.Item2
-									  let link = Url.AbsoluteAction("Details", "PostDetails", new { post.Id, Slug = SlugConverter.TitleToSlug(post.Title) }) + "#comment" + comment.Id
+									  let link = Url.AbsoluteAction("Details", "PostDetails", new { Id = RavenIdResolver.Resolve(post.Id), Slug = SlugConverter.TitleToSlug(post.Title) }) + "#comment" + comment.Id
 									  select new XElement("item",
 														  new XElement("title", comment.Author +" commented on " + post.Title),
 														  new XElement("description", comment.Body),
@@ -130,6 +131,13 @@ namespace RaccoonBlog.Web.Controllers
 
 			return Xml(rss, responseETagHeader);
 
+		}
+
+		private bool CheckEtag(RavenQueryStatistics stats, out string responseETagHeader)
+		{
+			string requestETagHeader = Request.Headers["If-None-Match"] ?? string.Empty;
+			responseETagHeader = stats.Timestamp.ToString("o") + EtagInitValue;
+			return requestETagHeader == responseETagHeader;
 		}
 
 		public ActionResult LegacyRss()
