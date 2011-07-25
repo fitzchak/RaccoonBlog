@@ -63,11 +63,7 @@ namespace RaccoonBlog.Web.Commands
 			if (_requestValues.IsAuthenticated)
 				return;
 
-			Guid guid;
-			if (Guid.TryParse(_commentInput.CommenterKey, out guid) == false)
-				return;
-
-			var commenter = Session.GetCommenter(_commentInput.CommenterKey) ?? new Commenter {Key = guid};
+			var commenter = Session.GetCommenter(_commentInput.CommenterKey) ?? new Commenter {Key = _commentInput.CommenterKey};
 			_commentInput.MapPropertiesToInstance(commenter);
 			commenter.IsTrustedCommenter = isTrusted;
 			Session.Store(commenter);
