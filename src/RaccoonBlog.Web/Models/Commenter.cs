@@ -13,5 +13,7 @@ namespace RaccoonBlog.Web.Models
 		public string Url { get; set; }
 
 		public string OpenId { get; set; }
+
+		public int NumberOfSpamComments { get; set; }
 	}
 }
