@@ -69,7 +69,7 @@ namespace RaccoonBlog.Web.Controllers
 			var commenter = Session.GetCommenter(input.CommenterKey);
 			if (commenter == null)
 			{
-				input.CommenterKey = Guid.NewGuid().MapTo<string>();
+				input.CommenterKey = Guid.NewGuid();
 			}
 			
     		ValidateCommentsAllowed(post, comments);
@@ -80,7 +80,7 @@ namespace RaccoonBlog.Web.Controllers
 
 			CommandExecutor.ExcuteLater(new AddCommentCommand(input, Request.MapTo<RequestValues>(), id));
 
-			CommenterUtil.SetCommenterCookie(Response, input.CommenterKey);
+			CommenterUtil.SetCommenterCookie(Response, input.CommenterKey.MapTo<string>());
 
     		return PostingCommentSucceeded(post);
         }
@@ -148,7 +148,6 @@ namespace RaccoonBlog.Web.Controllers
 			var cookie = Request.Cookies[CommenterUtil.CommenterCookieName];
     		if (cookie == null) return;
 
-    		
 			var commenter = Session.GetCommenter(cookie.Value);
 			if (commenter == null)
 			{

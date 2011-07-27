@@ -82,6 +82,14 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 				.FirstOrDefault();
 		}
 
+		public static Commenter GetCommenter(this IDocumentSession session, string commenterKey)
+		{
+			Guid guid;
+			if (Guid.TryParse(commenterKey, out guid) == false)
+				return null;
+			return GetCommenter(session, guid);
+		}
+
 		public static Commenter GetCommenter(this IDocumentSession session, Guid commenterKey)
 		{
 			return session.Query<Commenter>()
