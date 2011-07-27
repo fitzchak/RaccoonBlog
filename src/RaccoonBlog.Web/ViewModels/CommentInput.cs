@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
@@ -24,6 +25,6 @@ namespace RaccoonBlog.Web.ViewModels
 		public string Body { get; set; }
 
 		[HiddenInput]
-		public string CommenterKey { get; set; }
+		public Guid CommenterKey { get; set; }
 	}
 }

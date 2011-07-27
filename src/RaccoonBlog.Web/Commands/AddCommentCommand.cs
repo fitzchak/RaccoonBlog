@@ -45,31 +45,36 @@ namespace RaccoonBlog.Web.Commands
 			              	};
 			comment.IsSpam = new AskimetService(Session).CheckForSpam(comment);
 
+			var commenter = Session.GetCommenter(_commentInput.CommenterKey) ?? new Commenter { Key = _commentInput.CommenterKey };
+
 			if (_requestValues.IsAuthenticated == false && comment.IsSpam)
+			{
+				if (commenter.NumberOfSpamComments > 4)
+					return;
 				comments.Spam.Add(comment);
+			}
 			else
 			{
 				post.CommentsCount++;
 				comments.Comments.Add(comment);
 			}
 
-			SetCommenter(comment.IsSpam == false);
+			SetCommenter(commenter, comment.IsSpam);
 
 			SendNewCommentEmail(post, comment);
 		}
 
-		private void SetCommenter(bool isTrusted)
+		private void SetCommenter(Commenter commenter, bool isSpamComment)
 		{
 			if (_requestValues.IsAuthenticated)
 				return;
 
-			Guid guid;
-			if (Guid.TryParse(_commentInput.CommenterKey, out guid) == false)
-				return;
-
-			var commenter = Session.GetCommenter(_commentInput.CommenterKey) ?? new Commenter {Key = guid};
 			_commentInput.MapPropertiesToInstance(commenter);
-			commenter.IsTrustedCommenter = isTrusted;
+			commenter.IsTrustedCommenter = isSpamComment == false;
+
+			if (isSpamComment)
+				commenter.NumberOfSpamComments++;
+
 			Session.Store(commenter);
 		}
 

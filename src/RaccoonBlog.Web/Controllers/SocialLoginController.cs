@@ -26,41 +26,41 @@ namespace RaccoonBlog.Web.Controllers
 			if (string.IsNullOrWhiteSpace(returnUrl))
 				returnUrl = Request.UrlReferrer != null ? Request.UrlReferrer.ToString() : Url.RouteUrl("default");
 
-			var response = new OpenIdRelyingParty().GetResponse();
-			if (response == null)
+			using (var openIdRelyingParty = new OpenIdRelyingParty())
 			{
-				return HandleNullResponse(url, returnUrl);
-			}
+				var response = openIdRelyingParty.GetResponse();
+				if (response == null)
+				{
+					return HandleNullResponse(url, returnUrl);
+				}
 
-			switch (response.Status)
-			{
-				case AuthenticationStatus.Authenticated:
-					var claimedIdentifier = response.ClaimedIdentifier.ToString();
-					var commenter = Session.Query<Commenter>()
-					                	.Where(c => c.OpenId == claimedIdentifier)
-					                	.FirstOrDefault() ?? new Commenter
-					                	{
-					                		Key = Guid.NewGuid(),
-					                		OpenId = claimedIdentifier,
-					                	};
+				switch (response.Status)
+				{
+					case AuthenticationStatus.Authenticated:
+						var claimedIdentifier = response.ClaimedIdentifier.ToString();
+						var commenter = Session.Query<Commenter>()
+						                	.Where(c => c.OpenId == claimedIdentifier)
+						                	.FirstOrDefault() ?? new Commenter
+						                	{
+						                		Key = Guid.NewGuid(),
+						                		OpenId = claimedIdentifier,
+						                	};
 
-					SetCommenterValuesFromOpenIdResponse(response, commenter);
-
-					if (string.IsNullOrWhiteSpace(commenter.Email) == false && string.IsNullOrWhiteSpace(commenter.Name) == false)
-					{
+						SetCommenterValuesFromOpenIdResponse(response, commenter);
+						
 						CommenterUtil.SetCommenterCookie(Response, commenter.Key.MapTo<string>());
 						Session.Store(commenter);
-					}
 
-					return Redirect(returnUrl);
-				case AuthenticationStatus.Canceled:
-					TempData["Message"] = "Canceled at provider";
-					return Redirect(returnUrl);
-				case AuthenticationStatus.Failed:
-					TempData["Message"] = response.Exception.Message;
-					return Redirect(returnUrl);
+						return Redirect(returnUrl);
+					case AuthenticationStatus.Canceled:
+						TempData["Message"] = "Canceled at provider";
+						return Redirect(returnUrl);
+					case AuthenticationStatus.Failed:
+						TempData["Message"] = response.Exception.Message;
+						return Redirect(returnUrl);
+				}
+				return new EmptyResult();
 			}
-			return new EmptyResult();
 		}
 
 		private static void SetCommenterValuesFromOpenIdResponse(IAuthenticationResponse response, Commenter commenter)
@@ -68,24 +68,30 @@ namespace RaccoonBlog.Web.Controllers
 			var claimsResponse = response.GetExtension<ClaimsResponse>();
 			if (claimsResponse != null)
 			{
-				if (string.IsNullOrWhiteSpace(claimsResponse.Nickname) == false)
+				if (string.IsNullOrWhiteSpace(commenter.Name) && string.IsNullOrWhiteSpace(claimsResponse.Nickname) == false)
 					commenter.Name = claimsResponse.Nickname;
-				else if (string.IsNullOrWhiteSpace(claimsResponse.FullName) == false)
+				else if (string.IsNullOrWhiteSpace(commenter.Name) && string.IsNullOrWhiteSpace(claimsResponse.FullName) == false)
 					commenter.Name = claimsResponse.FullName;
-				if (string.IsNullOrWhiteSpace(claimsResponse.Email) == false)
+				if (string.IsNullOrWhiteSpace(commenter.Email) && string.IsNullOrWhiteSpace(claimsResponse.Email) == false)
 					commenter.Email = claimsResponse.Email;
 			}
 			var fetchResponse = response.GetExtension<FetchResponse>();
 			if (fetchResponse != null) // let us try from the attributes
 			{
-				commenter.Email = fetchResponse.GetAttributeValue(WellKnownAttributes.Contact.Email);
-				commenter.Name = fetchResponse.GetAttributeValue(WellKnownAttributes.Name.FullName) ??
-				                 fetchResponse.GetAttributeValue(WellKnownAttributes.Name.First) + " " +
-				                 fetchResponse.GetAttributeValue(WellKnownAttributes.Name.Last);
+				if (string.IsNullOrWhiteSpace(commenter.Email))
+					commenter.Email = fetchResponse.GetAttributeValue(WellKnownAttributes.Contact.Email);
+				if (string.IsNullOrWhiteSpace(commenter.Name))
+				{
+					commenter.Name = fetchResponse.GetAttributeValue(WellKnownAttributes.Name.FullName) ??
+					                 fetchResponse.GetAttributeValue(WellKnownAttributes.Name.First) + " " +
+					                 fetchResponse.GetAttributeValue(WellKnownAttributes.Name.Last);
+				}
 
-				commenter.Url = fetchResponse.GetAttributeValue(WellKnownAttributes.Contact.Web.Blog) ??
+				if (string.IsNullOrWhiteSpace(commenter.Url))
+				{
+					commenter.Url = fetchResponse.GetAttributeValue(WellKnownAttributes.Contact.Web.Blog) ??
 				                fetchResponse.GetAttributeValue(WellKnownAttributes.Contact.Web.Homepage);
-
+				}
 			}
 		}
 
@@ -110,27 +116,30 @@ namespace RaccoonBlog.Web.Controllers
 				{
 					Query = "returnUrl=" + Uri.EscapeUriString(returnUrl)
 				}.Uri;
-				
-				var request = new OpenIdRelyingParty().CreateRequest(url, Realm.AutoDetect, theReturnUrlForOpenId);
-				request.AddExtension(new FetchRequest  // requires for Google 
+
+				using (var openIdRelyingParty = new OpenIdRelyingParty())
 				{
-					Attributes =
-				                     	{
-				                     		new AttributeRequest(WellKnownAttributes.Name.First, true),
-											new AttributeRequest(WellKnownAttributes.Name.Last, true),
-											new AttributeRequest(WellKnownAttributes.Contact.Email, true),
-											new AttributeRequest(WellKnownAttributes.Contact.Web.Blog, true),
-											new AttributeRequest(WellKnownAttributes.Contact.Web.Homepage, true),
-											new AttributeRequest(WellKnownAttributes.Name.FullName, false),
-				                     	}
-				});
-				request.AddExtension(new ClaimsRequest // other providers
-				{
-					Email = DemandLevel.Require,
-					FullName = DemandLevel.Require,
-					Nickname = DemandLevel.Require,
-				});
-				return request.RedirectingResponse.AsActionResult();
+					var request = openIdRelyingParty.CreateRequest(url, Realm.AutoDetect, theReturnUrlForOpenId);
+					request.AddExtension(new FetchRequest // requires for Google 
+					{
+						Attributes =
+							{
+								new AttributeRequest(WellKnownAttributes.Name.First, true),
+								new AttributeRequest(WellKnownAttributes.Name.Last, true),
+								new AttributeRequest(WellKnownAttributes.Contact.Email, true),
+								new AttributeRequest(WellKnownAttributes.Contact.Web.Blog, true),
+								new AttributeRequest(WellKnownAttributes.Contact.Web.Homepage, true),
+								new AttributeRequest(WellKnownAttributes.Name.FullName, false),
+							}
+					});
+					request.AddExtension(new ClaimsRequest // other providers
+					{
+						Email = DemandLevel.Require,
+						FullName = DemandLevel.Require,
+						Nickname = DemandLevel.Require,
+					});
+					return request.RedirectingResponse.AsActionResult();
+				}
 			}
 			catch (ProtocolException ex)
 			{
