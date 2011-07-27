@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Indexes;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
@@ -56,13 +57,13 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 			}
 			
 			var postReference = queryable
-			  .Select(p => new PostReference{ Id = p.Id, Title = p.Title })
-			  .FirstOrDefault();
+				.Select(p => new Post {Id = p.Id, Title = p.Title})
+				.FirstOrDefault();
 
 			if (postReference == null)
 				return null;
 
-			return postReference;
+			return postReference.MapTo<PostReference>();
 		}
 
 		public static User GetCurrentUser(this IDocumentSession session)

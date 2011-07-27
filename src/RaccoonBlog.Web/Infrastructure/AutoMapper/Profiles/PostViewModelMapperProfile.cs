@@ -32,6 +32,7 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
                 ;
 
             Mapper.CreateMap<Post, PostReference>()
+				.ForMember(x => x.Title, o => o.MapFrom(m => HttpUtility.HtmlDecode(m.Title)))
                 .ForMember(x => x.Slug, o => o.Ignore())
                 ;
             
