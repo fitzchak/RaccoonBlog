@@ -25,6 +25,6 @@ namespace RaccoonBlog.Web.ViewModels
 		public string Body { get; set; }
 
 		[HiddenInput]
-		public Guid CommenterKey { get; set; }
+		public Guid? CommenterKey { get; set; }
 	}
 }

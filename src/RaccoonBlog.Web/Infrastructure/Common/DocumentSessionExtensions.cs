@@ -90,6 +90,13 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 				return null;
 			return GetCommenter(session, guid);
 		}
+		
+		public static Commenter GetCommenter(this IDocumentSession session, Guid? commenterKey)
+		{
+			if (commenterKey == null)
+				return null;
+			return GetCommenter(session, commenterKey.Value);
+		}
 
 		public static Commenter GetCommenter(this IDocumentSession session, Guid commenterKey)
 		{
