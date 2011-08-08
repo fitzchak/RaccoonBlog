@@ -45,7 +45,7 @@ namespace RaccoonBlog.Web.Commands
 			              	};
 			comment.IsSpam = new AskimetService(Session).CheckForSpam(comment);
 
-			var commenter = Session.GetCommenter(_commentInput.CommenterKey) ?? new Commenter { Key = _commentInput.CommenterKey };
+			var commenter = Session.GetCommenter(_commentInput.CommenterKey) ?? new Commenter { Key = _commentInput.CommenterKey ?? Guid.Empty };
 
 			if (_requestValues.IsAuthenticated == false && comment.IsSpam)
 			{

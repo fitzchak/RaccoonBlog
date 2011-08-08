@@ -13,4 +13,15 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers
 			return guid;
 		}
 	}
+
+	public class StringToNullableGuidConverter : TypeConverter<string, Guid?>
+	{
+		protected override Guid? ConvertCore(string source)
+		{
+			Guid guid;
+			if (Guid.TryParse(source, out guid) == false)
+				return null;
+			return guid;
+		}
+	}
 }
