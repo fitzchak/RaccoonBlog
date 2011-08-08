@@ -24,7 +24,7 @@ namespace RaccoonBlog.Web.Models
 			if (numberOfDayToCloseComments < 1)
 				return false;
 			
-			DateTimeOffset lastCommentDate = Comments.Count == 0 ? post.CreatedAt : Comments.Max(x => x.CreatedAt);
+			DateTimeOffset lastCommentDate = Comments.Count == 0 ? post.PublishAt : Comments.Max(x => x.CreatedAt);
 			return DateTimeOffset.Now - lastCommentDate > TimeSpan.FromDays(numberOfDayToCloseComments);
 		}
 
