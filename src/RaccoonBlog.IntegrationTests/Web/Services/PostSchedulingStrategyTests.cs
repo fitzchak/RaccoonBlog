@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;

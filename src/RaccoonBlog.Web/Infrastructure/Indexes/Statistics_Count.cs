@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using RaccoonBlog.Web.Models;
 using Raven.Client.Indexes;
 
