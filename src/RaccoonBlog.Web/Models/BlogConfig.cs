@@ -29,5 +29,15 @@ namespace RaccoonBlog.Web.Models
 						RssFutureDaysAllowed = 7
 			       	};
 		}
+
+		public static BlogConfig NewDummy()
+		{
+			return new BlogConfig
+			{
+				Id = "Blog/Config/Dummy",
+				RssFuturePostsKey = Guid.NewGuid(),
+				RssFutureDaysAllowed = 7
+			};
+		}
 	}
 }
