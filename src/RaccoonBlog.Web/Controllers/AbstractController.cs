@@ -55,6 +55,8 @@ namespace RaccoonBlog.Web.Controllers
 			return new JsonNetResult(data, settings);
 		}
 
+		public bool IsFirstRun { get; private set; }
+
 		private BlogConfig blogConfig;
 		public BlogConfig BlogConfig
 		{
@@ -66,6 +68,8 @@ namespace RaccoonBlog.Web.Controllers
 					if (blogConfig == null)
 					{
 						Session.Store(blogConfig = BlogConfig.New());
+						Session.SaveChanges();
+						IsFirstRun = true;
 					}
 				}
 				return blogConfig;

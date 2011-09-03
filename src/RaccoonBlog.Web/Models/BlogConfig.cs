@@ -24,6 +24,7 @@ namespace RaccoonBlog.Web.Models
 		{
 			return new BlogConfig
 			       	{
+						Id = "Blog/Config",
 			       		RssFuturePostsKey = Guid.NewGuid(),
 						RssFutureDaysAllowed = 7
 			       	};
