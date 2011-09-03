@@ -20,6 +20,11 @@ namespace RaccoonBlog.Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.IgnoreRoute("{*favicon}", new { favicon = @"(.*/)?favicon.ico(/.*)?" });
 
+    		routes.MapRoute("WelcomeScreen",
+    		                "welcome/{action}",
+    		                new {controller = "Welcome", action = "Index"}
+    			);
+
             ConfigureSyndication();
 
             ConfigurePost();

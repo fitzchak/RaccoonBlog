@@ -140,6 +140,7 @@
     <Compile Include="Controllers\ConfigurationAdminController.cs" />
     <Compile Include="Controllers\SocialLoginController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\WelcomeController.cs" />
     <Compile Include="Helpers\Binders\GuidBinder.cs" />
     <Compile Include="Helpers\StaticFileUrlHelperExtensions.cs" />
     <Compile Include="Helpers\Validation\NonEmptyGuid.cs" />
@@ -404,6 +405,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Section\RecentComments.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Welcome\Index.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
