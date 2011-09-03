@@ -61,8 +61,8 @@
     <Reference Include="dotless.Core">
       <HintPath>..\packages\dotless.1.1.0\lib\dotless.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DotNetOpenAuth">
-      <HintPath>..\..\lib\DotNetOpenAuth\DotNetOpenAuth.dll</HintPath>
+    <Reference Include="DotNetOpenAuth, Version=3.4.7.11121, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetOpenAuth.3.4.7.11121\lib\DotNetOpenAuth.dll</HintPath>
     </Reference>
     <Reference Include="Elmah">
       <HintPath>..\packages\elmah.1.1\lib\Elmah.dll</HintPath>
