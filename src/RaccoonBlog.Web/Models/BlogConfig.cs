@@ -1,14 +1,26 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace RaccoonBlog.Web.Models
 {
 	public class BlogConfig
 	{
 		public string Id { get; set; }
+
+		[Required]
+		[Display(Name = "Blog title")]
 		public string Title { get; set; }
+
+		[Display(Name = "Slogan")]
 		public string Subtitle { get; set; }
+
+		[Required]
+		[Display(Name = "Custom CSS")]
 		public string CustomCss { get; set; }
+
+		[Display(Name = "Copyright string")]
 		public string Copyright { get; set; }
+
 		public string AkismetKey { get; set; }
 		public string GoogleAnalyticsKey { get; set; }
 		public Guid RssFuturePostsKey { get; set; }
@@ -26,7 +38,8 @@ namespace RaccoonBlog.Web.Models
 			       	{
 						Id = "Blog/Config",
 			       		RssFuturePostsKey = Guid.NewGuid(),
-						RssFutureDaysAllowed = 7
+						RssFutureDaysAllowed = 0,
+						CustomCss = "hibernatingrhinos"
 			       	};
 		}
 
@@ -35,8 +48,6 @@ namespace RaccoonBlog.Web.Models
 			return new BlogConfig
 			{
 				Id = "Blog/Config/Dummy",
-				RssFuturePostsKey = Guid.NewGuid(),
-				RssFutureDaysAllowed = 7
 			};
 		}
 	}

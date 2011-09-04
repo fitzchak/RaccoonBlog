@@ -1,6 +1,8 @@
 ﻿using System.Web.Mvc;
+using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Raven;
 using RaccoonBlog.Web.Models;
+using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Controllers
 {
@@ -9,21 +11,32 @@ namespace RaccoonBlog.Web.Controllers
         //
         // GET: /Welcome/
 
-        public ActionResult Index()
-        {
-        	AssertConfigurationIsNeeded();
+		public ActionResult Index()
+		{
+			AssertConfigurationIsNeeded();
 
-            return View(BlogConfig.New());
-        }
+			return View(BlogConfig.New());
+		}
 		
 		[HttpPost]
 		public ActionResult CreateBlog(BlogConfig config)
 		{
 			AssertConfigurationIsNeeded();
 
+			if (!ModelState.IsValid)
+				return View("Index");
+
 			using (var session = DocumentStoreHolder.DocumentStore.OpenSession())
 			{
+				// Create the blog by storing the config
+				config.Id = "Blog/Config";
 				session.Store(config);
+
+				// Create default sections
+				session.Store(new Section{Title="Archive", IsActive = true, Position = 1, ControllerName = "Section", ActionName = "ArchivesList"});
+				session.Store(new Section{Title="Tags", IsActive=true, Position = 2, ControllerName = "Section", ActionName = "TagsList"});
+				session.Store(new Section{Title="Statistics", IsActive = true, Position=3, ControllerName="Section", ActionName="PostsStatistics"});
+
 				session.SaveChanges();
 			}
 
