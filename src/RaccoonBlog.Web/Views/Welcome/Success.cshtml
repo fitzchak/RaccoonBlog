@@ -12,7 +12,9 @@
 </head>
 <body>
     <div>
-        <h2>Your blog was created successfully</h2>
+        <h2>Your blog "@MvcHtmlString.Create(Model.Title)" was created successfully</h2>
+
+        <p>@Html.ActionLink("Go back", "List", "Post") to your blog, or @Html.ActionLink("start posting", "List", "PostAdmin") .</p>
     </div>
 </body>
 </html>
