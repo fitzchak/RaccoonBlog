@@ -20,42 +20,29 @@ namespace RaccoonBlog.Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.IgnoreRoute("{*favicon}", new { favicon = @"(.*/)?favicon.ico(/.*)?" });
 
-    		routes.MapRoute("WelcomeScreen",
-    		                "welcome/{action}",
-    		                new {controller = "Welcome", action = "Index"}
-    			);
-
             ConfigureSyndication();
 
             ConfigurePost();
             ConfigureLegacyPost();
             ConfigurePostDetails();
-            ConfigurePostAdmin();
             ConfigureSocialLogin();
-            
-    	    ConfigureSection();
-    	    ConfigureSectionAdmin();
+
+			//ConfigurePostAdmin();
+    	    //ConfigureSectionAdmin();
+			//ConfigureLogin();
+			//ConfigureUserAdmin();
+			//ConfigureConfigurationAdmin();
 
     	    ConfigureSearch();
-
-    	    ConfigureLogin();
-
     	    ConfigureCss();
 
-            ConfigureUserAdmin();
-
-			ConfigureConfigurationAdmin();
-
-            ConfigureElmah();
-
-            #region "Default"
+            //ConfigureElmah();
 
             routes.MapRouteLowerCase("Default",
-                "",
-                new { controller = "Post", action = "List" }
+                "{controller}/{action}",
+                new { controller = "Post", action = "Index" },
+				new [] { "RaccoonBlog.Web.Controllers" }
                 );
-
-            #endregion
         }
 
     	private void ConfigureConfigurationAdmin()
@@ -87,15 +74,6 @@ namespace RaccoonBlog.Web
 			routes.MapRouteLowerCase("SocialLoginController",
 				"users/authenticate",
 				new { controller = "SocialLogin", action = "Authenticate" }
-                );
-        }
-
-        private void ConfigureSection()
-        {
-            routes.MapRouteLowerCase("SectionController-internal",
-                "{controller}/{action}",
-                new { },
-                new { controller = "Section", action = "List|TagsList|ArchivesList|FuturePosts|PostsStatistics|RecentComments" }
                 );
         }
 
@@ -190,14 +168,14 @@ namespace RaccoonBlog.Web
                );
         }
 
-        private void ConfigureLogin()
+        /*private void ConfigureLogin()
         {
             routes.MapRouteLowerCase("LoginController",
                "users/{action}",
                new { controller = "Login" },
                new { action = "Login|LogOut|CurrentUser|AdministrationPanel" }
                );
-        }
+        }*/
 
         private void ConfigurePost()
         {

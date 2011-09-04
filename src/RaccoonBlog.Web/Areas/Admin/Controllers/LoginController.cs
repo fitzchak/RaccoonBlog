@@ -1,14 +1,15 @@
 using System.Web.Mvc;
 using System.Web.Security;
+using RaccoonBlog.Web.Controllers;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.ViewModels;
 
-namespace RaccoonBlog.Web.Controllers
+namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
     public class LoginController : AbstractController
     {
         [HttpGet]
-        public ActionResult Login(string returnUrl)
+        public ActionResult Index(string returnUrl)
         {
             if (Request.IsAuthenticated)
             {
@@ -19,7 +20,7 @@ namespace RaccoonBlog.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(LoginInput input)
+        public ActionResult Index(LoginInput input)
         {
             var user = Session.GetUserByEmail(input.Email);
 
@@ -64,19 +65,6 @@ namespace RaccoonBlog.Web.Controllers
 
         	var user = Session.GetUserByEmail(HttpContext.User.Identity.Name);
         	return View(new CurrentUserViewModel {FullName = user.FullName});
-        }
-
-        [ChildActionOnly]
-        public ActionResult AdministrationPanel()
-        {
-            var user = Session.GetCurrentUser();
-
-            var vm = new CurrentUserViewModel();
-            if (user != null)
-            {
-                vm.FullName = user.FullName;
-            }
-            return View(vm);
         }
     }
 }

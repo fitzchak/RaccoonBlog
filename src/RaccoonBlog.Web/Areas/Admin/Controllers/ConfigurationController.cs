@@ -1,11 +1,12 @@
 using System.Web.Mvc;
+using RaccoonBlog.Web.Controllers;
 using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.ViewModels;
 
-namespace RaccoonBlog.Web.Controllers
+namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
-	public class ConfigurationAdminController : AdminController
+	public class ConfigurationController : AdminController
 	{
 		[HttpGet]
 		public ActionResult Index()

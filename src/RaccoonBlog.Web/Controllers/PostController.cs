@@ -14,6 +14,11 @@ namespace RaccoonBlog.Web.Controllers
 {
 	public class PostController : AbstractController
     {
+		public ActionResult Index()
+		{
+			return List();
+		}
+
         public ActionResult List()
         {
 			RavenQueryStatistics stats;

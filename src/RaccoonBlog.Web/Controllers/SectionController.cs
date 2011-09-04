@@ -109,5 +109,18 @@ namespace RaccoonBlog.Web.Controllers
 			}
 			return View(result);
 		}
+
+		[ChildActionOnly]
+		public ActionResult AdministrationPanel()
+		{
+			var user = Session.GetCurrentUser();
+
+			var vm = new CurrentUserViewModel();
+			if (user != null)
+			{
+				vm.FullName = user.FullName;
+			}
+			return View(vm);
+		}
 	}
 }

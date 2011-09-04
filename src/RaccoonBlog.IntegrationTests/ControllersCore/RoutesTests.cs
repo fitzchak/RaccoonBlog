@@ -3,9 +3,11 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using MvcContrib.TestHelper;
 using RaccoonBlog.Web;
+using RaccoonBlog.Web.Areas.Admin.Controllers;
 using RaccoonBlog.Web.Controllers;
 using RaccoonBlog.Web.ViewModels;
 using Xunit;
+using PostController = RaccoonBlog.Web.Controllers.PostController;
 
 namespace RaccoonBlog.IntegrationTests.ControllersCore
 {

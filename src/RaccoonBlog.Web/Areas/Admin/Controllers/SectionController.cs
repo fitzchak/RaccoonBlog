@@ -1,13 +1,14 @@
 using System.Linq;
 using System.Web.Mvc;
+using RaccoonBlog.Web.Controllers;
 using RaccoonBlog.Web.Helpers.Attributes;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
 
-namespace RaccoonBlog.Web.Controllers
+namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
-	public class SectionAdminController : AdminController
+	public class SectionController : AdminController
 	{
 		public ActionResult List()
 		{

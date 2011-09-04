@@ -12,9 +12,11 @@
         </form>
     </aside>
 
-    @{Html.RenderAction("AdministrationPanel", "Login");}
+    
+	@{Html.RenderAction("AdministrationPanel", "Section");}
 
-    @foreach (var section in Model) {
+
+	@foreach (var section in Model) {
         <aside class="section">
             <h1>@(section.Title)</h1>
             @if (section.IsActionSection()) { 

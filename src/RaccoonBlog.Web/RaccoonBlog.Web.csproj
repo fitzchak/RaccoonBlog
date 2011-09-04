@@ -137,7 +137,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\ConfigurationAdminController.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\ConfigurationController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Controllers\SocialLoginController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\WelcomeController.cs" />
@@ -161,13 +163,13 @@
     <Compile Include="Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Helpers\Results\ElmahResult.cs" />
     <Compile Include="Controllers\PostDetailsController.cs" />
-    <Compile Include="Controllers\LoginController.cs" />
-    <Compile Include="Controllers\PostAdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PostController.cs" />
     <Compile Include="Infrastructure\Common\QueryableExtensions.cs" />
-    <Compile Include="Controllers\SectionAdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SectionController.cs" />
     <Compile Include="Controllers\SectionController.cs" />
     <Compile Include="Controllers\SyndicationController.cs" />
-    <Compile Include="Controllers\UserAdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Helpers\Attributes\AjaxOnlyAttribute.cs" />
     <Compile Include="Helpers\ModelStateExtensions.cs" />
     <Compile Include="Helpers\TwitterButtonDataCount.cs" />
@@ -313,7 +315,7 @@
     <Content Include="Content\js\jquery.tmpl.js" />
     <Content Include="Content\js\jquery.tmpl.min.js" />
     <Compile Include="ViewModels\RecentCommentViewModel.cs" />
-    <Content Include="Views\SectionAdmin\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Section\Edit.cshtml" />
     <Compile Include="Controllers\PostController.cs" />
     <Content Include="Views\MailTemplates\_Layout.cshtml" />
     <Content Include="Views\Section\FuturePosts.cshtml" />
@@ -329,16 +331,16 @@
     <Content Include="Views\Section\ArchivesList.cshtml" />
     <Content Include="Services\MetaWeblogAPI.ashx" />
     <Content Include="wlwmanifest.xml" />
-    <Content Include="Views\Login\Login.cshtml" />
-    <Content Include="Views\Login\CurrentUser.cshtml" />
+    <Content Include="Areas\Admin\Views\Login\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Login\CurrentUser.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EmailAddress.cshtml" />
-    <Content Include="Views\PostAdmin\List.cshtml" />
-    <Content Include="Views\PostAdmin\Details.cshtml" />
-    <Content Include="Views\Login\AdministrationPanel.cshtml" />
-    <Content Include="Views\PostAdmin\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Post\List.cshtml" />
+    <Content Include="Areas\Admin\Views\Post\Details.cshtml" />
+    <Content Include="Views\Section\AdministrationPanel.cshtml" />
+    <Content Include="Areas\Admin\Views\Post\Edit.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
     <Content Include="Views\Section\List.cshtml" />
-    <Content Include="Views\SectionAdmin\List.cshtml" />
+    <Content Include="Areas\Admin\Views\Section\List.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\MultilineText.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
@@ -371,12 +373,14 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\404.cshtml" />
-    <Content Include="Views\UserAdmin\Edit.cshtml" />
-    <Content Include="Views\UserAdmin\List.cshtml" />
-    <Content Include="Views\UserAdmin\ChangePass.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\User\List.cshtml" />
+    <Content Include="Areas\Admin\Views\User\ChangePass.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Content\css\openid\images\" />
   </ItemGroup>
   <ItemGroup>
@@ -401,7 +405,7 @@
     <Content Include="Views\MailTemplates\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\ConfigurationAdmin\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Configuration\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Section\RecentComments.cshtml" />
@@ -411,6 +415,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Welcome\Success.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

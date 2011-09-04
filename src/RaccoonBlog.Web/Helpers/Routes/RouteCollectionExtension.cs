@@ -6,12 +6,32 @@ namespace RaccoonBlog.Web.Helpers.Routes
 {
 	public static class RouteCollectionExtension
 	{
+		public static Route MapRouteLowerCase(this RouteCollection routes, string name, string url)
+		{
+			return MapRouteLowerCase(routes, name, url, null /* defaults */, (object)null /* constraints */);
+		}
+
 		public static Route MapRouteLowerCase(this RouteCollection routes, string name, string url, object defaults)
 		{
-			return routes.MapRouteLowerCase(name, url, defaults, null);
+			return MapRouteLowerCase(routes, name, url, defaults, (object)null /* constraints */);
 		}
 
 		public static Route MapRouteLowerCase(this RouteCollection routes, string name, string url, object defaults, object constraints)
+		{
+			return MapRouteLowerCase(routes, name, url, defaults, constraints, null /* namespaces */);
+		}
+
+		public static Route MapRouteLowerCase(this RouteCollection routes, string name, string url, string[] namespaces)
+		{
+			return MapRouteLowerCase(routes, name, url, null /* defaults */, null /* constraints */, namespaces);
+		}
+
+		public static Route MapRouteLowerCase(this RouteCollection routes, string name, string url, object defaults, string[] namespaces)
+		{
+			return MapRouteLowerCase(routes, name, url, defaults, null /* constraints */, namespaces);
+		}
+
+		public static Route MapRouteLowerCase(this RouteCollection routes, string name, string url, object defaults, object constraints, string[] namespaces)
 		{
 			if (routes == null)
 			{
@@ -26,8 +46,13 @@ namespace RaccoonBlog.Web.Helpers.Routes
 			{
 				Defaults = new RouteValueDictionary(defaults),
 				Constraints = new RouteValueDictionary(constraints),
-				DataTokens = new RouteValueDictionary(),
+				DataTokens = new RouteValueDictionary()
 			};
+
+			if ((namespaces != null) && (namespaces.Length > 0))
+			{
+				route.DataTokens["Namespaces"] = namespaces;
+			}
 
 			routes.Add(name, route);
 
