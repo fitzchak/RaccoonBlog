@@ -29,7 +29,6 @@ namespace RaccoonBlog.Web
 
 			//ConfigurePostAdmin();
     	    //ConfigureSectionAdmin();
-			//ConfigureLogin();
 			//ConfigureUserAdmin();
 			//ConfigureConfigurationAdmin();
 
@@ -167,15 +166,6 @@ namespace RaccoonBlog.Web
 			   new { action = "SearchResult" }
                );
         }
-
-        /*private void ConfigureLogin()
-        {
-            routes.MapRouteLowerCase("LoginController",
-               "users/{action}",
-               new { controller = "Login" },
-               new { action = "Login|LogOut|CurrentUser|AdministrationPanel" }
-               );
-        }*/
 
         private void ConfigurePost()
         {

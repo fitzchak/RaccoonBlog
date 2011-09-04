@@ -23,5 +23,20 @@ namespace RaccoonBlog.Web.Helpers
 
             return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
         }
+
+		public static MvcHtmlString AdminImage(this HtmlHelper helper, string path)
+		{
+			return MvcHtmlString.Create("/areas/admin/content/images/" + path.Replace('\\', '/'));
+		}
+
+		public static MvcHtmlString AdminScript(this HtmlHelper helper, string path)
+		{
+			return MvcHtmlString.Create("/areas/admin/content/js/" + path.Replace('\\', '/'));
+		}
+
+		public static MvcHtmlString AdminStyle(this HtmlHelper helper, string path)
+		{
+			return MvcHtmlString.Create("/areas/admin/content/css/" + path.Replace('\\', '/'));
+		}
     }
 }
