@@ -43,18 +43,6 @@
     <Reference Include="AutoMapper">
       <HintPath>..\packages\AutoMapper.1.1.0.118\lib\AutoMapper.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.Core">
-      <HintPath>..\packages\Castle.Core.1.2.0\lib\Castle.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Castle.DynamicProxy2">
-      <HintPath>..\packages\Castle.DynamicProxy.2.2.0\lib\Castle.DynamicProxy2.dll</HintPath>
-    </Reference>
-    <Reference Include="Castle.Services.Logging.log4netIntegration">
-      <HintPath>..\packages\Castle.Core.1.2.0\lib\Castle.Services.Logging.log4netIntegration.dll</HintPath>
-    </Reference>
-    <Reference Include="Castle.Services.Logging.NLogIntegration">
-      <HintPath>..\packages\Castle.Core.1.2.0\lib\Castle.Services.Logging.NLogIntegration.dll</HintPath>
-    </Reference>
     <Reference Include="CookComputing.XmlRpcV2">
       <HintPath>..\packages\xmlrpcnet.2.5.0\lib\net20\CookComputing.XmlRpcV2.dll</HintPath>
     </Reference>
@@ -69,9 +57,6 @@
     </Reference>
     <Reference Include="Joel.Net.Akismet">
       <HintPath>..\packages\Joel.Net.Akismet\Joel.Net.Akismet.dll</HintPath>
-    </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
     </Reference>
     <Reference Include="MarkdownSharp">
       <HintPath>..\packages\MarkdownSharp.1.13.0.0\lib\35\MarkdownSharp.dll</HintPath>
