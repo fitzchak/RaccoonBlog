@@ -37,7 +37,14 @@ namespace RaccoonBlog.Web.Controllers
 			Session.Store(new Section { Title = "Archive", IsActive = true, Position = 1, ControllerName = "Section", ActionName = "ArchivesList" });
 			Session.Store(new Section { Title = "Tags", IsActive = true, Position = 2, ControllerName = "Section", ActionName = "TagsList" });
 			Session.Store(new Section { Title = "Statistics", IsActive = true, Position = 3, ControllerName = "Section", ActionName = "PostsStatistics" });
-
+			var user = new User
+			{
+				FullName = "Default User",
+				Email = "user@example.org",
+				Enabled = true,
+			};
+			user.SetPassword("raccoon");
+			Session.Store(user);
 			Session.SaveChanges();
 
 			return RedirectToAction("Success");
