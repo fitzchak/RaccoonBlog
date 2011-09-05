@@ -45,7 +45,6 @@ namespace RaccoonBlog.Web.Controllers
 			};
 			user.SetPassword("raccoon");
 			Session.Store(user);
-			Session.SaveChanges();
 
 			return RedirectToAction("Success");
 		}
