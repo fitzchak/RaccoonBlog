@@ -11,7 +11,7 @@ using RaccoonBlog.Web.Infrastructure.Common;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public class SectionController : AbstractController
+	public class SectionController : RaccoonController
 	{
 		[ChildActionOnly]
 		public ActionResult FuturePosts()

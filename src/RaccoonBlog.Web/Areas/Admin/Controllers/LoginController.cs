@@ -6,7 +6,7 @@ using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
-    public class LoginController : AbstractController
+    public class LoginController : RaccoonController
     {
         [HttpGet]
         public ActionResult Index(string returnUrl)

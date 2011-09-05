@@ -1,5 +1,4 @@
 ﻿using System.Web.Mvc;
-using RaccoonBlog.Web.Infrastructure.Raven;
 using RaccoonBlog.Web.Models;
 
 namespace RaccoonBlog.Web.Controllers
@@ -24,7 +23,7 @@ namespace RaccoonBlog.Web.Controllers
 			if (!ModelState.IsValid)
 				return View("Index");
 
-			using (var session = DocumentStoreHolder.DocumentStore.OpenSession())
+			using (var session = MvcApplication.DocumentStore.OpenSession())
 			{
 				// Create the blog by storing the config
 				config.Id = "Blog/Config";
@@ -44,7 +43,7 @@ namespace RaccoonBlog.Web.Controllers
 		public ActionResult Success()
 		{
 			BlogConfig config;
-			using (var session = DocumentStoreHolder.DocumentStore.OpenSession())
+			using (var session = MvcApplication.DocumentStore.OpenSession())
 			{
 				config = session.Load<BlogConfig>("Blog/Config");
 			}
@@ -55,7 +54,7 @@ namespace RaccoonBlog.Web.Controllers
 		private void AssertConfigurationIsNeeded()
 		{
 			bool canContinue = true;
-			using (var session = DocumentStoreHolder.DocumentStore.OpenSession())
+			using (var session = MvcApplication.DocumentStore.OpenSession())
 			{
 				if (session.Load<BlogConfig>("Blog/Config") != null)
 					canContinue = false;

@@ -19,7 +19,7 @@ using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public class SocialLoginController : AbstractController
+	public class SocialLoginController : RaccoonController
 	{
 		public ActionResult Authenticate(string url, string returnUrl)
 		{

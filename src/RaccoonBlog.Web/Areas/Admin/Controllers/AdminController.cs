@@ -8,7 +8,7 @@ using RaccoonBlog.Web.ViewModels;
 namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
     //[Authorize]
-    public abstract class AdminController : AbstractController
+    public abstract class AdminController : RaccoonController
     {
 		protected override void OnActionExecuted(ActionExecutedContext filterContext)
 		{
