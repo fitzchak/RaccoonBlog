@@ -1,20 +1,26 @@
 ﻿using System.Web.Mvc;
 using RaccoonBlog.Web.Models;
+using RaccoonBlog.Web.ViewModels;
+using Raven.Client;
 
 namespace RaccoonBlog.Web.Controllers
 {
-    public class WelcomeController : Controller
-    {
-        //
-        // GET: /Welcome/
+	public class WelcomeController : RaccoonController
+	{
+		protected override void OnActionExecuted(ActionExecutedContext filterContext)
+		{
+			// don't load the non existant Blog/Config
+		}
 
+		//
+		// GET: /Welcome/
 		public ActionResult Index()
 		{
 			AssertConfigurationIsNeeded();
 
 			return View(BlogConfig.New());
 		}
-		
+
 		[HttpPost]
 		public ActionResult CreateBlog(BlogConfig config)
 		{
@@ -23,48 +29,40 @@ namespace RaccoonBlog.Web.Controllers
 			if (!ModelState.IsValid)
 				return View("Index");
 
-			using (var session = MvcApplication.DocumentStore.OpenSession())
+			// Create the blog by storing the config
+			config.Id = "Blog/Config";
+			Session.Store(config);
+
+			// Create default sections
+			Session.Store(new Section { Title = "Archive", IsActive = true, Position = 1, ControllerName = "Section", ActionName = "ArchivesList" });
+			Session.Store(new Section { Title = "Tags", IsActive = true, Position = 2, ControllerName = "Section", ActionName = "TagsList" });
+			Session.Store(new Section { Title = "Statistics", IsActive = true, Position = 3, ControllerName = "Section", ActionName = "PostsStatistics" });
+			var user = new User
 			{
-				// Create the blog by storing the config
-				config.Id = "Blog/Config";
-				session.Store(config);
-
-				// Create default sections
-				session.Store(new Section{Title="Archive", IsActive = true, Position = 1, ControllerName = "Section", ActionName = "ArchivesList"});
-				session.Store(new Section{Title="Tags", IsActive=true, Position = 2, ControllerName = "Section", ActionName = "TagsList"});
-				session.Store(new Section{Title="Statistics", IsActive = true, Position=3, ControllerName="Section", ActionName="PostsStatistics"});
-
-				session.SaveChanges();
-			}
+				FullName = "Default User",
+				Email = "user@example.org",
+				Enabled = true,
+			};
+			user.SetPassword("raccoon");
+			Session.Store(user);
 
 			return RedirectToAction("Success");
 		}
 
 		public ActionResult Success()
 		{
-			BlogConfig config;
-			using (var session = MvcApplication.DocumentStore.OpenSession())
-			{
-				config = session.Load<BlogConfig>("Blog/Config");
-			}
+			var config = Session.Load<BlogConfig>("Blog/Config");
 
 			return config == null ? View("Index") : View(config);
 		}
 
 		private void AssertConfigurationIsNeeded()
 		{
-			bool canContinue = true;
-			using (var session = MvcApplication.DocumentStore.OpenSession())
-			{
-				if (session.Load<BlogConfig>("Blog/Config") != null)
-					canContinue = false;
-			}
-
-			if (!canContinue)
+			if (Session.Load<BlogConfig>("Blog/Config") != null)
 			{
 				Response.Redirect("/");
 				Response.End();
 			}
 		}
-    }
+	}
 }

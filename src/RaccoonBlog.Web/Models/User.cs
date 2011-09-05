@@ -41,10 +41,9 @@ namespace RaccoonBlog.Web.Models
 			string hashedPassword;
 			using (var sha = SHA256.Create())
 			{
-				var saltPerUser = Id;
 				var computedHash = sha.ComputeHash(
 					PasswordSalt.ToByteArray().Concat(
-						Encoding.Unicode.GetBytes(saltPerUser + pwd + ConstantSalt)
+						Encoding.Unicode.GetBytes(PasswordSalt + pwd + ConstantSalt)
 						).ToArray()
 					);
 
