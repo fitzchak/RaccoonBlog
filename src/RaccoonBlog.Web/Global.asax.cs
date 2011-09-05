@@ -18,7 +18,7 @@ namespace RaccoonBlog.Web
 	{
 		public static void RegisterGlobalFilters(GlobalFilterCollection filters)
 		{
-			filters.Add(new ElmahHandleErrorAttribute());
+			//filters.Add(new ElmahHandleErrorAttribute());
 		}
 
 		protected void Application_Start()
