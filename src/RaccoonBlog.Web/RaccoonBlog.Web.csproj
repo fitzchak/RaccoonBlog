@@ -67,10 +67,6 @@
     <Reference Include="Elmah">
       <HintPath>..\packages\elmah.1.1\lib\Elmah.dll</HintPath>
     </Reference>
-    <Reference Include="Glimpse.Net, Version=0.80.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Glimpse.0.80\lib\net40\Glimpse.Net.dll</HintPath>
-    </Reference>
     <Reference Include="Joel.Net.Akismet">
       <HintPath>..\packages\Joel.Net.Akismet\Joel.Net.Akismet.dll</HintPath>
     </Reference>
