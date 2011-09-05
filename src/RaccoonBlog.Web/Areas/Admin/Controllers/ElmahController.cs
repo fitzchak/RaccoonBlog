@@ -1,7 +1,7 @@
 using System.Web.Mvc;
 using RaccoonBlog.Web.Helpers.Results;
 
-namespace RaccoonBlog.Web.Controllers
+namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
     public class ElmahController : AdminController
     {
