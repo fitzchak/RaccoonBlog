@@ -1,7 +1,10 @@
 ﻿using System.Web.Mvc;
+using RaccoonBlog.Web.Infrastructure.Indexes;
 using RaccoonBlog.Web.Infrastructure.Raven;
 using RaccoonBlog.Web.Models;
 using Raven.Client;
+using Raven.Client.Document;
+using Raven.Client.Indexes;
 
 namespace RaccoonBlog.Web.Controllers
 {
@@ -16,6 +19,8 @@ namespace RaccoonBlog.Web.Controllers
 				if (filterContext.Exception == null)
 					Session.SaveChanges();
 			}
+
+			DocumentStoreHolder.AssureIndexesCreated();
 		}
 
 		//
