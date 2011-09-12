@@ -10,6 +10,12 @@ namespace RaccoonBlog.Web.Controllers
 		protected override void OnActionExecuted(ActionExecutedContext filterContext)
 		{
 			// don't load the non existant Blog/Config
+
+			using (Session)
+			{
+				if (filterContext.Exception == null)
+					Session.SaveChanges();
+			}
 		}
 
 		//
