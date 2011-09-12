@@ -12,12 +12,40 @@ using Raven.Client;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public abstract class AbstractController : Controller
+	public abstract class RaccoonController : Controller
 	{
 		public const int DefaultPage = 1;
 		public const int PageSize = 25;
 
-		public new IDocumentSession Session { get; set; }
+		public new IDocumentSession Session { get; private set; }
+
+		private BlogConfig blogConfig;
+		public BlogConfig BlogConfig
+		{
+			get
+			{
+				if (blogConfig == null)
+				{
+					using (Session.Advanced.DocumentStore.AggressivelyCacheFor(TimeSpan.FromMinutes(5)))
+					{
+						blogConfig = Session.Load<BlogConfig>("Blog/Config");
+					}
+
+					if (blogConfig == null) // first launch
+					{
+						Session.Advanced.DocumentStore.DisableAggressiveCaching();
+						Response.Redirect("/welcome");
+						Response.End();
+					}
+				}
+				return blogConfig;
+			}
+		}
+
+		protected override void OnActionExecuting(ActionExecutingContext filterContext)
+		{
+			Session = MvcApplication.DocumentStore.OpenSession();
+		}
 
 		protected override void OnActionExecuted(ActionExecutedContext filterContext)
 		{
@@ -25,6 +53,12 @@ namespace RaccoonBlog.Web.Controllers
 				return;
 
 			ViewBag.BlogConfig = BlogConfig.MapTo<BlogConfigViewModel>();
+
+			using (Session)
+			{
+				if (filterContext.Exception == null)
+					Session.SaveChanges();
+			}
 		}
 		
 		protected int CurrentPage
@@ -53,24 +87,6 @@ namespace RaccoonBlog.Web.Controllers
 		{
 			var settings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
 			return new JsonNetResult(data, settings);
-		}
-
-		private BlogConfig blogConfig;
-		public BlogConfig BlogConfig
-		{
-			get
-			{
-				if (blogConfig == null)
-				{
-					blogConfig = Session.Load<BlogConfig>("Blog/Config");
-					if (blogConfig == null) // first launch
-					{
-						Response.Redirect("/welcome");
-						Response.End();
-					}
-				}
-				return blogConfig;
-			}
 		}
 	}
 }
