@@ -6,18 +6,19 @@ using Newtonsoft.Json.Serialization;
 using RaccoonBlog.Web.Helpers.Results;
 using RaccoonBlog.Web.Infrastructure.ActionResults;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
+using RaccoonBlog.Web.Infrastructure.Raven;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
 using Raven.Client;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public abstract class RaccoonController : Controller
+	public abstract class AbstractController : Controller
 	{
 		public const int DefaultPage = 1;
 		public const int PageSize = 25;
 
-		public new IDocumentSession Session { get; private set; }
+		public new IDocumentSession Session { get; set; }
 
 		private BlogConfig blogConfig;
 		public BlogConfig BlogConfig
@@ -40,11 +41,6 @@ namespace RaccoonBlog.Web.Controllers
 				}
 				return blogConfig;
 			}
-		}
-
-		protected override void OnActionExecuting(ActionExecutingContext filterContext)
-		{
-			Session = MvcApplication.DocumentStore.OpenSession();
 		}
 
 		protected override void OnActionExecuted(ActionExecutedContext filterContext)
