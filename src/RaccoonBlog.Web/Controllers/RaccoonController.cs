@@ -26,9 +26,14 @@ namespace RaccoonBlog.Web.Controllers
 			{
 				if (blogConfig == null)
 				{
-					blogConfig = Session.Load<BlogConfig>("Blog/Config");
+					using (Session.Advanced.DocumentStore.AggressivelyCacheFor(TimeSpan.FromMinutes(5)))
+					{
+						blogConfig = Session.Load<BlogConfig>("Blog/Config");
+					}
+
 					if (blogConfig == null) // first launch
 					{
+						Session.Advanced.DocumentStore.DisableAggressiveCaching();
 						Response.Redirect("/welcome");
 						Response.End();
 					}
