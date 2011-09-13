@@ -38,14 +38,14 @@ namespace RaccoonBlog.Web
 
 		private static void InitializeDocumentStore()
 		{
+			if (DocumentStore != null) return; // prevent misuse
+
 			DocumentStore = new DocumentStore
 			                	{
 			                		ConnectionStringName = "RavenDB"
 			                	}.Initialize();
 
 			IndexCreation.CreateIndexes(typeof (Tags_Count).Assembly, DocumentStore);
-
-			//RavenProfilingHandler.SourcePath = @"C:\Work\ravendb\Raven.Client.MvcIntegration";
 
 			RavenProfiler.InitializeFor(MvcApplication.DocumentStore,
 			                            //Fields to filter out of the output
