@@ -28,7 +28,8 @@ namespace RaccoonBlog.Web.Commands
 
 		public void Execute()
 		{
-			var post = Session.Load<Post>(_postId);
+			var post = Session.Include<Post>(x=>x.AuthorId).Load(_postId);
+			var postAuthor = Session.Load<User>(post.AuthorId);
 			var comments = Session.Load<PostComments>(_postId);
 
 			var comment = new PostComments.Comment
@@ -61,7 +62,7 @@ namespace RaccoonBlog.Web.Commands
 
 			SetCommenter(commenter, comment.IsSpam);
 
-			SendNewCommentEmail(post, comment);
+			SendNewCommentEmail(post, comment, postAuthor);
 		}
 
 		private void SetCommenter(Commenter commenter, bool isSpamComment)
@@ -78,7 +79,7 @@ namespace RaccoonBlog.Web.Commands
 			Session.Store(commenter);
 		}
 
-		private void SendNewCommentEmail(Post post, PostComments.Comment comment)
+		private void SendNewCommentEmail(Post post, PostComments.Comment comment, User postAuthor)
 		{
 			if (_requestValues.IsAuthenticated)
 				return; // we don't send email for authenticated users
@@ -92,7 +93,7 @@ namespace RaccoonBlog.Web.Commands
 
 			var subject = string.Format("{2}Comment on: {0} from {1}", viewModel.PostTitle, viewModel.BlogName, comment.IsSpam ? "[Spam] " : string.Empty);
 
-			CommandExecutor.ExcuteLater(new SendEmailCommand(viewModel.Email, subject, "NewComment", viewModel));
+			CommandExecutor.ExcuteLater(new SendEmailCommand(viewModel.Email, subject, "NewComment", postAuthor.Email, viewModel));
 		}
 	}
 }

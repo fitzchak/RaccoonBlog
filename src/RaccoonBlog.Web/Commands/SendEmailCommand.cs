@@ -20,17 +20,20 @@ namespace RaccoonBlog.Web.Commands
     	private readonly string subject;
     	private readonly string view;
     	private readonly object model;
+		private readonly string sendTo;
 
         public SendEmailCommand(
 			string replyTo,
 			string subject,
-			string view, 
+			string view,
+			string sendTo,
 			object model)
         {
         	this.replyTo = replyTo;
         	this.subject = subject;
         	this.view = view;
         	this.model = model;
+        	this.sendTo = sendTo;
         }
 
     	public void Execute()
@@ -62,12 +65,16 @@ namespace RaccoonBlog.Web.Commands
 				}
 			}
 
+			// Send a notification of the comment to the post author
+			mailMessage.To.Add(sendTo);
+
+			// Also CC the owners, if specificed
+			// TODO: Move this to a config entry in the database
 			var commentsMederatorEmails = ConfigurationManager.AppSettings["OwnerEmail"];
 			commentsMederatorEmails
-				.Split(';')
+				.Split(new []{';'}, StringSplitOptions.RemoveEmptyEntries)
 				.Select(x => new MailAddress(x.Trim()))
-				.ForEach(email => mailMessage.To.Add(email));
-
+				.ForEach(email => mailMessage.CC.Add(email));
 
     		using(var smtpClient = new SmtpClient())
     		{
