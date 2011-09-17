@@ -90,10 +90,7 @@ namespace RaccoonBlog.Web.Commands
 			viewModel.BlogName = Session.Load<BlogConfig>("Blog/Config").Title;
 			viewModel.Key = post.ShowPostEvenIfPrivate.MapTo<string>();
 
-			var subject = string.Format("Comment on: {0} from {1}", viewModel.PostTitle, viewModel.BlogName);
-
-			if (comment.IsSpam)
-				subject = "Spam " + subject;
+			var subject = string.Format("{2}Comment on: {0} from {1}", viewModel.PostTitle, viewModel.BlogName, comment.IsSpam ? "[Spam] " : string.Empty);
 
 			CommandExecutor.ExcuteLater(new SendEmailCommand(viewModel.Email, subject, "NewComment", viewModel));
 		}
