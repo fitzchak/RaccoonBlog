@@ -2,7 +2,6 @@ using System.Web;
 using System.Web.Mvc;
 using Elmah;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
-using RaccoonBlog.Web.Infrastructure.Raven;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
 
@@ -18,7 +17,7 @@ namespace RaccoonBlog.Web.Helpers.Attributes
 			ErrorLog.GetDefault(HttpContext.Current).Log(new Error(context.Exception, HttpContext.Current));
 
 			BlogConfig blogConfig;
-			using(var session = DocumentStoreHolder.DocumentStore.OpenSession())
+			using(var session = MvcApplication.DocumentStore.OpenSession())
 			{
 				blogConfig = session.Load<BlogConfig>("Blog/Config") ?? BlogConfig.NewDummy();
 			}

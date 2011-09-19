@@ -6,11 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using CookComputing.XmlRpc;
-using RaccoonBlog.Web.Controllers;
-using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Infrastructure.Indexes;
-using RaccoonBlog.Web.Infrastructure.Raven;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.Services.RssModels;
 using Raven.Client;
@@ -26,7 +23,7 @@ namespace RaccoonBlog.Web.Services
 
         public MetaWeblog()
         {
-            session = DocumentStoreHolder.DocumentStore.OpenSession();
+            session = MvcApplication.DocumentStore.OpenSession();
             postScheduleringStrategy = new PostSchedulingStrategy(session, DateTimeOffset.Now);
         }
 

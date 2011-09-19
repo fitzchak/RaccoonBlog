@@ -43,18 +43,6 @@
     <Reference Include="AutoMapper">
       <HintPath>..\packages\AutoMapper.1.1.0.118\lib\AutoMapper.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.Core">
-      <HintPath>..\packages\Castle.Core.1.2.0\lib\Castle.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Castle.DynamicProxy2">
-      <HintPath>..\packages\Castle.DynamicProxy.2.2.0\lib\Castle.DynamicProxy2.dll</HintPath>
-    </Reference>
-    <Reference Include="Castle.Services.Logging.log4netIntegration">
-      <HintPath>..\packages\Castle.Core.1.2.0\lib\Castle.Services.Logging.log4netIntegration.dll</HintPath>
-    </Reference>
-    <Reference Include="Castle.Services.Logging.NLogIntegration">
-      <HintPath>..\packages\Castle.Core.1.2.0\lib\Castle.Services.Logging.NLogIntegration.dll</HintPath>
-    </Reference>
     <Reference Include="CookComputing.XmlRpcV2">
       <HintPath>..\packages\xmlrpcnet.2.5.0\lib\net20\CookComputing.XmlRpcV2.dll</HintPath>
     </Reference>
@@ -67,15 +55,8 @@
     <Reference Include="Elmah">
       <HintPath>..\packages\elmah.1.1\lib\Elmah.dll</HintPath>
     </Reference>
-    <Reference Include="Glimpse.Net, Version=0.80.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Glimpse.0.80\lib\net40\Glimpse.Net.dll</HintPath>
-    </Reference>
     <Reference Include="Joel.Net.Akismet">
       <HintPath>..\packages\Joel.Net.Akismet\Joel.Net.Akismet.dll</HintPath>
-    </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
     </Reference>
     <Reference Include="MarkdownSharp">
       <HintPath>..\packages\MarkdownSharp.1.13.0.0\lib\35\MarkdownSharp.dll</HintPath>
@@ -137,7 +118,11 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\ConfigurationAdminController.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\ConfigurationController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Helpers\HtmlHelperExtensions.cs" />
+    <Compile Include="Areas\Admin\Models\AdminMenu.cs" />
     <Compile Include="Controllers\SocialLoginController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\WelcomeController.cs" />
@@ -151,23 +136,23 @@
     <Content Include="Content\css\custom\ayende.less.css" />
     <Content Include="Content\css\custom\hibernatingrhinos.settings.less.css" />
     <Content Include="Content\css\custom\hibernatingrhinos.less.css" />
-    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Infrastructure\Common\DateTimeOffsetUtil.cs" />
     <Compile Include="Controllers\CommentCommandOptions.cs" />
     <Compile Include="Controllers\CssController.cs" />
-    <Compile Include="Controllers\ElmahController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ElmahController.cs" />
     <Compile Include="Helpers\Attributes\ElmahHandleErrorAttribute.cs" />
     <Compile Include="Helpers\Binders\RemoveSpacesEnumBinder.cs" />
     <Compile Include="Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Helpers\Results\ElmahResult.cs" />
     <Compile Include="Controllers\PostDetailsController.cs" />
-    <Compile Include="Controllers\LoginController.cs" />
-    <Compile Include="Controllers\PostAdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PostController.cs" />
     <Compile Include="Infrastructure\Common\QueryableExtensions.cs" />
-    <Compile Include="Controllers\SectionAdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SectionController.cs" />
     <Compile Include="Controllers\SectionController.cs" />
     <Compile Include="Controllers\SyndicationController.cs" />
-    <Compile Include="Controllers\UserAdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Helpers\Attributes\AjaxOnlyAttribute.cs" />
     <Compile Include="Helpers\ModelStateExtensions.cs" />
     <Compile Include="Helpers\TwitterButtonDataCount.cs" />
@@ -218,14 +203,12 @@
     <Compile Include="Commands\AddCommentCommand.cs" />
     <Compile Include="Infrastructure\Common\EnumerableExtensions.cs" />
     <Compile Include="Commands\SendEmailCommand.cs" />
-    <Compile Include="Controllers\AbstractController.cs" />
+    <Compile Include="Controllers\RaccoonController.cs" />
     <Compile Include="Helpers\RecaptchHelperExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\AutoMapper\AutoMapperExtensions.cs" />
-    <Compile Include="Infrastructure\Raven\DocumentStoreHolder.cs" />
-    <Compile Include="Infrastructure\Controllers\RavenActionFilterAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Infrastructure\Commands\ICommand.cs" />
     <Compile Include="Services\AskimetService.cs" />
@@ -313,7 +296,7 @@
     <Content Include="Content\js\jquery.tmpl.js" />
     <Content Include="Content\js\jquery.tmpl.min.js" />
     <Compile Include="ViewModels\RecentCommentViewModel.cs" />
-    <Content Include="Views\SectionAdmin\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Section\Edit.cshtml" />
     <Compile Include="Controllers\PostController.cs" />
     <Content Include="Views\MailTemplates\_Layout.cshtml" />
     <Content Include="Views\Section\FuturePosts.cshtml" />
@@ -329,16 +312,16 @@
     <Content Include="Views\Section\ArchivesList.cshtml" />
     <Content Include="Services\MetaWeblogAPI.ashx" />
     <Content Include="wlwmanifest.xml" />
-    <Content Include="Views\Login\Login.cshtml" />
-    <Content Include="Views\Login\CurrentUser.cshtml" />
+    <Content Include="Areas\Admin\Views\Login\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Login\CurrentUser.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EmailAddress.cshtml" />
-    <Content Include="Views\PostAdmin\List.cshtml" />
-    <Content Include="Views\PostAdmin\Details.cshtml" />
-    <Content Include="Views\Login\AdministrationPanel.cshtml" />
-    <Content Include="Views\PostAdmin\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Post\List.cshtml" />
+    <Content Include="Areas\Admin\Views\Post\Details.cshtml" />
+    <Content Include="Views\Section\AdministrationPanel.cshtml" />
+    <Content Include="Areas\Admin\Views\Post\Edit.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
     <Content Include="Views\Section\List.cshtml" />
-    <Content Include="Views\SectionAdmin\List.cshtml" />
+    <Content Include="Areas\Admin\Views\Section\List.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\MultilineText.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
@@ -371,12 +354,13 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\404.cshtml" />
-    <Content Include="Views\UserAdmin\Edit.cshtml" />
-    <Content Include="Views\UserAdmin\List.cshtml" />
-    <Content Include="Views\UserAdmin\ChangePass.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\User\List.cshtml" />
+    <Content Include="Areas\Admin\Views\User\ChangePass.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Content\" />
     <Folder Include="Content\css\openid\images\" />
   </ItemGroup>
   <ItemGroup>
@@ -401,7 +385,7 @@
     <Content Include="Views\MailTemplates\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\ConfigurationAdmin\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Configuration\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Section\RecentComments.cshtml" />
@@ -411,6 +395,36 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Welcome\Success.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\Boolean.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\EmailAddress.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\HiddenInput.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\MultilineText.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\Password.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\String.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

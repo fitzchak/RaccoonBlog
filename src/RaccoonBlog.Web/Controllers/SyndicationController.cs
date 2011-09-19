@@ -10,7 +10,7 @@ using RaccoonBlog.Web.Helpers;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public class SyndicationController : AbstractController
+	public class SyndicationController : RaccoonController
 	{
 		private static readonly string EtagInitValue = Guid.NewGuid().ToString();
 

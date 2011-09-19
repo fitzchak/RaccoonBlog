@@ -13,7 +13,7 @@ using System.Web;
 
 namespace RaccoonBlog.Web.Controllers
 {
-    public class PostDetailsController : AbstractController
+    public class PostDetailsController : RaccoonController
     {
 
 		public ActionResult Details(int id, string slug, Guid key)

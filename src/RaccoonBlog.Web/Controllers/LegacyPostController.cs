@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace RaccoonBlog.Web.Controllers
 {
-    public class LegacyPostController : AbstractController
+    public class LegacyPostController : RaccoonController
     {
         public ActionResult RedirectLegacyPost(int year, int month, int day, string slug)
         {

@@ -1,14 +1,11 @@
 ﻿using System.Web.Mvc;
-using RaccoonBlog.Web.Infrastructure.Indexes;
-using RaccoonBlog.Web.Infrastructure.Raven;
 using RaccoonBlog.Web.Models;
+using RaccoonBlog.Web.ViewModels;
 using Raven.Client;
-using Raven.Client.Document;
-using Raven.Client.Indexes;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public class WelcomeController : AbstractController
+	public class WelcomeController : RaccoonController
 	{
 		protected override void OnActionExecuted(ActionExecutedContext filterContext)
 		{
@@ -19,8 +16,6 @@ namespace RaccoonBlog.Web.Controllers
 				if (filterContext.Exception == null)
 					Session.SaveChanges();
 			}
-
-			DocumentStoreHolder.AssureIndexesCreated();
 		}
 
 		//

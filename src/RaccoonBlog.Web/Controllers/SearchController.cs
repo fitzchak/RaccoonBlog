@@ -2,7 +2,7 @@ using System.Web.Mvc;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public class SearchController : AbstractController
+	public class SearchController : RaccoonController
 	{
 		public ActionResult SearchResult(string q)
 		{

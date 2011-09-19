@@ -12,8 +12,13 @@ using System.Web.Mvc;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public class PostController : AbstractController
+	public class PostController : RaccoonController
     {
+		public ActionResult Index()
+		{
+			return List();
+		}
+
         public ActionResult List()
         {
 			RavenQueryStatistics stats;

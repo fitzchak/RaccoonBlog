@@ -3,9 +3,11 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using MvcContrib.TestHelper;
 using RaccoonBlog.Web;
+using RaccoonBlog.Web.Areas.Admin.Controllers;
 using RaccoonBlog.Web.Controllers;
 using RaccoonBlog.Web.ViewModels;
 using Xunit;
+using PostController = RaccoonBlog.Web.Controllers.PostController;
 
 namespace RaccoonBlog.IntegrationTests.ControllersCore
 {
@@ -80,13 +82,13 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
 		[Fact]
 		public void LoginControllerRoutes()
 		{
-			"~/users/login".ShouldMapTo<LoginController>(c => c.Login((string)null));
-			"~/users/login".WithMethod(HttpVerbs.Post).ShouldMapTo<LoginController>(c => c.Login((LoginInput)null));
+			"~/admin/login".ShouldMapTo<LoginController>(c => c.Login((string)null));
+			"~/admin/login".WithMethod(HttpVerbs.Post).ShouldMapTo<LoginController>(c => c.Login((LoginInput)null));
 
-			"~/users/logout".ShouldMapTo<LoginController>(c => c.LogOut(null));
+			"~/admin/logout".ShouldMapTo<LoginController>(c => c.LogOut(null));
 
-			"~/users/currentuser".ShouldMapTo<LoginController>(c => c.CurrentUser());
-			"~/users/administrationpanel".ShouldMapTo<LoginController>(c => c.AdministrationPanel());
+			"~/admin/currentuser".ShouldMapTo<LoginController>(c => c.CurrentUser());
+			"~/section/administrationpanel".ShouldMapTo<LoginController>(c => c.AdministrationPanel());
 		}
 
 		[Fact]
@@ -101,12 +103,12 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
 
 			"~/admin/posts/1024".ShouldMapTo<PostAdminController>(c => c.Details(1024, null));
 			"~/admin/posts/1024/edit".ShouldMapTo<PostAdminController>(c => c.Edit(1024));
-			"~/admin/posts/1024/blog-post-title".ShouldMapTo<PostAdminController>(c => c.Details(1024, "blog-post-title"));
+			"~/admin/posts/1024/blog-post-title".ShouldMapTo<RaccoonBlog.Web.Areas.Admin.Controllers.PostController>(c => c.Details(1024, "blog-post-title"));
 
-			"~/admin/posts/update".ShouldMapTo<PostAdminController>(c => c.Update(null));
+			"~/admin/posts/update".ShouldMapTo<RaccoonBlog.Web.Areas.Admin.Controllers.PostController>(c => c.Update(null));
 			var delete = "~/admin/posts/delete".WithMethod(HttpVerbs.Post);
 			delete.Values["id"] = 1024;
-			delete.ShouldMapTo<PostAdminController>(c => c.Delete(1024));
+			delete.ShouldMapTo<RaccoonBlog.Web.Areas.Admin.Controllers.PostController>(c => c.Delete(1024));
 
 			var setpostdate = "~/admin/posts/1024/setpostdate".WithMethod(HttpVerbs.Post);
 			setpostdate.Values["date"] = 0;

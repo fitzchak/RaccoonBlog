@@ -10,7 +10,6 @@ namespace RaccoonBlog.Web.ViewModels
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-
         [Required]
         [Display(Name = "Password")]
 		[DataType(DataType.Password)]

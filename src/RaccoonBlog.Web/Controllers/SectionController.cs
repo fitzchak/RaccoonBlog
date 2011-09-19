@@ -11,7 +11,7 @@ using RaccoonBlog.Web.Infrastructure.Common;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public class SectionController : AbstractController
+	public class SectionController : RaccoonController
 	{
 		[ChildActionOnly]
 		public ActionResult FuturePosts()
@@ -108,6 +108,19 @@ namespace RaccoonBlog.Web.Controllers
 				result.Add(recentCommentViewModel);
 			}
 			return View(result);
+		}
+
+		[ChildActionOnly]
+		public ActionResult AdministrationPanel()
+		{
+			var user = Session.GetCurrentUser();
+
+			var vm = new CurrentUserViewModel();
+			if (user != null)
+			{
+				vm.FullName = user.FullName;
+			}
+			return View(vm);
 		}
 	}
 }
