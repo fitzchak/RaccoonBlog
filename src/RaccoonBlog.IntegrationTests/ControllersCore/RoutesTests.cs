@@ -216,5 +216,13 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
 		{
 			"~/admin/configuration".ShouldMapTo<ConfigurationAdminController>(c => c.Index());
 		}
+
+		[Fact]
+		public void WelcomeControllerRoutes()
+		{
+			"~/welcome".ShouldMapTo<WelcomeController>(c => c.Index());
+			"~/welcome/CreateBlog".ShouldMapTo<WelcomeController>(c => c.CreateBlog(null));
+			"~/welcome/Success".ShouldMapTo<WelcomeController>(c => c.Success());
+		}
 	}
 }

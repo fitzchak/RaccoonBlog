@@ -20,12 +20,9 @@ namespace RaccoonBlog.Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.IgnoreRoute("{*favicon}", new { favicon = @"(.*/)?favicon.ico(/.*)?" });
 
-    		routes.MapRoute("WelcomeScreen",
-    		                "welcome/{action}",
-    		                new {controller = "Welcome", action = "Index"}
-    			);
-
             ConfigureSyndication();
+
+            ConfigureWelcome();
 
             ConfigurePost();
             ConfigureLegacyPost();
@@ -57,6 +54,14 @@ namespace RaccoonBlog.Web
 
             #endregion
         }
+
+    	private void ConfigureWelcome()
+    	{
+    		routes.MapRouteLowerCase("WelcomeScreen",
+    		    "welcome/{action}",
+    		    new {controller = "Welcome", action = "Index"}
+    			);
+    	}
 
     	private void ConfigureConfigurationAdmin()
     	{
