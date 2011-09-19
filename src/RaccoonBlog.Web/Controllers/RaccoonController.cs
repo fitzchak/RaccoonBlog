@@ -33,7 +33,6 @@ namespace RaccoonBlog.Web.Controllers
 
 					if (blogConfig == null) // first launch
 					{
-						Session.Advanced.DocumentStore.DisableAggressiveCaching();
 						Response.Redirect("/welcome");
 						Response.End();
 					}
