@@ -1,4 +1,5 @@
 using System;
+using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
 using Newtonsoft.Json;
@@ -33,8 +34,13 @@ namespace RaccoonBlog.Web.Controllers
 
 					if (blogConfig == null) // first launch
 					{
-						Response.Redirect("/welcome");
-						Response.End();
+						throw new HttpException(302, "Found")
+						{
+							Data =
+								{
+									{"Location", "/welcome"}
+								}
+						};
 					}
 				}
 				return blogConfig;
@@ -48,12 +54,27 @@ namespace RaccoonBlog.Web.Controllers
 
 		protected override void OnActionExecuted(ActionExecutedContext filterContext)
 		{
+			if (HandleRedirection(filterContext))
+				return;
+
 			if (filterContext.IsChildAction)
 				return;
 
 			ViewBag.BlogConfig = BlogConfig.MapTo<BlogConfigViewModel>();
 
 			CompleteSessionHandler(filterContext);
+		}
+
+		private bool HandleRedirection(ActionExecutedContext filterContext)
+		{
+			var httpException = filterContext.Exception as HttpException;
+			if (httpException == null || httpException.GetHttpCode() != 302)
+			{
+				return false;
+			}
+			filterContext.ExceptionHandled = true;
+			filterContext.HttpContext.Response.Redirect((string) httpException.Data["Location"]);
+			return true;
 		}
 
 		protected void CompleteSessionHandler(ActionExecutedContext filterContext)
