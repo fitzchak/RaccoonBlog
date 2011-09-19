@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Indexes;
 using RaccoonBlog.Web.Models;
@@ -73,6 +74,10 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 
 			var email = HttpContext.Current.User.Identity.Name;
 			var user = session.GetUserByEmail(email);
+			
+			if (user == null)
+				FormsAuthentication.SignOut();
+			
 			return user;
 		}
 
