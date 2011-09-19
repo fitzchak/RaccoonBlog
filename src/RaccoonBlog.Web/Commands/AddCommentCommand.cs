@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Web;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
@@ -44,6 +45,12 @@ namespace RaccoonBlog.Web.Commands
 			              		UserHostAddress = _requestValues.UserHostAddress
 			              	};
 			comment.IsSpam = new AskimetService(Session).CheckForSpam(comment);
+
+			var isDuplicateComment = comments.Comments
+				.Concat(comments.Spam)
+				.Any(c => c.Author == comment.Author && c.Body == comment.Body);
+			if (isDuplicateComment)
+				return;
 
 			var commenter = Session.GetCommenter(_commentInput.CommenterKey) ?? new Commenter { Key = _commentInput.CommenterKey ?? Guid.Empty };
 
