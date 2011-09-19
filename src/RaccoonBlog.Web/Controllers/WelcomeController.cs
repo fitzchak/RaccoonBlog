@@ -11,11 +11,7 @@ namespace RaccoonBlog.Web.Controllers
 		{
 			// don't load the non existant Blog/Config
 
-			using (Session)
-			{
-				if (filterContext.Exception == null)
-					Session.SaveChanges();
-			}
+			CompleteSessionHandler(filterContext);
 		}
 
 		//

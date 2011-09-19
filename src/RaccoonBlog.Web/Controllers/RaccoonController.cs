@@ -53,13 +53,18 @@ namespace RaccoonBlog.Web.Controllers
 
 			ViewBag.BlogConfig = BlogConfig.MapTo<BlogConfigViewModel>();
 
+			CompleteSessionHandler(filterContext);
+		}
+
+		protected void CompleteSessionHandler(ActionExecutedContext filterContext)
+		{
 			using (Session)
 			{
-				if (filterContext.Exception == null)
+				if (Session != null && filterContext.Exception == null)
 					Session.SaveChanges();
 			}
 		}
-		
+
 		protected int CurrentPage
 		{
 			get
