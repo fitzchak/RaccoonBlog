@@ -298,6 +298,7 @@
     <Compile Include="ViewModels\RecentCommentViewModel.cs" />
     <Content Include="Areas\Admin\Views\Section\Edit.cshtml" />
     <Compile Include="Controllers\PostController.cs" />
+    <Content Include="RavenNotReachable.htm" />
     <Content Include="Views\MailTemplates\_Layout.cshtml" />
     <Content Include="Views\Section\FuturePosts.cshtml" />
     <Content Include="Views\Shared\500.cshtml" />

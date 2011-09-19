@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Could not reach RavenDB Instance</title>
+</head>
+<body>
+    <h1>RavenDB instance not reachable</h1>
+    <p>When initializing, RaccoonBlog could not reach the RavenDB server configured in web.config, please ensure that:</p>
+    <ul>
+        <li>You have a server running in that address.</li>
+        <li>That it is reachable from the RaccoonBlog server.</li>
+    </ul>
+    <p>
+        Common causes for this error is to simply not have RavenDB running. RaccoonBlog <i>requires</i> RavenDB server to be running.
+    </p>
+    <p>
+        If you don't have RavenDB already, you can download it from <a href="http://ravendb.net/download">http://ravendb.net/download</a>, after which you can
+        simply execute the Raven.Server.exe in the Server directory, to start it.
+    </p>
+</body>
+</html>
