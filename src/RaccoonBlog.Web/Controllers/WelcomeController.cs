@@ -18,15 +18,15 @@ namespace RaccoonBlog.Web.Controllers
 		// GET: /Welcome/
 		public ActionResult Index()
 		{
-			AssertConfigurationIsNeeded();
-
-			return View(BlogConfig.New());
+			return AssertConfigurationIsNeeded() ?? View(BlogConfig.New());
 		}
 
 		[HttpPost]
 		public ActionResult CreateBlog(BlogConfig config)
 		{
-			AssertConfigurationIsNeeded();
+			var result = AssertConfigurationIsNeeded();
+			if (result != null)
+				return result;
 
 			if (!ModelState.IsValid)
 				return View("Index");
@@ -58,13 +58,13 @@ namespace RaccoonBlog.Web.Controllers
 			return config == null ? View("Index") : View(config);
 		}
 
-		private void AssertConfigurationIsNeeded()
+		private ActionResult AssertConfigurationIsNeeded()
 		{
 			if (Session.Load<BlogConfig>("Blog/Config") != null)
 			{
-				Response.Redirect("/");
-				Response.End();
+				return Redirect("/");
 			}
+			return null;
 		}
 	}
 }
