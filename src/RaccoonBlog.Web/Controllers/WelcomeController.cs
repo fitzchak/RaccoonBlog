@@ -1,7 +1,5 @@
 ﻿using System.Web.Mvc;
 using RaccoonBlog.Web.Models;
-using RaccoonBlog.Web.ViewModels;
-using Raven.Client;
 
 namespace RaccoonBlog.Web.Controllers
 {
@@ -53,14 +51,24 @@ namespace RaccoonBlog.Web.Controllers
 
 		public ActionResult Success()
 		{
-			var config = Session.Load<BlogConfig>("Blog/Config");
+			BlogConfig bc = null;
+			using (Session.Advanced.DocumentStore.DisableAggressiveCaching())
+			{
+				bc = Session.Load<BlogConfig>("Blog/Config");
+			}
 
-			return config == null ? View("Index") : View(config);
+			return bc == null ? View("Index") : View(bc);
 		}
 
 		private ActionResult AssertConfigurationIsNeeded()
 		{
-			if (Session.Load<BlogConfig>("Blog/Config") != null)
+			BlogConfig bc = null;
+			using (Session.Advanced.DocumentStore.DisableAggressiveCaching())
+			{
+				bc = Session.Load<BlogConfig>("Blog/Config");
+			}
+
+			if (bc != null)
 			{
 				return Redirect("/");
 			}
