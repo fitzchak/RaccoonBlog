@@ -178,11 +178,7 @@
     <Compile Include="Helpers\Routes\LowercaseRoute.cs" />
     <Compile Include="Infrastructure\Commands\CommandExecutor.cs" />
     <Compile Include="Infrastructure\Indexes\PostComments_CreationDate.cs" />
-    <Compile Include="Infrastructure\Indexes\PostCommentsIdentifier.cs" />
-    <Compile Include="Infrastructure\Indexes\PostCountByMonth.cs" />
     <Compile Include="Infrastructure\Indexes\Statistics_Count.cs" />
-    <Compile Include="Infrastructure\Indexes\TagCount.cs" />
-    <Compile Include="Infrastructure\Indexes\PostsStatistics.cs" />
     <Compile Include="Models\BlogConfig.cs" />
     <Compile Include="Models\PostComments.cs" />
     <Compile Include="Models\Commenter.cs" />

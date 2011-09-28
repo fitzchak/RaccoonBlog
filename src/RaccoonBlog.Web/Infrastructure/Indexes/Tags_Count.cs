@@ -5,8 +5,15 @@ using Raven.Client.Indexes;
 
 namespace RaccoonBlog.Web.Infrastructure.Indexes
 {
-    public class Tags_Count : AbstractIndexCreationTask<Post, TagCount>
+    public class Tags_Count : AbstractIndexCreationTask<Post, Tags_Count.ReduceResult>
     {
+		public class ReduceResult
+		{
+			public string Name { get; set; }
+			public int Count { get; set; }
+			public DateTimeOffset LastSeenAt { get; set; }
+		}
+
         public Tags_Count()
         {
             Map = posts => from post in posts

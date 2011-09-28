@@ -4,8 +4,14 @@ using Raven.Client.Indexes;
 
 namespace RaccoonBlog.Web.Infrastructure.Indexes
 {
-	public class Posts_Statistics : AbstractIndexCreationTask<PostComments, PostsStatistics>
+	public class Posts_Statistics : AbstractIndexCreationTask<PostComments, Posts_Statistics.ReduceResult>
 	{
+		public class ReduceResult
+		{
+			public int PostsCount { get; set; }
+			public int CommentsCount { get; set; }
+		}
+
 		public Posts_Statistics()
 		{
 			Map = postComments => from postComment in postComments

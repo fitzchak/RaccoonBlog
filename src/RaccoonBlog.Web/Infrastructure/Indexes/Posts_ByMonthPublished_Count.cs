@@ -4,8 +4,15 @@ using Raven.Client.Indexes;
 
 namespace RaccoonBlog.Web.Infrastructure.Indexes
 {
-    public class Posts_ByMonthPublished_Count : AbstractIndexCreationTask<Post, PostCountByMonth>
+	public class Posts_ByMonthPublished_Count : AbstractIndexCreationTask<Post, Posts_ByMonthPublished_Count.ReduceResult>
     {
+		public class ReduceResult
+		{
+			public int Year { get; set; }
+			public int Month { get; set; }
+			public int Count { get; set; }
+		}
+
         public Posts_ByMonthPublished_Count()
         {
             Map = posts => from post in posts

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using RaccoonBlog.Web.Models;
 using Raven.Abstractions.Indexing;
@@ -5,8 +6,17 @@ using Raven.Client.Indexes;
 
 namespace RaccoonBlog.Web.Infrastructure.Indexes
 {
-	public class PostComments_CreationDate : AbstractIndexCreationTask<PostComments, PostCommentsIdentifier>
+	public class PostComments_CreationDate : AbstractIndexCreationTask<PostComments, PostComments_CreationDate.ReduceResult>
 	{
+		public class ReduceResult
+		{
+			public DateTimeOffset CreatedAt { get; set; }
+			public int CommentId { get; set; }
+			public string PostCommentsId { get; set; }
+			public string PostId { get; set; }
+			public DateTimeOffset PostPublishAt { get; set; }
+		}
+
 		public PostComments_CreationDate()
 		{
 			Map = postComments => from postComment in postComments

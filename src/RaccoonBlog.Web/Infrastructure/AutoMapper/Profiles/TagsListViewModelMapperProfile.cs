@@ -8,7 +8,7 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
     {
         protected override void Configure()
         {
-            Mapper.CreateMap<TagCount, TagsListViewModel>()
+            Mapper.CreateMap<Tags_Count.ReduceResult, TagsListViewModel>()
                 ;
         }
     }

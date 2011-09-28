@@ -139,7 +139,7 @@ namespace RaccoonBlog.Web.Services
                                                    1, 0, 0, 0,
                                                    DateTimeOffset.Now.Offset);
 
-            var categoryInfos = session.Query<TagCount, Tags_Count>()
+			var categoryInfos = session.Query<Tags_Count.ReduceResult, Tags_Count>()
                 .Where(x => x.LastSeenAt > mostRecentTag)
                 .ToList();
 

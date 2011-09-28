@@ -63,7 +63,7 @@ namespace RaccoonBlog.Web.Controllers
 												   1, 0, 0, 0,
 												   DateTimeOffset.Now.Offset);
 
-			var tags = Session.Query<TagCount, Tags_Count>()
+			var tags = Session.Query<Tags_Count.ReduceResult, Tags_Count>()
 				.Where(x => x.Count > BlogConfig.MinNumberOfPostForSignificantTag && x.LastSeenAt > mostRecentTag)
 				.OrderBy(x => x.Name)
 				.ToList();
@@ -76,7 +76,7 @@ namespace RaccoonBlog.Web.Controllers
 		{
 			var now = DateTime.Now;
 
-			var dates = Session.Query<PostCountByMonth, Posts_ByMonthPublished_Count>()
+			var dates = Session.Query<Posts_ByMonthPublished_Count.ReduceResult, Posts_ByMonthPublished_Count>()
 				.OrderByDescending(x => x.Year)
 				.ThenByDescending(x => x.Month)
 				// filter future stats
@@ -89,8 +89,8 @@ namespace RaccoonBlog.Web.Controllers
 		[ChildActionOnly]
 		public ActionResult PostsStatistics()
 		{
-			var statistics = Session.Query<PostsStatistics, Posts_Statistics>()
-				.FirstOrDefault() ?? new PostsStatistics();
+			var statistics = Session.Query<Posts_Statistics.ReduceResult, Posts_Statistics>()
+				.FirstOrDefault() ?? new Posts_Statistics.ReduceResult();
 
 			return View(statistics.MapTo<PostsStatisticsViewModel>());
 		}

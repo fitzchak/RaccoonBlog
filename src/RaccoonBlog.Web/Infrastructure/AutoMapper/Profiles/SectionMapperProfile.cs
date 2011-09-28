@@ -19,7 +19,7 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 				.ForMember(x => x.Title, o => o.MapFrom(m => HttpUtility.HtmlDecode(m.Title)))
 			   ;
 
-			Mapper.CreateMap<PostsStatistics, PostsStatisticsViewModel>()
+			Mapper.CreateMap<Posts_Statistics.ReduceResult, PostsStatisticsViewModel>()
 			   ;
 
 			Mapper.CreateMap<Post, RecentCommentViewModel>()
