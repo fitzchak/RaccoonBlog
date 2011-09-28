@@ -51,7 +51,10 @@ namespace RaccoonBlog.Web.Controllers
 
 		public ActionResult Success()
 		{
-			BlogConfig bc = null;
+			BlogConfig bc;
+
+			// Bypass the aggressive caching to force loading the BlogConfig object,
+			// otherwise we might get a null BlogConfig even though a valid one exists
 			using (Session.Advanced.DocumentStore.DisableAggressiveCaching())
 			{
 				bc = Session.Load<BlogConfig>("Blog/Config");
@@ -62,7 +65,10 @@ namespace RaccoonBlog.Web.Controllers
 
 		private ActionResult AssertConfigurationIsNeeded()
 		{
-			BlogConfig bc = null;
+			BlogConfig bc;
+
+			// Bypass the aggressive caching to force loading the BlogConfig object,
+			// otherwise we might get a null BlogConfig even though a valid one exists
 			using (Session.Advanced.DocumentStore.DisableAggressiveCaching())
 			{
 				bc = Session.Load<BlogConfig>("Blog/Config");
