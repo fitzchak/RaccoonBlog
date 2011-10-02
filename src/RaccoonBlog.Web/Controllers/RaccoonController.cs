@@ -59,10 +59,7 @@ namespace RaccoonBlog.Web.Controllers
 				return;
 
 			if (filterContext.IsChildAction)
-			{
-				TaskExecutor.StartExecuting();
 				return;
-			}
 
 			ViewBag.BlogConfig = BlogConfig.MapTo<BlogConfigViewModel>();
 
@@ -83,10 +80,14 @@ namespace RaccoonBlog.Web.Controllers
 
 		protected void CompleteSessionHandler(ActionExecutedContext filterContext)
 		{
-			if (filterContext.Exception != null) return;
+			using (Session)
+			{
+				if (filterContext.Exception != null)
+					return;
 
-			if (Session != null)
-				using (Session)	{Session.SaveChanges();}
+				if (Session != null)
+					Session.SaveChanges();
+			}
 
 			TaskExecutor.StartExecuting();
 		}
