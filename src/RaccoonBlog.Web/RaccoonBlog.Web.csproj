@@ -176,7 +176,7 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\TagsResolver.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\UserAdminMapperProfile.cs" />
     <Compile Include="Helpers\Routes\LowercaseRoute.cs" />
-    <Compile Include="Infrastructure\Commands\CommandExecutor.cs" />
+    <Compile Include="Infrastructure\Commands\TaskExecutor.cs" />
     <Compile Include="Infrastructure\Indexes\PostComments_CreationDate.cs" />
     <Compile Include="Infrastructure\Indexes\Statistics_Count.cs" />
     <Compile Include="Models\BlogConfig.cs" />
@@ -196,9 +196,9 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\PostsViewModelMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\PostViewModelMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\RavenIdResolver.cs" />
-    <Compile Include="Commands\AddCommentCommand.cs" />
+    <Compile Include="Commands\AddCommentTask.cs" />
     <Compile Include="Infrastructure\Common\EnumerableExtensions.cs" />
-    <Compile Include="Commands\SendEmailCommand.cs" />
+    <Compile Include="Commands\SendEmailTask.cs" />
     <Compile Include="Controllers\RaccoonController.cs" />
     <Compile Include="Helpers\RecaptchHelperExtensions.cs" />
     <Compile Include="Global.asax.cs">
@@ -206,7 +206,7 @@
     </Compile>
     <Compile Include="Infrastructure\AutoMapper\AutoMapperExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Infrastructure\Commands\ICommand.cs" />
+    <Compile Include="Infrastructure\Commands\BackgroundTask.cs" />
     <Compile Include="Services\AkismetService.cs" />
     <Compile Include="Infrastructure\Common\DateTimeOffsetExtensions.cs" />
     <Compile Include="Services\IMetaWeblog.cs" />
