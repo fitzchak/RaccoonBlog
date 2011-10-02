@@ -1,5 +1,4 @@
 using AutoMapper;
-using MarkdownSharp;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
