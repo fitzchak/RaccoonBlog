@@ -160,7 +160,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
                     comments.Spam.RemoveAll(spams.Contains);
                     foreach (var comment in spams)
                     {
-                        new AskimetService(Session).MarkSpam(comment);
+                        new AkismetService(Session).MarkSpam(comment);
                     }
                     break;
 
@@ -173,7 +173,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
                     foreach (var comment in ham)
                     {
                         comment.IsSpam = false;
-                        new AskimetService(Session).MarkHam(comment);
+                        new AkismetService(Session).MarkHam(comment);
                     }
                     comments.Comments.AddRange(ham);
                     break;

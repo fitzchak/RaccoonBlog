@@ -44,7 +44,7 @@ namespace RaccoonBlog.Web.Commands
 			              		UserAgent = _requestValues.UserAgent,
 			              		UserHostAddress = _requestValues.UserHostAddress
 			              	};
-			comment.IsSpam = new AskimetService(Session).CheckForSpam(comment);
+			comment.IsSpam = new AkismetService(Session).CheckForSpam(comment);
 
 			var commenter = Session.GetCommenter(_commentInput.CommenterKey) ?? new Commenter { Key = _commentInput.CommenterKey ?? Guid.Empty };
 
