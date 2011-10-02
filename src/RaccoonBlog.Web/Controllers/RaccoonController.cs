@@ -7,6 +7,7 @@ using Newtonsoft.Json.Serialization;
 using RaccoonBlog.Web.Helpers.Results;
 using RaccoonBlog.Web.Infrastructure.ActionResults;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
+using RaccoonBlog.Web.Infrastructure.Commands;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
 using Raven.Client;
@@ -58,7 +59,10 @@ namespace RaccoonBlog.Web.Controllers
 				return;
 
 			if (filterContext.IsChildAction)
+			{
+				TaskExecutor.StartExecuting();
 				return;
+			}
 
 			ViewBag.BlogConfig = BlogConfig.MapTo<BlogConfigViewModel>();
 
@@ -79,11 +83,12 @@ namespace RaccoonBlog.Web.Controllers
 
 		protected void CompleteSessionHandler(ActionExecutedContext filterContext)
 		{
-			using (Session)
-			{
-				if (Session != null && filterContext.Exception == null)
-					Session.SaveChanges();
-			}
+			if (filterContext.Exception != null) return;
+
+			if (Session != null)
+				using (Session)	{Session.SaveChanges();}
+
+			TaskExecutor.StartExecuting();
 		}
 
 		protected int CurrentPage
