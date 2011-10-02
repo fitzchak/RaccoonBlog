@@ -7,6 +7,7 @@ using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.Services;
 using RaccoonBlog.Web.ViewModels;
+using Raven.Abstractions.Exceptions;
 using Raven.Client;
 
 namespace RaccoonBlog.Web.Commands
@@ -61,6 +62,21 @@ namespace RaccoonBlog.Web.Commands
 			}
 
 			SetCommenter(commenter, comment.IsSpam);
+
+			Session.Advanced.UseOptimisticConcurrency = true;
+			var retries = 0;
+
+			while (retries++ < 10)
+			{
+				try
+				{
+					Session.SaveChanges();
+					retries = int.MaxValue;
+				}
+				catch (ConcurrencyException ex)
+				{
+				}
+			}
 
 			SendNewCommentEmail(post, comment, postAuthor);
 		}
