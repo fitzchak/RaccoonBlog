@@ -7,7 +7,6 @@ using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.Services;
 using RaccoonBlog.Web.ViewModels;
-using Raven.Client;
 
 namespace RaccoonBlog.Web.Commands
 {
@@ -16,8 +15,6 @@ namespace RaccoonBlog.Web.Commands
 		private readonly CommentInput _commentInput;
 		private readonly RequestValues _requestValues;
 		private readonly int _postId;
-
-		public IDocumentSession Session { get; set; }
 
 		public AddCommentTask(CommentInput commentInput, RequestValues requestValues, int postId)
 		{
@@ -28,9 +25,9 @@ namespace RaccoonBlog.Web.Commands
 
 		public override void Execute()
 		{
-			var post = Session.Include<Post>(x=>x.AuthorId).Load(_postId);
-			var postAuthor = Session.Load<User>(post.AuthorId);
-			var comments = Session.Load<PostComments>(_postId);
+			var post = documentSession.Include<Post>(x => x.AuthorId).Load(_postId);
+			var postAuthor = documentSession.Load<User>(post.AuthorId);
+			var comments = documentSession.Load<PostComments>(_postId);
 
 			var comment = new PostComments.Comment
 			              	{
@@ -40,13 +37,13 @@ namespace RaccoonBlog.Web.Commands
 			              		CreatedAt = DateTimeOffset.Now,
 			              		Email = _commentInput.Email,
 			              		Url = _commentInput.Url,
-			              		Important = _requestValues.IsAuthenticated,
+			              		Important = _requestValues.IsAuthenticated, // TODO: Don't mark as important based on that
 			              		UserAgent = _requestValues.UserAgent,
 			              		UserHostAddress = _requestValues.UserHostAddress
 			              	};
-			comment.IsSpam = new AkismetService(Session).CheckForSpam(comment);
+			comment.IsSpam = new AkismetService(documentSession).CheckForSpam(comment);
 
-			var commenter = Session.GetCommenter(_commentInput.CommenterKey) ?? new Commenter { Key = _commentInput.CommenterKey ?? Guid.Empty };
+			var commenter = documentSession.GetCommenter(_commentInput.CommenterKey) ?? new Commenter { Key = _commentInput.CommenterKey ?? Guid.Empty };
 
 			if (_requestValues.IsAuthenticated == false && comment.IsSpam)
 			{
@@ -76,7 +73,7 @@ namespace RaccoonBlog.Web.Commands
 			if (isSpamComment)
 				commenter.NumberOfSpamComments++;
 
-			Session.Store(commenter);
+			documentSession.Store(commenter);
 		}
 
 		private void SendNewCommentEmail(Post post, PostComments.Comment comment, User postAuthor)
@@ -88,7 +85,7 @@ namespace RaccoonBlog.Web.Commands
 			viewModel.PostId = RavenIdResolver.Resolve(post.Id);
 			viewModel.PostTitle = HttpUtility.HtmlDecode(post.Title);
 			viewModel.PostSlug = SlugConverter.TitleToSlug(post.Title);
-			viewModel.BlogName = Session.Load<BlogConfig>("Blog/Config").Title;
+			viewModel.BlogName = documentSession.Load<BlogConfig>("Blog/Config").Title;
 			viewModel.Key = post.ShowPostEvenIfPrivate.MapTo<string>();
 
 			var subject = string.Format("{2}Comment on: {0} from {1}", viewModel.PostTitle, viewModel.BlogName, comment.IsSpam ? "[Spam] " : string.Empty);
