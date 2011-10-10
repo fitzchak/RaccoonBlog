@@ -8,20 +8,17 @@ namespace RaccoonBlog.Web.Services
 {
     public class AkismetService
     {
-    	private IDocumentSession session;
     	private readonly string akismetKey;
 
     	public AkismetService(IDocumentSession session)
     	{
-    		this.session = session;
-
     		akismetKey = session.Load<BlogConfig>("Blog/Config").AkismetKey;
     	}
 
     	public bool CheckForSpam(PostComments.Comment comment)
         {
             //Create a new instance of the Akismet API and verify your key is valid.
-            string blog = ConfigurationManager.AppSettings["MainUrl"];
+            var blog = ConfigurationManager.AppSettings["MainUrl"];
             var api = new Akismet(akismetKey, blog, comment.UserAgent);
             if (!api.VerifyKey()) throw new Exception("Akismet API key invalid.");
 
@@ -44,7 +41,7 @@ namespace RaccoonBlog.Web.Services
         public void MarkHam(PostComments.Comment comment)
         {
             //Create a new instance of the Akismet API and verify your key is valid.
-            string blog = ConfigurationManager.AppSettings["MainUrl"];
+            var blog = ConfigurationManager.AppSettings["MainUrl"];
 			var api = new Akismet(akismetKey, blog, comment.UserAgent);
             if (!api.VerifyKey()) throw new Exception("Akismet API key invalid.");
 
@@ -67,7 +64,7 @@ namespace RaccoonBlog.Web.Services
         public void MarkSpam(PostComments.Comment comment)
         {
             //Create a new instance of the Akismet API and verify your key is valid.
-            string blog = ConfigurationManager.AppSettings["MainUrl"];
+            var blog = ConfigurationManager.AppSettings["MainUrl"];
 			var api = new Akismet(akismetKey, blog, comment.UserAgent);
             if (!api.VerifyKey()) throw new Exception("Akismet API key invalid.");
 
