@@ -27,6 +27,15 @@ namespace RaccoonBlog.Web
 		{
 			AreaRegistration.RegisterAllAreas();
 
+			// Work around nasty .NET framework bug
+			try
+			{
+				new Uri("http://fail/first/time?only=%2bplus");
+			}
+			catch (Exception)
+			{
+			}
+
 			RegisterGlobalFilters(GlobalFilters.Filters);
 			InitializeDocumentStore();
 			new RouteConfigurator(RouteTable.Routes).Configure();
