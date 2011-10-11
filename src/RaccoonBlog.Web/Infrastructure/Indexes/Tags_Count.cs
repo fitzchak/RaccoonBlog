@@ -18,7 +18,7 @@ namespace RaccoonBlog.Web.Infrastructure.Indexes
         {
             Map = posts => from post in posts
                            from tag in post.Tags
-                           select new {Name = tag, Count = 1, LastSeenAt = post.PublishAt};
+                           select new {Name = tag.ToString().ToLower(), Count = 1, LastSeenAt = post.PublishAt};
             Reduce = results => from tagCount in results
                                 group tagCount by tagCount.Name
                                 into g
