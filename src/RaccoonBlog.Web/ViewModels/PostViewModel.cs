@@ -32,6 +32,7 @@ namespace RaccoonBlog.Web.ViewModels
         public class PostDetails
         {
             public int Id { get; set; }
+			public Guid Key { get; set; }
             public MvcHtmlString Title { get; set; }
             public string Slug { get; set; }
             public MvcHtmlString Body { get; set; }
