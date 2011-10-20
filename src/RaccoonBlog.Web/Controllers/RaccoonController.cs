@@ -7,6 +7,7 @@ using Newtonsoft.Json.Serialization;
 using RaccoonBlog.Web.Helpers.Results;
 using RaccoonBlog.Web.Infrastructure.ActionResults;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
+using RaccoonBlog.Web.Infrastructure.Commands;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
 using Raven.Client;
@@ -90,9 +91,14 @@ namespace RaccoonBlog.Web.Controllers
 		{
 			using (Session)
 			{
-				if (Session != null && filterContext.Exception == null)
+				if (filterContext.Exception != null)
+					return;
+
+				if (Session != null)
 					Session.SaveChanges();
 			}
+
+			TaskExecutor.StartExecuting();
 		}
 
 		protected int CurrentPage

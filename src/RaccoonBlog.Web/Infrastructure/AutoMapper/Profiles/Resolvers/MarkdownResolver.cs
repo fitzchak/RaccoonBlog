@@ -1,5 +1,5 @@
 using System.Web.Mvc;
-using MarkdownSharp;
+using MarkdownDeep;
 
 namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers
 {
@@ -13,15 +13,8 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers
         }
 
     	private static string FormatMarkdown(string content)
-        {
-            var md = new Markdown(new MarkdownOptions
-        	{
-        		AutoHyperlink = true,
-        		AutoNewLines = true,
-        		EncodeProblemUrlCharacters = true,
-        		LinkEmails = false,
-        		StrictBoldItalic = true,
-        	});
+    	{
+    		var md = new Markdown();
             
             return md.Transform(content);
         }

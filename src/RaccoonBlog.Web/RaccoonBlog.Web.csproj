@@ -58,8 +58,8 @@
     <Reference Include="Joel.Net.Akismet">
       <HintPath>..\packages\Joel.Net.Akismet\Joel.Net.Akismet.dll</HintPath>
     </Reference>
-    <Reference Include="MarkdownSharp">
-      <HintPath>..\packages\MarkdownSharp.1.13.0.0\lib\35\MarkdownSharp.dll</HintPath>
+    <Reference Include="MarkdownDeep">
+      <HintPath>..\packages\MarkdownDeep.Full.1.4\lib\.NetFramework 3.5\MarkdownDeep.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json">
@@ -176,7 +176,7 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\TagsResolver.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\UserAdminMapperProfile.cs" />
     <Compile Include="Helpers\Routes\LowercaseRoute.cs" />
-    <Compile Include="Infrastructure\Commands\CommandExecutor.cs" />
+    <Compile Include="Infrastructure\Commands\TaskExecutor.cs" />
     <Compile Include="Infrastructure\Indexes\PostComments_CreationDate.cs" />
     <Compile Include="Infrastructure\Indexes\Statistics_Count.cs" />
     <Compile Include="Models\BlogConfig.cs" />
@@ -196,9 +196,9 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\PostsViewModelMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\PostViewModelMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\RavenIdResolver.cs" />
-    <Compile Include="Commands\AddCommentCommand.cs" />
+    <Compile Include="Commands\AddCommentTask.cs" />
     <Compile Include="Infrastructure\Common\EnumerableExtensions.cs" />
-    <Compile Include="Commands\SendEmailCommand.cs" />
+    <Compile Include="Commands\SendEmailTask.cs" />
     <Compile Include="Controllers\RaccoonController.cs" />
     <Compile Include="Helpers\RecaptchHelperExtensions.cs" />
     <Compile Include="Global.asax.cs">
@@ -206,8 +206,8 @@
     </Compile>
     <Compile Include="Infrastructure\AutoMapper\AutoMapperExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Infrastructure\Commands\ICommand.cs" />
-    <Compile Include="Services\AskimetService.cs" />
+    <Compile Include="Infrastructure\Commands\BackgroundTask.cs" />
+    <Compile Include="Services\AkismetService.cs" />
     <Compile Include="Infrastructure\Common\DateTimeOffsetExtensions.cs" />
     <Compile Include="Services\IMetaWeblog.cs" />
     <Compile Include="Services\MetaWeblog.cs" />
@@ -295,6 +295,15 @@
     <Content Include="Areas\Admin\Views\Section\Edit.cshtml" />
     <Compile Include="Controllers\PostController.cs" />
     <Content Include="RavenNotReachable.htm" />
+    <Content Include="Scripts\MarkdownDeep License.txt" />
+    <Content Include="Scripts\MarkdownDeep Quick Reference.txt" />
+    <Content Include="Scripts\MarkdownDeepLib.min.js" />
+    <Content Include="Scripts\mdd_ajax_loader.gif" />
+    <Content Include="Scripts\mdd_gripper.png" />
+    <Content Include="Scripts\mdd_help.htm" />
+    <Content Include="Scripts\mdd_modal_background.png" />
+    <Content Include="Scripts\mdd_styles.css" />
+    <Content Include="Scripts\mdd_toolbar.png" />
     <Content Include="Views\MailTemplates\_Layout.cshtml" />
     <Content Include="Views\Section\FuturePosts.cshtml" />
     <Content Include="Views\Shared\500.cshtml" />
