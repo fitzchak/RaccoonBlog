@@ -54,20 +54,29 @@ namespace RaccoonBlog.Web.Controllers
 
 		protected override void OnActionExecuted(ActionExecutedContext filterContext)
 		{
-			if (HandleRedirection(filterContext))
+			if (HandleRedirection(filterContext, filterContext.Exception))
 				return;
 
 			if (filterContext.IsChildAction)
 				return;
 
-			ViewBag.BlogConfig = BlogConfig.MapTo<BlogConfigViewModel>();
+			try
+			{
+				ViewBag.BlogConfig = BlogConfig.MapTo<BlogConfigViewModel>();
+			}
+			catch (Exception e)
+			{
+				if (HandleRedirection(filterContext, e))
+					return;
 
+				throw;
+			}
 			CompleteSessionHandler(filterContext);
 		}
 
-		private bool HandleRedirection(ActionExecutedContext filterContext)
+		private bool HandleRedirection(ActionExecutedContext filterContext, Exception exception)
 		{
-			var httpException = filterContext.Exception as HttpException;
+			var httpException = exception as HttpException;
 			if (httpException == null || httpException.GetHttpCode() != 302)
 			{
 				return false;
