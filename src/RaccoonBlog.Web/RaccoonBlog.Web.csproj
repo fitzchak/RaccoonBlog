@@ -260,7 +260,6 @@
     <Content Include="Content\css\custom\hibernatingrhinos.less.css" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Infrastructure\Common\DateTimeOffsetUtil.cs" />
-    <Compile Include="Controllers\CommentCommandOptions.cs" />
     <Compile Include="Controllers\CssController.cs" />
     <Compile Include="Areas\Admin\Controllers\ElmahController.cs" />
     <Compile Include="Helpers\Attributes\ElmahHandleErrorAttribute.cs" />

@@ -15,6 +15,12 @@ namespace RaccoonBlog.Web.Controllers
 {
     public class PostDetailsController : RaccoonController
     {
+		public enum CommentCommandOptions
+		{
+			Delete,
+			MarkHam,
+			MarkSpam
+		}
 
 		public ActionResult Details(int id, string slug, Guid key)
         {
