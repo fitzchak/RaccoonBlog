@@ -22,7 +22,7 @@ namespace RaccoonBlog.Web.Controllers
         public ActionResult List()
         {
 			RavenQueryStatistics stats;
-            var posts = Session.Query<Post>()
+			var posts = RavenSession.Query<Post>()
 			    .Include(x => x.AuthorId)
 			    .Statistics(out stats)
                 .WhereIsPublicPost()
@@ -36,7 +36,7 @@ namespace RaccoonBlog.Web.Controllers
 		public ActionResult Tag(string slug)
 		{
 			RavenQueryStatistics stats;
-			var posts = Session.Query<Post>()
+			var posts = RavenSession.Query<Post>()
 				.Include(x => x.AuthorId)
 				.Statistics(out stats)
 				.WhereIsPublicPost()
@@ -52,7 +52,7 @@ namespace RaccoonBlog.Web.Controllers
         public ActionResult Archive(int year, int? month, int? day)
         {
             RavenQueryStatistics stats;
-        	var postsQuery = Session.Query<Post>()
+			var postsQuery = RavenSession.Query<Post>()
         		.Include(x => x.AuthorId)
         		.Statistics(out stats)
         		.WhereIsPublicPost()
@@ -79,8 +79,8 @@ namespace RaccoonBlog.Web.Controllers
 			{
 				if (string.IsNullOrWhiteSpace(post.AuthorId))
 					continue;
-				
-				var author = Session.Load<User>(post.AuthorId);
+
+				var author = RavenSession.Load<User>(post.AuthorId);
 				if (author == null)
 					continue;
 

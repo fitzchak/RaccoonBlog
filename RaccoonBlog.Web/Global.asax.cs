@@ -4,6 +4,8 @@ using System.Net.Sockets;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using HibernatingRhinos.Loci.Common.Controllers;
+using HibernatingRhinos.Loci.Common.Tasks;
 using RaccoonBlog.Web.Controllers;
 using RaccoonBlog.Web.Helpers.Attributes;
 using RaccoonBlog.Web.Helpers.Binders;
@@ -43,6 +45,9 @@ namespace RaccoonBlog.Web
 			ModelBinders.Binders.Add(typeof (Guid), new GuidBinder());
 
 			AutoMapperConfiguration.Configure();
+
+			RavenController.DocumentStore = DocumentStore;
+			TaskExecutor.DocumentStore = DocumentStore;
 		}
 
 		public static IDocumentStore DocumentStore { get; private set; }

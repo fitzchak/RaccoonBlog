@@ -12,19 +12,19 @@ namespace RaccoonBlog.Web.Controllers
         public ActionResult RedirectLegacyPost(int year, int month, int day, string slug)
         {
 			// attempt to find a post with match slug in the given date, but will back off the exact date if we can't find it
-        	var post = Session.Query<Post>()
+			var post = RavenSession.Query<Post>()
         	           	.WhereIsPublicPost()
         	           	.Where(p => p.LegacySlug == slug && (p.PublishAt.Year == year && p.PublishAt.Month == month && p.PublishAt.Day == day))
         	           	.FirstOrDefault() ??
-        	          Session.Query<Post>()
+					  RavenSession.Query<Post>()
         	           	.WhereIsPublicPost()
         	           	.Where(p => p.LegacySlug == slug && p.PublishAt.Year == year && p.PublishAt.Month == month)
         	           	.FirstOrDefault() ??
-        	         Session.Query<Post>()
+					 RavenSession.Query<Post>()
         	           	.WhereIsPublicPost()
         	           	.Where(p => p.LegacySlug == slug && p.PublishAt.Year == year)
         	           	.FirstOrDefault() ??
-        	         Session.Query<Post>()
+					 RavenSession.Query<Post>()
         	           	.WhereIsPublicPost()
         	           	.Where(p => p.LegacySlug == slug)
         	           	.FirstOrDefault();

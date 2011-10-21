@@ -31,12 +31,12 @@ namespace RaccoonBlog.Web.Controllers
 
 			// Create the blog by storing the config
 			config.Id = "Blog/Config";
-			Session.Store(config);
+			RavenSession.Store(config);
 
 			// Create default sections
-			Session.Store(new Section { Title = "Archive", IsActive = true, Position = 1, ControllerName = "Section", ActionName = "ArchivesList" });
-			Session.Store(new Section { Title = "Tags", IsActive = true, Position = 2, ControllerName = "Section", ActionName = "TagsList" });
-			Session.Store(new Section { Title = "Statistics", IsActive = true, Position = 3, ControllerName = "Section", ActionName = "PostsStatistics" });
+			RavenSession.Store(new Section { Title = "Archive", IsActive = true, Position = 1, ControllerName = "Section", ActionName = "ArchivesList" });
+			RavenSession.Store(new Section { Title = "Tags", IsActive = true, Position = 2, ControllerName = "Section", ActionName = "TagsList" });
+			RavenSession.Store(new Section { Title = "Statistics", IsActive = true, Position = 3, ControllerName = "Section", ActionName = "PostsStatistics" });
 			var user = new User
 			{
 				FullName = "Default User",
@@ -44,7 +44,7 @@ namespace RaccoonBlog.Web.Controllers
 				Enabled = true,
 			};
 			user.SetPassword("raccoon");
-			Session.Store(user);
+			RavenSession.Store(user);
 
 			return RedirectToAction("Success");
 		}
@@ -55,9 +55,9 @@ namespace RaccoonBlog.Web.Controllers
 
 			// Bypass the aggressive caching to force loading the BlogConfig object,
 			// otherwise we might get a null BlogConfig even though a valid one exists
-			using (Session.Advanced.DocumentStore.DisableAggressiveCaching())
+			using (RavenSession.Advanced.DocumentStore.DisableAggressiveCaching())
 			{
-				bc = Session.Load<BlogConfig>("Blog/Config");
+				bc = RavenSession.Load<BlogConfig>("Blog/Config");
 			}
 
 			return bc == null ? View("Index") : View(bc);
@@ -69,9 +69,9 @@ namespace RaccoonBlog.Web.Controllers
 
 			// Bypass the aggressive caching to force loading the BlogConfig object,
 			// otherwise we might get a null BlogConfig even though a valid one exists
-			using (Session.Advanced.DocumentStore.DisableAggressiveCaching())
+			using (RavenSession.Advanced.DocumentStore.DisableAggressiveCaching())
 			{
-				bc = Session.Load<BlogConfig>("Blog/Config");
+				bc = RavenSession.Load<BlogConfig>("Blog/Config");
 			}
 
 			if (bc != null)

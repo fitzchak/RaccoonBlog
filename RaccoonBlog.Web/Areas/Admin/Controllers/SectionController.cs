@@ -12,7 +12,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 	{
 		public ActionResult List()
 		{
-			var sections = Session.Query<Section>()
+			var sections = RavenSession.Query<Section>()
 				.OrderBy(x => x.Position)
 				.ToList();
 
@@ -28,7 +28,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		[HttpGet]
 		public ActionResult Edit(int id)
 		{
-			var section = Session.Load<Section>(id);
+			var section = RavenSession.Load<Section>(id);
 			if (section == null)
 				return HttpNotFound("Section does not exist.");
 			return View(section.MapTo<SectionInput>());
@@ -40,27 +40,27 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			if (!ModelState.IsValid)
 				return View("Edit", input);
 
-			var section = Session.Load<Section>(input.Id) ?? new Section();
+			var section = RavenSession.Load<Section>(input.Id) ?? new Section();
 			input.MapPropertiesToInstance(section);
 			if (section.Position == 0)
 			{
-				section.Position = Session.Query<Section>()
+				section.Position = RavenSession.Query<Section>()
 					.Select(sec => sec.Position)
 					.OrderByDescending(position => position)
 					.FirstOrDefault() + 1;
 			}
-			Session.Store(section);
+			RavenSession.Store(section);
 			return RedirectToAction("List");
 		}
 
 		[HttpPost]
 		public ActionResult Delete(int id)
 		{
-			var section = Session.Load<Section>(id);
+			var section = RavenSession.Load<Section>(id);
 			if (section == null)
 				return HttpNotFound("Section does not exist.");
-		  
-			Session.Delete(section);
+
+			RavenSession.Delete(section);
 			
 			if (Request.IsAjaxRequest())
 			{
@@ -73,7 +73,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		[HttpPost]
 		public ActionResult SetPosition(int id, int newPosition)
 		{
-			var section = Session.Load<Section>(id);
+			var section = RavenSession.Load<Section>(id);
 			if (section == null)
 				return Json(new {success = false, message = string.Format("There is no post with id {0}", id)});
 
@@ -82,7 +82,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 
 			if (section.Position > newPosition)
 			{
-				var sections = Session.Query<Section>()
+				var sections = RavenSession.Query<Section>()
 					.Where(s => s.Position >= newPosition && s.Position < section.Position)
 					.OrderBy(s => s.Position)
 					.ToList();
@@ -94,7 +94,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			}
 			else if (section.Position < newPosition)
 			{
-				var sections = Session.Query<Section>()
+				var sections = RavenSession.Query<Section>()
 					.Where(s => s.Position < newPosition && s.Position >= section.Position)
 					.OrderBy(s => s.Position)
 					.ToList();

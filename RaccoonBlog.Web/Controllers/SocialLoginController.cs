@@ -38,7 +38,7 @@ namespace RaccoonBlog.Web.Controllers
 				{
 					case AuthenticationStatus.Authenticated:
 						var claimedIdentifier = response.ClaimedIdentifier.ToString();
-						var commenter = Session.Query<Commenter>()
+						var commenter = RavenSession.Query<Commenter>()
 						                	.Where(c => c.OpenId == claimedIdentifier)
 						                	.FirstOrDefault() ?? new Commenter
 						                	{
@@ -49,7 +49,7 @@ namespace RaccoonBlog.Web.Controllers
 						SetCommenterValuesFromOpenIdResponse(response, commenter);
 						
 						CommenterUtil.SetCommenterCookie(Response, commenter.Key.MapTo<string>());
-						Session.Store(commenter);
+						RavenSession.Store(commenter);
 
 						return Redirect(returnUrl);
 					case AuthenticationStatus.Canceled:

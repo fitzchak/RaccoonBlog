@@ -24,7 +24,7 @@ namespace RaccoonBlog.Web.Controllers
     {
 		public ActionResult Details(int id, string slug, Guid key)
         {
-        	var post = Session
+			var post = RavenSession
         		.Include<Post>(x => x.CommentsId)
         		.Include(x => x.AuthorId)
         		.Load(id);
@@ -33,21 +33,21 @@ namespace RaccoonBlog.Web.Controllers
                 return HttpNotFound();
 
 			if (post.IsPublicPost(key) == false)
-				return HttpNotFound();  
+				return HttpNotFound();
 
-			var comments = Session.Load<PostComments>(post.CommentsId);
+			var comments = RavenSession.Load<PostComments>(post.CommentsId);
 			var vm = new PostViewModel
 			{
 				Post = post.MapTo<PostViewModel.PostDetails>(),
 				Comments = comments.Comments
 					.OrderBy(comment => comment.CreatedAt)
 					.MapTo<PostViewModel.Comment>(),
-				NextPost = Session.GetNextPrevPost(post, true),
-				PreviousPost = Session.GetNextPrevPost(post, false),
+				NextPost = RavenSession.GetNextPrevPost(post, true),
+				PreviousPost = RavenSession.GetNextPrevPost(post, false),
 				AreCommentsClosed = comments.AreCommentsClosed(post, BlogConfig.NumberOfDayToCloseComments),
 			};
 
-			vm.Post.Author = Session.Load<User>(post.AuthorId).MapTo<PostViewModel.UserDetails>();
+			vm.Post.Author = RavenSession.Load<User>(post.AuthorId).MapTo<PostViewModel.UserDetails>();
 
 			vm.Post.Key = key; // Save the key too, to allow operations on privately accessible posts too. Redirection (below) isn't of concern.
 
@@ -63,18 +63,18 @@ namespace RaccoonBlog.Web.Controllers
     	[HttpPost]
         public ActionResult Comment(CommentInput input, int id, Guid key)
         {
-			var post = Session
+			var post = RavenSession
 				.Include<Post>(x => x.CommentsId)
 				.Load(id);
 
 			if (post == null || post.IsPublicPost(key) == false)
 				return HttpNotFound();
 
-        	var comments = Session.Load<PostComments>(post.CommentsId);
+			var comments = RavenSession.Load<PostComments>(post.CommentsId);
 			if (comments == null)
 				return HttpNotFound();
-			
-			var commenter = Session.GetCommenter(input.CommenterKey);
+
+			var commenter = RavenSession.GetCommenter(input.CommenterKey);
 			if (commenter == null)
 			{
 				input.CommenterKey = Guid.NewGuid();
@@ -146,7 +146,7 @@ namespace RaccoonBlog.Web.Controllers
 		{
 			if (Request.IsAuthenticated)
 			{
-				var user = Session.GetCurrentUser();
+				var user = RavenSession.GetCurrentUser();
 				vm.Input = user.MapTo<CommentInput>();
 				vm.IsTrustedCommenter = true;
 				vm.IsLoggedInCommenter = true;
@@ -156,7 +156,7 @@ namespace RaccoonBlog.Web.Controllers
 			var cookie = Request.Cookies[CommenterUtil.CommenterCookieName];
     		if (cookie == null) return;
 
-			var commenter = Session.GetCommenter(cookie.Value);
+			var commenter = RavenSession.GetCommenter(cookie.Value);
 			if (commenter == null)
 			{
 				vm.IsLoggedInCommenter = false;

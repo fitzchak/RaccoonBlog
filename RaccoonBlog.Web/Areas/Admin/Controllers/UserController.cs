@@ -12,7 +12,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
     {
     	public ActionResult List()
         {
-            var users = Session.Query<User>()
+			var users = RavenSession.Query<User>()
                 .OrderBy(u => u.FullName)
                 .ToList();
 
@@ -29,7 +29,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var user = Session.Load<User>(id);
+			var user = RavenSession.Load<User>(id);
             if (user == null)
                 return HttpNotFound("User does not exist.");
         	return View(user.MapTo<UserInput>());
@@ -41,16 +41,16 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         	if (!ModelState.IsValid)
         		return View("Edit", input);
 
-        	var user = Session.Load<User>(input.Id) ?? new User();
+			var user = RavenSession.Load<User>(input.Id) ?? new User();
         	input.MapPropertiesToInstance(user);
-        	Session.Store(user);
+			RavenSession.Store(user);
         	return RedirectToAction("List");
         }
 
         [HttpGet]
         public ActionResult ChangePass(int id)
         {
-            var user = Session.Load<User>(id);
+			var user = RavenSession.Load<User>(id);
             if (user == null)
                 return HttpNotFound("User does not exist.");
 
@@ -64,7 +64,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		[HttpPost]
 		public ActionResult ChangePass(UserPasswordInput input)
 		{
-			var user = Session.Load<User>(input.Id);
+			var user = RavenSession.Load<User>(input.Id);
 			if (user == null)
 				return HttpNotFound("User does not exist.");
 
@@ -83,7 +83,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         [HttpPost]
 		public ActionResult SetActivation(int id, bool isActive)
 		{
-			var user = Session.Load<User>(id);
+			var user = RavenSession.Load<User>(id);
 			if (user == null)
 				return HttpNotFound("User does not exist.");
 

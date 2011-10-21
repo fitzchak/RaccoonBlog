@@ -39,7 +39,7 @@ namespace RaccoonBlog.Web.Controllers
 		public ActionResult Rss(string tag, Guid key)
 		{
 			RavenQueryStatistics stats;
-			var postsQuery = Session.Query<Post>()
+			var postsQuery = RavenSession.Query<Post>()
 				.Statistics(out stats);
 
 			if (key != Guid.Empty && key == BlogConfig.RssFuturePostsKey)
@@ -91,7 +91,7 @@ namespace RaccoonBlog.Web.Controllers
 		public ActionResult CommentsRss(int? id)
 		{
 			RavenQueryStatistics stats = null;
-			var commentsTuples = Session.QueryForRecentComments(q =>
+			var commentsTuples = RavenSession.QueryForRecentComments(q =>
 			{
 				if (id != null)
 				{

@@ -33,6 +33,11 @@ namespace HibernatingRhinos.Loci.Common.Controllers
 			if (filterContext.IsChildAction)
 				return;
 
+			CompleteSessionHandler(filterContext);
+		}
+
+		protected void CompleteSessionHandler(ActionExecutedContext filterContext)
+		{
 			using (RavenSession)
 			{
 				if (filterContext.Exception != null)

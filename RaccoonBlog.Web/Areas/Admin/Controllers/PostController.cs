@@ -22,14 +22,14 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 
         public ActionResult Details(int id, string slug)
         {
-			var post = Session
+			var post = RavenSession
                 .Include<Post>(x => x.CommentsId)
                 .Load(id);
 
 			if (post == null)
 				return HttpNotFound();
 
-			var comments = Session.Load<PostComments>(post.CommentsId);
+			var comments = RavenSession.Load<PostComments>(post.CommentsId);
 
         	var vm = new AdminPostDetailsViewModel
 			{
@@ -40,8 +40,8 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 					.OrderBy(comment => comment.CreatedAt)
 					.MapTo<AdminPostDetailsViewModel.Comment>(),
 
-				NextPost = Session.GetNextPrevPost(post, true),
-				PreviousPost = Session.GetNextPrevPost(post, false),
+				NextPost = RavenSession.GetNextPrevPost(post, true),
+				PreviousPost = RavenSession.GetNextPrevPost(post, false),
 				AreCommentsClosed = comments.AreCommentsClosed(post, BlogConfig.NumberOfDayToCloseComments),
 			};
 
@@ -57,7 +57,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         	var startAsDateTimeOffset = DateTimeOffsetUtil.ConvertFromUnixTimestamp(start);
         	var endAsDateTimeOffset = DateTimeOffsetUtil.ConvertFromUnixTimestamp(end);
 
-        	var posts = Session.Query<Post>()
+			var posts = RavenSession.Query<Post>()
 				.Where(post => post.IsDeleted == false)
 				.Where
 				(
@@ -74,7 +74,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var post = Session.Load<Post>(id);
+			var post = RavenSession.Load<Post>(id);
             if (post == null)
                 return HttpNotFound("Post does not exist.");
             return View(new EditPostViewModel {Input = post.MapTo<PostInput>()});
@@ -87,10 +87,10 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         	if (!ModelState.IsValid)
         		return View("Edit", new EditPostViewModel {Input = input});
 
-        	var post = Session.Load<Post>(input.Id) ?? new Post();
+			var post = RavenSession.Load<Post>(input.Id) ?? new Post();
         	input.MapPropertiesToInstance(post);
 
-        	var user = Session.GetCurrentUser();
+			var user = RavenSession.GetCurrentUser();
             if (string.IsNullOrEmpty(post.AuthorId))
         	{
                 post.AuthorId = user.Id;
@@ -101,7 +101,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         		post.LastEditedAt = DateTimeOffset.Now;
         	}
 
-        	Session.Store(post);
+			RavenSession.Store(post);
 
         	var postReference = post.MapTo<PostReference>();
         	return RedirectToAction("Details", new { Id = postReference.DomainId, postReference.Slug});
@@ -111,14 +111,14 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         [AjaxOnly]
         public ActionResult SetPostDate(int id, long date)
         {
-            var post = Session
+			var post = RavenSession
 				.Include<Post>(x=>x.CommentsId)
 				.Load(id);
             if (post == null)
                 return Json(new {success = false});
 
             post.PublishAt = post.PublishAt.WithDate(DateTimeOffsetUtil.ConvertFromJsTimestamp(date));
-        	Session.Load<PostComments>(post.CommentsId).Post.PublishAt = post.PublishAt;
+			RavenSession.Load<PostComments>(post.CommentsId).Post.PublishAt = post.PublishAt;
 			
         	return Json(new { success = true });
         }
@@ -128,8 +128,8 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         {
             if (commentIds.Length < 1)
                 ModelState.AddModelError("CommentIdsAreEmpty", "Not comments was selected.");
-        	
-            var post = Session.Load<Post>(id);
+
+			var post = RavenSession.Load<Post>(id);
             if (post == null)
                 return HttpNotFound();
 
@@ -143,7 +143,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 				return Details(id, postReference.Slug);
             }
 
-            var comments = Session.Load<PostComments>(id);
+			var comments = RavenSession.Load<PostComments>(id);
             switch (command)
             {
                 case CommentCommandOptions.Delete:
@@ -193,7 +193,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
     	[HttpPost]
         public ActionResult Delete(int id)
         {
-            var post = Session.Load<Post>(id);
+			var post = RavenSession.Load<Post>(id);
             post.IsDeleted = true;
 
             if (Request.IsAjaxRequest())

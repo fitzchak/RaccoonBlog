@@ -22,7 +22,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Index(LoginInput input)
         {
-            var user = Session.GetUserByEmail(input.Email);
+			var user = RavenSession.GetUserByEmail(input.Email);
 
         	if (user == null || user.ValidatePassword(input.Password) == false)
             {
@@ -63,7 +63,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			if (Request.IsAuthenticated == false)
 				return View(new CurrentUserViewModel());
 
-        	var user = Session.GetUserByEmail(HttpContext.User.Identity.Name);
+			var user = RavenSession.GetUserByEmail(HttpContext.User.Identity.Name);
         	return View(new CurrentUserViewModel {FullName = user.FullName});
         }
     }
