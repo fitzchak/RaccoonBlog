@@ -52,8 +52,9 @@
     <Reference Include="DotNetOpenAuth, Version=3.4.7.11121, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetOpenAuth.3.4.7.11121\lib\DotNetOpenAuth.dll</HintPath>
     </Reference>
-    <Reference Include="Elmah">
-      <HintPath>..\packages\elmah.1.1\lib\Elmah.dll</HintPath>
+    <Reference Include="Elmah, Version=1.2.13605.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\elmah.corelibrary.1.2\lib\Elmah.dll</HintPath>
     </Reference>
     <Reference Include="Joel.Net.Akismet">
       <HintPath>..\packages\Joel.Net.Akismet\Joel.Net.Akismet.dll</HintPath>
@@ -259,10 +260,8 @@
     <Compile Include="Infrastructure\Common\DateTimeOffsetUtil.cs" />
     <Compile Include="Controllers\CssController.cs" />
     <Compile Include="Areas\Admin\Controllers\ElmahController.cs" />
-    <Compile Include="Helpers\Attributes\ElmahHandleErrorAttribute.cs" />
     <Compile Include="Helpers\Binders\RemoveSpacesEnumBinder.cs" />
     <Compile Include="Helpers\HtmlHelperExtensions.cs" />
-    <Compile Include="Helpers\Results\ElmahResult.cs" />
     <Compile Include="Controllers\PostDetailsController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\PostController.cs" />
