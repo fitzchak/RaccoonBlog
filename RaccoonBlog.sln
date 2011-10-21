@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaccoonBlog.IntegrationTest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaccoonBlog.Migrations", "RaccoonBlog.Migrations\RaccoonBlog.Migrations.csproj", "{9A577574-D910-4B66-9499-CF31B5ED8B0E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loci.Common", "HibernatingRhinos.Loci.Common\Loci.Common.csproj", "{238D8AAA-FD89-48E7-9446-ADCDE845B58E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +60,16 @@ Global
 		{9A577574-D910-4B66-9499-CF31B5ED8B0E}.Release|Mixed Platforms.Build.0 = Release|x86
 		{9A577574-D910-4B66-9499-CF31B5ED8B0E}.Release|x86.ActiveCfg = Release|x86
 		{9A577574-D910-4B66-9499-CF31B5ED8B0E}.Release|x86.Build.0 = Release|x86
+		{238D8AAA-FD89-48E7-9446-ADCDE845B58E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{238D8AAA-FD89-48E7-9446-ADCDE845B58E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{238D8AAA-FD89-48E7-9446-ADCDE845B58E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{238D8AAA-FD89-48E7-9446-ADCDE845B58E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{238D8AAA-FD89-48E7-9446-ADCDE845B58E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{238D8AAA-FD89-48E7-9446-ADCDE845B58E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{238D8AAA-FD89-48E7-9446-ADCDE845B58E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{238D8AAA-FD89-48E7-9446-ADCDE845B58E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{238D8AAA-FD89-48E7-9446-ADCDE845B58E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{238D8AAA-FD89-48E7-9446-ADCDE845B58E}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
