@@ -8,7 +8,7 @@ using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.Services;
 using RaccoonBlog.Web.ViewModels;
 
-namespace RaccoonBlog.Web.Commands
+namespace RaccoonBlog.Web.Infrastructure.Tasks
 {
 	public class AddCommentTask : BackgroundTask
 	{

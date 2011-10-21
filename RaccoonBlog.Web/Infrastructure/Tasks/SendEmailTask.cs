@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.ComponentModel;
 using System.Configuration;
 using System.IO;
 using System.Linq;
@@ -8,11 +7,10 @@ using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Elmah;
 using RaccoonBlog.Web.Infrastructure.Commands;
 using RaccoonBlog.Web.Infrastructure.Common;
 
-namespace RaccoonBlog.Web.Commands
+namespace RaccoonBlog.Web.Infrastructure.Tasks
 {
     public class SendEmailTask : BackgroundTask
     {

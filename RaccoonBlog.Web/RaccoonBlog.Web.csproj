@@ -314,9 +314,9 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\PostsViewModelMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\PostViewModelMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\RavenIdResolver.cs" />
-    <Compile Include="Commands\AddCommentTask.cs" />
+    <Compile Include="Infrastructure\Tasks\AddCommentTask.cs" />
     <Compile Include="Infrastructure\Common\EnumerableExtensions.cs" />
-    <Compile Include="Commands\SendEmailTask.cs" />
+    <Compile Include="Infrastructure\Tasks\SendEmailTask.cs" />
     <Compile Include="Controllers\RaccoonController.cs" />
     <Compile Include="Helpers\RecaptchHelperExtensions.cs" />
     <Compile Include="Global.asax.cs">
