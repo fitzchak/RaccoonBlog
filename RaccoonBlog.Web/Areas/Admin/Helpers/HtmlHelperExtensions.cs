@@ -33,7 +33,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Helpers
 			{
 				sb.Append("<ul class=\"");
 				sb.Append(m.IsCurrent ? "current" : "select");
-				sb.AppendFormat(@"""><li><a href=""#nogo""><b>{0}</b><!--[if IE 7]><!--></a><!--<![endif]-->", m.Title);
+				sb.AppendFormat(@"""><li><a href=""{1}""><b>{0}</b><!--[if IE 7]><!--></a><!--<![endif]-->", m.Title, string.IsNullOrWhiteSpace(m.Url) ? "#nogo" : m.Url);
 				sb.AppendLine("<!--[if lte IE 6]><table><tr><td><![endif]-->");
 				sb.AppendFormat(@"<div class=""select_sub{0}""><ul class=""sub"">", m.IsCurrent ? "_show" : string.Empty);
 

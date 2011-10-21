@@ -53,6 +53,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			       		new AdminMenu
 			       			{
 			       				Title = "Users",
+								Url = Url.Action("Index", "Users"),
 			       				SubMenus = new List<AdminMenu>
 			       				           	{
 			       				           		new AdminMenu {Title = "All users", Url = Url.Action("List", "Users")},
