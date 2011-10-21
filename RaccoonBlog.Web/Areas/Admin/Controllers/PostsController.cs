@@ -12,18 +12,42 @@ using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
-    public class PostController : AdminController
+    public class PostsController : AdminController
     {
+		public ActionResult Index()
+		{
+			return List();
+		}
+
         public ActionResult List()
         {
 			// the actual UI is handled via JavaScript
-            return View();
+            return View("List");
         }
 
 		[HttpGet]
 		public ActionResult Add()
 		{
 			return View("Edit", new PostInput());
+		}
+
+		public ActionResult Add(PostInput input)
+		{
+			if (!ModelState.IsValid)
+				return View("Edit", new EditPostViewModel { Input = input });
+
+			var post = new Post();
+			input.MapPropertiesToInstance(post);
+
+			var user = RavenSession.GetCurrentUser();
+			post.AuthorId = user.Id;
+			post.LastEditedByUserId = user.Id;
+			post.LastEditedAt = DateTimeOffset.Now;
+
+			RavenSession.Store(post);
+
+			var postReference = post.MapTo<PostReference>();
+			return RedirectToAction("Details", new { Id = postReference.DomainId, postReference.Slug });
 		}
 
         public ActionResult Details(int id, string slug)
@@ -88,12 +112,12 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Edit(PostInput input)
+        public ActionResult Edit(PostInput input, int id)
         {
         	if (!ModelState.IsValid)
         		return View("Edit", new EditPostViewModel {Input = input});
 
-			var post = RavenSession.Load<Post>(input.Id) ?? new Post();
+			var post = RavenSession.Load<Post>(id) ?? new Post();
         	input.MapPropertiesToInstance(post);
 
 			var user = RavenSession.GetCurrentUser();

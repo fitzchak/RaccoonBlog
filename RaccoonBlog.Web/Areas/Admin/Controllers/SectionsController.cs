@@ -1,6 +1,5 @@
 using System.Linq;
 using System.Web.Mvc;
-using RaccoonBlog.Web.Controllers;
 using RaccoonBlog.Web.Helpers.Attributes;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Models;
@@ -8,15 +7,20 @@ using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
-	public class SectionController : AdminController
+	public class SectionsController : AdminController
 	{
+		public ActionResult Index()
+		{
+			return List();
+		}
+
 		public ActionResult List()
 		{
 			var sections = RavenSession.Query<Section>()
 				.OrderBy(x => x.Position)
 				.ToList();
 
-			return View(sections.MapTo<SectionSummery>());
+			return View("List", sections.MapTo<SectionSummery>());
 		}
 
 		[HttpGet]
