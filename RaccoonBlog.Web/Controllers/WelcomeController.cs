@@ -37,13 +37,13 @@ namespace RaccoonBlog.Web.Controllers
 			RavenSession.Store(new Section { Title = "Archive", IsActive = true, Position = 1, ControllerName = "Section", ActionName = "ArchivesList" });
 			RavenSession.Store(new Section { Title = "Tags", IsActive = true, Position = 2, ControllerName = "Section", ActionName = "TagsList" });
 			RavenSession.Store(new Section { Title = "Statistics", IsActive = true, Position = 3, ControllerName = "Section", ActionName = "PostsStatistics" });
+			
 			var user = new User
 			{
 				FullName = "Default User",
-				Email = "user@example.org",
+				Email = config.OwnerEmail,
 				Enabled = true,
-			};
-			user.SetPassword("raccoon");
+			}.SetPassword("raccoon");
 			RavenSession.Store(user);
 
 			return RedirectToAction("Success");

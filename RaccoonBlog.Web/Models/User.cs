@@ -31,9 +31,10 @@ namespace RaccoonBlog.Web.Models
 			set { passwordSalt = value; }
 		}
 
-		public void SetPassword(string pwd)
+		public User SetPassword(string pwd)
 		{
 			HashedPassword = GetHashedPassword(pwd);
+			return this;
 		}
 
 		private string GetHashedPassword(string pwd)

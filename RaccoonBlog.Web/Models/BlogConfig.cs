@@ -11,6 +11,10 @@ namespace RaccoonBlog.Web.Models
 		[Display(Name = "Blog title")]
 		public string Title { get; set; }
 
+		[Required]
+		[Display(Name = "Owner Email")]
+		public string OwnerEmail { get; set; }
+
 		[Display(Name = "Slogan")]
 		public string Subtitle { get; set; }
 
