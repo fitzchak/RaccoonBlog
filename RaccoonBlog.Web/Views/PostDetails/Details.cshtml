@@ -1,0 +1,195 @@
+﻿@model PostViewModel
+@{
+	ViewBag.Title = @Model.Post.Title;
+	ViewBag.CurrentUrl = Url.Action("Details", new { Model.Post.Id, Model.Post.Slug });
+}
+<article class="post-detalis">
+	<header>
+		<h1><a href="@Url.Action("Details", new { Model.Post.Id, Model.Post.Slug })">@Model.Post.Title</a></h1>
+	</header>
+	
+	<nav id="headerPrevNext">
+		<ul>
+			@if (Model.PreviousPost != null)
+			{ 
+				<li><a href="@Url.Action("Details", new { id = Model.PreviousPost.DomainId, Model.PreviousPost.Slug })">previous: @Model.PreviousPost.Title</a></li>
+			}
+		
+			@if (Model.NextPost != null)
+			{ 
+				<li><a href="@Url.Action("Details", new { id = Model.NextPost.DomainId, Model.NextPost.Slug })">next: @Model.NextPost.Title</a></li>
+			}
+		</ul>
+	</nav>
+
+	<div class="post_body raw_html">
+		@Model.Post.Body
+	</div>
+	
+	<footer>
+		@if (Model.Post.Tags.Count > 0)
+		{
+			<div class="tags">
+				<span>Tags:</span>
+				<ul>
+					@foreach (var tag in Model.Post.Tags)
+					{
+						<li><a href="@Url.Action("Tag", "Post", new {tag.Slug})">@tag.Name</a></li>
+					}
+				</ul>
+			</div>
+		}
+
+		<p class="author">Posted By: @Model.Post.Author.FullName</p>
+		<p class="published">Published at <time pubdate>@Model.Post.PublishedAt.ToString("r")</time></p>
+		@if (Model.Post.PublishedAt != Model.Post.CreatedAt)
+		{ 
+			<p class="created">Originally posted at <time>@Model.Post.CreatedAt.ToString("r")</time></p>
+		}
+		<div class="clr"></div>
+
+		<div class="share">
+			<div class="twitter">
+				@Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, Model.Post.Author)
+			</div>
+			<div class="facebook-share">
+				<a name="fb_share" type="box_count" share_url="@(Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))" href="http://www.facebook.com/sharer.php?u=@(Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))&t=@(Model.Post.Title)"></a>
+			</div>
+			<div class="facebook">
+				<iframe src="http://www.facebook.com/plugins/like.php?href=@(Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))&send=false&layout=button_count&width=450&show_faces=true&action=like&colorscheme=light&font&height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px;" allowTransparency="true"></iframe>
+			</div>
+			<div class="clr"></div>
+		</div>
+		<div class="comments-rss">
+			<a rel="alternate" type="application/rss+xml" href="@Url.Action("CommentsRss", "Syndication", new { id = Model.Post.Id })">Comments Feed</a>
+		</div>
+	</footer>
+
+	
+ 
+	<section class="comments">
+		<header>
+			<a name="comments"></a>
+			<h1>Comments</h1>
+		</header>
+		@if (Model.Comments.Count == 0)
+		{ 
+			<p>No comments posted yet.</p>
+		}
+		@foreach (var comment in Model.Comments)
+		{
+			<article class="comment @(comment.IsImportant ? " important" : null)">
+				<a name="comment@(comment.Id)"></a>
+				<div class="avatar">
+					<img src="http://www.gravatar.com/avatar.php?gravatar_id=@(comment.EmailHash)&size=50&default=identicon" alt="@comment.Author">
+				</div>
+
+				<header>
+					@comment.CreatedAt by
+					<address>
+						@Html.Link(comment.Author, @comment.Url, new { title = comment.Tooltip, target = "_blank" })
+					</address>
+				</header>
+				<div class="comment-body raw_html">@comment.Body</div>
+			</article>
+		}
+
+		<div class="messageWrapper"><div id="message" style="visibility:hidden"></div></div>
+		<article id="postComment">
+			@if (Model.Post.IsCommentAllowed == false || Model.AreCommentsClosed)
+			{ 
+				<div class="commentsClosedMessage">Comments have been closed on this topic.</div>
+			}
+			else
+			{
+                if (Model.IsLoggedInCommenter == false)
+                {
+                    <div class="openid-wrapper">
+                        <form id="openid" action="@Url.Action("Authenticate", "SocialLogin")" method="post">
+                            <noscript>
+				                <p>OpenID is service that allows you to log-on to many different websites using a single identity.
+				                Find out <a href="http://openid.net/what/">more about OpenID</a> and <a href="http://openid.net/get/">how to get an OpenID enabled account</a>.</p>
+			                </noscript>
+
+                            @Html.Hidden("returnUrl", Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))
+	                    </form>
+                    </div>
+                }
+                if (ViewData.ModelState.IsValid == false)
+                { 
+					<div class="form-error">
+						@Html.ValidationSummary(true)
+					</div>
+                }
+                <div class="comment-form-wrapper">
+                    @using (Html.BeginForm("Comment", "PostDetails", new { id = Model.Post.Id, key = Model.Post.Key }))
+                    {
+					    @Html.EditorFor(x => x.Input.Name)
+					    @Html.EditorFor(x => x.Input.Email)
+					    @Html.EditorFor(x => x.Input.Url)
+					    @Html.EditorFor(x => x.Input.Body)
+
+                        if (!Model.IsTrustedCommenter)
+                        {
+						    <div class="form_item">
+							    <label>
+								    <span class="form_item_name">Are you human?</span>
+								    @Html.GenerateCaptcha()
+								    @Html.ValidationMessage("CaptchaNotValid")
+							    </label>
+						    </div>
+                        }
+					    @Html.EditorFor(x => x.Input.CommenterKey)
+					    <input type="submit" value="Post Comment" />
+					    <div class="clr"></div>
+                    }
+                </div>
+            }
+		</article>
+	</section>
+</article>
+@section Style {
+	<link rel="canonical" href="@Url.AbsoluteAction("Details", new { Model.Post.Id, Model.Post.Slug })">
+}
+@section Script {
+	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.validate.min.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.validate.unobtrusive.min.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Content/js/showdown.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.tmpl.min.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.md5.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Content/js/date.f-0.5.0.min.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.openid.js")"></script>
+	@if (Model.IsLoggedInCommenter == false)
+	{
+		<script type="text/javascript">
+	    
+	    		$(function () {
+				$('#openid').openid({
+					img_path: '@Url.Content("~/Content/css/images/")',
+					txt: {
+						label: 'Select your Open ID provider',
+						username: 'Username',
+						title: 'Social Login',
+						sign: 'Sign In'
+					}
+				});
+			});
+		</script>
+	}
+	<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+	<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+	<script id="commentTemplate" type="text/html">
+		<article class="comment livecomment" style="display: none">
+			<div class="avatar">
+				<img src="http://www.gravatar.com/avatar.php?gravatar_id=${emailHash}&size=50&default=identicon" alt="Gravatar">
+			</div>
+			<header>
+				${createdAt} by
+				<address>
+					<a target="_blank" href="${url}">${author}</a>
+				</address>
+			</header>
+			<div class="comment-body raw_html">{{html body}}</div>
+		</article>
+	</script>
+}

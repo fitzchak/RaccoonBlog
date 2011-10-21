@@ -1,0 +1,27 @@
+﻿@using System.Globalization
+@model FuturePostsViewModel
+@{
+    Layout = "";    
+}
+<ol>
+@if (Model.Posts.Count > 0)
+{
+    foreach (var futurePost in Model.Posts)
+	{
+        <li>@futurePost.Title - @futurePost.Time</li>
+	}
+}
+else
+{
+	<li>No future posts left, oh my!</li>
+}
+</ol>
+@if (Model.TotalCount > Model.Posts.Count)
+{
+	<p>And @(Model.TotalCount - Model.Posts.Count) more posts are pending...</p>
+}
+
+@if (Model.LastPostDate != null)
+{
+	<p>There are posts all the way to @Model.LastPostDate.Value.ToString("MMM dd, yyyy",CultureInfo.InvariantCulture)</p>
+}
