@@ -48,6 +48,18 @@ namespace RaccoonBlog.Web
 
 			RavenController.DocumentStore = DocumentStore;
 			TaskExecutor.DocumentStore = DocumentStore;
+
+			// In case the versioning bundle is installed, make sure it will version
+			// only what we opt-in to version
+			using (var s = DocumentStore.OpenSession())
+			{
+				s.Store(new
+				{
+					Exclude = true,
+					Id = "Raven/Versioning/DefaultConfiguration",
+				});
+				s.SaveChanges();
+			}
 		}
 
 		public static IDocumentStore DocumentStore { get; private set; }
