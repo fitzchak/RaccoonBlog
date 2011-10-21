@@ -1,6 +1,6 @@
 using System.Web.Mvc;
 using System.Web.Routing;
-using RaccoonBlog.Web.Helpers.Routes;
+using HibernatingRhinos.Loci.Common.Routing;
 
 namespace RaccoonBlog.Web
 {

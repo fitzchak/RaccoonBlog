@@ -130,7 +130,6 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\BlogConfigAdminViewModelMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\StringToGuidConverter.cs" />
     <Compile Include="Infrastructure\Common\DocumentSessionExtensions.cs" />
-    <Compile Include="Helpers\Routes\RouteCollectionExtension.cs" />
     <Content Include="Areas\Admin\Content\css\datePicker.css" />
     <Content Include="Areas\Admin\Content\css\pro_dropline.css" />
     <Content Include="Areas\Admin\Content\css\pro_dropline_ie.css" />
@@ -291,7 +290,6 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\MvcHtmlStringConverter.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\TagsResolver.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\UserAdminMapperProfile.cs" />
-    <Compile Include="Helpers\Routes\LowercaseRoute.cs" />
     <Compile Include="Infrastructure\Indexes\PostComments_CreationDate.cs" />
     <Compile Include="Infrastructure\Indexes\Statistics_Count.cs" />
     <Compile Include="Models\BlogConfig.cs" />

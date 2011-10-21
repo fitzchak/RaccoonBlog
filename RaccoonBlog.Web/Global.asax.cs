@@ -7,7 +7,6 @@ using System.Web.Routing;
 using HibernatingRhinos.Loci.Common.Controllers;
 using HibernatingRhinos.Loci.Common.Tasks;
 using RaccoonBlog.Web.Controllers;
-using RaccoonBlog.Web.Helpers.Attributes;
 using RaccoonBlog.Web.Helpers.Binders;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Indexes;
