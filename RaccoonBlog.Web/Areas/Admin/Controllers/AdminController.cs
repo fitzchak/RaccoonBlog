@@ -7,7 +7,7 @@ using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public abstract class AdminController : RaccoonController
     {
 		protected override void OnActionExecuted(ActionExecutedContext filterContext)
@@ -17,6 +17,8 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 
 			ViewBag.BlogConfig = BlogConfig.MapTo<BlogConfigViewModel>();
 			ViewBag.TopMenus = GetTopMenu();
+
+			CompleteSessionHandler(filterContext);
 		}
 
 		private IList<AdminMenu> GetTopMenu()
