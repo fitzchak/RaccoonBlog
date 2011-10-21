@@ -14,7 +14,8 @@
         </div>
     }
 
-	<form action="@Url.Action("Update")" method="post">
+@using (Html.BeginForm())
+{
 		@Html.EditorFor(x => x.FullName)
 		@Html.EditorFor(x => x.Email)
 		@Html.EditorFor(x => x.Enabled)
@@ -24,6 +25,6 @@
 		@Html.EditorFor(x => x.RelatedTwitterNickDesc)
 				  
 		@Html.EditorFor(x => x.Id)
-		<input type="submit" value="@ViewBag.SubmitButtonText">
-	</form>
+		<text><input type="submit" value="@ViewBag.SubmitButtonText"></text>
+}
 </article>
