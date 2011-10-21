@@ -1,18 +1,20 @@
-﻿@model EditPostViewModel
+﻿@model PostInput
 @{
-    ViewBag.Title = @Model.Input.Title;
+    ViewBag.Title = @Model.Title;
 }
 
 <article class="post">
-    <form action="@Url.Action("Update")" method="post">
-        @Html.EditorFor(x => x.Input.Title)
-        @Html.EditorFor(x => x.Input.Body)
-        @Html.EditorFor(x => x.Input.CreatedAt)
-        @Html.EditorFor(x => x.Input.PublishAt)
-        @Html.EditorFor(x => x.Input.Tags)
-        @Html.EditorFor(x => x.Input.AllowComments)
+@using (Html.BeginForm())
+{
 
-        @Html.EditorFor(x => x.Input.Id)
-        <input type="submit" value="Update Post">
-    </form>
+	Html.EditorFor(x => x.Title);
+	Html.EditorFor(x => x.Body);
+	Html.EditorFor(x => x.CreatedAt);
+	Html.EditorFor(x => x.PublishAt);
+	Html.EditorFor(x => x.Tags);
+	Html.EditorFor(x => x.AllowComments);
+
+	Html.EditorFor(x => x.Id);
+    <text><input type="submit" value="Update Post"></text>
+}
 </article>

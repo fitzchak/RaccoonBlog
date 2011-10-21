@@ -20,6 +20,12 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
             return View();
         }
 
+		[HttpGet]
+		public ActionResult Add()
+		{
+			return View("Edit", new PostInput());
+		}
+
         public ActionResult Details(int id, string slug)
         {
 			var post = RavenSession
@@ -77,12 +83,12 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			var post = RavenSession.Load<Post>(id);
             if (post == null)
                 return HttpNotFound("Post does not exist.");
-            return View(new EditPostViewModel {Input = post.MapTo<PostInput>()});
+            return View(post.MapTo<PostInput>());
         }
         
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Update(PostInput input)
+        public ActionResult Edit(PostInput input)
         {
         	if (!ModelState.IsValid)
         		return View("Edit", new EditPostViewModel {Input = input});
