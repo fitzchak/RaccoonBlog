@@ -7,7 +7,7 @@ using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using RaccoonBlog.Web.Infrastructure.Commands;
+using HibernatingRhinos.Loci.Common.Tasks;
 using RaccoonBlog.Web.Infrastructure.Common;
 
 namespace RaccoonBlog.Web.Infrastructure.Tasks

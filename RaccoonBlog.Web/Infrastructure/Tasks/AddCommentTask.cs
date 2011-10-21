@@ -1,8 +1,8 @@
 using System;
 using System.Web;
+using HibernatingRhinos.Loci.Common.Tasks;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
-using RaccoonBlog.Web.Infrastructure.Commands;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.Services;
@@ -25,9 +25,9 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 
 		public override void Execute()
 		{
-			var post = documentSession.Include<Post>(x => x.AuthorId).Load(_postId);
-			var postAuthor = documentSession.Load<User>(post.AuthorId);
-			var comments = documentSession.Load<PostComments>(_postId);
+			var post = DocumentSession.Include<Post>(x => x.AuthorId).Load(_postId);
+			var postAuthor = DocumentSession.Load<User>(post.AuthorId);
+			var comments = DocumentSession.Load<PostComments>(_postId);
 
 			var comment = new PostComments.Comment
 			              	{
@@ -43,7 +43,7 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 			              	};
 			comment.IsSpam = AkismetService.CheckForSpam(comment);
 
-			var commenter = documentSession.GetCommenter(_commentInput.CommenterKey) ?? new Commenter { Key = _commentInput.CommenterKey ?? Guid.Empty };
+			var commenter = DocumentSession.GetCommenter(_commentInput.CommenterKey) ?? new Commenter { Key = _commentInput.CommenterKey ?? Guid.Empty };
 
 			if (_requestValues.IsAuthenticated == false && comment.IsSpam)
 			{
@@ -73,7 +73,7 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 			if (isSpamComment)
 				commenter.NumberOfSpamComments++;
 
-			documentSession.Store(commenter);
+			DocumentSession.Store(commenter);
 		}
 
 		private void SendNewCommentEmail(Post post, PostComments.Comment comment, User postAuthor)
@@ -85,7 +85,7 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 			viewModel.PostId = RavenIdResolver.Resolve(post.Id);
 			viewModel.PostTitle = HttpUtility.HtmlDecode(post.Title);
 			viewModel.PostSlug = SlugConverter.TitleToSlug(post.Title);
-			viewModel.BlogName = documentSession.Load<BlogConfig>("Blog/Config").Title;
+			viewModel.BlogName = DocumentSession.Load<BlogConfig>("Blog/Config").Title;
 			viewModel.Key = post.ShowPostEvenIfPrivate.MapTo<string>();
 
 			var subject = string.Format("{2}Comment on: {0} from {1}", viewModel.PostTitle, viewModel.BlogName, comment.IsSpam ? "[Spam] " : string.Empty);
