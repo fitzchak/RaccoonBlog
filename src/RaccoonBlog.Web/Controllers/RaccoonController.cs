@@ -35,13 +35,14 @@ namespace RaccoonBlog.Web.Controllers
 
 					if (blogConfig == null) // first launch
 					{
-						throw new HttpException(302, "Found")
-						{
-							Data =
-								{
-									{"Location", "/welcome"}
-								}
-						};
+						HttpContext.Response.Redirect("/welcome", true);
+						//throw new HttpException(302, "Found")
+						//{
+						//    Data =
+						//        {
+						//            {"Location", "/welcome"}
+						//        }
+						//};
 					}
 				}
 				return blogConfig;
@@ -55,8 +56,8 @@ namespace RaccoonBlog.Web.Controllers
 
 		protected override void OnActionExecuted(ActionExecutedContext filterContext)
 		{
-			if (HandleRedirection(filterContext))
-				return;
+			//if (HandleRedirection(filterContext))
+			//    return;
 
 			if (filterContext.IsChildAction)
 				return;
@@ -66,17 +67,17 @@ namespace RaccoonBlog.Web.Controllers
 			CompleteSessionHandler(filterContext);
 		}
 
-		private bool HandleRedirection(ActionExecutedContext filterContext)
-		{
-			var httpException = filterContext.Exception as HttpException;
-			if (httpException == null || httpException.GetHttpCode() != 302)
-			{
-				return false;
-			}
-			filterContext.ExceptionHandled = true;
-			filterContext.HttpContext.Response.Redirect((string) httpException.Data["Location"]);
-			return true;
-		}
+		//private bool HandleRedirection(ActionExecutedContext filterContext)
+		//{
+		//    var httpException = filterContext.Exception as HttpException;
+		//    if (httpException == null || httpException.GetHttpCode() != 302)
+		//    {
+		//        return false;
+		//    }
+		//    filterContext.ExceptionHandled = true;
+		//    filterContext.HttpContext.Response.Redirect((string) httpException.Data["Location"]);
+		//    return true;
+		//}
 
 		protected void CompleteSessionHandler(ActionExecutedContext filterContext)
 		{
