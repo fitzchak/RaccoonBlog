@@ -43,6 +43,12 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			var post = new Post();
 			input.MapPropertiesToInstance(post);
 
+			if (post.PublishAt == DateTimeOffset.MinValue)
+			{
+				var postScheduleringStrategy = new PostSchedulingStrategy(RavenSession, DateTimeOffset.Now);
+				post.PublishAt = postScheduleringStrategy.Schedule();
+			}
+
 			// Create the post comments object and link between it and the post
 			var comments = new PostComments
 			{
