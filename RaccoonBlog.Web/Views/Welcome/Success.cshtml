@@ -1,5 +1,4 @@
 ﻿@model RaccoonBlog.Web.Models.BlogConfig
-
 @{
     Layout = null;
 }
@@ -17,7 +16,7 @@
         <p>@Html.ActionLink("Go back", "List", "Post") to your blog, or @Html.ActionLink("start posting", "List", "PostAdmin") .</p>
         <p>The default user credentials, which you are <b>strongly</b> encouraged to modify are:</p>
         <ul>
-            <li>Email: user@example.org</li>
+            <li>Email: @Model.OwnerEmail</li>
             <li>Password: raccoon</li>
         </ul>
     </div>

@@ -46,7 +46,7 @@ namespace RaccoonBlog.Web.Controllers
 			}.SetPassword("raccoon");
 			RavenSession.Store(user);
 
-			return RedirectToAction("Success");
+			return RedirectToAction("Success", config);
 		}
 
 		public ActionResult Success()
