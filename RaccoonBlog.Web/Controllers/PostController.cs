@@ -13,14 +13,14 @@ using System.Web.Mvc;
 namespace RaccoonBlog.Web.Controllers
 {
 	public class PostController : RaccoonController
-    {
+	{
 		public ActionResult Index()
 		{
 			return List();
 		}
 
-        public ActionResult List()
-        {
+		public ActionResult List()
+		{
 			RavenQueryStatistics stats;
 			var posts = RavenSession.Query<Post>()
 			    .Include(x => x.AuthorId)
@@ -30,8 +30,8 @@ namespace RaccoonBlog.Web.Controllers
                 .Paging(CurrentPage, DefaultPage, PageSize)
                 .ToList();
 
-            return ListView(stats.TotalResults, posts);
-        }
+			return ListView(stats.TotalResults, posts);
+		}
 
 		public ActionResult Tag(string slug)
 		{
@@ -64,13 +64,13 @@ namespace RaccoonBlog.Web.Controllers
 			if(day != null)
 				postsQuery = postsQuery.Where(post => post.PublishAt.Day == day.Value);
 
-            var posts = 
+			var posts = 
 				postsQuery.OrderByDescending(post => post.PublishAt)
-                .Paging(CurrentPage, DefaultPage, PageSize)
-                .ToList();
+				.Paging(CurrentPage, DefaultPage, PageSize)
+				.ToList();
 
-            return ListView(stats.TotalResults, posts);
-        }
+			return ListView(stats.TotalResults, posts);
+		}
 
 		private ActionResult ListView(int count, IEnumerable<Post> posts)
 		{
@@ -94,5 +94,5 @@ namespace RaccoonBlog.Web.Controllers
 				Posts = summaries
 			});
 		}
-    }
+	}
 }
