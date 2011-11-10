@@ -34,20 +34,20 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			       			},
 			       		new AdminMenu
 			       			{
+			       				Title = "Posts",
+			       				SubMenus = new List<AdminMenu>
+			       				           	{
+			       				           		new AdminMenu {Title = "All posts", Url = Url.Action("List", "Posts")},
+			       				           		new AdminMenu{Title = "Create a new post", Url=Url.Action("Add", "Posts")}
+			       				           	}
+			       			},
+			       		new AdminMenu
+			       			{
 			       				Title = "Sections",
 			       				SubMenus = new List<AdminMenu>
 			       				           	{
 			       				           		new AdminMenu {Title = "Sections list", Url = Url.Action("List", "Section")},
 			       				           		new AdminMenu {Title = "Add a new section", Url = Url.Action("Add", "Section")}
-			       				           	}
-			       			},
-			       		new AdminMenu
-			       			{
-			       				Title = "Posts",
-			       				SubMenus = new List<AdminMenu>
-			       				           	{
-			       				           		new AdminMenu {Title = "All posts", Url = Url.Action("List", "Post")},
-			       				           		//new AdminMenu{Title = "Add a new section", Url=Url.Action("Add", "Post")}
 			       				           	}
 			       			},
 			       		new AdminMenu

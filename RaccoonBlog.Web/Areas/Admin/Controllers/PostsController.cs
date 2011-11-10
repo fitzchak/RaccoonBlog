@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using HibernatingRhinos.Loci.Common.Extensions;
 using RaccoonBlog.Web.Controllers;
 using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Helpers.Attributes;
@@ -31,26 +33,43 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			return View("Edit", new PostInput());
 		}
 
+		[HttpPost]
 		public ActionResult Add(PostInput input)
 		{
 			if (!ModelState.IsValid)
 				return View("Edit", new EditPostViewModel { Input = input });
 
+			// Create new post object
 			var post = new Post();
 			input.MapPropertiesToInstance(post);
 
+			// Create the post comments object and link between it and the post
+			var comments = new PostComments
+			{
+				Comments = new List<PostComments.Comment>(),
+				Spam = new List<PostComments.Comment>()
+			};
+			RavenSession.Store(comments);
+			post.CommentsId = comments.Id;
+
+			// Record the user making the actual post
 			var user = RavenSession.GetCurrentUser();
 			post.AuthorId = user.Id;
 			post.LastEditedByUserId = user.Id;
 			post.LastEditedAt = DateTimeOffset.Now;
 
+			// Actually save the post now
 			RavenSession.Store(post);
+			comments.Post = new PostComments.PostReference
+			{
+				Id = post.Id,
+				PublishAt = post.PublishAt,
+			};
 
-			var postReference = post.MapTo<PostReference>();
-			return RedirectToAction("Details", new { Id = postReference.DomainId, postReference.Slug });
+			return RedirectToAction("Details", new { id = post.Id.ToIntId() });
 		}
 
-        public ActionResult Details(int id, string slug)
+        public ActionResult Details(int id)
         {
 			var post = RavenSession
                 .Include<Post>(x => x.CommentsId)
@@ -74,10 +93,6 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 				PreviousPost = RavenSession.GetNextPrevPost(post, false),
 				AreCommentsClosed = comments.AreCommentsClosed(post, BlogConfig.NumberOfDayToCloseComments),
 			};
-
-
-        	if (vm.Post.Slug != slug)
-				return RedirectToActionPermanent("Details", new { id, vm.Post.Slug });
 
             return View("Details", vm);
         }
@@ -163,14 +178,12 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
             if (post == null)
                 return HttpNotFound();
 
-			var postReference = post.MapTo<PostReference>();
-
             if (ModelState.IsValid == false)
             {
                 if (Request.IsAjaxRequest())
                     return Json(new {Success = false, message = ModelState.GetFirstErrorMessage()});
 
-				return Details(id, postReference.Slug);
+				return Details(id);
             }
 
 			var comments = RavenSession.Load<PostComments>(id);
@@ -217,7 +230,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
             {
                 return Json(new {Success = true});
             }
-			return RedirectToAction("Details", new { id, postReference.Slug });
+			return RedirectToAction("Details", new { id });
         }
 
     	[HttpPost]
