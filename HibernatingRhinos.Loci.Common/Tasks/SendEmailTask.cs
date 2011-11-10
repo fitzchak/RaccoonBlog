@@ -22,9 +22,14 @@ namespace HibernatingRhinos.Loci.Common.Tasks
 
 		public static string RenderBodyUsingView(string viewName, object model)
 		{
+			return RenderBodyUsingView(viewName, model, new MailHttpContext());
+		}
+
+		public static string RenderBodyUsingView(string viewName, object model, HttpContextBase httpContext)
+		{
 			var routeData = new RouteData();
 			routeData.Values.Add("controller", "MailTemplates");
-			var controllerContext = new ControllerContext(new MailHttpContext(), routeData, new MailController());
+			var controllerContext = new ControllerContext(httpContext, routeData, new MailController());
 			var viewEngineResult = ViewEngines.Engines.FindView(controllerContext, viewName, "_Layout");
 			var stringWriter = new StringWriter();
 			viewEngineResult.View.Render(
@@ -61,7 +66,9 @@ namespace HibernatingRhinos.Loci.Common.Tasks
 
 			using (var smtpClient = new SmtpClient())
 			{
+#if !DEBUG
 				smtpClient.Send(mailMessage);
+#endif
 			}
 
 		}

@@ -70,11 +70,13 @@
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\Html5Helpers.cs" />
     <Compile Include="Extensions\RavenHelpers.cs" />
+    <Compile Include="Extensions\RecaptchaValidatorWrapper.cs" />
     <Compile Include="Extensions\TimeSpanExtenstions.cs" />
     <Compile Include="Extensions\XmlResult.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Controllers\RavenController.cs" />
     <Compile Include="Models\Configs.cs" />
+    <Compile Include="Models\DynamicContent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Routing\LowercaseRoute.cs" />
     <Compile Include="Routing\OrganicSeoHelpers.cs" />
@@ -82,6 +84,7 @@
     <Compile Include="Tasks\BackgroundTask.cs" />
     <Compile Include="Tasks\SendEmailTask.cs" />
     <Compile Include="Tasks\TaskExecutor.cs" />
+    <Compile Include="Utils\StringRandomizer.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
