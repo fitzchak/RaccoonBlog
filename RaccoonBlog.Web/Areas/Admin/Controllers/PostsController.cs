@@ -37,7 +37,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		public ActionResult Add(PostInput input)
 		{
 			if (!ModelState.IsValid)
-				return View("Edit", new EditPostViewModel { Input = input });
+				return View("Edit", input);
 
 			// Create new post object
 			var post = new Post();
@@ -135,8 +135,8 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         [ValidateInput(false)]
         public ActionResult Edit(PostInput input, int id)
         {
-        	if (!ModelState.IsValid)
-        		return View("Edit", new EditPostViewModel {Input = input});
+			if (!ModelState.IsValid)
+				return View("Edit", input);
 
 			var post = RavenSession.Load<Post>(id) ?? new Post();
         	input.MapPropertiesToInstance(post);

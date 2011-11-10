@@ -342,7 +342,6 @@
     <Compile Include="ViewModels\CommenterUtil.cs" />
     <Compile Include="ViewModels\CommentInput.cs" />
     <Compile Include="ViewModels\CurrentUserViewModel.cs" />
-    <Compile Include="ViewModels\EditPostViewModel.cs" />
     <Compile Include="ViewModels\FuturePostViewModel.cs" />
     <Compile Include="ViewModels\LoginInput.cs" />
     <Compile Include="ViewModels\NewCommentEmailViewModel.cs" />
