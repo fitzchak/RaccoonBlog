@@ -156,7 +156,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult CommentsAdmin(int id, CommentCommandOptions command, int[] commentIds)
         {
-            if (commentIds.Length < 1)
+            if (commentIds == null || commentIds.Length == 0)
                 ModelState.AddModelError("CommentIdsAreEmpty", "Not comments was selected.");
 
 			var post = RavenSession.Load<Post>(id);
