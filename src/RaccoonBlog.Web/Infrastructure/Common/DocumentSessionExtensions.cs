@@ -46,13 +46,13 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 			if (isNext)
 			{
 				queryable = queryable
-					.Where(post => post.PublishAt > compareTo.PublishAt)
+					.Where(post => post.PublishAt >= compareTo.PublishAt && post.Id != compareTo.Id)
 					.OrderBy(post => post.PublishAt);
 			}
 			else
 			{
 				queryable = queryable
-					.Where(post => post.PublishAt < compareTo.PublishAt)
+					.Where(post => post.PublishAt <= compareTo.PublishAt && post.Id != compareTo.Id)
 					.OrderByDescending(post => post.PublishAt);
 			}
 			
