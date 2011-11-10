@@ -11,11 +11,21 @@ namespace RaccoonBlog.Web.Infrastructure.Indexes
 		{
 			Map = postComments => from postComment in postComments
 								  from comment in postComment.Comments
-								  select new { comment.CreatedAt, CommentId = comment.Id, PostCollectionId = postComment.Id, postComment.PostId };
+								  where comment.IsSpam == false
+								  select new
+								  {
+								  	comment.CreatedAt, 
+									CommentId = comment.Id, 
+									PostCommentsId = postComment.Id, 
+									PostId = postComment.Post.Id,
+									PostPublishAt = postComment.Post.PublishAt
+								  };
 
 			Store(x =>x.CreatedAt, FieldStorage.Yes);
 			Store(x =>x.CommentId, FieldStorage.Yes);
 			Store(x =>x.PostId, FieldStorage.Yes);
+			Store(x=>x.PostCommentsId, FieldStorage.Yes);
+			Store(x => x.PostPublishAt, FieldStorage.Yes);
 		}
 	}
 }

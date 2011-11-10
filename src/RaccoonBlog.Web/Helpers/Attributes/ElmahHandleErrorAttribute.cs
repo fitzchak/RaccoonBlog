@@ -20,7 +20,7 @@ namespace RaccoonBlog.Web.Helpers.Attributes
 			BlogConfig blogConfig;
 			using(var session = DocumentStoreHolder.DocumentStore.OpenSession())
 			{
-				blogConfig = session.Load<BlogConfig>("Blog/Config");
+				blogConfig = session.Load<BlogConfig>("Blog/Config") ?? BlogConfig.NewDummy();
 			}
 
 			var controllerName = (string) context.RouteData.Values["controller"];

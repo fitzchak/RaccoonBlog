@@ -7,6 +7,8 @@ namespace RaccoonBlog.Web.ViewModels
 	{
 		public int TotalCount { get; set; }
 		public List<FuturePostViewModel> Posts { get; set; }
+
+		public DateTimeOffset? LastPostDate { get; set; }
 	}
 
 	public class FuturePostViewModel

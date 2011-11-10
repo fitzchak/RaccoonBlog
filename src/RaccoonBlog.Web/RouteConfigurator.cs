@@ -20,12 +20,18 @@ namespace RaccoonBlog.Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.IgnoreRoute("{*favicon}", new { favicon = @"(.*/)?favicon.ico(/.*)?" });
 
+    		routes.MapRoute("WelcomeScreen",
+    		                "welcome/{action}",
+    		                new {controller = "Welcome", action = "Index"}
+    			);
+
             ConfigureSyndication();
 
             ConfigurePost();
             ConfigureLegacyPost();
             ConfigurePostDetails();
             ConfigurePostAdmin();
+            ConfigureSocialLogin();
             
     	    ConfigureSection();
     	    ConfigureSectionAdmin();
@@ -37,6 +43,8 @@ namespace RaccoonBlog.Web
     	    ConfigureCss();
 
             ConfigureUserAdmin();
+
+			ConfigureConfigurationAdmin();
 
             ConfigureElmah();
 
@@ -50,7 +58,15 @@ namespace RaccoonBlog.Web
             #endregion
         }
 
-        private void ConfigureElmah()
+    	private void ConfigureConfigurationAdmin()
+    	{
+			routes.MapRouteLowerCase("ConfigureConfigurationAdmin",
+				"admin/configuration",
+				new { controller = "ConfigurationAdmin", action = "Index" }
+				);
+    	}
+
+    	private void ConfigureElmah()
         {
             routes.MapRouteLowerCase("ElmahController-internal",
                 "admin/elmah/{type}",
@@ -66,12 +82,20 @@ namespace RaccoonBlog.Web
                 );
         }
 
+		private void ConfigureSocialLogin()
+        {
+			routes.MapRouteLowerCase("SocialLoginController",
+				"users/authenticate",
+				new { controller = "SocialLogin", action = "Authenticate" }
+                );
+        }
+
         private void ConfigureSection()
         {
             routes.MapRouteLowerCase("SectionController-internal",
                 "{controller}/{action}",
                 new { },
-                new { controller = "Section", action = "List|TagsList|ArchivesList|FuturePosts|PostsStatistics" }
+                new { controller = "Section", action = "List|TagsList|ArchivesList|FuturePosts|PostsStatistics|RecentComments" }
                 );
         }
 
@@ -237,10 +261,17 @@ namespace RaccoonBlog.Web
 
     	private void ConfigureSyndication()
     	{
+			routes.MapRouteLowerCase("CommentsRssFeed",
+			  "rss/comments",
+			  new { controller = "Syndication", action = "CommentsRss"}
+			  );
+
 			routes.MapRouteLowerCase("RssFeed",
 			  "rss/{tag}",
 			  new { controller = "Syndication", action = "Rss", tag = UrlParameter.Optional }
 			  );
+
+			
 
 			routes.MapRouteLowerCase("RsdFeed",
 			  "rsd",

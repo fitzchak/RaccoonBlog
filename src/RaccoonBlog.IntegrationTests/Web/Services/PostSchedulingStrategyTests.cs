@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
@@ -38,7 +38,7 @@ namespace RaccoonBlog.IntegrationTests.Web.Services
 			var rescheduler = new PostSchedulingStrategy(Session, Now);
 
 			var result = rescheduler.Schedule();
-			Assert.Equal(Now.AddDays(1).AtNoon(), result);
+			Assert.Equal(Now.AddDays(1).SkipToNextWorkDay().AtNoon(), result);
 		}
 
 		[Fact]
@@ -47,7 +47,7 @@ namespace RaccoonBlog.IntegrationTests.Web.Services
 			var rescheduler = new PostSchedulingStrategy(Session, Now);
 
 			var result = rescheduler.Schedule();
-			Assert.Equal(Now.AddDays(1).AtNoon(), result);
+			Assert.Equal(Now.AddDays(1).SkipToNextWorkDay().AtNoon(), result);
 		}
 
 		[Fact]

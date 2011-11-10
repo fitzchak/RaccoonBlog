@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
@@ -24,9 +25,17 @@ namespace RaccoonBlog.Web.Controllers
 				.Take(5)
 				.ToList();
 
+			var lastPost = Session.Query<Post>()
+				.Where(x => x.IsDeleted == false)
+				.OrderByDescending(x => x.PublishAt)
+				.Select(x => new Post { PublishAt = x.PublishAt })
+				.FirstOrDefault();
+				
+
 			return View(
 				new FuturePostsViewModel
 				{
+					LastPostDate = lastPost == null ? null : (DateTimeOffset?)lastPost.PublishAt,
 					TotalCount = stats.TotalResults,
 					Posts = futurePosts.MapTo<FuturePostViewModel>()
 				});
@@ -65,9 +74,13 @@ namespace RaccoonBlog.Web.Controllers
 		[ChildActionOnly]
 		public ActionResult ArchivesList()
 		{
+			var now = DateTime.Now;
+
 			var dates = Session.Query<PostCountByMonth, Posts_ByMonthPublished_Count>()
 				.OrderByDescending(x => x.Year)
 				.ThenByDescending(x => x.Month)
+				// filter future stats
+				.Where(x=> x.Year < now.Year || x.Year == now.Year && x.Month <= now.Month)
 				.ToList();
 
 			return View(dates);
@@ -77,9 +90,24 @@ namespace RaccoonBlog.Web.Controllers
 		public ActionResult PostsStatistics()
 		{
 			var statistics = Session.Query<PostsStatistics, Posts_Statistics>()
-				.FirstOrDefault();
+				.FirstOrDefault() ?? new PostsStatistics();
 
 			return View(statistics.MapTo<PostsStatisticsViewModel>());
+		}
+
+		[ChildActionOnly]
+		public ActionResult RecentComments()
+		{
+			var commentsTuples = Session.QueryForRecentComments(q=> q.Take(5));
+
+			var result = new List<RecentCommentViewModel>();
+			foreach (var commentsTuple in commentsTuples)
+			{
+				var recentCommentViewModel = commentsTuple.Item1.MapTo<RecentCommentViewModel>();
+				commentsTuple.Item2.MapPropertiesToInstance(recentCommentViewModel);
+				result.Add(recentCommentViewModel);
+			}
+			return View(result);
 		}
 	}
 }

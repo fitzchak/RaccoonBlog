@@ -1,0 +1,102 @@
+﻿@model RaccoonBlog.Web.Models.BlogConfig
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>RaccoonBlog :: Welcome</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+</head>
+<body>
+
+    <h2>Welcome to RaccoonBlog!</h2>
+
+    <p>RaccoonBlog is an official sample application for <a href="http://ravendb.net">RavenDB</a>, and as such it demonstrates best practices for using RavenDB.
+    RaccoonBlog is production ready, and is already driving real-world blogs like <a href="http://ayende.com">Ayende.com</a> and the <a href="http://blogs.hibernatingrhinos.com">Hibernating Rhinos blog</a>.</p>
+
+    <p>Going through the sources, you can learn how to use RavenDB, and about various features it offers.</p>
+
+    <p>Starting your own blog using this software is easy, just review the blog configuration below, submit it when you are done, and your blog will be ready.</p>
+    
+    @using (Html.BeginForm(new{controller = "Welcome",action = "CreateBlog"}))
+    {
+        @Html.ValidationSummary(true)
+        <fieldset>
+            <legend>BlogConfig</legend>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Title)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Title)
+                @Html.ValidationMessageFor(model => model.Title)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Subtitle)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Subtitle)
+                @Html.ValidationMessageFor(model => model.Subtitle)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.CustomCss)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.CustomCss)
+                @Html.ValidationMessageFor(model => model.CustomCss)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Copyright)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Copyright)
+                @Html.ValidationMessageFor(model => model.Copyright)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.AkismetKey)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.AkismetKey)
+                @Html.ValidationMessageFor(model => model.AkismetKey)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.GoogleAnalyticsKey)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.GoogleAnalyticsKey)
+                @Html.ValidationMessageFor(model => model.GoogleAnalyticsKey)
+            </div>
+        
+            <div class="editor-label">
+                @Html.LabelFor(model => model.MetaDescription)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.MetaDescription)
+                @Html.ValidationMessageFor(model => model.MetaDescription)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.MetaKeywords)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.MetaKeywords)
+                @Html.ValidationMessageFor(model => model.MetaKeywords)
+            </div>
+        
+            <p>
+                <input type="submit" value="Setup my blog" />
+            </p>
+        </fieldset>
+    }
+</body>
+</html>

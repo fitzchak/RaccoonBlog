@@ -88,9 +88,14 @@ namespace RaccoonBlog.Web.Infrastructure.Raven
             public Func<object, IDocumentSession> Get;
         }
 
+		public static void AssureIndexesCreated()
+		{
+			IndexCreation.CreateIndexes(typeof(Tags_Count).Assembly, DocumentStore);
+		}
+
     	public static void Initailize()
     	{
-			IndexCreation.CreateIndexes(typeof(Tags_Count).Assembly, DocumentStore);
+			AssureIndexesCreated();
 
 			//RavenProfilingHandler.SourcePath = @"C:\Work\ravendb\Raven.Client.MvcIntegration";
 

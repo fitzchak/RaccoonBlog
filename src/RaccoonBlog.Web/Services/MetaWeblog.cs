@@ -65,7 +65,11 @@ namespace RaccoonBlog.Web.Services
 				AllowComments = true,
             };
             session.Store(newPost);
-        	comments.PostId = newPost.Id;
+        	comments.Post = new PostComments.PostReference
+        	{
+        		Id = newPost.Id,
+        		PublishAt = publishDate
+        	};
 
             session.SaveChanges();
 
@@ -75,7 +79,9 @@ namespace RaccoonBlog.Web.Services
         bool IMetaWeblog.UpdatePost(string postid, string username, string password, Post post, bool publish)
         {
             var user = ValidateUser(username, password);
-            var postToEdit = session.Load<Models.Post>(postid);
+            var postToEdit = session
+				.Include<Models.Post>(x=>x.CommentsId)
+				.Load(postid);
             if (postToEdit == null)
                 throw new XmlRpcFaultException(0, "Post does not exists");
 
@@ -98,6 +104,7 @@ namespace RaccoonBlog.Web.Services
             {
                 // schedule all the future posts up 
                 postToEdit.PublishAt = postScheduleringStrategy.Schedule(new DateTimeOffset(post.dateCreated.Value));
+            	session.Load<PostComments>(postToEdit.CommentsId).Post.PublishAt = postToEdit.PublishAt;
             }
             postToEdit.Tags = post.categories;
             postToEdit.Title = post.title;
@@ -145,7 +152,7 @@ namespace RaccoonBlog.Web.Services
                 description = x.Name,
                 title = x.Name,
                 htmlUrl = Url.Action("Tag", "Post", new { slug = x.Name }),
-                rssUrl = Url.Action("Tag", "Syndication", new { x.Name }),
+                rssUrl = Url.Action("Rss", "Syndication", new { tag = x.Name }),
             }).ToArray();
         }
 

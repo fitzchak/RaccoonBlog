@@ -59,10 +59,13 @@ namespace RaccoonBlog.Web.Models
 			}
 		}
 
-		public bool IsPublicPost(Guid key)
-		{
-			if (PublishAt <= DateTimeOffset.Now && IsDeleted == false)
-				return true;
+        public bool IsPublicPost(Guid key)
+        {
+			if (IsDeleted)
+				return false;
+
+            if (PublishAt <= DateTimeOffset.Now)
+                return true;
 
 			return key != Guid.Empty && key == ShowPostEvenIfPrivate;
 		}

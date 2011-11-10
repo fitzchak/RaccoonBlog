@@ -8,7 +8,6 @@ using RaccoonBlog.Web.Infrastructure.Commands;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
-using Raven.Client.Linq;
 using System.Web.Mvc;
 using System.Web;
 
@@ -16,7 +15,6 @@ namespace RaccoonBlog.Web.Controllers
 {
     public class PostDetailsController : AbstractController
     {
-        public const string CommenterCookieName = "commenter";
 
 		public ActionResult Details(int id, string slug, Guid key)
         {
@@ -45,6 +43,8 @@ namespace RaccoonBlog.Web.Controllers
 
 			vm.Post.Author = Session.Load<User>(post.AuthorId).MapTo<PostViewModel.UserDetails>();
 
+			vm.Post.Key = key; // Save the key too, to allow operations on privately accessible posts too. Redirection (below) isn't of concern.
+
         	if (vm.Post.Slug != slug)
 				return RedirectToActionPermanent("Details", new { id, vm.Post.Slug });
 
@@ -71,7 +71,7 @@ namespace RaccoonBlog.Web.Controllers
 			var commenter = Session.GetCommenter(input.CommenterKey);
 			if (commenter == null)
 			{
-				input.CommenterKey = Guid.NewGuid().MapTo<string>();
+				input.CommenterKey = Guid.NewGuid();
 			}
 			
     		ValidateCommentsAllowed(post, comments);
@@ -82,7 +82,7 @@ namespace RaccoonBlog.Web.Controllers
 
 			CommandExecutor.ExcuteLater(new AddCommentCommand(input, Request.MapTo<RequestValues>(), id));
 
-			SetCommenterCookie(input);
+			CommenterUtil.SetCommenterCookie(Response, input.CommenterKey.MapTo<string>());
 
     		return PostingCommentSucceeded(post);
         }
@@ -96,13 +96,6 @@ namespace RaccoonBlog.Web.Controllers
     		TempData["message"] = successMessage;
     		var postReference = post.MapTo<PostReference>();
     		return RedirectToAction("Details", new { Id = postReference.DomainId, postReference.Slug });
-    	}
-
-		private void SetCommenterCookie(CommentInput commentInput)
-    	{
-			var cookie = new HttpCookie(CommenterCookieName, commentInput.CommenterKey)
-    		{Expires = DateTime.Now.AddYears(1)};
-    		Response.Cookies.Add(cookie);
     	}
 
     	private void ValidateCommentsAllowed(Post post, PostComments comments)
@@ -150,19 +143,24 @@ namespace RaccoonBlog.Web.Controllers
 				var user = Session.GetCurrentUser();
 				vm.Input = user.MapTo<CommentInput>();
 				vm.IsTrustedCommenter = true;
+				vm.IsLoggedInCommenter = true;
 				return;
 			}
 
-			var cookie = Request.Cookies[CommenterCookieName];
-			if (cookie == null)
-				return;
+			var cookie = Request.Cookies[CommenterUtil.CommenterCookieName];
+    		if (cookie == null) return;
 
 			var commenter = Session.GetCommenter(cookie.Value);
 			if (commenter == null)
-				return;
+			{
+				vm.IsLoggedInCommenter = false;
+    			Response.Cookies.Set(new HttpCookie(CommenterUtil.CommenterCookieName) { Expires = DateTime.Now.AddYears(-1) });
+    			return;
+    		}
 
-			vm.Input = commenter.MapTo<CommentInput>();
-			vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
+    		vm.IsLoggedInCommenter = string.IsNullOrWhiteSpace(commenter.OpenId) == false;
+    		vm.Input = commenter.MapTo<CommentInput>();
+    		vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
 		}
     }
 }

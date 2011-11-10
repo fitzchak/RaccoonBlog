@@ -110,13 +110,16 @@ namespace RaccoonBlog.Web.Controllers
         [AjaxOnly]
         public ActionResult SetPostDate(int id, long date)
         {
-            var post = Session.Load<Post>(id);
+            var post = Session
+				.Include<Post>(x=>x.CommentsId)
+				.Load(id);
             if (post == null)
                 return Json(new {success = false});
 
             post.PublishAt = post.PublishAt.WithDate(DateTimeOffsetUtil.ConvertFromJsTimestamp(date));
-
-            return Json(new { success = true });
+        	Session.Load<PostComments>(post.CommentsId).Post.PublishAt = post.PublishAt;
+			
+        	return Json(new { success = true });
         }
         
         [HttpPost]

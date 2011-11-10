@@ -6,6 +6,7 @@ using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
+using RaccoonBlog.Web.Helpers;
 
 namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 {
@@ -31,6 +32,7 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
                 ;
 
             Mapper.CreateMap<Post, PostReference>()
+				.ForMember(x => x.Title, o => o.MapFrom(m => HttpUtility.HtmlDecode(m.Title)))
                 .ForMember(x => x.Slug, o => o.Ignore())
                 ;
             
@@ -43,14 +45,22 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 				.ForMember(x => x.Id, o => o.Ignore())
 				.ForMember(x => x.IsTrustedCommenter, o => o.Ignore())
 				.ForMember(x => x.Key, o => o.Ignore())
+				.ForMember(x => x.OpenId, o => o.Ignore())
 				;
 
             Mapper.CreateMap<User, CommentInput>()
                 .ForMember(x => x.Name, o => o.MapFrom(m => m.FullName))
-                .ForMember(x => x.Url, o => o.MapFrom(m => ConfigurationManager.AppSettings["MainUrl"] + UrlHelper.RouteUrl("Default")))
+				.ForMember(x => x.Url, o => o.MapFrom(m => UrlHelper.RelativeToAbsolute(UrlHelper.RouteUrl("Default"))))
                 .ForMember(x => x.Body, o => o.Ignore())
                 .ForMember(x => x.CommenterKey, o => o.Ignore())
                 ;
+
+			//Mapper.CreateMap<UserProfile, CommentInput>()
+			//    .ForMember(x => x.Name, o => o.MapFrom(m => m.FirstName + " " + m.LastName))
+			//    .ForMember(x => x.Url, o => o.MapFrom(m => m.ProfileURL))
+			//    .ForMember(x => x.Body, o => o.Ignore())
+			//    .ForMember(x => x.CommenterKey, o => o.Ignore())
+			//    ;
 
             Mapper.CreateMap<HttpRequestWrapper, RequestValues>();
 

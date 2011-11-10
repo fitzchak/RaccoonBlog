@@ -35,7 +35,7 @@ namespace RaccoonBlog.ImportFromSubtext
 			{
 				var config = BlogConfig.New();
 				config.Id = "Blog/Config";
-				config.CustomCss = "ayende";
+				config.CustomCss = "hibernatingrhinos";
 				config.Subtitle = "Unnatural acts on source code";
 				config.Title = "Ayende @ Rahien";
 				config.Copyright = "Ayende Rahien";
@@ -181,7 +181,11 @@ namespace RaccoonBlog.ImportFromSubtext
                         ravenPost.CommentsId = commentsCollection.Id;
 
                         s.Store(ravenPost);
-                    	commentsCollection.PostId = ravenPost.Id;
+                    	commentsCollection.Post = new PostComments.PostReference
+                    	{
+                    		Id = ravenPost.Id,
+							PublishAt = ravenPost.PublishAt
+                    	};
 
                         s.SaveChanges();
                     }

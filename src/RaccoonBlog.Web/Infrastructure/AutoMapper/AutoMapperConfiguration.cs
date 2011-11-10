@@ -28,7 +28,7 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper
 			Mapper.AddProfile(new SectionAdminMapperProfile());
 
 			Mapper.AddProfile(new BlogConfigMapperProfile());
-			Mapper.AddProfile(new SyndicationMapperProfile());
+			Mapper.AddProfile(new BlogConfigAdminViewModelMapperProfile());
 		}
 	}
 }

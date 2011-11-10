@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
+using Raven.Client.Linq;
 using Raven.Client;
 
 namespace RaccoonBlog.Web.Services
@@ -42,7 +43,7 @@ namespace RaccoonBlog.Web.Services
 
 		public DateTimeOffset Schedule(DateTimeOffset requestedDate)
 		{
-			var postsQuery = from p in session.Query<Post>()
+			var postsQuery = from p in session.Query<Post>().Include(x=>x.CommentsId)
 	                         where p.PublishAt > requestedDate && p.SkipAutoReschedule == false && p.PublishAt > now
 	                         orderby p.PublishAt
 	                         select p;
@@ -50,12 +51,14 @@ namespace RaccoonBlog.Web.Services
 	    	var nextPostDate = requestedDate;
 	        foreach (var post in postsQuery)
 	        {
-				post.PublishAt
-					= nextPostDate 
+				nextPostDate 
 					= nextPostDate
 						.AddDays(1)
 						.SkipToNextWorkDay()
 						.AtTime(post.PublishAt);
+
+				post.PublishAt = nextPostDate;
+				session.Load<PostComments>(post.CommentsId).Post.PublishAt = nextPostDate;
 	        }
 
 	    	return requestedDate;
