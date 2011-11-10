@@ -19,12 +19,10 @@ namespace RaccoonBlog.Web.Services
     public class MetaWeblog : XmlRpcService, IMetaWeblog
     {
         private readonly IDocumentSession session;
-    	readonly PostSchedulingStrategy postScheduleringStrategy;
 
         public MetaWeblog()
         {
             session = MvcApplication.DocumentStore.OpenSession();
-            postScheduleringStrategy = new PostSchedulingStrategy(session, DateTimeOffset.Now);
         }
 
         private UrlHelper Url
@@ -44,6 +42,7 @@ namespace RaccoonBlog.Web.Services
             };
             session.Store(comments);
 
+			var postScheduleringStrategy = new PostSchedulingStrategy(session, DateTimeOffset.Now);
             var publishDate = post.dateCreated == null
                                 ? postScheduleringStrategy.Schedule()
                                 : postScheduleringStrategy.Schedule(new DateTimeOffset(post.dateCreated.Value));
@@ -100,6 +99,7 @@ namespace RaccoonBlog.Web.Services
                 )
             {
                 // schedule all the future posts up 
+				var postScheduleringStrategy = new PostSchedulingStrategy(session, DateTimeOffset.Now);
                 postToEdit.PublishAt = postScheduleringStrategy.Schedule(new DateTimeOffset(post.dateCreated.Value));
             	session.Load<PostComments>(postToEdit.CommentsId).Post.PublishAt = postToEdit.PublishAt;
             }
