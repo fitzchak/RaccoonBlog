@@ -6,7 +6,7 @@ using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
-	public class ConfigurationController : AdminController
+	public class SettingsController : AdminController
 	{
 		[HttpGet]
 		public ActionResult Index()
@@ -28,7 +28,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			var config = input.MapPropertiesToInstance(BlogConfig);
 			RavenSession.Store(config);
 
-			ViewBag.Message = "Configuration successfully saved!";
+			ViewBag.Message = "Configurations successfully saved!";
 			if (Request.IsAjaxRequest())
 				return Json(new { Success = true, ViewBag.Message });
 			return View(config.MapTo<BlogConfigurationInput>());

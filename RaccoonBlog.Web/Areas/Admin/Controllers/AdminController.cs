@@ -30,7 +30,9 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			       				Title = "Dashboard",
 			       				SubMenus = new List<AdminMenu>
 			       				           	{
-			       				           	}
+			       				           	},
+								Url = Url.Action("Index", "Home"),
+								
 			       			},
 			       		new AdminMenu
 			       			{
@@ -58,6 +60,15 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			       				           	{
 			       				           		new AdminMenu {Title = "All users", Url = Url.Action("List", "Users")},
 			       				           		new AdminMenu {Title = "Add a new user", Url = Url.Action("Add", "Users")}
+			       				           	}
+			       			},
+						new AdminMenu
+			       			{
+			       				Title = "Tools",
+			       				SubMenus = new List<AdminMenu>
+			       				           	{
+			       				           		new AdminMenu {Title = "Elmah", Url = Url.Action("Index", "Elmah")},
+												new AdminMenu {Title = "Settings", Url = Url.Action("Index", "Settings")},
 			       				           	}
 			       			},
 			       	};

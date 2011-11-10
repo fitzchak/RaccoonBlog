@@ -117,7 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Controllers\ConfigurationController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SettingsController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Areas\Admin\Models\AdminMenu.cs" />
@@ -500,7 +500,7 @@
     <Content Include="Views\MailTemplates\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Admin\Views\Configuration\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Settings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Section\RecentComments.cshtml" />
@@ -566,6 +566,8 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>23167</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
