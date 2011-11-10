@@ -46,8 +46,8 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			       				Title = "Sections",
 			       				SubMenus = new List<AdminMenu>
 			       				           	{
-			       				           		new AdminMenu {Title = "Sections list", Url = Url.Action("List", "Section")},
-			       				           		new AdminMenu {Title = "Add a new section", Url = Url.Action("Add", "Section")}
+			       				           		new AdminMenu {Title = "Sections list", Url = Url.Action("List", "Sections")},
+			       				           		new AdminMenu {Title = "Add a new section", Url = Url.Action("Add", "Sections")}
 			       				           	}
 			       			},
 			       		new AdminMenu
