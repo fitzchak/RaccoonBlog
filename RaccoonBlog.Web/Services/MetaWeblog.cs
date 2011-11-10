@@ -10,7 +10,6 @@ using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Infrastructure.Indexes;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.Services.RssModels;
-using Raven.Client;
 using System.Linq;
 using Post = RaccoonBlog.Web.Services.RssModels.Post;
 
@@ -18,13 +17,6 @@ namespace RaccoonBlog.Web.Services
 {
     public class MetaWeblog : XmlRpcService, IMetaWeblog
     {
-        private readonly IDocumentSession session;
-
-        public MetaWeblog()
-        {
-            session = MvcApplication.DocumentStore.OpenSession();
-        }
-
         private UrlHelper Url
         {
             get { return new UrlHelper(new RequestContext(new HttpContextWrapper(Context), new RouteData())); }
@@ -34,101 +26,112 @@ namespace RaccoonBlog.Web.Services
 
         string IMetaWeblog.AddPost(string blogid, string username, string password, Post post, bool publish)
         {
-            var user = ValidateUser(username, password);
-            var comments = new PostComments
-            {
-            	Comments = new List<PostComments.Comment>(),
-				Spam = new List<PostComments.Comment>()
-            };
-            session.Store(comments);
+        	Models.Post newPost;
+			using (var session = MvcApplication.DocumentStore.OpenSession())
+			{
+				var user = ValidateUser(username, password);
+				var comments = new PostComments
+				               	{
+				               		Comments = new List<PostComments.Comment>(),
+				               		Spam = new List<PostComments.Comment>()
+				               	};
+				session.Store(comments);
 
-			var postScheduleringStrategy = new PostSchedulingStrategy(session, DateTimeOffset.Now);
-            var publishDate = post.dateCreated == null
-                                ? postScheduleringStrategy.Schedule()
-                                : postScheduleringStrategy.Schedule(new DateTimeOffset(post.dateCreated.Value));
+				var postScheduleringStrategy = new PostSchedulingStrategy(session, DateTimeOffset.Now);
+				var publishDate = post.dateCreated == null
+				                  	? postScheduleringStrategy.Schedule()
+				                  	: postScheduleringStrategy.Schedule(new DateTimeOffset(post.dateCreated.Value));
 
-            var newPost = new Models.Post
-            {
-                AuthorId = user.Id,
-                Body = post.description,
-                CommentsId = comments.Id,
-                CreatedAt = DateTimeOffset.Now,
-                SkipAutoReschedule = post.dateCreated != null,
-                PublishAt = publishDate,
-                Tags = post.categories,
-                Title = post.title,
-                CommentsCount = 0,
-				AllowComments = true,
-            };
-            session.Store(newPost);
-        	comments.Post = new PostComments.PostReference
-        	{
-        		Id = newPost.Id,
-        		PublishAt = publishDate
-        	};
+				newPost = new Models.Post
+				              	{
+				              		AuthorId = user.Id,
+				              		Body = post.description,
+				              		CommentsId = comments.Id,
+				              		CreatedAt = DateTimeOffset.Now,
+				              		SkipAutoReschedule = post.dateCreated != null,
+				              		PublishAt = publishDate,
+				              		Tags = post.categories,
+				              		Title = post.title,
+				              		CommentsCount = 0,
+				              		AllowComments = true,
+				              	};
+				session.Store(newPost);
+				comments.Post = new PostComments.PostReference
+				                	{
+				                		Id = newPost.Id,
+				                		PublishAt = publishDate
+				                	};
 
-            session.SaveChanges();
+				session.SaveChanges();
+			}
 
-            return newPost.Id;
+        	return newPost.Id;
         }
 
         bool IMetaWeblog.UpdatePost(string postid, string username, string password, Post post, bool publish)
         {
-            var user = ValidateUser(username, password);
-            var postToEdit = session
-				.Include<Models.Post>(x=>x.CommentsId)
-				.Load(postid);
-            if (postToEdit == null)
-                throw new XmlRpcFaultException(0, "Post does not exists");
+			using (var session = MvcApplication.DocumentStore.OpenSession())
+			{
+				var user = ValidateUser(username, password);
+				var postToEdit = session
+					.Include<Models.Post>(x => x.CommentsId)
+					.Load(postid);
+				if (postToEdit == null)
+					throw new XmlRpcFaultException(0, "Post does not exists");
 
-            if (string.IsNullOrEmpty(postToEdit.AuthorId))
-                postToEdit.AuthorId = user.Id;
-            else
-            {
-                postToEdit.LastEditedByUserId = user.Id;
-                postToEdit.LastEditedAt = DateTimeOffset.Now;
-            }
+				if (string.IsNullOrEmpty(postToEdit.AuthorId))
+					postToEdit.AuthorId = user.Id;
+				else
+				{
+					postToEdit.LastEditedByUserId = user.Id;
+					postToEdit.LastEditedAt = DateTimeOffset.Now;
+				}
 
-            postToEdit.Body = post.description;
-            if (
-                // don't bother moving things if we are already talking about something that is fixed
-                postToEdit.SkipAutoReschedule &&
-                // if we haven't modified it, or if we modified to the same value, we can ignore this
-                post.dateCreated != null &&
-                post.dateCreated.Value != postToEdit.PublishAt.DateTime
-                )
-            {
-                // schedule all the future posts up 
-				var postScheduleringStrategy = new PostSchedulingStrategy(session, DateTimeOffset.Now);
-                postToEdit.PublishAt = postScheduleringStrategy.Schedule(new DateTimeOffset(post.dateCreated.Value));
-            	session.Load<PostComments>(postToEdit.CommentsId).Post.PublishAt = postToEdit.PublishAt;
-            }
-            postToEdit.Tags = post.categories;
-            postToEdit.Title = post.title;
+				postToEdit.Body = post.description;
+				if (
+					// don't bother moving things if we are already talking about something that is fixed
+					postToEdit.SkipAutoReschedule &&
+					// if we haven't modified it, or if we modified to the same value, we can ignore this
+					post.dateCreated != null &&
+					post.dateCreated.Value != postToEdit.PublishAt.DateTime
+					)
+				{
+					// schedule all the future posts up 
+					var postScheduleringStrategy = new PostSchedulingStrategy(session, DateTimeOffset.Now);
+					postToEdit.PublishAt = postScheduleringStrategy.Schedule(new DateTimeOffset(post.dateCreated.Value));
+					session.Load<PostComments>(postToEdit.CommentsId).Post.PublishAt = postToEdit.PublishAt;
+				}
+				postToEdit.Tags = post.categories;
+				postToEdit.Title = post.title;
 
-            session.SaveChanges();
+				session.SaveChanges();
+			}
 
-            return true;
+        	return true;
         }
 
         Post IMetaWeblog.GetPost(string postid, string username, string password)
         {
             ValidateUser(username, password);
-            var thePost = session.Load<Models.Post>(postid);
-            if (thePost.IsDeleted)
-            {
-                throw new InvalidOperationException("You cannot get deleted post");
-            }
 
-            return new Post
-            {
-                wp_slug = SlugConverter.TitleToSlug(thePost.Title),
-                description = thePost.Body,
-                dateCreated = thePost.PublishAt.DateTime,
-                categories = thePost.Tags.ToArray(),
-                title = thePost.Title,
-                postid = thePost.Id,
-            };
+			using (var session = MvcApplication.DocumentStore.OpenSession())
+			{
+				var thePost = session.Load<Models.Post>(postid);
+				if (thePost.IsDeleted)
+				{
+					throw new InvalidOperationException("You cannot get deleted post");
+				}
+
+				return new Post
+				       	{
+				       		wp_slug = SlugConverter.TitleToSlug(thePost.Title),
+				       		description = thePost.Body,
+				       		dateCreated = thePost.PublishAt.DateTime,
+				       		categories = thePost.Tags.ToArray(),
+				       		title = thePost.Title,
+				       		postid = thePost.Id,
+				       	};
+			}
         }
 
         CategoryInfo[] IMetaWeblog.GetCategories(string blogid, string username, string password)
@@ -139,18 +142,21 @@ namespace RaccoonBlog.Web.Services
                                                    1, 0, 0, 0,
                                                    DateTimeOffset.Now.Offset);
 
-			var categoryInfos = session.Query<Tags_Count.ReduceResult, Tags_Count>()
-                .Where(x => x.LastSeenAt > mostRecentTag)
-                .ToList();
+			using (var session = MvcApplication.DocumentStore.OpenSession())
+			{
+				var categoryInfos = session.Query<Tags_Count.ReduceResult, Tags_Count>()
+					.Where(x => x.LastSeenAt > mostRecentTag)
+					.ToList();
 
-            return categoryInfos.Select(x => new CategoryInfo
-            {
-                categoryid = x.Name,
-                description = x.Name,
-                title = x.Name,
-                htmlUrl = Url.Action("Tag", "Post", new { slug = x.Name }),
-                rssUrl = Url.Action("Rss", "Syndication", new { tag = x.Name }),
-            }).ToArray();
+				return categoryInfos.Select(x => new CategoryInfo
+				                                 	{
+				                                 		categoryid = x.Name,
+				                                 		description = x.Name,
+				                                 		title = x.Name,
+				                                 		htmlUrl = Url.Action("Tag", "Post", new {slug = x.Name}),
+				                                 		rssUrl = Url.Action("Rss", "Syndication", new {tag = x.Name}),
+				                                 	}).ToArray();
+			}
         }
 
         Post[] IMetaWeblog.GetRecentPosts(string blogid, string username, string password,
@@ -158,23 +164,25 @@ namespace RaccoonBlog.Web.Services
         {
             ValidateUser(username, password);
 
-            var list = session.Query<Models.Post>()
-                .Where(p=> p.IsDeleted == false)
-                .OrderByDescending(x => x.PublishAt)
-                .Take(numberOfPosts)
-                .ToList();
+			using (var session = MvcApplication.DocumentStore.OpenSession())
+			{
+				var list = session.Query<Models.Post>()
+					.Where(p => p.IsDeleted == false)
+					.OrderByDescending(x => x.PublishAt)
+					.Take(numberOfPosts)
+					.ToList();
 
-            return list.Select(thePost => new Post
-            {
-                wp_slug = SlugConverter.TitleToSlug(thePost.Title),
-                description = thePost.Body,
-                dateCreated = thePost.PublishAt.DateTime,
-                categories = thePost.Tags.ToArray(),
-                title = thePost.Title,
-                postid = thePost.Id,
-            }).ToArray();
+				return list.Select(thePost => new Post
+				                              	{
+				                              		wp_slug = SlugConverter.TitleToSlug(thePost.Title),
+				                              		description = thePost.Body,
+				                              		dateCreated = thePost.PublishAt.DateTime,
+				                              		categories = thePost.Tags.ToArray(),
+				                              		title = thePost.Title,
+				                              		postid = thePost.Id,
+				                              	}).ToArray();
+			}
         }
-
 
 
         MediaObjectInfo IMetaWeblog.NewMediaObject(string blogid, string username, string password,
@@ -206,16 +214,20 @@ namespace RaccoonBlog.Web.Services
     	bool IMetaWeblog.DeletePost(string key, string postid, string username, string password, bool publish)
         {
             ValidateUser(username, password);
-            var thePost = session.Load<Models.Post>(postid);
 
-            if (thePost != null)
-            {
-                thePost.IsDeleted = true;
-            }
+			using (var session = MvcApplication.DocumentStore.OpenSession())
+			{
+				var thePost = session.Load<Models.Post>(postid);
 
-            session.SaveChanges();
+				if (thePost != null)
+				{
+					thePost.IsDeleted = true;
+				}
 
-            return true;
+				session.SaveChanges();
+			}
+
+    		return true;
         }
 
         BlogInfo[] IMetaWeblog.GetUsersBlogs(string key, string username, string password)
@@ -251,8 +263,13 @@ namespace RaccoonBlog.Web.Services
 
         private User ValidateUser(string username, string password)
         {
-            var user = session.GetUserByEmail(username);
-            if (user == null || user.ValidatePassword(password) == false)
+        	User user;
+			using (var session = MvcApplication.DocumentStore.OpenSession())
+			{
+				user = session.GetUserByEmail(username);
+			}
+
+        	if (user == null || user.ValidatePassword(password) == false)
                 throw new XmlRpcFaultException(0, "User is not valid!");
             if (user.Enabled == false)
                 throw new XmlRpcFaultException(0, "User is not enabled!");
