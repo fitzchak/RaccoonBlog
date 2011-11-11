@@ -23,8 +23,7 @@ namespace RaccoonBlog.Web.Models
 		public string Title { get; set; }
 		public string LegacySlug { get; set; }
 
-		[JsonProperty(PropertyName = "Body")]
-		public string Content { get; set; }
+		public string Body { get; set; }
 		public DynamicContentType ContentType { get; set; }
 		public ICollection<string> Tags { get; set; }
 

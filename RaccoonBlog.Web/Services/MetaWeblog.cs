@@ -46,7 +46,7 @@ namespace RaccoonBlog.Web.Services
 				newPost = new Models.Post
 				              	{
 				              		AuthorId = user.Id,
-				              		Content = post.description,
+				              		Body = post.description,
 				              		CommentsId = comments.Id,
 				              		CreatedAt = DateTimeOffset.Now,
 				              		SkipAutoReschedule = post.dateCreated != null,
@@ -88,7 +88,7 @@ namespace RaccoonBlog.Web.Services
 					postToEdit.LastEditedAt = DateTimeOffset.Now;
 				}
 
-				postToEdit.Content = post.description;
+				postToEdit.Body = post.description;
 				if (
 					// don't bother moving things if we are already talking about something that is fixed
 					postToEdit.SkipAutoReschedule &&

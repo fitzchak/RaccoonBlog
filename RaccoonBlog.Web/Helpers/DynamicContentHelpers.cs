@@ -29,12 +29,12 @@ namespace RaccoonBlog.Web.Helpers
 						NewWindowForExternalLinks = true,
 					};
 
-					var contents = contentItem.Content;
+					var contents = contentItem.Body;
 					contents = CodeBlockFinder.Replace(contents, match => GenerateCodeBlock(match.Groups[1].Value.Trim(), match.Groups[2].Value));
 					contents = md.Transform(contents);
 					return MvcHtmlString.Create(contents);
 				case DynamicContentType.Html:
-					return trustContent ? MvcHtmlString.Create(contentItem.Content) : MvcHtmlString.Empty;
+					return trustContent ? MvcHtmlString.Create(contentItem.Body) : MvcHtmlString.Empty;
 			}
 			return MvcHtmlString.Empty;
 		}

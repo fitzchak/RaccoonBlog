@@ -10,7 +10,7 @@
 
 	public interface IDynamicContent
 	{
-		string Content { get; set; }
+		string Body { get; set; }
 		DynamicContentType ContentType { get; set; }
 	}
 

@@ -62,7 +62,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 							LastEditedAt = DateTimeOffset.Now,
 							CommentsId = comments.Id,
 							ContentType = input.ContentType,
-							Content = input.Body,
+							Body = input.Body,
 							CreatedAt = DateTimeOffset.Now,
 							Title = input.Title,
 			           	};
