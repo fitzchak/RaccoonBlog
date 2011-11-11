@@ -7,6 +7,7 @@ using RaccoonBlog.Web.Controllers;
 using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Helpers.Attributes;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
+using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.Services;
@@ -39,15 +40,8 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			if (!ModelState.IsValid)
 				return View("Edit", input);
 
-			// Create new post object
-			var post = new Post();
-			input.MapPropertiesToInstance(post);
-
-			if (post.PublishAt == DateTimeOffset.MinValue)
-			{
-				var postScheduleringStrategy = new PostSchedulingStrategy(RavenSession, DateTimeOffset.Now);
-				post.PublishAt = postScheduleringStrategy.Schedule();
-			}
+			// Be able to record the user making the actual post
+			var user = RavenSession.GetCurrentUser();
 
 			// Create the post comments object and link between it and the post
 			var comments = new PostComments
@@ -56,13 +50,28 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 				Spam = new List<PostComments.Comment>()
 			};
 			RavenSession.Store(comments);
-			post.CommentsId = comments.Id;
 
-			// Record the user making the actual post
-			var user = RavenSession.GetCurrentUser();
-			post.AuthorId = user.Id;
-			post.LastEditedByUserId = user.Id;
-			post.LastEditedAt = DateTimeOffset.Now;
+			// Create new post object
+			var post = new Post
+			           	{
+			           		Tags = TagsResolver.ResolveTagsInput(input.Tags),
+							PublishAt = input.PublishAt,
+							AllowComments = input.AllowComments,
+							AuthorId = user.Id,
+							LastEditedByUserId = user.Id,
+							LastEditedAt = DateTimeOffset.Now,
+							CommentsId = comments.Id,
+							ContentType = input.ContentType,
+							Content = input.Body,
+							CreatedAt = DateTimeOffset.Now,
+							Title = input.Title,
+			           	};
+
+			if (post.PublishAt == DateTimeOffset.MinValue)
+			{
+				var postScheduleringStrategy = new PostSchedulingStrategy(RavenSession, DateTimeOffset.Now);
+				post.PublishAt = postScheduleringStrategy.Schedule();
+			}
 
 			// Actually save the post now
 			RavenSession.Store(post);

@@ -70,7 +70,6 @@
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\Html5Helpers.cs" />
     <Compile Include="Extensions\RavenHelpers.cs" />
-    <Compile Include="Extensions\RecaptchaValidatorWrapper.cs" />
     <Compile Include="Extensions\TimeSpanExtenstions.cs" />
     <Compile Include="Extensions\XmlResult.cs" />
     <Compile Include="Models\AccountModels.cs" />

@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using HibernatingRhinos.Loci.Common.Models;
 
 namespace RaccoonBlog.Web.ViewModels
 {
@@ -18,6 +19,10 @@ namespace RaccoonBlog.Web.ViewModels
         [Display(Name = "Body")]
         [DataType(DataType.MultilineText)]
         public string Body { get; set; }
+
+		[Required]
+		[Display(Name = "Content type")]
+		public DynamicContentType ContentType { get; set; }
 
         [Display(Name = "Created At")]
         [DataType(DataType.DateTime)]

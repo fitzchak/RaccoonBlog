@@ -5,18 +5,27 @@
 // //-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using HibernatingRhinos.Loci.Common.Models;
+using Newtonsoft.Json;
 using RaccoonBlog.Web.Infrastructure.Common;
 
 namespace RaccoonBlog.Web.Models
 {
-	public class Post
+	public class Post : IDynamicContent
 	{
+		public Post()
+		{
+			ContentType = DynamicContentType.Html;
+		}
+
 		public string Id { get; set; }
 
 		public string Title { get; set; }
 		public string LegacySlug { get; set; }
 
-		public string Body { get; set; }
+		[JsonProperty(PropertyName = "Body")]
+		public string Content { get; set; }
+		public DynamicContentType ContentType { get; set; }
 		public ICollection<string> Tags { get; set; }
 
 		public string AuthorId { get; set; }
@@ -43,7 +52,6 @@ namespace RaccoonBlog.Web.Models
 		}
 
 		public int CommentsCount { get; set; }
-
 		public string CommentsId { get; set; }
 
 		public IEnumerable<string> TagsAsSlugs

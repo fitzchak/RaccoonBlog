@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using CookComputing.XmlRpc;
+using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Infrastructure.Indexes;
 using RaccoonBlog.Web.Models;
@@ -45,7 +46,7 @@ namespace RaccoonBlog.Web.Services
 				newPost = new Models.Post
 				              	{
 				              		AuthorId = user.Id,
-				              		Body = post.description,
+				              		Content = post.description,
 				              		CommentsId = comments.Id,
 				              		CreatedAt = DateTimeOffset.Now,
 				              		SkipAutoReschedule = post.dateCreated != null,
@@ -87,7 +88,7 @@ namespace RaccoonBlog.Web.Services
 					postToEdit.LastEditedAt = DateTimeOffset.Now;
 				}
 
-				postToEdit.Body = post.description;
+				postToEdit.Content = post.description;
 				if (
 					// don't bother moving things if we are already talking about something that is fixed
 					postToEdit.SkipAutoReschedule &&
@@ -125,7 +126,7 @@ namespace RaccoonBlog.Web.Services
 				return new Post
 				       	{
 				       		wp_slug = SlugConverter.TitleToSlug(thePost.Title),
-				       		description = thePost.Body,
+				       		description = thePost.CompiledContent().ToString(),
 				       		dateCreated = thePost.PublishAt.DateTime,
 				       		categories = thePost.Tags.ToArray(),
 				       		title = thePost.Title,
@@ -175,7 +176,7 @@ namespace RaccoonBlog.Web.Services
 				return list.Select(thePost => new Post
 				                              	{
 				                              		wp_slug = SlugConverter.TitleToSlug(thePost.Title),
-				                              		description = thePost.Body,
+				                              		description = thePost.CompiledContent().ToString(),
 				                              		dateCreated = thePost.PublishAt.DateTime,
 				                              		categories = thePost.Tags.ToArray(),
 				                              		title = thePost.Title,
