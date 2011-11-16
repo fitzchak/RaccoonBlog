@@ -13,5 +13,5 @@
 	<a href="@Url.RelativeToAbsolute(Url.Action("Details", "PostDetails", new { id = Model.PostId, slug = Model.PostSlug, key = Model.Key }))#comment@(Model.Id)">View Comment</a>
 </p>
 <p>
-	<a href="@Url.RelativeToAbsolute(Url.Action("Details", "PostAdmin", new { id = Model.PostId, slug = Model.PostSlug }))#comment@(Model.Id)">View Comment In Admin Page</a>
+	<a href="@Url.RelativeToAbsolute(Url.Action("Details", "Posts", new { id = Model.PostId, slug = Model.PostSlug }))#comment@(Model.Id)">View Comment In Admin Page</a>
 </p>
