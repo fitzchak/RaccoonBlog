@@ -1,0 +1,30 @@
+﻿@model UserInput
+@{
+	ViewBag.H1 = Model.IsNewUser() ? "Create a New User" : "Edit User " + Model.FullName;
+	ViewBag.SubmitButtonText = Model.IsNewUser() ? "Create User" : "Update User";
+
+	ViewBag.Title = ViewBag.H1;
+}
+<article id="user-input">
+	<h1>@ViewBag.H1</h1>
+
+    @if (ViewData.ModelState.IsValid == false) { 
+        <div class="form-error">
+            @Html.ValidationSummary(true)
+        </div>
+    }
+
+@using (Html.BeginForm())
+{
+		@Html.EditorFor(x => x.FullName)
+		@Html.EditorFor(x => x.Email)
+		@Html.EditorFor(x => x.Enabled)
+
+		@Html.EditorFor(x => x.TwitterNick)
+		@Html.EditorFor(x => x.RelatedTwitterNick)
+		@Html.EditorFor(x => x.RelatedTwitterNickDesc)
+				  
+		@Html.EditorFor(x => x.Id)
+		<text><input type="submit" value="@ViewBag.SubmitButtonText"></text>
+}
+</article>

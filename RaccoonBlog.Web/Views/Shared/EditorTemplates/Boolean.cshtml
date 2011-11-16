@@ -1,0 +1,30 @@
+﻿@functions{
+    private List<SelectListItem> TriStateValues {
+        get {
+            return new List<SelectListItem> {
+                new SelectListItem { Text = "Not Set", Value = String.Empty, Selected = !Value.HasValue },
+                new SelectListItem { Text = "True", Value = "true", Selected = Value.HasValue && Value.Value },
+                new SelectListItem { Text = "False", Value = "false", Selected = Value.HasValue && !Value.Value },
+            };
+        }
+    }
+    private bool? Value {
+        get {
+            if (ViewData.Model == null) {
+                return null;
+            }
+            return Convert.ToBoolean(ViewData.Model, System.Globalization.CultureInfo.InvariantCulture);
+        }
+    }
+}
+<div class="form_item">
+    <label>
+        <span class="form_item_name">@ViewData.ModelMetadata.DisplayName</span>
+        @if (ViewData.ModelMetadata.IsNullableValueType) {
+            @Html.DropDownList(string.Empty, TriStateValues)
+        } else {
+            @Html.CheckBox(string.Empty, Value ?? false)
+        }
+        @Html.ValidationMessage(string.Empty)
+    </label>
+</div>

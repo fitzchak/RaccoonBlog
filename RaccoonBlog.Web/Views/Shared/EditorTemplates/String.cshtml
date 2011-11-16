@@ -1,0 +1,7 @@
+﻿<div class="form_item">
+    <label>
+        <span class="form_item_name">@ViewData.ModelMetadata.DisplayName</span>
+        @Html.TextBox(string.Empty, ViewData.TemplateInfo.FormattedModelValue)
+        @Html.ValidationMessage(string.Empty)
+    </label>
+</div>

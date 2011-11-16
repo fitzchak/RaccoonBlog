@@ -1,0 +1,580 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{58CCD7A4-503D-467D-8DC4-4D310BD42774}</ProjectGuid>
+    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RaccoonBlog.Web</RootNamespace>
+    <AssemblyName>RaccoonBlog.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExcludeApp_Data>true</ExcludeApp_Data>
+    <PublishDatabases>false</PublishDatabases>
+    <IncludeIisSettings>false</IncludeIisSettings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AsyncCtpLibrary, Version=1.0.4107.18181, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\RavenDB.1.0.499\lib\net40\AsyncCtpLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.1.1.0.118\lib\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="CookComputing.XmlRpcV2">
+      <HintPath>..\packages\xmlrpcnet.2.5.0\lib\net20\CookComputing.XmlRpcV2.dll</HintPath>
+    </Reference>
+    <Reference Include="dotless.Core">
+      <HintPath>..\packages\dotless.1.1.0\lib\dotless.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth, Version=3.4.7.11121, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetOpenAuth.3.4.7.11121\lib\DotNetOpenAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah, Version=1.2.13605.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\elmah.corelibrary.1.2\lib\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="Joel.Net.Akismet">
+      <HintPath>..\packages\Joel.Net.Akismet\Joel.Net.Akismet.dll</HintPath>
+    </Reference>
+    <Reference Include="MarkdownDeep">
+      <HintPath>..\packages\MarkdownDeep.Full.1.4\lib\.NetFramework 3.5\MarkdownDeep.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <HintPath>..\packages\RavenDB.1.0.499\lib\net40\Raven.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Client.Debug, Version=1.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <HintPath>..\packages\RavenDB.1.0.499\lib\net40\Raven.Client.Debug.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Client.Lightweight, Version=1.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <HintPath>..\packages\RavenDB.1.0.499\lib\net40\Raven.Client.Lightweight.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Client.MvcIntegration, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RavenDB.1.0.499\lib\net40\Raven.Client.MvcIntegration.dll</HintPath>
+    </Reference>
+    <Reference Include="RazorEngine">
+      <HintPath>..\packages\RazorEngine.2.1\lib\.NetFramework 4.0\RazorEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="Recaptcha, Version=1.0.5.0, Culture=neutral, PublicKeyToken=9afc4d65b28c38c2, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\recaptcha.1.0.5.0\lib\.NetFramework 4.0\Recaptcha.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\RazorEngine.2.1\lib\.NetFramework 4.0\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Helpers" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\SettingsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Helpers\HtmlHelperExtensions.cs" />
+    <Compile Include="Areas\Admin\Models\AdminMenu.cs" />
+    <Compile Include="Controllers\SocialLoginController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\WelcomeController.cs" />
+    <Compile Include="Helpers\Binders\GuidBinder.cs" />
+    <Compile Include="Helpers\DynamicContentHelpers.cs" />
+    <Compile Include="Helpers\StaticFileUrlHelperExtensions.cs" />
+    <Compile Include="Helpers\Validation\NonEmptyGuid.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\BlogConfigAdminViewModelMapperProfile.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\StringToGuidConverter.cs" />
+    <Compile Include="Infrastructure\Common\DocumentSessionExtensions.cs" />
+    <Content Include="Areas\Admin\Content\css\datePicker.css" />
+    <Content Include="Areas\Admin\Content\css\pro_dropline.css" />
+    <Content Include="Areas\Admin\Content\css\pro_dropline_ie.css" />
+    <Content Include="Areas\Admin\Content\css\screen.css" />
+    <Content Include="Areas\Admin\Content\images\forms\bg_related_act.gif" />
+    <Content Include="Areas\Admin\Content\images\forms\bubble_inner.gif" />
+    <Content Include="Areas\Admin\Content\images\forms\bubble_left.gif" />
+    <Content Include="Areas\Admin\Content\images\forms\bubble_right.gif" />
+    <Content Include="Areas\Admin\Content\images\forms\choose-file.gif" />
+    <Content Include="Areas\Admin\Content\images\forms\error_left.gif" />
+    <Content Include="Areas\Admin\Content\images\forms\error_right.gif" />
+    <Content Include="Areas\Admin\Content\images\forms\form_inp.gif" />
+    <Content Include="Areas\Admin\Content\images\forms\form_inp_error.gif" />
+    <Content Include="Areas\Admin\Content\images\forms\form_reset.gif" />
+    <Content Include="Areas\Admin\Content\images\forms\form_select.gif" />
+    <Content Include="Areas\Admin\Content\images\forms\form_select_small.gif" />
+    <Content Include="Areas\Admin\Content\images\forms\form_submit.gif" />
+    <Content Include="Areas\Admin\Content\images\forms\form_textarea.gif" />
+    <Content Include="Areas\Admin\Content\images\forms\header_related_act.gif" />
+    <Content Include="Areas\Admin\Content\images\forms\icon_calendar.jpg" />
+    <Content Include="Areas\Admin\Content\images\forms\icon_edit.gif" />
+    <Content Include="Areas\Admin\Content\images\forms\icon_list_arrow.gif" />
+    <Content Include="Areas\Admin\Content\images\forms\icon_minus.gif" />
+    <Content Include="Areas\Admin\Content\images\forms\icon_plus.gif" />
+    <Content Include="Areas\Admin\Content\images\forms\lines_dotted_short.gif" />
+    <Content Include="Areas\Admin\Content\images\forms\step_1.gif" />
+    <Content Include="Areas\Admin\Content\images\forms\step_dark_left.gif" />
+    <Content Include="Areas\Admin\Content\images\forms\step_dark_right.gif" />
+    <Content Include="Areas\Admin\Content\images\forms\step_dark_round.gif" />
+    <Content Include="Areas\Admin\Content\images\forms\step_light_left.gif" />
+    <Content Include="Areas\Admin\Content\images\forms\step_light_right.gif" />
+    <Content Include="Areas\Admin\Content\images\forms\step_light_round.gif" />
+    <Content Include="Areas\Admin\Content\images\forms\upload_file.gif" />
+    <Content Include="Areas\Admin\Content\images\login\icon_back_login.gif" />
+    <Content Include="Areas\Admin\Content\images\login\inp_login.gif" />
+    <Content Include="Areas\Admin\Content\images\login\loginbox_bg.png" />
+    <Content Include="Areas\Admin\Content\images\login\login_bg.jpg" />
+    <Content Include="Areas\Admin\Content\images\login\submit_login.gif" />
+    <Content Include="Areas\Admin\Content\images\shared\blank.gif" />
+    <Content Include="Areas\Admin\Content\images\shared\border_bit.jpg" />
+    <Content Include="Areas\Admin\Content\images\shared\cal_th_repeat.jpg" />
+    <Content Include="Areas\Admin\Content\images\shared\cal_top_bg.jpg" />
+    <Content Include="Areas\Admin\Content\images\shared\cal_top_repeat.jpg" />
+    <Content Include="Areas\Admin\Content\images\shared\checkbox.gif" />
+    <Content Include="Areas\Admin\Content\images\shared\content_repeat.jpg" />
+    <Content Include="Areas\Admin\Content\images\shared\corner_bottom_left.jpg" />
+    <Content Include="Areas\Admin\Content\images\shared\corner_bottom_right.jpg" />
+    <Content Include="Areas\Admin\Content\images\shared\corner_top_left.jpg" />
+    <Content Include="Areas\Admin\Content\images\shared\corner_top_right.jpg" />
+    <Content Include="Areas\Admin\Content\images\shared\icon_idlogo.jpg" />
+    <Content Include="Areas\Admin\Content\images\shared\logo.png" />
+    <Content Include="Areas\Admin\Content\images\shared\nav\account_drop_bg.gif" />
+    <Content Include="Areas\Admin\Content\images\shared\nav\account_line.gif" />
+    <Content Include="Areas\Admin\Content\images\shared\nav\back_0.gif" />
+    <Content Include="Areas\Admin\Content\images\shared\nav\back_1.gif" />
+    <Content Include="Areas\Admin\Content\images\shared\nav\Copy of pro_line_1.gif" />
+    <Content Include="Areas\Admin\Content\images\shared\nav\divider.jpg" />
+    <Content Include="Areas\Admin\Content\images\shared\nav\icon_acc_inbox.gif" />
+    <Content Include="Areas\Admin\Content\images\shared\nav\icon_acc_personal.gif" />
+    <Content Include="Areas\Admin\Content\images\shared\nav\icon_acc_projects.gif" />
+    <Content Include="Areas\Admin\Content\images\shared\nav\icon_acc_settings.gif" />
+    <Content Include="Areas\Admin\Content\images\shared\nav\icon_acc_stats.gif" />
+    <Content Include="Areas\Admin\Content\images\shared\nav\nav_logout.gif" />
+    <Content Include="Areas\Admin\Content\images\shared\nav\nav_myaccount.gif" />
+    <Content Include="Areas\Admin\Content\images\shared\nav\pro_line_0.gif" />
+    <Content Include="Areas\Admin\Content\images\shared\nav\pro_line_1.gif" />
+    <Content Include="Areas\Admin\Content\images\shared\nav\pro_line_2.gif" />
+    <Content Include="Areas\Admin\Content\images\shared\nav\repeat.jpg" />
+    <Content Include="Areas\Admin\Content\images\shared\side_shadowleft.jpg" />
+    <Content Include="Areas\Admin\Content\images\shared\side_shadowright.jpg" />
+    <Content Include="Areas\Admin\Content\images\shared\top_bg.jpg" />
+    <Content Include="Areas\Admin\Content\images\shared\top_search_btn.gif" />
+    <Content Include="Areas\Admin\Content\images\shared\top_search_inp.gif" />
+    <Content Include="Areas\Admin\Content\images\shared\top_search_select.gif" />
+    <Content Include="Areas\Admin\Content\images\shared\year_next.gif" />
+    <Content Include="Areas\Admin\Content\images\shared\year_prev.gif" />
+    <Content Include="Areas\Admin\Content\images\shared\_logo.png" />
+    <Content Include="Areas\Admin\Content\images\table\actions_slider_bg.gif" />
+    <Content Include="Areas\Admin\Content\images\table\action_delete.gif" />
+    <Content Include="Areas\Admin\Content\images\table\action_edit.gif" />
+    <Content Include="Areas\Admin\Content\images\table\content_round_repeat.jpg" />
+    <Content Include="Areas\Admin\Content\images\table\content_round_top.jpg" />
+    <Content Include="Areas\Admin\Content\images\table\dropdown_actions.gif" />
+    <Content Include="Areas\Admin\Content\images\table\icon_close_blue.gif" />
+    <Content Include="Areas\Admin\Content\images\table\icon_close_green.gif" />
+    <Content Include="Areas\Admin\Content\images\table\icon_close_red.gif" />
+    <Content Include="Areas\Admin\Content\images\table\icon_close_yellow.gif" />
+    <Content Include="Areas\Admin\Content\images\table\message_blue.gif" />
+    <Content Include="Areas\Admin\Content\images\table\message_green.gif" />
+    <Content Include="Areas\Admin\Content\images\table\message_red.gif" />
+    <Content Include="Areas\Admin\Content\images\table\message_yellow.gif" />
+    <Content Include="Areas\Admin\Content\images\table\paging_far_left.gif" />
+    <Content Include="Areas\Admin\Content\images\table\paging_far_right.gif" />
+    <Content Include="Areas\Admin\Content\images\table\paging_left.gif" />
+    <Content Include="Areas\Admin\Content\images\table\paging_right.gif" />
+    <Content Include="Areas\Admin\Content\images\table\select_number_rows.gif" />
+    <Content Include="Areas\Admin\Content\images\table\table_header.jpg" />
+    <Content Include="Areas\Admin\Content\images\table\table_header_checkbox.jpg" />
+    <Content Include="Areas\Admin\Content\images\table\table_header_options.jpg" />
+    <Content Include="Areas\Admin\Content\images\table\table_header_repeat.jpg" />
+    <Content Include="Areas\Admin\Content\images\table\table_icon_1.gif" />
+    <Content Include="Areas\Admin\Content\images\table\table_icon_2.gif" />
+    <Content Include="Areas\Admin\Content\images\table\table_icon_3.gif" />
+    <Content Include="Areas\Admin\Content\images\table\table_icon_4.gif" />
+    <Content Include="Areas\Admin\Content\images\table\table_icon_5.gif" />
+    <Content Include="Areas\Admin\Content\images\table\table_sort_arrow.gif" />
+    <Content Include="Areas\Admin\Content\js\jquery\Copy of custom_jquery.js" />
+    <Content Include="Areas\Admin\Content\js\jquery\custom_jquery.js" />
+    <Content Include="Areas\Admin\Content\js\jquery\date.js" />
+    <Content Include="Areas\Admin\Content\js\jquery\jquery-1.4.1.min.js" />
+    <Content Include="Areas\Admin\Content\js\jquery\jquery.bind.js" />
+    <Content Include="Areas\Admin\Content\js\jquery\jquery.datePicker.js" />
+    <Content Include="Areas\Admin\Content\js\jquery\jquery.dimensions.js" />
+    <Content Include="Areas\Admin\Content\js\jquery\jquery.filestyle.js" />
+    <Content Include="Areas\Admin\Content\js\jquery\jquery.pngFix.pack.js" />
+    <Content Include="Areas\Admin\Content\js\jquery\jquery.selectbox-0.5.js" />
+    <Content Include="Areas\Admin\Content\js\jquery\jquery.selectbox-0.5_style_2.js" />
+    <Content Include="Areas\Admin\Content\js\jquery\jquery.selectbox-0.5_style_3.js" />
+    <Content Include="Areas\Admin\Content\js\jquery\jquery.tooltip.js" />
+    <Content Include="Areas\Admin\Content\js\jquery\jquery.usermode.js" />
+    <Content Include="Areas\Admin\Content\js\jquery\ui.checkbox.js" />
+    <Content Include="Areas\Admin\Content\js\jquery\ui.core.js" />
+    <Content Include="Content\css\custom\ayende.less.css" />
+    <Content Include="Content\css\custom\hibernatingrhinos.settings.less.css" />
+    <Content Include="Content\css\custom\hibernatingrhinos.less.css" />
+    <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Infrastructure\Common\DateTimeOffsetUtil.cs" />
+    <Compile Include="Controllers\CssController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ElmahController.cs" />
+    <Compile Include="Helpers\Binders\RemoveSpacesEnumBinder.cs" />
+    <Compile Include="Helpers\HtmlHelperExtensions.cs" />
+    <Compile Include="Controllers\PostDetailsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PostsController.cs" />
+    <Compile Include="Infrastructure\Common\QueryableExtensions.cs" />
+    <Compile Include="Areas\Admin\Controllers\SectionsController.cs" />
+    <Compile Include="Controllers\SectionController.cs" />
+    <Compile Include="Controllers\SyndicationController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
+    <Compile Include="Helpers\Attributes\AjaxOnlyAttribute.cs" />
+    <Compile Include="Helpers\ModelStateExtensions.cs" />
+    <Compile Include="Helpers\TwitterButtonDataCount.cs" />
+    <Compile Include="Helpers\TwitterExtensions.cs" />
+    <Compile Include="Helpers\UrlHelperExtensions.cs" />
+    <Compile Include="Helpers\Validation\RequiredIfAttribute.cs" />
+    <Compile Include="Helpers\Results\JsonNetResult.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\AbstractProfile.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\BlogConfigMapperProfile.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\EmailViewModelMapperProfile.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\GuidToStringConverter.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\SanitizeHtml.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\UrlResolver.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\SectionAdminMapperProfile.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\SectionMapperProfile.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\TagsListViewModelMapperProfile.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\PostsAdminViewModelMapperProfile.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\DateTimeTypeConverter.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\MvcHtmlStringConverter.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\TagsResolver.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\UserAdminMapperProfile.cs" />
+    <Compile Include="Infrastructure\Indexes\PostComments_CreationDate.cs" />
+    <Compile Include="Infrastructure\Indexes\Statistics_Count.cs" />
+    <Compile Include="Models\BlogConfig.cs" />
+    <Compile Include="Models\PostComments.cs" />
+    <Compile Include="Models\Commenter.cs" />
+    <Compile Include="Models\Post.cs" />
+    <Compile Include="Models\Section.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="RouteConfigurator.cs" />
+    <Compile Include="Controllers\LegacyPostController.cs" />
+    <Compile Include="Helpers\Validation\RecaptchaValidatorWrapper.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\MarkdownResolver.cs" />
+    <Compile Include="Infrastructure\Indexes\Posts_ByMonthPublished_Count.cs" />
+    <Compile Include="Infrastructure\Indexes\Tags_Count.cs" />
+    <Compile Include="Infrastructure\AutoMapper\AutoMapperConfiguration.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\EmailHashResolver.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\PostsViewModelMapperProfile.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\PostViewModelMapperProfile.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\RavenIdResolver.cs" />
+    <Compile Include="Infrastructure\Tasks\AddCommentTask.cs" />
+    <Compile Include="Infrastructure\Common\EnumerableExtensions.cs" />
+    <Compile Include="Infrastructure\Tasks\SendEmailTask.cs" />
+    <Compile Include="Controllers\RaccoonController.cs" />
+    <Compile Include="Helpers\RecaptchHelperExtensions.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\AutoMapper\AutoMapperExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AkismetService.cs" />
+    <Compile Include="Infrastructure\Common\DateTimeOffsetExtensions.cs" />
+    <Compile Include="Services\IMetaWeblog.cs" />
+    <Compile Include="Services\MetaWeblog.cs" />
+    <Compile Include="Services\PostSchedulingStrategy.cs" />
+    <Compile Include="Services\RssModels\Category.cs" />
+    <Compile Include="Services\RssModels\CategoryInfo.cs" />
+    <Compile Include="Services\RssModels\Enclosure.cs" />
+    <Compile Include="Services\RssModels\MediaObject.cs" />
+    <Compile Include="Services\RssModels\MediaObjectInfo.cs" />
+    <Compile Include="Services\RssModels\Post.cs" />
+    <Compile Include="Services\RssModels\Source.cs" />
+    <Compile Include="Services\RssModels\BlogInfo.cs" />
+    <Compile Include="Infrastructure\Common\SlugConverter.cs" />
+    <Compile Include="Services\RssModels\UserInfo.cs" />
+    <Compile Include="Services\RssModels\WordpressCategory.cs" />
+    <Compile Include="ViewModels\AbstractViewModel.cs" />
+    <Compile Include="ViewModels\AdminPostDetailsViewModel.cs" />
+    <Compile Include="ViewModels\BlogConfigurationInput.cs" />
+    <Compile Include="ViewModels\BlogConfigViewModel.cs" />
+    <Compile Include="ViewModels\CommenterUtil.cs" />
+    <Compile Include="ViewModels\CommentInput.cs" />
+    <Compile Include="ViewModels\CurrentUserViewModel.cs" />
+    <Compile Include="ViewModels\FuturePostViewModel.cs" />
+    <Compile Include="ViewModels\LoginInput.cs" />
+    <Compile Include="ViewModels\NewCommentEmailViewModel.cs" />
+    <Compile Include="ViewModels\PostInput.cs" />
+    <Compile Include="ViewModels\PostReference.cs" />
+    <Compile Include="ViewModels\PostsStatisticsViewModel.cs" />
+    <Compile Include="ViewModels\PostSummaryJson.cs" />
+    <Compile Include="ViewModels\PostViewModel.cs" />
+    <Compile Include="ViewModels\PostsViewModel.cs" />
+    <Compile Include="ViewModels\RequestValues.cs" />
+    <Compile Include="ViewModels\SectionDetails.cs" />
+    <Compile Include="ViewModels\SectionInput.cs" />
+    <Compile Include="ViewModels\SectionSummery.cs" />
+    <Compile Include="ViewModels\TagDetails.cs" />
+    <Compile Include="ViewModels\TagsListViewModel.cs" />
+    <Compile Include="ViewModels\UserInput.cs" />
+    <Compile Include="ViewModels\UserSummeryViewModel.cs" />
+    <Compile Include="Helpers\Attributes\ValidatePasswordLengthAttribute.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\css\custom\ayende.settings.less.css" />
+    <Content Include="Content\css\images\balloon.png" />
+    <Content Include="Content\css\images\feed-icon-14x14.png" />
+    <Content Include="Content\css\images\indicator.gif" />
+    <Content Include="Content\css\images\openid-icons.png" />
+    <Content Include="Content\css\images\openid-inputicon.gif" />
+    <Content Include="Content\css\images\openid-providers-en.png" />
+    <Content Include="Content\css\images\printer.png" />
+    <Content Include="Content\css\base.less.css" />
+    <Content Include="Content\css\ResetCss.css" />
+    <Content Include="Content\css\fullcalendar.css" />
+    <Content Include="Content\js\date.f-0.5.0.js" />
+    <Content Include="Content\js\date.f-0.5.0.min.js" />
+    <Content Include="Content\js\html5shim.js" />
+    <Content Include="Content\js\jquery.ae.image.resize.js" />
+    <Content Include="Content\js\jquery.ae.image.resize.min.js" />
+    <Content Include="Content\js\jquery.datalink.js" />
+    <Content Include="Content\js\jquery.markitup.js" />
+    <Content Include="Content\js\jquery.md5.js" />
+    <Content Include="Content\js\jquery.myimgscale-0.2.js" />
+    <Content Include="Content\js\jquery.myimgscale-0.2.min.js" />
+    <Content Include="Content\js\jquery.openid.js" />
+    <Content Include="Content\js\jquery.openid.min.js" />
+    <Content Include="Content\js\openid-en.js" />
+    <Content Include="Content\js\openid-jquery.js" />
+    <Content Include="Content\js\raccoon-blog.js" />
+    <Content Include="Content\js\RequiredIfValidation.js" />
+    <Content Include="Content\js\fullcalendar.min.js" />
+    <Content Include="Content\js\jquery-ui-1.8.12.custom.min.js" />
+    <Content Include="Content\js\showdown.js" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\js\jquery.ui.core.js" />
+    <Content Include="Content\js\jquery.ui.core.min.js" />
+    <Content Include="Content\js\jquery-1.6-vsdoc.js" />
+    <Content Include="Content\js\jquery-1.6.js" />
+    <Content Include="Content\js\jquery-1.6.min.js" />
+    <Content Include="Content\js\jquery.tmpl.js" />
+    <Content Include="Content\js\jquery.tmpl.min.js" />
+    <Compile Include="ViewModels\RecentCommentViewModel.cs" />
+    <Content Include="Areas\Admin\Views\Sections\Edit.cshtml" />
+    <Compile Include="Controllers\PostController.cs" />
+    <Content Include="RavenNotReachable.htm" />
+    <Content Include="Scripts\MarkdownDeep License.txt" />
+    <Content Include="Scripts\MarkdownDeep Quick Reference.txt" />
+    <Content Include="Scripts\MarkdownDeepLib.min.js" />
+    <Content Include="Scripts\mdd_ajax_loader.gif" />
+    <Content Include="Scripts\mdd_gripper.png" />
+    <Content Include="Scripts\mdd_help.htm" />
+    <Content Include="Scripts\mdd_modal_background.png" />
+    <Content Include="Scripts\mdd_styles.css" />
+    <Content Include="Scripts\mdd_toolbar.png" />
+    <Content Include="Views\MailTemplates\_Layout.cshtml" />
+    <Content Include="Views\Section\FuturePosts.cshtml" />
+    <Content Include="Views\Shared\500.cshtml" />
+    <Content Include="Views\Error\500.htm" />
+    <Content Include="Views\Error\404.htm" />
+    <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\HiddenInput.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\String.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\HiddenInput.cshtml" />
+    <Content Include="Views\MailTemplates\NewComment.cshtml" />
+    <Content Include="Views\Section\TagsList.cshtml" />
+    <Content Include="Views\Section\ArchivesList.cshtml" />
+    <Content Include="Services\MetaWeblogAPI.ashx" />
+    <Content Include="wlwmanifest.xml" />
+    <Content Include="Areas\Admin\Views\Login\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Login\CurrentUser.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EmailAddress.cshtml" />
+    <Content Include="Areas\Admin\Views\Posts\List.cshtml" />
+    <Content Include="Areas\Admin\Views\Posts\Details.cshtml" />
+    <Content Include="Views\Section\AdministrationPanel.cshtml" />
+    <Content Include="Areas\Admin\Views\Posts\Edit.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
+    <Content Include="Views\Section\List.cshtml" />
+    <Content Include="Areas\Admin\Views\Sections\List.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\MultilineText.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Content\js\jquery.unobtrusive-ajax.js" />
+    <Content Include="Content\js\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Content\js\jquery.validate.js" />
+    <Content Include="Content\js\jquery.validate.min.js" />
+    <Content Include="Content\js\jquery.validate.unobtrusive.js" />
+    <Content Include="Content\js\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Content\js\jquery.validate-vsdoc.js" />
+    <Content Include="Content\js\jquery-ui.js" />
+    <Content Include="Content\js\jquery-ui.min.js" />
+    <Content Include="Content\js\MicrosoftAjax.js" />
+    <Content Include="Content\js\MicrosoftAjax.debug.js" />
+    <Content Include="Content\js\MicrosoftMvcAjax.js" />
+    <Content Include="Content\js\MicrosoftMvcAjax.debug.js" />
+    <Content Include="Content\js\MicrosoftMvcValidation.js" />
+    <Content Include="Content\js\MicrosoftMvcValidation.debug.js" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\Shared\404.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\List.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\ChangePassword.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Content\css\openid\images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\PostDetails\Details.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Post\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Search\SearchResult.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Search\GoogleCse.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Section\PostsStatistics.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MailTemplates\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Settings\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Section\RecentComments.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Welcome\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Welcome\Success.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\Boolean.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\EmailAddress.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\HiddenInput.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\MultilineText.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\Password.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\String.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HibernatingRhinos.Loci.Common\Loci.Common.csproj">
+      <Project>{238D8AAA-FD89-48E7-9446-ADCDE845B58E}</Project>
+      <Name>Loci.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>23167</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

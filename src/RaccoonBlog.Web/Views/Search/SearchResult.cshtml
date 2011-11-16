@@ -1,22 +1,0 @@
-﻿@model string
-@{
-    ViewBag.Title = "search";
-}
-<div id="cse" style="width: 90%;">Loading</div>
-@section Style {
-    <style type="text/css">        table.gsc-search-box, table.gsc-branding { width: 60%; margin-left: auto; margin-right: auto; }                .gsc-input input { font-size: 17px; padding: 2px 6px; line-height: 20px; width: 97% }        .gs-result .gs-title, .gs-result .gs-title b { font-size: 16px; line-height: 1.2; }                .gs-snippet { color: #000; }        .gsc-adBlock { margin-bottom: 5px; }        .gsc-wrapper { max-width: 69%; }        .gs-webResult div.gs-visibleUrl-short{display:none;}         .gs-webResult div.gs-visibleUrl-long{display:block;}     </style>}
-@section Script {
-    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
-    <script type="text/javascript">
-        window._search = '@Model';
-        google.load('search', '1', { language: 'en' });
-        google.setOnLoadCallback(function () {
-            var customSearchControl = new google.search.CustomSearchControl({ 'crefUrl': '@Url.AbsoluteAction("GoogleCse")' });
-            customSearchControl.setLinkTarget(google.search.Search.LINK_TARGET_SELF);
-            customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
-            customSearchControl.draw('cse');
-            if (window._search)
-                customSearchControl.execute(window._search);
-        }, true);
-    </script>
-}
