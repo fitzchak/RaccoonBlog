@@ -95,6 +95,10 @@
     </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\HibernatingRhinos.Loci.Common\Loci.Common.csproj">
+      <Project>{238D8AAA-FD89-48E7-9446-ADCDE845B58E}</Project>
+      <Name>Loci.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RaccoonBlog.Web\RaccoonBlog.Web.csproj">
       <Project>{58CCD7A4-503D-467D-8DC4-4D310BD42774}</Project>
       <Name>RaccoonBlog.Web</Name>

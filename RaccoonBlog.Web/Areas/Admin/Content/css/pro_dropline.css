@@ -130,13 +130,13 @@ way to fit your requirements.
 	white-space: nowrap;
 	}
 .nav .current .sub li.sub_show a	{
-	background: url(../images/shared/nav/menus/back_1.gif);
+	background: url(../images/shared/nav/back_1.gif);
 	color: #088;
 	cursor: default;
 	}
 .nav .select :hover .sub li a:hover, 
 .nav .current .sub li a:hover	{
-	background: url(../images/shared/nav/menus/back_1.gif);
+	background: url(../images/shared/nav/back_1.gif);
 	color: #088;
 	visibility: visible;
 	}
