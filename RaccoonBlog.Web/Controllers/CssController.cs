@@ -13,8 +13,8 @@ namespace RaccoonBlog.Web.Controllers
              var builder = new StringBuilder();
              foreach (var file in files)
              {
-                 var pathAllowed = Server.MapPath(Url.Content("~/Content/css"));
-                 var normalizeFile = Server.MapPath(Url.Content(Path.Combine("~/Content/css", file)));
+                 var pathAllowed = Server.MapPath(Url.Content("~/Content/css/"));
+                 var normalizeFile = Server.MapPath(Url.Content(Path.Combine("~/Content/css/", file)));
                  if (normalizeFile.StartsWith(pathAllowed) == false)
                  {
                      return HttpNotFound("Path not allowed");
