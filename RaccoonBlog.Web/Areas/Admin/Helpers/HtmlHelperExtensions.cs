@@ -6,8 +6,8 @@ using RaccoonBlog.Web.Areas.Admin.Models;
 
 namespace RaccoonBlog.Web.Areas.Admin.Helpers
 {
-    public static class HtmlHelperExtensions
-    {
+	public static class HtmlHelperExtensions
+	{
 		public static MvcHtmlString AdminImage(this HtmlHelper helper, string path)
 		{
 			return MvcHtmlString.Create("/areas/admin/content/images/" + path.Replace('\\', '/'));
@@ -42,10 +42,10 @@ namespace RaccoonBlog.Web.Areas.Admin.Helpers
 					foreach (var submenu in m.SubMenus)
 					{
 						sb.AppendFormat(@"<li{0}><a href=""{1}"">{2}</a></li>{3}",
-						                submenu.IsCurrent ? @" class=""sub_show""" : string.Empty,
-						                submenu.Url,
-						                submenu.Title,
-						                Environment.NewLine);
+										submenu.IsCurrent ? @" class=""sub_show""" : string.Empty,
+										submenu.Url,
+										submenu.Title,
+										Environment.NewLine);
 					}
 				}
 
@@ -55,5 +55,5 @@ namespace RaccoonBlog.Web.Areas.Admin.Helpers
 
 			return MvcHtmlString.Create(sb.ToString());
 		}
-    }
+	}
 }
