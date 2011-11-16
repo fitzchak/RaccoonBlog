@@ -26,7 +26,7 @@ body
 
 .clr 
 {
-    clear: both;    
+	clear: both;    
 }
 
 h1
@@ -73,32 +73,32 @@ td
 
 
 blockquote {
-    margin: 1em 40px;
+	margin: 1em 40px;
 }
 
 p {
-    margin: 1em 0px;
+	margin: 1em 0px;
 }
 
 ul 
 {
-    list-style-type: none;
+	list-style-type: none;
 }
 .raw_html ul
 {
-    padding-left: 40px;
-    list-style-type: disc;
+	padding-left: 40px;
+	list-style-type: disc;
 }
 
 .raw_html ol
 {
-    padding-left: 40px;
-    list-style-type: decimal;
+	padding-left: 40px;
+	list-style-type: decimal;
 }
 
 pre 
 {
-    margin: 1em 0px;
+	margin: 1em 0px;
 }
 
 #container
@@ -128,10 +128,10 @@ header#headermain
 }
 header#headermain h1
 {
-    font-size: 2em;
-    text-align: left;
-    font-weight: bold;
-    margin-bottom: 5px;
+	font-size: 2em;
+	text-align: left;
+	font-weight: bold;
+	margin-bottom: 5px;
 }
 header#headermain h1 a
 {
@@ -161,25 +161,25 @@ header#headermain h2
 }
 #logoimage a
 {
-    display: block;
-    background: transparent none no-repeat 0 0;
+	display: block;
+	background: transparent none no-repeat 0 0;
 }
 article.post footer, postToolbar
 {
-    margin: 1em 0px;
+	margin: 1em 0px;
 }
 
 .comments header h1
 {
-    white-space: nowrap;
-    border-top: solid;
-    border-bottom: solid;
-    border-width: 1px;
-    padding-top: 1px;
-    padding-bottom: 1px;
-    border-color: #FF8000;
-    background-color: #FFEAC0;
-    font-size: 1.0em;
+	white-space: nowrap;
+	border-top: solid;
+	border-bottom: solid;
+	border-width: 1px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	border-color: #FF8000;
+	background-color: #FFEAC0;
+	font-size: 1.0em;
 }
 
 
@@ -190,64 +190,64 @@ article.post footer, postToolbar
 
 .comment
 {
-    min-height: 65px;
+	min-height: 65px;
 }
 .comment header
 {
-    white-space: nowrap;
-    border-top: solid;
-    border-bottom: solid;
-    border-width: 1px;
-    padding-top: 1px;
-    padding-bottom: 1px;
-    font-size: 0.9em;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    font-style: normal;
-    font-weight: bold;
+	white-space: nowrap;
+	border-top: solid;
+	border-bottom: solid;
+	border-width: 1px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	font-size: 0.9em;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	font-style: normal;
+	font-weight: bold;
 }
 
 .comment header address
 {
-    display: inline;
+	display: inline;
 }
 .comment.spam
 {
-    background-color: Gray;
+	background-color: Gray;
 }
 
 .comment input[type=checkbox]
 {
-    float: right;
+	float: right;
 }
 
 .comment-body
 {
-    padding: 1px;
+	padding: 1px;
 }
 
 .comment-body p
 {
-    margin: 0.7em 0px;
+	margin: 0.7em 0px;
 }
 
 .markdown-preview-container
 {
-    margin: 10px 0;
+	margin: 10px 0;
 }
 .markdown-preview-container .form_item_name
 {
 }
 .markdown-preview
 {
-    border: solid 1px transparent;
-    padding: 10px;
-    min-height: 50px;
-    margin: 5px 0;
+	border: solid 1px transparent;
+	padding: 10px;
+	min-height: 50px;
+	margin: 5px 0;
 }
 input[type="submit"]
 {
-    float: right;
+	float: right;
 }
 
 #sidebar
@@ -267,12 +267,12 @@ input[type="submit"]
 {
 	margin-bottom: 4px;
 	white-space: nowrap;
-    border-top: solid;
-    border-bottom: solid;
-    border-width: 1px;
-    padding-top: 1px;
-    padding-bottom: 1px;
-    font-size: 1.0em;
+	border-top: solid;
+	border-bottom: solid;
+	border-width: 1px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	font-size: 1.0em;
 }
 #content
 {
@@ -286,13 +286,13 @@ input[type="submit"]
 }
 .post_body div
 {
-    z-index: 10;
+	z-index: 10;
 }
 
 
 article header h1
 {
-    margin: 1em 0px;
+	margin: 1em 0px;
 }
 article header h1 a
 {
@@ -319,20 +319,20 @@ article header h1 a
 
 .form_item 
 {
-    margin: 2px 0;
+	margin: 2px 0;
 }
 
 .form_item label span.form_item_name
 {
-    width: 200px;
-    display: block;
-    float: left;
+	width: 200px;
+	display: block;
+	float: left;
 }
 
 .form_item textarea
 {
-    height: 193px;
-    width: 400px;
+	height: 193px;
+	width: 400px;
 }
 
 
@@ -341,97 +341,97 @@ article header h1 a
 -----------------------------------------------------------*/
 .field-validation-error
 {
-    color: #ff0000;
+	color: #ff0000;
 }
 
 .field-validation-valid
 {
-    display: none;
+	display: none;
 }
 
 .input-validation-error
 {
-    border: 1px solid #ff0000;
-    background-color: #ffeeee;
+	border: 1px solid #ff0000;
+	background-color: #ffeeee;
 }
 
 .validation-summary-errors
 {
-    font-weight: bold;
-    color: #ff0000;
+	font-weight: bold;
+	color: #ff0000;
 }
 
 .validation-summary-valid
 {
-    display: none;
+	display: none;
 }
 
 .message
 {
-    border: 1px solid #930;
-    background-color: #FC6;
-    padding: 3px;
-    text-align: center;
+	border: 1px solid #930;
+	background-color: #FC6;
+	padding: 3px;
+	text-align: center;
 }
 
 .messageWrapper 
 {
-    text-align: center;
+	text-align: center;
 }
 #message 
 {
-    color: #930;
-    padding: 0 7px;
-    margin: 5px 0;
-    display: inline-block;
-    position: relative;
-    background-color: #FFF1A8;
-    border: 3px solid #FFF1A8;
-    text-align: center;
-    .rounded_corners(3px);
+	color: #930;
+	padding: 0 7px;
+	margin: 5px 0;
+	display: inline-block;
+	position: relative;
+	background-color: #FFF1A8;
+	border: 3px solid #FFF1A8;
+	text-align: center;
+	.rounded_corners(3px);
 }
 #message.fail 
 {
-    color: #FFF1A8;
-    background-color: #930;
-    border-color: #930;
+	color: #FFF1A8;
+	background-color: #930;
+	border-color: #930;
 }
 
 
 .tags ul 
 {
-    display: inline;
+	display: inline;
 	margin-left: 5px;
 }
 .tags li 
 {
-    display: inline;
-    margin: 0 1px;
+	display: inline;
+	margin: 0 1px;
 }
 .tags a 
 {
-    padding: 2px 6px;
-    margin: 2px 2px 2px 0;
-    text-decoration: none;
-    font-size: 90%;
-    line-height: 2.4;
-    white-space: nowrap;
+	padding: 2px 6px;
+	margin: 2px 2px 2px 0;
+	text-decoration: none;
+	font-size: 90%;
+	line-height: 2.4;
+	white-space: nowrap;
 	border: #FF8000 solid 1px;
 	.rounded_corners(3px);
 }
 
 .section ul 
 {
-    list-style-type: disc;
-    padding-left: 40px;
+	list-style-type: disc;
+	padding-left: 40px;
 }
 .section ol 
 {
-    padding-left: 40px;
+	padding-left: 40px;
 }
 .section li
 {
-    margin: 1px 0;
+	margin: 1px 0;
 }
 
 
@@ -487,12 +487,12 @@ article.post-detalis footer .author
 
 footer p 
 {
-    margin: 5px 0;    
+	margin: 5px 0;    
 }
 
 footer .share .twitter, footer .share .facebook, footer .share .facebook-share
 {
-    padding-top: 5px;
+	padding-top: 5px;
 }
 footer .share .facebook, footer .share .facebook-share {
 	float: left;
@@ -501,33 +501,33 @@ footer .share .facebook, footer .share .facebook-share {
 
 footer .published, footer .created, footer .comment-count
 {
-    float: left;
+	float: left;
 }
 footer .created, footer .comment-count
 {
-    float: left;
-    border-left: solid 1px #000;
-    padding-left: 10px;
-    margin-left: 10px;
+	float: left;
+	border-left: solid 1px #000;
+	padding-left: 10px;
+	margin-left: 10px;
 }
 
 .commands-section ul li 
 {
-    border: none;
+	border: none;
 }
 
 .fc-grid .fc-event-time {
-    font-size: 11px;
+	font-size: 11px;
 }
 .fc-header-title 
 {
-    margin-top: 9px;
+	margin-top: 9px;
 }
 
 div.commentsClosedMessage
 {
-    font-style: italic;
-    padding-top: 10px;
+	font-style: italic;
+	padding-top: 10px;
 }
 
 .rounded_corners(@radius: 5px) {
@@ -538,8 +538,8 @@ div.commentsClosedMessage
 
 #login
 {
-    width: 360px;
-    margin: 50px auto 0;
+	width: 360px;
+	margin: 50px auto 0;
 }
 
 #post-list footer.post-list-footer
@@ -564,7 +564,7 @@ div.commentsClosedMessage
 } 
 #search 
 {
-    width: 100%;
+	width: 100%;
 }
 
 li span.rss {
@@ -573,7 +573,7 @@ li span.rss {
 }
 
 .openid-wrapper {
-    float: right;
+	float: right;
 }
 #openid {
   background: formatString("url({0}images/indicator.gif)", @siteRoot) center center no-repeat;
