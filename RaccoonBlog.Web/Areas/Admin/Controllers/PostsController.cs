@@ -142,7 +142,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		
 		[HttpPost]
 		[ValidateInput(false)]
-		public ActionResult Edit(PostInput input, int id)
+		public ActionResult Update(PostInput input)
 		{
 			if (!ModelState.IsValid)
 				return View("Edit", input);
