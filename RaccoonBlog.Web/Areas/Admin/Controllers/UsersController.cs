@@ -7,28 +7,28 @@ using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
-    public class UsersController : AdminController
-    {
+	public class UsersController : AdminController
+	{
 		public ActionResult Index()
 		{
 			return List();
 		}
 
-    	public ActionResult List()
-        {
+		public ActionResult List()
+		{
 			var users = RavenSession.Query<User>()
-                .OrderBy(u => u.FullName)
-                .ToList();
+				.OrderBy(u => u.FullName)
+				.ToList();
 
-            var vm = users.MapTo<UserSummeryViewModel>();
-            return View("List", vm);
-        }
+			var vm = users.MapTo<UserSummeryViewModel>();
+			return View("List", vm);
+		}
 
-        [HttpGet]
-        public ActionResult Add()
-        {
-            return View("Edit", new UserInput());
-        }
+		[HttpGet]
+		public ActionResult Add()
+		{
+			return View("Edit", new UserInput());
+		}
 
 		[HttpPost]
 		public ActionResult Add(UserInput input)
@@ -42,36 +42,36 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			return RedirectToAction("Index");
 		}
 
-        [HttpGet]
-        public ActionResult Edit(int id)
-        {
+		[HttpGet]
+		public ActionResult Edit(int id)
+		{
 			var user = RavenSession.Load<User>(id);
-            if (user == null)
-                return HttpNotFound("User does not exist.");
-        	return View(user.MapTo<UserInput>());
-        }
+			if (user == null)
+				return HttpNotFound("User does not exist.");
+			return View(user.MapTo<UserInput>());
+		}
 
-        [HttpPost]
-        public ActionResult Edit(UserInput input, int id)
-        {
-        	if (!ModelState.IsValid)
-        		return View("Edit", input);
+		[HttpPost]
+		public ActionResult Edit(UserInput input, int id)
+		{
+			if (!ModelState.IsValid)
+				return View("Edit", input);
 
 			var user = RavenSession.Load<User>(id) ?? new User();
-        	input.MapPropertiesToInstance(user);
+			input.MapPropertiesToInstance(user);
 			RavenSession.Store(user);
-        	return RedirectToAction("Index");
-        }
+			return RedirectToAction("Index");
+		}
 
-        [HttpGet]
+		[HttpGet]
 		public ActionResult ChangePassword(int id)
-        {
+		{
 			var user = RavenSession.Load<User>(id);
-            if (user == null)
-                return HttpNotFound("User does not exist.");
+			if (user == null)
+				return HttpNotFound("User does not exist.");
 
-        	return View(new ChangePasswordModel());
-        }
+			return View(new ChangePasswordModel());
+		}
 
 		[HttpPost]
 		public ActionResult ChangePassword(ChangePasswordModel input, int id)
@@ -83,19 +83,19 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			if (user == null)
 				return HttpNotFound("User does not exist.");
 
-		    if (user.ValidatePassword(input.OldPassword) == false)
-		    {
-		        ModelState.AddModelError("OldPassword", "Old password did not match existing password");
-		    }
+			if (user.ValidatePassword(input.OldPassword) == false)
+			{
+				ModelState.AddModelError("OldPassword", "Old password did not match existing password");
+			}
 
 			if (ModelState.IsValid == false)
 				return View(input);
 
-            user.SetPassword(input.NewPassword);
-		    return RedirectToAction("Index");
+			user.SetPassword(input.NewPassword);
+			return RedirectToAction("Index");
 		}
 
-        [HttpPost]
+		[HttpPost]
 		public ActionResult SetActivation(int id, bool isActive)
 		{
 			var user = RavenSession.Load<User>(id);
@@ -106,5 +106,5 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 
 			return RedirectToAction("Index");
 		}
-    }
+	}
 }
