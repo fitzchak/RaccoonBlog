@@ -45,6 +45,8 @@ namespace RaccoonBlog.Web.Models
 
 		public bool ValidatePassword(string maybePwd)
 		{
+			if (HashedPassword == null)
+				return true;
 			return HashedPassword == GetHashedPassword(maybePwd);
 		}
 	}
