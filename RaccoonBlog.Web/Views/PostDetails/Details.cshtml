@@ -34,7 +34,7 @@
 				<ul>
 					@foreach (var tag in Model.Post.Tags)
 					{
-						<li><a href="@Url.Action("Tag", "Post", new {tag.Slug})">@tag.Name</a></li>
+						<li><a href="@Url.Action("Tag", "Posts", new {tag.Slug})">@tag.Name</a></li>
 					}
 				</ul>
 			</div>
@@ -105,7 +105,7 @@
                 if (Model.IsLoggedInCommenter == false)
                 {
                     <div class="openid-wrapper">
-                        <form id="openid" action="@Url.Action("Authenticate", "SocialLogin")" method="post">
+                        <form id="openid" action="@Url.Action("Login", "Social")" method="post">
                             <noscript>
 				                <p>OpenID is service that allows you to log-on to many different websites using a single identity.
 				                Find out <a href="http://openid.net/what/">more about OpenID</a> and <a href="http://openid.net/get/">how to get an OpenID enabled account</a>.</p>

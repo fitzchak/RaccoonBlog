@@ -81,15 +81,9 @@ namespace RaccoonBlog.IntegrationTests.Routing
 		}
 
 		[Fact]
-		public void CssControllerRoutes()
+		public void Css()
 		{
 			"~/css".ShouldMapTo<CssController>(c => c.Merge(null));
-		}
-
-		[Fact]
-		public void SocialLoginControllerRoutes()
-		{
-			"~/users/authenticate".ShouldMapTo<SocialLoginController>(c => c.Authenticate(null, null));
 		}
 
 		[Fact]

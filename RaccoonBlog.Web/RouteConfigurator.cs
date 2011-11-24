@@ -20,15 +20,14 @@ namespace RaccoonBlog.Web
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 			routes.IgnoreRoute("{*favicon}", new { favicon = @"(.*/)?favicon.ico(/.*)?" });
 
-			ConfigureSyndication();
+			Syndication();
 
 			Posts();
-			ConfigureLegacyPost();
-			ConfigurePostDetails();
-			ConfigureSocialLogin();
+			LegacyPost();
+			PostDetails();
 
-			ConfigureSearch();
-			ConfigureCss();
+			Search();
+			Css();
 
 			routes.MapRouteLowerCase("Default",
 				"{controller}/{action}",
@@ -43,7 +42,7 @@ namespace RaccoonBlog.Web
 			   );
 		}
 
-		private void ConfigureCss()
+		private void Css()
 		{
 			routes.MapRouteLowerCase("CssController",
 				"css",
@@ -52,16 +51,7 @@ namespace RaccoonBlog.Web
 				);
 		}
 
-		private void ConfigureSocialLogin()
-		{
-			routes.MapRouteLowerCase("SocialLoginController",
-				"users/authenticate",
-				new { controller = "SocialLogin", action = "Authenticate" },
-				new[] { "RaccoonBlog.Web.Controllers" }
-				);
-		}
-
-		private void ConfigureSearch()
+		private void Search()
 		{
 			routes.MapRouteLowerCase("SearchController-GoogleCse",
 			   "search/google_cse.xml",
@@ -79,7 +69,7 @@ namespace RaccoonBlog.Web
 
 		private void Posts()
 		{
-			routes.MapRouteLowerCase("PostController-PostsByTag",
+			routes.MapRouteLowerCase("PostsByTag",
 				"tags/{slug}",
 				new { controller = "Post", action = "Tag" },
 				new[] { "RaccoonBlog.Web.Controllers" }
@@ -87,7 +77,7 @@ namespace RaccoonBlog.Web
 
 			#region "Archive"
 
-			routes.MapRouteLowerCase("PostControllerPostsByYearMonthDay",
+			routes.MapRouteLowerCase("PostsByYearMonthDay",
 				"archive/{year}/{month}/{day}",
 				new { controller = "Post", action = "Archive" },
 				new { Year = MatchPositiveInteger, Month = MatchPositiveInteger, Day = MatchPositiveInteger },
@@ -111,16 +101,16 @@ namespace RaccoonBlog.Web
 			#endregion
 		}
 
-		private void ConfigureLegacyPost()
+		private void LegacyPost()
 		{
-			routes.MapRouteLowerCase("LegacyPostController-RedirectLegacyPostUrl",
+			routes.MapRouteLowerCase("RedirectLegacyPostUrl",
 				"archive/{year}/{month}/{day}/{slug}.aspx",
 				new { controller = "LegacyPost", action = "RedirectLegacyPost" },
 				new { Year = MatchPositiveInteger, Month = MatchPositiveInteger, Day = MatchPositiveInteger },
 				new[] { "RaccoonBlog.Web.Controllers" }
 				);
 
-			routes.MapRouteLowerCase("LegacyPostController-RedirectLegacyArchive",
+			routes.MapRouteLowerCase("RedirectLegacyArchive",
 			   "archive/{year}/{month}/{day}.aspx",
 			   new { controller = "LegacyPost", action = "RedirectLegacyArchive" },
 			   new { Year = MatchPositiveInteger, Month = MatchPositiveInteger, Day = MatchPositiveInteger },
@@ -128,7 +118,7 @@ namespace RaccoonBlog.Web
 			   );
 		}
 
-		private void ConfigurePostDetails()
+		private void PostDetails()
 		{
 			routes.MapRouteLowerCase("PostDetailsController-Comment",
 				"{id}/comment",
@@ -145,7 +135,7 @@ namespace RaccoonBlog.Web
 				);
 		}
 
-		private void ConfigureSyndication()
+		private void Syndication()
 		{
 			routes.MapRouteLowerCase("CommentsRssFeed",
 			  "rss/comments",

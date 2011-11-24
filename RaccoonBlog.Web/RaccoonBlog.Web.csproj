@@ -131,7 +131,7 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Areas\Admin\Models\AdminMenu.cs" />
-    <Compile Include="Controllers\SocialLoginController.cs" />
+    <Compile Include="Controllers\SocialController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\WelcomeController.cs" />
     <Compile Include="Helpers\Binders\GuidBinder.cs" />
