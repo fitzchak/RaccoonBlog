@@ -5,10 +5,10 @@
 @if (Model.IsAuthenticated())
 { 
 	<h1>Welcome @Model.FullName</h1>
-    <p><a href="@Url.Action("Logout", "Login")">Log out</a></p>
+	<p><a href="@Url.Action("Logout", "Login")">Log out</a></p>
 }
 else
 { 
 	<h1>Log In</h1>
-    <p><a href="@Url.Action("Index", "Login")">Log in</a></p>
+	<p><a href="@Url.Action("Index", "Login")">Log in</a></p>
 }

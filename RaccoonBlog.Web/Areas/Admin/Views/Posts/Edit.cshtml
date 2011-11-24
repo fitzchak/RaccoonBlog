@@ -1,6 +1,6 @@
 ﻿@model PostInput
 @{
-    ViewBag.Title = @Model.Title;
+	ViewBag.Title = @Model.Title;
 }
 
 <article class="post">
@@ -8,13 +8,13 @@
 {
 
 	@Html.EditorFor(x => x.Title);
-    @Html.EditorFor(x => x.ContentType);
+	@Html.EditorFor(x => x.ContentType);
 	@Html.EditorFor(x => x.Body);
 	@Html.EditorFor(x => x.CreatedAt);
 	@Html.EditorFor(x => x.PublishAt);
 	@Html.EditorFor(x => x.Tags);
 	@Html.EditorFor(x => x.AllowComments);
 
-    <text><input type="submit" value="Update Post"></text>
+	<text><input type="submit" value="Update Post"></text>
 }
 </article>
