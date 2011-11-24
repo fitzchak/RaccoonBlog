@@ -65,14 +65,6 @@ namespace RaccoonBlog.IntegrationTests.Routing
 		}
 
 		[Fact]
-		public void ElmahControllerRoutes()
-		{
-			"~/admin/elmah".ShouldMapTo<ElmahController>(c => c.Index(null));
-			"~/admin/elmah/detail".ShouldMapTo<ElmahController>(c => c.Index("detail"));
-			"~/admin/elmah/stylesheet".ShouldMapTo<ElmahController>(c => c.Index("stylesheet"));
-		}
-
-		[Fact]
 		public void ConfigurationAdminControllerRoutes()
 		{
 			"~/admin/configuration".ShouldMapTo<SettingsController>(c => c.Index());

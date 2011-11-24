@@ -269,7 +269,6 @@
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Infrastructure\Common\DateTimeOffsetUtil.cs" />
     <Compile Include="Controllers\CssController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ElmahController.cs" />
     <Compile Include="Helpers\Binders\RemoveSpacesEnumBinder.cs" />
     <Compile Include="Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Controllers\PostDetailsController.cs" />

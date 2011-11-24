@@ -147,7 +147,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			if (!ModelState.IsValid)
 				return View("Edit", input);
 
-			var post = RavenSession.Load<Post>(id) ?? new Post();
+			var post = RavenSession.Load<Post>(input.Id) ?? new Post();
 			input.MapPropertiesToInstance(post);
 
 			var user = RavenSession.GetCurrentUser();

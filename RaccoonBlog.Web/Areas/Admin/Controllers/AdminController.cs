@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using RaccoonBlog.Web.Areas.Admin.Models;
 using RaccoonBlog.Web.Controllers;
-using RaccoonBlog.Web.Infrastructure.AutoMapper;
-using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
@@ -12,13 +10,8 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 	{
 		protected override void OnActionExecuted(ActionExecutedContext filterContext)
 		{
-			if (filterContext.IsChildAction)
-				return;
-
-			ViewBag.BlogConfig = BlogConfig.MapTo<BlogConfigViewModel>();
+			base.OnActionExecuted(filterContext);
 			ViewBag.TopMenus = GetTopMenu();
-
-			CompleteSessionHandler(filterContext);
 		}
 
 		private IList<AdminMenu> GetTopMenu()
@@ -67,7 +60,6 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			       				Title = "Tools",
 			       				SubMenus = new List<AdminMenu>
 			       				           	{
-			       				           		new AdminMenu {Title = "Elmah", Url = Url.Action("Index", "Elmah")},
 												new AdminMenu {Title = "Settings", Url = Url.Action("Index", "Settings")},
 			       				           	}
 			       			},
