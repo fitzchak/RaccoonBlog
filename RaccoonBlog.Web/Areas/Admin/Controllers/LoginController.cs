@@ -1,5 +1,6 @@
 using System.Web.Mvc;
 using System.Web.Security;
+using RaccoonBlog.Web.Areas.Admin.ViewModels;
 using RaccoonBlog.Web.Controllers;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.ViewModels;
