@@ -6,7 +6,7 @@
 	@foreach (var tag in Model)
 	{
 		<li>
-			<a href="@Url.Action("Tag", "Post", new { tag.Slug })">@tag.Name</a> (@tag.Count)
+			<a href="@Url.Action("Tag", "Posts", new { tag.Slug })">@tag.Name</a> (@tag.Count)
 			<span class="rss"><a href="@Url.Action("Rss", "Syndication", new { Tag = tag.Slug })">rss</a></span>
 		</li>
 	}

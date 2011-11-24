@@ -31,13 +31,13 @@ namespace RaccoonBlog.Web
 
 			routes.MapRouteLowerCase("Default",
 				"{controller}/{action}",
-				new { controller = "Post", action = "Index" },
+				new { controller = "Posts", action = "Index" },
 				new [] { "RaccoonBlog.Web.Controllers" }
 				);
 
 			routes.MapRouteLowerCase("homepage",
 			   "",
-			   new { controller = "Post", action = "Index" },
+			   new { controller = "Posts", action = "Index" },
 			   new[] { "RaccoonBlog.Web.Controllers" }
 			   );
 		}
@@ -71,7 +71,7 @@ namespace RaccoonBlog.Web
 		{
 			routes.MapRouteLowerCase("PostsByTag",
 				"tags/{slug}",
-				new { controller = "Post", action = "Tag" },
+				new { controller = "Posts", action = "Tag" },
 				new[] { "RaccoonBlog.Web.Controllers" }
 				);
 
@@ -79,21 +79,21 @@ namespace RaccoonBlog.Web
 
 			routes.MapRouteLowerCase("PostsByYearMonthDay",
 				"archive/{year}/{month}/{day}",
-				new { controller = "Post", action = "Archive" },
+				new { controller = "Posts", action = "Archive" },
 				new { Year = MatchPositiveInteger, Month = MatchPositiveInteger, Day = MatchPositiveInteger },
 				new[] { "RaccoonBlog.Web.Controllers" }
 				);
 
 			routes.MapRouteLowerCase("PostsByYearMonth",
 				"archive/{year}/{month}",
-				new { controller = "Post", action = "Archive" },
+				new { controller = "Posts", action = "Archive" },
 				new { Year = MatchPositiveInteger, Month = MatchPositiveInteger },
 				new[] { "RaccoonBlog.Web.Controllers" }
 				);
 
 			routes.MapRouteLowerCase("PostsByYear",
 				"archive/{year}",
-				new { controller = "Post", action = "Archive" },
+				new { controller = "Posts", action = "Archive" },
 				new { Year = MatchPositiveInteger },
 				new[] { "RaccoonBlog.Web.Controllers" }
 				);
