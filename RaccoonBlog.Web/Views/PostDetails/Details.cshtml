@@ -102,49 +102,49 @@
 			}
 			else
 			{
-                if (Model.IsLoggedInCommenter == false)
-                {
-                    <div class="openid-wrapper">
-                        <form id="openid" action="@Url.Action("Login", "Social")" method="post">
-                            <noscript>
-				                <p>OpenID is service that allows you to log-on to many different websites using a single identity.
-				                Find out <a href="http://openid.net/what/">more about OpenID</a> and <a href="http://openid.net/get/">how to get an OpenID enabled account</a>.</p>
-			                </noscript>
+				if (Model.IsLoggedInCommenter == false)
+				{
+					<div class="openid-wrapper">
+						<form id="openid" action="@Url.Action("Login", "Social")" method="post">
+							<noscript>
+								<p>OpenID is service that allows you to log-on to many different websites using a single identity.
+								Find out <a href="http://openid.net/what/">more about OpenID</a> and <a href="http://openid.net/get/">how to get an OpenID enabled account</a>.</p>
+							</noscript>
 
-                            @Html.Hidden("returnUrl", Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))
-	                    </form>
-                    </div>
-                }
-                if (ViewData.ModelState.IsValid == false)
-                { 
+							@Html.Hidden("returnUrl", Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))
+						</form>
+					</div>
+				}
+				if (ViewData.ModelState.IsValid == false)
+				{ 
 					<div class="form-error">
 						@Html.ValidationSummary(true)
 					</div>
-                }
-                <div class="comment-form-wrapper">
-                    @using (Html.BeginForm("Comment", "PostDetails", new { id = Model.Post.Id, key = Model.Post.Key }))
-                    {
-					    @Html.EditorFor(x => x.Input.Name)
-					    @Html.EditorFor(x => x.Input.Email)
-					    @Html.EditorFor(x => x.Input.Url)
-					    @Html.EditorFor(x => x.Input.Body)
+				}
+				<div class="comment-form-wrapper">
+					@using (Html.BeginForm("Comment", "PostDetails", new { id = Model.Post.Id, key = Model.Post.Key }))
+					{
+						@Html.EditorFor(x => x.Input.Name)
+						@Html.EditorFor(x => x.Input.Email)
+						@Html.EditorFor(x => x.Input.Url)
+						@Html.EditorFor(x => x.Input.Body)
 
-                        if (!Model.IsTrustedCommenter)
-                        {
-						    <div class="form_item">
-							    <label>
-								    <span class="form_item_name">Are you human?</span>
-								    @Html.GenerateCaptcha()
-								    @Html.ValidationMessage("CaptchaNotValid")
-							    </label>
-						    </div>
-                        }
-					    @Html.EditorFor(x => x.Input.CommenterKey)
-					    <input type="submit" value="Post Comment" />
-					    <div class="clr"></div>
-                    }
-                </div>
-            }
+						if (!Model.IsTrustedCommenter)
+						{
+							<div class="form_item">
+								<label>
+									<span class="form_item_name">Are you human?</span>
+									@Html.GenerateCaptcha()
+									@Html.ValidationMessage("CaptchaNotValid")
+								</label>
+							</div>
+						}
+						@Html.EditorFor(x => x.Input.CommenterKey)
+						<input type="submit" value="Post Comment" />
+						<div class="clr"></div>
+					}
+				</div>
+			}
 		</article>
 	</section>
 </article>
@@ -162,8 +162,8 @@
 	@if (Model.IsLoggedInCommenter == false)
 	{
 		<script type="text/javascript">
-	    
-	    		$(function () {
+		
+				$(function () {
 				$('#openid').openid({
 					img_path: '@Url.Content("~/Content/css/images/")',
 					txt: {
