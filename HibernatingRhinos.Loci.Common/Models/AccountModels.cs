@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using DataAnnotationsExtensions;
 
 namespace HibernatingRhinos.Loci.Common.Models
 {
@@ -25,7 +26,7 @@ namespace HibernatingRhinos.Loci.Common.Models
 	public class LogOnModel
 	{
 		[Required]
-		[DataType(DataType.EmailAddress)]
+		[Email]
 		[Display(Name = "Login")]
 		public string Login { get; set; }
 
@@ -50,7 +51,7 @@ namespace HibernatingRhinos.Loci.Common.Models
 
 		[Required]
 		[StringLength(50, ErrorMessage = "E-mail address longer than 50 characters isn't valid.")]
-		[DataType(DataType.EmailAddress)]
+		[Email]
 		[Display(Name = "Email address (used as your login ID, too)")]
 		public string Email { get; set; }
 
