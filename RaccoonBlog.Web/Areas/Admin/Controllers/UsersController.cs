@@ -52,7 +52,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult Edit(UserInput input, int id)
+		public ActionResult Update(UserInput input)
 		{
 			if (!ModelState.IsValid)
 				return View("Edit", input);
@@ -74,7 +74,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult ChangePassword(ChangePasswordModel input, int id)
+		public ActionResult ChangePassword(ChangePasswordModel input)
 		{
 			if (!ModelState.IsValid)
 				return View("ChangePassword", input);
