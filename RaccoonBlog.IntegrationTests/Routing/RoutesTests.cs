@@ -1,8 +1,6 @@
-using System;
 using System.Web.Mvc;
 using System.Web.Routing;
 using MvcContrib.TestHelper;
-using RaccoonBlog.Web;
 using RaccoonBlog.Web.Controllers;
 using Xunit;
 
@@ -13,7 +11,7 @@ namespace RaccoonBlog.IntegrationTests.Routing
 		[Fact]
 		public void DefaultRoute()
 		{
-			"~/".ShouldMapTo<PostController>(c => c.List());
+			"~/".ShouldMapTo<PostsController>(c => c.List());
 		}
 
 		[Fact]
@@ -28,16 +26,16 @@ namespace RaccoonBlog.IntegrationTests.Routing
 		}
 
 		[Fact]
-		public void PostControllerRoutes()
+		public void Posts()
 		{
-			"~/".ShouldMapTo<PostController>(c => c.List());
+			"~/".ShouldMapTo<PostsController>(c => c.List());
 
-			"~/tags/tag-name".ShouldMapTo<PostController>(c => c.Tag("tag-name"));
+			"~/tags/tag-name".ShouldMapTo<PostsController>(c => c.Tag("tag-name"));
 
 			// "~/archive".ShouldMapTo<ErrorController>(c => c.404());
-			"~/archive/2011".ShouldMapTo<PostController>(c => c.Archive(2011, null,null));
-			"~/archive/2011/4".ShouldMapTo<PostController>(c => c.Archive(2011, 4, null));
-			"~/archive/2011/4/24".ShouldMapTo<PostController>(c => c.Archive(2011, 4, 24));
+			"~/archive/2011".ShouldMapTo<PostsController>(c => c.Archive(2011, null,null));
+			"~/archive/2011/4".ShouldMapTo<PostsController>(c => c.Archive(2011, 4, null));
+			"~/archive/2011/4/24".ShouldMapTo<PostsController>(c => c.Archive(2011, 4, 24));
 		}
 
 		[Fact]

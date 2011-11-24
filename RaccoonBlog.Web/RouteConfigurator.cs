@@ -22,7 +22,7 @@ namespace RaccoonBlog.Web
 
 			ConfigureSyndication();
 
-			ConfigurePost();
+			Posts();
 			ConfigureLegacyPost();
 			ConfigurePostDetails();
 			ConfigureSocialLogin();
@@ -77,7 +77,7 @@ namespace RaccoonBlog.Web
 			   );
 		}
 
-		private void ConfigurePost()
+		private void Posts()
 		{
 			routes.MapRouteLowerCase("PostController-PostsByTag",
 				"tags/{slug}",

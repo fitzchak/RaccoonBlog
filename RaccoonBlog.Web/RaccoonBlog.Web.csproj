@@ -412,7 +412,7 @@
     <Content Include="Content\js\jquery.tmpl.min.js" />
     <Compile Include="ViewModels\RecentCommentViewModel.cs" />
     <Content Include="Areas\Admin\Views\Sections\Edit.cshtml" />
-    <Compile Include="Controllers\PostController.cs" />
+    <Compile Include="Controllers\PostsController.cs" />
     <Content Include="RavenNotReachable.htm" />
     <Content Include="Scripts\MarkdownDeep License.txt" />
     <Content Include="Scripts\MarkdownDeep Quick Reference.txt" />
