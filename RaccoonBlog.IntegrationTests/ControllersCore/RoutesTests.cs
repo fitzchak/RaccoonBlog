@@ -4,6 +4,7 @@ using System.Web.Routing;
 using MvcContrib.TestHelper;
 using RaccoonBlog.Web;
 using RaccoonBlog.Web.Areas.Admin.Controllers;
+using RaccoonBlog.Web.Areas.Admin.ViewModels;
 using RaccoonBlog.Web.Controllers;
 using RaccoonBlog.Web.ViewModels;
 using Xunit;
@@ -87,11 +88,10 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
 
 			"~/admin/logout".ShouldMapTo<LoginController>(c => c.LogOut(null));
 
-			//"~/admin/currentuser".ShouldMapTo<LoginController>(c => c.CurrentUser());
-			//"~/section/administrationpanel".ShouldMapTo<LoginController>(c => c.AdministrationPanel());
+			"~/admin/currentuser".ShouldMapTo<LoginController>(c => c.CurrentUser());
+			"~/section/administrationpanel".ShouldMapTo<LoginController>(c => c.AdministrationPanel());
 		}
 
-		/*
 		[Fact]
 		public void PostAdminControllerRoutes()
 		{
@@ -218,6 +218,6 @@ namespace RaccoonBlog.IntegrationTests.ControllersCore
 		public void ConfigurationAdminControllerRoutes()
 		{
 			"~/admin/configuration".ShouldMapTo<ConfigurationAdminController>(c => c.Index());
-		}*/
+		}
 	}
 }
