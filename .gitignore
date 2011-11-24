@@ -22,6 +22,8 @@ temp-war-deps
 StyleCop.Cache
 /Server
 App_Data/
-/src/RaccoonBlog.Web/RaccoonBlog.Web.Publish.xml
-/src/*.docstates
+/RaccoonBlog.Web/RaccoonBlog.Web.Publish.xml
+/*.docstates
 Thumbs.db
+*.dotCover
+/RaccoonBlog.Web/RaccoonBlog.Web.Publish.xml
