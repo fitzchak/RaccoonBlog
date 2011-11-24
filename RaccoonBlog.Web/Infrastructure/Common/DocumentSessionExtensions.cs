@@ -78,9 +78,7 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 
 		public static User GetUserByEmail(this IDocumentSession session, string email)
 		{
-			return session.Query<User>()
-				.Where(u => u.Email == email)
-				.FirstOrDefault();
+			return session.Query<User>().FirstOrDefault(u => u.Email == email);
 		}
 
 		public static Commenter GetCommenter(this IDocumentSession session, string commenterKey)
@@ -100,9 +98,7 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 
 		public static Commenter GetCommenter(this IDocumentSession session, Guid commenterKey)
 		{
-			return session.Query<Commenter>()
-						.Where(x => x.Key == commenterKey)
-						.FirstOrDefault();
+			return session.Query<Commenter>().FirstOrDefault(x => x.Key == commenterKey);
 		}
 	}
 }
