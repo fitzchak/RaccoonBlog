@@ -1,6 +1,6 @@
 using System.Web.Mvc;
 using System.Web.Security;
-using RaccoonBlog.Web.Areas.Admin.ViewModels;
+using HibernatingRhinos.Loci.Common.Models;
 using RaccoonBlog.Web.Controllers;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.ViewModels;
@@ -17,13 +17,13 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 				return RedirectFromLoginPage();
 			}
 
-			return View(new LoginInput { ReturnUrl = returnUrl });
+			return View(new LogOnModel { ReturnUrl = returnUrl });
 		}
 
 		[HttpPost]
-		public ActionResult Index(LoginInput input)
+		public ActionResult Index(LogOnModel input)
 		{
-			var user = RavenSession.GetUserByEmail(input.Email);
+			var user = RavenSession.GetUserByEmail(input.Login);
 
 			if (user == null || user.ValidatePassword(input.Password) == false)
 			{
@@ -37,11 +37,11 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 
 			if (ModelState.IsValid)
 			{
-				FormsAuthentication.SetAuthCookie(input.Email, true);
+				FormsAuthentication.SetAuthCookie(input.Login, true);
 				return RedirectFromLoginPage(input.ReturnUrl);
 			}
 
-			return View(new LoginInput {Email = input.Email, ReturnUrl = input.ReturnUrl});
+			return View(new LogOnModel { Login = input.Login, ReturnUrl = input.ReturnUrl });
 		}
 
 		private ActionResult RedirectFromLoginPage(string retrunUrl = null)
@@ -65,7 +65,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 				return View(new CurrentUserViewModel());
 
 			var user = RavenSession.GetUserByEmail(HttpContext.User.Identity.Name);
-			return View(new CurrentUserViewModel {FullName = user.FullName});
+			return View(new CurrentUserViewModel {FullName = user.FullName}); // TODO: we don't really need a VM here
 		}
 	}
 }

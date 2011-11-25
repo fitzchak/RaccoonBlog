@@ -1,4 +1,5 @@
-﻿@model RaccoonBlog.Web.Areas.Admin.ViewModels.LoginInput
+﻿@using HibernatingRhinos.Loci.Common.Models
+@model LogOnModel
 @{
 	Layout = null;
 }
@@ -39,8 +40,8 @@
 		<form action="@Url.Action("Index")" method="post">
 		<table border="0" cellpadding="0" cellspacing="0">
 		<tr>
-			<th>Username</th>
-			<td>@Html.TextBoxFor(x => x.Email, new {@class = "login-inp"})</td>
+			<th>Login</th>
+			<td>@Html.TextBoxFor(x => x.Login, new {@class = "login-inp"})</td>
 		</tr>
 		<tr>
 			<th>Password</th>
