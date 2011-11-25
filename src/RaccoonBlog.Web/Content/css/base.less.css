@@ -672,3 +672,43 @@ div.comments-rss
 	font-size: smaller;
 	padding-left: 15px;
 }
+
+@media screen and (max-width: 780px) 
+{
+    div#logoimage, div#sidebar {
+         display: none;
+    }
+    div#content {
+         width: auto;
+         float: none;
+    }
+}
+
+@media screen and (max-width: 640px) 
+{
+    span.rdbprofilerbutton {
+         display: none;
+    }
+    #postComment .comment-form-wrapper textarea {
+        width: 80%;
+    }
+    article header h1 a, .comment header {
+        white-space: normal;
+    }
+    #postComment .comment-form-wrapper {
+        width: auto;
+    }
+    .form_item label span.form_item_name {
+        width: 150px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+  header#headermain h2 {
+    width: auto;
+  }
+    .form_item label span.form_item_name {
+        width: auto;
+        float: none;
+    }
+}
