@@ -701,6 +701,9 @@ div.comments-rss
     .form_item label span.form_item_name {
         width: 150px;
     }
+    img {
+        max-width: 100%;
+    }
 }
 
 @media screen and (max-width: 480px) {
