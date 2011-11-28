@@ -75,8 +75,6 @@ namespace RaccoonBlog.Web
 				new[] { "RaccoonBlog.Web.Controllers" }
 				);
 
-			#region "Archive"
-
 			routes.MapRouteLowerCase("PostsByYearMonthDay",
 				"archive/{year}/{month}/{day}",
 				new { controller = "Post", action = "Archive" },
@@ -97,8 +95,6 @@ namespace RaccoonBlog.Web
 				new { Year = MatchPositiveInteger },
 				new[] { "RaccoonBlog.Web.Controllers" }
 				);
-
-			#endregion
 		}
 
 		private void LegacyPost()
