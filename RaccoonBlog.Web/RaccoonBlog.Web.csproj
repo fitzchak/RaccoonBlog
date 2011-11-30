@@ -490,7 +490,7 @@
     <Content Include="Views\PostDetails\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Post\List.cshtml" />
+    <Content Include="Views\Posts\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -40,7 +40,7 @@ namespace RaccoonBlog.Web.Controllers
 
         public ActionResult RedirectLegacyArchive(int year, int month, int day)
         {
-            return RedirectToActionPermanent("Archive", "Post", new { year, month, day });
+            return RedirectToActionPermanent("Archive", "Posts", new { year, month, day });
         }
     }
 }

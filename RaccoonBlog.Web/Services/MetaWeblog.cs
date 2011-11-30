@@ -154,7 +154,7 @@ namespace RaccoonBlog.Web.Services
 				                                 		categoryid = x.Name,
 				                                 		description = x.Name,
 				                                 		title = x.Name,
-				                                 		htmlUrl = Url.Action("Tag", "Post", new {slug = x.Name}),
+				                                 		htmlUrl = Url.Action("Tag", "Posts", new {slug = x.Name}),
 				                                 		rssUrl = Url.Action("Rss", "Syndication", new {tag = x.Name}),
 				                                 	}).ToArray();
 			}
