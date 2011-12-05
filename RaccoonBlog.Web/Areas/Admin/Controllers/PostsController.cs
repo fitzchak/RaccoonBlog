@@ -142,12 +142,12 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		
 		[HttpPost]
 		[ValidateInput(false)]
-		public ActionResult Update(PostInput input)
+		public ActionResult Edit(PostInput input, int id)
 		{
 			if (!ModelState.IsValid)
 				return View("Edit", input);
 
-			var post = RavenSession.Load<Post>(input.Id) ?? new Post();
+			var post = RavenSession.Load<Post>(id) ?? new Post();
 			input.MapPropertiesToInstance(post);
 
 			var user = RavenSession.GetCurrentUser();

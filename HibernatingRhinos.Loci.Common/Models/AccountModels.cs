@@ -6,9 +6,6 @@ namespace HibernatingRhinos.Loci.Common.Models
 {
 	public class ChangePasswordModel
 	{
-		[HiddenInput]
-		public int Id { get; set; }
-
 		[Required]
 		[DataType(DataType.Password)]
 		[Display(Name = "Current password")]
@@ -40,6 +37,8 @@ namespace HibernatingRhinos.Loci.Common.Models
 
 		[Display(Name = "Remember me?")]
 		public bool RememberMe { get; set; }
+
+		public string ReturnUrl { get; set; }
 	}
 
 	public class RegisterModel
