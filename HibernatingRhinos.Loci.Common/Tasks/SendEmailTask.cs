@@ -30,7 +30,9 @@ namespace HibernatingRhinos.Loci.Common.Tasks
 			var routeData = new RouteData();
 			routeData.Values.Add("controller", "MailTemplates");
 			var controllerContext = new ControllerContext(httpContext, routeData, new MailController());
+// ReSharper disable Mvc.MasterpageNotResolved
 			var viewEngineResult = ViewEngines.Engines.FindView(controllerContext, viewName, "_Layout");
+// ReSharper restore Mvc.MasterpageNotResolved
 			var stringWriter = new StringWriter();
 			viewEngineResult.View.Render(
 				new ViewContext(controllerContext, viewEngineResult.View, new ViewDataDictionary(model), new TempDataDictionary(),
