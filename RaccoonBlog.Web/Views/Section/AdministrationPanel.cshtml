@@ -1,19 +1,18 @@
 ﻿@model CurrentUserViewModel
 @{
-    Layout = "";    
+	Layout = "";    
 }
 @if (Model.IsAuthenticated())
 { 
 	<aside class="section admin-panel">
-        <h1>Administration Panel</h1>
-        <p>Welcome @Model.FullName!</p>
-        <ul>
-            <li><a href="@Url.Action("Index", "Posts", new { area = "Admin" })">Posts</a></li>
-            <li><a href="@Url.Action("List", "Sections", new { area = "Admin" })">Section</a></li>
-            <li><a href="@Url.Action("Index", "Users", new { area = "Admin" })">Users</a></li>
-            <li><a href="@Url.Action("Index", "Elmah", new { area = "Admin" })">Elmah</a></li>
-            <li><a href="@Url.Action("Index", "Settings", new { area = "Admin" })">Settings</a></li>
-            <li><a href="@Url.Action("Logout", "Login", new { area = "Admin" })">Log out</a></li>
-        </ul>
-    </aside>
+		<h1>Administration Panel</h1>
+		<p>Welcome @Model.FullName!</p>
+		<ul>
+			<li><a href="@Url.Action("Index", "Posts", new { area = "Admin" })">Posts</a></li>
+			<li><a href="@Url.Action("List", "Sections", new { area = "Admin" })">Section</a></li>
+			<li><a href="@Url.Action("Index", "Users", new { area = "Admin" })">Users</a></li>
+			<li><a href="@Url.Action("Index", "Settings", new { area = "Admin" })">Settings</a></li>
+			<li><a href="@Url.Action("Logout", "Login", new { area = "Admin" })">Log out</a></li>
+		</ul>
+	</aside>
 }

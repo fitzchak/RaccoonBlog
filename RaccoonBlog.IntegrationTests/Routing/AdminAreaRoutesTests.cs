@@ -1,8 +1,7 @@
 using System.Web.Mvc;
-using System.Web.Routing;
+using HibernatingRhinos.Loci.Common.Models;
 using MvcContrib.TestHelper;
 using RaccoonBlog.Web.Areas.Admin.Controllers;
-using RaccoonBlog.Web.Areas.Admin.ViewModels;
 using Xunit;
 
 namespace RaccoonBlog.IntegrationTests.Routing
@@ -13,7 +12,7 @@ namespace RaccoonBlog.IntegrationTests.Routing
 		public void LoginControllerRoutes()
 		{
 			"~/admin/login".ShouldMapTo<LoginController>(c => c.Index((string)null));
-			"~/admin/login".WithMethod(HttpVerbs.Post).ShouldMapTo<LoginController>(c => c.Index((LoginInput)null));
+			"~/admin/login".WithMethod(HttpVerbs.Post).ShouldMapTo<LoginController>(c => c.Index((LogOnModel)null));
 
 			"~/admin/logout".ShouldMapTo<LoginController>(c => c.LogOut(null));
 
