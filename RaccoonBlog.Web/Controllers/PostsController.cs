@@ -70,7 +70,7 @@ namespace RaccoonBlog.Web.Controllers
 			return ListView(stats.TotalResults, posts);
 		}
 
-		private ActionResult ListView(int count, IEnumerable<Post> posts)
+		private ActionResult ListView(int count, IList<Post> posts)
 		{
 			var summaries = posts.MapTo<PostsViewModel.PostSummary>();
 			foreach (var post in posts)
