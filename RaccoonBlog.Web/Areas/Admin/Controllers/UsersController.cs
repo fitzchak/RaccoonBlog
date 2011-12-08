@@ -52,12 +52,12 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult Edit(UserInput input, int id)
+		public ActionResult Update(UserInput input)
 		{
 			if (!ModelState.IsValid)
 				return View("Edit", input);
 
-			var user = RavenSession.Load<User>(id) ?? new User();
+			var user = RavenSession.Load<User>(input.Id) ?? new User();
 			input.MapPropertiesToInstance(user);
 			RavenSession.Store(user);
 			return RedirectToAction("Index");
@@ -74,12 +74,12 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult ChangePassword(ChangePasswordModel input, int id)
+		public ActionResult ChangePassword(ChangePasswordModel input)
 		{
 			if (!ModelState.IsValid)
 				return View("ChangePassword", input);
 
-			var user = RavenSession.Load<User>(id);
+			var user = RavenSession.Load<User>(input.Id);
 			if (user == null)
 				return HttpNotFound("User does not exist.");
 
