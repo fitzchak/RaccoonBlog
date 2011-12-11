@@ -20,13 +20,13 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 				.OrderBy(x => x.Position)
 				.ToList();
 
-			return View("List", sections.MapTo<SectionSummery>());
+			return View("List", sections);
 		}
 
 		[HttpGet]
 		public ActionResult Add()
 		{
-			return View("Edit", new SectionInput());
+			return View("Edit", new Section());
 		}
 
 		[HttpGet]
@@ -35,11 +35,11 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			var section = RavenSession.Load<Section>(id);
 			if (section == null)
 				return HttpNotFound("Section does not exist.");
-			return View(section.MapTo<SectionInput>());
+			return View(section);
 		}
 
 		[HttpPost]
-		public ActionResult Update(SectionInput input)
+		public ActionResult Update(Section input)
 		{
 			if (!ModelState.IsValid)
 				return View("Edit", input);

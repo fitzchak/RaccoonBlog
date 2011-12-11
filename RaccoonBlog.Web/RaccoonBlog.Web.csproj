@@ -292,7 +292,6 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\GuidToStringConverter.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\SanitizeHtml.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\UrlResolver.cs" />
-    <Compile Include="Infrastructure\AutoMapper\Profiles\SectionAdminMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\SectionMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\TagsListViewModelMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\PostsAdminViewModelMapperProfile.cs" />
@@ -353,15 +352,12 @@
     <Compile Include="ViewModels\CurrentUserViewModel.cs" />
     <Compile Include="ViewModels\FuturePostViewModel.cs" />
     <Compile Include="ViewModels\NewCommentEmailViewModel.cs" />
-    <Compile Include="ViewModels\PostInput.cs" />
     <Compile Include="ViewModels\PostReference.cs" />
     <Compile Include="ViewModels\PostsStatisticsViewModel.cs" />
     <Compile Include="ViewModels\PostSummaryJson.cs" />
     <Compile Include="ViewModels\PostViewModel.cs" />
     <Compile Include="ViewModels\PostsViewModel.cs" />
     <Compile Include="ViewModels\SectionDetails.cs" />
-    <Compile Include="ViewModels\SectionInput.cs" />
-    <Compile Include="ViewModels\SectionSummery.cs" />
     <Compile Include="ViewModels\TagDetails.cs" />
     <Compile Include="ViewModels\TagsListViewModel.cs" />
     <Compile Include="ViewModels\UserInput.cs" />

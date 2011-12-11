@@ -1,4 +1,5 @@
-﻿@model SectionInput
+﻿@using RaccoonBlog.Web.Models
+@model Section
 @{
 	ViewBag.H1 = Model.IsNewSection() ? "Create a New Section" : "Edit Section " + Model.Title;
 	ViewBag.SubmitButtonText = Model.IsNewSection() ? "Create Section" : "Update Section";
