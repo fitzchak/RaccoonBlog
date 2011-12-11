@@ -359,7 +359,6 @@
     <Compile Include="ViewModels\PostSummaryJson.cs" />
     <Compile Include="ViewModels\PostViewModel.cs" />
     <Compile Include="ViewModels\PostsViewModel.cs" />
-    <Compile Include="ViewModels\RequestValues.cs" />
     <Compile Include="ViewModels\SectionDetails.cs" />
     <Compile Include="ViewModels\SectionInput.cs" />
     <Compile Include="ViewModels\SectionSummery.cs" />

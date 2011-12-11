@@ -12,6 +12,13 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 {
 	public class AddCommentTask : BackgroundTask
 	{
+		public class RequestValues
+		{
+			public string UserAgent { get; set; }
+			public string UserHostAddress { get; set; }
+			public bool IsAuthenticated { get; set; }
+		}
+
 		private readonly CommentInput _commentInput;
 		private readonly RequestValues _requestValues;
 		private readonly int _postId;

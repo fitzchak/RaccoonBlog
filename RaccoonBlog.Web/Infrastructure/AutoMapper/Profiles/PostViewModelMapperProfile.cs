@@ -62,7 +62,7 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 			//    .ForMember(x => x.CommenterKey, o => o.Ignore())
 			//    ;
 
-            Mapper.CreateMap<HttpRequestWrapper, RequestValues>();
+            Mapper.CreateMap<HttpRequestWrapper, Tasks.AddCommentTask.RequestValues>();
 
             Mapper.CreateMap<User, PostViewModel.UserDetails>();
         }
