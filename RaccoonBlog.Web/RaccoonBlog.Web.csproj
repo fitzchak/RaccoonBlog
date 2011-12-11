@@ -348,7 +348,7 @@
     <Compile Include="ViewModels\AdminPostDetailsViewModel.cs" />
     <Compile Include="ViewModels\BlogConfigurationInput.cs" />
     <Compile Include="ViewModels\BlogConfigViewModel.cs" />
-    <Compile Include="ViewModels\CommenterUtil.cs" />
+    <Compile Include="Helpers\CommenterUtil.cs" />
     <Compile Include="ViewModels\CommentInput.cs" />
     <Compile Include="ViewModels\CurrentUserViewModel.cs" />
     <Compile Include="ViewModels\FuturePostViewModel.cs" />

@@ -1,7 +1,7 @@
 using System;
 using System.Web;
 
-namespace RaccoonBlog.Web.ViewModels
+namespace RaccoonBlog.Web.Helpers
 {
 	public static class CommenterUtil
 	{
