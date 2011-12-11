@@ -2,7 +2,7 @@ using RaccoonBlog.Web.Infrastructure.Common;
 
 namespace RaccoonBlog.Web.ViewModels
 {
-    public class TagDetails : AbstractViewModel
+    public class TagDetails
     {
         public string Name { get; set; }
 

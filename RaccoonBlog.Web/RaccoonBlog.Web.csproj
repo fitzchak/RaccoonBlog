@@ -345,7 +345,6 @@
     <Compile Include="Infrastructure\Common\SlugConverter.cs" />
     <Compile Include="Services\RssModels\UserInfo.cs" />
     <Compile Include="Services\RssModels\WordpressCategory.cs" />
-    <Compile Include="ViewModels\AbstractViewModel.cs" />
     <Compile Include="ViewModels\AdminPostDetailsViewModel.cs" />
     <Compile Include="ViewModels\BlogConfigurationInput.cs" />
     <Compile Include="ViewModels\BlogConfigViewModel.cs" />
