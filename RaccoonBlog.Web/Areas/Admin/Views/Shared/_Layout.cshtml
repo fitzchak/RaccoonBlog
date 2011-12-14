@@ -12,9 +12,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>RaccoonBlog :: @ViewBag.Title</title>
 <link rel="stylesheet" href="@Html.AdminStyle("screen.css")" type="text/css" media="screen" title="default" />
-<!--[if IE]>
+@*[if IE]>*@
 <link rel="stylesheet" media="all" type="text/css" href="@Html.AdminStyle("pro_dropline_ie.css")" />
-<![endif]-->
+@*<![endif]*@
 @RenderSection("Style", false)
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
@@ -185,8 +185,8 @@
 	</div>
 
 	<!--  start top-search -->
-	<div id="top-search">
-		<table border="0" cellpadding="0" cellspacing="0">
+@*	<div id="top-search">
+		<table>
 		<tr>
 		<td><input type="text" value="Search" onblur="if (this.value=='') { this.value='Search'; }" onfocus="if (this.value=='Search') { this.value=''; }" class="top-search-inp" /></td>
 		<td>
@@ -204,7 +204,7 @@
 	<!--  end top-search -->
 	<div class="clear"></div>
 
-</div>
+</div>*@
 <!-- End: page-top -->
 
 </div>
@@ -220,13 +220,13 @@
 		<!-- start nav-right -->
 		<div id="nav-right">
 		
-			<div class="nav-divider">&nbsp;</div>
-			<div class="showhide-account"><img src="@Html.AdminImage("shared/nav/nav_myaccount.gif")" width="93" height="14" alt="" /></div>
+			@*<div class="nav-divider">&nbsp;</div>*@
+			@*<div class="showhide-account"><img src="@Html.AdminImage("shared/nav/nav_myaccount.gif")" width="93" height="14" alt="" /></div>*@
 			<div class="nav-divider">&nbsp;</div>
 			<a href="@Url.Action("Logout", "Login")" id="logout"><img src="@Html.AdminImage("shared/nav/nav_logout.gif")" width="64" height="14" alt="" /></a>
 			<div class="clear">&nbsp;</div>
 
-			<div class="account-content">
+			@*<div class="account-content">
 			<div class="account-drop-inner">
 				<a href="" id="acc-settings">Settings</a>
 				<div class="clear">&nbsp;</div>
@@ -242,7 +242,7 @@
 				<div class="acc-line">&nbsp;</div>
 				<a href="" id="acc-stats">Statistics</a> 
 			</div>
-			</div>
+			</div>*@
 		</div>
 		<!-- end nav-right -->
 

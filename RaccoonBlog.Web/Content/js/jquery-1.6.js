@@ -4277,7 +4277,7 @@ var Expr = Sizzle.selectors = {
 			return elem.nodeName.toLowerCase() === "input" && "file" === elem.type;
 		},
 
-		password: function( elem ) {
+		password: function (elem) {
 			return elem.nodeName.toLowerCase() === "input" && "password" === elem.type;
 		},
 

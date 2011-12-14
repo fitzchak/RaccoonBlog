@@ -16,6 +16,7 @@ namespace RaccoonBlog.Web.Models
 		public string RelatedTwitterNick { get; set; }
 		public string RelatedTwitterNickDesc { get; set; }
 
+
 		const string ConstantSalt = "xi07cevs01q4#";
 		protected string HashedPassword { get; private set; }
 		private string passwordSalt;

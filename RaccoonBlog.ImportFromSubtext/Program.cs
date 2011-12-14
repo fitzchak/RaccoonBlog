@@ -108,7 +108,7 @@ namespace RaccoonBlog.ImportFromSubtext
                                 RelatedTwitterNick = users[i].RelatedTwitterNick,
                                 Enabled = true,
                             };
-                        user.SetPassword("123456");
+						user.SetPassword("123456");
                         s.Store(user);
                         usersList.Add(user);
                     }
