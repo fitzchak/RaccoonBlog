@@ -29,7 +29,7 @@
 						</ul>
 					</div>
 				}
-
+				<div div class="clr" >
 				<p class="published">Published at <time pubdate>@post.PublishedAt.ToString("r")</time></p>
 				@if (post.PublishedAt != post.CreatedAt) { 
 					<p class="created">Originally posted at <time>@post.CreatedAt.ToString("r")</time></p>
@@ -37,7 +37,7 @@
 				@if (post.CommentsCount > 0) {
 					<p class="comment-count"><a href="@postUrl#comments">Comments (@post.CommentsCount)</a></p>
 				}
-				<div class="clr"></div>
+				</div><div class="clr"></div>
 			</footer>
 		</article>
 	}

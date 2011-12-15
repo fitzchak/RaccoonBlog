@@ -1,11 +1,13 @@
-﻿    	<tr>
-			<th valign="top">@ViewData.ModelMetadata.DisplayName</th>
-			<td>@Html.TextBox(string.Empty, ViewData.TemplateInfo.FormattedModelValue, new Dictionary<string, object> { { "class", "inp-form" } })</td>
-			<td>
-            <!-- class="inp-form-error" -->
-            
-			    <div class="error-left"></div>
-			    <div class="error-inner">@Html.ValidationMessage(string.Empty)</div>
-            
-            </td>
-		</tr>
+﻿<tr style="float: right">
+	<td style="float: right" valign="top">@ViewData.ModelMetadata.DisplayName
+	</td>
+	<td >
+		<!-- class="inp-form-error" -->
+		<div class="error-left">
+		</div>
+		<div style="visibility: inherit" class="error-inner">@Html.ValidationMessage(string.Empty)</div>
+	</td>
+	<td style="float: right">@Html.TextBox(string.Empty, ViewData.TemplateInfo.FormattedModelValue, new Dictionary<string, object> { { "class", "inp-form" } })
+	</td>
+</tr>
+<br/><br/><br/>

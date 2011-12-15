@@ -35,6 +35,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			       				           		new AdminMenu {Title = "All posts", Url = Url.Action("List", "Posts")},
 			       				           		new AdminMenu{Title = "Create a new post", Url=Url.Action("Add", "Posts")}
 			       				           	}
+                                      
 			       			},
 			       		new AdminMenu
 			       			{

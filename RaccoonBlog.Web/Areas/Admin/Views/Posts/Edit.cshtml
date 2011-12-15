@@ -1,9 +1,10 @@
-﻿@model PostInput
+﻿@using RaccoonBlog.Web.Models
+@model PostInput
 @{
 	ViewBag.Title = @Model.Title;
 }
 
-<article class="post">
+<div class="post">
 @using (Html.BeginForm())
 {
 
@@ -17,4 +18,4 @@
 
 	<text><input type="submit" value="Update Post"></text>
 }
-</article>
+</div>
