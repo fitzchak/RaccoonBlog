@@ -15,9 +15,10 @@
 		@Html.ValidationSummary(true)
 	</div>
 }
+<article id="user-input">
 <form action="@Url.Action("Update")" method="post">
-<div style="left: 0px; float: left; width: 100%">
-	<table style="width: 90%; float: left" id="content-table">
+
+	<table style="width: 100%; " id="content-table">
 		<tr>
 			<th rowspan="3" class="sized">
 				<img src="@Html.AdminImage("shared/side_shadowleft.jpg")" width="20"
@@ -35,30 +36,31 @@
 	width="20" height="300" alt="" />
 			</th>
 		</tr>
-		<tr style="float: left; left: 5px;">
+		<tr>
 			<td id="tbl-border-left">
 			</td>
 			<td>
 				<!-- start content-table-inner -->
 				<div id="content-table-inner">
-					<table style="width: 100%">
+					<table>
 						<tr valign="top">
-							<td style="float: left; left: 5px;">
-								<table id="id-form" style="float: left; left: 5px;">
+							<td >
+								<table id="id-form">
 									@Html.EditorFor(x => x.Title) 
 									@Html.EditorFor(x => x.ControllerName)
 									@Html.EditorFor(x => x.ActionName)
 									@Html.EditorFor(x => x.IsActive)
+
 									@Html.EditorFor(x => x.Body) 
-									<div class="markdown-preview-container" style="display: none; float: left; left: 5px;">
-										<span class="form_item_name" style="float: left; left: 5px;">Preview Body</span>
-										<div class="section markdown-preview" style="float: left; left: 5px;">
+									<div class="markdown-preview-container" >
+										<span class="form_item_name" >Preview Body</span>
+										<div class="section markdown-preview" >
 										</div>
 									</div>
 									@Html.HiddenFor(x => x.Id)
-									<tr style="float: left; left: 5px;">
+									<tr>
 										<th>
-											&nbsp;
+											
 										</th>
 										<td valign="top">
 											<input type="submit" value="@ViewBag.SubmitButtonText" class="form-submit" />
@@ -174,8 +176,9 @@
 			</th>
 		</tr>
 	</table>
-</div>
+
 </form>
+</article>
 <div class="clear">
 	&nbsp;</div>
 @section Script {
@@ -185,8 +188,8 @@
 			var $textarea = $('textarea[name$="Body"]').keydown(function () {
 				$('.markdown-preview-container').show('medium');
 			});
-			$preview = $('.markdown-preview');
-			converter = new Showdown.converter();
+			var $preview = $('.markdown-preview');
+			var converter = new Showdown.converter();
 			$textarea.keyup(function () {
 				$preview.html(converter.makeHtml($textarea.val()));
 			}).trigger('keyup');

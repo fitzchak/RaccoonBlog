@@ -17,6 +17,7 @@ namespace RaccoonBlog.Web.Models
 		[Display(Name = "Title")]
         public string Title { get; set; }
 
+		[Required]
 		[Display(Name = "Active?")]
         public bool IsActive { get; set; }
 

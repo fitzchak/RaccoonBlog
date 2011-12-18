@@ -12,29 +12,25 @@
 
 	@using (Html.BeginForm())
 	{
+	
 		<p>
-			@Html.EditorFor(config => config.Title)
-			@Html.EditorFor(config => config.Subtitle)
-			@Html.EditorFor(config => config.MetaDescription)
-			@Html.EditorFor(config => config.MetaKeywords)
-			@Html.EditorFor(config => config.Copyright)
-			@Html.EditorFor(config => config.CustomCss)
-		</p>
-
-		<p>
-			@Html.EditorFor(config => config.AkismetKey)
-			@Html.EditorFor(config => config.GoogleAnalyticsKey)
-		</p>
-
-		<p>
-			@Html.EditorFor(config => config.RssFuturePostsKey)
-			@Html.EditorFor(config => config.RssFutureDaysAllowed)
-		</p>
-
-		<p>
-			@Html.EditorFor(config => config.MinNumberOfPostForSignificantTag)
-			@Html.EditorFor(config => config.NumberOfDayToCloseComments)
-		</p>
+			@Html.EditorFor(config => config.Title) </p>
+	 <p>
+			@Html.EditorFor(config => config.Subtitle)</p>
+			 <p>@Html.EditorFor(config => config.MetaDescription)</p>
+			 <p>@Html.EditorFor(config => config.MetaKeywords)</p>
+			 <p>@Html.EditorFor(config => config.Copyright)</p>
+			 <p>@Html.EditorFor(config => config.CustomCss)</p>
+		
+			 <p>@Html.EditorFor(config => config.AkismetKey)</p>
+			 <p>@Html.EditorFor(config => config.GoogleAnalyticsKey)</p>
+		
+			 <p>@Html.EditorFor(config => config.RssFuturePostsKey)</p>
+			 <p>@Html.EditorFor(config => config.RssFutureDaysAllowed)</p>
+		
+			 <p>@Html.EditorFor(config => config.MinNumberOfPostForSignificantTag)</p>
+			 <p>@Html.EditorFor(config => config.NumberOfDayToCloseComments)</p>
+		
 		<input type="submit" value="Save" />
 	}
 </article>

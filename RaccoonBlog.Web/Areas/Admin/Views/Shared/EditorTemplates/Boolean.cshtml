@@ -27,7 +27,7 @@
 		</div>
 		<div style="visibility: inherit" class="error-inner">@Html.ValidationMessage(string.Empty)</div>
 	</td>
-	<td style="float:left"> @if (ViewData.ModelMetadata.IsNullableValueType) {
+	<td > @if (ViewData.ModelMetadata.IsNullableValueType) {
                 @Html.DropDownList(string.Empty, TriStateValues, new Dictionary<string, object>{{"class", "styledselect_form_2"}})
             } else {
                 @Html.CheckBox(string.Empty, Value ?? false)
