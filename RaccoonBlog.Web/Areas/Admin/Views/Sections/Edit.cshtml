@@ -6,154 +6,178 @@
 
 	ViewBag.Title = ViewBag.H1;
 }
-
-<div id="page-heading"><h1>@ViewBag.H1</h1></div>
-	@if (ViewData.ModelState.IsValid == false) { 
-		<div class="form-error">
-			@Html.ValidationSummary(true)
-		</div>
-	}
-	style="width: 100%"
-<form action="@Url.Action("Update")" method="post">
-<table style="width: 100%" id="content-table">
-<tr>
-	<th rowspan="3" class="sized"><img src="@Html.AdminImage("shared/side_shadowleft.jpg")" width="20" height="300" alt="" /></th>
-	<th class="topleft"></th>
-	<td id="tbl-border-top">&nbsp;</td>
-	<th class="topright"></th>
-	<th rowspan="3" class="sized"><img src="@Html.AdminImage("shared/side_shadowright.jpg")" width="20" height="300" alt="" /></th>
-</tr>
-<tr>
-	<td id="tbl-border-left"></td>
-	<td>
-	<!--  start content-table-inner -->
-	<div id="content-table-inner">
-	
-	<table style="width: 100%">
-	<tr valign="top">
-	<td>
-	
-		<table id="id-form">
-		
-		@Html.EditorFor(x => x.Title)
-		@Html.EditorFor(x => x.ControllerName)
-		@Html.EditorFor(x => x.ActionName)
-		@Html.EditorFor(x => x.IsActive)
-
-		@Html.EditorFor(x => x.Body)
-		<div class="markdown-preview-container" style="display: none">
-			<span class="form_item_name">Preview Body</span>
-			<div class="section markdown-preview"></div>
-		</div>
-
-				  
-		@Html.HiddenFor(x => x.Id)
-
-	<tr>
-		<th>&nbsp;</th>
-		<td valign="top">
-			<input type="submit" value="@ViewBag.SubmitButtonText" class="form-submit" />
-			<input type="reset" value="" class="form-reset"  />
-		</td>
-		<td></td>
-	</tr>
-	</table>
-	<!-- end id-form  -->
-
-	</td>
-	<td>
-
-	<!--  start related-activities -->
-	<div id="related-activities">
-		
-		<!--  start related-act-top -->
-		<div id="related-act-top">
-		<img src="@Html.AdminImage("forms/header_related_act.gif")" width="271" height="43" alt="" />
-		</div>
-		<!-- end related-act-top -->
-		
-		<!--  start related-act-bottom -->
-		<div id="related-act-bottom">
-		
-			<!--  start related-act-inner -->
-			<div id="related-act-inner">
-			
-				<div class="left"><a href=""><img src="@Html.AdminImage("forms/icon_plus.gif")" width="21" height="21" alt="" /></a></div>
-				<div class="right">
-					<h5>Add another product</h5>
-					Lorem ipsum dolor sit amet consectetur
-					adipisicing elitsed do eiusmod tempor.
-					<ul class="greyarrow">
-						<li><a href="">Click here to visit</a></li> 
-						<li><a href="">Click here to visit</a> </li>
-					</ul>
-				</div>
-				
-				<div class="clear"></div>
-				<div class="lines-dotted-short"></div>
-				
-				<div class="left"><a href=""><img src="@Html.AdminImage("forms/icon_minus.gif")" width="21" height="21" alt="" /></a></div>
-				<div class="right">
-					<h5>Delete products</h5>
-					Lorem ipsum dolor sit amet consectetur
-					adipisicing elitsed do eiusmod tempor.
-					<ul class="greyarrow">
-						<li><a href="">Click here to visit</a></li> 
-						<li><a href="">Click here to visit</a> </li>
-					</ul>
-				</div>
-				
-				<div class="clear"></div>
-				<div class="lines-dotted-short"></div>
-				
-				<div class="left"><a href=""><img src="@Html.AdminImage("forms/icon_edit.gif")" width="21" height="21" alt="" /></a></div>
-				<div class="right">
-					<h5>Edit categories</h5>
-					Lorem ipsum dolor sit amet consectetur
-					adipisicing elitsed do eiusmod tempor.
-					<ul class="greyarrow">
-						<li><a href="">Click here to visit</a></li> 
-						<li><a href="">Click here to visit</a> </li>
-					</ul>
-				</div>
-				<div class="clear"></div>
-				
-			</div>
-			<!-- end related-act-inner -->
-			<div class="clear"></div>
-		
-		</div>
-		<!-- end related-act-bottom -->
-	
-	</div>
-	<!-- end related-activities -->
-
-</td>
-</tr>
-<tr>
-<td><img src="@Html.AdminImage("shared/blank.gif")" width="695" height="1" alt="blank" /></td>
-<td></td>
-</tr>
-</table>
- 
-<div class="clear"></div>
- 
-
+<div id="page-heading">
+	<h1>@ViewBag.H1</h1>
 </div>
-<!--  end content-table-inner  -->
-</td>
-<td id="tbl-border-right"></td>
-</tr>
-<tr>
-	<th class="sized bottomleft"></th>
-	<td id="tbl-border-bottom">&nbsp;</td>
-	<th class="sized bottomright"></th>
-</tr>
-</table>
+@if (ViewData.ModelState.IsValid == false)
+{ 
+	<div class="form-error">
+		@Html.ValidationSummary(true)
+	</div>
+}
+<form action="@Url.Action("Update")" method="post">
+<div style="left: 0px; float: left; width: 100%">
+	<table style="width: 90%; float: left" id="content-table">
+		<tr>
+			<th rowspan="3" class="sized">
+				<img src="@Html.AdminImage("shared/side_shadowleft.jpg")" width="20"
+	height="300" alt="" />
+			</th>
+			<th class="topleft">
+			</th>
+			<td id="tbl-border-top">
+				&nbsp;
+			</td>
+			<th class="topleft">
+			</th>
+			<th rowspan="3" class="sized">
+				<img src="@Html.AdminImage("shared/side_shadowright.jpg")"
+	width="20" height="300" alt="" />
+			</th>
+		</tr>
+		<tr style="float: left; left: 5px;">
+			<td id="tbl-border-left">
+			</td>
+			<td>
+				<!-- start content-table-inner -->
+				<div id="content-table-inner">
+					<table style="width: 100%">
+						<tr valign="top">
+							<td style="float: left; left: 5px;">
+								<table id="id-form" style="float: left; left: 5px;">
+									@Html.EditorFor(x => x.Title) 
+									@Html.EditorFor(x => x.ControllerName)
+									@Html.EditorFor(x => x.ActionName)
+									@Html.EditorFor(x => x.IsActive)
+									@Html.EditorFor(x => x.Body) 
+									<div class="markdown-preview-container" style="display: none; float: left; left: 5px;">
+										<span class="form_item_name" style="float: left; left: 5px;">Preview Body</span>
+										<div class="section markdown-preview" style="float: left; left: 5px;">
+										</div>
+									</div>
+									@Html.HiddenFor(x => x.Id)
+									<tr style="float: left; left: 5px;">
+										<th>
+											&nbsp;
+										</th>
+										<td valign="top">
+											<input type="submit" value="@ViewBag.SubmitButtonText" class="form-submit" />
+											<input type="reset" value="" class="form-reset" />
+										</td>
+										<td>
+										</td>
+									</tr>
+								</table>
+								<!-- end id-form -->
+							</td>
+							<td>
+								<!-- start related-activities -->
+								<div id="related-activities">
+									<!-- start
+	related-act-top -->
+									<div id="related-act-top">
+										<img src="@Html.AdminImage("forms/header_related_act.gif")"
+	width="271" height="43" alt="" />
+									</div>
+									<!-- end related-act-top -->
+									<!-- start
+	related-act-bottom -->
+									<div id="related-act-bottom">
+										<!-- start related-act-inner
+	-->
+										<div id="related-act-inner">
+											<div class="left">
+												<a href="">
+													<img src="@Html.AdminImage("forms/icon_plus.gif")"
+	width="21" height="21" alt="" /></a></div>
+											<div class="right">
+												<h5>
+													Add another product</h5>
+												Lorem ipsum dolor sit amet consectetur adipisicing elitsed do eiusmod tempor.
+												<ul class="greyarrow">
+													<li><a href="">Click here to visit</a></li>
+													<li><a href="">Click here to visit</a> </li>
+												</ul>
+											</div>
+											<div class="clear">
+											</div>
+											<div class="lines-dotted-short">
+											</div>
+											<div class="left">
+												<a href="">
+													<img src="@Html.AdminImage("forms/icon_minus.gif")"
+	width="21" height="21" alt="" /></a></div>
+											<div class="right">
+												<h5>
+													Delete products</h5>
+												Lorem ipsum dolor sit amet consectetur adipisicing elitsed do eiusmod tempor.
+												<ul class="greyarrow">
+													<li><a href="">Click here to visit</a></li>
+													<li><a href="">Click here to visit</a> </li>
+												</ul>
+											</div>
+											<div class="clear">
+											</div>
+											<div class="lines-dotted-short">
+											</div>
+											<div class="left">
+												<a href="">
+													<img src="@Html.AdminImage("forms/icon_edit.gif")"
+	width="21" height="21" alt="" /></a></div>
+											<div class="right">
+												<h5>
+													Edit categories</h5>
+												Lorem ipsum dolor sit amet consectetur adipisicing elitsed do eiusmod tempor.
+												<ul class="greyarrow">
+													<li><a href="">Click here to visit</a></li>
+													<li><a href="">Click here to visit</a> </li>
+												</ul>
+											</div>
+											<div class="clear">
+											</div>
+										</div>
+										<!-- end related-act-inner
+	-->
+										<div class="clear">
+										</div>
+									</div>
+									<!-- end related-act-bottom -->
+								</div>
+								<!--
+	end related-activities -->
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<img src="@Html.AdminImage("shared/blank.gif")"
+	width="695" height="1" alt="blank" />
+							</td>
+							<td>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="clear">
+				</div>
+				<!--  end content-table-inner  -->
+			</td>
+			<td id="tbl-border-right">
+			</td>
+		</tr>
+		<tr>
+			<th class="sized bottomleft">
+			</th>
+			<td id="tbl-border-bottom">
+				&nbsp;
+			</td>
+			<th class="sized bottomright">
+			</th>
+		</tr>
+	</table>
+</div>
 </form>
-
-<div class="clear">&nbsp;</div>
-
+<div class="clear">
+	&nbsp;</div>
 @section Script {
 	<script type="text/javascript" src="@Url.Content("~/Content/js/showdown.js")"></script>
 	<script type="text/javascript">

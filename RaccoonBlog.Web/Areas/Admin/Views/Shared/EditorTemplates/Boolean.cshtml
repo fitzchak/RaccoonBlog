@@ -18,14 +18,20 @@
     }
 }
 
-    	<tr>
-			<th valign="top">@ViewData.ModelMetadata.DisplayName</th>
-			<td>
-            @if (ViewData.ModelMetadata.IsNullableValueType) {
-                @Html.DropDownList(string.Empty, TriStateValues, new Dictionary<string, object>{{"class", "styledselect_form_1"}})
+		<tr style="float: right">
+	<td style="float: right" valign="top">@ViewData.ModelMetadata.DisplayName
+	</td>
+	<td >
+		<!-- class="inp-form-error" -->
+		<div class="error-left">
+		</div>
+		<div style="visibility: inherit" class="error-inner">@Html.ValidationMessage(string.Empty)</div>
+	</td>
+	<td style="float:left"> @if (ViewData.ModelMetadata.IsNullableValueType) {
+                @Html.DropDownList(string.Empty, TriStateValues, new Dictionary<string, object>{{"class", "styledselect_form_2"}})
             } else {
                 @Html.CheckBox(string.Empty, Value ?? false)
             }
-            </td>
-			<td>@Html.ValidationMessage(string.Empty)</td>
-		</tr>
+	</td>
+</tr>
+<br/><br/><br/>

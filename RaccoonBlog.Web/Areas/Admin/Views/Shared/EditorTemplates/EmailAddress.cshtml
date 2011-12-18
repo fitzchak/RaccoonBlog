@@ -1,7 +1,14 @@
-﻿<div class="form_item">
-    <label>
-        <span class="form_item_name">@ViewData.ModelMetadata.DisplayName</span>
-		@Html.TextBox(string.Empty, ViewData.TemplateInfo.FormattedModelValue, new { type = "email", @class = "email" })
-        @Html.ValidationMessage(string.Empty)
-    </label>
-</div>
+﻿
+<tr style="float: right">
+	<td style="float: right" valign="top">@ViewData.ModelMetadata.DisplayName
+	</td>
+	<td >
+		<!-- class="inp-form-error" -->
+		<div class="error-left">
+		</div>
+		<div style="visibility: inherit" class="error-inner">@Html.ValidationMessage(string.Empty)</div>
+	</td>
+	<td style="float:left">@Html.TextBox(string.Empty, ViewData.TemplateInfo.FormattedModelValue, new { type = "email", @class = "inp-form" })
+	</td>
+</tr>
+<br/><br/><br/>
