@@ -142,8 +142,7 @@
 			$('#d option[value=' + selectedDate.getDate() + ']').attr('selected', 'selected');
 			$('#m option[value=' + (selectedDate.getMonth() + 1) + ']').attr('selected', 'selected');
 			$('#y option[value=' + (selectedDate.getFullYear()) + ']').attr('selected', 'selected');
-		}
-		// listen for when the selects are changed and update the picker
+		}; // listen for when the selects are changed and update the picker
 		$('#d, #m, #y')
 	.bind(
 		'change',
@@ -289,7 +288,7 @@
 	<!--  end footer-left -->
 	<div class="clear">&nbsp;</div>
 </div>
-<!-- end footer -->
+<!-- end footer --></div>
  
 </body>
 </html>

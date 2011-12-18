@@ -11,26 +11,27 @@
                 <li><a href="@Url.Action("Details", "PostDetails")">View</a></li>
                 <li><a href="@Url.Action("Details", "PostDetails", new { key = @Model.Post.Key })">Private View</a></li>
                 <li><a href="@Url.Action("Edit")">Edit</a></li>
-                <li>
-                    <form action="@Url.Action("Delete", new { Model.Post.Id })" method="post">
-                        <input type="submit" value="Delete" class="confirm">
-                    </form>
-                </li>
+                
+				<div style="right: 0px; float: right; width: 100%">
+                    <form action="@Url.Action("Delete", new { @Model.Post.Id })" method="post">
+                        <input style="float: right; right: 2px;" type="submit" value="Delete" class="confirm">
+                   </form></div>
+                
             </ul>
         </div>
     </header>
     
     <nav id="headerPrevNext">
         <ul>
-            @if (Model.PreviousPost != null)
+          <li> @if (Model.PreviousPost != null)
             { 
-                <li><a href="@Url.Action("Details", new { Model.PreviousPost.Id, Model.PreviousPost.Slug })">previous: @Model.PreviousPost.Title</a></li>
+               <a href="@Url.Action("Details", new { Model.PreviousPost.Id, Model.PreviousPost.Slug })">previous: @Model.PreviousPost.Title</a>
             }
-        
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             @if (Model.NextPost != null)
             { 
-                <li><a href="@Url.Action("Details", new { Model.NextPost.Id, Model.NextPost.Slug })">next: @Model.NextPost.Title</a></li>
-            }
+               <a href="@Url.Action("Details", new { Model.NextPost.Id, Model.NextPost.Slug })">next: @Model.NextPost.Title</a>
+            }</li> 
         </ul>
     </nav>
 
@@ -69,21 +70,27 @@
         }
         <form action="@Url.Action("CommentsAdmin", new { id = Model.Post.Id })" method="post">
             @foreach (var comment in Model.Comments) {
-                <article class="comment @(comment.IsImportant ? " important" : null)@(comment.IsSpam ? " spam" : null)">
-                    <a name="comment@(comment.Id)"></a>
-                    <input type="checkbox" name="commentIds" value="@comment.Id">
-
+                <article style="border-bottom: 2px solid silver; border-top: 2px solid silver;" comment-id="comment@(comment.Id)" class="comment @(comment.IsImportant ? " important" : null)@(comment.IsSpam ? " spam" : null)">
+				   <br/>
                     <div class="avatar">
-                        <img src="http://www.gravatar.com/avatar.php?gravatar_id=@(comment.EmailHash)&amp;size=50&amp;default=identicon" alt="Gravatar">
-                    </div>
-
-                    <div class="comment_title">
+                        <img style="float: left; padding : 6px 6px 6px 6px" src="http://www.gravatar.com/avatar.php?gravatar_id=@(comment.EmailHash)&amp;size=50&amp;default=identicon" alt="Gravatar">
+                   
+                          </div>
+                       <div class="comment_title">
+                     <br/>
                         @comment.CreatedAt by
                         <address>
-                            <a title="@(string.IsNullOrEmpty(comment.Url) ? "Comment by " + comment.Author : comment.Url)" href="@comment.Url">@comment.Author</a>
+                           &nbsp;&nbsp;&nbsp; <a title="@(string.IsNullOrEmpty(comment.Url) ? "Comment by " + comment.Author : comment.Url)" href="@comment.Url">@comment.Author</a>
+                          
+						  <form name="comment" > <a  name="comment@(comment.Id)"></a><br/>
+						  <div style="right: 0px; float: right; width: 100%">
+                             <input style="float: right; left: 83%" type="checkbox" name="commentIds" value="@comment.Id" id="comment@(comment.Id)" /></div>
+							 <label style="color: black" for="comment@(comment.Id)" value="@comment.Id">@comment.Body</label>
+                         </form>
                         </address>
                     </div>
-                    <p>@comment.Body</p>
+					 <br/>
+					@* <p >@comment.Body</p> *@
                 </article>
             }
             <div id="comments-admin">
@@ -94,22 +101,21 @@
         </form>
     </section>
 </article>
-
 @if (Model.AreCommentsClosed)
 { 
     <div>Comments have been closed on this topic.</div>
 }
-
 @section Script {
     <script type="text/javascript">
-        $(function () {
-            $('.comment').click(function () {
-                var c = $(this).children('input:checkbox');
-                c.attr('checked', !c.attr('checked'));
-            });
-            $('.confirm').click(function () {
-                if (!confirm( 'Are you sure you want to ' + $(this).val().toLowerCase() + '?') ) return false;
-            });
-        });
-    </script>
+    	$(function () {
+    		$('.comment').click(function () {
+    			var c = $('#' + $(this).attr("comment-id"));
+    			c.attr('checked', !c.attr('checked'));
+    		});
+
+    		$('.confirm').click(function () {
+    			return confirm('Are you sure you want to ' + $(this).val().toLowerCase() + '?');
+    		});
+    	});
+  </script>
 }
