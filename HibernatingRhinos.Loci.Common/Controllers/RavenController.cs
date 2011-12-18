@@ -6,27 +6,24 @@ using Raven.Client;
 
 namespace HibernatingRhinos.Loci.Common.Controllers
 {
-    public abstract class RavenController : Controller
-    {
-    	public static IDocumentStore DocumentStore
-    	{
-    		get { return _documentStore; }
-    		set
-    		{
-    			if (_documentStore == null)
-    			{
-    				_documentStore = value;
-    			}
-    		}
-    	}
-    	private static IDocumentStore _documentStore;
+	public abstract class RavenController : Controller
+	{
+		public static IDocumentStore DocumentStore
+		{
+			get { return _documentStore; }
+			set
+			{
+				_documentStore = value;
+			}
+		}
+		private static IDocumentStore _documentStore;
 
-        public IDocumentSession RavenSession { get; protected set; }
+		public IDocumentSession RavenSession { get; protected set; }
 
-        protected override void OnActionExecuting(ActionExecutingContext filterContext)
-        {
+		protected override void OnActionExecuting(ActionExecutingContext filterContext)
+		{
 			RavenSession = _documentStore.OpenSession();
-        }
+		}
 
 		// TODO: Consider re-applying https://github.com/ayende/RaccoonBlog/commit/ff954e563e6996d44eb59a28f0abb2d3d9305ffe
 		protected override void OnActionExecuted(ActionExecutedContext filterContext)
@@ -51,7 +48,7 @@ namespace HibernatingRhinos.Loci.Common.Controllers
 			TaskExecutor.StartExecuting();
 		}
 
-    	protected HttpStatusCodeResult HttpNotModified()
+		protected HttpStatusCodeResult HttpNotModified()
 		{
 			return new HttpStatusCodeResult(304);
 		}
@@ -60,5 +57,5 @@ namespace HibernatingRhinos.Loci.Common.Controllers
 		{
 			return new XmlResult(xml, etag);
 		}
-    }
+	}
 }
