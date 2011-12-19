@@ -1,0 +1,15 @@
+﻿@model NewCommentEmailViewModel
+
+  
+  <label > Are you sure you want to delete these comments</label>
+
+@if (Model.IsSpam)
+{
+	<p>
+		@using (Html.BeginForm("Delete", "Posts", new { id = Model.PostId, slug = Model.PostSlug, key = Model.Key, area = "Admin" }))
+  {
+        <input type="submit" value="Delete All Spam" />
+  }
+ 
+	</p>
+}
