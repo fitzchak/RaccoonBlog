@@ -2,17 +2,20 @@
 @{
     ViewBag.Title = "Users";
 }
-<article class="useradmin-list">
 	<h1>Users</h1>
+	<br/>
+<article style="border-bottom: 2px solid silver; border-top: 2px solid silver;" class="useradmin-list">
+<br/>
 	@Html.ActionLink("Create New User", "Add")
+	<br/>
 	<ul class="admin-list">
 		@foreach (var user in Model) { 
-			<li>
+			<div style="border-bottom: 2px solid silver; border-top: 2px solid silver;" class="command-section">
 				@Html.DisplayFor(u => user.FullName)
 				@Html.DisplayFor(u => user.Email)
 				@Html.DisplayFor(u => user.Enabled)
 				@Html.DisplayFor(u => user.TwitterNick)
-				<div class="command-section">
+				
 					<div><a href="@Url.Action("Edit", new { user.Id })">Edit</a></div>
 					<div><a href="@Url.Action("ChangePassword", new { user.Id })">Change Password</a></div>
 					<div>
@@ -21,7 +24,7 @@
                         </form>
                     </div>
 				</div>
-			</li>
+			
 		}
 	</ul>
 </article>

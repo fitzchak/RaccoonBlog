@@ -16,9 +16,8 @@
 	</div>
 }
 <article id="user-input">
-<form action="@Url.Action("Update")" method="post">
-
-	<table style="width: 100%; " id="content-table">
+	<form action="@Url.Action("Update")" method="post">
+	   <table style="width: 100%;" id="content-table">
 		<tr>
 			<th rowspan="3" class="sized">
 				<img src="@Html.AdminImage("shared/side_shadowleft.jpg")" width="20"
@@ -41,26 +40,26 @@
 			</td>
 			<td>
 				<!-- start content-table-inner -->
-				<div id="content-table-inner">
-					<table>
-						<tr valign="top">
-							<td >
+				<div >
+					<table id="content-table-inner">
+						<tr >
+							<td>
 								<table id="id-form">
-									@Html.EditorFor(x => x.Title) 
-									@Html.EditorFor(x => x.ControllerName)
-									@Html.EditorFor(x => x.ActionName)
-									@Html.EditorFor(x => x.IsActive)
-
-									@Html.EditorFor(x => x.Body) 
-									<div class="markdown-preview-container" >
-										<span class="form_item_name" >Preview Body</span>
-										<div class="section markdown-preview" >
+									<p>@Html.EditorFor(x => x.Title)
+									</p>
+									<p>@Html.EditorFor(x => x.ControllerName)</p>
+									<p>@Html.EditorFor(x => x.ActionName)</p>
+									<p>@Html.EditorFor(x => x.IsActive)</p>
+									<p>@Html.EditorFor(x => x.Body)
+									</p>
+									<div class="markdown-preview-container">
+										
+										<div class="section markdown-preview">
 										</div>
 									</div>
 									@Html.HiddenFor(x => x.Id)
 									<tr>
 										<th>
-											
 										</th>
 										<td valign="top">
 											<input type="submit" value="@ViewBag.SubmitButtonText" class="form-submit" />
@@ -72,8 +71,12 @@
 								</table>
 								<!-- end id-form -->
 							</td>
-							<td>
-								<!-- start related-activities -->
+						</tr>
+					</table>
+					</div>
+					<tr>
+				<td>
+					@*<!-- start related-activities -->
 								<div id="related-activities">
 									<!-- start
 	related-act-top -->
@@ -174,9 +177,10 @@
 			</td>
 			<th class="sized bottomright">
 			</th>
+		</tr>*@
+		</td>
 		</tr>
 	</table>
-
 </form>
 </article>
 <div class="clear">

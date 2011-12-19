@@ -31,7 +31,7 @@ namespace RaccoonBlog.Web.ViewModels
 			{
 				public string TwitterNick { get; set; }
 				public string RelatedTwitterNick { get; set; }
-				public string RelatedTwitterNickDesc { get; set; }
+				public string RelatedTwitNickDes { get; set; }
 			}
         }
     }

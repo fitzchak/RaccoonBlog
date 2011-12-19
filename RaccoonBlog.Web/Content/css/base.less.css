@@ -219,7 +219,7 @@ article.post footer, postToolbar
 
 .comment input[type=checkbox]
 {
-	float: right;
+	float: left;
 }
 
 .comment-body

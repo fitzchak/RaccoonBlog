@@ -8,9 +8,9 @@
         <h1><a href="@Url.Action("Details", new { Model.Post.Id, Model.Post.Slug })">@Model.Post.Title</a></h1>
         <div id="post-admin">
             <ul>
-                <li><a href="@Url.Action("Details", "PostDetails")">View</a></li>
-                <li><a href="@Url.Action("Details", "PostDetails", new { key = @Model.Post.Key })">Private View</a></li>
-                <li><a href="@Url.Action("Edit")">Edit</a></li>
+                <a href="@Url.Action("Details", "PostDetails")">View</a><br/>
+               <a href="@Url.Action("Details", "PostDetails", new { key = @Model.Post.Key })">Private View</a><br/>
+                <a href="@Url.Action("Edit")">Edit</a>
                 
 				<div style="right: 0px; float: right; width: 100%">
                     <form action="@Url.Action("Delete", new { @Model.Post.Id })" method="post">
@@ -23,7 +23,7 @@
     
     <nav id="headerPrevNext">
         <ul>
-          <li> @if (Model.PreviousPost != null)
+           @if (Model.PreviousPost != null)
             { 
                <a href="@Url.Action("Details", new { Model.PreviousPost.Id, Model.PreviousPost.Slug })">previous: @Model.PreviousPost.Title</a>
             }
@@ -31,15 +31,15 @@
             @if (Model.NextPost != null)
             { 
                <a href="@Url.Action("Details", new { Model.NextPost.Id, Model.NextPost.Slug })">next: @Model.NextPost.Title</a>
-            }</li> 
+            }
         </ul>
     </nav>
 
     <div class="post_body raw_html">
         @Model.Post.Body
     </div>
-
-    <footer>
+	<br/>
+    <footer style="border-top: 2px solid silver; border-bottom: 2px solid silver; ">
         Published at <time pubdate>@Model.Post.PublishedAt.ToString("r")</time>
 
         @if (Model.Post.PublishedAt != Model.Post.CreatedAt)
@@ -54,8 +54,7 @@
     <div class="tags">
         <ul>
             @foreach (var name in Model.Post.Tags) {
-                <li><a href="@Url.Action("Tag", "Posts", new { name })">@name</a></li>
-            }
+                <a href="@Url.Action("Tag", "Posts", new { name })">@name</a>}
         </ul>
     </div>
     
@@ -63,8 +62,8 @@
     <section class="comments">
         <header>
             <a name="comments"></a>
-            <h1>Comments  </h1><br/>
-			<h2>Feedback (@Model.Comments.Count) - @Model.Comments.Count comments</h2>
+            <h1>Comments  (@Model.Comments.Count)</h1>
+			
         </header>
         @if (Model.Comments.Count == 0) { 
             <p>No comments posted yet.</p>
