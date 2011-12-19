@@ -1,37 +1,46 @@
 ﻿@functions{
-    private List<SelectListItem> TriStateValues {
-        get {
-            return new List<SelectListItem> {
+	private List<SelectListItem> TriStateValues
+	{
+		get
+		{
+			return new List<SelectListItem> {
                 new SelectListItem { Text = "Not Set", Value = String.Empty, Selected = !Value.HasValue },
                 new SelectListItem { Text = "True", Value = "true", Selected = Value.HasValue && Value.Value },
                 new SelectListItem { Text = "False", Value = "false", Selected = Value.HasValue && !Value.Value },
             };
-        }
-    }
-    private bool? Value {
-        get {
-            if (ViewData.Model == null) {
-                return null;
-            }
-            return Convert.ToBoolean(ViewData.Model, System.Globalization.CultureInfo.InvariantCulture);
-        }
-    }
+		}
+	}
+	private bool? Value
+	{
+		get
+		{
+			if (ViewData.Model == null)
+			{
+				return null;
+			}
+			return Convert.ToBoolean(ViewData.Model, System.Globalization.CultureInfo.InvariantCulture);
+		}
+	}
 }
-
-		<tr style="float: right">
-	<td style="float: right" valign="top">@ViewData.ModelMetadata.DisplayName
+<tr>
+	<td>
+		@if (ViewData.ModelMetadata.IsNullableValueType)
+  {
+			@Html.DropDownList(string.Empty, TriStateValues, new Dictionary<string, object> { { "class", "styledselect_form_2" } })
+  }
+  else
+  {
+			@Html.CheckBox(string.Empty, Value ?? false)
+  }
 	</td>
-	<td >
+	<td  valign="top">@ViewData.ModelMetadata.DisplayName
+	</td>
+	<td>
 		<!-- class="inp-form-error" -->
+		<div style="visibility: inherit" class="error-inner">@Html.ValidationMessage(string.Empty)</div>
 		<div class="error-left">
 		</div>
-		<div style="visibility: inherit" class="error-inner">@Html.ValidationMessage(string.Empty)</div>
-	</td>
-	<td > @if (ViewData.ModelMetadata.IsNullableValueType) {
-                @Html.DropDownList(string.Empty, TriStateValues, new Dictionary<string, object>{{"class", "styledselect_form_2"}})
-            } else {
-                @Html.CheckBox(string.Empty, Value ?? false)
-            }
 	</td>
 </tr>
-<br/><br/><br/>
+<br />
+
