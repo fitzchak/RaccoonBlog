@@ -260,5 +260,18 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			}
 			return RedirectToAction("List");
 		}
+
+		public ActionResult DeleteAllSpamComments()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		public ActionResult DeleteAllSpamComments(bool deleteAll)
+		{
+			//var comments = RavenSession.Load<PostComments>(id);
+			//comments.Spam.RemoveAll(ham.Contains);
+			return View();
+		}
 	}
 }
