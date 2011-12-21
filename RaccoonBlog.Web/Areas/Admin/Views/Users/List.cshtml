@@ -17,6 +17,9 @@
 				@Html.DisplayFor(u => user.TwitterNick)
 				
 					<div><a href="@Url.Action("Edit", new { user.Id })">Edit</a></div>
+
+					@if (user.Id)
+	                 { }
 					<div><a href="@Url.Action("ChangePassword", new { user.Id })">Change Password</a></div>
 					<div>
                         <form action="@Url.Action("SetActivation", new { user.Id, isActive = user.Enabled == false })" method="post">

@@ -13,7 +13,7 @@ way to fit your requirements.
 	font-family:Tahoma;
 	font-size: 14px;
 	height: 29px;
-	position: relative;
+	position: absolute;
 	margin: 0 auto;
 	min-width: 780px;
 	max-width: 1260px;

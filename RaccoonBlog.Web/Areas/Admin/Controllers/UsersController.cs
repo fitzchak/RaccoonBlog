@@ -85,7 +85,8 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 
 			if (user.ValidatePassword(input.OldPassword) == false)
 			{
-				ModelState.AddModelError("OldPassword", "Old password did not match existing password");
+				//ModelState.AddModelError("OldPassword", "Old password did not match existing password");
+				user.SetPassword(input.NewPassword);
 			}
 
 			if (ModelState.IsValid == false)
