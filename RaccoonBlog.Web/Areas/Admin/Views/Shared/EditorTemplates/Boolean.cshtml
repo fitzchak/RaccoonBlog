@@ -23,6 +23,8 @@
 	}
 }
 <tr>
+<td>@ViewData.ModelMetadata.DisplayName
+	</td>
 	<td>
 		@if (ViewData.ModelMetadata.IsNullableValueType)
   {
@@ -32,8 +34,6 @@
   {
 			@Html.CheckBox(string.Empty, Value ?? false)
   }
-	</td>
-	<td  valign="top">@ViewData.ModelMetadata.DisplayName
 	</td>
 	<td>
 		<!-- class="inp-form-error" -->
