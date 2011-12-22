@@ -33,7 +33,7 @@
 			<div id="login-inner">
 					@if (ViewData.ModelState.IsValid == false) { 
 		<div class="form-error">
-			@Html.ValidationSummary(true)
+			@Html.ValidationSummary()
 		</div>
 		}
 				<form action="@Url.Action("Index")" method="post">
