@@ -265,41 +265,41 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		[HttpPost]
 		public ActionResult DeleteAllSpamComments(int id, CommentCommandOptions command, int[] commentIds)
 		{
-			var postComments = RavenSession.Query<PostComments>()
-				.Where(x => x.Spam.Count > 0);
+		//    var postComments = RavenSession.Query<PostComments>()
+		//        .Where(x => x.Spam.Count > 0);
 
 			
-			foreach (var postComment in postComments)
-			{
-				ICommandData a = new PatchCommandData
-				                 	{
-				                 		Key = postComment.Id,
-				                 		Patches = new[]
-				                 		          	{
-				                 		          		new PatchRequest
-				                 		          			{
-				                 		          				Type = PatchCommandType.Unset,
-																Name = 
-				                 		          			},
-				                 		          	}
-				                 	};
-				postComment.Spam
-					.Select(x => new DeleteCommandData{Key = x.Id})
-			}
+		//    foreach (var postComment in postComments)
+		//    {
+		//        ICommandData a = new PatchCommandData
+		//                            {
+		//                                Key = postComment.Id,
+		//                                Patches = new[]
+		//                                            {
+		//                                                new PatchRequest
+		//                                                    {
+		//                                                        Type = PatchCommandType.Unset,
+		//                                                        Name = 
+		//                                                    },
+		//                                            }
+		//                            };
+		//        postComment.Spam
+		//            .Select(x => new DeleteCommandData{Key = x.Id})
+		//    }
 
-			RavenSession.Advanced.DatabaseCommands.Batch();
-			var comments = RavenSession.Load<PostComments>();
-			var commentCommandOptions = CommentCommandOptions.DeleteAllSpamComments;
-			var spams = comments.Spam
-						.Where(c => commentIds.Contains(c.Id))
-						.ToArray();
+		//    RavenSession.Advanced.DatabaseCommands.Batch();
+		//    var comments = RavenSession.Load<PostComments>();
+		//    var commentCommandOptions = CommentCommandOptions.DeleteAllSpamComments;
+		//    var spams = comments.Spam
+		//                .Where(c => commentIds.Contains(c.Id))
+		//                .ToArray();
 
-					comments.Spam.RemoveAll(spams.Contains);
-					foreach (var comment in spams)
-					{
-						if (comment.IsSpam == true)
-						{ comments.Spam.RemoveAll(c => commentIds.Contains(c.Id)); }
-					}
+		//            comments.Spam.RemoveAll(spams.Contains);
+		//            foreach (var comment in spams)
+		//            {
+		//                if (comment.IsSpam == true)
+		//                { comments.Spam.RemoveAll(c => commentIds.Contains(c.Id)); }
+		//            }
 			
 			return View();
 		}
