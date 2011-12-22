@@ -10,7 +10,7 @@
             <ul>
                 <a href="@Url.Action("Details", "PostDetails")">View</a><br/>
                <a href="@Url.Action("Details", "PostDetails", new { key = @Model.Post.Key })">Private View</a><br/>
-                <a href="@Url.Action("Edit")">Edit</a>
+                <a href="@Url.Action("Edit", "Posts", new { id = @Model.Post.Id})">Edit</a>
                 
 				<div style="right: 0px; float: right; width: 100%">
                     <form action="@Url.Action("Delete", new { @Model.Post.Id })" method="post">
