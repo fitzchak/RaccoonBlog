@@ -115,7 +115,7 @@
 		createButton: false,
 		startDate: '01/01/2005',
 		endDate: '31/12/2020'
-}
+     }
 	).bind(
 		// when the link is clicked display the date picker
 		'click',
@@ -183,29 +183,6 @@
 		<a href=""><img src="@Html.AdminImage("shared/logo.png")" width="51" height="40" alt="" /></a>
 	</div>
 
-	<!--  start top-search -->
-@*	<div id="top-search">
-		<table>
-		<tr>
-		<td><input type="text" value="Search" onblur="if (this.value=='') { this.value='Search'; }" onfocus="if (this.value=='Search') { this.value=''; }" class="top-search-inp" /></td>
-		<td>
-		<select  class="styledselect">
-			<option value="">All</option>
-			<option value="">Posts</option>
-		</select> 
-		</td>
-		<td>
-		<input type="image" src="@Html.AdminImage("shared/top_search_btn.gif")" />
-		</td>
-		</tr>
-		</table>
-	</div>
-	<!--  end top-search -->
-	<div class="clear"></div>
-
-</div>*@
-<!-- End: page-top -->
-
 </div>
 <!-- End: page-top-outer -->
 	
@@ -219,30 +196,11 @@
 		<!-- start nav-right -->
 		<div id="nav-right">
 		
-			@*<div class="nav-divider">&nbsp;</div>*@
-			@*<div class="showhide-account"><img src="@Html.AdminImage("shared/nav/nav_myaccount.gif")" width="93" height="14" alt="" /></div>*@
-			<div class="nav-divider">&nbsp;</div>
+					<div class="nav-divider">&nbsp;</div>
 			<a href="@Url.Action("Logout", "Login")" id="logout"><img src="@Html.AdminImage("shared/nav/nav_logout.gif")" width="64" height="14" alt="" /></a>
 			<div class="clear">&nbsp;</div>
 
-			@*<div class="account-content">
-			<div class="account-drop-inner">
-				<a href="" id="acc-settings">Settings</a>
-				<div class="clear">&nbsp;</div>
-				<div class="acc-line">&nbsp;</div>
-				<a href="" id="acc-details">Personal details </a>
-				<div class="clear">&nbsp;</div>
-				<div class="acc-line">&nbsp;</div>
-				<a href="" id="acc-project">Project details</a>
-				<div class="clear">&nbsp;</div>
-				<div class="acc-line">&nbsp;</div>
-				<a href="" id="acc-inbox">Inbox</a>
-				<div class="clear">&nbsp;</div>
-				<div class="acc-line">&nbsp;</div>
-				<a href="" id="acc-stats">Statistics</a> 
-			</div>
-			</div>*@
-		</div>
+				</div>
 		<!-- end nav-right -->
 
 		<!--  start nav -->
