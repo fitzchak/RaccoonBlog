@@ -12,6 +12,8 @@ using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.Services;
 using RaccoonBlog.Web.ViewModels;
+using Raven.Abstractions.Commands;
+using Raven.Abstractions.Data;
 
 namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
@@ -260,18 +262,54 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			}
 			return RedirectToAction("List");
 		}
-
-		public ActionResult DeleteAllSpamComments()
-		{
-			return View();
-		}
-
 		[HttpPost]
-		public ActionResult DeleteAllSpamComments(bool deleteAll)
+		public ActionResult DeleteAllSpamComments(int id, CommentCommandOptions command, int[] commentIds)
 		{
-			//var comments = RavenSession.Load<PostComments>(id);
-			//comments.Spam.RemoveAll(ham.Contains);
+			var postComments = RavenSession.Query<PostComments>()
+				.Where(x => x.Spam.Count > 0);
+
+			
+			foreach (var postComment in postComments)
+			{
+				ICommandData a = new PatchCommandData
+				                 	{
+				                 		Key = postComment.Id,
+				                 		Patches = new[]
+				                 		          	{
+				                 		          		new PatchRequest
+				                 		          			{
+				                 		          				Type = PatchCommandType.Unset,
+																Name = 
+				                 		          			},
+				                 		          	}
+				                 	};
+				postComment.Spam
+					.Select(x => new DeleteCommandData{Key = x.Id})
+			}
+
+			RavenSession.Advanced.DatabaseCommands.Batch();
+			var comments = RavenSession.Load<PostComments>();
+			var commentCommandOptions = CommentCommandOptions.DeleteAllSpamComments;
+			var spams = comments.Spam
+						.Where(c => commentIds.Contains(c.Id))
+						.ToArray();
+
+					comments.Spam.RemoveAll(spams.Contains);
+					foreach (var comment in spams)
+					{
+						if (comment.IsSpam == true)
+						{ comments.Spam.RemoveAll(c => commentIds.Contains(c.Id)); }
+					}
+			
 			return View();
 		}
+
+		//[HttpPost]
+		//public ActionResult DeleteAllSpamComments(bool deleteAll)
+		//{
+		//    //var comments = RavenSession.Load<PostComments>(id);
+		//    //comments.Spam.RemoveAll(ham.Contains);
+		//    return View();
+		//}
 	}
 }
