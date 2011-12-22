@@ -43,16 +43,11 @@
 							<td>
 								<table id="id-form">
 									<p>@Html.EditorFor(x => x.Title)</p>
-									<p>@Html.EditorFor(x => x.ContentType)</p>
 									<p>@Html.EditorFor(x => x.Body)</p>
 									<p>@Html.EditorFor(x => x.CreatedAt)</p>
 									<p>@Html.EditorFor(x => x.PublishAt)</p>
 									<p>@Html.EditorFor(x => x.Tags)</p>
 									<p>@Html.EditorFor(x => x.AllowComments)</p>
-									<div class="markdown-preview-container">
-										<div class="section markdown-preview">
-										</div>
-									</div>
 									@Html.HiddenFor(x => x.Id)
 									<tr>
 										<th>
