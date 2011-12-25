@@ -592,9 +592,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\PostDetails\Edit.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Areas\Admin\Views\Posts\DeleteAllSpamComments.cshtml" />
   </ItemGroup>
   <ItemGroup>
