@@ -262,6 +262,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			}
 			return RedirectToAction("List");
 		}
+
 		[HttpPost]
 		public ActionResult DeleteAllSpamComments(int id, CommentCommandOptions command, int[] commentIds)
 		{
@@ -278,7 +279,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 				                 		          	{
 				                 		          		new PatchRequest
 				                 		          			{
-				                 		          				Type = PatchCommandType.Unset,
+				                 		          				Type = PatchCommandType.Set,
 																Name = 
 				                 		          			},
 				                 		          	}
