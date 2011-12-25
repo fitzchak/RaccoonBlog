@@ -248,22 +248,18 @@
     <Content Include="Areas\Admin\Content\images\table\table_icon_4.gif" />
     <Content Include="Areas\Admin\Content\images\table\table_icon_5.gif" />
     <Content Include="Areas\Admin\Content\images\table\table_sort_arrow.gif" />
-    <Content Include="Areas\Admin\Content\js\jquery\Copy of custom_jquery.js" />
-    <Content Include="Areas\Admin\Content\js\jquery\custom_jquery.js" />
-    <Content Include="Areas\Admin\Content\js\jquery\date.js" />
-    <Content Include="Areas\Admin\Content\js\jquery\jquery-1.4.1.min.js" />
-    <Content Include="Areas\Admin\Content\js\jquery\jquery.bind.js" />
-    <Content Include="Areas\Admin\Content\js\jquery\jquery.datePicker.js" />
-    <Content Include="Areas\Admin\Content\js\jquery\jquery.dimensions.js" />
-    <Content Include="Areas\Admin\Content\js\jquery\jquery.filestyle.js" />
-    <Content Include="Areas\Admin\Content\js\jquery\jquery.pngFix.pack.js" />
-    <Content Include="Areas\Admin\Content\js\jquery\jquery.selectbox-0.5.js" />
-    <Content Include="Areas\Admin\Content\js\jquery\jquery.selectbox-0.5_style_2.js" />
-    <Content Include="Areas\Admin\Content\js\jquery\jquery.selectbox-0.5_style_3.js" />
-    <Content Include="Areas\Admin\Content\js\jquery\jquery.tooltip.js" />
-    <Content Include="Areas\Admin\Content\js\jquery\jquery.usermode.js" />
-    <Content Include="Areas\Admin\Content\js\jquery\ui.checkbox.js" />
-    <Content Include="Areas\Admin\Content\js\jquery\ui.core.js" />
+    <Content Include="Areas\Admin\Content\js\custom_jquery.js" />
+    <Content Include="Areas\Admin\Content\js\jquery-1.4.1.min.js" />
+    <Content Include="Areas\Admin\Content\js\jquery.bind.js" />
+    <Content Include="Areas\Admin\Content\js\jquery.dimensions.js" />
+    <Content Include="Areas\Admin\Content\js\jquery.filestyle.js" />
+    <Content Include="Areas\Admin\Content\js\jquery.pngFix.pack.js" />
+    <Content Include="Areas\Admin\Content\js\jquery.selectbox-0.5.js" />
+    <Content Include="Areas\Admin\Content\js\jquery.selectbox-0.5_style_2.js" />
+    <Content Include="Areas\Admin\Content\js\jquery.selectbox-0.5_style_3.js" />
+    <Content Include="Areas\Admin\Content\js\jquery.tooltip.js" />
+    <Content Include="Areas\Admin\Content\js\jquery.usermode.js" />
+    <Content Include="Areas\Admin\Content\js\ui.checkbox.js" />
     <Content Include="Content\css\custom\ayende.less.css" />
     <Content Include="Content\css\custom\hibernatingrhinos.settings.less.css" />
     <Content Include="Content\css\custom\hibernatingrhinos.less.css" />
@@ -394,29 +390,76 @@
     <Content Include="Content\js\raccoon-blog.js" />
     <Content Include="Content\js\RequiredIfValidation.js" />
     <Content Include="Content\js\fullcalendar.min.js" />
-    <Content Include="Content\js\jquery-ui-1.8.12.custom.min.js" />
     <Content Include="Content\js\showdown.js" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery.ui.accordion.css" />
+    <Content Include="Content\themes\base\jquery.ui.all.css" />
+    <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
+    <Content Include="Content\themes\base\jquery.ui.base.css" />
+    <Content Include="Content\themes\base\jquery.ui.button.css" />
+    <Content Include="Content\themes\base\jquery.ui.core.css" />
+    <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
+    <Content Include="Content\themes\base\jquery.ui.dialog.css" />
+    <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
+    <Content Include="Content\themes\base\jquery.ui.resizable.css" />
+    <Content Include="Content\themes\base\jquery.ui.selectable.css" />
+    <Content Include="Content\themes\base\jquery.ui.slider.css" />
+    <Content Include="Content\themes\base\jquery.ui.tabs.css" />
+    <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\minified\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.accordion.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.all.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.base.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.button.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.core.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\js\jquery.ui.core.js" />
     <Content Include="Content\js\jquery.ui.core.min.js" />
-    <Content Include="Content\js\jquery-1.6-vsdoc.js" />
-    <Content Include="Content\js\jquery-1.6.js" />
-    <Content Include="Content\js\jquery-1.6.min.js" />
     <Content Include="Content\js\jquery.tmpl.js" />
     <Content Include="Content\js\jquery.tmpl.min.js" />
     <Compile Include="ViewModels\RecentCommentViewModel.cs" />
     <Content Include="Areas\Admin\Views\Sections\Edit.cshtml" />
     <Compile Include="Controllers\PostsController.cs" />
     <Content Include="RavenNotReachable.htm" />
-    <Content Include="Scripts\MarkdownDeep License.txt" />
-    <Content Include="Scripts\MarkdownDeep Quick Reference.txt" />
-    <Content Include="Scripts\MarkdownDeepLib.min.js" />
-    <Content Include="Scripts\mdd_ajax_loader.gif" />
-    <Content Include="Scripts\mdd_gripper.png" />
-    <Content Include="Scripts\mdd_help.htm" />
-    <Content Include="Scripts\mdd_modal_background.png" />
-    <Content Include="Scripts\mdd_styles.css" />
-    <Content Include="Scripts\mdd_toolbar.png" />
+    <Content Include="Content\js\jquery-1.7.1-vsdoc.js" />
+    <Content Include="Content\js\jquery-1.7.1.js" />
+    <Content Include="Content\js\jquery-1.7.1.min.js" />
+    <Content Include="Content\js\MarkdownDeepLib.min.js" />
     <Content Include="Views\MailTemplates\_Layout.cshtml" />
     <Content Include="Views\Section\FuturePosts.cshtml" />
     <Content Include="Views\Shared\500.cshtml" />
@@ -556,6 +599,9 @@
   <ItemGroup>
     <Content Include="Areas\Admin\Views\Posts\DeleteAllSpamComments.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\DateTime.cshtml" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -573,7 +619,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>26962</DevelopmentServerPort>
+          <DevelopmentServerPort>11960</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
