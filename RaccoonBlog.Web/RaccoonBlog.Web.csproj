@@ -249,10 +249,8 @@
     <Content Include="Areas\Admin\Content\images\table\table_icon_5.gif" />
     <Content Include="Areas\Admin\Content\images\table\table_sort_arrow.gif" />
     <Content Include="Areas\Admin\Content\js\custom_jquery.js" />
-    <Content Include="Areas\Admin\Content\js\date.js" />
     <Content Include="Areas\Admin\Content\js\jquery-1.4.1.min.js" />
     <Content Include="Areas\Admin\Content\js\jquery.bind.js" />
-    <Content Include="Areas\Admin\Content\js\jquery.datePicker.js" />
     <Content Include="Areas\Admin\Content\js\jquery.dimensions.js" />
     <Content Include="Areas\Admin\Content\js\jquery.filestyle.js" />
     <Content Include="Areas\Admin\Content\js\jquery.pngFix.pack.js" />
@@ -262,7 +260,6 @@
     <Content Include="Areas\Admin\Content\js\jquery.tooltip.js" />
     <Content Include="Areas\Admin\Content\js\jquery.usermode.js" />
     <Content Include="Areas\Admin\Content\js\ui.checkbox.js" />
-    <Content Include="Areas\Admin\Content\js\ui.core.js" />
     <Content Include="Content\css\custom\ayende.less.css" />
     <Content Include="Content\css\custom\hibernatingrhinos.settings.less.css" />
     <Content Include="Content\css\custom\hibernatingrhinos.less.css" />
@@ -393,7 +390,6 @@
     <Content Include="Content\js\raccoon-blog.js" />
     <Content Include="Content\js\RequiredIfValidation.js" />
     <Content Include="Content\js\fullcalendar.min.js" />
-    <Content Include="Content\js\jquery-ui-1.8.12.custom.min.js" />
     <Content Include="Content\js\showdown.js" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -464,8 +460,6 @@
     <Content Include="Content\js\jquery-1.7.1.js" />
     <Content Include="Content\js\jquery-1.7.1.min.js" />
     <Content Include="Content\js\MarkdownDeepLib.min.js" />
-    <Content Include="Scripts\jquery-ui-1.8.16.js" />
-    <Content Include="Scripts\jquery-ui-1.8.16.min.js" />
     <Content Include="Views\MailTemplates\_Layout.cshtml" />
     <Content Include="Views\Section\FuturePosts.cshtml" />
     <Content Include="Views\Shared\500.cshtml" />
@@ -625,7 +619,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>26962</DevelopmentServerPort>
+          <DevelopmentServerPort>11960</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
