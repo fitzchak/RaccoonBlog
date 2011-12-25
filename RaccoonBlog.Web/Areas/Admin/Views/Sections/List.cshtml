@@ -4,26 +4,25 @@
     ViewBag.Title = "Manage sections";
 }
 <div class="messageWrapper"><div id="message" style="visibility:hidden"></div></div>
- <h1>Sections</h1><br/>
 <article style="border-bottom: 2px solid silver; border-top: 2px solid silver;" class="sectionadmin-list">
-   <br/>
+    <h1>Sections</h1><br/>
 	<p style="font: 15px Ariel black">@Html.ActionLink("Create Section", "Add")</p>
-	<br/>
 	<ul class="admin-list sortable" >
-		@foreach (var section1 in Model) { 
-			 <div class="commands-section" style="border-bottom: 2px solid silver; border-top: 2px solid silver;">
-				@Html.DisplayFor(s => section1.Id)
-				@Html.DisplayFor(s => section1.Title)
-				@Html.DisplayFor(s => section1.IsActive)
-                    <ul>
-                       <a href="@Url.Action("Edit","Sections", new { section1.Id })">Edit</a>
-                        
-                            <form action="@Url.Action("Delete", new { section1.Id })" method="post">
-                                <input type="submit" value="Delete" class="confirm">
-                            </form>
-                    </ul>
-                </div>
-			
+		@foreach (var section1 in Model) {
+		  <li>
+			  <div class="commands-section" style="border-bottom: 2px solid silver; border-top: 2px solid silver;">
+	  			@Html.DisplayFor(s => section1.Id)
+	  			@Html.DisplayFor(s => section1.Title)
+	  			@Html.DisplayFor(s => section1.IsActive)
+	  			<ul>
+					<li><a href="@Url.Action("Edit","Sections", new { section1.Id })">Edit</a></li>
+				</ul>
+				
+	  			<form action="@Url.Action("Delete", new { section1.Id })" method="post">
+					<input type="submit" value="Delete" class="confirm">
+				</form>
+			  </div>
+		  </li>
 		}
 	</ul>
 </article>
