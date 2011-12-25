@@ -142,7 +142,6 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\BlogConfigAdminViewModelMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\StringToGuidConverter.cs" />
     <Compile Include="Infrastructure\Common\DocumentSessionExtensions.cs" />
-    <Content Include="Areas\Admin\Content\css\datePicker.css" />
     <Content Include="Areas\Admin\Content\css\pro_dropline.css" />
     <Content Include="Areas\Admin\Content\css\pro_dropline_ie.css" />
     <Content Include="Areas\Admin\Content\css\screen.css" />
