@@ -55,13 +55,7 @@ namespace RaccoonBlog.IntegrationTests.Routing
 			GetMethod("~/1024/comment", HttpVerbs.Post).ShouldMapTo<PostDetailsController>(c => c.Comment(null, 1024, TestGuid));
 		}
 
-		private RouteData GetMethod(string url, HttpVerbs method = HttpVerbs.Get)
-		{
-			var route = url.WithMethod(method);
-			route.Values["key"] = TestGuid;
-			return route;	
-		}
-
+		
 		[Fact]
 		public void SectionControllerRoutes()
 		{
