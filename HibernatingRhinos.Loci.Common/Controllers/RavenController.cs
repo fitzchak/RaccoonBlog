@@ -28,14 +28,14 @@ namespace HibernatingRhinos.Loci.Common.Controllers
 		// TODO: Consider re-applying https://github.com/ayende/RaccoonBlog/commit/ff954e563e6996d44eb59a28f0abb2d3d9305ffe
 		protected override void OnActionExecuted(ActionExecutedContext filterContext)
 		{
-			if (filterContext.IsChildAction)
-				return;
-
 			CompleteSessionHandler(filterContext);
 		}
 
 		protected void CompleteSessionHandler(ActionExecutedContext filterContext)
 		{
+			if (filterContext.IsChildAction)
+				return;
+
 			using (RavenSession)
 			{
 				if (filterContext.Exception != null)
