@@ -7,7 +7,7 @@ namespace RaccoonBlog.Web.Controllers
 	{
 		protected override void OnActionExecuted(ActionExecutedContext filterContext)
 		{
-			// don't load the non existant Blog/Config
+			// don't load the non existent Blog/Config
 
 			CompleteSessionHandler(filterContext);
 		}
