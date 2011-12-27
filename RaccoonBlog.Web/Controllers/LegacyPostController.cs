@@ -13,21 +13,17 @@ namespace RaccoonBlog.Web.Controllers
         {
 			// attempt to find a post with match slug in the given date, but will back off the exact date if we can't find it
 			var post = RavenSession.Query<Post>()
-        	           	.WhereIsPublicPost()
-        	           	.Where(p => p.LegacySlug == slug && (p.PublishAt.Year == year && p.PublishAt.Month == month && p.PublishAt.Day == day))
-        	           	.FirstOrDefault() ??
+			           	.WhereIsPublicPost()
+						.FirstOrDefault(p => p.LegacySlug == slug && (p.PublishAt.Year == year && p.PublishAt.Month == month && p.PublishAt.Day == day)) ??
 					  RavenSession.Query<Post>()
-        	           	.WhereIsPublicPost()
-        	           	.Where(p => p.LegacySlug == slug && p.PublishAt.Year == year && p.PublishAt.Month == month)
-        	           	.FirstOrDefault() ??
+					  	.WhereIsPublicPost()
+						.FirstOrDefault(p => p.LegacySlug == slug && p.PublishAt.Year == year && p.PublishAt.Month == month) ??
 					 RavenSession.Query<Post>()
-        	           	.WhereIsPublicPost()
-        	           	.Where(p => p.LegacySlug == slug && p.PublishAt.Year == year)
-        	           	.FirstOrDefault() ??
+					 	.WhereIsPublicPost()
+						.FirstOrDefault(p => p.LegacySlug == slug && p.PublishAt.Year == year) ??
 					 RavenSession.Query<Post>()
-        	           	.WhereIsPublicPost()
-        	           	.Where(p => p.LegacySlug == slug)
-        	           	.FirstOrDefault();
+					 	.WhereIsPublicPost()
+						.FirstOrDefault(p => p.LegacySlug == slug);
 
             if (post == null) 
             {
