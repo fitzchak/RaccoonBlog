@@ -19,6 +19,28 @@ namespace RaccoonBlog.Web
 {
 	public class MvcApplication : HttpApplication
 	{
+		public MvcApplication()
+		{
+			BeginRequest += (sender, args) =>
+			                	{
+			                		HttpContext.Current.Items["CurrentRequestRavenSession"] = RavenController.DocumentStore.OpenSession();
+			                	};
+			EndRequest += (sender, args) =>
+			              	{
+								using (var session = (IDocumentSession)HttpContext.Current.Items["CurrentRequestRavenSession"])
+								{
+									if (session == null)
+										return;
+
+									if (Server.GetLastError() != null)
+										return;
+
+									session.SaveChanges();
+								}
+								TaskExecutor.StartExecuting();
+			              	};
+		}
+
 		public static void RegisterGlobalFilters(GlobalFilterCollection filters)
 		{
 			filters.Add(new HandleErrorAttribute());

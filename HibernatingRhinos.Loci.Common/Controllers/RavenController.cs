@@ -22,30 +22,7 @@ namespace HibernatingRhinos.Loci.Common.Controllers
 
 		protected override void OnActionExecuting(ActionExecutingContext filterContext)
 		{
-			RavenSession = _documentStore.OpenSession();
-		}
-
-		// TODO: Consider re-applying https://github.com/ayende/RaccoonBlog/commit/ff954e563e6996d44eb59a28f0abb2d3d9305ffe
-		protected override void OnActionExecuted(ActionExecutedContext filterContext)
-		{
-			CompleteSessionHandler(filterContext);
-		}
-
-		protected void CompleteSessionHandler(ActionExecutedContext filterContext)
-		{
-			if (filterContext.IsChildAction)
-				return;
-
-			using (RavenSession)
-			{
-				if (filterContext.Exception != null)
-					return;
-
-				if (RavenSession != null)
-					RavenSession.SaveChanges();
-			}
-
-			TaskExecutor.StartExecuting();
+			RavenSession = (IDocumentSession)HttpContext.Items["CurrentRequestRavenSession"];
 		}
 
 		protected HttpStatusCodeResult HttpNotModified()
