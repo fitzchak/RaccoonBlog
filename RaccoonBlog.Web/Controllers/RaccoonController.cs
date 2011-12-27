@@ -38,9 +38,9 @@ namespace RaccoonBlog.Web.Controllers
 
 		protected override void OnActionExecuted(ActionExecutedContext filterContext)
 		{
-			ViewBag.BlogConfig = BlogConfig.MapTo<BlogConfigViewModel>();
-
 			base.OnActionExecuted(filterContext);
+
+			ViewBag.BlogConfig = BlogConfig.MapTo<BlogConfigViewModel>();
 		}
 
 		protected int CurrentPage
