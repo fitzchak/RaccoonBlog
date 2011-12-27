@@ -1,22 +1,13 @@
 ﻿using System.Web.Mvc;
 using System.Xml.Linq;
 using HibernatingRhinos.Loci.Common.Extensions;
-using HibernatingRhinos.Loci.Common.Tasks;
 using Raven.Client;
 
 namespace HibernatingRhinos.Loci.Common.Controllers
 {
 	public abstract class RavenController : Controller
 	{
-		public static IDocumentStore DocumentStore
-		{
-			get { return _documentStore; }
-			set
-			{
-				_documentStore = value;
-			}
-		}
-		private static IDocumentStore _documentStore;
+		public static IDocumentStore DocumentStore { get; set; }
 
 		public IDocumentSession RavenSession { get; protected set; }
 
