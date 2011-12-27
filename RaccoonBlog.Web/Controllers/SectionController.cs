@@ -13,6 +13,26 @@ namespace RaccoonBlog.Web.Controllers
 {
 	public class SectionController : RaccoonController
 	{
+		IDisposable aggressivelyCacheFor;
+
+		protected override void OnActionExecuting(ActionExecutingContext filterContext)
+		{
+			base.OnActionExecuting(filterContext);
+
+			aggressivelyCacheFor = RavenSession.Advanced.DocumentStore.AggressivelyCacheFor(TimeSpan.FromMinutes(5));
+		}
+
+		protected override void OnActionExecuted(ActionExecutedContext filterContext)
+		{
+			base.OnActionExecuted(filterContext);
+
+			if (aggressivelyCacheFor != null)
+			{
+				aggressivelyCacheFor.Dispose();
+				aggressivelyCacheFor = null;
+			}
+		}
+
 		[ChildActionOnly]
 		public ActionResult FuturePosts()
 		{
