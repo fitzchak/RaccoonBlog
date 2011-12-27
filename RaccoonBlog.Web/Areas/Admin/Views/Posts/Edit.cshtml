@@ -40,49 +40,33 @@
 				<div>
 					<table id="content-table-inner">
 						<tr>
-							<td>
-								<table id="id-form">
-									<p>@Html.EditorFor(x => x.Title)</p>
-									<p>@Html.EditorFor(x => x.Body)</p>
-									<p>@Html.EditorFor(x => x.CreatedAt)</p>
-									<p>@Html.EditorFor(x => x.PublishAt)</p>
-									<p>@Html.EditorFor(x => x.Tags)</p>
-									<p>@Html.EditorFor(x => x.AllowComments)</p>
-									@Html.HiddenFor(x => x.Id)
-									<tr>
-										<th>
-										</th>
-										<td valign="top">
-											<input type="submit" value="Update Post">
-										</td>
-										<td>
-										</td>
-									</tr>
-								</table>
-								
+							<td id="id-form">
+								<div>@Html.EditorFor(x => x.Title)</div>
+								<div>@Html.TextAreaFor(x => x.Body, new { @class = "adminRichText" })</div>
+								<div>@Html.EditorFor(x => x.CreatedAt)</div>
+								<div>@Html.EditorFor(x => x.PublishAt)</div>
+								<div>@Html.EditorFor(x => x.Tags)</div>
+								<div>@Html.EditorFor(x => x.AllowComments)</div>
+								@Html.HiddenFor(x => x.Id)
+								<div>
+									<input type="submit" value="Update Post"></div>
 							</td>
 						</tr>
 					</table>
 				</div>
-				</td>
-				</tr>
+			</td>
+		</tr>
 	</table>
 	</form>
 </article>
 <div class="clear">
 	&nbsp;</div>
 @section Script {
-	<script type="text/javascript" src="@Url.Content("~/Content/js/showdown.js")"></script>
+	<script type="text/javascript" src="@Url.Script("ckeditor/ckeditor.js")"></script>
+	<script type="text/javascript" src="@Url.Script("ckeditor/adapters/jquery.js")"></script>
 	<script type="text/javascript">
-		$(function () {
-			var $textarea = $('textarea[name$="Body"]').keydown(function () {
-				$('.markdown-preview-container').show('medium');
-			});
-			var $preview = $('.markdown-preview');
-			var converter = new Showdown.converter();
-			$textarea.keyup(function () {
-				$preview.html(converter.makeHtml($textarea.val()));
-			}).trigger('keyup');
+		jQuery(document).ready(function () {
+			jQuery(".adminRichText").ckeditor();
 		});
 	</script>
 }

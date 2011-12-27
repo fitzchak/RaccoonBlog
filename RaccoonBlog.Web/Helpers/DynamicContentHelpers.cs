@@ -13,7 +13,7 @@ namespace RaccoonBlog.Web.Helpers
 		static readonly Regex CodeBlockFinder = new Regex(@"\[code lang=(.+?)\s*\](.*?)\[/code\]", RegexOptions.Compiled | RegexOptions.Singleline);
 		static readonly Regex FirstLineSpacesFinder = new Regex(@"^(\s|\t)+", RegexOptions.Compiled);
 
-		public static MvcHtmlString CompiledContent(this IDynamicContent contentItem, bool trustContent = false)
+		public static MvcHtmlString CompiledContent(this IDynamicContent contentItem, bool trustContent)
 		{
 			if (contentItem == null) return MvcHtmlString.Empty;
 

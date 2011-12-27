@@ -75,7 +75,7 @@ namespace RaccoonBlog.Web.Controllers
 										  let postLink = Url.AbsoluteAction("Details", "PostDetails", new { Id = RavenIdResolver.Resolve(post.Id), Slug = SlugConverter.TitleToSlug(post.Title) })
 										  select new XElement("item",
 															  new XElement("title", post.Title),
-															  new XElement("description", post.CompiledContent()),
+															  new XElement("description", post.CompiledContent(true)),
 															  new XElement("link", postLink),
 																new XElement("guid", postLink),
 															  new XElement("pubDate", post.PublishAt.ToString("R"))
