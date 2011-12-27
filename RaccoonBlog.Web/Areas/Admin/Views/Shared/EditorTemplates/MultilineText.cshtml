@@ -1,17 +1,10 @@
-﻿	
-	<tr >
-	<td >@ViewData.ModelMetadata.DisplayName
-	</td>
-	<br/>
-	<td style="float:left">@Html.TextArea(string.Empty, ViewData.TemplateInfo.FormattedModelValue.ToString(), new Dictionary<string, object>{{"class", "form-textarea"}})</td>
-	<td >
-		<!-- class="inp-form-error" -->
-		
-		<div style="visibility: inherit" class="error-inner">@Html.ValidationMessage(string.Empty)</div><div class="error-left">
-		</div>
-	</td>
-</tr>
-<br/><br/>
+﻿<div class="form_item">
+    <label>
+        <span class="form_item_name">@ViewData.ModelMetadata.DisplayName</span>
+        @Html.TextArea(string.Empty, ViewData.TemplateInfo.FormattedModelValue.ToString(), 0, 0, null)
+        @Html.ValidationMessage(string.Empty)
+    </label>
+</div>
 
 
 
