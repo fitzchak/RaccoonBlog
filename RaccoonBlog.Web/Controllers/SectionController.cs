@@ -11,28 +11,8 @@ using RaccoonBlog.Web.Infrastructure.Common;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public class SectionController : RaccoonController
+	public class SectionController : AggresivelyCachingRacconController
 	{
-		IDisposable aggressivelyCacheFor;
-
-		protected override void OnActionExecuting(ActionExecutingContext filterContext)
-		{
-			base.OnActionExecuting(filterContext);
-
-			aggressivelyCacheFor = RavenSession.Advanced.DocumentStore.AggressivelyCacheFor(TimeSpan.FromMinutes(5));
-		}
-
-		protected override void OnActionExecuted(ActionExecutedContext filterContext)
-		{
-			base.OnActionExecuted(filterContext);
-
-			if (aggressivelyCacheFor != null)
-			{
-				aggressivelyCacheFor.Dispose();
-				aggressivelyCacheFor = null;
-			}
-		}
-
 		[ChildActionOnly]
 		public ActionResult FuturePosts()
 		{
@@ -141,6 +121,11 @@ namespace RaccoonBlog.Web.Controllers
 				vm.FullName = user.FullName;
 			}
 			return View(vm);
+		}
+
+		protected override TimeSpan CahceDuration
+		{
+			get { return TimeSpan.FromMinutes(6); }
 		}
 	}
 }
