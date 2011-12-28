@@ -1,6 +1,6 @@
 ﻿<div class="form_item">
     <label>
-        <span class="form_item_name">@ViewData.ModelMetadata.DisplayName</span>
+        <span class="form_item_title">@ViewData.ModelMetadata.DisplayName<span class="form_item_description">@ViewData.ModelMetadata.Description</span></span>
 		@Html.TextBox(string.Empty, ViewData.TemplateInfo.FormattedModelValue ,new Dictionary<string, object> { { "type", "datetime" } })
         @Html.ValidationMessage(string.Empty)
     </label>
