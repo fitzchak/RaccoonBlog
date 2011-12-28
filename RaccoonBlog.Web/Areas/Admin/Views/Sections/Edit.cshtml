@@ -6,9 +6,6 @@
 
 	ViewBag.Title = ViewBag.H1;
 }
-<div id="page-heading">
-	<h1>@ViewBag.H1</h1>
-</div>
 @if (ViewData.ModelState.IsValid == false)
 { 
 	<div class="form-error">
@@ -16,80 +13,32 @@
 	</div>
 }
 <article id="user-input">
+	<div id="page-heading">
+		<h1>@ViewBag.H1</h1>
+	</div>
 	<form action="@Url.Action("Update")" method="post">
-	   <table style="width: 130%;" id="content-table">
-		<tr>
-			<th rowspan="3" class="sized">
-				<img src="@Html.AdminImage("shared/side_shadowleft.jpg")" width="20"
-	height="400" alt="" />
-			</th>
-			<th class="topleft">
-			</th>
-			<td id="tbl-border-top">
-				&nbsp;
-			</td>
-			<th class="topleft">
-			</th>
-			<th rowspan="3" class="sized">
-				<img src="@Html.AdminImage("shared/side_shadowright.jpg")"
-	width="20" height="400" alt="" />
-			</th>
-		</tr>
-		<tr>
-			<td id="tbl-border-left">
-			</td>
-			<td>
-				<!-- start content-table-inner -->
-				<div >
-					<table id="content-table-inner">
-						<tr >
-							<td>
-								<table id="id-form">
-									<p>@Html.EditorFor(x => x.Title)</p>
-									<p>@Html.EditorFor(x => x.ControllerName)</p>
-									<p>@Html.EditorFor(x => x.ActionName)</p>
-									<p>@Html.EditorFor(x => x.IsActive)</p>
-									<p>@Html.EditorFor(x => x.Body)
-									</p>
-									
-									@Html.HiddenFor(x => x.Id)
-									<tr>
-										<th>
-										</th>
-										<td valign="top">
-											<input type="submit" value="@ViewBag.SubmitButtonText"/>
-											<input type="reset" value="Reset Section"/>
-										</td>
-										<td>
-										</td>
-									</tr>
-								</table>
-								<!-- end id-form -->
-							</td>
-						</tr>
-					</table>
-					</div>
-					<tr>
-				<td>
-		</td>
-		</tr>
-	</table>
-</form>
+	<div>
+		<div id="content-table-inner" class="inputform" >
+			<div id="id-form" style="top: 0;">
+				@Html.EditorFor(x => x.Title)
+				@Html.EditorFor(x => x.ControllerName)
+				@Html.EditorFor(x => x.ActionName)
+				@Html.TextAreaFor(x => x.Body, new { @class = "adminRichText" })
+				@Html.HiddenFor(x => x.Id)
+				<div>
+					<input type="submit" value="@ViewBag.SubmitButtonText"/>
+					<input type="reset" value="Reset Section" /></div>
+			</div>
+		</div>
+	</div>
+	</form>
 </article>
-<div class="clear">
-	&nbsp;</div>
 @section Script {
-	<script type="text/javascript" src="@Url.Content("~/Content/js/showdown.js")"></script>
+	<script type="text/javascript" src="@Url.Script("ckeditor/ckeditor.js")"></script>
+	<script type="text/javascript" src="@Url.Script("ckeditor/adapters/jquery.js")"></script>
 	<script type="text/javascript">
-		$(function () {
-			var $textarea = $('textarea[name$="Body"]').keydown(function () {
-				$('.markdown-preview-container').show('medium');
-			});
-			var $preview = $('.markdown-preview');
-			var converter = new Showdown.converter();
-			$textarea.keyup(function () {
-				$preview.html(converter.makeHtml($textarea.val()));
-			}).trigger('keyup');
+		jQuery(document).ready(function () {
+			jQuery(".adminRichText").ckeditor();
 		});
 	</script>
 }
