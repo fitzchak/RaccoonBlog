@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
@@ -10,7 +11,7 @@ using System.Web.Mvc;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public class PostsController : RaccoonController
+	public class PostsController : AggresivelyCachingRacconController
 	{
 		public ActionResult Index()
 		{
@@ -91,6 +92,11 @@ namespace RaccoonBlog.Web.Controllers
 				PostsCount = count,
 				Posts = summaries
 			});
+		}
+
+		protected override TimeSpan CahceDuration
+		{
+			get { return TimeSpan.FromMinutes(3); }
 		}
 	}
 }

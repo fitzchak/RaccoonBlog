@@ -1,51 +1,19 @@
 ﻿using System.Web.Mvc;
 using System.Xml.Linq;
 using HibernatingRhinos.Loci.Common.Extensions;
-using HibernatingRhinos.Loci.Common.Tasks;
 using Raven.Client;
 
 namespace HibernatingRhinos.Loci.Common.Controllers
 {
 	public abstract class RavenController : Controller
 	{
-		public static IDocumentStore DocumentStore
-		{
-			get { return _documentStore; }
-			set
-			{
-				_documentStore = value;
-			}
-		}
-		private static IDocumentStore _documentStore;
+		public static IDocumentStore DocumentStore { get; set; }
 
 		public IDocumentSession RavenSession { get; protected set; }
 
 		protected override void OnActionExecuting(ActionExecutingContext filterContext)
 		{
-			RavenSession = _documentStore.OpenSession();
-		}
-
-		// TODO: Consider re-applying https://github.com/ayende/RaccoonBlog/commit/ff954e563e6996d44eb59a28f0abb2d3d9305ffe
-		protected override void OnActionExecuted(ActionExecutedContext filterContext)
-		{
-			if (filterContext.IsChildAction)
-				return;
-
-			CompleteSessionHandler(filterContext);
-		}
-
-		protected void CompleteSessionHandler(ActionExecutedContext filterContext)
-		{
-			using (RavenSession)
-			{
-				if (filterContext.Exception != null)
-					return;
-
-				if (RavenSession != null)
-					RavenSession.SaveChanges();
-			}
-
-			TaskExecutor.StartExecuting();
+			RavenSession = (IDocumentSession)HttpContext.Items["CurrentRequestRavenSession"];
 		}
 
 		protected HttpStatusCodeResult HttpNotModified()
