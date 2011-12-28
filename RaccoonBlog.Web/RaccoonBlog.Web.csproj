@@ -809,12 +809,6 @@
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\String.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HibernatingRhinos.Loci.Common\Loci.Common.csproj">
-      <Project>{238D8AAA-FD89-48E7-9446-ADCDE845B58E}</Project>
-      <Name>Loci.Common</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Areas\Admin\Views\Posts\DeleteAllSpamComments.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -826,6 +820,12 @@
     <None Include="Content\js\ckeditor\ckeditor.php" />
     <None Include="Content\js\ckeditor\ckeditor_php4.php" />
     <None Include="Content\js\ckeditor\ckeditor_php5.php" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HibernatingRhinos.Loci.Common\Loci.Common.csproj">
+      <Project>{238D8AAA-FD89-48E7-9446-ADCDE845B58E}</Project>
+      <Name>Loci.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

@@ -18,15 +18,13 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		{
 			return new List<AdminMenu>
 			       	{
-						//new AdminMenu
-						//    {
-						//        Title = "Dashboard",
-						//        SubMenus = new List<AdminMenu>
-						//                    {
-						//                    },
-						//        Url = Url.Action("Index", "Home"),
+						new AdminMenu
+						    {
+						        Title = "Back To Blog",
+						        SubMenus = null,
+						        Url = Url.RouteUrl("Default"),
 								
-						//    },
+						    },
 			       		new AdminMenu
 			       			{
 			       				Title = "Posts",
