@@ -141,6 +141,7 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\BlogConfigAdminViewModelMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\StringToGuidConverter.cs" />
     <Compile Include="Infrastructure\Common\DocumentSessionExtensions.cs" />
+    <Content Include="Areas\Admin\Content\css\jquery-ui-timepicker-addon.css" />
     <Content Include="Areas\Admin\Content\css\pro_dropline.css" />
     <Content Include="Areas\Admin\Content\css\pro_dropline_ie.css" />
     <Content Include="Areas\Admin\Content\css\screen.css" />
@@ -248,6 +249,7 @@
     <Content Include="Areas\Admin\Content\images\table\table_sort_arrow.gif" />
     <Content Include="Areas\Admin\Content\js\custom_jquery.js" />
     <Content Include="Areas\Admin\Content\js\jquery-1.4.1.min.js" />
+    <Content Include="Areas\Admin\Content\js\jquery-ui-timepicker-addon.js" />
     <Content Include="Areas\Admin\Content\js\jquery.bind.js" />
     <Content Include="Areas\Admin\Content\js\jquery.dimensions.js" />
     <Content Include="Areas\Admin\Content\js\jquery.filestyle.js" />
@@ -844,7 +846,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>5635</DevelopmentServerPort>
+          <DevelopmentServerPort>36519</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
