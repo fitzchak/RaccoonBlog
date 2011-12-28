@@ -30,89 +30,58 @@
 		<div class="clear">
 		</div>
 		<div id="loginbox">
-			<div id="login-inner">
-					@if (ViewData.ModelState.IsValid == false) { 
-		<div class="form-error">
-			@Html.ValidationSummary()
-		</div>
-		}
+			@if (ViewData.ModelState.IsValid == false)
+   { 
+				<div class="form-error">
+					@Html.ValidationSummary(true)
+				</div>
+   }
+			<article id="user-input" style="width: 350px">
 				<form action="@Url.Action("Index")" method="post">
-				<table>
-					<tr>
-						<th>
-							Login
-						</th>
-						<td>@Html.TextBoxFor(x => x.Login, new { @class = "login-inp" })
-						</td>
-					</tr>
-					<tr>
-						<th>
-							Password
-						</th>
-						<td>
-	                           @Html.TextBoxFor(x => x.Password, new Dictionary<string, object> { { "class", "login-inp" }, { "type", "password" }, { "onfocus", "this.value=''" } })
-	 					</td>
-					</tr>
-					<tr>
-						<th>
-						</th>
-						<td valign="top">
-							<input type="checkbox" class="checkbox-size" id="login-check" /><label for="login-check">Remember
-								me</label>
-						</td>
-					</tr>
-					<tr>
-						<th>
-						</th>
-						<td>
-							<input type="submit" class="submit-login" value="Login" />
-						</td>
-					</tr>
-				</table>
-				@Html.HiddenFor(x => x.ReturnUrl)
+				<div style="width: 350px; height: 200px">
+					<div style="float: left; padding-left: 17px; font-size: 16px" class="login-form">
+						<div id="id-form" style="top: 0;">
+							@Html.EditorFor(x => x.Login)
+							@Html.EditorFor(x => x.Password)
+							@Html.EditorFor(x => x.RememberMe)
+							@Html.HiddenFor(x => x.ReturnUrl)
+							<div style="float: right; width: 600px">
+								<input type="submit" value="Login"></div>
+						</div>
+					</div>
+				</div>
 				</form>
-			</div>
+				<div id="forgotbox">
+					<div id="forgotbox-text">
+						Please send us your email and we'll reset your password.</div>
+					<div id="content-table-inner" class="inputform">
+						<div id="id-form" style="top: 0;">
+							@Html.EditorFor(x => x.Login)
+							@Html.EditorFor(x => x.Password)
+							<div>
+								<input type="submit" value="Login"></div>
+						</div>
+					</div>
+				</div>
+			</article>
 			<div class="clear">
-			</div>
-			<!--<a href="" class="forgot-pwd">Forgot Password?</a>-->
+				&nbsp;</div>
+			@section Script {
+				<script type="text/javascript" src="@Url.Content("~/Content/js/showdown.js")"> </script>
+				<script type="text/javascript">
+					$(function () {
+						var $textarea = $('textarea[name$="Body"]').keydown(function () {
+							$('.markdown-preview-container').show('medium');
+						});
+						var $preview = $('.markdown-preview');
+						var converter = new Showdown.converter();
+						$textarea.keyup(function () {
+							$preview.html(converter.makeHtml($textarea.val()));
+						}).trigger('keyup');
+					});
+				</script>
+			}
 		</div>
-		<!--  end loginbox -->
-		<!--  start forgotbox ................................................................................... -->
-		<div id="forgotbox">
-			<div id="forgotbox-text">
-				Please send us your email and we'll reset your password.</div>
-			<div id="forgot-inner">
-				<table>
-					<tr>
-						<th>
-							Email address:
-						</th>
-						<td>
-							<input type="text" value="" class="login-inp" />
-						</td>
-					</tr>
-					<tr>
-						<th>
-							Password:
-						</th>
-						<td>
-							<input type="text" value="" class="login-inp" />
-						</td>
-					</tr>
-					<tr>
-						<th>
-						</th>
-						<td>
-							<input type="button" class="submit-login" />
-						</td>
-					</tr>
-				</table>
-			</div>
-			<div class="clear">
-			</div>
-			<a href="" class="back-login">Back to login</a>
-		</div>
-		<!--  end forgotbox -->
 	</div>
 </body>
 </html>
