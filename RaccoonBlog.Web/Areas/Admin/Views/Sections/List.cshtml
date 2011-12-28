@@ -8,22 +8,7 @@
     <h1>Sections</h1><br/>
 	<p style="font: 15px Ariel black">@Html.ActionLink("Create Section", "Add")</p>
 	<ul class="admin-list sortable" >
-<<<<<<< HEAD
-		@foreach (var section1 in Model) { 
-			 <div class="commands-section" style="border-bottom: 2px solid silver; border-top: 2px solid silver;">
-				@Html.DisplayFor(s => section1.Id)
-				@Html.DisplayFor(s => section1.Title)
-				@Html.DisplayFor(s => section1.IsActive)
-                    <ul>
-                       <a href="@Url.Action("Edit","Sections")">Edit</a>
-                        
-                            <form action="@Url.Action("Delete", new { section1.Id })" method="post">
-                                <input type="submit" value="Delete" class="confirm">
-                            </form>
-                    </ul>
-                </div>
-			
-=======
+
 		@foreach (var section1 in Model) {
 		  <li>
 			  <div class="commands-section" style="border-bottom: 2px solid silver; border-top: 2px solid silver;">
@@ -35,11 +20,10 @@
 				</ul>
 				
 	  			<form action="@Url.Action("Delete", new { section1.Id })" method="post">
-					<input type="submit" value="Delete" class="confirm">
+					<input style="width: 90px" type="submit" value="Delete" class="confirm">
 				</form>
 			  </div>
 		  </li>
->>>>>>> e2949d2d25d0887d864d09a3a49ea7a6c2485680
 		}
 	</ul>
 </article>
