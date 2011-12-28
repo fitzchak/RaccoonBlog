@@ -220,6 +220,7 @@ article.post footer, postToolbar
 .comment input[type=checkbox]
 {
 	float: left;
+	z-index: -190;
 }
 
 .comment-body
@@ -238,6 +239,13 @@ article.post footer, postToolbar
 }
 .markdown-preview-container .form_item_name
 {
+	width: 200px;
+    display: block;
+    float: left;
+    text-align: left;
+    margin: 0 12px 0 0;
+    font-weight: bold; 
+	padding-right: 6px;
 }
 .markdown-preview
 {
@@ -320,19 +328,28 @@ article header h1 a
 
 .form_item 
 {
-	margin: 2px 0;
+	width: 400px;
+	margin: 8px 8px 8px 8px;
+	padding: 6px 6px 6px 6px;
 }
 
 .form_item label span.form_item_name
 {
 	width: 200px;
+	text-align:left;
+	margin-bottom: 12px;
+	margin-top: 8px;
+	margin-left: 20px;
+	margin-right: 6px;
+	padding: 6px 6px 6px 6px;
 	display: block;
 	float: left;
+	font-weight: bold;
 }
 
 .form_item textarea
 {
-	height: 193px;
+	height: 250px;
 	width: 400px;
 }
 

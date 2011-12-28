@@ -15,7 +15,7 @@
 				</li>
 				<div style="right: 0px; float: right; width: 100%">
 					<form action="@Url.Action("Delete", new { @Model.Post.Id })" method="post">
-						<input style="float: right; right: 2px;" type="submit" value="Delete" class="confirm">
+						<input style="float: right; right: 2px; width: 100px;" type="submit" value="Delete">
 					</form></div>
 				
 			</ul>
@@ -26,12 +26,12 @@
 		<ul>
 		   @if (Model.PreviousPost != null)
 			{ 
-			   <a href="@Url.Action("Details", new { Model.PreviousPost.Id, Model.PreviousPost.Slug })">previous: @Model.PreviousPost.Title</a>
+			   <li><a href="@Url.Action("Details", new { Model.PreviousPost.Id, Model.PreviousPost.Slug })">previous: @Model.PreviousPost.Title</a></li>
 			}
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			@if (Model.NextPost != null)
 			{ 
-			   <a href="@Url.Action("Details", new { Model.NextPost.Id, Model.NextPost.Slug })">next: @Model.NextPost.Title</a>
+			  <li> <a href="@Url.Action("Details", new { Model.NextPost.Id, Model.NextPost.Slug })">next: @Model.NextPost.Title</a></li>
 			}
 		</ul>
 	</nav>
