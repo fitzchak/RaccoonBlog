@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using DataAnnotationsExtensions.ClientValidation;
 using HibernatingRhinos.Loci.Common.Controllers;
 using HibernatingRhinos.Loci.Common.Tasks;
 using RaccoonBlog.Web.Controllers;
@@ -64,6 +65,8 @@ namespace RaccoonBlog.Web
 			new RouteConfigurator(RouteTable.Routes).Configure();
 			ModelBinders.Binders.Add(typeof (CommentCommandOptions), new RemoveSpacesEnumBinder());
 			ModelBinders.Binders.Add(typeof (Guid), new GuidBinder());
+
+			DataAnnotationsModelValidatorProviderExtensions.RegisterValidationExtensions();
 
 			AutoMapperConfiguration.Configure();
 
