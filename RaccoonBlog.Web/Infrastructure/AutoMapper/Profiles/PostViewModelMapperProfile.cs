@@ -2,11 +2,11 @@ using System.Configuration;
 using System.Linq;
 using System.Web;
 using AutoMapper;
+using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
-using RaccoonBlog.Web.Helpers;
 
 namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 {
@@ -28,7 +28,7 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 				.ForMember(x => x.IsImportant, o => o.MapFrom(m => m.Important))
 				.ForMember(x => x.Url, o => o.MapFrom(m => UrlResolver.Resolve(m.Url)))
 				.ForMember(x => x.Tooltip, o => o.MapFrom(m => string.IsNullOrEmpty(m.Url) ? "Comment by " + m.Author : m.Url))
-				.ForMember(x => x.CreatedAt, o => o.MapFrom(m => m.CreatedAt.ToString("MM/dd/yyyy hh:mm tt")))
+				.ForMember(x => x.CreatedAt, o => o.MapFrom(m => m.CreatedAt.ToUniversalTime().ToString("MM/dd/yyyy hh:mm tt")))
 				;
 
 			Mapper.CreateMap<Post, PostReference>()
