@@ -32,9 +32,12 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 
 		public override void Execute()
 		{
-			var post = DocumentSession.Include<Post>(x => x.AuthorId).Load(postId);
+			var post = DocumentSession
+				.Include<Post>(x => x.AuthorId)
+				.Include(x => x.CommentsId)
+				.Load(postId);
 			var postAuthor = DocumentSession.Load<User>(post.AuthorId);
-			var comments = DocumentSession.Load<PostComments>(postId);
+			var comments = DocumentSession.Load<PostComments>(post.CommentsId);
 
 			var comment = new PostComments.Comment
 			              	{
