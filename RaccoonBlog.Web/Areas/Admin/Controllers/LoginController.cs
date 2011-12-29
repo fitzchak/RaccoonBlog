@@ -17,7 +17,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 				return RedirectFromLoginPage();
 			}
 
-			return View(new LogOnModel { ReturnUrl = returnUrl });
+			return View(new LogOnModel {ReturnUrl = returnUrl});
 		}
 
 		[HttpPost]
@@ -27,10 +27,10 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 
 			if (user == null || user.ValidatePassword(input.Password) == false)
 			{
-				ModelState.AddModelError("UserNotExistOrPasswordNotMatch", 
-					"Email and password do not match to any known user.");
+				ModelState.AddModelError("UserNotExistOrPasswordNotMatch",
+				                         "Email and password do not match to any known user.");
 			}
-			else if(user.Enabled == false)
+			else if (user.Enabled == false)
 			{
 				ModelState.AddModelError("NotEnabled", "The user is not enabled");
 			}
@@ -41,7 +41,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 				return RedirectFromLoginPage(input.ReturnUrl);
 			}
 
-			return View(new LogOnModel { Login = input.Login, ReturnUrl = input.ReturnUrl });
+			return View(new LogOnModel {Login = input.Login, ReturnUrl = input.ReturnUrl});
 		}
 
 		private ActionResult RedirectFromLoginPage(string retrunUrl = null)

@@ -7,7 +7,7 @@ namespace RaccoonBlog.IntegrationTests.AutoMapper
 	public class AutoMapperConfigurationTester
 	{
 		[Fact]
-        public void AssertConfigurationIsValid()
+		public void AssertConfigurationIsValid()
 		{
 			AutoMapperConfiguration.Configure();
 			Mapper.AssertConfigurationIsValid();
