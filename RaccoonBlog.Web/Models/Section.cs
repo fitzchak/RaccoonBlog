@@ -9,11 +9,8 @@ namespace RaccoonBlog.Web.Models
 	 * 2. Can point to any internal action.
 	 */
 
-	public class Section
+	public class Section : Model
 	{
-		[HiddenInput]
-		public string Id { get; set; }
-
 		[Required]
 		[Display(Name = "Title")]
 		public string Title { get; set; }

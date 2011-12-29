@@ -299,6 +299,7 @@
     <Compile Include="Infrastructure\Indexes\PostComments_CreationDate.cs" />
     <Compile Include="Infrastructure\Indexes\Statistics_Count.cs" />
     <Compile Include="Models\BlogConfig.cs" />
+    <Compile Include="Models\Model.cs" />
     <Compile Include="Models\PostComments.cs" />
     <Compile Include="Models\Commenter.cs" />
     <Compile Include="Models\Post.cs" />
