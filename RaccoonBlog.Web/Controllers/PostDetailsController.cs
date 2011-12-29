@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 using HibernatingRhinos.Loci.Common.Tasks;
 using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Helpers.Validation;
@@ -8,8 +10,6 @@ using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Infrastructure.Tasks;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
-using System.Web.Mvc;
-using System.Web;
 
 namespace RaccoonBlog.Web.Controllers
 {

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -11,7 +12,6 @@ using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Infrastructure.Indexes;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.Services.RssModels;
-using System.Linq;
 using Post = RaccoonBlog.Web.Services.RssModels.Post;
 
 namespace RaccoonBlog.Web.Services

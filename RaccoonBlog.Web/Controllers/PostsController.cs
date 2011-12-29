@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Mvc;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
 using Raven.Client.Linq;
-using System.Web.Mvc;
 
 namespace RaccoonBlog.Web.Controllers
 {
