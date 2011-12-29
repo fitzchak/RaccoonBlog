@@ -7,17 +7,16 @@
 	<header>
 		<h1><a href="@Url.Action("Details", new { Model.Post.Id, Model.Post.Slug })">@Model.Post.Title</a></h1>
 		<div id="post-admin">
-			<ul>
-				<li style="color: white;">
-				<a href="@Url.Action("Details", "PostDetails")">View</a><br/>
-				<a href="@Url.Action("Details", "PostDetails", new { key = @Model.Post.Key })">Private View</a><br/>
-				<a href="@Url.Action("Edit", "Posts", new { id = @Model.Post.Id})">Edit</a>
+			<ul style="list-style-type: none">
+				<li><a href="@Url.Action("Details", "PostDetails")">View</a></li>
+				<li><a href="@Url.Action("Details", "PostDetails", new { key = @Model.Post.Key })">Private View</a></li>
+				<li><a href="@Url.Action("Edit", "Posts", new { id = @Model.Post.Id})">Edit</a></li>
+				<li>
+					<div style="right: 0px; float: right; width: 100%">
+						<form action="@Url.Action("Delete", new { @Model.Post.Id })" method="post">
+							<input style="float: right; right: 2px; width: 100px;" type="submit" value="Delete">
+						</form></div>
 				</li>
-				<div style="right: 0px; float: right; width: 100%">
-					<form action="@Url.Action("Delete", new { @Model.Post.Id })" method="post">
-						<input style="float: right; right: 2px; width: 100px;" type="submit" value="Delete">
-					</form></div>
-				
 			</ul>
 		</div>
 	</header>
