@@ -103,5 +103,51 @@ for (int i = 0; i < 13000; i++)
 			var result = MarkdownResolve(input);
 			Assert.Contains("for (int i = 0; i < 13000; i++)", result);
 		}
+
+		[Fact]
+		public void WillNotCrushForThisComment()
+		{
+			const string input = @"
+ public static IEnumerable
+<t RobustEnumerating
+<t(
+  
+            IEnumerable
+<t input, Func
+<ienumerable<t, IEnumerable
+<t> func)
+  
+        {
+  
+            // how to do this?
+  
+            IList
+<t list = new List
+<t();
+  
+            int counter = 0;
+  
+            foreach (var enumerable in input)
+  
+            {
+  
+                if (counter % 2 != 0)
+  
+                    list.Add(enumerable);
+  
+                counter++;           
+  
+            }
+  
+            input = list.AsEnumerable();
+  
+            return func(input);
+  
+  
+        }
+>
+";
+			Assert.DoesNotThrow(() => MarkdownResolve(input));
+		}
 	}
 }
