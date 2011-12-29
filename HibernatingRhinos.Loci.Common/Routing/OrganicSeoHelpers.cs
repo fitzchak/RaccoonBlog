@@ -7,6 +7,9 @@ namespace HibernatingRhinos.Loci.Common.Routing
 	{
 		public static void FixUrlOnBeginRequest(System.Web.HttpApplication app)
 		{
+			if (HttpContext.Current.Request.HttpMethod != "GET")
+				return;
+
 			// Get the requested URL so we can do some validation on it.
 			// We exclude the query string, and add that later, so it's not included
 			// in the validation
