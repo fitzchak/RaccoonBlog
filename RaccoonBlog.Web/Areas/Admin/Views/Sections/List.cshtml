@@ -16,7 +16,7 @@
 	  			@Html.DisplayFor(s => section1.Title)
 	  			@Html.DisplayFor(s => section1.IsActive)
 	  			<ul>
-					<li><a href="@Url.Action("Edit","Sections", new { section1.Id })">Edit</a></li>
+					<li><a href="@Url.Action("Edit","Sections", new { id = section1.NumericId })">Edit</a></li>
 				</ul>
 				
 	  			<form action="@Url.Action("Delete", new { section1.Id })" method="post">

@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using RaccoonBlog.Web.Helpers.Validation;
+using System.Linq;
 
 namespace RaccoonBlog.Web.Models
 {
@@ -12,6 +13,15 @@ namespace RaccoonBlog.Web.Models
     {
 		[HiddenInput]
         public string Id { get; set; }
+
+    	public int NumericId
+    	{
+    		get
+    		{
+    			var last = Id.Split('/').Last();
+    			return int.Parse(last);
+    		}
+    	}
 
 		[Required]
 		[Display(Name = "Title")]
