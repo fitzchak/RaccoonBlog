@@ -112,39 +112,39 @@ for (int i = 0; i < 13000; i++)
 <t RobustEnumerating
 <t(
   
-            IEnumerable
+			IEnumerable
 <t input, Func
 <ienumerable<t, IEnumerable
 <t> func)
   
-        {
+		{
   
-            // how to do this?
+			// how to do this?
   
-            IList
+			IList
 <t list = new List
 <t();
   
-            int counter = 0;
+			int counter = 0;
   
-            foreach (var enumerable in input)
+			foreach (var enumerable in input)
   
-            {
+			{
   
-                if (counter % 2 != 0)
+				if (counter % 2 != 0)
   
-                    list.Add(enumerable);
+					list.Add(enumerable);
   
-                counter++;           
+				counter++;           
   
-            }
+			}
   
-            input = list.AsEnumerable();
+			input = list.AsEnumerable();
   
-            return func(input);
+			return func(input);
   
   
-        }
+		}
 >
 ";
 			Assert.DoesNotThrow(() => MarkdownResolve(input));
