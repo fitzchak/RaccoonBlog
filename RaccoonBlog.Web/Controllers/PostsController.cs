@@ -57,10 +57,10 @@ namespace RaccoonBlog.Web.Controllers
 				.WhereIsPublicPost()
 				.Where(post => post.PublishAt.Year == year);
 			
-			if(month != null)
+			if (month != null)
 				postsQuery = postsQuery.Where(post => post.PublishAt.Month == month.Value);
 
-			if(day != null)
+			if (day != null)
 				postsQuery = postsQuery.Where(post => post.PublishAt.Day == day.Value);
 
 			var posts = 
