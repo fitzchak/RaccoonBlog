@@ -1,4 +1,5 @@
 using System;
+using System.Web;
 using System.Web.Mvc;
 using MarkdownDeep;
 
@@ -22,9 +23,9 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers
 			{
 				result = md.Transform(content);
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
-				result = "Comment format resulted in error:" + Environment.NewLine + Environment.NewLine + ex;
+				result = string.Format("<pre>{0}</pre>", HttpUtility.HtmlEncode(content));
 			}
 
 			return result;
