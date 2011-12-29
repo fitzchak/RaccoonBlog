@@ -1852,3 +1852,8 @@ a:hover.back-login
 .clr {
 	clear: both;
 }
+
+.comment.spam
+{
+	background-color: Gray;
+}
