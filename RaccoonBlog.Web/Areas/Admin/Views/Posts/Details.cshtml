@@ -25,13 +25,13 @@
 		<ul>
 		   @if (Model.PreviousPost != null)
 			{ 
-			   <li><a href="@Url.Action("Details", new { Model.PreviousPost.Id })">previous: @Model.PreviousPost.Title</a></li>
+			   <li><a href="@Url.Action("Details", new { Id = Model.PreviousPost.DomainId })">previous: @Model.PreviousPost.Title</a></li>
 			}
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		
 			@if (Model.NextPost != null)
-			{ 
-			  <li> <a href="@Url.Action("Details", new { Model.NextPost.Id, Model.NextPost.Slug })">next: @Model.NextPost.Title</a></li>
-			}
+   { 
+			  <li> <a href="@Url.Action("Details", new { Id = Model.NextPost.DomainId })">next: @Model.NextPost.Title</a></li>
+   }
 		</ul>
 	</nav>
 
@@ -93,9 +93,9 @@
 				</article>
 			}
 			<div id="comments-admin">
-				<input type="submit" name="command" value="Delete" class="confirm">
-				<input type="submit" name="command" value="Mark Spam" class="confirm">
-				<input type="submit" name="command" value="Mark Ham" class="confirm">
+				<input style="width: 100px;" type="submit" name="command" value="Delete" class="confirm">
+				<input style="width: 100px;" type="submit" name="command" value="Mark Spam" class="confirm">
+				<input style="width: 100px;" type="submit" name="command" value="Mark Ham" class="confirm">
 			</div>
 		</form>
 	</section>
