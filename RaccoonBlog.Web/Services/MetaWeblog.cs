@@ -139,9 +139,9 @@ namespace RaccoonBlog.Web.Services
 		{
 			ValidateUser(username, password);
 			var mostRecentTag = new DateTimeOffset(DateTimeOffset.Now.Year - 2,
-												   DateTimeOffset.Now.Month,
-												   1, 0, 0, 0,
-												   DateTimeOffset.Now.Offset);
+			                                       DateTimeOffset.Now.Month,
+			                                       1, 0, 0, 0,
+			                                       DateTimeOffset.Now.Offset);
 
 			using (var session = MvcApplication.DocumentStore.OpenSession())
 			{
@@ -150,18 +150,17 @@ namespace RaccoonBlog.Web.Services
 					.ToList();
 
 				return categoryInfos.Select(x => new CategoryInfo
-													{
-														categoryid = x.Name,
-														description = x.Name,
-														title = x.Name,
-														htmlUrl = Url.Action("Tag", "Posts", new {slug = x.Name}),
-														rssUrl = Url.Action("Rss", "Syndication", new {tag = x.Name}),
-													}).ToArray();
+				                                 {
+				                                 	categoryid = x.Name,
+				                                 	description = x.Name,
+				                                 	title = x.Name,
+				                                 	htmlUrl = Url.Action("Tag", "Posts", new {slug = x.Name}),
+				                                 	rssUrl = Url.Action("Rss", "Syndication", new {tag = x.Name}),
+				                                 }).ToArray();
 			}
 		}
 
-		Post[] IMetaWeblog.GetRecentPosts(string blogid, string username, string password,
-			int numberOfPosts)
+		Post[] IMetaWeblog.GetRecentPosts(string blogid, string username, string password, int numberOfPosts)
 		{
 			ValidateUser(username, password);
 
@@ -186,8 +185,7 @@ namespace RaccoonBlog.Web.Services
 		}
 
 
-		MediaObjectInfo IMetaWeblog.NewMediaObject(string blogid, string username, string password,
-			MediaObject mediaObject)
+		MediaObjectInfo IMetaWeblog.NewMediaObject(string blogid, string username, string password, MediaObject mediaObject)
 		{
 			ValidateUser(username, password);
 			var imagePhysicalPath = Context.Server.MapPath(ConfigurationManager.AppSettings["uploadsPath"]);

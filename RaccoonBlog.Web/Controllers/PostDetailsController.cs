@@ -37,22 +37,22 @@ namespace RaccoonBlog.Web.Controllers
 
 			var comments = RavenSession.Load<PostComments>(post.CommentsId) ?? new PostComments();
 			var vm = new PostViewModel
-			{
-				Post = post.MapTo<PostViewModel.PostDetails>(),
-				Comments = comments.Comments
-					.OrderBy(comment => comment.CreatedAt)
-					.MapTo<PostViewModel.Comment>(),
-				NextPost = RavenSession.GetNextPrevPost(post, true),
-				PreviousPost = RavenSession.GetNextPrevPost(post, false),
-				AreCommentsClosed = comments.AreCommentsClosed(post, BlogConfig.NumberOfDayToCloseComments),
-			};
+			         {
+			         	Post = post.MapTo<PostViewModel.PostDetails>(),
+			         	Comments = comments.Comments
+			         		.OrderBy(comment => comment.CreatedAt)
+			         		.MapTo<PostViewModel.Comment>(),
+			         	NextPost = RavenSession.GetNextPrevPost(post, true),
+			         	PreviousPost = RavenSession.GetNextPrevPost(post, false),
+			         	AreCommentsClosed = comments.AreCommentsClosed(post, BlogConfig.NumberOfDayToCloseComments),
+			         };
 
 			vm.Post.Author = RavenSession.Load<User>(post.AuthorId).MapTo<PostViewModel.UserDetails>();
 
 			vm.Post.Key = key; // Save the key too, to allow operations on privately accessible posts too. Redirection (below) isn't of concern.
 
 			if (vm.Post.Slug != slug)
-				return RedirectToActionPermanent("Details", new { id, vm.Post.Slug });
+				return RedirectToActionPermanent("Details", new {id, vm.Post.Slug});
 
 			SetWhateverUserIsTrustedCommenter(vm);
 
@@ -79,7 +79,7 @@ namespace RaccoonBlog.Web.Controllers
 			{
 				input.CommenterKey = Guid.NewGuid();
 			}
-			
+
 			ValidateCommentsAllowed(post, comments);
 			ValidateCaptcha(input, commenter);
 
@@ -97,11 +97,11 @@ namespace RaccoonBlog.Web.Controllers
 		{
 			const string successMessage = "Your comment will be posted soon. Thanks!";
 			if (Request.IsAjaxRequest())
-				return Json(new { Success = true, message = successMessage });
+				return Json(new {Success = true, message = successMessage});
 
 			TempData["message"] = successMessage;
 			var postReference = post.MapTo<PostReference>();
-			return RedirectToAction("Details", new { Id = postReference.DomainId, postReference.Slug });
+			return RedirectToAction("Details", new {Id = postReference.DomainId, postReference.Slug});
 		}
 
 		private void ValidateCommentsAllowed(Post post, PostComments comments)
@@ -115,20 +115,20 @@ namespace RaccoonBlog.Web.Controllers
 		private void ValidateCaptcha(CommentInput input, Commenter commenter)
 		{
 			if (Request.IsAuthenticated ||
-				(commenter != null && commenter.IsTrustedCommenter == true))
+			    (commenter != null && commenter.IsTrustedCommenter == true))
 				return;
 
-			if (RecaptchaValidatorWrapper.Validate(ControllerContext.HttpContext)) 
+			if (RecaptchaValidatorWrapper.Validate(ControllerContext.HttpContext))
 				return;
 
 			ModelState.AddModelError("CaptchaNotValid",
-									 "You did not type the verification word correctly. Please try again.");
+			                         "You did not type the verification word correctly. Please try again.");
 		}
 
 		private ActionResult PostingCommentFailed(Post post, CommentInput input, Guid key)
 		{
 			if (Request.IsAjaxRequest())
-				return Json(new { Success = false, message = ModelState.GetFirstErrorMessage() });
+				return Json(new {Success = false, message = ModelState.GetFirstErrorMessage()});
 
 			var postReference = post.MapTo<PostReference>();
 			var result = Details(postReference.DomainId, postReference.Slug, key);
@@ -160,7 +160,7 @@ namespace RaccoonBlog.Web.Controllers
 			if (commenter == null)
 			{
 				vm.IsLoggedInCommenter = false;
-				Response.Cookies.Set(new HttpCookie(CommenterUtil.CommenterCookieName) { Expires = DateTime.Now.AddYears(-1) });
+				Response.Cookies.Set(new HttpCookie(CommenterUtil.CommenterCookieName) {Expires = DateTime.Now.AddYears(-1)});
 				return;
 			}
 
@@ -168,6 +168,5 @@ namespace RaccoonBlog.Web.Controllers
 			vm.Input = commenter.MapTo<CommentInput>();
 			vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
 		}
-
 	}
 }
