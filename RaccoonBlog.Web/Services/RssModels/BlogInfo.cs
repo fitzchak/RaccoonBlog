@@ -1,13 +1,13 @@
 namespace RaccoonBlog.Web.Services.RssModels
 {
-    #region Structs
+	#region Structs
 
-    public struct BlogInfo
-    {
-        public string blogid;
-        public string url;
-        public string blogName;
-    }
+	public struct BlogInfo
+	{
+		public string blogid;
+		public string url;
+		public string blogName;
+	}
 
 	#endregion
 }

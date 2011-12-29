@@ -6,21 +6,21 @@ using Recaptcha;
 
 namespace RaccoonBlog.Web.Helpers
 {
-    public static class RecaptchHelperExtensions
-    {
-        public static MvcHtmlString GenerateCaptcha(this HtmlHelper helper)
-        {
-            var control = new RecaptchaControl
-            {
-            	ID = "recaptcha",
-            	Theme = "clean",
-            	PublicKey = ConfigurationManager.AppSettings["ReCaptchaPublicKey"],
-            	PrivateKey = ConfigurationManager.AppSettings["ReCaptchaPrivateKey"]
-            };
-        	var writer = new HtmlTextWriter(new StringWriter());
-            control.RenderControl(writer);
-            var html = writer.InnerWriter.ToString();
-            return MvcHtmlString.Create(html);
-        }
-    }
+	public static class RecaptchHelperExtensions
+	{
+		public static MvcHtmlString GenerateCaptcha(this HtmlHelper helper)
+		{
+			var control = new RecaptchaControl
+			              {
+			              	ID = "recaptcha",
+			              	Theme = "clean",
+			              	PublicKey = ConfigurationManager.AppSettings["ReCaptchaPublicKey"],
+			              	PrivateKey = ConfigurationManager.AppSettings["ReCaptchaPrivateKey"]
+			              };
+			var writer = new HtmlTextWriter(new StringWriter());
+			control.RenderControl(writer);
+			var html = writer.InnerWriter.ToString();
+			return MvcHtmlString.Create(html);
+		}
+	}
 }
