@@ -44,7 +44,6 @@
 			});
 		});
 	</script>
-
 	
 @if (ViewExtensions.IsDebug())
 {
@@ -56,17 +55,15 @@ else
 	
 }
 	<script type="text/javascript">
-		Modernizr.load([@Url.Content("~/Content/css/ResetCss.css"), @Url.Content("~/Areas/Admin/Content/css/screen.css")]);
+		
 	</script>
 </head>
 <body>
-	<!-- Start: page-top-outer -->
 	<div id="page-top-outer">
 		<!-- Start: page-top -->
 		<div id="page-top">
 			<div id="logo">
-				<a href="">
-					<img src="@Html.AdminImage("shared/logo.png")" width="51" height="40" alt="" /></a>
+				<a href=""><img src="@Url.Content("~/Areas/Admin/Content/images/logo.png")" width="51" height="40" alt="Logo"></a>
 			</div>
 		</div>
 		<!-- End: page-top-outer -->
@@ -80,8 +77,7 @@ else
 				<div id="nav-right">
 					<div class="nav-divider">
 						&nbsp;</div>
-					<a href="@Url.Action("Logout", "Login")" id="logout">
-						<img src="@Html.AdminImage("shared/nav/nav_logout.gif")" width="64" height="14" alt="" /></a>
+					<a href="@Url.Action("Logout", "Login")" id="logout">Logout</a>
 					<div class="clear">
 						&nbsp;</div>
 				</div>
@@ -130,7 +126,6 @@ else
 			<div class="clear">
 				&nbsp;</div>
 		</div>
-		<!-- end footer -->
 	</div>
 </body>
 </html>
