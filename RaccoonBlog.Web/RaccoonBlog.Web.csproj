@@ -818,6 +818,7 @@
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\DateTime.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="connString.config" />
     <None Include="Content\js\ckeditor\.htaccess" />
     <None Include="Content\js\ckeditor\ckeditor.pack" />
     <None Include="Content\js\ckeditor\ckeditor.php" />
