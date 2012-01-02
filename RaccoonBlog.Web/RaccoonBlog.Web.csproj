@@ -143,8 +143,6 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\StringToGuidConverter.cs" />
     <Compile Include="Infrastructure\Common\DocumentSessionExtensions.cs" />
     <Content Include="Areas\Admin\Content\css\jquery-ui-timepicker-addon.css" />
-    <Content Include="Areas\Admin\Content\css\pro_dropline.css" />
-    <Content Include="Areas\Admin\Content\css\pro_dropline_ie.css" />
     <Content Include="Areas\Admin\Content\css\screen.css" />
     <Content Include="Areas\Admin\Content\images\forms\bg_related_act.gif" />
     <Content Include="Areas\Admin\Content\images\forms\bubble_inner.gif" />
@@ -254,7 +252,6 @@
     <Content Include="Areas\Admin\Content\js\jquery.bind.js" />
     <Content Include="Areas\Admin\Content\js\jquery.dimensions.js" />
     <Content Include="Areas\Admin\Content\js\jquery.filestyle.js" />
-    <Content Include="Areas\Admin\Content\js\jquery.pngFix.pack.js" />
     <Content Include="Areas\Admin\Content\js\jquery.selectbox-0.5.js" />
     <Content Include="Areas\Admin\Content\js\jquery.selectbox-0.5_style_2.js" />
     <Content Include="Areas\Admin\Content\js\jquery.selectbox-0.5_style_3.js" />

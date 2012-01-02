@@ -18,11 +18,6 @@ namespace RaccoonBlog.Web.Areas.Admin.Helpers
 			return MvcHtmlString.Create("/areas/admin/content/js/" + path.Replace('\\', '/'));
 		}
 
-		public static MvcHtmlString AdminStyle(this HtmlHelper helper, string path)
-		{
-			return MvcHtmlString.Create("/areas/admin/content/css/" + path.Replace('\\', '/'));
-		}
-
 		public static MvcHtmlString AdminMenu(this HtmlHelper helper, IList<AdminMenu> menus)
 		{
 			if (menus == null)
