@@ -9,21 +9,11 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>RaccoonBlog :: Login</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-	<!-- Custom jquery scripts -->
-	<script src="@Html.AdminScript("custom_jquery.js")" type="text/javascript"></script>
-	<!-- MUST BE THE LAST SCRIPT IN <HEAD></HEAD></HEAD> png fix -->
-	<script src="@Html.AdminScript("jquery.pngFix.pack.js")" type="text/javascript"></script>
-	<script type="text/javascript">
-		$(document).ready(function () {
-			$(document).pngFix();
-		});
-	</script>
 </head>
 <body id="login-bg">
 	<div id="login-holder">
 		<div id="logo-login">
-			<a href="index.html">
-				<img src="@Html.AdminImage("shared/logo.png")" width="51" height="50" alt="" /></a>
+			<a href="index.html"><img src="@Url.Content("~/Areas/Admin/Content/images/logo.png")" width="51" height="50" alt="Logo"></a>
 		</div>
 		<div class="clear">
 		</div>
