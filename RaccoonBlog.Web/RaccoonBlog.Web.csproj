@@ -254,7 +254,6 @@
     <Content Include="Areas\Admin\Content\js\jquery.selectbox-0.5_style_3.js" />
     <Content Include="Areas\Admin\Content\js\jquery.tooltip.js" />
     <Content Include="Areas\Admin\Content\js\jquery.usermode.js" />
-    <Content Include="Areas\Admin\Content\js\ui.checkbox.js" />
     <Content Include="Content\css\custom\ayende.less.css" />
     <Content Include="Content\css\custom\hibernatingrhinos.settings.less.css" />
     <Content Include="Content\css\custom\hibernatingrhinos.less.css" />

@@ -476,26 +476,6 @@ th.line-left
 	background: #e3eceb;
 }
 
-#toggle-all
-{
-	display: block;
-	width: 17px;
-	height: 17px;
-	cursor: pointer;
-	background: url(../images/shared/checkbox.gif) 0 -17px;
-}
-
-#toggle-all.toggle-checked
-{
-	display: block;
-	width: 17px;
-	height: 17px;
-	background: url(../images/shared/checkbox.gif) 0 0;
-}
-
-
-
-
 
 
 
