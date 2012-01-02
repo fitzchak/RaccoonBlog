@@ -127,7 +127,6 @@
   <ItemGroup>
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\SettingsController.cs" />
-    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Areas\Admin\Models\AdminMenu.cs" />
     <Compile Include="Controllers\AggresivelyCachingRacconController.cs" />
@@ -190,7 +189,7 @@
     <Content Include="Areas\Admin\Content\images\shared\corner_top_left.jpg" />
     <Content Include="Areas\Admin\Content\images\shared\corner_top_right.jpg" />
     <Content Include="Areas\Admin\Content\images\shared\icon_idlogo.jpg" />
-    <Content Include="Areas\Admin\Content\images\shared\logo.png" />
+    <Content Include="Areas\Admin\Content\images\logo.png" />
     <Content Include="Areas\Admin\Content\images\shared\nav\account_drop_bg.gif" />
     <Content Include="Areas\Admin\Content\images\shared\nav\account_line.gif" />
     <Content Include="Areas\Admin\Content\images\shared\nav\back_0.gif" />
@@ -216,7 +215,6 @@
     <Content Include="Areas\Admin\Content\images\shared\top_search_select.gif" />
     <Content Include="Areas\Admin\Content\images\shared\year_next.gif" />
     <Content Include="Areas\Admin\Content\images\shared\year_prev.gif" />
-    <Content Include="Areas\Admin\Content\images\shared\_logo.png" />
     <Content Include="Areas\Admin\Content\images\table\actions_slider_bg.gif" />
     <Content Include="Areas\Admin\Content\images\table\action_delete.gif" />
     <Content Include="Areas\Admin\Content\images\table\action_edit.gif" />
@@ -246,7 +244,6 @@
     <Content Include="Areas\Admin\Content\images\table\table_icon_4.gif" />
     <Content Include="Areas\Admin\Content\images\table\table_icon_5.gif" />
     <Content Include="Areas\Admin\Content\images\table\table_sort_arrow.gif" />
-    <Content Include="Areas\Admin\Content\js\custom_jquery.js" />
     <Content Include="Areas\Admin\Content\js\jquery-1.4.1.min.js" />
     <Content Include="Areas\Admin\Content\js\jquery-ui-timepicker-addon.js" />
     <Content Include="Areas\Admin\Content\js\jquery.bind.js" />
@@ -783,9 +780,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Views\Web.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />

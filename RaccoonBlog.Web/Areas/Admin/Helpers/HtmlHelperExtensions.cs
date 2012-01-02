@@ -8,16 +8,6 @@ namespace RaccoonBlog.Web.Areas.Admin.Helpers
 {
 	public static class HtmlHelperExtensions
 	{
-		public static MvcHtmlString AdminImage(this HtmlHelper helper, string path)
-		{
-			return MvcHtmlString.Create("/areas/admin/content/images/" + path.Replace('\\', '/'));
-		}
-
-		public static MvcHtmlString AdminScript(this HtmlHelper helper, string path)
-		{
-			return MvcHtmlString.Create("/areas/admin/content/js/" + path.Replace('\\', '/'));
-		}
-
 		public static MvcHtmlString AdminMenu(this HtmlHelper helper, IList<AdminMenu> menus)
 		{
 			if (menus == null)
