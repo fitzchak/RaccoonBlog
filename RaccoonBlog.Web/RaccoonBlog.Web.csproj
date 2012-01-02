@@ -138,6 +138,7 @@
     <Compile Include="Helpers\DynamicContentHelpers.cs" />
     <Compile Include="Helpers\StaticFileUrlHelperExtensions.cs" />
     <Compile Include="Helpers\Validation\NonEmptyGuid.cs" />
+    <Compile Include="Helpers\ViewExtensions.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\BlogConfigAdminViewModelMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\StringToGuidConverter.cs" />
     <Compile Include="Infrastructure\Common\DocumentSessionExtensions.cs" />
@@ -684,6 +685,8 @@
     <Content Include="Content\js\ckeditor\skins\v2\skin.js" />
     <Content Include="Content\js\ckeditor\skins\v2\templates.css" />
     <Content Include="Content\js\ckeditor\themes\default\theme.js" />
+    <Content Include="Scripts\modernizr-2.0.6-development-only.js" />
+    <Content Include="Scripts\modernizr.custom.23209.js" />
     <Content Include="Views\MailTemplates\_Layout.cshtml" />
     <Content Include="Views\Section\FuturePosts.cshtml" />
     <Content Include="Views\Shared\500.cshtml" />
