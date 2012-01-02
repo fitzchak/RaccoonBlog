@@ -182,7 +182,6 @@
     <Content Include="Areas\Admin\Content\images\shared\cal_th_repeat.jpg" />
     <Content Include="Areas\Admin\Content\images\shared\cal_top_bg.jpg" />
     <Content Include="Areas\Admin\Content\images\shared\cal_top_repeat.jpg" />
-    <Content Include="Areas\Admin\Content\images\shared\checkbox.gif" />
     <Content Include="Areas\Admin\Content\images\shared\content_repeat.jpg" />
     <Content Include="Areas\Admin\Content\images\shared\corner_bottom_left.jpg" />
     <Content Include="Areas\Admin\Content\images\shared\corner_bottom_right.jpg" />
@@ -246,14 +245,6 @@
     <Content Include="Areas\Admin\Content\images\table\table_sort_arrow.gif" />
     <Content Include="Areas\Admin\Content\js\jquery-1.4.1.min.js" />
     <Content Include="Areas\Admin\Content\js\jquery-ui-timepicker-addon.js" />
-    <Content Include="Areas\Admin\Content\js\jquery.bind.js" />
-    <Content Include="Areas\Admin\Content\js\jquery.dimensions.js" />
-    <Content Include="Areas\Admin\Content\js\jquery.filestyle.js" />
-    <Content Include="Areas\Admin\Content\js\jquery.selectbox-0.5.js" />
-    <Content Include="Areas\Admin\Content\js\jquery.selectbox-0.5_style_2.js" />
-    <Content Include="Areas\Admin\Content\js\jquery.selectbox-0.5_style_3.js" />
-    <Content Include="Areas\Admin\Content\js\jquery.tooltip.js" />
-    <Content Include="Areas\Admin\Content\js\jquery.usermode.js" />
     <Content Include="Content\css\custom\ayende.less.css" />
     <Content Include="Content\css\custom\hibernatingrhinos.settings.less.css" />
     <Content Include="Content\css\custom\hibernatingrhinos.less.css" />
