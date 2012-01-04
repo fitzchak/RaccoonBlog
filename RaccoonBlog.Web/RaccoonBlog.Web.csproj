@@ -349,6 +349,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\custom\ayende.settings.less.css" />
+    <Content Include="Content\css\fullcalendar.css" />
+    <Content Include="Content\css\fullcalendar.print.css" />
     <Content Include="Content\css\images\balloon.png" />
     <Content Include="Content\css\images\feed-icon-14x14.png" />
     <Content Include="Content\css\images\indicator.gif" />
@@ -358,9 +360,10 @@
     <Content Include="Content\css\images\printer.png" />
     <Content Include="Content\css\base.less.css" />
     <Content Include="Content\css\ResetCss.css" />
-    <Content Include="Content\css\fullcalendar.css" />
     <Content Include="Content\js\date.f-0.5.0.js" />
     <Content Include="Content\js\date.f-0.5.0.min.js" />
+    <Content Include="Content\js\fullcalendar.js" />
+    <Content Include="Content\js\fullcalendar.min.js" />
     <Content Include="Content\js\html5shim.js" />
     <Content Include="Content\js\jquery.ae.image.resize.js" />
     <Content Include="Content\js\jquery.ae.image.resize.min.js" />
@@ -375,7 +378,6 @@
     <Content Include="Content\js\openid-jquery.js" />
     <Content Include="Content\js\raccoon-blog.js" />
     <Content Include="Content\js\RequiredIfValidation.js" />
-    <Content Include="Content\js\fullcalendar.min.js" />
     <Content Include="Content\js\showdown.js" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
