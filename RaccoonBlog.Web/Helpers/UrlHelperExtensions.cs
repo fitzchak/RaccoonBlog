@@ -49,7 +49,7 @@ namespace RaccoonBlog.Web.Helpers
 
 		public static MvcHtmlString ActionLinkWithArray(this UrlHelper url, string action, string controller, object routeData)
 		{
-			string href = url.Action(action, controller);
+		    string href = url.Action(action, controller, new {area = ""});
 
 			var rv = new RouteValueDictionary(routeData);
 			var parameters = new List<string>();
