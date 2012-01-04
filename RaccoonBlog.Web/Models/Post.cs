@@ -111,5 +111,10 @@ namespace RaccoonBlog.Web.Models
 
 		[Display(Name = "Allow Comments?")]
 		public bool AllowComments { get; set; }
+
+        public bool IsNewPost()
+        {
+            return Id == 0;
+        }
 	}
 }

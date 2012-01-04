@@ -11,25 +11,25 @@
 }
 <article id="user-input">
 	<div id="page-heading">
-		<h1>
-			Create a new post</h1>
+		<h1>@(Model.IsNewPost() ? "Create a new post" : "Edit Post")</h1>
 	</div>
-	<form action="@Url.Action("Add")" method="post">
-	<div>
-		<div id="content-table-inner" class="inputform">
-			<div id="id-form" style="top: 0;">
-				@Html.EditorFor(x => x.Title)
-				@Html.TextAreaFor(x => x.Body, new { @class = "adminRichText" })
-				@Html.EditorFor(x => x.CreatedAt)
-				@Html.EditorFor(x => x.PublishAt)
-				@Html.EditorFor(x => x.Tags)
-				@Html.EditorFor(x => x.AllowComments)
-				@Html.HiddenFor(x => x.Id)
-				<div><input type="submit" value="Update Post"></div>
+	@using (Html.BeginForm("Update"))
+	{
+		<div>
+			<div id="content-table-inner" class="inputform">
+				<div id="id-form" style="top: 0;">
+					@Html.EditorFor(x => x.Title)
+					@Html.TextAreaFor(x => x.Body, new {@class = "adminRichText"})
+					@Html.EditorFor(x => x.CreatedAt)
+					@Html.EditorFor(x => x.PublishAt)
+					@Html.EditorFor(x => x.Tags)
+					@Html.EditorFor(x => x.AllowComments)
+					@Html.HiddenFor(x => x.Id)
+					<div><input type="submit" value="Update Post"></div>
+				</div>
 			</div>
 		</div>
-	</div>
-	</form>
+	}
 </article>
 <div class="clear">
 	&nbsp;</div>

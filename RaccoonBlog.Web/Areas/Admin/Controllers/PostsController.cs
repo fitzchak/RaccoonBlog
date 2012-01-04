@@ -38,38 +38,40 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			return View("Edit", new PostInput());
 		}
 
+		[HttpGet]
+		public ActionResult Edit(int id)
+		{
+			var post = RavenSession.Load<Post>(id);
+			if (post == null)
+				return HttpNotFound("Post does not exist.");
+			return View(post.MapTo<PostInput>());
+		}
+
+/*
+		
+		
+		}*/
 		[HttpPost]
-		public ActionResult Add(PostInput input)
+		[ValidateInput(false)]
+		public ActionResult Update(PostInput input)
 		{
 			if (!ModelState.IsValid)
 				return View("Edit", input);
 
+			var post = RavenSession.Load<Post>(input.Id) ?? new Post { CreatedAt = DateTimeOffset.Now };
+			input.MapPropertiesToInstance(post);
+
 			// Be able to record the user making the actual post
 			var user = RavenSession.GetCurrentUser();
-
-			// Create the post comments object and link between it and the post
-			var comments = new PostComments
-			               {
-			               	Comments = new List<PostComments.Comment>(),
-			               	Spam = new List<PostComments.Comment>()
-			               };
-			RavenSession.Store(comments);
-
-			// Create new post object
-			var post = new Post
-			           {
-			           	Tags = TagsResolver.ResolveTagsInput(input.Tags),
-			           	PublishAt = input.PublishAt,
-			           	AllowComments = input.AllowComments,
-			           	AuthorId = user.Id,
-			           	LastEditedByUserId = user.Id,
-			           	LastEditedAt = DateTimeOffset.Now,
-			           	CommentsId = comments.Id,
-			           	ContentType = input.ContentType,
-			           	Body = input.Body,
-			           	CreatedAt = DateTimeOffset.Now,
-			           	Title = input.Title,
-			           };
+			if (string.IsNullOrEmpty(post.AuthorId))
+			{
+				post.AuthorId = user.Id;
+			}
+			else
+			{
+				post.LastEditedByUserId = user.Id;
+				post.LastEditedAt = DateTimeOffset.Now;
+			}
 
 			if (post.PublishAt == DateTimeOffset.MinValue)
 			{
@@ -79,13 +81,25 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 
 			// Actually save the post now
 			RavenSession.Store(post);
-			comments.Post = new PostComments.PostReference
-			                {
-			                	Id = post.Id,
-			                	PublishAt = post.PublishAt,
-			                };
 
-			return RedirectToAction("Details", new {id = post.Id.ToIntId()});
+			if (input.IsNewPost())
+			{
+				// Create the post comments object and link between it and the post
+				var comments = new PostComments
+				{
+					Comments = new List<PostComments.Comment>(),
+					Spam = new List<PostComments.Comment>(),
+					Post = new PostComments.PostReference
+					{
+						Id = post.Id,
+						PublishAt = post.PublishAt,
+					}
+				};
+
+				RavenSession.Store(comments);
+			}
+
+			return RedirectToAction("Details", new { Id = post.MapTo<PostReference>().DomainId });
 		}
 
 		public ActionResult Details(int id)
@@ -100,18 +114,18 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			var comments = RavenSession.Load<PostComments>(post.CommentsId);
 
 			var vm = new AdminPostDetailsViewModel
-			         {
-			         	Post = post.MapTo<AdminPostDetailsViewModel.PostDetails>(),
+					 {
+						Post = post.MapTo<AdminPostDetailsViewModel.PostDetails>(),
 
-			         	Comments = comments.Comments
-			         		.Concat(comments.Spam)
-			         		.OrderBy(comment => comment.CreatedAt)
-			         		.MapTo<AdminPostDetailsViewModel.Comment>(),
+						Comments = comments.Comments
+							.Concat(comments.Spam)
+							.OrderBy(comment => comment.CreatedAt)
+							.MapTo<AdminPostDetailsViewModel.Comment>(),
 
-			         	NextPost = RavenSession.GetNextPrevPost(post, true),
-			         	PreviousPost = RavenSession.GetNextPrevPost(post, false),
-			         	AreCommentsClosed = comments.AreCommentsClosed(post, BlogConfig.NumberOfDayToCloseComments),
-			         };
+						NextPost = RavenSession.GetNextPrevPost(post, true),
+						PreviousPost = RavenSession.GetNextPrevPost(post, false),
+						AreCommentsClosed = comments.AreCommentsClosed(post, BlogConfig.NumberOfDayToCloseComments),
+					 };
 
 			return View("Details", vm);
 		}
@@ -126,7 +140,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 				.Where
 				(
 					post => post.PublishAt >= startAsDateTimeOffset &&
-					        post.PublishAt <= endAsDateTimeOffset
+							post.PublishAt <= endAsDateTimeOffset
 				)
 				.OrderBy(post => post.PublishAt)
 				.Take(256)
@@ -135,42 +149,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			return Json(posts.MapTo<PostSummaryJson>());
 		}
 
-		[HttpGet]
-		public ActionResult Edit(int id)
-		{
-			var post = RavenSession.Load<Post>(id);
-			if (post == null)
-				return HttpNotFound("Post does not exist.");
-			return View(post.MapTo<PostInput>());
-		}
-
-		[HttpPost]
-		[ValidateInput(false)]
-		public ActionResult Edit(PostInput input, int id)
-		{
-			if (!ModelState.IsValid)
-				return View("Edit", input);
-
-			var post = RavenSession.Load<Post>(id) ?? new Post();
-			input.MapPropertiesToInstance(post);
-
-			var user = RavenSession.GetCurrentUser();
-			if (string.IsNullOrEmpty(post.AuthorId))
-			{
-				post.AuthorId = user.Id;
-			}
-			else
-			{
-				post.LastEditedByUserId = user.Id;
-				post.LastEditedAt = DateTimeOffset.Now;
-			}
-
-			RavenSession.Store(post);
-
-			var postReference = post.MapTo<PostReference>();
-			return RedirectToAction("Details", new {Id = postReference.DomainId, postReference.Slug});
-		}
-
+	
 		[HttpPost]
 		[AjaxOnly]
 		public ActionResult SetPostDate(int id, long date)
@@ -272,18 +251,18 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 				.Where(x => x.Spam.Count > 0)
 				.ToList()
 				.Select(x => new PatchCommandData
-				             {
-				             	Key = x.Id,
-				             	Patches = new[]
-				             	          {
-				             	          	new PatchRequest
-				             	          	{
-				             	          		Type = PatchCommandType.Set,
-				             	          		Name = "Spam",
-				             	          		Value = new RavenJArray(),
-				             	          	},
-				             	          }
-				             });
+							 {
+								Key = x.Id,
+								Patches = new[]
+										  {
+											new PatchRequest
+											{
+												Type = PatchCommandType.Set,
+												Name = "Spam",
+												Value = new RavenJArray(),
+											},
+										  }
+							 });
 
 			RavenSession.Advanced.DatabaseCommands.Batch(patchCommands);
 
