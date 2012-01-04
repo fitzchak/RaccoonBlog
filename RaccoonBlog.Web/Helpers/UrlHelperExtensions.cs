@@ -5,27 +5,28 @@ using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
+using JetBrains.Annotations;
 
 namespace RaccoonBlog.Web.Helpers
 {
 	public static class UrlHelperExtensions
 	{
-		public static string AbsoluteAction(this UrlHelper url, string action, object routeValues)
+	    public static string AbsoluteAction(this UrlHelper url, [AspMvcAction] string action, object routeValues)
 		{
 			return AbsoluteActionUtil(url, url.Action(action, routeValues));
 		}
 
-		public static string AbsoluteAction(this UrlHelper url, string action)
+		public static string AbsoluteAction(this UrlHelper url, [AspMvcAction] string action)
 		{
 			return AbsoluteActionUtil(url, url.Action(action));
 		}
 
-		public static string AbsoluteAction(this UrlHelper url, string action, string controller)
+		public static string AbsoluteAction(this UrlHelper url, [AspMvcAction] string action, [AspMvcController] string controller)
 		{
 			return AbsoluteActionUtil(url, url.Action(action, controller));
 		}
 
-		public static string AbsoluteAction(this UrlHelper url, string action, string controller, object routeValues)
+		public static string AbsoluteAction(this UrlHelper url, [AspMvcAction] string action, [AspMvcController] string controller, object routeValues)
 		{
 			return AbsoluteActionUtil(url, url.Action(action, controller, routeValues));
 		}
@@ -40,16 +41,16 @@ namespace RaccoonBlog.Web.Helpers
 			var request = url.RequestContext.HttpContext.Request;
 			Uri requestUrl = request.Url;
 			string absoluteAction = string.Format("{0}://{1}{2}",
-			                                      requestUrl.Scheme,
-			                                      requestUrl.Authority,
-			                                      relativeUrl);
+												  requestUrl.Scheme,
+												  requestUrl.Authority,
+												  relativeUrl);
 			return absoluteAction;
 		}
 
 
-		public static MvcHtmlString ActionLinkWithArray(this UrlHelper url, string action, string controller, object routeData)
+		public static MvcHtmlString ActionLinkWithArray(this UrlHelper url, [AspMvcAction] string action, [AspMvcController] string controller, object routeData)
 		{
-		    string href = url.Action(action, controller, new {area = ""});
+			string href = url.Action(action, controller, new {area = ""});
 
 			var rv = new RouteValueDictionary(routeData);
 			var parameters = new List<string>();
