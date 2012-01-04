@@ -13,7 +13,7 @@
 	<div id="page-heading">
 		<h1>@(Model.IsNewPost() ? "Create a new post" : "Edit Post")</h1>
 	</div>
-	@using (Html.BeginForm("Update"))
+	@using (Html.BeginForm("Update", "Posts"))
 	{
 		<div>
 			<div id="content-table-inner" class="inputform">
