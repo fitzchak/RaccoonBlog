@@ -35,7 +35,7 @@
 					}
 				}],
 				eventDrop: function (event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
-					var jqxhr = $.post('@Url.AbsoluteAction("SetPostDate", new { id = 1024})'.replace('/1024/', '/' + event.id + '/'), { date: event.start.valueOf() }, null, 'json');
+					var jqxhr = $.post('@Url.AbsoluteAction("SetPostDate", new { id = 1024 })'.replace('/1024', '/' + event.id), { date: event.start.valueOf() }, null, 'json');
 					jqxhr.error(failAction);
 					jqxhr.success(function (data, textStatus, jqXHR) {
 						if (!data.success) failAction();
