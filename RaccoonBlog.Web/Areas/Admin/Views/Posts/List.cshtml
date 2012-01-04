@@ -1,23 +1,23 @@
 ﻿@{
-    ViewBag.Title = "Manage posts";
+	ViewBag.Title = "Manage posts";
 }
 <div class="messageWrapper"><div id="message" style="visibility:hidden"></div></div>
 <div id="postsCalendar">
 
 </div>
 <div>
-    <p>In order to post new posts, please use Windows Live Writer.</p>
+	<p>In order to post new posts, please use Windows Live Writer.</p>
 </div>
 @section Style {
-    <link href="@Url.Content("~/Content/css/fullcalendar.css")" rel="stylesheet" type="text/css">
+	<link href="@Url.Content("~/Content/css/fullcalendar.css")" rel="stylesheet" type="text/css">
 }
 @section Script {
-    <script src="@Url.Content("~/Content/js/jquery-ui.min.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Content/js/fullcalendar.min.js")" type="text/javascript"></script>
-    <script type="text/javascript">
-    	$(function () {
-    		renderCalander(true);
-    	});
+	<script src="@Url.Content("~/Content/js/jquery-ui.min.js")" type="text/javascript"></script>
+	<script src="@Url.Content("~/Content/js/fullcalendar.min.js")" type="text/javascript"></script>
+	<script type="text/javascript">
+		$(function () {
+			renderCalander(true);
+		});
 		function renderCalander(weekends) {
 			$('#postsCalendar').empty().fullCalendar({
 				header: {
@@ -36,7 +36,7 @@
 					}
 				}],
 				eventDrop: function (event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
-				    var jqxhr = $.post('@Url.AbsoluteAction("SetPostDate", new { id = 1024})'.replace('/1024/', '/' + event.id + '/'), { date: event.start.valueOf() }, null, 'json');
+					var jqxhr = $.post('@Url.AbsoluteAction("SetPostDate", new { id = 1024})'.replace('/1024/', '/' + event.id + '/'), { date: event.start.valueOf() }, null, 'json');
 					jqxhr.error(failAction);
 					jqxhr.success(function (data, textStatus, jqXHR) {
 						if (!data.success) failAction();
@@ -49,5 +49,5 @@
 				}
 			});
 		}
-    </script>
+	</script>
 }
