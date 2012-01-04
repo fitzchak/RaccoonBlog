@@ -12,7 +12,7 @@
 		}
 	}
 	<title>RaccoonBlog :: @ViewBag.Title</title>
-	<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/ResetCss.css")">
+	<link rel="stylesheet" type="text/css" href="@Url.ActionLinkWithArray("Merge", "Css", new { files = new[] { "ResetCss.css", "custom/" + blogConfig.CustomCss + ".settings.less.css", "base.less.css", "custom/" + blogConfig.CustomCss + ".less.css" } })">
 	<link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/Admin/Content/css/screen.css")">
 	
 	@RenderSection("Style", false)
