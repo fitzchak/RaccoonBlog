@@ -365,6 +365,7 @@
     <Content Include="Content\js\fullcalendar.js" />
     <Content Include="Content\js\fullcalendar.min.js" />
     <Content Include="Content\js\html5shim.js" />
+    <Content Include="Content\js\jquery-ui-1.8.16.custom.min.js" />
     <Content Include="Content\js\jquery.ae.image.resize.js" />
     <Content Include="Content\js\jquery.ae.image.resize.min.js" />
     <Content Include="Content\js\jquery.datalink.js" />
