@@ -184,7 +184,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 				return Details(id);
 			}
 
-			var comments = RavenSession.Load<PostComments>(id);
+			var comments = RavenSession.Load<PostComments>(post.CommentsId);
 			switch (command)
 			{
 				case CommentCommandOptions.Delete:
