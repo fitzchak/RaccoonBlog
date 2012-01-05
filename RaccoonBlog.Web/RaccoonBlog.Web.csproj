@@ -205,9 +205,9 @@
     <Content Include="Areas\Admin\Content\images\shared\nav\icon_acc_stats.gif" />
     <Content Include="Areas\Admin\Content\images\shared\nav\nav_logout.gif" />
     <Content Include="Areas\Admin\Content\images\shared\nav\nav_myaccount.gif" />
-    <Content Include="Areas\Admin\Content\css\images\pro_line_0.gif" />
-    <Content Include="Areas\Admin\Content\css\images\pro_line_1.gif" />
-    <Content Include="Areas\Admin\Content\images\shared\nav\pro_line_2.gif" />
+    <Content Include="Areas\Admin\Content\css\images\nav_item_0.gif" />
+    <Content Include="Areas\Admin\Content\css\images\nav_item_1.gif" />
+    <Content Include="Areas\Admin\Content\css\images\nav_item_2.gif" />
     <Content Include="Areas\Admin\Content\images\shared\side_shadowleft.jpg" />
     <Content Include="Areas\Admin\Content\images\shared\side_shadowright.jpg" />
     <Content Include="Areas\Admin\Content\images\shared\top_search_btn.gif" />

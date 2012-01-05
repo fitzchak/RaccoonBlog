@@ -34,7 +34,7 @@
 }
 
 .admin-area header nav ul li a {
-	background: url(images/pro_line_0.gif);
+	background: url(images/nav_item_0.gif);
 	color: #fff;
 	display: block;
 	float: left;
@@ -46,7 +46,7 @@
 }
 .admin-area header nav ul li.current a
 {
-	background: url(images/pro_line_1.gif);
+	background: url(images/nav_item_1.gif);
 }
 
 .nav-divider
@@ -60,14 +60,14 @@
 
 .nav .select a:hover, .nav .select li:hover a
 {
-	background: url(images/pro_line_1.gif);
+	background: url(images/nav_item_1.gif);
 	color: #fff;
 	cursor: pointer;
 	padding: 0 0 0 10px;
 }
 .nav .select a:hover b, .nav .select li:hover a b
 {
-	background: url(images/pro_line_1.gif) right top;
+	background: url(images/nav_item_1.gif) right top;
 	cursor: pointer;
 	display: block;
 	float: left;
