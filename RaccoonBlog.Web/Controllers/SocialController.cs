@@ -24,7 +24,7 @@ namespace RaccoonBlog.Web.Controllers
 		public ActionResult Login(string url, string returnUrl)
 		{
 			if (string.IsNullOrWhiteSpace(returnUrl))
-				returnUrl = Request.UrlReferrer != null ? Request.UrlReferrer.ToString() : Url.RouteUrl("default");
+				returnUrl = Request.UrlReferrer != null ? Request.UrlReferrer.ToString() : Url.RouteUrl("homepage");
 
 			using (var openIdRelyingParty = new OpenIdRelyingParty())
 			{
