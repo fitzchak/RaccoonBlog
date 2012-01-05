@@ -64,42 +64,42 @@
 			<div id="logo">
 				<a href="@Url.Action("List", "Posts")"><img src="@Url.Content("~/Content/css/images/logo-admin.png")" width="51" height="40" alt="Logo"></a>
 			</div>
-		</header>
-
-		<div class="clr"></div>
-		<!--  start nav-outer-repeat................................................................................................. START -->
-		<div class="nav-outer-repeat">
-			<!--  start nav-outer -->
-			<div class="nav-outer">
-				<!-- start nav-right -->
-				<div id="nav-right">
-					<div class="nav-divider">
-						&nbsp;</div>
-					<a href="@Url.Action("Logout", "Login")" id="logout">Logout</a>
-					<div class="clear">
-						&nbsp;</div>
-				</div>
-				<!-- end nav-right -->
+			<div class="clr"></div>
+			
+			<nav>
+				<!--  start nav-outer -->
+				<div class="nav-outer">
+					<!-- start nav-right -->
+					<div id="nav-right">
+						<div class="nav-divider">
+							&nbsp;</div>
+						<a href="@Url.Action("Logout", "Login")" id="logout">Logout</a>
+						<div class="clear">
+							&nbsp;</div>
+					</div>
+					<!-- end nav-right -->
 				
 				
-				<!--  start nav -->
-				<div class="nav">
-					<div class="table">
-						@Html.AdminMenu((IList<AdminMenu>)@ViewBag.TopMenus)
+					<!--  start nav -->
+					<div class="nav">
+						<div class="table">
+							@Html.AdminMenu((IList<AdminMenu>)@ViewBag.TopMenus)
+							<div class="clear">
+							</div>
+						</div>
 						<div class="clear">
 						</div>
 					</div>
-					<div class="clear">
-					</div>
 				</div>
-			</div>
-			<div class="clear">
-			</div>
-			<!--  start nav-outer -->
-		</div>
-		<!--  start nav-outer-repeat................................................... END -->
-		<div class="clear">
-		</div>
+				<div class="clear">
+				</div>
+				<!--  start nav-outer -->
+			</nav>
+			<div class="clr"></div>
+
+		</header>
+		<div class="clr"></div>
+
 		<!-- start content-outer ........................................................................................................................START -->
 		<div id="content-outer">
 			<!-- start content -->

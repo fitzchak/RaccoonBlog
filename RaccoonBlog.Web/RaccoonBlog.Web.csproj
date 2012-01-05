@@ -208,7 +208,6 @@
     <Content Include="Areas\Admin\Content\images\shared\nav\pro_line_0.gif" />
     <Content Include="Areas\Admin\Content\images\shared\nav\pro_line_1.gif" />
     <Content Include="Areas\Admin\Content\images\shared\nav\pro_line_2.gif" />
-    <Content Include="Areas\Admin\Content\images\shared\nav\repeat.jpg" />
     <Content Include="Areas\Admin\Content\images\shared\side_shadowleft.jpg" />
     <Content Include="Areas\Admin\Content\images\shared\side_shadowright.jpg" />
     <Content Include="Areas\Admin\Content\images\shared\top_search_btn.gif" />

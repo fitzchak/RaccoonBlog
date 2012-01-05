@@ -689,6 +689,12 @@ div.comments-rss
 	margin: 0 auto;
 }
 
+.admin-area header nav
+{
+	background-color: #4D4D4D;
+	height: 77px;
+}
+
 #logo
 {
 	float: left;
