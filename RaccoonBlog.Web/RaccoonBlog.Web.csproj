@@ -186,7 +186,7 @@
     <Content Include="Areas\Admin\Content\images\shared\cal_th_repeat.jpg" />
     <Content Include="Areas\Admin\Content\images\shared\cal_top_bg.jpg" />
     <Content Include="Areas\Admin\Content\images\shared\cal_top_repeat.jpg" />
-    <Content Include="Areas\Admin\Content\images\shared\content_repeat.jpg" />
+    <Content Include="Areas\Admin\Content\css\images\content_repeat.jpg" />
     <Content Include="Areas\Admin\Content\images\shared\corner_bottom_left.jpg" />
     <Content Include="Areas\Admin\Content\images\shared\corner_bottom_right.jpg" />
     <Content Include="Areas\Admin\Content\images\shared\corner_top_left.jpg" />
