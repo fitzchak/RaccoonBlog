@@ -12,12 +12,7 @@ body
 {
 	width: 450px;
 }
-#page-top-outer
-{
-	background: url(../images/shared/top_bg.jpg) top center repeat-x;
-	border-bottom: 1px solid #7e7e7e;
-	height: 92px;
-}
+
 #page-top
 {
 	margin: 0 auto;
