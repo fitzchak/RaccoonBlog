@@ -10,13 +10,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Helpers
 		{
 			return new List<MenuItem>
 			       	{
-			       		new MenuItem
-			       			{
-			       				Title = "Back To Blog",
-			       				SubMenus = null,
-			       				Url = url.RouteUrl("homepage"),
-
-			       			},
+			       		new MenuItem {Title = "Back To Blog", Url = url.RouteUrl("homepage")},
 			       		new MenuItem
 			       			{
 			       				Title = "Posts",
@@ -25,7 +19,6 @@ namespace RaccoonBlog.Web.Areas.Admin.Helpers
 			       				           		new MenuItem {Title = "All posts", Url = url.Action("List", "Posts")},
 			       				           		new MenuItem {Title = "Create a new post", Url = url.Action("Add", "Posts")}
 			       				           	}
-
 			       			},
 			       		new MenuItem
 			       			{
