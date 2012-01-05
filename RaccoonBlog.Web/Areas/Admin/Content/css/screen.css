@@ -1230,15 +1230,6 @@ a
 a:hover
 {
 }
-.clear
-{
-	clear: both;
-	font-size: 0px;
-	height: 0;
-	line-height: 0px;
-	margin: 0px;
-	padding: 0px;
-}
 img
 {
 	border: 0;
@@ -1535,9 +1526,6 @@ a:hover.back-login
 	text-align: center;
 }
 
-.clr {
-	clear: both;
-}
 
 .comment.spam
 {
