@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using RaccoonBlog.Web.Areas.Admin.Models;
 
@@ -49,13 +50,26 @@ namespace RaccoonBlog.Web.Areas.Admin.Helpers
 			            			},
 			            	};
 
-			foreach (var menu in items)
-			{
-				var currentUri = url.RequestContext.HttpContext.Request.Url ?? new Uri("/");
-				menu.IsCurrent = currentUri.PathAndQuery == menu.Url;
-			}
+			AnalyzeMenuItems(items, url.RequestContext.HttpContext.Request.Url ?? new Uri("/"));
+			
 
 			return items;
+		}
+
+		private static void AnalyzeMenuItems(IEnumerable<MenuItem> items, Uri currentUri)
+		{
+			foreach (var menu in items)
+			{
+				menu.IsCurrent = currentUri.PathAndQuery == menu.Url;
+				if (menu.SubMenus != null)
+				{
+					if (menu.Url == null)
+					{
+						menu.Url = (menu.SubMenus.FirstOrDefault() ?? new MenuItem()).Url;
+					}
+					AnalyzeMenuItems(menu.SubMenus, currentUri);
+				}
+			}
 		}
 	}
 }
