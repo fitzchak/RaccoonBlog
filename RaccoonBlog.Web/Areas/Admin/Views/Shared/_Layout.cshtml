@@ -12,7 +12,7 @@
 	}
 	<title>RaccoonBlog :: @ViewBag.Title</title>
 	<link rel="stylesheet" type="text/css" href="@Url.ActionLinkWithArray("Merge", "Css", new { files = new[] { "ResetCss.css", "custom/" + blogConfig.CustomCss + ".settings.less.css", "base.less.css", "custom/" + blogConfig.CustomCss + ".less.css" } })">
-	<link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/Admin/Content/css/screen.css")">
+	<link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/Admin/Content/css/AdminStyle.css")">
 	
 	@RenderSection("Style", false)
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
@@ -61,7 +61,7 @@
 	<body class="admin-area">
 		<header>
 			<div id="logo">
-				<a href="@Url.Action("List", "Posts")"><img src="@Url.Content("~/Content/css/images/logo-admin.png")" width="51" height="40" alt="Logo"></a>
+				<a href="@Url.Action("Index", "Posts")"><img src="@Url.Content("~/Content/css/images/logo-admin.png")" width="51" height="40" alt="Logo"></a>
 			</div>
 			<nav>
 				@{Html.RenderPartial("RenderMenu", RaccoonBlog.Web.Areas.Admin.Helpers.MenuUtil.GetTopMenu(Url));}
