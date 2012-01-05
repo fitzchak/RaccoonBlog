@@ -66,17 +66,9 @@
 			<nav>
 				@{Html.RenderPartial("RenderMenu", RaccoonBlog.Web.Areas.Admin.Helpers.MenuUtil.GetTopMenu(Url));}
 			</nav>
-			<div class="clr"></div>
-			
-			<!-- start nav-right -->
 			<div id="nav-right">
-				<div class="nav-divider">
-					&nbsp;</div>
-				<a href="@Url.Action("Logout", "Login")" id="logout">Logout</a>
-				<div class="clear">
-					&nbsp;</div>
+				<a href="@Url.Action("Logout", "Login")">Logout</a>
 			</div>
-
 		</header>
 		<div class="clr"></div>
 

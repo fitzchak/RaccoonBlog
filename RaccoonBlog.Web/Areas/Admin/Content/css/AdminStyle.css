@@ -8,6 +8,7 @@
 	margin: 0 auto;
 }
 
+/*  NAVIGATION ----------------------------------------------- */
 .admin-area header nav
 {
 	clear: both;
@@ -19,7 +20,6 @@
 	margin: 0 auto;
 	width: 600px;
 }
-
 .admin-area header nav ul {
 	list-style: none;
 	white-space: nowrap;
@@ -30,7 +30,6 @@
 	float: left;
 	padding-right: 15px;
 }
-
 .admin-area header nav ul li a {
 	background: url(images/nav_item_0.gif);
 	color: #fff;
@@ -43,13 +42,10 @@
 	white-space: nowrap;
 	cursor: pointer;
 }
-
 .admin-area header nav ul li.current a, .admin-area header nav ul li a:hover
 {
 	background: url(images/nav_item_1.gif);
 }
-
-
 .admin-area header nav ul li ul
 {
 	display: none;
@@ -88,13 +84,107 @@
 #logo
 {
 	float: left;
-	margin: 45px 0 0 15px;
+	margin: 6px 0 0 8px
 }
 #logo a
 {
 	display: block;
 }
 
+#nav-right
+{
+	float: right;
+	position: relative;
+	top: -20px;
+	right: 10px;
+}
+#nav-right a
+{
+	width: 64px;
+	height: 14px;
+	display: block;
+	background: url(images/nav_logout.gif) no-repeat;
+	text-indent: -20000px;
+}
+
+/*  NAVIGATION ----------------------------------------------- */
+
+
+.account-content
+{
+	background: #454545 url(../images/shared/nav/account_drop_bg.gif) no-repeat bottom;
+	display: none;
+	left: 5px;
+	padding-bottom: 20px;
+	position: absolute;
+	top: 30px;
+	width: 170px;
+}
+.account-drop-inner
+{
+	font-size: 0px;
+	line-height: 0px;
+	margin: 20px auto 0 auto;
+	width: 140px;
+}
+.showhide-account
+{
+	cursor: pointer;
+	display: block;
+	float: left;
+	margin: 10px 5px 0 5px;
+}
+.account-drop-inner a
+{
+	color: #fff;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 16px;
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+}
+.account-drop-inner a:hover
+{
+	color: #94b52c;
+}
+.acc-line
+{
+	background: url(../images/shared/nav/account_line.gif) no-repeat 0 7px;
+	font-size: 0px;
+	height: 14px;
+	line-height: 0px;
+	margin-top: 0px;
+	padding: 0;
+}
+a#logout
+{
+	margin: 10px 0 0 5px;
+}
+a#acc-settings
+{
+	background: url(../images/shared/nav/icon_acc_settings.gif) no-repeat 0 2px;
+	padding: 0 0 0 20px;
+}
+a#acc-details
+{
+	background: url(../images/shared/nav/icon_acc_personal.gif) no-repeat 0 2px;
+	padding: 0 0 0 20px;
+}
+a#acc-project
+{
+	background: url(../images/shared/nav/icon_acc_projects.gif) no-repeat 0 2px;
+	padding: 0 0 0 20px;
+}
+a#acc-inbox
+{
+	background: url(../images/shared/nav/icon_acc_inbox.gif) no-repeat 0 2px;
+	padding: 0 0 0 20px;
+}
+a#acc-stats
+{
+	background: url(../images/shared/nav/icon_acc_stats.gif) no-repeat 0 2px;
+	padding: 0 0 0 20px;
+}
 
 
 
@@ -1008,104 +1098,6 @@ a:hover.action-delete
 {
 	border: 1px solid #acacac;
 	padding: 5px;
-}
-
-/*  NAVIGATION ----------------------------------------------- */
-#nav-holder
-{
-	margin: 0 auto;
-	max-width: 1260px;
-	min-width: 780px;
-	text-align: left;
-}
-
-#nav-right
-{
-	float: right;
-	position: relative;
-	width: 225px;
-	z-index: 0;
-}
-#nav-right a
-{
-	display: block;
-	float: left;
-	margin: 0px 0 0 0;
-}
-.account-content
-{
-	background: #454545 url(../images/shared/nav/account_drop_bg.gif) no-repeat bottom;
-	display: none;
-	left: 5px;
-	padding-bottom: 20px;
-	position: absolute;
-	top: 30px;
-	width: 170px;
-}
-.account-drop-inner
-{
-	font-size: 0px;
-	line-height: 0px;
-	margin: 20px auto 0 auto;
-	width: 140px;
-}
-.showhide-account
-{
-	cursor: pointer;
-	display: block;
-	float: left;
-	margin: 10px 5px 0 5px;
-}
-.account-drop-inner a
-{
-	color: #fff;
-	font-size: 12px;
-	font-weight: bold;
-	line-height: 16px;
-	margin: 0 0 0 0;
-	padding: 0 0 0 0;
-}
-.account-drop-inner a:hover
-{
-	color: #94b52c;
-}
-.acc-line
-{
-	background: url(../images/shared/nav/account_line.gif) no-repeat 0 7px;
-	font-size: 0px;
-	height: 14px;
-	line-height: 0px;
-	margin-top: 0px;
-	padding: 0;
-}
-a#logout
-{
-	margin: 10px 0 0 5px;
-}
-a#acc-settings
-{
-	background: url(../images/shared/nav/icon_acc_settings.gif) no-repeat 0 2px;
-	padding: 0 0 0 20px;
-}
-a#acc-details
-{
-	background: url(../images/shared/nav/icon_acc_personal.gif) no-repeat 0 2px;
-	padding: 0 0 0 20px;
-}
-a#acc-project
-{
-	background: url(../images/shared/nav/icon_acc_projects.gif) no-repeat 0 2px;
-	padding: 0 0 0 20px;
-}
-a#acc-inbox
-{
-	background: url(../images/shared/nav/icon_acc_inbox.gif) no-repeat 0 2px;
-	padding: 0 0 0 20px;
-}
-a#acc-stats
-{
-	background: url(../images/shared/nav/icon_acc_stats.gif) no-repeat 0 2px;
-	padding: 0 0 0 20px;
 }
 
 
