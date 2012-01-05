@@ -95,8 +95,8 @@
 {
 	float: right;
 	position: relative;
-	top: -20px;
 	right: 10px;
+	margin-top: -20px;
 }
 #nav-right a
 {
