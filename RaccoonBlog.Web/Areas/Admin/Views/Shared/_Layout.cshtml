@@ -67,35 +67,18 @@
 			<div class="clr"></div>
 			
 			<nav>
-				<!--  start nav-outer -->
-				<div class="nav-outer">
-					<!-- start nav-right -->
-					<div id="nav-right">
-						<div class="nav-divider">
-							&nbsp;</div>
-						<a href="@Url.Action("Logout", "Login")" id="logout">Logout</a>
-						<div class="clear">
-							&nbsp;</div>
-					</div>
-					<!-- end nav-right -->
-				
-				
-					<!--  start nav -->
-					<div class="nav">
-						<div class="table">
-							@Html.AdminMenu((IList<AdminMenu>)@ViewBag.TopMenus)
-							<div class="clear">
-							</div>
-						</div>
-						<div class="clear">
-						</div>
-					</div>
-				</div>
-				<div class="clear">
-				</div>
-				<!--  start nav-outer -->
+				@{Html.RenderPartial("RenderMenu", (object)ViewBag.TopMenus);}
 			</nav>
 			<div class="clr"></div>
+			
+			<!-- start nav-right -->
+			<div id="nav-right">
+				<div class="nav-divider">
+					&nbsp;</div>
+				<a href="@Url.Action("Logout", "Login")" id="logout">Logout</a>
+				<div class="clear">
+					&nbsp;</div>
+			</div>
 
 		</header>
 		<div class="clr"></div>

@@ -130,7 +130,6 @@
   <ItemGroup>
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\SettingsController.cs" />
-    <Compile Include="Areas\Admin\Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Areas\Admin\Models\AdminMenu.cs" />
     <Compile Include="Controllers\AggresivelyCachingRacconController.cs" />
     <Compile Include="Controllers\SocialController.cs" />
@@ -806,6 +805,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="connString.config" />
+    <Content Include="Areas\Admin\Views\Shared\RenderMenu.cshtml" />
     <None Include="Content\js\ckeditor\.htaccess" />
     <None Include="Content\js\ckeditor\ckeditor.pack" />
     <None Include="Content\js\ckeditor\ckeditor.php" />
