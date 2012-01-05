@@ -60,7 +60,6 @@ namespace RaccoonBlog.Web.Areas.Admin.Helpers
 		{
 			foreach (var menu in items)
 			{
-				menu.IsCurrent = currentUri.PathAndQuery == menu.Url;
 				if (menu.SubMenus != null)
 				{
 					if (menu.Url == null)
@@ -69,6 +68,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Helpers
 					}
 					AnalyzeMenuItems(menu.SubMenus, currentUri);
 				}
+				menu.IsCurrent = currentUri.PathAndQuery == menu.Url;
 			}
 		}
 	}
