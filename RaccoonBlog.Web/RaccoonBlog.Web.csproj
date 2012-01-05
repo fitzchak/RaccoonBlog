@@ -197,7 +197,7 @@
     <Content Include="Areas\Admin\Content\images\shared\nav\back_0.gif" />
     <Content Include="Areas\Admin\Content\images\shared\nav\back_1.gif" />
     <Content Include="Areas\Admin\Content\images\shared\nav\Copy of pro_line_1.gif" />
-    <Content Include="Areas\Admin\Content\images\shared\nav\divider.jpg" />
+    <Content Include="Areas\Admin\Content\css\images\nav_divider.jpg" />
     <Content Include="Areas\Admin\Content\images\shared\nav\icon_acc_inbox.gif" />
     <Content Include="Areas\Admin\Content\images\shared\nav\icon_acc_personal.gif" />
     <Content Include="Areas\Admin\Content\images\shared\nav\icon_acc_projects.gif" />
