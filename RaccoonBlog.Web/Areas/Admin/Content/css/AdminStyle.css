@@ -108,6 +108,42 @@
 }
 
 
+/* FOOTER -------------------------------------------------------------- */
+
+footer
+{
+	height: 70px;
+	margin: 80px auto 0px auto;
+	padding: 0px 0 0 0;
+	text-align: left;
+	min-width: 780px;
+	max-width: 1260px;
+}
+footer #footer-left
+{
+	color: #818181;
+	font-size: 11px;
+	line-height: 11px;
+	padding: 15px 0 15px 25px;
+	margin: 0 20px;
+	border-top: 1px solid #dbdbdb;
+	border-bottom: 1px solid #dbdbdb;
+	background: url(../images/shared/icon_idlogo.jpg) no-repeat 0 12px;
+}
+footer #footer-left a
+{
+	color: #818181;
+	text-decoration: none;
+}
+footer #footer-left a.selected, #footer-left a:hover
+{
+	color: #000;
+	text-decoration: none;
+}
+
+
+
+
 
 
 
@@ -1027,39 +1063,6 @@ a:hover.action-delete
 
 
 
-/* FOOTER -------------------------------------------------------------- */
-
-
-#footer
-{
-	height: 70px;
-	margin: 80px auto 0px auto;
-	padding: 0px 0 0 0;
-	text-align: left;
-	min-width: 780px;
-	max-width: 1260px;
-}
-#footer-left
-{
-	color: #818181;
-	font-size: 11px;
-	line-height: 11px;
-	padding: 15px 0 15px 25px;
-	margin: 0 20px;
-	border-top: 1px solid #dbdbdb;
-	border-bottom: 1px solid #dbdbdb;
-	background: url(../images/shared/icon_idlogo.jpg) no-repeat 0 12px;
-}
-#footer-left a
-{
-	color: #818181;
-	text-decoration: none;
-}
-#footer-left a.selected, #footer-left a:hover
-{
-	color: #000;
-	text-decoration: none;
-}
 
 
 
