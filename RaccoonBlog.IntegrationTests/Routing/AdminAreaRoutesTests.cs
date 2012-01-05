@@ -22,7 +22,7 @@ namespace RaccoonBlog.IntegrationTests.Routing
 		[Fact]
 		public void Users()
 		{
-			"~/admin/users".ShouldMapTo<UsersController>(c => c.List());
+			"~/admin/users".ShouldMapTo<UsersController>(c => c.Index());
 
 			"~/admin/users/add".ShouldMapTo<UsersController>(c => c.Add());
 			"~/admin/users/4/edit".ShouldMapTo<UsersController>(c => c.Edit(4));
@@ -47,7 +47,7 @@ namespace RaccoonBlog.IntegrationTests.Routing
 		[Fact]
 		public void Sections()
 		{
-			"~/admin/sections".ShouldMapTo<SectionsController>(c => c.List());
+			"~/admin/sections".ShouldMapTo<SectionsController>(c => c.Index());
 
 			"~/admin/sections/add".ShouldMapTo<SectionsController>(c => c.Add());
 			"~/admin/sections/4/edit".ShouldMapTo<SectionsController>(c => c.Edit(4));

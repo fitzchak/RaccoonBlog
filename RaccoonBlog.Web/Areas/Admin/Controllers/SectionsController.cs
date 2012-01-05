@@ -11,14 +11,9 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 	{
 		public ActionResult Index()
 		{
-			return List();
-		}
-
-		public ActionResult List()
-		{
 			var sections = RavenSession.Query<Section>()
-				.OrderBy(x => x.Position)
-				.ToList();
+			.OrderBy(x => x.Position)
+			.ToList();
 
 			return View("List", sections);
 		}
@@ -54,7 +49,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 					.FirstOrDefault() + 1;
 			}
 			RavenSession.Store(section);
-			return RedirectToAction("List");
+			return RedirectToAction("Index");
 		}
 
 		[HttpPost]
@@ -70,7 +65,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			{
 				return Json(new { Success = true });
 			}
-			return RedirectToAction("List");
+			return RedirectToAction("Index");
 		}
 
 		[AjaxOnly]

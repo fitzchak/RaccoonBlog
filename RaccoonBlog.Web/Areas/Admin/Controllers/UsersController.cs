@@ -11,11 +11,6 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 	{
 		public ActionResult Index()
 		{
-			return List();
-		}
-
-		public ActionResult List()
-		{
 			var users = RavenSession.Query<User>()
 				.OrderBy(u => u.FullName)
 				.ToList();
