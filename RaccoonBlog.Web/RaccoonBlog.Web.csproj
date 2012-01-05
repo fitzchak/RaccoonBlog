@@ -191,7 +191,7 @@
     <Content Include="Areas\Admin\Content\images\shared\corner_top_left.jpg" />
     <Content Include="Areas\Admin\Content\images\shared\corner_top_right.jpg" />
     <Content Include="Areas\Admin\Content\images\shared\icon_idlogo.jpg" />
-    <Content Include="Areas\Admin\Content\images\logo.png" />
+    <Content Include="Content\css\images\logo-admin.png" />
     <Content Include="Areas\Admin\Content\images\shared\nav\account_drop_bg.gif" />
     <Content Include="Areas\Admin\Content\images\shared\nav\account_line.gif" />
     <Content Include="Areas\Admin\Content\images\shared\nav\back_0.gif" />
@@ -211,7 +211,6 @@
     <Content Include="Areas\Admin\Content\images\shared\nav\repeat.jpg" />
     <Content Include="Areas\Admin\Content\images\shared\side_shadowleft.jpg" />
     <Content Include="Areas\Admin\Content\images\shared\side_shadowright.jpg" />
-    <Content Include="Areas\Admin\Content\images\shared\top_bg.jpg" />
     <Content Include="Areas\Admin\Content\images\shared\top_search_btn.gif" />
     <Content Include="Areas\Admin\Content\images\shared\top_search_inp.gif" />
     <Content Include="Areas\Admin\Content\images\shared\top_search_select.gif" />

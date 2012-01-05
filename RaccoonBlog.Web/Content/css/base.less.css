@@ -686,4 +686,15 @@ div.comments-rss
 	background-color: #3D3D3D;
 	border-bottom: 1px solid #7e7e7e;
 	height: 92px;
+	margin: 0 auto;
+}
+
+#logo
+{
+	float: left;
+	margin: 45px 0 0 15px;
+}
+#logo a
+{
+	display: block;
 }

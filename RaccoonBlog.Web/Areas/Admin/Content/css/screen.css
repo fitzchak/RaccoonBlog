@@ -13,22 +13,7 @@ body
 	width: 450px;
 }
 
-#page-top
-{
-	margin: 0 auto;
-	max-width: 1260px;
-	min-width: 850px;
-	position: relative;
-}
-#logo
-{
-	float: left;
-	margin: 45px 0 0 15px;
-}
-#logo a
-{
-	display: block;
-}
+
 #top-search
 {
 	display: inline;
