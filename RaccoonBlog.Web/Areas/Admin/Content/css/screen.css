@@ -1,3 +1,183 @@
+.admin-area {
+	
+}
+.admin-area header
+{
+	background-color: #3D3D3D;
+	border-bottom: 1px solid #7e7e7e;
+	height: 92px;
+	margin: 0 auto;
+}
+
+.admin-area header nav
+{
+	clear: both;
+	background-color: #4D4D4D;
+	height: 77px;
+	margin: 0 auto;
+	font-family: Tahoma;
+	font-size: 13px;
+	height: 38px;
+	position: relative;
+	width: 600px;
+}
+
+.admin-area header nav ul {
+	list-style: none;
+	white-space: nowrap;
+}
+.admin-area header nav ul li {
+	float: left;
+	height: auto;
+	margin: 0;
+	padding: 0;
+}
+
+.admin-area header nav ul li a {
+	background: url(images/pro_line_0.gif);
+	color: #fff;
+	display: block;
+	float: left;
+	height: 37px;
+	line-height: 35px;
+	padding: 0 20px 0 20px;
+	text-decoration: none;
+	white-space: nowrap;
+}
+.admin-area header nav ul li.current a
+{
+	background: url(images/pro_line_1.gif);
+}
+
+.nav-divider
+{
+	background: url(../images/shared/nav/divider.jpg) top no-repeat;
+	float: left;
+	height: 40px;
+	width: 15px;
+}
+
+
+.nav .select a:hover, .nav .select li:hover a
+{
+	background: url(../images/shared/nav/pro_line_1.gif);
+	color: #fff;
+	cursor: pointer;
+	padding: 0 0 0 10px;
+}
+.nav .select a:hover b, .nav .select li:hover a b
+{
+	background: url(../images/shared/nav/pro_line_1.gif) right top;
+	cursor: pointer;
+	display: block;
+	float: left;
+	padding: 0 20px 0 10px;
+}
+.nav .select_sub
+{
+	display: none;
+	margin: 0 0 0 10px;
+}
+
+/* IE6 only */
+.nav table
+{
+	border-collapse: collapse;
+	font-size: 1em;
+	height: 0;
+	margin: -1px;
+	width: 0;
+}
+.nav .sub
+{
+	display: table;
+	list-style: none; /* margin: 0 auto; */
+	padding: 0;
+}
+.nav .sub_active .current_sub a, .nav .sub_active a:hover
+{
+	background: transparent;
+	color: #fff;
+}
+.nav .select :hover .select_sub, .nav .current .show
+{
+	background: url(../images/shared/nav/back_0.gif);
+	display: block;
+	left: 0;
+	padding: 0;
+	position: absolute;
+	text-align: left;
+	top: 37px;
+	width: 750px;
+	z-index: 100;
+}
+.nav .current .show
+{
+	z-index: 10;
+}
+.nav .select :hover .sub li a, .nav .current .show .sub li a
+{
+	background: transparent;
+	border: 0;
+	color: #fff;
+	font-weight: bold;
+	font-size: 13px;
+	display: block;
+	float: left;
+	margin: 0;
+	padding: 0 10px 0 10px;
+	white-space: nowrap;
+}
+.nav .current .sub li.sub_show a
+{
+	background: url(../images/shared/nav/back_1.gif);
+	color: #94b52c;
+	cursor: default;
+}
+.nav .select :hover .sub li a:hover, .nav .current .sub li a:hover
+{
+	background: url(../images/shared/nav/back_1.gif);
+	color: #94b52c;
+	visibility: visible;
+}
+
+
+
+#logo
+{
+	float: left;
+	margin: 45px 0 0 15px;
+}
+#logo a
+{
+	display: block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 html, body
 {
 	height: 100%;
@@ -915,12 +1095,6 @@ a:hover.action-delete
 	text-align: left;
 }
 
-.nav-outer
-{
-	margin: 0 auto;
-	max-width: 1260px;
-	min-width: 850px;
-}
 #nav-right
 {
 	float: right;
@@ -1010,161 +1184,6 @@ a#acc-stats
 	padding: 0 0 0 20px;
 }
 
-/* ================================================================ 
-This copyright notice must be untouched at all times. The original version of this stylesheet and the associated (x)html is available at http://www.cssplay.co.uk/menus/pro_dropline.html
-Copyright (c) 2005-2007 Stu Nicholls. All rights reserved. This stylesheet and the associated (x)html may be modified in any way to fit your requirements.
-=================================================================== */
-
-.nav
-{
-	float: left;
-	font-family: Tahoma;
-	font-size: 13px;
-	height: 38px;
-	position: relative;
-	width: 600px;
-	min-width: 600px;
-	z-index: 500;
-}
-.nav-divider
-{
-	background: url(../images/shared/nav/divider.jpg) top no-repeat;
-	float: left;
-	height: 40px;
-	width: 15px;
-}
-.nav .table
-{
-	display: table;
-}
-.nav .select, .nav .current
-{
-	display: table-cell;
-	float: left;
-	list-style: none;
-	margin: 0 0px 0 0;
-	padding: 0;
-	white-space: nowrap;
-}
-.nav li
-{
-	float: left;
-	height: auto;
-	margin: 0;
-	padding: 0;
-}
-.nav .select a
-{
-	background: url(../images/shared/nav/pro_line_0.gif);
-	color: #fff;
-	display: block;
-	float: left;
-	height: 37px;
-	line-height: 35px;
-	padding: 0 20px 0 20px;
-	text-decoration: none;
-	white-space: nowrap;
-}
-.nav .current a
-{
-	background: url(../images/shared/nav/pro_line_1.gif);
-	color: #fff;
-	display: block;
-	float: left;
-	height: 37px;
-	line-height: 35px;
-	padding: 0 0 0 10px;
-	text-decoration: none;
-	white-space: nowrap;
-}
-.nav .current a b
-{
-	background: url(../images/shared/nav/pro_line_1.gif) right top;
-	display: block;
-	padding: 0 20px 0 10px;
-}
-.nav .select a:hover, .nav .select li:hover a
-{
-	background: url(../images/shared/nav/pro_line_1.gif);
-	color: #fff;
-	cursor: pointer;
-	padding: 0 0 0 10px;
-}
-.nav .select a:hover b, .nav .select li:hover a b
-{
-	background: url(../images/shared/nav/pro_line_1.gif) right top;
-	cursor: pointer;
-	display: block;
-	float: left;
-	padding: 0 20px 0 10px;
-}
-.nav .select_sub
-{
-	display: none;
-	margin: 0 0 0 10px;
-}
-
-/* IE6 only */
-.nav table
-{
-	border-collapse: collapse;
-	font-size: 1em;
-	height: 0;
-	margin: -1px;
-	width: 0;
-}
-.nav .sub
-{
-	display: table;
-	list-style: none; /* margin: 0 auto; */
-	padding: 0;
-}
-.nav .sub_active .current_sub a, .nav .sub_active a:hover
-{
-	background: transparent;
-	color: #fff;
-}
-.nav .select :hover .select_sub, .nav .current .show
-{
-	background: url(../images/shared/nav/back_0.gif);
-	display: block;
-	left: 0;
-	padding: 0;
-	position: absolute;
-	text-align: left;
-	top: 37px;
-	width: 750px;
-	z-index: 100;
-}
-.nav .current .show
-{
-	z-index: 10;
-}
-.nav .select :hover .sub li a, .nav .current .show .sub li a
-{
-	background: transparent;
-	border: 0;
-	color: #fff;
-	font-weight: bold;
-	font-size: 13px;
-	display: block;
-	float: left;
-	margin: 0;
-	padding: 0 10px 0 10px;
-	white-space: nowrap;
-}
-.nav .current .sub li.sub_show a
-{
-	background: url(../images/shared/nav/back_1.gif);
-	color: #94b52c;
-	cursor: default;
-}
-.nav .select :hover .sub li a:hover, .nav .current .sub li a:hover
-{
-	background: url(../images/shared/nav/back_1.gif);
-	color: #94b52c;
-	visibility: visible;
-}
 
 
 

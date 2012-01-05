@@ -672,35 +672,3 @@ div.comments-rss
 	font-size: smaller;
 	padding-left: 15px;
 }
-
-
-
-
-
-
-.admin-area {
-	
-}
-.admin-area header
-{
-	background-color: #3D3D3D;
-	border-bottom: 1px solid #7e7e7e;
-	height: 92px;
-	margin: 0 auto;
-}
-
-.admin-area header nav
-{
-	background-color: #4D4D4D;
-	height: 77px;
-}
-
-#logo
-{
-	float: left;
-	margin: 45px 0 0 15px;
-}
-#logo a
-{
-	display: block;
-}
