@@ -5,17 +5,16 @@
 
 <article class="post">
 	<header>
-		<h1><a href="@Url.Action("Details", new { Model.Post.Id })">@Model.Post.Title</a></h1>
+		<h1><a href="@Url.Action("Details", new { Model.Post.Id, Model.Post.Slug })">@Model.Post.Title</a></h1>
 		<div id="post-admin">
 			<ul style="list-style-type: none">
 				<li><a href="@Url.Action("Details", "PostDetails", new { Model.Post.Id, Model.Post.Slug, area = "" })">View</a></li>
 				<li><a href="@Url.Action("Details", "PostDetails", new { Model.Post.Id, Model.Post.Slug, key = @Model.Post.Key, area = "" })">Private View</a></li>
 				<li><a href="@Url.Action("Edit", "Posts", new { id = @Model.Post.Id})">Edit</a></li>
 				<li>
-					<div style="right: 0px; float: right; width: 100%">
-						<form action="@Url.Action("Delete", new { @Model.Post.Id })" method="post">
-							<input style="float: right; right: 2px; width: 100px;" type="submit" value="Delete">
-						</form></div>
+					<form action="@Url.Action("Delete", new { Model.Post.Id })" method="post">
+						<input type="submit" value="Delete" class="confirm">
+					</form>
 				</li>
 			</ul>
 		</div>
@@ -23,14 +22,14 @@
 	
 	<nav id="headerPrevNext">
 		<ul>
-		   @if (Model.PreviousPost != null)
-			{ 
-			   <li><a href="@Url.Action("Details", new { Id = Model.PreviousPost.DomainId })">previous: @Model.PreviousPost.Title</a></li>
+			@if (Model.PreviousPost != null)
+			{
+				<li><a href="@Url.Action("Details", new { Id = Model.PreviousPost.DomainId })">previous: @Model.PreviousPost.Title</a></li>
 			}
 		
 			@if (Model.NextPost != null)
-			{ 
-			  <li> <a href="@Url.Action("Details", new { Id = Model.NextPost.DomainId })">next: @Model.NextPost.Title</a></li>
+			{
+				<li> <a href="@Url.Action("Details", new { Id = Model.NextPost.DomainId })">next: @Model.NextPost.Title</a></li>
 			}
 		</ul>
 	</nav>
@@ -38,8 +37,8 @@
 	<div class="post_body raw_html">
 		@Model.Post.Body
 	</div>
-	<br/>
-	<footer style="border-top: 2px solid silver; border-bottom: 2px solid silver; ">
+
+	<footer>
 		Published at <time pubdate>@Model.Post.PublishedAt.ToString("r")</time>
 
 		@if (Model.Post.PublishedAt != Model.Post.CreatedAt)
@@ -54,7 +53,8 @@
 	<div class="tags">
 		<ul>
 			@foreach (var name in Model.Post.Tags) {
-				<a href="@Url.Action("Tag", "Posts", new { name })">@name</a>}
+				<li><a href="@Url.Action("Tag", "Post", new { name })">@name</a></li>
+			}
 		</ul>
 	</div>
 	
@@ -69,52 +69,47 @@
 		}
 		<form action="@Url.Action("CommentsAdmin", new { id = Model.Post.Id })" method="post">
 			@foreach (var comment in Model.Comments) {
-				<article style="border-bottom: 2px solid silver; border-top: 2px solid silver;" comment-id="comment@(comment.Id)" class="comment @(comment.IsImportant ? " important" : null)@(comment.IsSpam ? " spam" : null)">
-				   <br/>
+				<article class="comment @(comment.IsImportant ? " important" : null)@(comment.IsSpam ? " spam" : null)">
+					<a name="comment@(comment.Id)"></a>
+					<input type="checkbox" name="commentIds" value="@comment.Id">
+
 					<div class="avatar">
-						<img style="float: left; padding : 6px 6px 6px 6px" src="http://www.gravatar.com/avatar.php?gravatar_id=@(comment.EmailHash)&amp;size=50&amp;default=identicon" alt="Gravatar">
-				   
-						  </div>
-					   <div class="comment_title">
-					 <br/>
+						<img src="http://www.gravatar.com/avatar.php?gravatar_id=@(comment.EmailHash)&amp;size=50&amp;default=identicon" alt="Gravatar">
+					</div>
+
+					<div class="comment_title">
 						@comment.CreatedAt by
 						<address>
-						   &nbsp;&nbsp;&nbsp; <a title="@(string.IsNullOrEmpty(comment.Url) ? "Comment by " + comment.Author : comment.Url)" href="@comment.Url">@comment.Author</a>
-						  
-						  <form name="comment" > <a  name="comment@(comment.Id)"></a><br/>
-						  <div style="right: 0px; float: right; width: 100%">
-							 <input style="float: right; left: 83%" type="checkbox" name="commentIds" value="@comment.Id" id="comment@(comment.Id)" /></div>
-							 <label style="color: black" for="comment@(comment.Id)" value="@comment.Id">@comment.Body</label>
-						 </form>
+							<a title="@(string.IsNullOrEmpty(comment.Url) ? "Comment by " + comment.Author : comment.Url)" href="@comment.Url">@comment.Author</a>
 						</address>
 					</div>
-					 <br/>
-					@* <p >@comment.Body</p> *@
+					<p>@comment.Body</p>
 				</article>
 			}
 			<div id="comments-admin">
-				<input style="width: 100px;" type="submit" name="command" value="Delete" class="confirm">
-				<input style="width: 100px;" type="submit" name="command" value="Mark Spam" class="confirm">
-				<input style="width: 100px;" type="submit" name="command" value="Mark Ham" class="confirm">
+				<input type="submit" name="command" value="Delete" class="confirm">
+				<input type="submit" name="command" value="Mark Spam" class="confirm">
+				<input type="submit" name="command" value="Mark Ham" class="confirm">
 			</div>
 		</form>
 	</section>
 </article>
+
 @if (Model.AreCommentsClosed)
 { 
 	<div>Comments have been closed on this topic.</div>
 }
+
 @section Script {
 	<script type="text/javascript">
 		$(function () {
 			$('.comment').click(function () {
-				var c = $('#' + $(this).attr("comment-id"));
+				var c = $(this).children('input:checkbox');
 				c.attr('checked', !c.attr('checked'));
 			});
-
 			$('.confirm').click(function () {
-				return confirm('Are you sure you want to ' + $(this).val().toLowerCase() + '?');
+				if (!confirm('Are you sure you want to ' + $(this).val().toLowerCase() + '?')) return false;
 			});
 		});
-  </script>
+	</script>
 }
