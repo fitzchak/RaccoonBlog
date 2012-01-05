@@ -14,52 +14,52 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			ViewBag.TopMenus = GetTopMenu();
 		}
 
-		private IList<AdminMenu> GetTopMenu()
+		private IList<MenuItem> GetTopMenu()
 		{
-			return new List<AdminMenu>
+			return new List<MenuItem>
 					{
-						new AdminMenu
+						new MenuItem
 							{
 								Title = "Back To Blog",
 								SubMenus = null,
 								Url = Url.RouteUrl("homepage"),
 								
 							},
-						new AdminMenu
+						new MenuItem
 							{
 								Title = "Posts",
-								SubMenus = new List<AdminMenu>
+								SubMenus = new List<MenuItem>
 											{
-												new AdminMenu {Title = "All posts", Url = Url.Action("List", "Posts")},
-												new AdminMenu{Title = "Create a new post", Url=Url.Action("Add", "Posts")}
+												new MenuItem {Title = "All posts", Url = Url.Action("List", "Posts")},
+												new MenuItem{Title = "Create a new post", Url=Url.Action("Add", "Posts")}
 											}
 									  
 							},
-						new AdminMenu
+						new MenuItem
 							{
 								Title = "Sections",
-								SubMenus = new List<AdminMenu>
+								SubMenus = new List<MenuItem>
 											{
-												new AdminMenu {Title = "Sections list", Url = Url.Action("List", "Sections")},
-												new AdminMenu {Title = "Add a new section", Url = Url.Action("Add", "Sections")}
+												new MenuItem {Title = "Sections list", Url = Url.Action("List", "Sections")},
+												new MenuItem {Title = "Add a new section", Url = Url.Action("Add", "Sections")}
 											}
 							},
-						new AdminMenu
+						new MenuItem
 							{
 								Title = "Users",
 								Url = Url.Action("Index", "Users"),
-								SubMenus = new List<AdminMenu>
+								SubMenus = new List<MenuItem>
 											{
-												new AdminMenu {Title = "All users", Url = Url.Action("List", "Users")},
-												new AdminMenu {Title = "Add a new user", Url = Url.Action("Add", "Users")}
+												new MenuItem {Title = "All users", Url = Url.Action("List", "Users")},
+												new MenuItem {Title = "Add a new user", Url = Url.Action("Add", "Users")}
 											}
 							},
-						new AdminMenu
+						new MenuItem
 							{
 								Title = "Tools",
-								SubMenus = new List<AdminMenu>
+								SubMenus = new List<MenuItem>
 											{
-												new AdminMenu {Title = "Settings", Url = Url.Action("Index", "Settings")},
+												new MenuItem {Title = "Settings", Url = Url.Action("Index", "Settings")},
 											}
 							},
 					};
