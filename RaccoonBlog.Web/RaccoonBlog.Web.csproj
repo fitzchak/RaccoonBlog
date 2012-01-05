@@ -145,7 +145,7 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\StringToGuidConverter.cs" />
     <Compile Include="Infrastructure\Common\DocumentSessionExtensions.cs" />
     <Content Include="Areas\Admin\Content\css\jquery-ui-timepicker-addon.css" />
-    <Content Include="Areas\Admin\Content\css\screen.css" />
+    <Content Include="Areas\Admin\Content\css\AdminStyle.css" />
     <Content Include="Areas\Admin\Content\images\forms\bg_related_act.gif" />
     <Content Include="Areas\Admin\Content\images\forms\bubble_inner.gif" />
     <Content Include="Areas\Admin\Content\images\forms\bubble_left.gif" />
