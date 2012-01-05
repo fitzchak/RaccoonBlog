@@ -130,6 +130,7 @@
   <ItemGroup>
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\SettingsController.cs" />
+    <Compile Include="Areas\Admin\Helpers\MenuUtil.cs" />
     <Compile Include="Areas\Admin\Models\MenuItem.cs" />
     <Compile Include="Controllers\AggresivelyCachingRacconController.cs" />
     <Compile Include="Controllers\SocialController.cs" />

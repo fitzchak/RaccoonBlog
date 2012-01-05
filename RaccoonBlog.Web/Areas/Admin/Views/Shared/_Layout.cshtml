@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	@using RaccoonBlog.Web.Areas.Admin.Models
 	@{
 		ViewBag.Message = TempData["Message"] as string;
 		var blogConfig = ViewBag.BlogConfig as BlogConfigViewModel;
@@ -64,10 +63,8 @@
 			<div id="logo">
 				<a href="@Url.Action("List", "Posts")"><img src="@Url.Content("~/Content/css/images/logo-admin.png")" width="51" height="40" alt="Logo"></a>
 			</div>
-			<div class="clr"></div>
-			
 			<nav>
-				@{Html.RenderPartial("RenderMenu", (object)ViewBag.TopMenus);}
+				@{Html.RenderPartial("RenderMenu", RaccoonBlog.Web.Areas.Admin.Helpers.MenuUtil.GetTopMenu(Url));}
 			</nav>
 			<div class="clr"></div>
 			
