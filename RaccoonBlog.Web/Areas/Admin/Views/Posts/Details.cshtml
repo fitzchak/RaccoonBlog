@@ -29,9 +29,9 @@
 			}
 		
 			@if (Model.NextPost != null)
-   { 
+			{ 
 			  <li> <a href="@Url.Action("Details", new { Id = Model.NextPost.DomainId })">next: @Model.NextPost.Title</a></li>
-   }
+			}
 		</ul>
 	</nav>
 
