@@ -23,11 +23,6 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 	{
 		public ActionResult Index()
 		{
-			return List();
-		}
-
-		public ActionResult List()
-		{
 			// the actual UI is handled via JavaScript
 			return View("List");
 		}
@@ -47,10 +42,6 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			return View(post.MapTo<PostInput>());
 		}
 
-/*
-		
-		
-		}*/
 		[HttpPost]
 		[ValidateInput(false)]
 		public ActionResult Update(PostInput input)
@@ -241,7 +232,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			{
 				return Json(new {Success = true});
 			}
-			return RedirectToAction("List");
+			return RedirectToAction("Index");
 		}
 
 		[HttpPost]

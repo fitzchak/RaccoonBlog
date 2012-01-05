@@ -11,7 +11,7 @@ namespace RaccoonBlog.IntegrationTests.Routing
 		[Fact]
 		public void DefaultRoute()
 		{
-			"~/".ShouldMapTo<PostsController>(c => c.List());
+			"~/".ShouldMapTo<PostsController>(c => c.Index());
 		}
 
 		[Fact]
@@ -28,7 +28,7 @@ namespace RaccoonBlog.IntegrationTests.Routing
 		[Fact]
 		public void Posts()
 		{
-			"~/".ShouldMapTo<PostsController>(c => c.List());
+			"~/".ShouldMapTo<PostsController>(c => c.Index());
 
 			"~/tags/tag-name".ShouldMapTo<PostsController>(c => c.Tag("tag-name"));
 

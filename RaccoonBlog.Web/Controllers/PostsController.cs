@@ -15,11 +15,6 @@ namespace RaccoonBlog.Web.Controllers
 	{
 		public ActionResult Index()
 		{
-			return List();
-		}
-
-		public ActionResult List()
-		{
 			RavenQueryStatistics stats;
 			var posts = RavenSession.Query<Post>()
 				.Include(x => x.AuthorId)
