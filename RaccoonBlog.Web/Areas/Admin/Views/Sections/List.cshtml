@@ -5,13 +5,14 @@
 }
 <div class="messageWrapper"><div id="message" style="visibility:hidden"></div></div>
 <article class="sectionadmin-list">
-	<h1>Sections</h1><br/>
-	<p style="font: 15px Ariel black">@Html.ActionLink("Create Section", "Add")</p>
-	<ul class="admin-list sortable" >
-
+	<h1>Sections</h1>
+	<ul>
+		<li>@Html.ActionLink("Create Section", "Add")</li>
+	</ul>
+	<ul class="admin-list sortable">
 		@foreach (var section1 in Model) {
 		  <li>
-			  <div class="commands-section" style="border-bottom: 2px solid silver; border-top: 2px solid silver;">
+			  <div class="commands-section">
 				@Html.DisplayFor(s => section1.Id)
 				@Html.DisplayFor(s => section1.Title)
 				@Html.DisplayFor(s => section1.IsActive)
