@@ -23,11 +23,15 @@
 				@Html.EditorFor(x => x.Title)
 				@Html.EditorFor(x => x.ControllerName)
 				@Html.EditorFor(x => x.ActionName)
+				@Html.EditorFor(x => x.IsActive)
+				
 				@Html.TextAreaFor(x => x.Body, new { @class = "adminRichText" })
+
 				@Html.HiddenFor(x => x.Id)
 				<div>
-					<input type="submit" value="@ViewBag.SubmitButtonText"/>
-					<input type="reset" value="Reset Section" /></div>
+					<input type="submit" value="@ViewBag.SubmitButtonText">
+					<input type="reset" value="Reset Section">
+				</div>
 			</div>
 		</div>
 	</div>
