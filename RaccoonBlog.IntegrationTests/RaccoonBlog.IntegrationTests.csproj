@@ -112,6 +112,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Routing\RoutingTestBase.cs" />
     <Compile Include="SlugConverterTests.cs" />
+    <Compile Include="Web\Areas\Admin\Helpers\TestingHtmlHelperExtensions\WhenTestingTheClass.cs" />
     <Compile Include="Web\Services\PostSchedulingStrategyTests.cs" />
   </ItemGroup>
   <ItemGroup>
