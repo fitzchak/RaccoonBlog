@@ -1,32 +1,32 @@
 ﻿@model IList<UserSummeryViewModel>
 @{
-    ViewBag.Title = "Users";
+	ViewBag.Title = "Users";
 }
+<article class="useradmin-list">
 	<h1>Users</h1>
-	<br/>
-<article style="border-bottom: 2px solid silver; border-top: 2px solid silver;" class="useradmin-list">
-<br/>
-	@Html.ActionLink("Create New User", "Add")
-	<br/>
+	<ul>
+		<li>@Html.ActionLink("Create New User", "Add")</li>
+	</ul>
 	<ul class="admin-list">
-		@foreach (var user in Model) { 
-			<div style="border-bottom: 2px solid silver; border-top: 2px solid silver;" class="command-section">
+		@foreach (var user in Model) {
+			<li>
 				@Html.DisplayFor(u => user.FullName)
 				@Html.DisplayFor(u => user.Email)
 				@Html.DisplayFor(u => user.Enabled)
 				@Html.DisplayFor(u => user.TwitterNick)
 				
-					<div><a href="@Url.Action("Edit", new { user.Id })">Edit</a></div>
-
-					
-					<div><a href="@Url.Action("ChangePassword", new { user.Id })">Change Password</a></div>
-					<div>
-                        <form action="@Url.Action("SetActivation", new { user.Id, isActive = user.Enabled == false })" method="post">
-                            <input type="submit" value="@(user.Enabled ? "Disable" : "Activate")" style="width: 100px;">
-                        </form>
-                    </div>
+				<div class="commands-section">
+					<ul>
+						<li><a href="@Url.Action("Edit", new {user.Id})">Edit</a></li>
+						<li><a href="@Url.Action("ChangePassword", new {user.Id})">Change Password</a></li>
+						<li>
+							<form action="@Url.Action("SetActivation", new {user.Id, isActive = user.Enabled == false})" method="post">
+								<input type="submit" value="@(user.Enabled ? "Disable" : "Activate")" style="width: 100px;">
+							</form>
+						</li>
+					</ul>
 				</div>
-			
+			</li>
 		}
 	</ul>
 </article>

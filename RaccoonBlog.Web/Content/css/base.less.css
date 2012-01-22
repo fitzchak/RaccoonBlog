@@ -473,7 +473,7 @@ article.useradmin-list .commands-section
 article.sectionadmin-list .commands-section
 {
 	float: right;
-	margin-top: -54px;
+	margin-top: -40px;
 }
 
 article.post-detalis footer, article.postSummery footer
@@ -514,6 +514,7 @@ footer .created, footer .comment-count
 .commands-section ul li 
 {
 	border: none;
+	padding: 0;
 }
 
 .fc-grid .fc-event-time {
