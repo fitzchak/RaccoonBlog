@@ -11,20 +11,22 @@
 	</ul>
 	<ul class="admin-list sortable">
 		@foreach (var section1 in Model) {
-		  <li>
-			  <div class="commands-section">
+			<li>
 				@Html.DisplayFor(s => section1.Id)
 				@Html.DisplayFor(s => section1.Title)
 				@Html.DisplayFor(s => section1.IsActive)
-				<ul>
-					<li><a href="@Url.Action("Edit","Sections", new { Id = section1.DenormalizedId })">Edit</a></li>
-				</ul>
-				
-				<form action="@Url.Action("Delete", new { section1.Id })" method="post">
-					<input style="width: 90px" type="submit" value="Delete" class="confirm">
-				</form>
-			  </div>
-		  </li>
+					
+				<div class="commands-section">
+					<ul>
+						<li><a href="@Url.Action("Edit","Sections", new { Id = section1.DenormalizedId })">Edit</a></li>
+						<li>
+							<form action="@Url.Action("Delete", new { section1.Id })" method="post">
+								<input style="width: 90px" type="submit" value="Delete" class="confirm">
+							</form>
+						</li>
+					</ul>
+				</div>
+			</li>
 		}
 	</ul>
 </article>
