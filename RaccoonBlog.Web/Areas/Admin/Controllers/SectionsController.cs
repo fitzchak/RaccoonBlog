@@ -38,7 +38,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			if (!ModelState.IsValid)
 				return View("Edit", input);
 
-			var section = RavenSession.Load<Section>(input.Id) ?? new Section();
+			var section = input.Id == null ? new Section() : (RavenSession.Load<Section>(input.Id) ?? new Section());
 			input.MapPropertiesToInstance(section);
 			if (section.Position == 0)
 			{
