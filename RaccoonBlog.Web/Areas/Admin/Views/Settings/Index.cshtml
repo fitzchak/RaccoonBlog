@@ -1,4 +1,4 @@
-﻿@model BlogConfigurationInput
+﻿@model RaccoonBlog.Web.Models.BlogConfig
 @{
 	ViewBag.Title = "Blog Configuration";
 }
@@ -17,25 +17,29 @@
 		<div>
 			<div id="content-table-inner" class="inputform">
 				<div id="id-form" style="top: 0;">
-					@Html.EditorFor(config => config.Title) 
+					@Html.EditorFor(config => config.Title)
 					@Html.EditorFor(config => config.Subtitle)
+					@Html.EditorFor(config => config.OwnerEmail)
+
 					@Html.EditorFor(config => config.MetaDescription)
 					@Html.EditorFor(config => config.MetaKeywords)
+
 					@Html.EditorFor(config => config.Copyright)
 					@Html.EditorFor(config => config.CustomCss)
+
 					@Html.EditorFor(config => config.AkismetKey)
 					@Html.EditorFor(config => config.GoogleAnalyticsKey)
 					@Html.EditorFor(config => config.RssFuturePostsKey)
 					@Html.EditorFor(config => config.RssFutureDaysAllowed)
+
 					@Html.EditorFor(config => config.MinNumberOfPostForSignificantTag)
 					@Html.EditorFor(config => config.NumberOfDayToCloseComments)
+					
+					@Html.EditorFor(config => config.Id)
 					<div><input type="submit" value="Save" /></div>
 				</div>
 			</div>
 		</div>
 	}
 </article>
-<div class="clear">
-	&nbsp;</div>
-
-
+<div class="clear"></div>

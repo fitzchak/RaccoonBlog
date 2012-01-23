@@ -141,7 +141,6 @@
     <Compile Include="Helpers\StaticFileUrlHelperExtensions.cs" />
     <Compile Include="Helpers\Validation\NonEmptyGuid.cs" />
     <Compile Include="Helpers\ViewExtensions.cs" />
-    <Compile Include="Infrastructure\AutoMapper\Profiles\BlogConfigAdminViewModelMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\StringToGuidConverter.cs" />
     <Compile Include="Infrastructure\Common\DocumentSessionExtensions.cs" />
     <Content Include="Areas\Admin\Content\css\images\nav_logout.gif" />
@@ -258,7 +257,6 @@
     <Compile Include="Helpers\Validation\RequiredIfAttribute.cs" />
     <Compile Include="Helpers\Results\JsonNetResult.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\AbstractProfile.cs" />
-    <Compile Include="Infrastructure\AutoMapper\Profiles\BlogConfigMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\EmailViewModelMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\GuidToStringConverter.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\SanitizeHtml.cs" />
@@ -317,7 +315,6 @@
     <Compile Include="Services\RssModels\UserInfo.cs" />
     <Compile Include="Services\RssModels\WordpressCategory.cs" />
     <Compile Include="ViewModels\AdminPostDetailsViewModel.cs" />
-    <Compile Include="ViewModels\BlogConfigurationInput.cs" />
     <Compile Include="ViewModels\BlogConfigViewModel.cs" />
     <Compile Include="Helpers\CommenterUtil.cs" />
     <Compile Include="ViewModels\CommentInput.cs" />

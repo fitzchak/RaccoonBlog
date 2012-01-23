@@ -23,7 +23,7 @@
 	
 		}
 
-		<link rel="stylesheet" type="text/css" href="@Url.ActionLinkWithArray("Merge", "Css", new { files = new[] { "ResetCss.css", "custom/" + blogConfig.CustomCss + ".settings.less.css", "base.less.css", "custom/" + blogConfig.CustomCss + ".less.css" } })">
+		<link rel="stylesheet" type="text/css" href="@Url.ActionLinkWithArray("Merge", "Css", new { files = new[] { "ResetCss.css", "custom/" + blogConfig.CustomCss.ToLowerInvariant() + ".settings.less.css", "base.less.css", "custom/" + blogConfig.CustomCss + ".less.css" } })">
 		@RenderSection("Style", false)
 		
 		<link id="Rsd" rel="EditURI" type="application/rsd+xml" title="RSD" href="@Url.Action("Rsd", "Syndication")">
