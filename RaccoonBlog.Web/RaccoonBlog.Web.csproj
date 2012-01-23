@@ -315,7 +315,6 @@
     <Compile Include="Services\RssModels\UserInfo.cs" />
     <Compile Include="Services\RssModels\WordpressCategory.cs" />
     <Compile Include="ViewModels\AdminPostDetailsViewModel.cs" />
-    <Compile Include="ViewModels\BlogConfigViewModel.cs" />
     <Compile Include="Helpers\CommenterUtil.cs" />
     <Compile Include="ViewModels\CommentInput.cs" />
     <Compile Include="ViewModels\CurrentUserViewModel.cs" />

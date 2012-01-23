@@ -40,7 +40,7 @@ namespace RaccoonBlog.Web.Controllers
 		{
 			base.OnActionExecuted(filterContext);
 
-			ViewBag.BlogConfig = BlogConfig.MapTo<BlogConfigViewModel>();
+			ViewBag.BlogConfig = BlogConfig;
 		}
 
 		protected int CurrentPage

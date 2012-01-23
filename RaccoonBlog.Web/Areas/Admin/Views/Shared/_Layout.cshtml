@@ -4,14 +4,9 @@
 	<meta charset="utf-8">
 	@{
 		ViewBag.Message = TempData["Message"] as string;
-		var blogConfig = ViewBag.BlogConfig as BlogConfigViewModel;
-		if (blogConfig == null)
-		{
-			throw new InvalidOperationException("Couldn't find blog config");
-		}
 	}
 	<title>RaccoonBlog :: @ViewBag.Title</title>
-	<link rel="stylesheet" type="text/css" href="@Url.ActionLinkWithArray("Merge", "Css", new { files = new[] { "ResetCss.css", "custom/" + blogConfig.CustomCss + ".settings.less.css", "base.less.css", "custom/" + blogConfig.CustomCss + ".less.css" } })">
+	<link rel="stylesheet" type="text/css" href="@Url.ActionLinkWithArray("Merge", "Css", new { files = new[] { "ResetCss.css", "custom/" + ViewBag.BlogConfig.CustomCss + ".settings.less.css", "base.less.css", "custom/" + ViewBag.BlogConfig.CustomCss + ".less.css" } })">
 	<link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/Admin/Content/css/AdminStyle.css")">
 	
 	@RenderSection("Style", false)

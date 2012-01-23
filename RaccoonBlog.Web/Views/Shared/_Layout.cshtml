@@ -4,14 +4,10 @@
 		<meta charset="utf-8">
 		@{
 			ViewBag.Message = TempData["Message"] as string;
-			var blogConfig = ViewBag.BlogConfig as BlogConfigViewModel;
-			if (blogConfig == null) {
-				throw new InvalidOperationException("Couldn't find blog config");
-			}
 		}
-		<title>@if (ViewBag.Title != null) { <text> @ViewBag.Title - </text> }@blogConfig.Title</title>
-		<meta name="description" content="@blogConfig.MetaDescription">
-		<meta name="keywords" content="@blogConfig.MetaKeywords">
+		<title>@if (ViewBag.Title != null) { <text> @ViewBag.Title - </text> }@ViewBag.BlogConfig.Title</title>
+		<meta name="description" content="@ViewBag.BlogConfig.MetaDescription">
+		<meta name="keywords" content="@ViewBag.BlogConfig.MetaKeywords">
 
 		@if (ViewExtensions.IsDebug())
 		{
@@ -23,7 +19,7 @@
 	
 		}
 
-		<link rel="stylesheet" type="text/css" href="@Url.ActionLinkWithArray("Merge", "Css", new { files = new[] { "ResetCss.css", "custom/" + blogConfig.CustomCss.ToLowerInvariant() + ".settings.less.css", "base.less.css", "custom/" + blogConfig.CustomCss + ".less.css" } })">
+		<link rel="stylesheet" type="text/css" href="@Url.ActionLinkWithArray("Merge", "Css", new { files = new[] { "ResetCss.css", "custom/" + ViewBag.BlogConfig.CustomCss.ToLowerInvariant() + ".settings.less.css", "base.less.css", "custom/" + ViewBag.BlogConfig.CustomCss + ".less.css" } })">
 		@RenderSection("Style", false)
 		
 		<link id="Rsd" rel="EditURI" type="application/rsd+xml" title="RSD" href="@Url.Action("Rsd", "Syndication")">
@@ -36,8 +32,8 @@
 		<header id="headermain">
 			<div id="logoarea">
 				<div id="logoimage"><a href="@Url.Action("Index", "Posts")"></a></div>
-				<h1><a href="@Url.Action("Index", "Posts")">@blogConfig.Title</a></h1>
-				<h2>@blogConfig.Subtitle</h2>
+				<h1><a href="@Url.Action("Index", "Posts")">@ViewBag.BlogConfig.Title</a></h1>
+				<h2>@ViewBag.BlogConfig.Subtitle</h2>
 			</div>
 		</header>
 		<div id="mainBody">
@@ -75,11 +71,11 @@
 		</script>
 		@RenderSection("Script")
 		@Raven.Client.MvcIntegration.RavenProfiler.CurrentRequestSessions()
-		if (string.IsNullOrEmpty(blogConfig.GoogleAnalyticsKey) == false)
+		if (string.IsNullOrEmpty(ViewBag.BlogConfig.GoogleAnalyticsKey) == false)
 		{ 
 			<script type="text/javascript">
 				var _gaq = _gaq || [];
-				_gaq.push(['_setAccount', '@blogConfig.GoogleAnalyticsKey']);
+				_gaq.push(['_setAccount', '@ViewBag.BlogConfig.GoogleAnalyticsKey']);
 				_gaq.push(['_trackPageview']);
 
 				(function () {
