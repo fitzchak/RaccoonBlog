@@ -18,7 +18,7 @@
 					
 				<div class="commands-section">
 					<ul>
-						<li><a href="@Url.Action("Edit","Sections", new { Id = section1.DenormalizedId })">Edit</a></li>
+						<li><a href="@Url.Action("Edit","Sections", new { section1.Id })">Edit</a></li>
 						<li>
 							<form action="@Url.Action("Delete", new { section1.Id })" method="post">
 								<input style="width: 90px" type="submit" value="Delete" class="confirm">

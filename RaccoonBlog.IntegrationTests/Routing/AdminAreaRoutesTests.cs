@@ -42,25 +42,23 @@ namespace RaccoonBlog.IntegrationTests.Routing
 			"~/admin/users/update".ShouldMapTo<UsersController>(c => c.Update(null));
 		}
 
-		
-
 		[Fact]
 		public void Sections()
 		{
 			"~/admin/sections".ShouldMapTo<SectionsController>(c => c.Index());
 
 			"~/admin/sections/add".ShouldMapTo<SectionsController>(c => c.Add());
-			"~/admin/sections/4/edit".ShouldMapTo<SectionsController>(c => c.Edit(4));
+			"~/admin/sections/4/edit".ShouldMapTo<SectionsController>(c => c.Edit("sections/4"));
 
 			"~/admin/sections/update".ShouldMapTo<SectionsController>(c => c.Update(null));
 
 			var delete = "~/admin/sections/delete".WithMethod(HttpVerbs.Post);
 			delete.Values["id"] = 4;
-			delete.ShouldMapTo<SectionsController>(c => c.Delete(4));
+			delete.ShouldMapTo<SectionsController>(c => c.Delete("sections/4"));
 
 			var setpostdate = "~/admin/sections/4/setposition".WithMethod(HttpVerbs.Post);
 			setpostdate.Values["newPosition"] = 0;
-			setpostdate.ShouldMapTo<SectionsController>(c => c.SetPosition(4, 0));
+			setpostdate.ShouldMapTo<SectionsController>(c => c.SetPosition("sections/4", 0));
 		}
 
 		[Fact]

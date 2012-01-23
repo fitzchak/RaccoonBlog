@@ -13,7 +13,7 @@ namespace RaccoonBlog.Web.Areas.Admin
 		{
 			context.MapRoute(
 				"Admin_default",
-				"admin/{controller}/{action}/{id}",
+				"admin/{controller}/{action}/{*id}",
 				new { controller = "Posts", action = "Index", id = UrlParameter.Optional },
 				new[] { "RaccoonBlog.Web.Areas.Admin.Controllers" }
 			);
