@@ -44,8 +44,8 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			if (section.Position == 0)
 			{
 				section.Position = RavenSession.Query<Section>()
+					.OrderByDescending(sec => sec.Position)
 					.Select(sec => sec.Position)
-					.OrderByDescending(position => position)
 					.FirstOrDefault() + 1;
 			}
 			RavenSession.Store(section);
