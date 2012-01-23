@@ -41,9 +41,6 @@ namespace RaccoonBlog.Web.Models
 		[Display(Name = "MetaDescription")]
 		public string MetaDescription { get; set; }
 
-		[Display(Name = "MetaKeywords")]
-		public string MetaKeywords { get; set; }
-
 		[Display(Name = "MinNumberOfPostForSignificantTag")]
 		public int MinNumberOfPostForSignificantTag { get; set; }
 
