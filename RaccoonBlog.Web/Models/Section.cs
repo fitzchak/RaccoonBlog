@@ -8,7 +8,6 @@ namespace RaccoonBlog.Web.Models
 	 * 1. Body = "Any html text"
 	 * 2. Can point to any internal action.
 	 */
-
 	public class Section : Model
 	{
 		[Required]
@@ -19,6 +18,7 @@ namespace RaccoonBlog.Web.Models
 		[Display(Name = "Active?")]
 		public bool IsActive { get; set; }
 
+		[Display(Name = "Position")]
 		public int Position { get; set; }
 
 		[AllowHtml]

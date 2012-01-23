@@ -11,8 +11,8 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		public ActionResult Index()
 		{
 			var sections = RavenSession.Query<Section>()
-			.OrderBy(x => x.Position)
-			.ToList();
+				.OrderBy(x => x.Position)
+				.ToList();
 
 			return View("List", sections);
 		}
@@ -33,13 +33,11 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult Update(Section input)
+		public ActionResult Update(Section section)
 		{
 			if (!ModelState.IsValid)
-				return View("Edit", input);
+				return View("Edit", section);
 
-			var section = input.Id == null ? new Section() : (RavenSession.Load<Section>(input.Id) ?? new Section());
-			input.MapPropertiesToInstance(section);
 			if (section.Position == 0)
 			{
 				section.Position = RavenSession.Query<Section>()
