@@ -55,9 +55,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\DataAnnotationsExtensions.MVC3.1.0.1\lib\NETFramework40\DataAnnotationsExtensions.ClientValidation.dll</HintPath>
     </Reference>
-    <Reference Include="dotless.Core, Version=1.2.1.0, Culture=neutral, PublicKeyToken=96b446c9e63eae34, processorArchitecture=MSIL">
+    <Reference Include="dotless.Core, Version=1.2.2.0, Culture=neutral, PublicKeyToken=96b446c9e63eae34, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\dotless.1.2.1.0\lib\dotless.Core.dll</HintPath>
+      <HintPath>..\packages\dotless.1.2.2.0\lib\dotless.Core.dll</HintPath>
     </Reference>
     <Reference Include="DotNetOpenAuth, Version=3.4.7.11121, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetOpenAuth.3.4.7.11121\lib\DotNetOpenAuth.dll</HintPath>
@@ -95,9 +95,9 @@
     <Reference Include="Raven.Client.MvcIntegration, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RavenDB.1.0.589-Unstable\lib\net40\Raven.Client.MvcIntegration.dll</HintPath>
     </Reference>
-    <Reference Include="RazorEngine, Version=3.0.5.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+    <Reference Include="RazorEngine, Version=3.0.7.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\RazorEngine.3.0.5\lib\net40\RazorEngine.dll</HintPath>
+      <HintPath>..\packages\RazorEngine.3.0.7\lib\net40\RazorEngine.dll</HintPath>
     </Reference>
     <Reference Include="Recaptcha, Version=1.0.5.0, Culture=neutral, PublicKeyToken=9afc4d65b28c38c2, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -107,7 +107,7 @@
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\RazorEngine.3.0.5\lib\net40\System.Web.Razor.dll</HintPath>
+      <HintPath>..\packages\RazorEngine.3.0.7\lib\net40\System.Web.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Helpers" />
@@ -351,7 +351,7 @@
     <Content Include="Content\js\date.f-0.5.0.min.js" />
     <Content Include="Content\js\fullcalendar.js" />
     <Content Include="Content\js\fullcalendar.min.js" />
-    <Content Include="Content\js\jquery-ui-1.8.16.custom.min.js" />
+    <Content Include="Content\js\jquery-ui-1.8.17.custom.min.js" />
     <Content Include="Content\js\jquery.ae.image.resize.js" />
     <Content Include="Content\js\jquery.ae.image.resize.min.js" />
     <Content Include="Content\js\jquery.datalink.js" />
@@ -658,8 +658,10 @@
     <Content Include="Content\js\ckeditor\skins\v2\skin.js" />
     <Content Include="Content\js\ckeditor\skins\v2\templates.css" />
     <Content Include="Content\js\ckeditor\themes\default\theme.js" />
-    <Content Include="Scripts\modernizr-2.0.6-development-only.js" />
-    <Content Include="Scripts\modernizr.custom.23209.js" />
+    <Content Include="Content\js\jquery-ui-1.8.17.js" />
+    <Content Include="Content\js\jquery-ui-1.8.17.min.js" />
+    <Content Include="Content\js\modernizr-2.0.6-development-only.js" />
+    <Content Include="Content\js\modernizr.custom.23209.js" />
     <Content Include="Views\MailTemplates\_Layout.cshtml" />
     <Content Include="Views\Section\FuturePosts.cshtml" />
     <Content Include="Views\Shared\500.cshtml" />
@@ -723,6 +725,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\css\openid\images\" />
+    <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\PostDetails\Details.cshtml" />
