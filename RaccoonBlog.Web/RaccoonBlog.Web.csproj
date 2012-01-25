@@ -801,6 +801,7 @@
     <None Include="Content\js\ckeditor\ckeditor.php" />
     <None Include="Content\js\ckeditor\ckeditor_php4.php" />
     <None Include="Content\js\ckeditor\ckeditor_php5.php" />
+    <Content Include="NLog.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HibernatingRhinos.Loci.Common\Loci.Common.csproj">
