@@ -7,6 +7,7 @@ using System.Web.Routing;
 using DataAnnotationsExtensions.ClientValidation;
 using HibernatingRhinos.Loci.Common.Controllers;
 using HibernatingRhinos.Loci.Common.Tasks;
+using NLog;
 using RaccoonBlog.Web.Controllers;
 using RaccoonBlog.Web.Helpers.Binders;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
@@ -50,6 +51,8 @@ namespace RaccoonBlog.Web
 		protected void Application_Start()
 		{
 			AreaRegistration.RegisterAllAreas();
+
+			LogManager.GetCurrentClassLogger().Info("Started Raccon Blog");
 
 			// Work around nasty .NET framework bug
 			try
