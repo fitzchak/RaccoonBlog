@@ -13,7 +13,7 @@ body
 .admin-area {
 	
 }
-.admin-area header
+.admin-area > header
 {
 	background-color: #3D3D3D;
 	border-bottom: 1px solid #7e7e7e;
