@@ -202,12 +202,15 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 						.ToArray();
 
 					comments.Spam.RemoveAll(ham.Contains);
-					foreach (var comment in ham)
-					{
-						comment.IsSpam = false;
-						AkismetService.MarkHam(comment);
-					}
 					comments.Comments.AddRange(ham);
+
+					comments.Comments
+						.Where(c => c.IsSpam)
+						.ForEach(comment =>
+						         	{
+						         		comment.IsSpam = false;
+						         		AkismetService.MarkHam(comment);
+						         	});
 					break;
 				default:
 					throw new InvalidOperationException(command + " command is not recognized.");
