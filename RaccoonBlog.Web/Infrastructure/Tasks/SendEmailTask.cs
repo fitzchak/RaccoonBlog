@@ -7,8 +7,8 @@ using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using HibernatingRhinos.Loci.Common.Extensions;
 using HibernatingRhinos.Loci.Common.Tasks;
-using RaccoonBlog.Web.Infrastructure.Common;
 
 namespace RaccoonBlog.Web.Infrastructure.Tasks
 {
@@ -66,7 +66,7 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 			// Send a notification of the comment to the post author
 			mailMessage.To.Add(sendTo);
 
-			// Also CC the owners, if specificed
+			// Also CC the owners, if specified
 			// TODO: Move this to a config entry in the database
 			var commentsMederatorEmails = ConfigurationManager.AppSettings["OwnerEmail"];
 			commentsMederatorEmails
