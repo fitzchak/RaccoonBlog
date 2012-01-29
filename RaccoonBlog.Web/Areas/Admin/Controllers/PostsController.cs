@@ -238,6 +238,12 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			return RedirectToAction("Index");
 		}
 
+		[HttpGet]
+		public ActionResult DeleteAllSpamComments()
+		{
+			return View();
+		}
+
 		[HttpPost]
 		public ActionResult DeleteAllSpamComments(bool deleteAll)
 		{
