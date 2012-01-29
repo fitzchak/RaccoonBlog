@@ -260,4 +260,11 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			return View();
 		}
 	}
+
+	public enum CommentCommandOptions
+	{
+		Delete,
+		MarkHam,
+		MarkSpam
+	}
 }

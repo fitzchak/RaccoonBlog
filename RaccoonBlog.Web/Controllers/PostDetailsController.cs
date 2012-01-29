@@ -13,13 +13,6 @@ using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public enum CommentCommandOptions
-	{
-		Delete,
-		MarkHam,
-		MarkSpam
-	}
-
 	public class PostDetailsController : RaccoonController
 	{
 		public ActionResult Details(int id, string slug, Guid key)
