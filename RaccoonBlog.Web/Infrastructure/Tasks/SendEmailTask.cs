@@ -3,6 +3,7 @@ using System.Collections;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
@@ -32,6 +33,12 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 			this.view = view;
 			this.model = model;
 			this.sendTo = sendTo;
+		}
+
+		static SendEmailTask()
+		{
+			// Fix: The remote certificate is invalid according to the validation procedure.
+			ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, errors) => true;
 		}
 
 		public override void Execute()
