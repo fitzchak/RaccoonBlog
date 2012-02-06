@@ -170,7 +170,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			if (ModelState.IsValid == false)
 			{
 				if (Request.IsAjaxRequest())
-					return Json(new {Success = false, message = ModelState.GetFirstErrorMessage()});
+					return Json(new {Success = false, message = ModelState.FirstErrorMessage()});
 
 				return Details(id);
 			}

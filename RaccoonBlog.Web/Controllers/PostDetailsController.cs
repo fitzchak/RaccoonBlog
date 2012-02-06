@@ -121,7 +121,7 @@ namespace RaccoonBlog.Web.Controllers
 		private ActionResult PostingCommentFailed(Post post, CommentInput input, Guid key)
 		{
 			if (Request.IsAjaxRequest())
-				return Json(new {Success = false, message = ModelState.GetFirstErrorMessage()});
+				return Json(new {Success = false, message = ModelState.FirstErrorMessage()});
 
 			var postReference = post.MapTo<PostReference>();
 			var result = Details(postReference.DomainId, postReference.Slug, key);

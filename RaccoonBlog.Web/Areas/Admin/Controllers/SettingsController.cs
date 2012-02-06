@@ -17,7 +17,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		{
 			if (ModelState.IsValid == false)
 			{
-				ViewBag.Message = ModelState.GetFirstErrorMessage();
+				ViewBag.Message = ModelState.FirstErrorMessage();
 				if (Request.IsAjaxRequest())
 					return Json(new { Success = false, ViewBag.Message });
 				return View(BlogConfig);

@@ -5,7 +5,7 @@ namespace RaccoonBlog.Web.Helpers
 {
 	public static class ModelStateExtensions
 	{
-		public static string GetFirstErrorMessage(this ModelStateDictionary modelState)
+		public static string FirstErrorMessage(this ModelStateDictionary modelState)
 		{
 			var state = modelState.Values.FirstOrDefault(v => v.Errors.Count > 0);
 

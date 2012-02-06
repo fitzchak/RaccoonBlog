@@ -103,9 +103,9 @@ namespace RaccoonBlog.Web.Controllers
 			if (ModelState.IsValid == false)
 			{
 				if (Request.IsAjaxRequest())
-					return Json(new {Success = false, message = ModelState.GetFirstErrorMessage()});
+					return Json(new {Success = false, message = ModelState.FirstErrorMessage()});
 
-				TempData["Message"] = ModelState.GetFirstErrorMessage();
+				TempData["Message"] = ModelState.FirstErrorMessage();
 				return Redirect(returnUrl);
 			}
 
