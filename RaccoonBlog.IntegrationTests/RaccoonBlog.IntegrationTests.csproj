@@ -112,6 +112,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Routing\RoutingTestBase.cs" />
     <Compile Include="SlugConverterTests.cs" />
+    <Compile Include="Web\Controllers\RaccoonControllerTests\BlogConfigProperty\WhenTestingTheProperty.cs" />
+    <Compile Include="Web\Controllers\RaccoonControllerTests\BlogConfigProperty\WhenTheBlogConfigIsAvailable.cs" />
+    <Compile Include="Web\Controllers\RaccoonControllerTests\BlogConfigProperty\WhenTheBlogConfigIsNotAvailable.cs" />
+    <Compile Include="Web\Controllers\RaccoonControllerTests\TestController.cs" />
+    <Compile Include="Web\Controllers\RaccoonControllerTests\WhenTestingTheClass.cs" />
     <Compile Include="Web\WhenTestingTheClass.cs" />
     <Compile Include="Web\Services\PostSchedulingStrategyTests.cs" />
   </ItemGroup>
