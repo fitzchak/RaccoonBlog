@@ -92,6 +92,7 @@
                 @Html.TextBoxFor(model => model.MetaDescription)
                 @Html.ValidationMessageFor(model => model.MetaDescription)
             </div>
+            @Html.HiddenFor(model => model.RssFuturePostsKey)
     
             <p>
                 <input type="submit" value="Setup my blog" />
