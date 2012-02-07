@@ -9,7 +9,7 @@ namespace HibernatingRhinos.Loci.Common.Controllers
 	{
 		public static IDocumentStore DocumentStore { get; set; }
 
-		public IDocumentSession RavenSession { get; protected set; }
+		public IDocumentSession RavenSession { get; set; }
 
 		protected override void OnActionExecuting(ActionExecutingContext filterContext)
 		{
