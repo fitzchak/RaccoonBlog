@@ -42,8 +42,6 @@ namespace RaccoonBlog.Web.Controllers
 
 			vm.Post.Author = RavenSession.Load<User>(post.AuthorId).MapTo<PostViewModel.UserDetails>();
 
-			vm.Post.Key = key; // Save the key too, to allow operations on privately accessible posts too. Redirection (below) isn't of concern.
-
 			if (vm.Post.Slug != slug)
 				return RedirectToActionPermanent("Details", new {id, vm.Post.Slug});
 
@@ -54,13 +52,13 @@ namespace RaccoonBlog.Web.Controllers
 
 		[ValidateInput(false)]
 		[HttpPost]
-		public ActionResult Comment(CommentInput input, int id, Guid key)
+		public ActionResult Comment(CommentInput input, int id, Guid showPostEvenIfPrivate)
 		{
 			var post = RavenSession
 				.Include<Post>(x => x.CommentsId)
 				.Load(id);
 
-			if (post == null || post.IsPublicPost(key) == false)
+			if (post == null || post.IsPublicPost(showPostEvenIfPrivate) == false)
 				return HttpNotFound();
 
 			var comments = RavenSession.Load<PostComments>(post.CommentsId);
@@ -77,7 +75,7 @@ namespace RaccoonBlog.Web.Controllers
 			ValidateCaptcha(input, commenter);
 
 			if (ModelState.IsValid == false)
-				return PostingCommentFailed(post, input, key);
+				return PostingCommentFailed(post, input, showPostEvenIfPrivate);
 
 			TaskExecutor.ExcuteLater(new AddCommentTask(input, Request.MapTo<AddCommentTask.RequestValues>(), id));
 

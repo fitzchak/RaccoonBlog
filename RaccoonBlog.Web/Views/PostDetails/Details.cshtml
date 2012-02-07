@@ -122,7 +122,7 @@
 					</div>
 				}
 				<div class="comment-form-wrapper">
-					@using (Html.BeginForm("Comment", "PostDetails", new { id = Model.Post.Id, key = Model.Post.Key }))
+					@using (Html.BeginForm("Comment", "PostDetails", new { Model.Post.Id, Model.Post.ShowPostEvenIfPrivate }))
 					{
 						@Html.EditorFor(x => x.Input.Name)
 						@Html.EditorFor(x => x.Input.Email)
