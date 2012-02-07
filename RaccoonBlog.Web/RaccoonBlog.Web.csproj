@@ -291,6 +291,7 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\PostViewModelMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\RavenIdResolver.cs" />
     <Compile Include="Infrastructure\Tasks\AddCommentTask.cs" />
+    <Compile Include="Infrastructure\Common\EnumerableExtensions.cs" />
     <Compile Include="Infrastructure\Tasks\SendEmailTask.cs" />
     <Compile Include="Controllers\RaccoonController.cs" />
     <Compile Include="Helpers\RecaptchHelperExtensions.cs" />
@@ -827,7 +828,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>27606</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:27606/RaccoonBlog.Web</IISUrl>
+          <IISUrl>http://localhost:27606/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
