@@ -1320,7 +1320,7 @@ a:hover.back-login
 	font-size: 11px;
 	line-height: 14px;
 }
-.form_item input[type=text], .form_item input[type=password]
+.form_item input[type=text], .form_item input[type=password], .form_item input[type=datetime]
 {
 	width:300px;
 }
