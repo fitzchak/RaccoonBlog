@@ -49,11 +49,12 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 			              		Url = commentInput.Url,
 			              		Important = requestValues.IsAuthenticated, // TODO: Don't mark as important based on that
 			              		UserAgent = requestValues.UserAgent,
-			              		UserHostAddress = requestValues.UserHostAddress
+			              		UserHostAddress = requestValues.UserHostAddress,
 			              	};
 			comment.IsSpam = AkismetService.CheckForSpam(comment);
 
 			var commenter = DocumentSession.GetCommenter(commentInput.CommenterKey) ?? new Commenter { Key = commentInput.CommenterKey ?? Guid.Empty };
+			SetCommenter(commenter, comment);
 
 			if (requestValues.IsAuthenticated == false && comment.IsSpam)
 			{
@@ -67,23 +68,22 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 				comments.Comments.Add(comment);
 			}
 
-			SetCommenter(commenter, comment.IsSpam);
-
 			SendNewCommentEmail(post, comment, postAuthor);
 		}
 
-		private void SetCommenter(Commenter commenter, bool isSpamComment)
+		private void SetCommenter(Commenter commenter, PostComments.Comment comment)
 		{
 			if (requestValues.IsAuthenticated)
 				return;
 
 			commentInput.MapPropertiesToInstance(commenter);
-			commenter.IsTrustedCommenter = isSpamComment == false;
+			commenter.IsTrustedCommenter = comment.IsSpam == false;
 
-			if (isSpamComment)
+			if (comment.IsSpam)
 				commenter.NumberOfSpamComments++;
 
 			DocumentSession.Store(commenter);
+			comment.CommenterId = commenter.Id;
 		}
 
 		private void SendNewCommentEmail(Post post, PostComments.Comment comment, User postAuthor)

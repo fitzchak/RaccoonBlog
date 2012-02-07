@@ -49,7 +49,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			if (!ModelState.IsValid)
 				return View("Edit", input);
 
-			var post = RavenSession.Load<Post>(input.Id) ?? new Post { CreatedAt = DateTimeOffset.Now };
+			var post = RavenSession.Load<Post>(input.Id) ?? new Post {CreatedAt = DateTimeOffset.Now};
 			input.MapPropertiesToInstance(post);
 
 			// Be able to record the user making the actual post
@@ -77,20 +77,20 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			{
 				// Create the post comments object and link between it and the post
 				var comments = new PostComments
-				{
-					Comments = new List<PostComments.Comment>(),
-					Spam = new List<PostComments.Comment>(),
-					Post = new PostComments.PostReference
-					{
-						Id = post.Id,
-						PublishAt = post.PublishAt,
-					}
-				};
+				               {
+				               	Comments = new List<PostComments.Comment>(),
+				               	Spam = new List<PostComments.Comment>(),
+				               	Post = new PostComments.PostReference
+				               	       {
+				               	       	Id = post.Id,
+				               	       	PublishAt = post.PublishAt,
+				               	       }
+				               };
 
 				RavenSession.Store(comments);
 			}
 
-			return RedirectToAction("Details", new { Id = post.MapTo<PostReference>().DomainId });
+			return RedirectToAction("Details", new {Id = post.MapTo<PostReference>().DomainId});
 		}
 
 		public ActionResult Details(int id)
@@ -105,18 +105,18 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			var comments = RavenSession.Load<PostComments>(post.CommentsId);
 
 			var vm = new AdminPostDetailsViewModel
-					 {
-						Post = post.MapTo<AdminPostDetailsViewModel.PostDetails>(),
+			         {
+			         	Post = post.MapTo<AdminPostDetailsViewModel.PostDetails>(),
 
-						Comments = comments.Comments
-							.Concat(comments.Spam)
-							.OrderBy(comment => comment.CreatedAt)
-							.MapTo<AdminPostDetailsViewModel.Comment>(),
+			         	Comments = comments.Comments
+			         		.Concat(comments.Spam)
+			         		.OrderBy(comment => comment.CreatedAt)
+			         		.MapTo<AdminPostDetailsViewModel.Comment>(),
 
-						NextPost = RavenSession.GetNextPrevPost(post, true),
-						PreviousPost = RavenSession.GetNextPrevPost(post, false),
-						AreCommentsClosed = comments.AreCommentsClosed(post, BlogConfig.NumberOfDayToCloseComments),
-					 };
+			         	NextPost = RavenSession.GetNextPrevPost(post, true),
+			         	PreviousPost = RavenSession.GetNextPrevPost(post, false),
+			         	AreCommentsClosed = comments.AreCommentsClosed(post, BlogConfig.NumberOfDayToCloseComments),
+			         };
 
 			return View("Details", vm);
 		}
@@ -131,7 +131,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 				.Where
 				(
 					post => post.PublishAt >= startAsDateTimeOffset &&
-							post.PublishAt <= endAsDateTimeOffset
+					        post.PublishAt <= endAsDateTimeOffset
 				)
 				.OrderBy(post => post.PublishAt)
 				.Take(256)
@@ -140,7 +140,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			return Json(posts.MapTo<PostSummaryJson>());
 		}
 
-	
+
 		[HttpPost]
 		[AjaxOnly]
 		public ActionResult SetPostDate(int id, long date)
@@ -210,6 +210,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 						         	{
 						         		comment.IsSpam = false;
 						         		AkismetService.MarkHam(comment);
+						         		ResetNumberOfSpamComments(comment);
 						         	});
 					break;
 				default:
@@ -223,6 +224,16 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 				return Json(new {Success = true});
 			}
 			return RedirectToAction("Details", new {id});
+		}
+
+		private void ResetNumberOfSpamComments(PostComments.Comment comment)
+		{
+			if (comment.CommenterId == null) 
+				return;
+			var commenter = RavenSession.Load<Commenter>(comment.CommenterId);
+			if (commenter == null) 
+				return;
+			commenter.NumberOfSpamComments = 0;
 		}
 
 		[HttpPost]
@@ -251,18 +262,18 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 				.Where(x => x.Spam.Count > 0)
 				.ToList()
 				.Select(x => new PatchCommandData
-							 {
-								Key = x.Id,
-								Patches = new[]
-										  {
-											new PatchRequest
-											{
-												Type = PatchCommandType.Set,
-												Name = "Spam",
-												Value = new RavenJArray(),
-											},
-										  }
-							 });
+				             {
+				             	Key = x.Id,
+				             	Patches = new[]
+				             	          {
+				             	          	new PatchRequest
+				             	          	{
+				             	          		Type = PatchCommandType.Set,
+				             	          		Name = "Spam",
+				             	          		Value = new RavenJArray(),
+				             	          	},
+				             	          }
+				             });
 
 			RavenSession.Advanced.DatabaseCommands.Batch(patchCommands);
 
