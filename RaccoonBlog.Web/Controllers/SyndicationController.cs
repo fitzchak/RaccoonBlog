@@ -95,7 +95,7 @@ namespace RaccoonBlog.Web.Controllers
 			{
 				if (id != null)
 				{
-					var postId = "posts/" + id;
+					var postId = RavenSession.Advanced.GetDocumentId(id);
 					q = q.Where(x => x.PostId == postId);
 				}
 				return q.Statistics(out stats).Take(30);
