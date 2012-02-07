@@ -233,7 +233,6 @@
     <Content Include="Areas\Admin\Content\images\table\table_icon_4.gif" />
     <Content Include="Areas\Admin\Content\images\table\table_icon_5.gif" />
     <Content Include="Areas\Admin\Content\images\table\table_sort_arrow.gif" />
-    <Content Include="Areas\Admin\Content\js\jquery-1.4.1.min.js" />
     <Content Include="Areas\Admin\Content\js\jquery-ui-timepicker-addon.js" />
     <Content Include="Content\css\custom\ayende.less.css" />
     <Content Include="Content\css\custom\hibernatingrhinos.settings.less.css" />
