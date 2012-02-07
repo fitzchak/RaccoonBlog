@@ -14,22 +14,13 @@
 	<link  rel="stylesheet" type="text/css" href="@Url.Content("~/Content/themes/base/jquery-ui.css")" />
 	<script src="@Url.Content("~/Content/js/jquery-ui-1.8.17.custom.min.js")" type="text/javascript"></script>
 	<script src="@Url.Content("~/Content/js/raccoon-blog.js")" type="text/javascript"></script>
-	<link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/Admin/Content/css/jquery-ui-timepicker-addon.css")">
-	<script src="@Url.Content("~/Areas/Admin/Content/js/jquery-ui-timepicker-addon.js")" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/anytime.css")">
+	<script src="@Url.Content("~/Content/js/anytime.min.js")" type="text/javascript"></script>
 	@RenderSection("Script", false)
 	<script type="text/javascript">
 		$(function () {
-			$('input[type=datetime]').datetimepicker({
-				gotoCurrent: true,
-				showOn: 'button',
-				buttonImage: '@Url.Content("~/Areas/Admin/Content/images/forms/icon_calendar.jpg")',
-				buttonImageOnly: true,
-				buttonText: 'Calendar',
-				showSecond: true,
-				timeFormat: 'hh:mm:ss',
-				stepHour: 2,
-				stepMinute: 10,
-				stepSecond: 10
+			$('input[type=datetime]').AnyTime_picker({
+				format: '%m/%d/%Y %h:%i:%s %p +02:00'
 			});
 
 			$('#toggle-all').click(function () {

@@ -146,7 +146,6 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\StringToGuidConverter.cs" />
     <Compile Include="Infrastructure\Common\DocumentSessionExtensions.cs" />
     <Content Include="Areas\Admin\Content\css\images\nav_logout.gif" />
-    <Content Include="Areas\Admin\Content\css\jquery-ui-timepicker-addon.css" />
     <Content Include="Areas\Admin\Content\css\AdminStyle.css" />
     <Content Include="Areas\Admin\Content\images\forms\bg_related_act.gif" />
     <Content Include="Areas\Admin\Content\images\forms\bubble_inner.gif" />
@@ -193,6 +192,10 @@
     <Content Include="Areas\Admin\Content\images\shared\corner_top_left.jpg" />
     <Content Include="Areas\Admin\Content\images\shared\corner_top_right.jpg" />
     <Content Include="Areas\Admin\Content\images\shared\icon_idlogo.jpg" />
+    <Content Include="Content\css\anytime.css" />
+    <Content Include="Content\js\anytime.js" />
+    <Content Include="Content\css\anytime.min.css" />
+    <Content Include="Content\js\anytime.min.js" />
     <Content Include="Content\css\images\logo-admin.png" />
     <Content Include="Areas\Admin\Content\css\images\nav_divider.jpg" />
     <Content Include="Areas\Admin\Content\css\images\nav_item_0.gif" />
@@ -233,7 +236,6 @@
     <Content Include="Areas\Admin\Content\images\table\table_icon_4.gif" />
     <Content Include="Areas\Admin\Content\images\table\table_icon_5.gif" />
     <Content Include="Areas\Admin\Content\images\table\table_sort_arrow.gif" />
-    <Content Include="Areas\Admin\Content\js\jquery-ui-timepicker-addon.js" />
     <Content Include="Content\css\custom\ayende.less.css" />
     <Content Include="Content\css\custom\hibernatingrhinos.settings.less.css" />
     <Content Include="Content\css\custom\hibernatingrhinos.less.css" />
