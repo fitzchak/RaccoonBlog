@@ -27,7 +27,7 @@ namespace RaccoonBlog.Web.Controllers
 						blogConfig = RavenSession.Load<BlogConfig>("Blog/Config");
 					}
 
-					if (blogConfig == null && "welcome".Equals((string)RouteData.Values["controller"], StringComparison.OrdinalIgnoreCase)) // first launch
+					if (blogConfig == null && !"welcome".Equals((string)RouteData.Values["controller"], StringComparison.OrdinalIgnoreCase)) // first launch
 					{
 						HttpContext.Response.Redirect("/welcome", true);
 					}
