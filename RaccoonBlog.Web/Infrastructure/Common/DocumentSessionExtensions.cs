@@ -19,11 +19,11 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 		{
 			var query = documentSession
 				.Query<PostComments_CreationDate.ReduceResult, PostComments_CreationDate>()
-					.Include(comment => comment.PostCommentsId)
-					.Include(comment => comment.PostId)
+				.Include(comment => comment.PostCommentsId)
+				.Include(comment => comment.PostId)
 				.OrderByDescending(x => x.PostPublishAt)
-					.ThenByDescending(x => x.CreatedAt)
-				.Where(x=>x.PostPublishAt < DateTimeOffset.Now.AsMinutes())
+				.ThenByDescending(x => x.CreatedAt)
+				.Where(x => x.PostPublishAt < DateTimeOffset.Now.AsMinutes())
 				.AsProjection<PostComments_CreationDate.ReduceResult>();
 
 			var commentsIdentifiers = processQuery(query)
@@ -55,7 +55,7 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 					.Where(post => post.PublishAt <= compareTo.PublishAt && post.Id != compareTo.Id)
 					.OrderByDescending(post => post.PublishAt);
 			}
-			
+
 			var postReference = queryable
 				.Select(p => new Post {Id = p.Id, Title = p.Title})
 				.FirstOrDefault();
@@ -88,7 +88,7 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 				return null;
 			return GetCommenter(session, guid);
 		}
-		
+
 		public static Commenter GetCommenter(this IDocumentSession session, Guid? commenterKey)
 		{
 			if (commenterKey == null)
