@@ -27,6 +27,8 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 				.ForMember(x => x.PostTitle, o => o.MapFrom(m => m.Title))
 				.ForMember(x => x.PostSlug, o => o.MapFrom(m => SlugConverter.TitleToSlug(m.Title)))
 				.ForMember(x => x.Author, o => o.Ignore())
+				.ForMember(x => x.CommentId, o => o.Ignore())
+				.ForMember(x => x.ShortBody, o => o.Ignore())
 				;
 
 			Mapper.CreateMap<PostComments.Comment, RecentCommentViewModel>()
@@ -34,6 +36,7 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 				.ForMember(x => x.ShortBody, o => o.MapFrom(x => MaxLength(x.Body, 128)))
 				.ForMember(x => x.CommentId, o => o.MapFrom(x => x.Id))
 				.ForMember(x => x.PostSlug, o => o.Ignore())
+				.ForMember(x => x.PostTitle, o => o.Ignore())
 				;
 		}
 
