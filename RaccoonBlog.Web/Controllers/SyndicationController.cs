@@ -46,10 +46,14 @@ namespace RaccoonBlog.Web.Controllers
 				.Statistics(out stats);
 
 			int take = 20;
+			var title = BlogConfig.Title;
 			if (string.IsNullOrEmpty(token) == false)
 			{
-				var numberOfDays = GetNumberOfDays(token);
+				int numberOfDays;
+				string user;
+				GetNumberOfDays(token, out numberOfDays, out user);
 				take = Math.Max(numberOfDays, take);
+				title = title + " for " + user;
 				postsQuery = postsQuery.Where(x => x.PublishAt < DateTimeOffset.Now.AddDays(numberOfDays).AsMinutes());
 			}
 			else
@@ -72,9 +76,9 @@ namespace RaccoonBlog.Web.Controllers
 				new XElement("rss",
 							 new XAttribute("version", "2.0"),
 							 new XElement("channel",
-										  new XElement("title", BlogConfig.Title),
+										  new XElement("title", title),
 										  new XElement("link", Url.RelativeToAbsolute(Url.RouteUrl("homepage"))),
-										  new XElement("description", BlogConfig.MetaDescription ?? BlogConfig.Title),
+										  new XElement("description", BlogConfig.MetaDescription ?? title),
 										  new XElement("copyright", String.Format("{0} (c) {1}", BlogConfig.Copyright, DateTime.Now.Year)),
 										  new XElement("ttl", "60"),
 										  from post in posts
@@ -94,7 +98,7 @@ namespace RaccoonBlog.Web.Controllers
 		}
 
 
-		private int GetNumberOfDays(string token)
+		private void GetNumberOfDays(string token, out int numberOfDays, out string user)
 		{
 			using (var rijndael = Rijndael.Create())
 			{
@@ -109,7 +113,8 @@ namespace RaccoonBlog.Web.Controllers
 					if (DateTime.UtcNow > expiry)
 						throw new InvalidOperationException("The key has already expired.");
 
-					return reader.ReadInt32();
+					numberOfDays =  reader.ReadInt32();
+					user = reader.ReadString();
 				}
 			}
 		}
