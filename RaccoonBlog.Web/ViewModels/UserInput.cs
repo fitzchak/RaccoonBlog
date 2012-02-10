@@ -26,8 +26,8 @@ namespace RaccoonBlog.Web.ViewModels
 		[Display(Name = "Related Twitter Nick", Prompt = "This is a nick of someone that you want to recommend the user to follow.")]
 		public string RelatedTwitterNick { get; set; }
 
-		[Display(Name = "Related Twitter Nick Description")]
-		public string RelatedTwitterNickDesc { get; set; }
+		[Display(Name = "Related  Description")]
+		public string RelatedTwitNickDes { get; set; }
 
 		public bool IsNewUser()
 		{

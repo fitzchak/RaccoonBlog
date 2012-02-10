@@ -25,7 +25,7 @@ namespace RaccoonBlog.Web.Controllers
 						new XElement(ns + "service",
 									 new XElement(ns + "engineName", "Raccoon Blog"),
 									 new XElement(ns + "engineLink", "http://hibernatingrhinos.com"),
-									 new XElement(ns + "homePageLink", Url.RelativeToAbsolute(Url.RouteUrl("Default"))),
+									 new XElement(ns + "homePageLink", Url.RelativeToAbsolute(Url.RouteUrl("homepage"))),
 									 new XElement(ns + "apis",
 												  new XElement(ns + "api",
 															   new XAttribute("name", "MetaWeblog"),
@@ -73,7 +73,7 @@ namespace RaccoonBlog.Web.Controllers
 							 new XAttribute("version", "2.0"),
 							 new XElement("channel",
 										  new XElement("title", BlogConfig.Title),
-										  new XElement("link", Url.RelativeToAbsolute(Url.RouteUrl("Default"))),
+										  new XElement("link", Url.RelativeToAbsolute(Url.RouteUrl("homepage"))),
 										  new XElement("description", BlogConfig.MetaDescription ?? BlogConfig.Title),
 										  new XElement("copyright", String.Format("{0} (c) {1}", BlogConfig.Copyright, DateTime.Now.Year)),
 										  new XElement("ttl", "60"),
@@ -81,7 +81,7 @@ namespace RaccoonBlog.Web.Controllers
 										  let postLink = Url.AbsoluteAction("Details", "PostDetails", new { Id = RavenIdResolver.Resolve(post.Id), Slug = SlugConverter.TitleToSlug(post.Title) })
 										  select new XElement("item",
 															  new XElement("title", post.Title),
-															  new XElement("description", post.CompiledContent()),
+															  new XElement("description", post.CompiledContent(true)),
 															  new XElement("link", postLink),
 																new XElement("guid", postLink),
 															  new XElement("pubDate", post.PublishAt.ToString("R"))
@@ -121,7 +121,7 @@ namespace RaccoonBlog.Web.Controllers
 			{
 				if (id != null)
 				{
-					var postId = "posts/" + id;
+					var postId = RavenSession.Advanced.GetDocumentId(id);
 					q = q.Where(x => x.PostId == postId);
 				}
 				return q.Statistics(out stats).Take(30);
@@ -136,7 +136,7 @@ namespace RaccoonBlog.Web.Controllers
 						 new XAttribute("version", "2.0"),
 						 new XElement("channel",
 									  new XElement("title", BlogConfig.Title),
-									  new XElement("link", Url.RelativeToAbsolute(Url.RouteUrl("Default"))),
+									  new XElement("link", Url.RelativeToAbsolute(Url.RouteUrl("homepage"))),
 									  new XElement("description", BlogConfig.MetaDescription ?? BlogConfig.Title),
 									  new XElement("copyright", String.Format("{0} (c) {1}", BlogConfig.Copyright, DateTime.Now.Year)),
 									  new XElement("ttl", "60"),

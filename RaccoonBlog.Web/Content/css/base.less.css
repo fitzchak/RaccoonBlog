@@ -473,7 +473,7 @@ article.useradmin-list .commands-section
 article.sectionadmin-list .commands-section
 {
 	float: right;
-	margin-top: -54px;
+	margin-top: -40px;
 }
 
 article.post-detalis footer, article.postSummery footer
@@ -514,6 +514,7 @@ footer .created, footer .comment-count
 .commands-section ul li 
 {
 	border: none;
+	padding: 0;
 }
 
 .fc-grid .fc-event-time {
@@ -671,4 +672,44 @@ div.comments-rss
 	background: formatString("url({0}images/feed-icon-14x14.png)", @siteRoot) left no-repeat;
 	font-size: smaller;
 	padding-left: 15px;
+}
+
+@media screen and (max-width: 780px) 
+{
+	div#logoimage, div#sidebar {
+		 display: none;
+	}
+	div#content {
+		 width: auto;
+		 float: none;
+	}
+}
+
+@media screen and (max-width: 640px) 
+{
+	span.rdbprofilerbutton {
+		 display: none;
+	}
+	#postComment .comment-form-wrapper textarea {
+		width: 80%;
+	}
+	article header h1 a, .comment header {
+		white-space: normal;
+	}
+	#postComment .comment-form-wrapper {
+		width: auto;
+	}
+	.form_item label span.form_item_name {
+		width: 150px;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	header#headermain h2 {
+		width: auto;
+	}
+	.form_item label span.form_item_name {
+		width: auto;
+		float: none;
+	}
 }

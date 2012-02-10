@@ -10,10 +10,10 @@ namespace RaccoonBlog.Web.Helpers
 {
 	public static class DynamicContentHelpers
 	{
-		static readonly Regex CodeBlockFinder = new Regex(@"\[code lang=(.+?)\s*\](.*?)\[/code\]", RegexOptions.Compiled | RegexOptions.Singleline);
-		static readonly Regex FirstLineSpacesFinder = new Regex(@"^(\s|\t)+", RegexOptions.Compiled);
+		private static readonly Regex CodeBlockFinder = new Regex(@"\[code lang=(.+?)\s*\](.*?)\[/code\]", RegexOptions.Compiled | RegexOptions.Singleline);
+		private static readonly Regex FirstLineSpacesFinder = new Regex(@"^(\s|\t)+", RegexOptions.Compiled);
 
-		public static MvcHtmlString CompiledContent(this IDynamicContent contentItem, bool trustContent = false)
+		public static MvcHtmlString CompiledContent(this IDynamicContent contentItem, bool trustContent)
 		{
 			if (contentItem == null) return MvcHtmlString.Empty;
 
@@ -31,7 +31,16 @@ namespace RaccoonBlog.Web.Helpers
 
 					var contents = contentItem.Body;
 					contents = CodeBlockFinder.Replace(contents, match => GenerateCodeBlock(match.Groups[1].Value.Trim(), match.Groups[2].Value));
-					contents = md.Transform(contents);
+
+					try
+					{
+						contents = md.Transform(contents);
+					}
+					catch (Exception)
+					{
+						contents = string.Format("<pre>{0}</pre>", HttpUtility.HtmlEncode(contents));
+					}
+
 					return MvcHtmlString.Create(contents);
 				case DynamicContentType.Html:
 					return trustContent ? MvcHtmlString.Create(contentItem.Body) : MvcHtmlString.Empty;

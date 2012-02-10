@@ -1,20 +1,45 @@
-﻿@model PostInput
+﻿@using RaccoonBlog.Web.Models
+@model PostInput
 @{
 	ViewBag.Title = @Model.Title;
 }
-
-<article class="post">
-@using (Html.BeginForm())
-{
-
-	@Html.EditorFor(x => x.Title);
-	@Html.EditorFor(x => x.ContentType);
-	@Html.EditorFor(x => x.Body);
-	@Html.EditorFor(x => x.CreatedAt);
-	@Html.EditorFor(x => x.PublishAt);
-	@Html.EditorFor(x => x.Tags);
-	@Html.EditorFor(x => x.AllowComments);
-
-	<text><input type="submit" value="Update Post"></text>
+@if (ViewData.ModelState.IsValid == false)
+{ 
+	<div class="form-error">
+		@Html.ValidationSummary(true)
+	</div>
 }
+<article id="user-input">
+	<div id="page-heading">
+		<h1>@(Model.IsNewPost() ? "Create a new post" : "Edit Post")</h1>
+	</div>
+	@using (Html.BeginForm("Update", "Posts"))
+	{
+		<div>
+			<div id="content-table-inner" class="inputform">
+				<div id="id-form" style="top: 0;">
+					@Html.EditorFor(x => x.Title)
+					@Html.TextAreaFor(x => x.Body, new {@class = "adminRichText"})
+					@Html.EditorFor(x => x.CreatedAt)
+					@Html.EditorFor(x => x.PublishAt)
+					@Html.EditorFor(x => x.Tags)
+					@Html.EditorFor(x => x.AllowComments)
+					@Html.HiddenFor(x => x.Id)
+					<div><input type="submit" value="Update Post"></div>
+				</div>
+			</div>
+		</div>
+	}
 </article>
+<div class="clear">
+	&nbsp;</div>
+@section Script {
+	<script type="text/javascript" src="@Url.Script("ckeditor/ckeditor.js")"></script>
+	<script type="text/javascript" src="@Url.Script("ckeditor/adapters/jquery.js")"></script>
+	<script type="text/javascript">
+		jQuery(document).ready(function () {
+			jQuery(".adminRichText").ckeditor();
+		});
+	
+	</script>
+}

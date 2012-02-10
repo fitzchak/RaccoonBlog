@@ -6,7 +6,7 @@ namespace RaccoonBlog.Web.Controllers
 	{
 		public ActionResult SearchResult(string q)
 		{
-			return View("SearchResult", q);
+			return View((object)q);
 		} 
 		
 		public ActionResult GoogleCse()

@@ -27,3 +27,5 @@ App_Data/
 Thumbs.db
 *.dotCover
 /RaccoonBlog.Web/RaccoonBlog.Web.Publish.xml
+*/connString.config
+Logs/

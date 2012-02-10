@@ -1,5 +1,7 @@
-﻿	<tr>
-		<th valign="top">@ViewData.ModelMetadata.DisplayName</th>
-		<td>@Html.TextArea(string.Empty, ViewData.TemplateInfo.FormattedModelValue.ToString(), new Dictionary<string, object>{{"class", "form-textarea"}})</td>
-		<td>@Html.ValidationMessage(string.Empty)</td>
-	</tr>
+﻿<div class="form_item">
+    <label>
+        <span class="form_item_title">@ViewData.ModelMetadata.DisplayName</span>
+        @Html.TextArea(string.Empty, ViewData.TemplateInfo.FormattedModelValue.ToString(), 0, 0, null)
+        @Html.ValidationMessage(string.Empty)
+    </label>
+</div>

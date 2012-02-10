@@ -29,8 +29,8 @@ namespace RaccoonBlog.Web.Helpers
 
 			if (string.IsNullOrEmpty(author.RelatedTwitterNick) == false)
 			{
-				if (string.IsNullOrEmpty(author.RelatedTwitterNickDesc) == false)
-					tag.Attributes["data-related"] = author.RelatedTwitterNick + ":" + author.RelatedTwitterNickDesc;
+				if (string.IsNullOrEmpty(author.RelatedTwitNickDes) == false)
+					tag.Attributes["data-related"] = author.RelatedTwitterNick + ":" + author.RelatedTwitNickDes;
 				else
 					tag.Attributes["data-related"] = author.RelatedTwitterNick;
 			}

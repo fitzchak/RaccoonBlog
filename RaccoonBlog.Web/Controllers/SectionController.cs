@@ -11,7 +11,7 @@ using RaccoonBlog.Web.Infrastructure.Common;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public class SectionController : RaccoonController
+	public class SectionController : AggresivelyCachingRacconController
 	{
 		[ChildActionOnly]
 		public ActionResult FuturePosts()
@@ -121,6 +121,11 @@ namespace RaccoonBlog.Web.Controllers
 				vm.FullName = user.FullName;
 			}
 			return View(vm);
+		}
+
+		protected override TimeSpan CahceDuration
+		{
+			get { return TimeSpan.FromMinutes(6); }
 		}
 	}
 }

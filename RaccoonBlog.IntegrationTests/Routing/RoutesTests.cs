@@ -11,7 +11,7 @@ namespace RaccoonBlog.IntegrationTests.Routing
 		[Fact]
 		public void DefaultRoute()
 		{
-			"~/".ShouldMapTo<PostsController>(c => c.List());
+			"~/".ShouldMapTo<PostsController>(c => c.Index());
 		}
 
 		[Fact]
@@ -28,7 +28,7 @@ namespace RaccoonBlog.IntegrationTests.Routing
 		[Fact]
 		public void Posts()
 		{
-			"~/".ShouldMapTo<PostsController>(c => c.List());
+			"~/".ShouldMapTo<PostsController>(c => c.Index());
 
 			"~/tags/tag-name".ShouldMapTo<PostsController>(c => c.Tag("tag-name"));
 
@@ -55,13 +55,7 @@ namespace RaccoonBlog.IntegrationTests.Routing
 			GetMethod("~/1024/comment", HttpVerbs.Post).ShouldMapTo<PostDetailsController>(c => c.Comment(null, 1024, TestGuid));
 		}
 
-		private RouteData GetMethod(string url, HttpVerbs method = HttpVerbs.Get)
-		{
-			var route = url.WithMethod(method);
-			route.Values["key"] = TestGuid;
-			return route;	
-		}
-
+		
 		[Fact]
 		public void SectionControllerRoutes()
 		{

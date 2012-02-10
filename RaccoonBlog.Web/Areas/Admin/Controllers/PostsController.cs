@@ -3,26 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using HibernatingRhinos.Loci.Common.Extensions;
-using RaccoonBlog.Web.Controllers;
 using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Helpers.Attributes;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
-using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.Services;
 using RaccoonBlog.Web.ViewModels;
+using Raven.Abstractions.Commands;
+using Raven.Abstractions.Data;
+using Raven.Json.Linq;
+
 
 namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
 	public class PostsController : AdminController
 	{
 		public ActionResult Index()
-		{
-			return List();
-		}
-
-		public ActionResult List()
 		{
 			// the actual UI is handled via JavaScript
 			return View("List");
@@ -34,38 +31,36 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			return View("Edit", new PostInput());
 		}
 
+		[HttpGet]
+		public ActionResult Edit(int id)
+		{
+			var post = RavenSession.Load<Post>(id);
+			if (post == null)
+				return HttpNotFound("Post does not exist.");
+			return View(post.MapTo<PostInput>());
+		}
+
 		[HttpPost]
-		public ActionResult Add(PostInput input)
+		[ValidateInput(false)]
+		public ActionResult Update(PostInput input)
 		{
 			if (!ModelState.IsValid)
 				return View("Edit", input);
 
+			var post = RavenSession.Load<Post>(input.Id) ?? new Post {CreatedAt = DateTimeOffset.Now};
+			input.MapPropertiesToInstance(post);
+
 			// Be able to record the user making the actual post
 			var user = RavenSession.GetCurrentUser();
-
-			// Create the post comments object and link between it and the post
-			var comments = new PostComments
+			if (string.IsNullOrEmpty(post.AuthorId))
 			{
-				Comments = new List<PostComments.Comment>(),
-				Spam = new List<PostComments.Comment>()
-			};
-			RavenSession.Store(comments);
-
-			// Create new post object
-			var post = new Post
-						{
-							Tags = TagsResolver.ResolveTagsInput(input.Tags),
-							PublishAt = input.PublishAt,
-							AllowComments = input.AllowComments,
-							AuthorId = user.Id,
-							LastEditedByUserId = user.Id,
-							LastEditedAt = DateTimeOffset.Now,
-							CommentsId = comments.Id,
-							ContentType = input.ContentType,
-							Body = input.Body,
-							CreatedAt = DateTimeOffset.Now,
-							Title = input.Title,
-						};
+				post.AuthorId = user.Id;
+			}
+			else
+			{
+				post.LastEditedByUserId = user.Id;
+				post.LastEditedAt = DateTimeOffset.Now;
+			}
 
 			if (post.PublishAt == DateTimeOffset.MinValue)
 			{
@@ -75,13 +70,25 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 
 			// Actually save the post now
 			RavenSession.Store(post);
-			comments.Post = new PostComments.PostReference
-			{
-				Id = post.Id,
-				PublishAt = post.PublishAt,
-			};
 
-			return RedirectToAction("Details", new { id = post.Id.ToIntId() });
+			if (input.IsNewPost())
+			{
+				// Create the post comments object and link between it and the post
+				var comments = new PostComments
+				               {
+				               	Comments = new List<PostComments.Comment>(),
+				               	Spam = new List<PostComments.Comment>(),
+				               	Post = new PostComments.PostReference
+				               	       {
+				               	       	Id = post.Id,
+				               	       	PublishAt = post.PublishAt,
+				               	       }
+				               };
+
+				RavenSession.Store(comments);
+			}
+
+			return RedirectToAction("Details", new {Id = post.MapTo<PostReference>().DomainId});
 		}
 
 		public ActionResult Details(int id)
@@ -96,18 +103,18 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			var comments = RavenSession.Load<PostComments>(post.CommentsId);
 
 			var vm = new AdminPostDetailsViewModel
-			{
-				Post = post.MapTo<AdminPostDetailsViewModel.PostDetails>(),
-				
-				Comments = comments.Comments
-					.Concat(comments.Spam)
-					.OrderBy(comment => comment.CreatedAt)
-					.MapTo<AdminPostDetailsViewModel.Comment>(),
+			         {
+			         	Post = post.MapTo<AdminPostDetailsViewModel.PostDetails>(),
 
-				NextPost = RavenSession.GetNextPrevPost(post, true),
-				PreviousPost = RavenSession.GetNextPrevPost(post, false),
-				AreCommentsClosed = comments.AreCommentsClosed(post, BlogConfig.NumberOfDayToCloseComments),
-			};
+			         	Comments = comments.Comments
+			         		.Concat(comments.Spam)
+			         		.OrderBy(comment => comment.CreatedAt)
+			         		.MapTo<AdminPostDetailsViewModel.Comment>(),
+
+			         	NextPost = RavenSession.GetNextPrevPost(post, true),
+			         	PreviousPost = RavenSession.GetNextPrevPost(post, false),
+			         	AreCommentsClosed = comments.AreCommentsClosed(post, BlogConfig.NumberOfDayToCloseComments),
+			         };
 
 			return View("Details", vm);
 		}
@@ -122,7 +129,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 				.Where
 				(
 					post => post.PublishAt >= startAsDateTimeOffset &&
-							post.PublishAt <= endAsDateTimeOffset
+					        post.PublishAt <= endAsDateTimeOffset
 				)
 				.OrderBy(post => post.PublishAt)
 				.Take(256)
@@ -131,58 +138,23 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			return Json(posts.MapTo<PostSummaryJson>());
 		}
 
-		[HttpGet]
-		public ActionResult Edit(int id)
-		{
-			var post = RavenSession.Load<Post>(id);
-			if (post == null)
-				return HttpNotFound("Post does not exist.");
-			return View(post.MapTo<PostInput>());
-		}
-		
-		[HttpPost]
-		[ValidateInput(false)]
-		public ActionResult Edit(PostInput input, int id)
-		{
-			if (!ModelState.IsValid)
-				return View("Edit", input);
 
-			var post = RavenSession.Load<Post>(id) ?? new Post();
-			input.MapPropertiesToInstance(post);
-
-			var user = RavenSession.GetCurrentUser();
-			if (string.IsNullOrEmpty(post.AuthorId))
-			{
-				post.AuthorId = user.Id;
-			}
-			else
-			{
-				post.LastEditedByUserId = user.Id;
-				post.LastEditedAt = DateTimeOffset.Now;
-			}
-
-			RavenSession.Store(post);
-
-			var postReference = post.MapTo<PostReference>();
-			return RedirectToAction("Details", new { Id = postReference.DomainId, postReference.Slug});
-		}
-		
 		[HttpPost]
 		[AjaxOnly]
 		public ActionResult SetPostDate(int id, long date)
 		{
 			var post = RavenSession
-				.Include<Post>(x=>x.CommentsId)
+				.Include<Post>(x => x.CommentsId)
 				.Load(id);
 			if (post == null)
 				return Json(new {success = false});
 
 			post.PublishAt = post.PublishAt.WithDate(DateTimeOffsetUtil.ConvertFromJsTimestamp(date));
 			RavenSession.Load<PostComments>(post.CommentsId).Post.PublishAt = post.PublishAt;
-			
-			return Json(new { success = true });
+
+			return Json(new {success = true});
 		}
-		
+
 		[HttpPost]
 		public ActionResult CommentsAdmin(int id, CommentCommandOptions command, int[] commentIds)
 		{
@@ -196,12 +168,12 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			if (ModelState.IsValid == false)
 			{
 				if (Request.IsAjaxRequest())
-					return Json(new {Success = false, message = ModelState.GetFirstErrorMessage()});
+					return Json(new {Success = false, message = ModelState.FirstErrorMessage()});
 
 				return Details(id);
 			}
 
-			var comments = RavenSession.Load<PostComments>(id);
+			var comments = RavenSession.Load<PostComments>(post.CommentsId);
 			switch (command)
 			{
 				case CommentCommandOptions.Delete:
@@ -209,7 +181,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 					comments.Spam.RemoveAll(c => commentIds.Contains(c.Id));
 					break;
 
-				case CommentCommandOptions.MarkSpam: 
+				case CommentCommandOptions.MarkSpam:
 					var spams = comments.Comments.Concat(comments.Spam)
 						.Where(c => commentIds.Contains(c.Id))
 						.ToArray();
@@ -228,12 +200,16 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 						.ToArray();
 
 					comments.Spam.RemoveAll(ham.Contains);
-					foreach (var comment in ham)
-					{
-						comment.IsSpam = false;
-						AkismetService.MarkHam(comment);
-					}
 					comments.Comments.AddRange(ham);
+
+					comments.Comments
+						.Where(c => c.IsSpam)
+						.ForEach(comment =>
+						         	{
+						         		comment.IsSpam = false;
+						         		AkismetService.MarkHam(comment);
+						         		ResetNumberOfSpamComments(comment);
+						         	});
 					break;
 				default:
 					throw new InvalidOperationException(command + " command is not recognized.");
@@ -245,7 +221,17 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			{
 				return Json(new {Success = true});
 			}
-			return RedirectToAction("Details", new { id });
+			return RedirectToAction("Details", new {id});
+		}
+
+		private void ResetNumberOfSpamComments(PostComments.Comment comment)
+		{
+			if (comment.CommenterId == null) 
+				return;
+			var commenter = RavenSession.Load<Commenter>(comment.CommenterId);
+			if (commenter == null) 
+				return;
+			commenter.NumberOfSpamComments = 0;
 		}
 
 		[HttpPost]
@@ -256,9 +242,47 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 
 			if (Request.IsAjaxRequest())
 			{
-				return Json(new { Success = true });
+				return Json(new {Success = true});
 			}
-			return RedirectToAction("List");
+			return RedirectToAction("Index");
 		}
+
+		[HttpGet]
+		public ActionResult DeleteAllSpamComments()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		public ActionResult DeleteAllSpamComments(bool deleteAll)
+		{
+			var patchCommands = RavenSession.Query<PostComments>()
+				.Where(x => x.Spam.Count > 0)
+				.ToList()
+				.Select(x => new PatchCommandData
+				             {
+				             	Key = x.Id,
+				             	Patches = new[]
+				             	          {
+				             	          	new PatchRequest
+				             	          	{
+				             	          		Type = PatchCommandType.Set,
+				             	          		Name = "Spam",
+				             	          		Value = new RavenJArray(),
+				             	          	},
+				             	          }
+				             });
+
+			RavenSession.Advanced.DatabaseCommands.Batch(patchCommands);
+
+			return View();
+		}
+	}
+
+	public enum CommentCommandOptions
+	{
+		Delete,
+		MarkHam,
+		MarkSpam
 	}
 }

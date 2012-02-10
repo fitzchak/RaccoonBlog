@@ -1,4 +1,5 @@
 ﻿using System;
+using NLog;
 using Raven.Abstractions.Exceptions;
 using Raven.Client;
 
@@ -7,6 +8,8 @@ namespace HibernatingRhinos.Loci.Common.Tasks
 	public abstract class BackgroundTask
 	{
 		protected IDocumentSession DocumentSession;
+
+		private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
 		protected virtual void Initialize(IDocumentSession session)
 		{
@@ -30,11 +33,13 @@ namespace HibernatingRhinos.Loci.Common.Tasks
 			}
 			catch (ConcurrencyException e)
 			{
+				logger.ErrorException("Could not execute task " + GetType().Name, e);
 				OnError(e);
 				return null;
 			}
 			catch (Exception e)
 			{
+				logger.ErrorException("Could not execute task " + GetType().Name, e);
 				OnError(e);
 				return false;
 			}

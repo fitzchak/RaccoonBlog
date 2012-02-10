@@ -1,23 +1,19 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Mvc;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
 using Raven.Client.Linq;
-using System.Web.Mvc;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public class PostsController : RaccoonController
+	public class PostsController : AggresivelyCachingRacconController
 	{
 		public ActionResult Index()
-		{
-			return List();
-		}
-
-		public ActionResult List()
 		{
 			RavenQueryStatistics stats;
 			var posts = RavenSession.Query<Post>()
@@ -56,10 +52,10 @@ namespace RaccoonBlog.Web.Controllers
 				.WhereIsPublicPost()
 				.Where(post => post.PublishAt.Year == year);
 			
-			if(month != null)
+			if (month != null)
 				postsQuery = postsQuery.Where(post => post.PublishAt.Month == month.Value);
 
-			if(day != null)
+			if (day != null)
 				postsQuery = postsQuery.Where(post => post.PublishAt.Day == day.Value);
 
 			var posts = 
@@ -91,6 +87,11 @@ namespace RaccoonBlog.Web.Controllers
 				PostsCount = count,
 				Posts = summaries
 			});
+		}
+
+		protected override TimeSpan CahceDuration
+		{
+			get { return TimeSpan.FromMinutes(3); }
 		}
 	}
 }

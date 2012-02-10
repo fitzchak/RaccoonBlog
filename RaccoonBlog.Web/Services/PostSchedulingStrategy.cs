@@ -26,13 +26,13 @@ namespace RaccoonBlog.Web.Services
 			this.session = session;
 			this.now = now;
 		}
-		
+
 		public DateTimeOffset Schedule()
 		{
 			var p = session.Query<Post>()
-					.OrderByDescending(post => post.PublishAt)
-					.Select(post => new { post.PublishAt })
-					.FirstOrDefault();
+				.OrderByDescending(post => post.PublishAt)
+				.Select(post => new {post.PublishAt})
+				.FirstOrDefault();
 
 			var lastScheduledPostDate = p == null || p.PublishAt < now ? now : p.PublishAt;
 			return lastScheduledPostDate
@@ -43,25 +43,27 @@ namespace RaccoonBlog.Web.Services
 
 		public DateTimeOffset Schedule(DateTimeOffset requestedDate)
 		{
-			var postsQuery = from p in session.Query<Post>().Include(x=>x.CommentsId)
-	                         where p.PublishAt > requestedDate && p.SkipAutoReschedule == false && p.PublishAt > now
-	                         orderby p.PublishAt
-	                         select p;
+			var postsQuery = from p in session.Query<Post>().Include(x => x.CommentsId)
+			                 where p.PublishAt > requestedDate && p.SkipAutoReschedule == false && p.PublishAt > now
+			                 orderby p.PublishAt
+			                 select p;
 
-	    	var nextPostDate = requestedDate;
-	        foreach (var post in postsQuery)
-	        {
-				nextPostDate 
+			var nextPostDate = requestedDate;
+			foreach (var post in postsQuery)
+			{
+				nextPostDate
 					= nextPostDate
 						.AddDays(1)
 						.SkipToNextWorkDay()
 						.AtTime(post.PublishAt);
 
 				post.PublishAt = nextPostDate;
-				session.Load<PostComments>(post.CommentsId).Post.PublishAt = nextPostDate;
-	        }
 
-	    	return requestedDate;
+				if (post.CommentsId != null)
+					session.Load<PostComments>(post.CommentsId).Post.PublishAt = nextPostDate;
+			}
+
+			return requestedDate;
 		}
 	}
 }

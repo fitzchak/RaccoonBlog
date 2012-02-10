@@ -17,15 +17,14 @@
         }
     }
 }
-
-    	<tr>
-			<th valign="top">@ViewData.ModelMetadata.DisplayName</th>
-			<td>
-            @if (ViewData.ModelMetadata.IsNullableValueType) {
-                @Html.DropDownList(string.Empty, TriStateValues, new Dictionary<string, object>{{"class", "styledselect_form_1"}})
-            } else {
-                @Html.CheckBox(string.Empty, Value ?? false)
-            }
-            </td>
-			<td>@Html.ValidationMessage(string.Empty)</td>
-		</tr>
+<div class="form_item">
+    <label>
+        <span class="form_item_title">@ViewData.ModelMetadata.DisplayName</span>
+        @if (ViewData.ModelMetadata.IsNullableValueType) {
+            @Html.DropDownList(string.Empty, TriStateValues)
+        } else {
+            @Html.CheckBox(string.Empty, Value ?? false)
+        }
+        @Html.ValidationMessage(string.Empty)
+    </label>
+</div>

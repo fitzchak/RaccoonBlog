@@ -1,40 +1,43 @@
-﻿@model BlogConfigurationInput
+﻿@model RaccoonBlog.Web.Models.BlogConfig
 @{
 	ViewBag.Title = "Blog Configuration";
 }
-<article>
-	@if (ViewData.ModelState.IsValid == false)
-	{
-		<div class="form-error">
-			@Html.ValidationSummary(true)
-		</div>
-	}
-
+@if (ViewData.ModelState.IsValid == false)
+{ 
+	<div class="form-error">
+		@Html.ValidationSummary(true)
+	</div>
+}
+<article id="user-input">
+	<div id="page-heading">
+		<h1>Settings</h1>
+	</div>
 	@using (Html.BeginForm())
 	{
-		<p>
-			@Html.EditorFor(config => config.Title)
-			@Html.EditorFor(config => config.Subtitle)
-			@Html.EditorFor(config => config.MetaDescription)
-			@Html.EditorFor(config => config.MetaKeywords)
-			@Html.EditorFor(config => config.Copyright)
-			@Html.EditorFor(config => config.CustomCss)
-		</p>
+		<div>
+			<div id="content-table-inner" class="inputform">
+				<div id="id-form" style="top: 0;">
+					@Html.EditorFor(config => config.Title)
+					@Html.EditorFor(config => config.Subtitle)
+					@Html.EditorFor(config => config.OwnerEmail)
 
-		<p>
-			@Html.EditorFor(config => config.AkismetKey)
-			@Html.EditorFor(config => config.GoogleAnalyticsKey)
-		</p>
+					@Html.EditorFor(config => config.MetaDescription)
+					@Html.EditorFor(config => config.Copyright)
+					@Html.EditorFor(config => config.CustomCss)
 
-		<p>
-			@Html.EditorFor(config => config.FuturePostsEncryptionKey)
-			@Html.EditorFor(config => config.FuturePostsEncryptionIV)
-		</p>
+					@Html.EditorFor(config => config.AkismetKey)
+					@Html.EditorFor(config => config.GoogleAnalyticsKey)
+					@Html.EditorFor(config => config.RssFuturePostsKey)
+					@Html.EditorFor(config => config.RssFutureDaysAllowed)
 
-		<p>
-			@Html.EditorFor(config => config.MinNumberOfPostForSignificantTag)
-			@Html.EditorFor(config => config.NumberOfDayToCloseComments)
-		</p>
-		<input type="submit" value="Save" />
+					@Html.EditorFor(config => config.MinNumberOfPostForSignificantTag)
+					@Html.EditorFor(config => config.NumberOfDayToCloseComments)
+					
+					@Html.EditorFor(config => config.Id)
+					<div><input type="submit" value="Save" /></div>
+				</div>
+			</div>
+		</div>
 	}
 </article>
+<div class="clear"></div>

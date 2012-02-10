@@ -1,5 +1,3 @@
-using System;
-
 namespace RaccoonBlog.Web.ViewModels
 {
 	public class RecentCommentViewModel

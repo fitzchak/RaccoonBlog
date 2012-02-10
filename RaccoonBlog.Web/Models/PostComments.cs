@@ -49,6 +49,8 @@ namespace RaccoonBlog.Web.Models
 
 			public string UserHostAddress { get; set; }
 			public string UserAgent { get; set; }
+
+			public string CommenterId { get; set; }
 		}
 	}
 }

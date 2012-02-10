@@ -4,8 +4,11 @@ using System.Net.Sockets;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using DataAnnotationsExtensions.ClientValidation;
 using HibernatingRhinos.Loci.Common.Controllers;
 using HibernatingRhinos.Loci.Common.Tasks;
+using NLog;
+using RaccoonBlog.Web.Areas.Admin.Controllers;
 using RaccoonBlog.Web.Controllers;
 using RaccoonBlog.Web.Helpers.Binders;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
@@ -19,6 +22,28 @@ namespace RaccoonBlog.Web
 {
 	public class MvcApplication : HttpApplication
 	{
+		public MvcApplication()
+		{
+			BeginRequest += (sender, args) =>
+			                	{
+			                		HttpContext.Current.Items["CurrentRequestRavenSession"] = RavenController.DocumentStore.OpenSession();
+			                	};
+			EndRequest += (sender, args) =>
+			              	{
+								using (var session = (IDocumentSession)HttpContext.Current.Items["CurrentRequestRavenSession"])
+								{
+									if (session == null)
+										return;
+
+									if (Server.GetLastError() != null)
+										return;
+
+									session.SaveChanges();
+								}
+								TaskExecutor.StartExecuting();
+			              	};
+		}
+
 		public static void RegisterGlobalFilters(GlobalFilterCollection filters)
 		{
 			filters.Add(new HandleErrorAttribute());
@@ -27,6 +52,8 @@ namespace RaccoonBlog.Web
 		protected void Application_Start()
 		{
 			AreaRegistration.RegisterAllAreas();
+
+			LogManager.GetCurrentClassLogger().Info("Started Raccon Blog");
 
 			// Work around nasty .NET framework bug
 			try
@@ -42,6 +69,8 @@ namespace RaccoonBlog.Web
 			new RouteConfigurator(RouteTable.Routes).Configure();
 			ModelBinders.Binders.Add(typeof (CommentCommandOptions), new RemoveSpacesEnumBinder());
 			ModelBinders.Binders.Add(typeof (Guid), new GuidBinder());
+
+			DataAnnotationsModelValidatorProviderExtensions.RegisterValidationExtensions();
 
 			AutoMapperConfiguration.Configure();
 

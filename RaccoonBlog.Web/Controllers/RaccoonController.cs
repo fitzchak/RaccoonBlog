@@ -4,9 +4,7 @@ using HibernatingRhinos.Loci.Common.Controllers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using RaccoonBlog.Web.Helpers.Results;
-using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Models;
-using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Controllers
 {
@@ -27,9 +25,9 @@ namespace RaccoonBlog.Web.Controllers
 						blogConfig = RavenSession.Load<BlogConfig>("Blog/Config");
 					}
 
-					if (blogConfig == null) // first launch
+					if (blogConfig == null && "welcome".Equals((string)RouteData.Values["controller"], StringComparison.OrdinalIgnoreCase) == false) // first launch
 					{
-						HttpContext.Response.Redirect("/welcome", true);
+						HttpContext.Response.Redirect("~/welcome", true);
 					}
 				}
 				return blogConfig;
@@ -38,12 +36,9 @@ namespace RaccoonBlog.Web.Controllers
 
 		protected override void OnActionExecuted(ActionExecutedContext filterContext)
 		{
-			if (filterContext.IsChildAction)
-				return;
+			base.OnActionExecuted(filterContext);
 
-			ViewBag.BlogConfig = BlogConfig.MapTo<BlogConfigViewModel>();
-
-			CompleteSessionHandler(filterContext);
+			ViewBag.BlogConfig = BlogConfig;
 		}
 
 		protected int CurrentPage

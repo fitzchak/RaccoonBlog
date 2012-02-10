@@ -24,7 +24,7 @@ namespace RaccoonBlog.Web.Controllers
 		public ActionResult Login(string url, string returnUrl)
 		{
 			if (string.IsNullOrWhiteSpace(returnUrl))
-				returnUrl = Request.UrlReferrer != null ? Request.UrlReferrer.ToString() : Url.RouteUrl("default");
+				returnUrl = Request.UrlReferrer != null ? Request.UrlReferrer.ToString() : Url.RouteUrl("homepage");
 
 			using (var openIdRelyingParty = new OpenIdRelyingParty())
 			{
@@ -103,9 +103,9 @@ namespace RaccoonBlog.Web.Controllers
 			if (ModelState.IsValid == false)
 			{
 				if (Request.IsAjaxRequest())
-					return Json(new {Success = false, message = ModelState.GetFirstErrorMessage()});
+					return Json(new {Success = false, message = ModelState.FirstErrorMessage()});
 
-				TempData["Message"] = ModelState.GetFirstErrorMessage();
+				TempData["Message"] = ModelState.FirstErrorMessage();
 				return Redirect(returnUrl);
 			}
 

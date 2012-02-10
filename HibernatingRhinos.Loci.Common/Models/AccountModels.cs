@@ -28,6 +28,7 @@ namespace HibernatingRhinos.Loci.Common.Models
 
 	public class LogOnModel
 	{
+
 		[Required]
 		[Email]
 		[Display(Name = "Login")]

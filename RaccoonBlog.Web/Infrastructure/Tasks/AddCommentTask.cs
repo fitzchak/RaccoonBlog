@@ -19,40 +19,44 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 			public bool IsAuthenticated { get; set; }
 		}
 
-		private readonly CommentInput _commentInput;
-		private readonly RequestValues _requestValues;
-		private readonly int _postId;
+		private readonly CommentInput commentInput;
+		private readonly RequestValues requestValues;
+		private readonly int postId;
 
 		public AddCommentTask(CommentInput commentInput, RequestValues requestValues, int postId)
 		{
-			_commentInput = commentInput;
-			_requestValues = requestValues;
-			_postId = postId;
+			this.commentInput = commentInput;
+			this.requestValues = requestValues;
+			this.postId = postId;
 		}
 
 		public override void Execute()
 		{
-			var post = DocumentSession.Include<Post>(x => x.AuthorId).Load(_postId);
+			var post = DocumentSession
+				.Include<Post>(x => x.AuthorId)
+				.Include(x => x.CommentsId)
+				.Load(postId);
 			var postAuthor = DocumentSession.Load<User>(post.AuthorId);
-			var comments = DocumentSession.Load<PostComments>(_postId);
+			var comments = DocumentSession.Load<PostComments>(post.CommentsId);
 
 			var comment = new PostComments.Comment
 			              	{
 			              		Id = comments.GenerateNewCommentId(),
-			              		Author = _commentInput.Name,
-			              		Body = _commentInput.Body,
+			              		Author = commentInput.Name,
+			              		Body = commentInput.Body,
 			              		CreatedAt = DateTimeOffset.Now,
-			              		Email = _commentInput.Email,
-			              		Url = _commentInput.Url,
-			              		Important = _requestValues.IsAuthenticated, // TODO: Don't mark as important based on that
-			              		UserAgent = _requestValues.UserAgent,
-			              		UserHostAddress = _requestValues.UserHostAddress
+			              		Email = commentInput.Email,
+			              		Url = commentInput.Url,
+			              		Important = requestValues.IsAuthenticated, // TODO: Don't mark as important based on that
+			              		UserAgent = requestValues.UserAgent,
+			              		UserHostAddress = requestValues.UserHostAddress,
 			              	};
 			comment.IsSpam = AkismetService.CheckForSpam(comment);
 
-			var commenter = DocumentSession.GetCommenter(_commentInput.CommenterKey) ?? new Commenter { Key = _commentInput.CommenterKey ?? Guid.Empty };
+			var commenter = DocumentSession.GetCommenter(commentInput.CommenterKey) ?? new Commenter { Key = commentInput.CommenterKey ?? Guid.Empty };
+			SetCommenter(commenter, comment);
 
-			if (_requestValues.IsAuthenticated == false && comment.IsSpam)
+			if (requestValues.IsAuthenticated == false && comment.IsSpam)
 			{
 				if (commenter.NumberOfSpamComments > 4)
 					return;
@@ -64,28 +68,27 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 				comments.Comments.Add(comment);
 			}
 
-			SetCommenter(commenter, comment.IsSpam);
-
 			SendNewCommentEmail(post, comment, postAuthor);
 		}
 
-		private void SetCommenter(Commenter commenter, bool isSpamComment)
+		private void SetCommenter(Commenter commenter, PostComments.Comment comment)
 		{
-			if (_requestValues.IsAuthenticated)
+			if (requestValues.IsAuthenticated)
 				return;
 
-			_commentInput.MapPropertiesToInstance(commenter);
-			commenter.IsTrustedCommenter = isSpamComment == false;
+			commentInput.MapPropertiesToInstance(commenter);
+			commenter.IsTrustedCommenter = comment.IsSpam == false;
 
-			if (isSpamComment)
+			if (comment.IsSpam)
 				commenter.NumberOfSpamComments++;
 
 			DocumentSession.Store(commenter);
+			comment.CommenterId = commenter.Id;
 		}
 
 		private void SendNewCommentEmail(Post post, PostComments.Comment comment, User postAuthor)
 		{
-			if (_requestValues.IsAuthenticated)
+			if (requestValues.IsAuthenticated)
 				return; // we don't send email for authenticated users
 
 			var viewModel = comment.MapTo<NewCommentEmailViewModel>();

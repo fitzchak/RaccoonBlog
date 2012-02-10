@@ -1,14 +1,9 @@
 ﻿@{
 	Layout = "";
-	var blogConfig = ViewBag.BlogConfig as BlogConfigViewModel;
-	if (blogConfig == null)
-	{
-		throw new InvalidOperationException("Couldn't find blog config");
-	} 
 }
 <GoogleCustomizations>
 	<CustomSearchEngine>
-		<Title>@blogConfig.Title Search Engine</Title>
+		<Title>@ViewBag.BlogConfig.Title Search Engine</Title>
 		<Description>
 			A Google Custom Search Engine that includes Hibernating Rhinos websites
 		</Description>

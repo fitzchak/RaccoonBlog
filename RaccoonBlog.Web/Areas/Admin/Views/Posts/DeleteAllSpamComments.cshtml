@@ -1,0 +1,9 @@
+﻿<h1>Delete all spam comments</h1>
+<p>Really delete all spam comments?</p>
+
+<p>
+	@using (Html.BeginForm("DeleteAllSpamComments", "Posts", new { deleteAll = true }))
+	{
+		<input type="submit" value="Delete All Spam" />
+	}
+</p>

@@ -3,86 +3,75 @@
 @{
 	Layout = null;
 }
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>RaccoonBlog :: Login</title>
-<link rel="stylesheet" href="@Html.AdminStyle("screen.css")" type="text/css" media="screen" title="default" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
-
-<!-- Custom jquery scripts -->
-<script src="@Html.AdminScript("jquery/custom_jquery.js")" type="text/javascript"></script>
-
-<!-- MUST BE THE LAST SCRIPT IN <HEAD></HEAD></HEAD> png fix -->
-<script src="@Html.AdminScript("jquery/jquery.pngFix.pack.js")" type="text/javascript"></script>
-<script type="text/javascript">
-	$(document).ready(function () {
-		$(document).pngFix();
-	});
-</script>
+	<meta charset="utf-8">
+	<title>RaccoonBlog :: Login</title>
+	<link rel="stylesheet" type="text/css" href="@Url.ActionLinkWithArray("Merge", "Css", new { files = new[] { "ResetCss.css", "custom/" + ViewBag.BlogConfig.CustomCss + ".settings.less.css", "base.less.css", "custom/" + ViewBag.BlogConfig.CustomCss + ".less.css" } })">
+	<link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/Admin/Content/css/AdminStyle.css")">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 </head>
 <body id="login-bg">
-<div id="login-holder">
-	<div id="logo-login">
-		<a href="index.html"><img src="@Html.AdminImage("shared/logo.png")" width="51" height="50" alt="" /></a>
-	</div>
-	<div class="clear"></div>
-	
-	<div id="loginbox">
-	<div id="login-inner">
-		@if (ViewData.ModelState.IsValid == false) { 
-		<div class="form-error">
-			@Html.ValidationSummary(true)
+	<div id="login-holder">
+		<div id="logo-login">
+			<a href="@Url.RouteUrl("homepage")"><img src="@Url.Content("~/Content/css/images/logo-admin.png")" width="51" height="50" alt="Logo"></a>
 		</div>
-		}
-			   
-		<form action="@Url.Action("Index")" method="post">
-		<table border="0" cellpadding="0" cellspacing="0">
-		<tr>
-			<th>Login</th>
-			<td>@Html.TextBoxFor(x => x.Login, new {@class = "login-inp"})</td>
-		</tr>
-		<tr>
-			<th>Password</th>
-			<td>@Html.TextBoxFor(x => x.Password, new Dictionary<string, object> { { "class", "login-inp" }, { "type", "password" }, { "onfocus", "this.value=''" } })</td>
-		</tr>
-		<!--<tr>
-			<th></th>
-			<td valign="top"><input type="checkbox" class="checkbox-size" id="login-check" /><label for="login-check">Remember me</label></td>
-		</tr>-->
-		<tr>
-			<th></th>
-			<td><input type="submit" class="submit-login" value="Login" /></td>
-		</tr>
-		</table>
-		@Html.HiddenFor(x => x.ReturnUrl)
-		</form>
-	</div>
-	<div class="clear"></div>
-	<!--<a href="" class="forgot-pwd">Forgot Password?</a>-->
- </div>
- <!--  end loginbox -->
- 
-	<!--  start forgotbox ................................................................................... -->
-	<div id="forgotbox">
-		<div id="forgotbox-text">Please send us your email and we'll reset your password.</div>
-		<div id="forgot-inner">
-		<table border="0" cellpadding="0" cellspacing="0">
-		<tr>
-			<th>Email address:</th>
-			<td><input type="text" value="" class="login-inp" /></td>
-		</tr>
-		<tr>
-			<th> </th>
-			<td><input type="button" class="submit-login"  /></td>
-		</tr>
-		</table>
+		<div class="clear">
 		</div>
-		<div class="clear"></div>
-		<a href="" class="back-login">Back to login</a>
+		<div id="loginbox">
+			@if (ViewData.ModelState.IsValid == false)
+   { 
+				<div class="form-error">
+					@Html.ValidationSummary(true)
+				</div>
+   }
+			<article id="user-input" style="width: 350px">
+				<form action="@Url.Action("Index")" method="post">
+				<div style="width: 350px; height: 200px">
+					<div style="float: left; padding-left: 17px; font-size: 16px" class="login-form">
+						<div id="id-form" style="top: 0;">
+							@Html.EditorFor(x => x.Login)
+							@Html.EditorFor(x => x.Password)
+							@Html.EditorFor(x => x.RememberMe)
+							@Html.HiddenFor(x => x.ReturnUrl)
+							<div style="float: right; width: 600px">
+								<input style="width: 180px" type="submit" value="Login"></div>
+						</div>
+					</div>
+				</div>
+				</form>
+				<div id="forgotbox">
+					<div id="forgotbox-text">
+						Please send us your email and we'll reset your password.</div>
+					<div id="content-table-inner" class="inputform">
+						<div id="id-form" style="top: 0;">
+							@Html.EditorFor(x => x.Login)
+							@Html.EditorFor(x => x.Password)
+							<div>
+								<input type="submit" value="Login"></div>
+						</div>
+					</div>
+				</div>
+			</article>
+			<div class="clear">
+				&nbsp;</div>
+			@section Script {
+				<script type="text/javascript" src="@Url.Content("~/Content/js/showdown.js")"> </script>
+				<script type="text/javascript">
+					$(function () {
+						var $textarea = $('textarea[name$="Body"]').keydown(function () {
+							$('.markdown-preview-container').show('medium');
+						});
+						var $preview = $('.markdown-preview');
+						var converter = new Showdown.converter();
+						$textarea.keyup(function () {
+							$preview.html(converter.makeHtml($textarea.val()));
+						}).trigger('keyup');
+					});
+				</script>
+			}
+		</div>
 	</div>
-	<!--  end forgotbox -->
-</div>
 </body>
 </html>

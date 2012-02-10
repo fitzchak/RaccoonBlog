@@ -1,0 +1,14 @@
+﻿@using RaccoonBlog.Web.Areas.Admin.Models
+@model IList<MenuItem>
+<ul>
+	@foreach (var menu in Model)
+	{
+		<li class="@(menu.IsCurrent ? "current" : null)">
+			<a href="@menu.Url">@menu.Title</a>
+			@if (menu.SubMenus != null)
+			{
+				Html.RenderPartial("RenderMenu", menu.SubMenus);
+			}
+		</li>
+	}
+</ul>

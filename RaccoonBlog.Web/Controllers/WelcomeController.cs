@@ -5,13 +5,6 @@ namespace RaccoonBlog.Web.Controllers
 {
 	public class WelcomeController : RaccoonController
 	{
-		protected override void OnActionExecuted(ActionExecutedContext filterContext)
-		{
-			// don't load the non existant Blog/Config
-
-			CompleteSessionHandler(filterContext);
-		}
-
 		//
 		// GET: /Welcome/
 		public ActionResult Index()

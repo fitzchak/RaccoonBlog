@@ -3,18 +3,12 @@ using System.Web.Mvc;
 using RaccoonBlog.Web.Helpers.Attributes;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Models;
-using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
 	public class SectionsController : AdminController
 	{
 		public ActionResult Index()
-		{
-			return List();
-		}
-
-		public ActionResult List()
 		{
 			var sections = RavenSession.Query<Section>()
 				.OrderBy(x => x.Position)
@@ -30,7 +24,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult Edit(int id)
+		public ActionResult Edit(string id)
 		{
 			var section = RavenSession.Load<Section>(id);
 			if (section == null)
@@ -39,26 +33,24 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult Update(Section input)
+		public ActionResult Update(Section section)
 		{
 			if (!ModelState.IsValid)
-				return View("Edit", input);
+				return View("Edit", section);
 
-			var section = RavenSession.Load<Section>(input.Id) ?? new Section();
-			input.MapPropertiesToInstance(section);
 			if (section.Position == 0)
 			{
 				section.Position = RavenSession.Query<Section>()
+					.OrderByDescending(sec => sec.Position)
 					.Select(sec => sec.Position)
-					.OrderByDescending(position => position)
 					.FirstOrDefault() + 1;
 			}
 			RavenSession.Store(section);
-			return RedirectToAction("List");
+			return RedirectToAction("Index");
 		}
 
 		[HttpPost]
-		public ActionResult Delete(int id)
+		public ActionResult Delete(string id)
 		{
 			var section = RavenSession.Load<Section>(id);
 			if (section == null)
@@ -70,12 +62,12 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			{
 				return Json(new { Success = true });
 			}
-			return RedirectToAction("List");
+			return RedirectToAction("Index");
 		}
 
 		[AjaxOnly]
 		[HttpPost]
-		public ActionResult SetPosition(int id, int newPosition)
+		public ActionResult SetPosition(string id, int newPosition)
 		{
 			var section = RavenSession.Load<Section>(id);
 			if (section == null)
