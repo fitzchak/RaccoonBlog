@@ -30,13 +30,11 @@ namespace RaccoonBlog.Web.Models
 		[Display(Name = "Google-Analytics Key")]
 		public string GoogleAnalyticsKey { get; set; }
 
-		[Required]
-		[NonEmptyGuid]
-		[Display(Name = "RssFuturePostsKey")]
-		public Guid RssFuturePostsKey { get; set; }
+		[Display(Name = "FuturePostsEncryptionIV")]
+		public string FuturePostsEncryptionIV { get; set; }
 
-		[Display(Name = "RssFutureDaysAllowed")]
-		public int RssFutureDaysAllowed { get; set; }
+		[Display(Name = "FuturePostsEncryptionKey")]
+		public string FuturePostsEncryptionKey { get; set; }
 
 		[Display(Name = "MetaDescription")]
 		public string MetaDescription { get; set; }
@@ -52,8 +50,6 @@ namespace RaccoonBlog.Web.Models
 			return new BlogConfig
 			       	{
 						Id = "Blog/Config",
-			       		RssFuturePostsKey = Guid.NewGuid(),
-						RssFutureDaysAllowed = 0,
 						CustomCss = "hibernatingrhinos"
 			       	};
 		}

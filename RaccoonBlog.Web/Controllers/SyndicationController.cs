@@ -78,7 +78,7 @@ namespace RaccoonBlog.Web.Controllers
 										  new XElement("copyright", String.Format("{0} (c) {1}", BlogConfig.Copyright, DateTime.Now.Year)),
 										  new XElement("ttl", "60"),
 										  from post in posts
-										  let postLink = Url.AbsoluteAction("Details", "PostDetails", new { Id = RavenIdResolver.Resolve(post.Id), Slug = SlugConverter.TitleToSlug(post.Title) })
+										  let postLink = Url.AbsoluteAction("Details", "PostDetails", new { Id = RavenIdResolver.Resolve(post.Id), Slug = SlugConverter.TitleToSlug(post.Title), Key = post.ShowPostEvenIfPrivate })
 										  select new XElement("item",
 															  new XElement("title", post.Title),
 															  new XElement("description", post.CompiledContent(true)),
