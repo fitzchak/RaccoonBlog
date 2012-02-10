@@ -27,12 +27,12 @@ namespace RaccoonBlog.Web.ViewModels
 		public string GoogleAnalyticsKey { get; set; }
 
 		[Required]
-		[NonEmptyGuid]
-		[Display(Name = "RssFuturePostsKey")]
-		public string RssFuturePostsKey { get; set; }
+		[Display(Name = "FuturePostsEncryptionKey")]
+		public string FuturePostsEncryptionKey { get; set; }
 
-		[Display(Name = "RssFutureDaysAllowed")]
-		public int RssFutureDaysAllowed { get; set; }
+		[Required]
+		[Display(Name = "FuturePostsEncryptionIV")]
+		public string FuturePostsEncryptionIV { get; set; }
 
 		[Display(Name = "MetaDescription")]
 		public string MetaDescription { get; set; }

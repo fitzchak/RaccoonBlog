@@ -1,4 +1,7 @@
 using System;
+using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web.Mvc;
 using System.Linq;
 using System.Xml.Linq;
@@ -36,15 +39,18 @@ namespace RaccoonBlog.Web.Controllers
 
 		}
 
-		public ActionResult Rss(string tag, Guid key)
+		public ActionResult Rss(string tag, string token)
 		{
 			RavenQueryStatistics stats;
 			var postsQuery = RavenSession.Query<Post>()
 				.Statistics(out stats);
 
-			if (key != Guid.Empty && key == BlogConfig.RssFuturePostsKey)
+			int take = 20;
+			if (string.IsNullOrEmpty(token) == false)
 			{
-				postsQuery = postsQuery.Where(x => x.PublishAt < DateTimeOffset.Now.AddDays(BlogConfig.RssFutureDaysAllowed).AsMinutes());
+				var numberOfDays = GetNumberOfDays(token);
+				take = Math.Max(numberOfDays, take);
+				postsQuery = postsQuery.Where(x => x.PublishAt < DateTimeOffset.Now.AddDays(numberOfDays).AsMinutes());
 			}
 			else
 			{
@@ -55,7 +61,7 @@ namespace RaccoonBlog.Web.Controllers
 				postsQuery = postsQuery.Where(x => x.TagsAsSlugs.Any(postTag => postTag == tag));
 
 			var posts = postsQuery.OrderByDescending(x => x.PublishAt)
-				.Take(20)
+				.Take(take)
 				.ToList();
 
 			string responseETagHeader;
@@ -87,6 +93,26 @@ namespace RaccoonBlog.Web.Controllers
 			return Xml(rss, responseETagHeader);
 		}
 
+
+		private int GetNumberOfDays(string token)
+		{
+			using (var rijndael = Rijndael.Create())
+			{
+				rijndael.Key = Convert.FromBase64String(BlogConfig.FuturePostsEncryptionKey);
+				rijndael.IV = Convert.FromBase64String(BlogConfig.FuturePostsEncryptionIV);
+
+				using(var memoryStream = new MemoryStream(Convert.FromBase64String(token)))
+				using (var cryptoStream = new CryptoStream(memoryStream, rijndael.CreateDecryptor(), CryptoStreamMode.Read))
+				using (var reader = new BinaryReader(cryptoStream))
+				{
+					var expiry = DateTime.FromBinary(reader.ReadInt64());
+					if (DateTime.UtcNow > expiry)
+						throw new InvalidOperationException("The key has already expired.");
+
+					return reader.ReadInt32();
+				}
+			}
+		}
 
 		public ActionResult CommentsRss(int? id)
 		{
