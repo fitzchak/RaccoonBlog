@@ -5,6 +5,7 @@ using System.Text;
 using System.Web.Mvc;
 using System.Linq;
 using System.Xml.Linq;
+using HibernatingRhinos.Loci.Common.Models;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Models;
 using Raven.Client.Linq;
@@ -39,34 +40,40 @@ namespace RaccoonBlog.Web.Controllers
 
 		}
 
+		private class QueryBehavior
+		{
+			public string Title;
+			public int Take;
+			public bool AddExpiredNote;
+			public IRavenQueryable<Post> PostsQuery;
+		}
+
 		public ActionResult Rss(string tag, string token)
 		{
 			RavenQueryStatistics stats;
-			var postsQuery = RavenSession.Query<Post>()
-				.Statistics(out stats);
 
-			int take = 20;
-			var title = BlogConfig.Title;
-			if (string.IsNullOrEmpty(token) == false)
-			{
-				int numberOfDays;
-				string user;
-				GetNumberOfDays(token, out numberOfDays, out user);
-				take = Math.Max(numberOfDays, take);
-				title = title + " for " + user;
-				postsQuery = postsQuery.Where(x => x.PublishAt < DateTimeOffset.Now.AddDays(numberOfDays).AsMinutes());
-			}
-			else
-			{
-				postsQuery = postsQuery.Where(x => x.PublishAt < DateTimeOffset.Now.AsMinutes());
-			}
+			var queryBehavior = SetQueryLimitsBasedOnToken(token, RavenSession.Query<Post>().Statistics(out stats));
+
+
+			var postsQuery = queryBehavior.PostsQuery;
 
 			if (string.IsNullOrWhiteSpace(tag) == false)
 				postsQuery = postsQuery.Where(x => x.TagsAsSlugs.Any(postTag => postTag == tag));
 
 			var posts = postsQuery.OrderByDescending(x => x.PublishAt)
-				.Take(take)
+				.Take(queryBehavior.Take)
 				.ToList();
+
+			if (queryBehavior.AddExpiredNote)
+			{
+				posts.Insert(0, new Post
+				{
+					Title = "Feed token expired, you are no longer able to read future posts",
+					Id = null,
+					ContentType = DynamicContentType.Html,
+					Body = "<p>This feed token has expired, and will no longer show any future posts.</p><p>You can still read current posts.</p>"
+				});
+			}
 
 			string responseETagHeader;
 			if (CheckEtag(stats, out responseETagHeader))
@@ -76,13 +83,13 @@ namespace RaccoonBlog.Web.Controllers
 				new XElement("rss",
 							 new XAttribute("version", "2.0"),
 							 new XElement("channel",
-										  new XElement("title", title),
+										  new XElement("title", queryBehavior.Title),
 										  new XElement("link", Url.RelativeToAbsolute(Url.RouteUrl("homepage"))),
-										  new XElement("description", BlogConfig.MetaDescription ?? title),
+										  new XElement("description", BlogConfig.MetaDescription ?? queryBehavior.Title),
 										  new XElement("copyright", String.Format("{0} (c) {1}", BlogConfig.Copyright, DateTime.Now.Year)),
 										  new XElement("ttl", "60"),
 										  from post in posts
-										  let postLink = Url.AbsoluteAction("Details", "PostDetails", new { Id = RavenIdResolver.Resolve(post.Id), Slug = SlugConverter.TitleToSlug(post.Title), Key = post.ShowPostEvenIfPrivate })
+										  let postLink = GetPostLink(post)
 										  select new XElement("item",
 															  new XElement("title", post.Title),
 															  new XElement("description", post.CompiledContent(true)),
@@ -97,8 +104,46 @@ namespace RaccoonBlog.Web.Controllers
 			return Xml(rss, responseETagHeader);
 		}
 
+		private QueryBehavior SetQueryLimitsBasedOnToken(string token, IRavenQueryable<Post> postsQuery)
+		{
+			var behavior = new QueryBehavior
+			{
+				AddExpiredNote = false,
+				Title = BlogConfig.Title,
+				Take = 20
+			};
+			if (string.IsNullOrEmpty(token) != false)
+			{
+				behavior.PostsQuery = postsQuery.Where(x => x.PublishAt < DateTimeOffset.Now.AsMinutes());
+				return behavior;
+			}
 
-		private void GetNumberOfDays(string token, out int numberOfDays, out string user)
+			int numberOfDays;
+			string user;
+			if (GetNumberOfDays(token, out numberOfDays, out user))
+			{
+				behavior.Take = Math.Max(numberOfDays, behavior.Take);
+				behavior.Title = behavior.Title + " for " + user;
+				behavior.PostsQuery = postsQuery.Where(x => x.PublishAt < DateTimeOffset.Now.AddDays(numberOfDays).AsMinutes());
+			}
+			else
+			{
+				behavior.Title = behavior.Title + " for " + user + " EXPIRED TOKEN";
+				behavior.PostsQuery = postsQuery.Where(x => x.PublishAt < DateTimeOffset.Now.AsMinutes());
+				behavior.AddExpiredNote = true;
+			}
+			return behavior;
+		}
+
+		private string GetPostLink(Post post)
+		{
+			if (post.Id == null) // invalid feed
+				return Url.AbsoluteAction("Index", "Posts");
+			return Url.AbsoluteAction("Details", "PostDetails", new { Id = RavenIdResolver.Resolve(post.Id), Slug = SlugConverter.TitleToSlug(post.Title), Key = post.ShowPostEvenIfPrivate });
+		}
+
+
+		private bool GetNumberOfDays(string token, out int numberOfDays, out string user)
 		{
 			using (var rijndael = Rijndael.Create())
 			{
@@ -110,11 +155,12 @@ namespace RaccoonBlog.Web.Controllers
 				using (var reader = new BinaryReader(cryptoStream))
 				{
 					var expiry = DateTime.FromBinary(reader.ReadInt64());
-					if (DateTime.UtcNow > expiry)
-						throw new InvalidOperationException("The key has already expired.");
-
 					numberOfDays =  reader.ReadInt32();
 					user = reader.ReadString();
+					if (DateTime.UtcNow > expiry)
+						return false;
+
+					return true;
 				}
 			}
 		}
