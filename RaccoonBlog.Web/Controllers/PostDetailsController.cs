@@ -92,7 +92,7 @@ namespace RaccoonBlog.Web.Controllers
 
 			TempData["message"] = successMessage;
 			var postReference = post.MapTo<PostReference>();
-			return RedirectToAction("Details", new {Id = postReference.DomainId, postReference.Slug});
+			return RedirectToAction("Details", new {Id = postReference.DomainId, postReference.Slug, key = post.ShowPostEvenIfPrivate});
 		}
 
 		private void ValidateCommentsAllowed(Post post, PostComments comments)
