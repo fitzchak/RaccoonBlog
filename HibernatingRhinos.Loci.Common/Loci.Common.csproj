@@ -35,10 +35,10 @@
       <HintPath>..\packages\RavenDB-Client.1.0.664-Unstable\lib\net40\AsyncCtpLibrary.dll</HintPath>
     </Reference>
     <Reference Include="DataAnnotationsExtensions">
-      <HintPath>..\packages\DataAnnotationsExtensions.1.0.0.0\lib\NETFramework40\DataAnnotationsExtensions.dll</HintPath>
+      <HintPath>..\packages\DataAnnotationsExtensions.1.0.1\lib\NETFramework40\DataAnnotationsExtensions.dll</HintPath>
     </Reference>
     <Reference Include="DataAnnotationsExtensions.ClientValidation">
-      <HintPath>..\packages\DataAnnotationsExtensions.MVC3.1.0.0.0\lib\NETFramework40\DataAnnotationsExtensions.ClientValidation.dll</HintPath>
+      <HintPath>..\packages\DataAnnotationsExtensions.MVC3.1.0.1\lib\NETFramework40\DataAnnotationsExtensions.ClientValidation.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
@@ -91,9 +91,6 @@
     <Compile Include="Tasks\BackgroundTask.cs" />
     <Compile Include="Tasks\TaskExecutor.cs" />
     <Compile Include="Utils\StringRandomizer.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Start\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
