@@ -17,8 +17,8 @@ namespace RaccoonBlog.IntegrationTests.Routing
 		[Fact]
 		public void SyndicationControllerRoutes()
 		{
-			GetMethod("~/rss").ShouldMapTo<SyndicationController>(c => c.Rss(null, TestGuid));
-			GetMethod("~/rss/tag-name").ShouldMapTo<SyndicationController>(c => c.Rss("tag-name", TestGuid));
+			GetMethod("~/rss").ShouldMapTo<SyndicationController>(c => c.Rss(null, null));
+			GetMethod("~/rss/tag-name").ShouldMapTo<SyndicationController>(c => c.Rss("tag-name", null));
 
 			GetMethod("~/rsd").ShouldMapTo<SyndicationController>(c => c.Rsd());
 
