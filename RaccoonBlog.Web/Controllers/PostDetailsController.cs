@@ -32,9 +32,7 @@ namespace RaccoonBlog.Web.Controllers
 			var vm = new PostViewModel
 			         {
 			         	Post = post.MapTo<PostViewModel.PostDetails>(),
-			         	Comments = comments.Comments
-			         		.OrderBy(comment => comment.CreatedAt)
-			         		.MapTo<PostViewModel.Comment>(),
+			         	Comments = comments.Comments.MapTo<PostViewModel.Comment>(),
 			         	NextPost = RavenSession.GetNextPrevPost(post, true),
 			         	PreviousPost = RavenSession.GetNextPrevPost(post, false),
 			         	AreCommentsClosed = comments.AreCommentsClosed(post, BlogConfig.NumberOfDayToCloseComments),
