@@ -57,7 +57,7 @@
       <HintPath>..\packages\RavenDB-Embedded.1.0.664-Unstable\lib\net40\Lucene.Net.Contrib.SpellChecker.dll</HintPath>
     </Reference>
     <Reference Include="MvcContrib.TestHelper, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MvcContrib.Mvc3.TestHelper-ci.3.0.94.0\lib\MvcContrib.TestHelper.dll</HintPath>
+      <HintPath>..\packages\MvcContrib.Mvc3.TestHelper-ci.3.0.96.0\lib\MvcContrib.TestHelper.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
