@@ -92,7 +92,21 @@
 				@Html.TextBoxFor(model => model.MetaDescription)
 				@Html.ValidationMessageFor(model => model.MetaDescription)
 			</div>
-			@Html.HiddenFor(model => model.RssFuturePostsKey)
+            
+            <div class="editor-label">
+				@Html.LabelFor(model => model.FuturePostsEncryptionKey)
+			</div>
+			<div class="editor-field">
+				@Html.TextBoxFor(model => model.FuturePostsEncryptionKey)
+				@Html.ValidationMessageFor(model => model.FuturePostsEncryptionKey)
+			</div>
+             <div class="editor-label">
+				@Html.LabelFor(model => model.FuturePostsEncryptionIV)
+			</div>
+			<div class="editor-field">
+				@Html.TextBoxFor(model => model.FuturePostsEncryptionIV)
+				@Html.ValidationMessageFor(model => model.FuturePostsEncryptionIV)
+			</div>
 
 			<p>
 				<input type="submit" value="Setup my blog" />
