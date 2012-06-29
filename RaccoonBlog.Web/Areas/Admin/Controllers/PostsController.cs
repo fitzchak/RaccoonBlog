@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using HibernatingRhinos.Loci.Common.Extensions;
+using HibernatingRhinos.Loci.Common.Models;
 using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Helpers.Attributes;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
@@ -30,6 +31,8 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		{
 			return View("Edit", new PostInput
 			{
+				AllowComments = true,
+				ContentType = DynamicContentType.Html,
 				CreatedAt = DateTimeOffset.Now,
 				PublishAt = DateTimeOffset.MinValue // force auto schedule
 			});

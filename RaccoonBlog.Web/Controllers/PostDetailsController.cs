@@ -6,6 +6,7 @@ using HibernatingRhinos.Loci.Common.Tasks;
 using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Helpers.Validation;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
+using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Infrastructure.Tasks;
 using RaccoonBlog.Web.Models;
@@ -28,6 +29,7 @@ namespace RaccoonBlog.Web.Controllers
 			if (post.IsPublicPost(key) == false)
 				return HttpNotFound();
 
+
 			var comments = RavenSession.Load<PostComments>(post.CommentsId) ?? new PostComments();
 			var vm = new PostViewModel
 			         {
@@ -40,6 +42,22 @@ namespace RaccoonBlog.Web.Controllers
 
 			vm.Post.Author = RavenSession.Load<User>(post.AuthorId).MapTo<PostViewModel.UserDetails>();
 
+			var comment = TempData["new-comment"] as CommentInput;
+
+			if(comment != null)
+			{
+				vm.Comments.Add(new PostViewModel.Comment
+				{
+					CreatedAt = DateTimeOffset.Now.ToString(),
+					Author = comment.Name,
+					Body = MarkdownResolver.Resolve(comment.Body),
+					Id = -1,
+					Url = UrlResolver.Resolve(comment.Url),
+					Tooltip = "Comment by " + comment.Name,
+					EmailHash = EmailHashResolver.Resolve(comment.Email)
+				});
+			}
+
 			if (vm.Post.Slug != slug)
 				return RedirectToActionPermanent("Details", new {id, vm.Post.Slug});
 
@@ -50,13 +68,13 @@ namespace RaccoonBlog.Web.Controllers
 
 		[ValidateInput(false)]
 		[HttpPost]
-		public ActionResult Comment(CommentInput input, int id, Guid showPostEvenIfPrivate)
+		public ActionResult Comment(CommentInput input, int id, Guid key)
 		{
 			var post = RavenSession
 				.Include<Post>(x => x.CommentsId)
 				.Load(id);
 
-			if (post == null || post.IsPublicPost(showPostEvenIfPrivate) == false)
+			if (post == null || post.IsPublicPost(key) == false)
 				return HttpNotFound();
 
 			var comments = RavenSession.Load<PostComments>(post.CommentsId);
@@ -73,24 +91,26 @@ namespace RaccoonBlog.Web.Controllers
 			ValidateCaptcha(input, commenter);
 
 			if (ModelState.IsValid == false)
-				return PostingCommentFailed(post, input, showPostEvenIfPrivate);
+				return PostingCommentFailed(post, input, key);
 
 			TaskExecutor.ExcuteLater(new AddCommentTask(input, Request.MapTo<AddCommentTask.RequestValues>(), id));
 
 			CommenterUtil.SetCommenterCookie(Response, input.CommenterKey.MapTo<string>());
 
-			return PostingCommentSucceeded(post);
+			return PostingCommentSucceeded(post, input);
 		}
 
-		private ActionResult PostingCommentSucceeded(Post post)
+		private ActionResult PostingCommentSucceeded(Post post, CommentInput input)
 		{
 			const string successMessage = "Your comment will be posted soon. Thanks!";
 			if (Request.IsAjaxRequest())
 				return Json(new {Success = true, message = successMessage});
 
-			TempData["message"] = successMessage;
+			TempData["new-comment"] = input;
 			var postReference = post.MapTo<PostReference>();
-			return RedirectToAction("Details", new {Id = postReference.DomainId, postReference.Slug, key = post.ShowPostEvenIfPrivate});
+
+			return Redirect(Url.Action("Details",
+				new { Id = postReference.DomainId, postReference.Slug, key = post.ShowPostEvenIfPrivate }) + "#comments-form-location");
 		}
 
 		private void ValidateCommentsAllowed(Post post, PostComments comments)
