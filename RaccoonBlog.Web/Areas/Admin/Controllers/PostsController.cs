@@ -28,7 +28,11 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		[HttpGet]
 		public ActionResult Add()
 		{
-			return View("Edit", new PostInput());
+			return View("Edit", new PostInput
+			{
+				CreatedAt = DateTimeOffset.Now,
+				PublishAt = DateTimeOffset.MinValue // force auto schedule
+			});
 		}
 
 		[HttpGet]
@@ -86,6 +90,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 				               };
 
 				RavenSession.Store(comments);
+				post.CommentsId = comments.Id;	
 			}
 
 			return RedirectToAction("Details", new {Id = post.MapTo<PostReference>().DomainId});
