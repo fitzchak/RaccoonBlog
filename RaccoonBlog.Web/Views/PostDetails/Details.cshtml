@@ -121,8 +121,12 @@
 						@Html.ValidationSummary(true)
 					</div>
 				}
+				<div>
+					<h1><a id="comments-form-location">Join the conversation...</a></h1>
+				</div>	
+	   <p/>
 				<div class="comment-form-wrapper">
-					@using (Html.BeginForm("Comment", "PostDetails", new { Model.Post.Id, Model.Post.ShowPostEvenIfPrivate }))
+					@using (Html.BeginForm("Comment", "PostDetails", new { Model.Post.Id, key = Model.Post.ShowPostEvenIfPrivate }))
 					{
 						@Html.EditorFor(x => x.Input.Name)
 						@Html.EditorFor(x => x.Input.Email)
