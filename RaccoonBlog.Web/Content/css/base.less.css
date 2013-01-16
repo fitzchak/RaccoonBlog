@@ -492,13 +492,16 @@ footer p
 
 footer .share .twitter, footer .share .facebook, footer .share .facebook-share
 {
-	padding-top: 5px;
+	padding-bottom: 5px;
 }
 footer .share .facebook, footer .share .facebook-share {
 	float: left;
-	margin-right: 5px;
 }
-
+.fb_iframe_widget iframe {
+	height: 20px !important;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
 footer .published, footer .created, footer .comment-count
 {
 	float: left;
@@ -672,6 +675,7 @@ div.comments-rss
 	background: formatString("url({0}images/feed-icon-14x14.png)", @siteRoot) left no-repeat;
 	font-size: smaller;
 	padding-left: 15px;
+	padding-top: 15px;
 }
 
 @media screen and (max-width: 780px) 
