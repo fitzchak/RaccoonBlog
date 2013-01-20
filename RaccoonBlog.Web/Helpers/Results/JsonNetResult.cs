@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using Newtonsoft.Json;
+using Raven.Imports.Newtonsoft.Json;
 
 namespace RaccoonBlog.Web.Helpers.Results
 {

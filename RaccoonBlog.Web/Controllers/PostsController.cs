@@ -7,7 +7,7 @@ using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
-using Raven.Client.Linq;
+using Raven.Client;
 
 namespace RaccoonBlog.Web.Controllers
 {

@@ -1,13 +1,13 @@
 using System;
 using System.IO;
 using System.Security.Cryptography;
-using System.Text;
 using System.Web.Mvc;
 using System.Linq;
 using System.Xml.Linq;
 using HibernatingRhinos.Loci.Common.Models;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Models;
+using Raven.Client;
 using Raven.Client.Linq;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Helpers;
