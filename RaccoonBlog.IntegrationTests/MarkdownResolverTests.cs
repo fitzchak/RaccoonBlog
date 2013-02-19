@@ -59,10 +59,12 @@ namespace RaccoonBlog.IntegrationTests
 		[Fact]
 		public void AllowRawLink()
 		{
-			var url = "http://example.com?query=value#item";
-			var input = url;
+		    const string url = "http://example.com?query=value#item";
+            var markdownInput = "[link text](" + url + ")";
+			var input = markdownInput;
+		    const string linkText = "link text";
 			var result = MarkdownResolve(input);
-			var expected = string.Format("<a href=\"{0}\">{0}</a>", url);
+			var expected = string.Format("<p><a href=\"{0}\">{1}</a></p>", url, linkText);
 			Assert.Contains(expected, result);
 		}
 
