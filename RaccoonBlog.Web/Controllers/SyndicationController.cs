@@ -91,7 +91,7 @@ namespace RaccoonBlog.Web.Controllers
 										  from post in posts
 										  let postLink = GetPostLink(post)
 										  select new XElement("item",
-															  new XElement("title", post.Title),
+															  new XElement("title", Server.HtmlDecode(post.Title)),
 															  new XElement("description", post.CompiledContent(true)),
 															  new XElement("link", postLink),
 																new XElement("guid", postLink),
