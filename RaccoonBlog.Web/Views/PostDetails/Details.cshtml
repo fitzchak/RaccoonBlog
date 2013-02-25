@@ -4,9 +4,14 @@
 	ViewBag.Title = @Model.Post.Title;
 }
 
+@{
+    // this is in a separate block because I get compilation error when I put this in the same block as above!!!!
+    string currentURL = Url.Action("Details", "PostDetails", new {Model.Post.Id, Model.Post.Slug});
+}
+
 <article class="post-detalis">
 	<header>
-	    <h1><a href="@Url.Action("Details", "PostDetails", new { Model.Post.Id, Model.Post.Slug })">
+	    <h1><a href="@currentURL">
 	            @Model.Post.Title
 	        </a>
 	    </h1>
@@ -57,10 +62,10 @@
 				@Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, Model.Post.Author)
 			</div>
 			<div class="facebook-share">
-				<a name="fb_share" share_url="@(Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))" href="http://www.facebook.com/sharer.php" name="fb_share" rel="nofollow" type="button_count">Share</a>
+				<a name="fb_share" share_url="@(Url.RelativeToAbsolute(currentURL))" href="http://www.facebook.com/sharer.php" name="fb_share" rel="nofollow" type="button_count">Share</a>
 			</div>
 			<div class="facebook">
-				<iframe src="http://www.facebook.com/plugins/like.php?href=@(Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))&send=false&layout=button_count&width=450&show_faces=true&action=like&colorscheme=light&font&height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px;" allowTransparency="true"></iframe>
+				<iframe src="http://www.facebook.com/plugins/like.php?href=@(Url.RelativeToAbsolute(currentURL))&send=false&layout=button_count&width=450&show_faces=true&action=like&colorscheme=light&font&height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px;" allowTransparency="true"></iframe>
 			</div>
 			<div class="clr"></div>
 		</div>
@@ -115,16 +120,11 @@
 								Find out <a href="http://openid.net/what/">more about OpenID</a> and <a href="http://openid.net/get/">how to get an OpenID enabled account</a>.</p>
 							</noscript>
 
-							@Html.Hidden(
-                                "returnUrl", Url.RelativeToAbsolute(
-                                    Url.Action(
-                                        "Details", "PostDetails", new {
-                                            id = Model.Post.Id, 
-                                            slug = Model.Post.Slug, 
-                                            key = Guid.Empty}
-                                        )
-                                    )
-                                )
+						    @Html.Hidden(
+						        "returnUrl", Url.RelativeToAbsolute(
+						            currentURL
+						                         )
+						         )
 						</form>
 					</div>
 				}
