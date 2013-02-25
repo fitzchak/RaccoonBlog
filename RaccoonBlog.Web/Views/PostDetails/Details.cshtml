@@ -1,11 +1,24 @@
-﻿@model PostViewModel
+﻿@model RaccoonBlog.Web.ViewModels.PostViewModel
+
 @{
 	ViewBag.Title = @Model.Post.Title;
-	ViewBag.CurrentUrl = Url.Action("Details", new { Model.Post.Id, Model.Post.Slug });
+	ViewBag.CurrentUrl = "/";
 }
+
+@*Url.Action("Details", 
+        new { 
+                id = Model.Post.Id, 
+                slug = Model.Post.Slug, 
+                key = Guid.Empty 
+            });
+            *@
+
 <article class="post-detalis">
 	<header>
-		<h1><a href="@Url.Action("Details", new { Model.Post.Id, Model.Post.Slug })">@Model.Post.Title</a></h1>
+	    <h1><a href="@Url.Action("Details", new { Model.Post.Id, Model.Post.Slug })">
+	            @Model.Post.Title
+	        </a>
+	    </h1>
 	</header>
 	
 	<nav id="headerPrevNext">
