@@ -2,20 +2,11 @@
 
 @{
 	ViewBag.Title = @Model.Post.Title;
-	ViewBag.CurrentUrl = "/";
 }
-
-@*Url.Action("Details", 
-        new { 
-                id = Model.Post.Id, 
-                slug = Model.Post.Slug, 
-                key = Guid.Empty 
-            });
-            *@
 
 <article class="post-detalis">
 	<header>
-	    <h1><a href="@Url.Action("Details", new { Model.Post.Id, Model.Post.Slug })">
+	    <h1><a href="@Url.Action("Details", "PostDetails", new { Model.Post.Id, Model.Post.Slug })">
 	            @Model.Post.Title
 	        </a>
 	    </h1>
@@ -25,12 +16,12 @@
 		<ul>
 			@if (Model.PreviousPost != null)
 			{ 
-				<li><a href="@Url.Action("Details", new { id = Model.PreviousPost.DomainId, Model.PreviousPost.Slug })">previous: @Model.PreviousPost.Title</a></li>
+				<li><a href="@Url.Action("Details", "PostDetails", new { id = Model.PreviousPost.DomainId, Model.PreviousPost.Slug })">previous: @Model.PreviousPost.Title</a></li>
 			}
 		
 			@if (Model.NextPost != null)
 			{ 
-				<li><a href="@Url.Action("Details", new { id = Model.NextPost.DomainId, Model.NextPost.Slug })">next: @Model.NextPost.Title</a></li>
+				<li><a href="@Url.Action("Details", "PostDetails", new { id = Model.NextPost.DomainId, Model.NextPost.Slug })">next: @Model.NextPost.Title</a></li>
 			}
 		</ul>
 	</nav>
@@ -124,7 +115,16 @@
 								Find out <a href="http://openid.net/what/">more about OpenID</a> and <a href="http://openid.net/get/">how to get an OpenID enabled account</a>.</p>
 							</noscript>
 
-							@Html.Hidden("returnUrl", Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))
+							@Html.Hidden(
+                                "returnUrl", Url.RelativeToAbsolute(
+                                    Url.Action(
+                                        "Details", "PostDetails", new {
+                                            id = Model.Post.Id, 
+                                            slug = Model.Post.Slug, 
+                                            key = Guid.Empty}
+                                        )
+                                    )
+                                )
 						</form>
 					</div>
 				}
