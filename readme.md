@@ -19,7 +19,6 @@ Dependencies
 
 Some Specific ways of contributing to RaccoonBlog
 -------------------------------------------------
-* update RaccoonBlog to use ASP.NET MVC 4 framework (is now currently on ASP.NET MVC 3)
 * move calls to HttpUtility.HtmlDecode(post.Title) into post model
 * move calls to SlugConverter.TitleToSlug(post.Title) into post model
 * write integration tests for AddCommentTask
@@ -32,10 +31,12 @@ Some Specific ways of contributing to RaccoonBlog
 * move ConfigurationManager.AppSettings["OwnerEmail"] to confg entry in the database
 * integrate twitter bootstrap
 * fix all broken unit tests
-* update DataAnnotationExteions to latest version
+
+In Progress
+-----------
+* update RaccoonBlog to use ASP.NET MVC 4 framework (is now currently on ASP.NET MVC 3) (verifying)
 
 Done
 ----
 * update MarkdownDeep to 1.5
-
-
+* update DataAnnotationExteions to latest version
