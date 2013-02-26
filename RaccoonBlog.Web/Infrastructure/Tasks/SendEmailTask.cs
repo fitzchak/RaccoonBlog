@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
@@ -10,6 +11,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using HibernatingRhinos.Loci.Common.Extensions;
 using HibernatingRhinos.Loci.Common.Tasks;
+using RaccoonBlog.Web.Models;
 
 namespace RaccoonBlog.Web.Infrastructure.Tasks
 {
@@ -74,12 +76,7 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 			mailMessage.To.Add(sendTo);
 
 			// Also CC the owners, if specified
-			// TODO: Move this to a config entry in the database
-			var commentsMederatorEmails = ConfigurationManager.AppSettings["OwnerEmail"];
-			commentsMederatorEmails
-				.Split(new[] {';'}, StringSplitOptions.RemoveEmptyEntries)
-				.Select(x => new MailAddress(x.Trim()))
-				.ForEach(email => mailMessage.CC.Add(email));
+            OwnerEmails.ForEach(email => mailMessage.CC.Add(email));
 
 			using (var smtpClient = new SmtpClient())
 			{
@@ -87,6 +84,17 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 			}
 
 		}
+
+        public IEnumerable<MailAddress> OwnerEmails
+	    {
+	        get
+	        {
+                var commentsMederatorEmails = DocumentSession.Load<BlogConfig>("Blog/Config").OwnerEmail;
+	            return commentsMederatorEmails
+	                .Split(new[] {';'}, StringSplitOptions.RemoveEmptyEntries)
+	                .Select(x => new MailAddress(x.Trim()));
+	        }
+	    }
 
 		public class MailController : Controller
 		{
