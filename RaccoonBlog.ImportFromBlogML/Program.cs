@@ -34,6 +34,8 @@ namespace RaccoonBlog.ImportFromBlogML {
                 s.Store(new Section { Title = "Archive", IsActive = true, Position = 1, ControllerName = "Section", ActionName = "ArchivesList" });
                 s.Store(new Section { Title = "Tags", IsActive = true, Position = 2, ControllerName = "Section", ActionName = "TagsList" });
                 s.Store(new Section { Title = "Statistics", IsActive = true, Position = 3, ControllerName = "Section", ActionName = "PostsStatistics" });
+                s.Store(new Section { Title = "Future Posts", IsActive = true, Position = 4, ControllerName = "Section", ActionName = "FuturePosts" });
+						
                 s.SaveChanges();
             }
         }
