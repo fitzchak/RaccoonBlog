@@ -2,10 +2,10 @@ using System;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using HibernatingRhinos.Loci.Common.Utils;
 using RaccoonBlog.Web.Controllers;
 using Raven.Client;
 using Raven.Client.Embedded;
-using Raven.Client.Listeners;
 using Rhino.Mocks;
 
 namespace RaccoonBlog.IntegrationTests.Web.Controllers
@@ -32,14 +32,6 @@ namespace RaccoonBlog.IntegrationTests.Web.Controllers
 			{
 				action(session);
 				session.SaveChanges();
-			}
-		}
-
-		public class NoStaleQueriesAllowed : IDocumentQueryListener
-		{
-			public void BeforeQueryExecuted(IDocumentQueryCustomization queryCustomization)
-			{
-				queryCustomization.WaitForNonStaleResults();
 			}
 		}
 
