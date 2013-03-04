@@ -11,17 +11,50 @@ using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
 using Raven.Client;
 using Raven.Client.Document;
+using Raven.Client.Embedded;
+using Raven.Client.Listeners;
 using Sgml;
 
-namespace RaccoonBlog.ImportFromBlogML {
-    internal class Program {
-        private static void Main(string[] args) {
-            var blog = GetBlog(args[0]);
+namespace RaccoonBlog.ImportFromBlogML
+{
+    internal class Program
+    {
+        #region GetDocumentStore
 
-            using (var store = new DocumentStore {
-                Url = "http://localhost:8080",
-                DefaultDatabase = "RaccoonBlog"
-            }.Initialize()) {
+        private static IDocumentStore GetDocumentStore(bool isTest)
+        {
+            return isTest ? GetInMemoryDocumentStore() : GetDocumentStore();
+        }
+
+        private static DocumentStore GetInMemoryDocumentStore()
+        {
+            var documentStore = new EmbeddableDocumentStore
+                {
+                    RunInMemory = true
+                };
+
+            documentStore.RegisterListener(new NoStaleQueriesAllowed());
+            return documentStore;
+        }
+
+        private static DocumentStore GetDocumentStore()
+        {
+            return new DocumentStore
+                {
+                    Url = "http://localhost:8080",
+                    DefaultDatabase = "RaccoonBlog"
+                };
+        }
+
+        #endregion
+
+        private static void Main(string[] args)
+        {
+            var blog = GetBlog(args[0]);
+            bool isTest = args.Length >= 2 && args[1].Equals("-t");
+
+            using (var store = GetDocumentStore(isTest).Initialize())
+            {
                 ImportBlog(store, blog);
                 ImportBlogPosts(store, blog);
                 CreateSections(store);
@@ -35,23 +68,26 @@ namespace RaccoonBlog.ImportFromBlogML {
                 s.Store(new Section { Title = "Tags", IsActive = true, Position = 2, ControllerName = "Section", ActionName = "TagsList" });
                 s.Store(new Section { Title = "Statistics", IsActive = true, Position = 3, ControllerName = "Section", ActionName = "PostsStatistics" });
                 s.Store(new Section { Title = "Future Posts", IsActive = true, Position = 4, ControllerName = "Section", ActionName = "FuturePosts" });
-						
                 s.SaveChanges();
             }
         }
 
-        private static void ImportBlogPosts(IDocumentStore store, BlogMLBlog blog) {
+        private static void ImportBlogPosts(IDocumentStore store, BlogMLBlog blog)
+        {
             Stopwatch sp = Stopwatch.StartNew();
 
             var usersList = new Dictionary<string, User>();
-            using (var s = store.OpenSession()) {
-                for (int i = 0; i < blog.Authors.Count; ++i) {
-                    var user = new User {
-                        Id = "users/" + (i+1),
-                        FullName = blog.Authors[i].Title,
-                        Email = blog.Authors[i].Email,
-                        Enabled = blog.Authors[i].Approved,
-                    };
+            using (var s = store.OpenSession())
+            {
+                for (int i = 0; i < blog.Authors.Count; ++i)
+                {
+                    var user = new User
+                        {
+                            Id = "users/" + (i + 1),
+                            FullName = blog.Authors[i].Title,
+                            Email = blog.Authors[i].Email,
+                            Enabled = blog.Authors[i].Approved,
+                        };
                     user.SetPassword("123456");
                     s.Store(user);
                     usersList.Add(blog.Authors[i].ID, user);
@@ -59,76 +95,92 @@ namespace RaccoonBlog.ImportFromBlogML {
                 s.SaveChanges();
             }
 
-            foreach (var post in blog.Posts) {
+            foreach (var post in blog.Posts)
+            {
                 string authorId;
                 User user;
-                if (post.Authors.Count > 0 && usersList.TryGetValue(post.Authors.Cast<BlogMLAuthorReference>().First().Ref, out user)) {
+                if (post.Authors.Count > 0 &&
+                    usersList.TryGetValue(post.Authors.Cast<BlogMLAuthorReference>().First().Ref, out user))
+                {
                     authorId = user.Id;
-                } else {
+                }
+                else
+                {
                     authorId = usersList.First().Value.Id;
                 }
 
-                var ravenPost = new Post {
-                    AuthorId = authorId,
-                    CreatedAt = new DateTimeOffset(post.DateCreated),
-                    PublishAt = new DateTimeOffset(post.DateCreated),
-                    Body = post.Content.Text,
-                    LegacySlug = SlugConverter.TitleToSlug(post.PostName ?? post.Title),
-                    Title = HttpUtility.HtmlDecode(post.Title),
-                    Tags = post.Categories.Cast<BlogMLCategoryReference>().Select(x => blog.Categories.First(c => c.ID == x.Ref).Title).ToArray(),
-                    AllowComments = true
-                };
+                var ravenPost = new Post
+                    {
+                        AuthorId = authorId,
+                        CreatedAt = new DateTimeOffset(post.DateCreated),
+                        PublishAt = new DateTimeOffset(post.DateCreated),
+                        Body = post.Content.Text,
+                        LegacySlug = SlugConverter.TitleToSlug(post.PostName ?? post.Title),
+                        Title = HttpUtility.HtmlDecode(post.Title),
+                        Tags =
+                            post.Categories.Cast<BlogMLCategoryReference>()
+                                .Select(x => blog.Categories.First(c => c.ID == x.Ref).Title)
+                                .ToArray(),
+                        AllowComments = true
+                    };
 
                 var commentsCollection = new PostComments();
                 commentsCollection.Spam = new List<PostComments.Comment>();
                 commentsCollection.Comments = post.Comments.Cast<BlogMLComment>()
-                    .Where(comment => comment.Approved)
-                    .OrderBy(comment => comment.DateCreated)
-                    .Select(
-                        comment => new PostComments.Comment {
-                            Id = commentsCollection.GenerateNewCommentId(),
-                            Author = comment.UserName,
-                            Body = ConvertCommentToMarkdown(comment.Content.Text),
-                            CreatedAt = comment.DateCreated,
-                            Email = comment.UserEMail,
-                            Url = comment.UserUrl,
-                            Important = usersList.Any(u => u.Value.FullName == comment.UserName),
-                            //UserAgent = comment.,
-                            //UserHostAddress = comment.IpAddress,
-                            IsSpam = false,
-                            CommenterId = null,
-                        }
+                                                  .Where(comment => comment.Approved)
+                                                  .OrderBy(comment => comment.DateCreated)
+                                                  .Select(
+                                                      comment => new PostComments.Comment
+                                                          {
+                                                              Id = commentsCollection.GenerateNewCommentId(),
+                                                              Author = comment.UserName,
+                                                              Body = ConvertCommentToMarkdown(comment.Content.Text),
+                                                              CreatedAt = comment.DateCreated,
+                                                              Email = comment.UserEMail,
+                                                              Url = comment.UserUrl,
+                                                              Important =
+                                                                  usersList.Any(
+                                                                      u => u.Value.FullName == comment.UserName),
+                                                              //UserAgent = comment.,
+                                                              //UserHostAddress = comment.IpAddress,
+                                                              IsSpam = false,
+                                                              CommenterId = null,
+                                                          }
                     ).ToList();
                 commentsCollection.Spam = post.Comments.Cast<BlogMLComment>()
-                    .Where(comment => !comment.Approved)
-                    .OrderBy(comment => comment.DateCreated)
-                    .Select(
-                        comment => new PostComments.Comment {
-                            Id = commentsCollection.GenerateNewCommentId(),
-                            Author = comment.UserName,
-                            Body = ConvertCommentToMarkdown(comment.Content.Text),
-                            CreatedAt = comment.DateCreated,
-                            Email = comment.UserEMail,
-                            Url = comment.UserUrl,
-                            Important = usersList.Any(u => u.Value.FullName == comment.UserName),
-                            //UserAgent = comment.UserAgent,
-                            //UserHostAddress = comment.IpAddress,
-                            IsSpam = true,
-                            CommenterId = null,
-                        }
+                                              .Where(comment => !comment.Approved)
+                                              .OrderBy(comment => comment.DateCreated)
+                                              .Select(
+                                                  comment => new PostComments.Comment
+                                                      {
+                                                          Id = commentsCollection.GenerateNewCommentId(),
+                                                          Author = comment.UserName,
+                                                          Body = ConvertCommentToMarkdown(comment.Content.Text),
+                                                          CreatedAt = comment.DateCreated,
+                                                          Email = comment.UserEMail,
+                                                          Url = comment.UserUrl,
+                                                          Important =
+                                                              usersList.Any(u => u.Value.FullName == comment.UserName),
+                                                          //UserAgent = comment.UserAgent,
+                                                          //UserHostAddress = comment.IpAddress,
+                                                          IsSpam = true,
+                                                          CommenterId = null,
+                                                      }
                     ).Where(c => c.Body != null).ToList();
 
                 ravenPost.CommentsCount = commentsCollection.Comments.Count;
 
-                using (var s = store.OpenSession()) {
+                using (var s = store.OpenSession())
+                {
                     s.Store(commentsCollection);
                     ravenPost.CommentsId = commentsCollection.Id;
 
                     s.Store(ravenPost);
-                    commentsCollection.Post = new PostComments.PostReference {
-                        Id = ravenPost.Id,
-                        PublishAt = ravenPost.PublishAt
-                    };
+                    commentsCollection.Post = new PostComments.PostReference
+                        {
+                            Id = ravenPost.Id,
+                            PublishAt = ravenPost.PublishAt
+                        };
 
                     s.SaveChanges();
                 }
@@ -137,47 +189,57 @@ namespace RaccoonBlog.ImportFromBlogML {
             Console.WriteLine(sp.Elapsed);
         }
 
-        private static void ImportBlog(IDocumentStore store, BlogMLBlog blog) {
+        private static void ImportBlog(IDocumentStore store, BlogMLBlog blog)
+        {
             var config = BlogConfig.New();
             config.Title = blog.Title;
             config.Subtitle = blog.SubTitle;
             config.Copyright = String.Join(", ", blog.Authors.Select(author => author.Title));
             config.MetaDescription = String.Join(", ", blog.Categories.Select(category => category.Title));
 
-            using (var session = store.OpenSession()) {
+            using (var session = store.OpenSession())
+            {
                 session.Store(config);
                 session.SaveChanges();
             }
         }
 
-        private static BlogMLBlog GetBlog(string filename) {
-            using (var stream = File.OpenRead(filename)) {
+        private static BlogMLBlog GetBlog(string filename)
+        {
+            using (var stream = File.OpenRead(filename))
+            {
                 return BlogMLSerializer.Deserialize(stream);
             }
         }
 
-        private static string ConvertCommentToMarkdown(string body) {
+        private static string ConvertCommentToMarkdown(string body)
+        {
             var sb = new StringBuilder();
 
-            var sgmlReader = new SgmlReader {
-                InputStream = new StringReader(body),
-                DocType = "HTML",
-                WhitespaceHandling = WhitespaceHandling.Significant,
-                CaseFolding = CaseFolding.ToLower
-            };
+            var sgmlReader = new SgmlReader
+                {
+                    InputStream = new StringReader(body),
+                    DocType = "HTML",
+                    WhitespaceHandling = WhitespaceHandling.Significant,
+                    CaseFolding = CaseFolding.ToLower
+                };
 
-            try {
+            try
+            {
                 bool outputEndElement = false;
                 int indentLevel = 0;
-                while (sgmlReader.Read()) {
-                    switch (sgmlReader.NodeType) {
+                while (sgmlReader.Read())
+                {
+                    switch (sgmlReader.NodeType)
+                    {
                         case XmlNodeType.Text:
                             if (indentLevel > 0)
                                 sb.Append("\t");
                             sb.AppendLine(sgmlReader.Value);
                             break;
                         case XmlNodeType.Element:
-                            switch (sgmlReader.LocalName) {
+                            switch (sgmlReader.LocalName)
+                            {
                                 case "h1":
                                     sb.Append("## ");
                                     break;
@@ -185,7 +247,8 @@ namespace RaccoonBlog.ImportFromBlogML {
                                     sb.AppendLine("  ");
                                     break;
                                 case "a":
-                                    if (sgmlReader.MoveToAttribute("href")) {
+                                    if (sgmlReader.MoveToAttribute("href"))
+                                    {
                                         string url = sgmlReader.Value;
                                         sgmlReader.Read();
 
@@ -236,9 +299,19 @@ namespace RaccoonBlog.ImportFromBlogML {
                 }
 
                 return sb.ToString();
-            } catch {
+            }
+            catch
+            {
                 return null;
             }
+        }
+    }
+
+    public class NoStaleQueriesAllowed : IDocumentQueryListener
+    {
+        public void BeforeQueryExecuted(IDocumentQueryCustomization queryCustomization)
+        {
+            queryCustomization.WaitForNonStaleResults();
         }
     }
 }
