@@ -80,6 +80,7 @@
     <Compile Include="Routing\RouteCollectionExtension.cs" />
     <Compile Include="Tasks\BackgroundTask.cs" />
     <Compile Include="Tasks\TaskExecutor.cs" />
+    <Compile Include="Utils\NoStaleQueriesAllowed.cs" />
     <Compile Include="Utils\StringRandomizer.cs" />
   </ItemGroup>
   <ItemGroup>
