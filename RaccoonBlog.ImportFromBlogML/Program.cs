@@ -7,12 +7,12 @@ using System.Text;
 using System.Web;
 using System.Xml;
 using BlogML.Xml;
+using HibernatingRhinos.Loci.Common.Utils;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
 using Raven.Client;
 using Raven.Client.Document;
 using Raven.Client.Embedded;
-using Raven.Client.Listeners;
 using Sgml;
 
 namespace RaccoonBlog.ImportFromBlogML
@@ -304,14 +304,6 @@ namespace RaccoonBlog.ImportFromBlogML
             {
                 return null;
             }
-        }
-    }
-
-    public class NoStaleQueriesAllowed : IDocumentQueryListener
-    {
-        public void BeforeQueryExecuted(IDocumentQueryCustomization queryCustomization)
-        {
-            queryCustomization.WaitForNonStaleResults();
         }
     }
 }
