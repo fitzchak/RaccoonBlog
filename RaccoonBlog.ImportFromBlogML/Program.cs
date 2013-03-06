@@ -62,6 +62,13 @@ namespace RaccoonBlog.ImportFromBlogML
 
             var usersList = ImportUserList(store, blog);
 
+            importBlogPosts(store, blog, usersList);
+
+            Console.WriteLine(sp.Elapsed);
+        }
+
+        private void importBlogPosts(IDocumentStore store, BlogMLBlog blog, Dictionary<string, User> usersList)
+        {
             foreach (var post in blog.Posts)
             {
                 string authorId;
@@ -152,8 +159,6 @@ namespace RaccoonBlog.ImportFromBlogML
                     s.SaveChanges();
                 }
             }
-
-            Console.WriteLine(sp.Elapsed);
         }
 
         private static Dictionary<string, User> ImportUserList(IDocumentStore store, BlogMLBlog blog)
