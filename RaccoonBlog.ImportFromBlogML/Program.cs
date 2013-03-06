@@ -11,65 +11,37 @@ using HibernatingRhinos.Loci.Common.Utils;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
 using Raven.Client;
-using Raven.Client.Document;
-using Raven.Client.Embedded;
 using Sgml;
 
 namespace RaccoonBlog.ImportFromBlogML
 {
-    internal class Program
+    public class Program : ImportBase
     {
-        #region GetDocumentStore
+        private readonly BlogMLBlog blog;
+        private readonly bool isTest;
 
-        private static IDocumentStore GetDocumentStore(bool isTest)
+        public Program(BlogMLBlog blog, bool isTest)
         {
-            return isTest ? GetInMemoryDocumentStore() : GetDocumentStore();
+            this.blog = blog;
+            this.isTest = isTest;
         }
 
-        private static DocumentStore GetInMemoryDocumentStore()
+        void Run()
         {
-            var documentStore = new EmbeddableDocumentStore
-                {
-                    RunInMemory = true
-                };
-
-            documentStore.RegisterListener(new NoStaleQueriesAllowed());
-            return documentStore;
-        }
-
-        private static DocumentStore GetDocumentStore()
-        {
-            return new DocumentStore
-                {
-                    Url = "http://localhost:8080",
-                    DefaultDatabase = "RaccoonBlog"
-                };
-        }
-
-        #endregion
-
-        private static void Main(string[] args)
-        {
-            var blog = GetBlog(args[0]);
-            bool isTest = args.Length >= 2 && args[1].Equals("-t");
-
             using (var store = GetDocumentStore(isTest).Initialize())
             {
                 ImportBlog(store, blog);
                 ImportBlogPosts(store, blog);
                 CreateSections(store);
             }
-            Console.WriteLine("Done importing");
         }
-
-        private static void CreateSections(IDocumentStore store) {
-            using (var s = store.OpenSession()) {
-                s.Store(new Section { Title = "Archive", IsActive = true, Position = 1, ControllerName = "Section", ActionName = "ArchivesList" });
-                s.Store(new Section { Title = "Tags", IsActive = true, Position = 2, ControllerName = "Section", ActionName = "TagsList" });
-                s.Store(new Section { Title = "Statistics", IsActive = true, Position = 3, ControllerName = "Section", ActionName = "PostsStatistics" });
-                s.Store(new Section { Title = "Future Posts", IsActive = true, Position = 4, ControllerName = "Section", ActionName = "FuturePosts" });
-                s.SaveChanges();
-            }
+        private static void Main(string[] args)
+        {
+            var blog = GetBlog(args[0]);
+            bool isTest = args.Length >= 2 && args[1].Equals("-t");
+            var runner = new Program(blog, isTest);
+            runner.Run();
+            Console.WriteLine("Done importing");
         }
 
         private static void ImportBlogPosts(IDocumentStore store, BlogMLBlog blog)
