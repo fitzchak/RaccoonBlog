@@ -56,28 +56,11 @@ namespace RaccoonBlog.ImportFromBlogML
             Console.WriteLine("Done importing");
         }
 
-        private static void ImportBlogPosts(IDocumentStore store, BlogMLBlog blog)
+        void ImportBlogPosts(IDocumentStore store, BlogMLBlog blog)
         {
             Stopwatch sp = Stopwatch.StartNew();
 
-            var usersList = new Dictionary<string, User>();
-            using (var s = store.OpenSession())
-            {
-                for (int i = 0; i < blog.Authors.Count; ++i)
-                {
-                    var user = new User
-                        {
-                            Id = "users/" + (i + 1),
-                            FullName = blog.Authors[i].Title,
-                            Email = blog.Authors[i].Email,
-                            Enabled = blog.Authors[i].Approved,
-                        };
-                    user.SetPassword("123456");
-                    s.Store(user);
-                    usersList.Add(blog.Authors[i].ID, user);
-                }
-                s.SaveChanges();
-            }
+            var usersList = ImportUserList(store, blog);
 
             foreach (var post in blog.Posts)
             {
@@ -173,7 +156,30 @@ namespace RaccoonBlog.ImportFromBlogML
             Console.WriteLine(sp.Elapsed);
         }
 
-        private static void ImportBlog(IDocumentStore store, BlogMLBlog blog)
+        private static Dictionary<string, User> ImportUserList(IDocumentStore store, BlogMLBlog blog)
+        {
+            var usersList = new Dictionary<string, User>();
+            using (var s = store.OpenSession())
+            {
+                for (int i = 0; i < blog.Authors.Count; ++i)
+                {
+                    var user = new User
+                        {
+                            Id = "users/" + (i + 1),
+                            FullName = blog.Authors[i].Title,
+                            Email = blog.Authors[i].Email,
+                            Enabled = blog.Authors[i].Approved,
+                        };
+                    user.SetPassword("123456");
+                    s.Store(user);
+                    usersList.Add(blog.Authors[i].ID, user);
+                }
+                s.SaveChanges();
+            }
+            return usersList;
+        }
+
+        void ImportBlog(IDocumentStore store, BlogMLBlog blog)
         {
             var config = BlogConfig.New();
             config.Title = blog.Title;
@@ -196,7 +202,7 @@ namespace RaccoonBlog.ImportFromBlogML
             }
         }
 
-        private static string ConvertCommentToMarkdown(string body)
+        string ConvertCommentToMarkdown(string body)
         {
             var sb = new StringBuilder();
 
