@@ -71,17 +71,7 @@ namespace RaccoonBlog.ImportFromBlogML
         {
             foreach (var post in blog.Posts)
             {
-                string authorId;
-                User user;
-                if (post.Authors.Count > 0 &&
-                    usersList.TryGetValue(post.Authors.Cast<BlogMLAuthorReference>().First().Ref, out user))
-                {
-                    authorId = user.Id;
-                }
-                else
-                {
-                    authorId = usersList.First().Value.Id;
-                }
+                var authorId = getAuthorId(usersList, post);
 
                 var ravenPost = new Post
                     {
@@ -159,6 +149,22 @@ namespace RaccoonBlog.ImportFromBlogML
                     s.SaveChanges();
                 }
             }
+        }
+
+        private string getAuthorId(Dictionary<string, User> usersList, BlogMLPost post)
+        {
+            string authorId;
+            User user;
+            if (post.Authors.Count > 0 &&
+                usersList.TryGetValue(post.Authors.Cast<BlogMLAuthorReference>().First().Ref, out user))
+            {
+                authorId = user.Id;
+            }
+            else
+            {
+                authorId = usersList.First().Value.Id;
+            }
+            return authorId;
         }
 
         private static Dictionary<string, User> ImportUserList(IDocumentStore store, BlogMLBlog blog)
