@@ -6,15 +6,41 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Xml;
+using RaccoonBlog.IntegrationTests.Web.Controllers;
 using RaccoonBlog.Web.Models;
 using Raven.Client;
 using Raven.Client.Document;
+using Raven.Client.Embedded;
 using Sgml;
 
 namespace RaccoonBlog.ImportFromSubtext
 {
 	internal class Program
 	{
+        private static IDocumentStore GetDocumentStore(bool isTest)
+        {
+            return isTest ? GetInMemoryDocumentStore() : GetDocumentStore();
+        }
+
+        private static DocumentStore GetInMemoryDocumentStore()
+        {
+            var documentStore = new EmbeddableDocumentStore
+            {
+                RunInMemory = true
+            };
+
+            documentStore.RegisterListener(new NoStaleQueriesAllowed());
+            return documentStore;
+        }
+
+        private static DocumentStore GetDocumentStore()
+        {
+            return new DocumentStore
+            {
+                Url = "http://localhost:8080",
+                DefaultDatabase = "RaccoonBlog"
+            };
+        }
 		private static void Main(string[] args)
 		{
 			using (IDocumentStore store = new DocumentStore
