@@ -1,8 +1,11 @@
 ﻿@model PostViewModel
 @{
 	ViewBag.Title = @Model.Post.Title;
-	ViewBag.CurrentUrl = Url.Action("Details", new { Model.Post.Id, Model.Post.Slug });
 }
+@{
+    ViewBag.CurrentUrl = Url.Action("Details", new { Model.Post.Id, Model.Post.Slug });
+}
+
 <article class="post-detalis">
 	<header>
 		<h1><a href="@Url.Action("Details", new { Model.Post.Id, Model.Post.Slug })">@Model.Post.Title</a></h1>
