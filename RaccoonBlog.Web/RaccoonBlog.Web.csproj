@@ -813,6 +813,7 @@
     <None Include="Content\js\ckeditor\ckeditor_php5.php" />
     <Content Include="NLog.config" />
     <None Include="Properties\PublishProfiles\Ayende.com.pubxml" />
+    <None Include="Properties\PublishProfiles\Profile1.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HibernatingRhinos.Loci.Common\Loci.Common.csproj">
