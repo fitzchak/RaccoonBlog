@@ -41,11 +41,19 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="Raven.Abstractions">
-      <HintPath>..\packages\RavenDB.Client.2.0.2237-Unstable\lib\net40\Raven.Abstractions.dll</HintPath>
+    <Reference Include="Raven.Abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RavenDB.Client.2.0.2261\lib\net40\Raven.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Raven.Client.Lightweight">
-      <HintPath>..\packages\RavenDB.Client.2.0.2237-Unstable\lib\net40\Raven.Client.Lightweight.dll</HintPath>
+    <Reference Include="Raven.Client.Embedded">
+      <HintPath>..\packages\RavenDB.Embedded.2.0.2261\lib\net40\Raven.Client.Embedded.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Client.Lightweight, Version=2.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RavenDB.Client.2.0.2261\lib\net40\Raven.Client.Lightweight.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Database">
+      <HintPath>..\packages\RavenDB.Database.2.0.2261\lib\net40\Raven.Database.dll</HintPath>
     </Reference>
     <Reference Include="SgmlReaderDll">
       <HintPath>..\SharedLibs\SgmlReaderDll.dll</HintPath>
@@ -85,6 +93,10 @@
     <ProjectReference Include="..\HibernatingRhinos.Loci.Common\Loci.Common.csproj">
       <Project>{238D8AAA-FD89-48E7-9446-ADCDE845B58E}</Project>
       <Name>Loci.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RaccoonBlog.IntegrationTests\RaccoonBlog.IntegrationTests.csproj">
+      <Project>{03EBB446-3306-4F60-B49F-29E4737CEAFC}</Project>
+      <Name>RaccoonBlog.IntegrationTests</Name>
     </ProjectReference>
     <ProjectReference Include="..\RaccoonBlog.Web\RaccoonBlog.Web.csproj">
       <Project>{58CCD7A4-503D-467D-8DC4-4D310BD42774}</Project>
