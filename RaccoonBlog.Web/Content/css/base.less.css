@@ -22,6 +22,7 @@ body
 	font-family: georgia, verdana, arial, Sans-Serif;
 	color: #333;
 	background: @backgroundColor;
+	line-height: 1.4;
 }
 
 .clr 

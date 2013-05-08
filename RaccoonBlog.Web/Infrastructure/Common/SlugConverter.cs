@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Web;
 
 namespace RaccoonBlog.Web.Infrastructure.Common
 {
@@ -8,6 +9,8 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 	{
 		public static string TitleToSlug(string title)
 		{
+			title = HttpUtility.HtmlDecode(title);
+
 			// 2 - Strip diacritical marks using Michael Kaplan's function or equivalent
 			title = RemoveDiacritics(title);
 
