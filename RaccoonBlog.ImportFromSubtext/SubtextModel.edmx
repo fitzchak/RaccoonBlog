@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
   <!-- EF Runtime content -->
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SubtextModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+      <Schema Namespace="SubtextModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="SubtextModelStoreContainer">
-          <EntitySet Name="subtext_Content" EntityType="SubtextModel.Store.subtext_Content" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="subtext_FeedBack" EntityType="SubtextModel.Store.subtext_FeedBack" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="subtext_LinkCategories" EntityType="SubtextModel.Store.subtext_LinkCategories" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="subtext_Links" EntityType="SubtextModel.Store.subtext_Links" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="subtext_Content" EntityType="SubtextModel.Store.subtext_Content" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="subtext_FeedBack" EntityType="SubtextModel.Store.subtext_FeedBack" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="subtext_LinkCategories" EntityType="SubtextModel.Store.subtext_LinkCategories" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="subtext_Links" EntityType="SubtextModel.Store.subtext_Links" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
           <AssociationSet Name="FK_subtext_Feedback_subtext_Content" Association="SubtextModel.Store.FK_subtext_Feedback_subtext_Content">
             <End Role="subtext_Content" EntitySet="subtext_Content" />
             <End Role="subtext_FeedBack" EntitySet="subtext_FeedBack" />
@@ -131,8 +131,8 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="SubtextModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
-        <EntityContainer Name="SubtextEntities" annotation:LazyLoadingEnabled="true">
+      <Schema Namespace="SubtextModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SubtextEntities" annotation:LazyLoadingEnabled="true" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
           <EntitySet Name="Posts" EntityType="SubtextModel.Post" />
           <EntitySet Name="Comments" EntityType="SubtextModel.Comment" />
           <EntitySet Name="Categories" EntityType="SubtextModel.Category" />
@@ -154,7 +154,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
           <Property Name="DateAdded" Type="DateTime" Nullable="false" />
           <Property Name="PostType" Type="Int32" Nullable="false" />
@@ -175,7 +175,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
           <Property Name="Body" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="BlogId" Type="Int32" Nullable="false" />
@@ -199,7 +199,7 @@
           <Key>
             <PropertyRef Name="CategoryID" />
           </Key>
-          <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
           <Property Name="BlogId" Type="Int32" Nullable="false" />
@@ -211,7 +211,7 @@
           <Key>
             <PropertyRef Name="LinkID" />
           </Key>
-          <Property Name="LinkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LinkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Name="Title" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
           <Property Name="Url" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
           <Property Name="Rss" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
@@ -264,7 +264,7 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="SubtextModelStoreContainer" CdmEntityContainer="SubtextEntities">
           <EntitySetMapping Name="Posts"><EntityTypeMapping TypeName="SubtextModel.Post"><MappingFragment StoreEntitySet="subtext_Content">
             <ScalarProperty Name="ID" ColumnName="ID" />
@@ -327,7 +327,7 @@
     </edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
-  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <Connection>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
