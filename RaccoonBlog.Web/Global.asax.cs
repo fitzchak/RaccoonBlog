@@ -1,14 +1,16 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 using DataAnnotationsExtensions.ClientValidation;
 using HibernatingRhinos.Loci.Common.Controllers;
 using HibernatingRhinos.Loci.Common.Tasks;
 using RaccoonBlog.Web.Areas.Admin.Controllers;
-using RaccoonBlog.Web.Controllers;
 using RaccoonBlog.Web.Helpers.Binders;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Indexes;
@@ -25,48 +27,35 @@ namespace RaccoonBlog.Web
 		public MvcApplication()
 		{
 			BeginRequest += (sender, args) =>
-			                	{
-			                		HttpContext.Current.Items["CurrentRequestRavenSession"] = RavenController.DocumentStore.OpenSession();
-			                	};
+			{
+				HttpContext.Current.Items["CurrentRequestRavenSession"] = RavenController.DocumentStore.OpenSession();
+			};
 			EndRequest += (sender, args) =>
-			              	{
-								using (var session = (IDocumentSession)HttpContext.Current.Items["CurrentRequestRavenSession"])
-								{
-									if (session == null)
-										return;
+			{
+				using (var session = (IDocumentSession) HttpContext.Current.Items["CurrentRequestRavenSession"])
+				{
+					if (session == null)
+						return;
 
-									if (Server.GetLastError() != null)
-										return;
+					if (Server.GetLastError() != null)
+						return;
 
-									session.SaveChanges();
-								}
-								TaskExecutor.StartExecuting();
-			              	};
-		}
-
-		public static void RegisterGlobalFilters(GlobalFilterCollection filters)
-		{
-			filters.Add(new HandleErrorAttribute());
+					session.SaveChanges();
+				}
+				TaskExecutor.StartExecuting();
+			};
 		}
 
 		protected void Application_Start()
 		{
 			AreaRegistration.RegisterAllAreas();
 
-			LogManager.GetCurrentClassLogger().Info("Started Raccon Blog");
-
-			// Work around nasty .NET framework bug
-			try
-			{
-				new Uri("http://fail/first/time?only=%2bplus");
-			}
-			catch (Exception)
-			{
-			}
-
-			RegisterGlobalFilters(GlobalFilters.Filters);
-			InitializeDocumentStore();
+			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 			new RouteConfigurator(RouteTable.Routes).Configure();
+
+			InitializeDocumentStore();
+			LogManager.GetCurrentClassLogger().Info("Started Raccoon Blog");
+
 			ModelBinders.Binders.Add(typeof (CommentCommandOptions), new RemoveSpacesEnumBinder());
 			ModelBinders.Binders.Add(typeof (Guid), new GuidBinder());
 
