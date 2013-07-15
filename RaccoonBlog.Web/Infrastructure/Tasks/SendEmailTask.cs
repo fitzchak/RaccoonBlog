@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Web;
+using System.Web.Caching;
+using System.Web.Instrumentation;
 using System.Web.Mvc;
 using System.Web.Routing;
 using HibernatingRhinos.Loci.Common.Extensions;
@@ -52,14 +55,14 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 			var stringWriter = new StringWriter();
 			viewEngineResult.View.Render(
 				new ViewContext(controllerContext, viewEngineResult.View, new ViewDataDictionary(model), new TempDataDictionary(),
-				                stringWriter), stringWriter);
+								stringWriter), stringWriter);
 
 			var mailMessage = new MailMessage
-			                  {
-			                  	IsBodyHtml = true,
-			                  	Body = stringWriter.GetStringBuilder().ToString(),
-			                  	Subject = subject,
-			                  };
+			{
+				IsBodyHtml = true,
+				Body = stringWriter.GetStringBuilder().ToString(),
+				Subject = subject,
+			};
 			if (string.IsNullOrEmpty(replyTo) == false)
 			{
 				try
@@ -111,7 +114,12 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 
 			public override System.Web.Caching.Cache Cache
 			{
-				get { return HttpRuntime.Cache; }
+				get { return new Cache(); }
+			}
+
+			public override PageInstrumentationService PageInstrumentation
+			{
+				get { return new PageInstrumentationService(); }
 			}
 
 			public override HttpResponseBase Response
@@ -121,7 +129,7 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 
 			public override HttpRequestBase Request
 			{
-				get { return new HttpRequestWrapper(new HttpRequest("", ConfigurationManager.AppSettings["MainUrl"], "")); }
+				get { return new MailHttpRequset(); }
 			}
 		}
 
@@ -130,6 +138,57 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 			public override string ApplyAppPathModifier(string virtualPath)
 			{
 				return virtualPath;
+			}
+
+			public override HttpCookieCollection Cookies
+			{
+				get { return new HttpCookieCollection(); }
+			}
+		}
+
+		public class MailHttpRequset : HttpRequestBase
+		{
+			public override string UserAgent
+			{
+				get { return "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.72 Safari/537.36"; }
+			}
+
+			public override HttpBrowserCapabilitiesBase Browser
+			{
+				get { return new MailBrowserCapabilities(); }
+			}
+
+			public override HttpCookieCollection Cookies
+			{
+				get { return new HttpCookieCollection(); }
+			}
+
+			public override bool IsLocal
+			{
+				get { return true; }
+			}
+
+			public override string ApplicationPath
+			{
+				get { return "/"; }
+			}
+
+			public override NameValueCollection ServerVariables
+			{
+				get { return new NameValueCollection(); }
+			}
+
+			public override Uri Url
+			{
+				get { return new Uri(ConfigurationManager.AppSettings["MainUrl"]); }
+			}
+		}
+
+		public class MailBrowserCapabilities : HttpBrowserCapabilitiesBase
+		{
+			public override bool IsMobileDevice
+			{
+				get { return false; }
 			}
 		}
 	}
