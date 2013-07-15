@@ -829,7 +829,7 @@
     <Content Include="NLog.config" />
     <None Include="Properties\PublishProfiles\Ayende.com.pubxml" />
     <None Include="Properties\PublishProfiles\oreneini.com.pubxml" />
-    <None Include="Properties\PublishProfiles\Profile1.pubxml" />
+    <None Include="Properties\PublishProfiles\blog.hibernatingrhinos.com.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HibernatingRhinos.Loci.Common\Loci.Common.csproj">
