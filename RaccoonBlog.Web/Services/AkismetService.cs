@@ -30,6 +30,9 @@ namespace RaccoonBlog.Web.Services
 
 		public static bool CheckForSpam(PostComments.Comment comment)
 		{
+#if DEBUG 
+			return false;
+#endif
 			var api = new Akismet(AkismetKey, BlogUrl, comment.UserAgent);
 			if (!api.VerifyKey()) throw new Exception("Akismet API key invalid.");
 
