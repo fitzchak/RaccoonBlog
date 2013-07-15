@@ -827,7 +827,7 @@
     <None Include="Content\js\ckeditor\ckeditor_php4.php" />
     <None Include="Content\js\ckeditor\ckeditor_php5.php" />
     <Content Include="NLog.config" />
-    <None Include="Properties\PublishProfiles\Ayende.com.pubxml" />
+    <None Include="Properties\PublishProfiles\blog.ayende.com.pubxml" />
     <None Include="Properties\PublishProfiles\oreneini.com.pubxml" />
     <None Include="Properties\PublishProfiles\blog.hibernatingrhinos.com.pubxml" />
   </ItemGroup>
