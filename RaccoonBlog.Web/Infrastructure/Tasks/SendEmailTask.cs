@@ -114,6 +114,7 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 
 			public override Cache Cache
 			{
+				// Avoid NRE on the server
 				get { return HttpRuntime.Cache; }
 			}
 
