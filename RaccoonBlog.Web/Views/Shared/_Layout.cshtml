@@ -76,7 +76,6 @@
 			});
 		</script>
 		@RenderSection("Script")
-		@Raven.Client.MvcIntegration.RavenProfiler.CurrentRequestSessions()
 	 if (string.IsNullOrEmpty(ViewBag.BlogConfig.GoogleAnalyticsKey) == false)
 	 { 
 			<script type="text/javascript">

@@ -86,16 +86,11 @@ namespace RaccoonBlog.Web
 			if (DocumentStore != null) return; // prevent misuse
 
 			DocumentStore = new DocumentStore
-			                	{
-			                		ConnectionStringName = "RavenDB"
-			                	}.Initialize();
+			{
+				ConnectionStringName = "RavenDB",
+			}.Initialize();
 
 			TryCreatingIndexesOrRedirectToErrorPage();
-
-			RavenProfiler.InitializeFor(DocumentStore,
-			                            //Fields to filter out of the output
-			                            "Email", "HashedPassword", "AkismetKey", "GoogleAnalyticsKey", "ShowPostEvenIfPrivate",
-			                            "PasswordSalt", "UserHostAddress");
 		}
 
 		private static void TryCreatingIndexesOrRedirectToErrorPage()
