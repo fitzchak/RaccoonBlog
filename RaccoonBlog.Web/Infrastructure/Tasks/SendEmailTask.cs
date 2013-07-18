@@ -112,9 +112,9 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 				get { return items; }
 			}
 
-			public override System.Web.Caching.Cache Cache
+			public override Cache Cache
 			{
-				get { return new Cache(); }
+				get { return HttpRuntime.Cache; }
 			}
 
 			public override PageInstrumentationService PageInstrumentation
