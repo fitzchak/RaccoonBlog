@@ -38,13 +38,11 @@ namespace RaccoonBlog.Web.Helpers
 
 		private static string AbsoluteActionUtil(UrlHelper url, string relativeUrl)
 		{
-			var request = url.RequestContext.HttpContext.Request;
-			Uri requestUrl = request.Url;
-			string absoluteAction = string.Format("{0}://{1}{2}",
-												  requestUrl.Scheme,
-												  requestUrl.Authority,
-												  relativeUrl);
-			return absoluteAction;
+			var absoluteUrl = new UriBuilder(url.RequestContext.HttpContext.Request.Url)
+			{
+				Path = relativeUrl,
+			}.ToString();
+			return absoluteUrl;
 		}
 
 
