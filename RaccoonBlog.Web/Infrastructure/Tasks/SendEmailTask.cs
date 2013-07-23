@@ -131,7 +131,7 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 
 			public override HttpRequestBase Request
 			{
-				get { return new MailHttpRequset(); }
+				get { return new MailHttpRequset(ConfigurationManager.AppSettings["MainUrl"]); }
 			}
 		}
 
@@ -150,6 +150,13 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 
 		public class MailHttpRequset : HttpRequestBase
 		{
+			private readonly Uri websiteUrl;
+
+			public MailHttpRequset(string websiteUrl)
+			{
+				this.websiteUrl = new Uri(websiteUrl);
+			}
+
 			public override string UserAgent
 			{
 				get { return "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.72 Safari/537.36"; }
@@ -172,7 +179,7 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 
 			public override string ApplicationPath
 			{
-				get { return "/"; }
+				get { return websiteUrl.AbsolutePath; }
 			}
 
 			public override NameValueCollection ServerVariables
@@ -182,7 +189,7 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 
 			public override Uri Url
 			{
-				get { return new Uri(ConfigurationManager.AppSettings["MainUrl"]); }
+				get { return websiteUrl; }
 			}
 		}
 
