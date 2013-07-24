@@ -1,8 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using JetBrains.Annotations;
@@ -11,7 +10,7 @@ namespace RaccoonBlog.Web.Helpers
 {
 	public static class UrlHelperExtensions
 	{
-	    public static string AbsoluteAction(this UrlHelper url, [AspMvcAction] string action, object routeValues)
+		public static string AbsoluteAction(this UrlHelper url, [AspMvcAction] string action, object routeValues)
 		{
 			return AbsoluteActionUtil(url, url.Action(action, routeValues));
 		}
@@ -38,15 +37,17 @@ namespace RaccoonBlog.Web.Helpers
 
 		private static string AbsoluteActionUtil(UrlHelper url, string relativeUrl)
 		{
-			var absoluteUrl = new UriBuilder(url.RequestContext.HttpContext.Request.Url)
-			{
-				Path = relativeUrl,
-			}.ToString();
+			var requestUrl = url.RequestContext.HttpContext.Request.Url;
+			var absoluteUrl = string.Format("{0}://{1}{2}",
+				requestUrl.Scheme,
+				requestUrl.Authority,
+				relativeUrl);
+
 			return absoluteUrl;
 		}
 
 
-		public static MvcHtmlString ActionLinkWithArray(this UrlHelper url, [AspMvcAction] string action, [AspMvcController] string controller, object routeData)
+		public static HtmlString ActionLinkWithArray(this UrlHelper url, [AspMvcAction] string action, [AspMvcController] string controller, object routeData)
 		{
 			string href = url.Action(action, controller, new {area = ""});
 
@@ -79,7 +80,7 @@ namespace RaccoonBlog.Web.Helpers
 			{
 				href += "?" + paramString;
 			}
-			return MvcHtmlString.Create(href);
+			return new HtmlString(href);
 		}
 	}
 }
