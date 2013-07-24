@@ -105,8 +105,6 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 
 		public class MailHttpContext : HttpContextBase
 		{
-			private readonly Cache cache = new Cache();
-
 			private readonly IDictionary items = new Hashtable();
 
 			public override IDictionary Items
@@ -116,7 +114,7 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 
 			public override Cache Cache
 			{
-				get { return cache; }
+				get { return HttpRuntime.Cache; }
 			}
 
 			public override PageInstrumentationService PageInstrumentation
