@@ -48,6 +48,9 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		[HttpPost]
 		public ActionResult RssFutureAccess(GenerateFutureRssAccessInput input)
 		{
+			if (ModelState.IsValid == false)
+				return View(input);
+
 			input.Token = GetFutureAccessToken(input.ExpiredOn, input.NumberOfFutureDays, input.User);
 			return View(input);
 		}
