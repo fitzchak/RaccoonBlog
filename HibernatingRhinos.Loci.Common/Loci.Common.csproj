@@ -98,9 +98,7 @@
     <Compile Include="Models\Configs.cs" />
     <Compile Include="Models\DynamicContent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Routing\LowercaseRoute.cs" />
     <Compile Include="Routing\OrganicSeoHelpers.cs" />
-    <Compile Include="Routing\RouteCollectionExtension.cs" />
     <Compile Include="Tasks\BackgroundTask.cs" />
     <Compile Include="Tasks\TaskExecutor.cs" />
     <Compile Include="Utils\NoStaleQueriesAllowed.cs" />
