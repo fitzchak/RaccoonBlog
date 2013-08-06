@@ -12,12 +12,18 @@
 	        <div id="content-table-inner" class="inputform">
 	            <div id="id-form" style="top: 0;">
 	                @Html.EditorFor(input => input.User)
-	                @Html.DisplayFor(input => input.Token)
+	                @Html.EditorFor(input => input.ExpiredOn)
+	                @Html.EditorFor(input => input.NumberOfFutureDays)
+                    
+                    @if (Model.Token != null)
+                    {
+                        @Html.DisplayFor(input => input.Token)
+                        @Html.ActionLink("RSS Feed Link", "Rss", "Syndication", new {area = "", token = Model.Token}, new {})
+                    }
 
 	                <div><input type="submit" value="Save" /></div>
 	            </div>
                 
-                @Html.ActionLink("Link", "Rss", "Syndication", new { area = "", token = Model.Token}, new {})
 	        </div>
 	    </div>
 	}

@@ -139,6 +139,7 @@
     <Compile Include="App_Start\CommonSetup.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\ViewModels\GenerateFutureRssAccessInput.cs" />
     <Compile Include="Areas\Admin\Controllers\SettingsController.cs" />
     <Compile Include="Areas\Admin\Helpers\MenuUtil.cs" />
     <Compile Include="Areas\Admin\Models\MenuItem.cs" />
@@ -815,6 +816,7 @@
     <Content Include="connString.config" />
     <Content Include="Areas\Admin\Views\Shared\RenderMenu.cshtml" />
     <Content Include="Areas\Admin\Views\Settings\RssFutureAccess.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\Int32.cshtml" />
     <None Include="Content\js\ckeditor\.htaccess" />
     <None Include="Content\js\ckeditor\ckeditor.pack" />
     <None Include="Content\js\ckeditor\ckeditor.php" />

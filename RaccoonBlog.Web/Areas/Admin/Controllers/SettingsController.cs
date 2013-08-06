@@ -38,13 +38,17 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		[HttpGet]
 		public ActionResult RssFutureAccess()
 		{
-			return View(new GenerateFutureRssAccessInput());
+			return View(new GenerateFutureRssAccessInput
+			{
+				ExpiredOn = DateTime.UtcNow.AddYears(1),
+				NumberOfFutureDays = 180,
+			});
 		}
 
 		[HttpPost]
 		public ActionResult RssFutureAccess(GenerateFutureRssAccessInput input)
 		{
-			input.Token = GetFutureAccessToken(DateTimeOffset.UtcNow.AddYears(1).DateTime, 180, input.User);
+			input.Token = GetFutureAccessToken(input.ExpiredOn, input.NumberOfFutureDays, input.User);
 			return View(input);
 		}
 
