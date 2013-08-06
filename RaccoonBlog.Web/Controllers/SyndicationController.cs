@@ -112,7 +112,7 @@ namespace RaccoonBlog.Web.Controllers
 				Title = BlogConfig.Title,
 				Take = 20
 			};
-			if (string.IsNullOrEmpty(token) != false)
+			if (string.IsNullOrEmpty(token))
 			{
 				behavior.PostsQuery = postsQuery.Where(x => x.PublishAt < DateTimeOffset.Now.AsMinutes());
 				return behavior;
@@ -120,7 +120,7 @@ namespace RaccoonBlog.Web.Controllers
 
 			int numberOfDays;
 			string user;
-			if (GetNumberOfDays(token, out numberOfDays, out user))
+			if (GetNumberOfDays(token, out numberOfDays , out user))
 			{
 				behavior.Take = Math.Max(numberOfDays, behavior.Take);
 				behavior.Title = behavior.Title + " for " + user;
@@ -145,23 +145,41 @@ namespace RaccoonBlog.Web.Controllers
 
 		private bool GetNumberOfDays(string token, out int numberOfDays, out string user)
 		{
-			using (var rijndael = Rijndael.Create())
+			try
 			{
-				rijndael.Key = Convert.FromBase64String(BlogConfig.FuturePostsEncryptionKey);
-				rijndael.IV = Convert.FromBase64String(BlogConfig.FuturePostsEncryptionIV);
+				var tokenBytes = Convert.FromBase64String(token);
+				var iv = new byte[16];
+				Buffer.BlockCopy(tokenBytes, 0, iv, 0, iv.Length);
 
-				using(var memoryStream = new MemoryStream(Convert.FromBase64String(token)))
-				using (var cryptoStream = new CryptoStream(memoryStream, rijndael.CreateDecryptor(), CryptoStreamMode.Read))
-				using (var reader = new BinaryReader(cryptoStream))
+				var decrypt = new byte[tokenBytes.Length - iv.Length];
+				Buffer.BlockCopy(tokenBytes, iv.Length, decrypt, 0, decrypt.Length);
+
+				using (var aes = new AesManaged())
 				{
-					var expiry = DateTime.FromBinary(reader.ReadInt64());
-					numberOfDays =  reader.ReadInt32();
-					user = reader.ReadString();
-					if (DateTime.UtcNow > expiry)
-						return false;
+					aes.Padding = PaddingMode.PKCS7;
 
-					return true;
+					aes.Key = Convert.FromBase64String("cxL93ropkZOh5aY+ghhUw+tVVs4/CmhtCCQqUeG4po4=");
+					aes.IV = iv;
+
+					using (var memoryStream = new MemoryStream(decrypt))
+					using (var cryptoStream = new CryptoStream(memoryStream, aes.CreateDecryptor(), CryptoStreamMode.Read))
+					using (var reader = new BinaryReader(cryptoStream))
+					{
+					var expiry = DateTime.FromBinary(reader.ReadInt64());
+						numberOfDays = reader.ReadInt32();
+						user = reader.ReadString();
+						if (DateTime.UtcNow > expiry)
+							return false;
+
+						return true;
+					}
 				}
+			}
+			catch (Exception)
+			{
+				numberOfDays = 0;
+				user = null;
+				return false;
 			}
 		}
 

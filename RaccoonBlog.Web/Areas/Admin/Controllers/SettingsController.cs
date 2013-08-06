@@ -1,4 +1,8 @@
+using System;
+using System.IO;
+using System.Security.Cryptography;
 using System.Web.Mvc;
+using RaccoonBlog.Web.Areas.Admin.ViewModels;
 using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Models;
 
@@ -29,6 +33,59 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			if (Request.IsAjaxRequest())
 				return Json(new { Success = true, ViewBag.Message });
 			return View(config);
+		}
+
+		[HttpGet]
+		public ActionResult RssFutureAccess()
+		{
+			return View(new GenerateFutureRssAccessInput());
+		}
+
+		[HttpPost]
+		public ActionResult RssFutureAccess(GenerateFutureRssAccessInput input)
+		{
+			input.Token = GetFutureAccessToken(DateTimeOffset.UtcNow.AddYears(1).DateTime, 180, input.User);
+			return View(input);
+		}
+
+		private string GetFutureAccessToken(DateTime expiresOn, int numberOfDays, string user)
+		{
+			using (var aes = new AesManaged())
+			{
+				aes.Padding = PaddingMode.PKCS7;
+
+				if (string.IsNullOrWhiteSpace(BlogConfig.FuturePostsEncryptionKey))
+				{
+					// Setting the encryption key will invalidate the previous generated links,
+					// but here it is null anyway, to this is not a problem.
+					BlogConfig.FuturePostsEncryptionKey = Convert.ToBase64String(aes.Key);
+				}
+				else
+					aes.Key = Convert.FromBase64String("cxL93ropkZOh5aY+ghhUw+tVVs4/CmhtCCQqUeG4po4=");
+
+				using (var memoryStream = new MemoryStream())
+				{
+					using (var cryptoStream = new CryptoStream(memoryStream, aes.CreateEncryptor(), CryptoStreamMode.Write))
+					{
+						using (var writer = new BinaryWriter(cryptoStream))
+						{
+							writer.Write(expiresOn.ToBinary());
+							writer.Write(numberOfDays);
+							writer.Write(user);
+							writer.Flush();
+						}
+						cryptoStream.Flush();
+					}
+					var encrypted = memoryStream.ToArray();
+					var iv = aes.IV;
+
+					var result = new byte[iv.Length + encrypted.Length];
+					iv.CopyTo(result, 0);
+					encrypted.CopyTo(result, iv.Length);
+
+					return Convert.ToBase64String(result);
+				}
+			}
 		}
 	}
 }

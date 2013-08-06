@@ -1,0 +1,26 @@
+﻿@model RaccoonBlog.Web.Areas.Admin.ViewModels.GenerateFutureRssAccessInput
+@{
+	ViewBag.Title = "Blog Configuration";
+}
+<article id="user-input">
+	<div id="page-heading">
+		<h1>Generate RSS with Future Access link</h1>
+	</div>
+	@using (Html.BeginForm())
+	{
+	    <div>
+	        <div id="content-table-inner" class="inputform">
+	            <div id="id-form" style="top: 0;">
+	                @Html.EditorFor(input => input.User)
+	                @Html.DisplayFor(input => input.Token)
+
+	                <div><input type="submit" value="Save" /></div>
+	            </div>
+                
+                @Html.ActionLink("Link", "Rss", "Syndication", new { area = "", token = Model.Token}, new {})
+	        </div>
+	    </div>
+	}
+    
+</article>
+<div class="clear"></div>

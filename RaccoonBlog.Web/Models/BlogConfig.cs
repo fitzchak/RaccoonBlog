@@ -30,9 +30,6 @@ namespace RaccoonBlog.Web.Models
 		[Display(Name = "Google-Analytics Key")]
 		public string GoogleAnalyticsKey { get; set; }
 
-		[Display(Name = "FuturePostsEncryptionIV")]
-		public string FuturePostsEncryptionIV { get; set; }
-
 		[Display(Name = "FuturePostsEncryptionKey")]
 		public string FuturePostsEncryptionKey { get; set; }
 
