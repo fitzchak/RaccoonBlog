@@ -11,7 +11,7 @@ namespace HibernatingRhinos.Loci.Common.Utils
             return isTest ? GetInMemoryDocumentStore() : GetDocumentStore();
         }
 
-        protected DocumentStore GetInMemoryDocumentStore()
+        protected IDocumentStore GetInMemoryDocumentStore()
         {
             var documentStore = new EmbeddableDocumentStore
                 {
@@ -22,7 +22,7 @@ namespace HibernatingRhinos.Loci.Common.Utils
             return documentStore;
         }
 
-        protected DocumentStore GetDocumentStore()
+        protected IDocumentStore GetDocumentStore()
         {
             return new DocumentStore
                 {

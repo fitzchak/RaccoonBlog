@@ -127,7 +127,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			return View("Details", vm);
 		}
 
-		public ActionResult ListFeed(long start, long end)
+		public ActionResult ListFeed(long start = 0, long end = int.MaxValue)
 		{
 			var startAsDateTimeOffset = DateTimeOffsetUtil.ConvertFromUnixTimestamp(start);
 			var endAsDateTimeOffset = DateTimeOffsetUtil.ConvertFromUnixTimestamp(end);

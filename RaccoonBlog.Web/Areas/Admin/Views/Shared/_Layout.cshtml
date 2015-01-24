@@ -8,11 +8,12 @@
 	<title>RaccoonBlog :: @ViewBag.Title</title>
 	<link rel="stylesheet" type="text/css" href="@Url.ActionLinkWithArray("Merge", "Css", new { files = new[] { "ResetCss.css", "custom/" + ViewBag.BlogConfig.CustomCss + ".settings.less.css", "base.less.css", "custom/" + ViewBag.BlogConfig.CustomCss + ".less.css" } })">
 	<link rel="stylesheet" type="text/css" href="@Url.Content("~/Areas/Admin/Content/css/AdminStyle.css")">
-	
+
 	@RenderSection("Style", false)
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-	<link  rel="stylesheet" type="text/css" href="@Url.Content("~/Content/themes/base/jquery-ui.css")" />
-	<script src="@Url.Content("~/Content/js/jquery-ui-1.8.17.custom.min.js")" type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" type="text/javascript"></script>
+	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/themes/base/all.css")" />
+	<script src="@Url.Content("~/Content/js/jquery-ui-1.11.2.min.js")" type="text/javascript"></script>
 	<script src="@Url.Content("~/Content/js/raccoon-blog.js")" type="text/javascript"></script>
 	<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/anytime.css")">
 	<script src="@Url.Content("~/Content/js/anytime.min.js")" type="text/javascript"></script>
@@ -30,45 +31,33 @@
 			});
 		});
 	</script>
-	
-	@if (ViewExtensions.IsDebug())
-	{
-		<script type="text/javascript" src="@Url.Content("~/Content/js/modernizr-2.0.6-development-only.js")"></script>
-	}
-	else
-	{
-		<script type="text/javascript" src="@Url.Content("~/Content/js/modernizr.custom.23209.js")"></script>
-	
-	}
-	<script type="text/javascript">
-		
-	</script>
 </head>
-	<body class="admin-area">
-		<header>
-			<div id="logo">
-				<a href="@Url.Action("Index", "Posts")"><img src="@Url.Content("~/Content/css/images/logo-admin.png")" width="51" height="40" alt="Logo"></a>
-			</div>
-			<nav>
-				@{Html.RenderPartial("RenderMenu", RaccoonBlog.Web.Areas.Admin.Helpers.MenuUtil.GetTopMenu(Url));}
-			</nav>
-			<div id="nav-right">
-				<a href="@Url.Action("Logout", "Login")">Logout</a>
-			</div>
-		</header>
-		<div class="clr"></div>
-
-		<div id="content-outer">
-			<div id="content-admin">
-				@RenderBody()
-			</div>
+<body class="admin-area">
+	<header>
+		<div id="logo">
+			<a href="@Url.Action("Index", "Posts")"><img src="@Url.Content("~/Content/css/images/logo-admin.png")" width="51" height="40" alt="Logo"></a>
 		</div>
-		<div class="clr"></div>
-		
-		<footer>
-			<div id="footer-left">
-				Admin Skin &copy; Copyright Internet Dreams Ltd. <a href="">www.netdreams.co.uk</a>.
-				All rights reserved.</div>
-		</footer>
-	</body>
+		<nav>
+			@{Html.RenderPartial("RenderMenu", RaccoonBlog.Web.Areas.Admin.Helpers.MenuUtil.GetTopMenu(Url));}
+		</nav>
+		<div id="nav-right">
+			<a href="@Url.Action("Logout", "Login")">Logout</a>
+		</div>
+	</header>
+	<div class="clr"></div>
+
+	<div id="content-outer">
+		<div id="content-admin">
+			@RenderBody()
+		</div>
+	</div>
+	<div class="clr"></div>
+
+	<footer>
+		<div id="footer-left">
+			Admin Skin &copy; Copyright Internet Dreams Ltd. <a href="">www.netdreams.co.uk</a>.
+			All rights reserved.
+		</div>
+	</footer>
+</body>
 </html>
