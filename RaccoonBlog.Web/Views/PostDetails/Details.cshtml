@@ -3,23 +3,23 @@
 	ViewBag.Title = @Model.Post.Title;
 }
 @{
-    ViewBag.CurrentUrl = Url.Action("Details", new { Model.Post.Id, Model.Post.Slug });
+	ViewBag.CurrentUrl = Url.Action("Details", new { Model.Post.Id, Model.Post.Slug });
 }
 
 <article class="post-detalis">
 	<header>
 		<h1><a href="@Url.Action("Details", new { Model.Post.Id, Model.Post.Slug })">@Model.Post.Title</a></h1>
 	</header>
-	
+
 	<nav id="headerPrevNext">
 		<ul>
 			@if (Model.PreviousPost != null)
-			{ 
+			{
 				<li><a href="@Url.Action("Details", new { id = Model.PreviousPost.DomainId, Model.PreviousPost.Slug })">previous: @Model.PreviousPost.Title</a></li>
 			}
-		
+
 			@if (Model.NextPost != null)
-			{ 
+			{
 				<li><a href="@Url.Action("Details", new { id = Model.NextPost.DomainId, Model.NextPost.Slug })">next: @Model.NextPost.Title</a></li>
 			}
 		</ul>
@@ -28,7 +28,7 @@
 	<div class="post_body raw_html">
 		@Model.Post.Body
 	</div>
-	
+
 	<footer>
 		@if (Model.Post.Tags.Count > 0)
 		{
@@ -46,7 +46,7 @@
 		<p class="author">Posted By: @Model.Post.Author.FullName</p>
 		<p class="published">Published at <time pubdate>@Model.Post.PublishedAt.ToString("r")</time></p>
 		@if (Model.Post.PublishedAt != Model.Post.CreatedAt)
-		{ 
+		{
 			<p class="created">Originally posted at <time>@Model.Post.CreatedAt.ToString("r")</time></p>
 		}
 		<div class="clr"></div>
@@ -55,12 +55,7 @@
 			<div class="twitter">
 				@Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, Model.Post.Author)
 			</div>
-			<div class="facebook-share">
-				<a name="fb_share" share_url="@(Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))" href="http://www.facebook.com/sharer.php" name="fb_share" rel="nofollow" type="button_count">Share</a>
-			</div>
-			<div class="facebook">
-				<iframe src="http://www.facebook.com/plugins/like.php?href=@(Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))&send=false&layout=button_count&width=450&show_faces=true&action=like&colorscheme=light&font&height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px;" allowTransparency="true"></iframe>
-			</div>
+			<div class="fb-like" data-href="@(Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
 			<div class="clr"></div>
 		</div>
 		<div class="comments-rss">
@@ -68,15 +63,15 @@
 		</div>
 	</footer>
 
-	
- 
+
+
 	<section class="comments">
 		<header>
 			<a name="comments"></a>
 			<h1>Comments</h1>
 		</header>
 		@if (Model.Comments.Count == 0)
-		{ 
+		{
 			<p>No comments posted yet.</p>
 		}
 		@foreach (var comment in Model.Comments)
@@ -100,7 +95,7 @@
 		<div class="messageWrapper"><div id="message" style="visibility:hidden"></div></div>
 		<article id="postComment">
 			@if (Model.Post.IsCommentAllowed == false || Model.AreCommentsClosed)
-			{ 
+			{
 				<div class="commentsClosedMessage">Comments have been closed on this topic.</div>
 			}
 			else
@@ -110,8 +105,10 @@
 					<div class="openid-wrapper">
 						<form id="openid" action="@Url.Action("Login", "Social")" method="post">
 							<noscript>
-								<p>OpenID is service that allows you to log-on to many different websites using a single identity.
-								Find out <a href="http://openid.net/what/">more about OpenID</a> and <a href="http://openid.net/get/">how to get an OpenID enabled account</a>.</p>
+								<p>
+									OpenID is service that allows you to log-on to many different websites using a single identity.
+									Find out <a href="http://openid.net/what/">more about OpenID</a> and <a href="http://openid.net/get/">how to get an OpenID enabled account</a>.
+								</p>
 							</noscript>
 
 							@Html.Hidden("returnUrl", Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))
@@ -119,15 +116,15 @@
 					</div>
 				}
 				if (ViewData.ModelState.IsValid == false)
-				{ 
+				{
 					<div class="form-error">
 						@Html.ValidationSummary(true)
 					</div>
 				}
 				<div>
 					<h1><a id="comments-form-location">Join the conversation...</a></h1>
-				</div>	
-	   <p/>
+				</div>
+				<p />
 				<div class="comment-form-wrapper">
 					@using (Html.BeginForm("Comment", "PostDetails", new { Model.Post.Id, key = Model.Post.ShowPostEvenIfPrivate }))
 					{
@@ -169,8 +166,8 @@
 	@if (Model.IsLoggedInCommenter == false)
 	{
 		<script type="text/javascript">
-		
-				$(function () {
+
+			$(function () {
 				$('#openid').openid({
 					img_path: '@Url.Content("~/Content/css/images/")',
 					txt: {
@@ -183,8 +180,18 @@
 			});
 		</script>
 	}
-	<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-	<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+	<script>
+		window.twttr = (function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], t = window.twttr || {}; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); t._e = []; t.ready = function (f) { t._e.push(f); }; return t; }(document, "script", "twitter-wjs"));
+	</script>
+	<script>
+		(function (d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) return;
+			js = d.createElement(s); js.id = id;
+			js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+	</script>
 	<script id="commentTemplate" type="text/html">
 		<article class="comment livecomment" style="display: none">
 			<div class="avatar">
