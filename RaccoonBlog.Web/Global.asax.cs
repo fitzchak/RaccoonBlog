@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Optimization;
 using System.Web.Routing;
 
 using DataAnnotationsExtensions.ClientValidation;
@@ -59,6 +60,7 @@ namespace RaccoonBlog.Web
 			DataAnnotationsModelValidatorProviderExtensions.RegisterValidationExtensions();
 
 			AutoMapperConfiguration.Configure();
+			BundleConfig.RegisterBundles(BundleTable.Bundles);
 
 			RavenController.DocumentStore = DocumentStore;
 			TaskExecutor.DocumentStore = DocumentStore;
