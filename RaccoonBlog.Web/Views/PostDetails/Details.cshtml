@@ -6,7 +6,7 @@
 	ViewBag.CurrentUrl = Url.Action("Details", new { Model.Post.Id, Model.Post.Slug });
 }
 
-<article class="post-detalis">
+@*<article class="post-detalis">
 	<header>
 		<h1><a href="@Url.Action("Details", new { Model.Post.Id, Model.Post.Slug })">@Model.Post.Title</a></h1>
 	</header>
@@ -206,4 +206,4 @@
 			<div class="comment-body raw_html">{{html body}}</div>
 		</article>
 	</script>
-}
+}*@

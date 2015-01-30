@@ -1,87 +1,104 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="@ViewBag.BlogConfig.MetaDescription">
 	@{
 		ViewBag.Message = TempData["Message"] as string;
 	}
-	<title>
-		@if (ViewBag.Title != null)
-		{ <text> @ViewBag.Title - </text> }@ViewBag.BlogConfig.Title
-	</title>
-	<meta name="description" content="@ViewBag.BlogConfig.MetaDescription">
+    @if (string.IsNullOrWhiteSpace(Context.Request.QueryString["key"]) == false)
+    {
+        <meta name="robots" content="noindex" />
+    }
+    <title>
+        @if (ViewBag.Title != null)
+        { <text> @ViewBag.Title - </text> }@ViewBag.BlogConfig.Title
+    </title>
 
-	@if (string.IsNullOrWhiteSpace(Context.Request.QueryString["key"]) == false)
-	{
-		<meta name="robots" content="noindex" />
-	}
-
-	@Styles.Render("~/Content/css/bootstrap")
-    @Html.RenderTheme("~/Content/css/custom/" + (string)ViewBag.BlogConfig.CustomCss)
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,400italic,700italic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
+	
+    @Styles.Render("~/Content/css/socicon")
+    @Html.RenderTheme("~/Content/css/custom/ayende")
 	@RenderSection("Style", false)
 
-	<link id="Rsd" rel="EditURI" type="application/rsd+xml" title="RSD" href="@Url.Action("Rsd", "Syndication")">
-	<link id="AtomLink" title="RSS" type="application/rss+xml" rel="alternate" href="@Url.Action("Rss", "Syndication")">
 </head>
 <body>
-	<div class="container-fluid page">
-		<header id="headermain">
-			<div id="logoarea">
-				<div id="logoimage"><a href="@Url.Action("Index", "Posts")"></a></div>
-				<h1><a href="@Url.Action("Index", "Posts")">@ViewBag.BlogConfig.Title</a></h1>
-				<h2>@ViewBag.BlogConfig.Subtitle</h2>
-			</div>
-		</header>
-		<div id="mainBody">
-			<div id="content">
-				@if (!string.IsNullOrEmpty(ViewBag.Message))
-				{
-					<div class="message">@ViewBag.Message</div>
-				}
-				@RenderBody()
-			</div>
-			@{Html.RenderAction("List", "Section");}
-		</div>
-	</div>
-	@if (IsSectionDefined("Script"))
-	{
-		<script type="text/javascript">
-			window.RaccoonRoutes = {};
-		</script>
-		@Scripts.Render("~/Content/js/jquery")
-		@Scripts.Render("~/Content/js/jquery-migrate")
-		@Scripts.Render("~/Content/js/bootstrap")
-		@Scripts.Render("~/Content/js")
-		<script type="text/javascript">
-			$(function () {
-				var timer;
-				function resizeImagesToScreen() {
-					$('#content img').aeImageResize({ width: $('#content').width() });
-				}
-				resizeImagesToScreen();
-				$(window).resize(function () {
-					clearTimeout(timer);
-					timer = setTimeout(resizeImagesToScreen, 50);
-				});
-			});
-		</script>
-		@RenderSection("Script")
-		if (string.IsNullOrEmpty(ViewBag.BlogConfig.GoogleAnalyticsKey) == false)
-		{
-			<script type="text/javascript">
-				var _gaq = _gaq || [];
-				_gaq.push(['_setAccount', '@ViewBag.BlogConfig.GoogleAnalyticsKey']);
-				_gaq.push(['_trackPageview']);
+    <div class="container">
+        <div class="row">
+            <div class="leftSide col-sm-4 col-md-3">
+                <a href="#" class="logo"><h1>Ayende &#64; Rahien</h1></a><img src="~/Content/img/rihno.svg" class="rihno" />
+                <button class="menu-button" id="open-button"><i class="glyphicon glyphicon-info-sign hide-sm" aria-hidden="true"></i></button>
+                <div class="clearfix"></div>
+                <div class="collapseMobile">
+                    <div class="about">
+                        <span>Hi!</span><br />
+                        <span>My name is</span> <span>Oren Eini</span><br />
+                        <span>and you can reach me by phone or email:</span><br />
+                        <p class="mail"><a href="mialto:Ayende@ayende.com">Ayende@ayende.com</a></p>
+                        <p class="phone">+972 52-548-6969</p>
+                    </div>
+                    <div class="pull-down">
+                        <p class="socicon"><a href="#" class="rss">,</a> <a href="#" class="mail">&#64;</a> <a href="#" class="git">Q</a> <a href="#" class="twitter">a</a> <a href="#" class="facebook">b</a> <a href="#" class="gplus">c</a></p>
+                        <p class="stats"><span>Posts: <strong>5,894</strong></span> | <span>Comments: <strong>43,923</strong></span></p>
+                        <p>© 2004-2015 Ayende Rahien</p>
+                    </div>
+                </div>
+            </div>
+            <div class="centerCol col-sm-8 col-sm-offset-4 col-md-offset-3 col-md-6 col-lg-7">
+                <header>
+                    <div class="search">
+                        <input type="search" placeholder="search" class="form-control" />
+                        <input type="submit" />
+                    </div>
+                    <a href="#" id="tags-button"><span class="glyphicon glyphicon-tags" aria-hidden="true"></span> filter by tags</a>&nbsp;<a href="#" id="archive-button"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> archive</a>
+                </header>
+                @*@RenderBody()*@
+            </div>
+        </div>
+    </div>
+    
+    @if (IsSectionDefined("Script"))
+    {
+        <script type="text/javascript">
+            window.RaccoonRoutes = {};
+        </script>
+        <!--[if IE 8]>
+            <script type="text/javascript" src="~/Content/js/respond.src.js"></script>
+        <![endif]-->
+        @Scripts.Render("~/Content/js/jquery")
+        @Scripts.Render("~/Content/js/jquery-migrate")
+        @Scripts.Render("~/Content/js/bootstrap")
+        @Scripts.Render("~/Content/js")
+        <script type="text/javascript">
+            $(function () {
+                var timer;
+                function resizeImagesToScreen() {
+                    $('#content img').aeImageResize({ width: $('#content').width() });
+                }
+                resizeImagesToScreen();
+                $(window).resize(function () {
+                    clearTimeout(timer);
+                    timer = setTimeout(resizeImagesToScreen, 50);
+                });
+            });
+        </script>
+        @RenderSection("Script")
+        if (string.IsNullOrEmpty(ViewBag.BlogConfig.GoogleAnalyticsKey) == false)
+        {
+            <script type="text/javascript">
+                var _gaq = _gaq || [];
+                _gaq.push(['_setAccount', '@ViewBag.BlogConfig.GoogleAnalyticsKey']);
+                _gaq.push(['_trackPageview']);
 
-				(function () {
-					var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-					ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-					var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-				})();
-			</script>
-		}
-	}
+                (function () {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            </script>
+        }
+    }
 </body>
 </html>

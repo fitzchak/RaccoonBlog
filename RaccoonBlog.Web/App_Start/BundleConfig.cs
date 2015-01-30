@@ -29,18 +29,23 @@ namespace RaccoonBlog.Web
 
 			bundles
 				.Add(new StyleBundle("~/Content/css/bootstrap", "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css")
-                .Include("~/Content/css/bootstrap.css"));
+                .Include("~/Content/css/bootstrap.css")
+                .Include("~/Content/css/bootstrap-theme.css"));
 
-            bundles.Add(new Bundle("~/Content/css/custom/ayende", new LessTransform(), new CssMinify())
-                .Include("~/Content/css/custom/ayende.settings.less.css")
-                .Include("~/Content/css/base.less.css")
-                .Include("~/Content/css/custom/ayende.less.css"));
+            bundles
+                .Add((new StyleBundle("~/Content/css/socicon"))
+                .Include("~/Content/css/socicon.css"));
+
+            bundles.Add(new Bundle("~/Content/css/custom/ayende", new LessTransform())
+                .Include("~/Content/css/custom/ayende.variables.less")
+                .Include("~/Content/css/bootstrap/bootstrap.custom.less")
+                .Include("~/Content/css/styles.less"));
 
             bundles.Add(new Bundle("~/Content/css/custom/hibernatingrhinos", new Helpers.LessTransform(), new CssMinify())
                 .Include("~/Content/css/custom/hibernatingrhinos.settings.less.css")
                 .Include("~/Content/css/base.less.css")
                 .Include("~/Content/css/custom/hibernatingrhinos.less.css"));
-
+            
 			//bundles.Add(new LessBundle("~/Content/less")
 			//	.Include("~/Content/site.less"));
 		}
