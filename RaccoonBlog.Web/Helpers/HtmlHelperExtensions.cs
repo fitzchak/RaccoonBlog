@@ -3,7 +3,10 @@ using System.Web.Mvc;
 
 namespace RaccoonBlog.Web.Helpers
 {
-	public static class HtmlHelperExtensions
+    using System.Web;
+    using System.Web.Optimization;
+
+    public static class HtmlHelperExtensions
 	{
 		public static MvcHtmlString Link(this HtmlHelper helper, string text, string href, object htmlAttributes)
 		{
@@ -23,5 +26,19 @@ namespace RaccoonBlog.Web.Helpers
 
 			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
 		}
+
+        public static IHtmlString RenderTheme(this HtmlHelper helper, string virtualPath)
+        {
+            var oldValue = BundleTable.EnableOptimizations;
+            BundleTable.EnableOptimizations = true;
+            try
+            {
+                return Styles.Render(virtualPath);
+            }
+            finally
+            {
+                BundleTable.EnableOptimizations = oldValue;
+            }
+        }
 	}
 }

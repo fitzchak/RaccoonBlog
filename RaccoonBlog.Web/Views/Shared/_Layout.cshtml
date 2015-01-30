@@ -19,7 +19,7 @@
 	}
 
 	@Styles.Render("~/Content/css/bootstrap")
-	<link rel="stylesheet" type="text/css" href="@Url.ActionLinkWithArray("Merge", "Css", new { files = new[] { "custom/" + ViewBag.BlogConfig.CustomCss.ToLowerInvariant() + ".settings.less.css", "base.less.css", "custom/" + ViewBag.BlogConfig.CustomCss + ".less.css" } })">
+    @Html.RenderTheme("~/Content/css/custom/" + (string)ViewBag.BlogConfig.CustomCss)
 	@RenderSection("Style", false)
 
 	<link id="Rsd" rel="EditURI" type="application/rsd+xml" title="RSD" href="@Url.Action("Rsd", "Syndication")">
