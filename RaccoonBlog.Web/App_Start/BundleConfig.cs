@@ -1,11 +1,26 @@
-﻿using System.Web.Optimization;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Web;
+using System.Web.Optimization;
+
+using RaccoonBlog.Web.Helpers;
 
 namespace RaccoonBlog.Web
 {
-    using RaccoonBlog.Web.Helpers;
-
-    public class BundleConfig
+	public static class BundleConfig
 	{
+		public const string ThemeDirectory = "~/Content/css/custom/";
+
+		private const string ThemeVariablesExtension = ".variables.less";
+
+		private const string ThemeStylesExtension = ".styles.less";
+
+		private static bool themeBundlesRegistered;
+
+		private static readonly object Locker = new object();
+
 		public static void RegisterBundles(BundleCollection bundles)
 		{
 			bundles.UseCdn = true;
@@ -29,22 +44,59 @@ namespace RaccoonBlog.Web
 
 			bundles
 				.Add(new StyleBundle("~/Content/css/bootstrap", "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css")
-                .Include("~/Content/css/bootstrap.css")
-                .Include("~/Content/css/bootstrap-theme.css"));
+				.Include("~/Content/css/bootstrap.css")
+				.Include("~/Content/css/bootstrap-theme.css"));
 
-            bundles
-                .Add((new StyleBundle("~/Content/css/socicon"))
-                .Include("~/Content/css/socicon.css"));
+			bundles
+				.Add((new StyleBundle("~/Content/css/socicon"))
+				.Include("~/Content/css/socicon.css"));
+		}
 
-            var bundle = new Bundle("~/Content/css/custom/ayende", new LessTransform())
-                .Include("~/Content/css/custom/ayende.variables.less")
-                .Include("~/Content/css/bootstrap/bootstrap.custom.less")
-                .Include("~/Content/css/styles.less")
-				.Include("~/Content/css/custom/ayende.styles.less");
+		public static void RegisterThemeBundles(HttpContext context, BundleCollection bundles)
+		{
+			if (context == null)
+				return;
+
+			if (themeBundlesRegistered)
+				return;
+
+			lock (Locker)
+			{
+				if (themeBundlesRegistered)
+					return;
+
+				foreach (var bundle in CreateThemeBundles(context))
+					bundles.Add(bundle);
+
+				themeBundlesRegistered = true;
+			}
+		}
+
+		private static IEnumerable<Bundle> CreateThemeBundles(HttpContext context)
+		{
+			var themePath = context.Server.MapPath(ThemeDirectory);
+			if (Directory.Exists(themePath) == false)
+				yield break;
+
+			foreach (var file in Directory.GetFiles(themePath, "*" + ThemeVariablesExtension).Select(x => new FileInfo(x)))
+			{
+				var themeName = file.Name.Substring(0, file.Name.IndexOf(ThemeVariablesExtension, StringComparison.OrdinalIgnoreCase));
+				var themeBundleName = (ThemeDirectory + themeName).ToLowerInvariant();
+				var bundle = new Bundle(themeBundleName, new ThemeLessTransform())
+				.Include(ThemeDirectory + file.Name)
+				.Include("~/Content/css/bootstrap/bootstrap.custom.less")
+				.Include("~/Content/css/styles.less");
+
+				var stylesFile = themeName + ThemeStylesExtension;
+				if (File.Exists(themePath + stylesFile))
+					bundle.Include(ThemeDirectory + stylesFile);
+
 #if !DEBUG
-			bundle.Transforms.Add(new CssMinify());
+				bundle.Transforms.Add(new CssMinify());
 #endif
-			bundles.Add(bundle);
+
+				yield return bundle;
+			}
 		}
 	}
 }

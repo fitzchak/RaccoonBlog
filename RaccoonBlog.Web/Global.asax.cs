@@ -26,11 +26,12 @@ namespace RaccoonBlog.Web
 		{
 			BeginRequest += (sender, args) =>
 			{
+				BundleConfig.RegisterThemeBundles(HttpContext.Current, BundleTable.Bundles);
 				HttpContext.Current.Items["CurrentRequestRavenSession"] = RavenController.DocumentStore.OpenSession();
 			};
 			EndRequest += (sender, args) =>
 			{
-				using (var session = (IDocumentSession) HttpContext.Current.Items["CurrentRequestRavenSession"])
+				using (var session = (IDocumentSession)HttpContext.Current.Items["CurrentRequestRavenSession"])
 				{
 					if (session == null)
 						return;
@@ -54,8 +55,8 @@ namespace RaccoonBlog.Web
 			InitializeDocumentStore();
 			LogManager.GetCurrentClassLogger().Info("Started Raccoon Blog");
 
-			ModelBinders.Binders.Add(typeof (CommentCommandOptions), new RemoveSpacesEnumBinder());
-			ModelBinders.Binders.Add(typeof (Guid), new GuidBinder());
+			ModelBinders.Binders.Add(typeof(CommentCommandOptions), new RemoveSpacesEnumBinder());
+			ModelBinders.Binders.Add(typeof(Guid), new GuidBinder());
 
 			DataAnnotationsModelValidatorProviderExtensions.RegisterValidationExtensions();
 
@@ -96,12 +97,12 @@ namespace RaccoonBlog.Web
 		{
 			try
 			{
-				IndexCreation.CreateIndexes(typeof (Tags_Count).Assembly, DocumentStore);
+				IndexCreation.CreateIndexes(typeof(Tags_Count).Assembly, DocumentStore);
 			}
 			catch (WebException e)
 			{
 				var socketException = e.InnerException as SocketException;
-				if(socketException == null)
+				if (socketException == null)
 					throw;
 
 				switch (socketException.SocketErrorCode)

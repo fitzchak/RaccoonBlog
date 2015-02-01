@@ -27,13 +27,16 @@ namespace RaccoonBlog.Web.Helpers
 			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
 		}
 
-        public static IHtmlString RenderTheme(this HtmlHelper helper, string virtualPath)
+        public static IHtmlString RenderTheme(this HtmlHelper helper, string themeName)
         {
+	        if (string.IsNullOrEmpty(themeName)) 
+				return null;
+
             var oldValue = BundleTable.EnableOptimizations;
-            BundleTable.EnableOptimizations = true;
             try
-            {
-                return Styles.Render(virtualPath);
+			{
+				BundleTable.EnableOptimizations = true;
+				return Styles.Render(BundleConfig.ThemeDirectory + themeName);
             }
             finally
             {

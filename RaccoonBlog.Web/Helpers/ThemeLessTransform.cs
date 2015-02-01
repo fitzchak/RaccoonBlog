@@ -1,14 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="LessTransform.cs" company="">
-//   
-// </copyright>
-// <summary>
-//   The less transform.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-
-namespace RaccoonBlog.Web.Helpers
+﻿namespace RaccoonBlog.Web.Helpers
 {
 	using System;
 	using System.Collections.Generic;
@@ -18,7 +8,7 @@ namespace RaccoonBlog.Web.Helpers
 	using dotless.Core;
 	using dotless.Core.configuration;
 
-	public class LessTransform : IBundleTransform
+	public class ThemeLessTransform : IBundleTransform
 	{
 		private static readonly Dictionary<string, string> FilesToNormalize = new Dictionary<string, string>
 			                                                             {

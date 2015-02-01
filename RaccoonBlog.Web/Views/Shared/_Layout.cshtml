@@ -20,7 +20,7 @@
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,400italic,700italic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
 	
     @Styles.Render("~/Content/css/socicon")
-    @Html.RenderTheme("~/Content/css/custom/ayende")
+    @Html.RenderTheme(ViewBag.BlogConfig.CustomCss as string)
 	@RenderSection("Style", false)
 
 </head>
