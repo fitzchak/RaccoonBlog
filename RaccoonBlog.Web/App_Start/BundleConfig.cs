@@ -39,7 +39,8 @@ namespace RaccoonBlog.Web
             var bundle = new Bundle("~/Content/css/custom/ayende", new LessTransform())
                 .Include("~/Content/css/custom/ayende.variables.less")
                 .Include("~/Content/css/bootstrap/bootstrap.custom.less")
-                .Include("~/Content/css/styles.less");
+                .Include("~/Content/css/styles.less")
+				.Include("~/Content/css/custom/ayende.styles.less");
 #if !DEBUG
 			bundle.Transforms.Add(new CssMinify());
 #endif

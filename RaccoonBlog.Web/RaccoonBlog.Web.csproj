@@ -406,9 +406,6 @@
     <Content Include="Areas\Admin\Content\images\table\table_icon_4.gif" />
     <Content Include="Areas\Admin\Content\images\table\table_icon_5.gif" />
     <Content Include="Areas\Admin\Content\images\table\table_sort_arrow.gif" />
-    <Content Include="Content\css\custom\ayende.less.css" />
-    <Content Include="Content\css\custom\hibernatingrhinos.settings.less.css" />
-    <Content Include="Content\css\custom\hibernatingrhinos.less.css" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Infrastructure\Common\DateTimeOffsetUtil.cs" />
     <Compile Include="Controllers\CssController.cs" />
@@ -505,7 +502,6 @@
     <Compile Include="Helpers\Attributes\ValidatePasswordLengthAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\css\custom\ayende.settings.less.css" />
     <Content Include="Content\css\images\balloon.png" />
     <Content Include="Content\css\images\feed-icon-14x14.png" />
     <Content Include="Content\css\images\indicator.gif" />
@@ -889,6 +885,7 @@
     <Content Include="Content\css\fonts\socicon-webfont.ttf" />
     <Content Include="Content\css\fonts\socicon-webfont.woff" />
     <Content Include="Content\css\fonts\socicon-webfont.woff2" />
+    <Content Include="Content\css\custom\ayende.styles.less" />
     <None Include="Content\js\jquery-1.11.2.intellisense.js" />
     <Content Include="Content\js\jquery-1.11.2.js" />
     <Content Include="Content\js\jquery-1.11.2.min.js" />
