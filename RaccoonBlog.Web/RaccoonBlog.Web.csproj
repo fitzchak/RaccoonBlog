@@ -351,6 +351,8 @@
     <Content Include="Content\css\styles.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\fonts\socicon-webfont.svg" />
+    <Content Include="Content\css\img\commentDate.png" />
+    <Content Include="Content\css\img\commentDateImp.png" />
     <Content Include="Content\img\ico_grid_active.svg" />
     <Content Include="Content\img\ico_grid_inactive.svg" />
     <Content Include="Content\img\ico_mail.svg" />
@@ -525,6 +527,7 @@
     <Content Include="Content\js\raccoon-blog.js" />
     <Content Include="Content\js\RequiredIfValidation.js" />
     <Content Include="Content\js\respond.src.js" />
+    <Content Include="Content\js\setup.js" />
     <Content Include="Content\js\showdown.js" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -864,7 +867,6 @@
     <Content Include="Content\css\bootstrap\badges.less" />
     <Content Include="Content\css\bootstrap\alerts.less" />
     <Content Include="Content\css\custom\ayende.variables.less" />
-    <Content Include="Content\css\styles.less" />
     <Content Include="Content\css\bootstrap\bootstrap.css.map">
       <DependentUpon>bootstrap.css</DependentUpon>
     </Content>
@@ -886,6 +888,8 @@
     <Content Include="Content\css\fonts\socicon-webfont.woff" />
     <Content Include="Content\css\fonts\socicon-webfont.woff2" />
     <Content Include="Content\css\custom\ayende.styles.less" />
+    <Content Include="Content\css\openid\styles.less" />
+    <Content Include="Content\css\bootstrap\styles.less" />
     <None Include="Content\js\jquery-1.11.2.intellisense.js" />
     <Content Include="Content\js\jquery-1.11.2.js" />
     <Content Include="Content\js\jquery-1.11.2.min.js" />

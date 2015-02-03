@@ -4,15 +4,15 @@
 }
 @if (Model.IsAuthenticated())
 { 
-	<aside class="section admin-panel">
-		<h1>Administration Panel</h1>
+	<div id="adminPanel">
+        <h4>ADMINISTRATION PANEL</h4>
 		<p>Welcome @Model.FullName!</p>
-		<ul>
+		<ol>
 			<li><a href="@Url.Action("Index", "Posts", new { area = "Admin" })">Posts</a></li>
 			<li><a href="@Url.Action("Index", "Sections", new { area = "Admin" })">Section</a></li>
 			<li><a href="@Url.Action("Index", "Users", new { area = "Admin" })">Users</a></li>
 			<li><a href="@Url.Action("Index", "Settings", new { area = "Admin" })">Settings</a></li>
 			<li><a href="@Url.Action("Logout", "Login", new { area = "Admin" })">Log out</a></li>
-		</ul>
-	</aside>
+		</ol>
+	</div>
 }

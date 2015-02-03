@@ -3,8 +3,18 @@
     Layout = "";    
 }
 <ul>
-    @foreach (var postCount in Model)
+    @foreach (var year in Model.GroupBy(x => x.Year))
     {
-        <li><a href="@Url.Action("Archive", "Posts", new { postCount.Year, postCount.Month })"> @(new DateTime(postCount.Year, @postCount.Month,1).ToString("MMMM, yyyy", System.Globalization.CultureInfo.InvariantCulture)) </a> (@postCount.Count)</li>
+        var currentYear = year.Key;
+        
+        <li>
+            <a href="#">@year.Key</a>
+            <ul>
+                @foreach (var postCount in Model.Where(x => x.Year == currentYear))
+                {
+                    <li><a href="@Url.Action("Archive", "Posts", new { postCount.Year, postCount.Month })"> @(new DateTime(postCount.Year, @postCount.Month,1).ToString("MMMM", System.Globalization.CultureInfo.InvariantCulture)) </a> (@postCount.Count)</li>
+                }
+            </ul>
+        </li>
     }
 </ul>

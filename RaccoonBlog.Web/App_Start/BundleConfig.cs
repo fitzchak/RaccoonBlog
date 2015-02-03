@@ -29,6 +29,11 @@ namespace RaccoonBlog.Web
 				.Add(new ScriptBundle("~/Content/js/jquery", "https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
 				.Include("~/Content/js/jquery-1.11.2.js"));
 
+            bundles
+                .Add(new ScriptBundle("~/Content/js/jquery-validate")
+                .Include("~/Content/js/jquery.validate.js")
+                .Include("~/Content/js/jquery.validate.unobtrusive.js"));
+
 			bundles
 				.Add(new ScriptBundle("~/Content/js/jquery-migrate", "http://code.jquery.com/jquery-migrate-1.2.1.min.js")
 				.Include("~/Content/js/jquery-migrate-1.2.1.js"));
@@ -40,7 +45,8 @@ namespace RaccoonBlog.Web
 			bundles
 				.Add(new ScriptBundle("~/Content/js")
 				.Include("~/Content/js/jquery.ae.image.resize.min.js")
-				.Include("~/Content/js/raccoon-blog.js"));
+				.Include("~/Content/js/raccoon-blog.js")
+                .Include("~/Content/js/setup.js"));
 
 			bundles
 				.Add(new StyleBundle("~/Content/css/bootstrap", "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css")
@@ -85,7 +91,7 @@ namespace RaccoonBlog.Web
 				var bundle = new Bundle(themeBundleName, new ThemeLessTransform())
 				.Include(ThemeDirectory + file.Name)
 				.Include("~/Content/css/bootstrap/bootstrap.custom.less")
-				.Include("~/Content/css/styles.less");
+				.Include("~/Content/css/bootstrap/styles.less");
 
 				var stylesFile = themeName + ThemeStylesExtension;
 				if (File.Exists(themePath + stylesFile))

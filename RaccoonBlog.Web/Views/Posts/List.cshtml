@@ -2,61 +2,71 @@
 @{
 	ViewBag.CurrentAction = @ViewContext.Controller.ValueProvider.GetValue("action").RawValue.ToString();
 }
-<article id="post-list">
-	@foreach (var post in Model.Posts)
-	{
-		var postUrl = Url.Action("Details", "PostDetails", new { post.Id, post.Slug });
-		<article class="postSummery">
-			<header>
-				<h1><a href="@postUrl">@post.Title</a></h1>
-			</header>
+@foreach (var post in Model.Posts)
+{
+    <article>
+        <time>
+            <span>@post.PublishedAt.ToString("dd.MM")</span>
+            @post.PublishedAt.ToString("yyyy HH:mm")
+        </time>
+        <a href="@Url.Action("Details", "PostDetails", new { post.Id, post.Slug })">
+            <h2>@post.Title</h2>
+        </a>
+        <div class="clearfix"></div>
+        <div class="postData">
+            <a href='@string.Format("http://twitter.com/intent/tweet?status={0}+{1} via @{2}", post.Title, string.Format("{0}{1}/{2}", Request.Url.OriginalString, post.Id, post.Slug), post.Author.TwitterNick)'>
+                <span class="socicon twitter">a</span><span>Tweet</span>
+            </a>
+            <a style='text-decoration:none;' type="icon_link" onclick="window.open('@string.Format("http://www.facebook.com/sharer/sharer.php?u={0}&title={1}", string.Format("{0}{1}/{2}", Request.Url.OriginalString, post.Id, post.Slug), post.Title)','sharer','toolbar=0,status=0,width=580,height=325');" href="javascript: void(0)">
+                <span class="socicon facebook">b</span><span>share</span>
+            </a>
+            <a style='text-decoration:none;' type="icon_link" onclick="popUp=window.open('@string.Format("https://plus.google.com/share?url={0}", string.Format("{0}{1}/{2}", Request.Url.OriginalString, post.Id, post.Slug))', 'popupwindow', 'scrollbars=yes,width=600,height=400');popUp.focus();return false;" href="javascript: void(0)">
+                <span class="socicon gplus">c</span><span>share</span>
+            </a>
+            <a href="#comments">
+                <span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span>@post.CommentsCount comments</span>
+            </a>
+            @if (post.Tags.Count > 0)
+            {
+                <div class="tags pull-right-lg">
+                    <span class="glyphicon glyphicon-tag" aria-hidden="true"></span> Tags:
+                    <ul>
+                        @foreach (var tag in post.Tags)
+                        {
+                            <li><a href="@Url.Action("Tag", "Posts", new {tag.Slug})">@tag.Name</a></li>
+                        }
+                    </ul>
+                </div>
+            }
+            <div class="clearfix"></div>
+        </div>
+        <div class="articleContent">
+            @post.Body
+        </div>
+    </article>
+}
+<div class="clearfix"></div>
 
-			<div class="post_body raw_html">
-				@post.Body
-			</div>
-			<footer>
-				@if (post.Tags.Count > 0)
-				{
-					<div class="tags">
-						<span>Tags:</span>
-						<ul>
-							@foreach (var tag in post.Tags)
-							{
-								<li><a href="@Url.Action("Tag", "Posts", new {tag.Slug})">@tag.Name</a></li>
-							}
-						</ul>
-					</div>
-				}
-				<div div class="clr">
-					<p class="published">Published at <time pubdate>@post.PublishedAt.ToString("r")</time></p>
-					@if (post.PublishedAt != post.CreatedAt)
-					{
-						<p class="created">Originally posted at <time>@post.CreatedAt.ToString("r")</time></p>
-					}
-					@if (post.CommentsCount > 0)
-					{
-						<p class="comment-count"><a href="@postUrl#comments">Comments (@post.CommentsCount)</a></p>
-					}
-				</div><div class="clr"></div>
-			</footer>
-		</article>
-	}
-	<footer class="post-list-footer">
-		@if (Model.HasPrevPage)
-		{
-			<a href="@Url.Action(@ViewBag.CurrentAction, new { page = Model.CurrentPage - 1 })" class="prev">Previous Page</a>
-		}
-		@if (Model.HasNextPage)
-		{
-			<a href="@Url.Action(@ViewBag.CurrentAction, new { page = Model.CurrentPage + 1 })" class="next">Next Page</a>
-		}
-	</footer>
-</article>
+<nav>
+    <hr/>
+    <ul class="pager">
+        <li class='@(Model.HasPrevPage ? "" : "disabled")'>
+            <a href="@Url.Action(@ViewBag.CurrentAction, new { page = Model.CurrentPage - 1 })" aria-label="Previous">
+                <span aria-hidden="true">&laquo;&nbsp;Previous</span>
+            </a>
+        </li>
+        <li class='@(Model.HasNextPage ? "" : "disabled")'>
+            <a href="@Url.Action(@ViewBag.CurrentAction, new { page = Model.CurrentPage + 1 })" aria-label="Next">
+                <span aria-hidden="true">Next&nbsp;&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
 @section Script {
 	<script>
 		window.twttr = (function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], t = window.twttr || {}; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); t._e = []; t.ready = function (f) { t._e.push(f); }; return t; }(document, "script", "twitter-wjs"));
 	</script>
-	<script>
+	@*<script>
 		(function (d, s, id) {
 			var js, fjs = d.getElementsByTagName(s)[0];
 			if (d.getElementById(id)) return;
@@ -64,5 +74,5 @@
 			js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
 			fjs.parentNode.insertBefore(js, fjs);
 		}(document, 'script', 'facebook-jssdk'));
-	</script>
+	</script>*@
 }

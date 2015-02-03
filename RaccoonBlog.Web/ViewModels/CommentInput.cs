@@ -7,20 +7,20 @@ namespace RaccoonBlog.Web.ViewModels
 {
 	public class CommentInput
 	{
-		[Required]
+        [Required]
 		[Display(Name = "Name")]
 		public string Name { get; set; }
 
-		[Required]
+        [Required]
 		[Display(Name = "Email")]
-		[Email]
+        [Email]
 		public string Email { get; set; }
 
 		[Display(Name = "Url")]
 		public string Url { get; set; }
 
 		[AllowHtml]
-		[Required]
+        [Required]
 		[Display(Name = "Comments")]
 		[DataType(DataType.MultilineText)]
 		public string Body { get; set; }

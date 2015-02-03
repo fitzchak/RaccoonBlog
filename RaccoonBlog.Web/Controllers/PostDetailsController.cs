@@ -70,34 +70,39 @@ namespace RaccoonBlog.Web.Controllers
 		[HttpPost]
 		public ActionResult Comment(CommentInput input, int id, Guid key)
 		{
-			var post = RavenSession
-				.Include<Post>(x => x.CommentsId)
-				.Load(id);
+		    if (ModelState.IsValid)
+		    {
+                var post = RavenSession
+                    .Include<Post>(x => x.CommentsId)
+                    .Load(id);
 
-			if (post == null || post.IsPublicPost(key) == false)
-				return HttpNotFound();
+                if (post == null || post.IsPublicPost(key) == false)
+                    return HttpNotFound();
 
-			var comments = RavenSession.Load<PostComments>(post.CommentsId);
-			if (comments == null)
-				return HttpNotFound();
+                var comments = RavenSession.Load<PostComments>(post.CommentsId);
+                if (comments == null)
+                    return HttpNotFound();
 
-			var commenter = RavenSession.GetCommenter(input.CommenterKey);
-			if (commenter == null)
-			{
-				input.CommenterKey = Guid.NewGuid();
-			}
+                var commenter = RavenSession.GetCommenter(input.CommenterKey);
+                if (commenter == null)
+                {
+                    input.CommenterKey = Guid.NewGuid();
+                }
 
-			ValidateCommentsAllowed(post, comments);
-			ValidateCaptcha(input, commenter);
+                ValidateCommentsAllowed(post, comments);
+                ValidateCaptcha(input, commenter);
 
-			if (ModelState.IsValid == false)
-				return PostingCommentFailed(post, input, key);
+                if (ModelState.IsValid == false)
+                    return PostingCommentFailed(post, input, key);
 
-			TaskExecutor.ExcuteLater(new AddCommentTask(input, Request.MapTo<AddCommentTask.RequestValues>(), id));
+                TaskExecutor.ExcuteLater(new AddCommentTask(input, Request.MapTo<AddCommentTask.RequestValues>(), id));
 
-			CommenterUtil.SetCommenterCookie(Response, input.CommenterKey.MapTo<string>());
+                CommenterUtil.SetCommenterCookie(Response, input.CommenterKey.MapTo<string>());
 
-			return PostingCommentSucceeded(post, input);
+                return PostingCommentSucceeded(post, input);
+		    }
+
+		    return RedirectToAction("Details");
 		}
 
 		private ActionResult PostingCommentSucceeded(Post post, CommentInput input)

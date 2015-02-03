@@ -83,6 +83,7 @@ namespace RaccoonBlog.Web.Controllers
 			}
 			return View("List", new PostsViewModel
 			{
+                PageSize = BlogConfig.PostsOnPage,
 				CurrentPage = CurrentPage,
 				PostsCount = count,
 				Posts = summaries

@@ -1,4 +1,5 @@
-﻿@model PostViewModel
+﻿@using dotless.Core.Parser.Tree
+@model PostViewModel
 @{
 	ViewBag.Title = @Model.Post.Title;
 }
@@ -6,204 +7,160 @@
 	ViewBag.CurrentUrl = Url.Action("Details", new { Model.Post.Id, Model.Post.Slug });
 }
 
-@*<article class="post-detalis">
-	<header>
-		<h1><a href="@Url.Action("Details", new { Model.Post.Id, Model.Post.Slug })">@Model.Post.Title</a></h1>
-	</header>
-
-	<nav id="headerPrevNext">
-		<ul>
-			@if (Model.PreviousPost != null)
-			{
-				<li><a href="@Url.Action("Details", new { id = Model.PreviousPost.DomainId, Model.PreviousPost.Slug })">previous: @Model.PreviousPost.Title</a></li>
-			}
-
-			@if (Model.NextPost != null)
-			{
-				<li><a href="@Url.Action("Details", new { id = Model.NextPost.DomainId, Model.NextPost.Slug })">next: @Model.NextPost.Title</a></li>
-			}
-		</ul>
-	</nav>
-
-	<div class="post_body raw_html">
-		@Model.Post.Body
-	</div>
-
-	<footer>
-		@if (Model.Post.Tags.Count > 0)
-		{
-			<div class="tags">
-				<span>Tags:</span>
-				<ul>
-					@foreach (var tag in Model.Post.Tags)
-					{
-						<li><a href="@Url.Action("Tag", "Posts", new {tag.Slug})">@tag.Name</a></li>
-					}
-				</ul>
-			</div>
-		}
-
-		<p class="author">Posted By: @Model.Post.Author.FullName</p>
-		<p class="published">Published at <time pubdate>@Model.Post.PublishedAt.ToString("r")</time></p>
-		@if (Model.Post.PublishedAt != Model.Post.CreatedAt)
-		{
-			<p class="created">Originally posted at <time>@Model.Post.CreatedAt.ToString("r")</time></p>
-		}
-		<div class="clr"></div>
-
-		<div class="share">
-			<div class="twitter">
-				@Html.TwitterButton("Tweet", TwitterButtonDataCount.Horizental, Model.Post.Author)
-			</div>
-			<div class="fb-like" data-href="@(Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
-			<div class="clr"></div>
-		</div>
-		<div class="comments-rss">
-			<a rel="alternate" type="application/rss+xml" href="@Url.Action("CommentsRss", "Syndication", new { id = Model.Post.Id })">Comments Feed</a>
-		</div>
-	</footer>
-
-
-
-	<section class="comments">
-		<header>
-			<a name="comments"></a>
-			<h1>Comments</h1>
-		</header>
-		@if (Model.Comments.Count == 0)
-		{
-			<p>No comments posted yet.</p>
-		}
-		@foreach (var comment in Model.Comments)
-		{
-			<article class="comment @(comment.IsImportant ? " important" : null)">
-				<a name="comment@(comment.Id)"></a>
-				<div class="avatar">
-					<img src="http://www.gravatar.com/avatar.php?gravatar_id=@(comment.EmailHash)&size=50&default=identicon" alt="@comment.Author">
-				</div>
-
-				<header>
-					@comment.CreatedAt by
-					<address>
-						@Html.Link(comment.Author, @comment.Url, new { title = comment.Tooltip, target = "_blank" })
-					</address>
-				</header>
-				<div class="comment-body raw_html">@comment.Body</div>
-			</article>
-		}
-
-		<div class="messageWrapper"><div id="message" style="visibility:hidden"></div></div>
-		<article id="postComment">
-			@if (Model.Post.IsCommentAllowed == false || Model.AreCommentsClosed)
-			{
-				<div class="commentsClosedMessage">Comments have been closed on this topic.</div>
-			}
-			else
-			{
-				if (Model.IsLoggedInCommenter == false)
-				{
-					<div class="openid-wrapper">
-						<form id="openid" action="@Url.Action("Login", "Social")" method="post">
-							<noscript>
-								<p>
-									OpenID is service that allows you to log-on to many different websites using a single identity.
-									Find out <a href="http://openid.net/what/">more about OpenID</a> and <a href="http://openid.net/get/">how to get an OpenID enabled account</a>.
-								</p>
-							</noscript>
-
-							@Html.Hidden("returnUrl", Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))
-						</form>
-					</div>
-				}
-				if (ViewData.ModelState.IsValid == false)
-				{
-					<div class="form-error">
-						@Html.ValidationSummary(true)
-					</div>
-				}
-				<div>
-					<h1><a id="comments-form-location">Join the conversation...</a></h1>
-				</div>
-				<p />
-				<div class="comment-form-wrapper">
-					@using (Html.BeginForm("Comment", "PostDetails", new { Model.Post.Id, key = Model.Post.ShowPostEvenIfPrivate }))
-					{
-						@Html.EditorFor(x => x.Input.Name)
-						@Html.EditorFor(x => x.Input.Email)
-						@Html.EditorFor(x => x.Input.Url)
-						@Html.EditorFor(x => x.Input.Body)
-
-						if (!Model.IsTrustedCommenter)
-						{
-							<div class="form_item">
-								<label>
-									<span class="form_item_name">Are you human?</span>
-									@Html.GenerateCaptcha()
-									@Html.ValidationMessage("CaptchaNotValid")
-								</label>
-							</div>
-						}
-						@Html.EditorFor(x => x.Input.CommenterKey)
-						<input type="submit" value="Post Comment" />
-						<div class="clr"></div>
-					}
-				</div>
-			}
-		</article>
-	</section>
+<article>
+    <nav class="nextPrev">
+        @if (Model.PreviousPost != null)
+        {
+            <a class="pull-left" href="@Url.Action("Details", new {id = Model.PreviousPost.DomainId, Model.PreviousPost.Slug})">‹&nbsp;previous post</a>
+        }
+        @if (Model.NextPost != null)
+        {
+            <a class="pull-right" href="@Url.Action("Details", new {id = Model.NextPost.DomainId, Model.NextPost.Slug})">next post&nbsp;›</a>
+        }
+    </nav>
+    <time>
+        <span>@Model.Post.PublishedAt.ToString("dd.MM")</span>
+        @Model.Post.PublishedAt.ToString("yyyy HH:mm")
+    </time>
+    <a href="@Url.Action("Details", new { Model.Post.Id, Model.Post.Slug })">
+        <h2>@Model.Post.Title</h2>
+    </a>
+    <div class="clearfix"></div>
+    <div class="postData">
+        <a href='@string.Format("http://twitter.com/intent/tweet?status={0}+{1} via @{2}", Model.Post.Title, Request.Url.OriginalString, Model.Post.Author.TwitterNick)'>
+            <span class="socicon twitter">a</span><span>Tweet</span>
+        </a>
+        <a style='text-decoration:none;' type="icon_link" onclick="window.open('@string.Format("http://www.facebook.com/sharer/sharer.php?u={0}&title={1}", Request.Url.OriginalString, Model.Post.Title)','sharer','toolbar=0,status=0,width=580,height=325');" href="javascript: void(0)">
+            <span class="socicon facebook">b</span><span>share</span>
+        </a>
+        <a style='text-decoration:none;' type="icon_link" onclick="popUp=window.open('@string.Format("https://plus.google.com/share?url={0}", Request.Url.OriginalString)', 'popupwindow', 'scrollbars=yes,width=600,height=400');popUp.focus();return false" href="javascript: void(0)">
+            <span class="socicon gplus">c</span><span>share</span>
+        </a>
+        <a href="#comments">
+            <span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span>@Model.Comments.Count comments</span>
+        </a>
+        @if (Model.Post.Tags.Count > 0)
+        {
+            <div class="tags pull-right-lg">
+                <span class="glyphicon glyphicon-tag" aria-hidden="true"></span> Tags:
+                <ul>
+                    @foreach (var tag in Model.Post.Tags)
+                    {
+                        <li><a href="@Url.Action("Tag", "Posts", new {tag.Slug})">@tag.Name</a></li>
+                    }
+                </ul>
+            </div>
+        }
+        <div class="clearfix"></div>
+    </div>
+    <div class="articleContent">
+        @Model.Post.Body
+    </div>
+    <hr />
+    <nav class="nextPrev">
+        @if (Model.PreviousPost != null)
+        {
+            <a class="pull-left" href="@Url.Action("Details", new {id = Model.PreviousPost.DomainId, Model.PreviousPost.Slug})">‹&nbsp;previous post</a>
+        }
+        @if (Model.NextPost != null)
+        {
+            <a class="pull-right" href="@Url.Action("Details", new {id = Model.NextPost.DomainId, Model.NextPost.Slug})">next post&nbsp;›</a>
+        }
+    </nav>
+    <hr />
 </article>
-@section Style {
-	<link rel="canonical" href="@Url.AbsoluteAction("Details", new { Model.Post.Id, Model.Post.Slug })">
-}
-@section Script {
-	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.validate.min.js")"></script>
-	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.validate.unobtrusive.min.js")"></script>
-	<script type="text/javascript" src="@Url.Content("~/Content/js/showdown.js")"></script>
-	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.tmpl.min.js")"></script>
-	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.md5.js")"></script>
-	<script type="text/javascript" src="@Url.Content("~/Content/js/date.f-0.5.0.min.js")"></script>
-	<script type="text/javascript" src="@Url.Content("~/Content/js/jquery.openid.js")"></script>
-	@if (Model.IsLoggedInCommenter == false)
-	{
-		<script type="text/javascript">
 
-			$(function () {
-				$('#openid').openid({
-					img_path: '@Url.Content("~/Content/css/images/")',
-					txt: {
-						label: 'Select your Open ID provider',
-						username: 'Username',
-						title: 'Social Login',
-						sign: 'Sign In'
-					}
-				});
-			});
-		</script>
-	}
-	<script>
-		window.twttr = (function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], t = window.twttr || {}; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); t._e = []; t.ready = function (f) { t._e.push(f); }; return t; }(document, "script", "twitter-wjs"));
-	</script>
-	<script>
-		(function (d, s, id) {
-			var js, fjs = d.getElementsByTagName(s)[0];
-			if (d.getElementById(id)) return;
-			js = d.createElement(s); js.id = id;
-			js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
-			fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));
-	</script>
-	<script id="commentTemplate" type="text/html">
-		<article class="comment livecomment" style="display: none">
-			<div class="avatar">
-				<img src="http://www.gravatar.com/avatar.php?gravatar_id=${emailHash}&size=50&default=identicon" alt="Gravatar">
-			</div>
-			<header>
-				${createdAt} by
-				<address>
-					<a target="_blank" href="${url}">${author}</a>
-				</address>
-			</header>
-			<div class="comment-body raw_html">{{html body}}</div>
-		</article>
-	</script>
-}*@
+<section class="comments">
+    <a name="comments"></a>
+    <h2>Comments</h2>
+    
+    @foreach (var comment in Model.Comments.Select((value, i) => new { value, i }))
+    {
+        if (@comment.value.IsImportant)
+        {
+            <article class="comment important">
+                <a name='@(string.Format("comment{0}", (comment.i+1)))'></a>
+                <div class="avatar"><img src='@(string.Format("http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon", @comment.value.EmailHash))' alt="@comment.value.Author" /></div>
+                <div class="postedBy"><a target="_blank" title='@(string.Format("Comment by {0}", @comment.value.Author))'>@comment.value.Author</a></div>
+                <time>
+                    @DateTime.Parse(@comment.value.CreatedAt).ToString("MM/dd/yyyy")<br />
+                    @DateTime.Parse(@comment.value.CreatedAt).ToString("HH:mm tt")
+                </time>
+                <div class="comment-body raw_html">
+                    @comment.value.Body
+                </div>
+            </article>
+        }
+        else
+        {
+            <article class="comment">
+                <a name='@(string.Format("comment{0}", (comment.i+1)))'></a>
+                <div class="avatar"><img src='@(string.Format("http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon", @comment.value.EmailHash))' alt="@comment.value.Author" /></div>
+                <time>
+                    @DateTime.Parse(@comment.value.CreatedAt).ToString("MM/dd/yyyy")<br />
+                    @DateTime.Parse(@comment.value.CreatedAt).ToString("HH:mm tt")
+                </time>
+                <div class="postedBy"><a target="_blank" title='@(string.Format("Comment by {0}", @comment.value.Author))'>@comment.value.Author</a></div>
+                <div class="comment-body raw_html">
+                    @comment.value.Body
+                </div>
+            </article>
+        }
+    }
+    
+    <div class="messageWrapper">
+        <div id="message" style="visibility:hidden"></div>
+    </div>
+    
+    <article id="postComment">
+
+        <h3><a id="comments-form-location">Join the conversation...</a></h3>
+        
+        <div class="comment-form-wrapper">
+            @using (Html.BeginForm("Comment", "PostDetails", new {Model.Post.Id, key = Model.Post.ShowPostEvenIfPrivate}))
+            {
+                <div class="row">
+                    <div class="form_item form-group col-sm-12 col-md-4">
+
+                        <div class="input-group">
+                            <label class="input-group-addon"> <span class="form_item_name">Name</span></label>
+                            <input data-val="true" data-val-required="The Name field is required." id="Input_Name" class="form-control" name="Input.Name" type="text">
+                            <span class="field-validation-valid" data-valmsg-for="Input.Name" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                    <div class="form_item form-group col-sm-6 col-md-4">
+                        <div class="input-group">
+                            <label class="input-group-addon"> <span class="form_item_name">Email</span></label>
+                            <input class="email form-control" data-val="true" data-val-email="The Email field is not a valid e-mail address." data-val-required="The Email field is required." id="Input_Email" name="Input.Email" type="email" value="">
+                            <span class="field-validation-valid" data-valmsg-for="Input.Email" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                    <div class="form_item form-group col-sm-6 col-md-4">
+                        <div class="input-group">
+                            <label class="input-group-addon"> <span class="form_item_name">Url</span> </label>
+                            <input id="Input_Url" class="form-control" name="Input.Url" type="text" value="">
+                            <span class="field-validation-valid" data-valmsg-for="Input.Url" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                    <div class="form_item form-group col-sm-12">
+                        <div class="input-group">
+                            <label class="input-group-addon"> <span class="form_item_name">Comments</span></label>
+                            <textarea data-val="true" data-val-required="The Comments field is required." id="Input_Body" class="form-control" name="Input.Body" rows="9"></textarea>
+                            <span class="field-validation-valid" data-valmsg-for="Input.Body" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                </div>
+                <input id="Input_CommenterKey" name="Input.CommenterKey" type="hidden" value="">
+                <input type="submit" value="Post Comment" class="btn btn-primary pull-right">
+                <div class="clr"></div>
+            }
+        </div>
+    </article>
+</section>
+
+@section Script {
+    <script>
+        window.twttr = (function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], t = window.twttr || {}; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); t._e = []; t.ready = function (f) { t._e.push(f); }; return t; }(document, "script", "twitter-wjs"));
+    </script>
+    @Scripts.Render("~/Content/js/jquery-validate")
+}

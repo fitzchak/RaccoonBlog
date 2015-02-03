@@ -15,8 +15,10 @@ namespace RaccoonBlog.Web.Controllers
 	public class SectionController : AggresivelyCachingRacconController
 	{
 		[ChildActionOnly]
-		public ActionResult FuturePosts()
-		{
+		public ActionResult FuturePosts(string sectionTitle)
+        {
+            ViewBag.SectionTitle = sectionTitle;
+
 			RavenQueryStatistics stats;
 			var futurePosts = RavenSession.Query<Post>()
 				.Statistics(out stats)
@@ -49,7 +51,8 @@ namespace RaccoonBlog.Web.Controllers
 				return View(new SectionDetails[0]);
 
 			var sections = RavenSession.Query<Section>()
-				.Where(s => s.IsActive)
+                //.Where(s => s.ActionName != "ArchivesList" && s.ActionName != "TagsList" && s.ControllerName != null && s.ActionName != null)
+                .Where(s => s.ActionName == "RecentComments" || s.ActionName == "FuturePosts")
 				.OrderBy(x => x.Position)
 				.ToList();
 
@@ -77,13 +80,13 @@ namespace RaccoonBlog.Web.Controllers
 		{
 			var now = DateTime.Now;
 
-			var dates = RavenSession.Query<Posts_ByMonthPublished_Count.ReduceResult, Posts_ByMonthPublished_Count>()
-				.OrderByDescending(x => x.Year)
-				.ThenByDescending(x => x.Month)
-				// filter future stats
-				.Where(x=> x.Year < now.Year || x.Year == now.Year && x.Month <= now.Month)
-				.ToList();
-
+            var dates = RavenSession.Query<Posts_ByMonthPublished_Count.ReduceResult, Posts_ByMonthPublished_Count>()
+                .OrderByDescending(x => x.Year)
+                .ThenByDescending(x => x.Month)
+                // filter future stats
+                .Where(x => x.Year < now.Year || x.Year == now.Year && x.Month <= now.Month)
+                .ToList();
+            
 			return View(dates);
 		}
 
@@ -97,8 +100,9 @@ namespace RaccoonBlog.Web.Controllers
 		}
 
 		[ChildActionOnly]
-		public ActionResult RecentComments()
+        public ActionResult RecentComments(string sectionTitle)
 		{
+		    ViewBag.SectionTitle = sectionTitle;
 			var commentsTuples = RavenSession.QueryForRecentComments(q => q.Take(5));
 
 			var result = new List<RecentCommentViewModel>();

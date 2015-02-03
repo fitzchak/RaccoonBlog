@@ -62,7 +62,7 @@ namespace RaccoonBlog.IntegrationTests.Routing
 			"~/section/list".ShouldMapTo<SectionController>(c => c.List());
 
 			"~/section/tagslist".ShouldMapTo<SectionController>(c => c.TagsList());
-			"~/section/futureposts".ShouldMapTo<SectionController>(c => c.FuturePosts());
+			"~/section/futureposts".ShouldMapTo<SectionController>(c => c.FuturePosts("Future Posts"));
 			"~/section/archiveslist".ShouldMapTo<SectionController>(c => c.ArchivesList());
 			"~/section/postsstatistics".ShouldMapTo<SectionController>(c => c.PostsStatistics());
 		}

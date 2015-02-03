@@ -11,8 +11,7 @@ namespace RaccoonBlog.Web.Controllers
 	public abstract class RaccoonController : RavenController
 	{
 		public const int DefaultPage = 1;
-		public const int PageSize = 25;
-
+        
 		private BlogConfig blogConfig;
 		public BlogConfig BlogConfig
 		{
@@ -40,6 +39,11 @@ namespace RaccoonBlog.Web.Controllers
 
 			ViewBag.BlogConfig = BlogConfig;
 		}
+        
+        public int PageSize
+        {
+            get { return BlogConfig.PostsOnPage; }
+        }
 
 		protected int CurrentPage
 		{

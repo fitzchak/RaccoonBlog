@@ -2,20 +2,24 @@
 @{
 	Layout = "";    
 }
-<ul class="recent-comments">
-	@foreach (var comment in Model)
-	{
-		var postUrl = Url.Action("Details", "PostDetails", new { Id = comment.PostId, Slug = comment.PostSlug });
-		
-		<li>
-			<div class="recent-comments-body">@comment.ShortBody 
-			<a href="@(postUrl)#comment@(comment.CommentId)">
-				Read all.
-			</a>
-			</div>
-			<p/>
-			<div><b>By</b> @comment.Author on <i>@comment.PostTitle</i></div>
-			<p/>
-		</li>
-	}
-</ul>
+<div id="recentComments">
+    <h4>@ViewBag.SectionTitle.ToUpper()</h4>
+    <ul>
+        @foreach (var comment in Model)
+        {
+            var postUrl = Url.Action("Details", "PostDetails", new { Id = comment.PostId, Slug = comment.PostSlug });
+
+            <li>
+                <div>
+                    <strong>@comment.ShortBody</strong>
+                    <a href="@(postUrl)#comment@(comment.CommentId)">
+                        Read all.
+                    </a>
+                </div>
+                <p />
+                <div><strong>By</strong>&nbsp;@comment.Author on <em>@comment.PostTitle</em></div>
+                <p />
+            </li>
+        }
+    </ul>
+</div>

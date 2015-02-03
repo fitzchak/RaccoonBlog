@@ -28,37 +28,77 @@
     <div class="container">
         <div class="row">
             <div class="leftSide col-sm-4 col-md-3">
-                <a href="#" class="logo"><h1>Ayende &#64; Rahien</h1></a><img src="~/Content/img/rihno.svg" class="rihno" />
+                <a href="#" class="logo"><h1>@ViewBag.BlogConfig.Title</h1></a><img src="~/Content/img/rihno.svg" class="rihno" />
                 <button class="menu-button" id="open-button"><i class="glyphicon glyphicon-info-sign hide-sm" aria-hidden="true"></i></button>
                 <div class="clearfix"></div>
                 <div class="collapseMobile">
                     <div class="about">
+                        @*@{Html.RenderAction("PostsStatistics", "Section");}*@
                         <span>Hi!</span><br />
                         <span>My name is</span> <span>Oren Eini</span><br />
                         <span>and you can reach me by phone or email:</span><br />
-                        <p class="mail"><a href="mialto:Ayende@ayende.com">Ayende@ayende.com</a></p>
+                        <p class="mail"><a href="@string.Format("mailto:{0}", ViewBag.BlogConfig.OwnerEmail)">@ViewBag.BlogConfig.OwnerEmail</a></p>
                         <p class="phone">+972 52-548-6969</p>
                     </div>
                     <div class="pull-down">
-                        <p class="socicon"><a href="#" class="rss">,</a> <a href="#" class="mail">&#64;</a> <a href="#" class="git">Q</a> <a href="#" class="twitter">a</a> <a href="#" class="facebook">b</a> <a href="#" class="gplus">c</a></p>
-                        <p class="stats"><span>Posts: <strong>5,894</strong></span> | <span>Comments: <strong>43,923</strong></span></p>
-                        <p>© 2004-2015 Ayende Rahien</p>
+                        <p class="socicon">
+                            @if (ViewBag.BlogConfig.RssLogin != null)
+                            {
+                                <a href="@string.Format("http://feeds.feedburner.com/{0}", ViewBag.BlogConfig.RssLogin)" class="rss">,</a>
+                            }
+                            @if (ViewBag.BlogConfig.OwnerEmail != null)
+                            {
+                                <a href="@string.Format("mailto:{0}", ViewBag.BlogConfig.OwnerEmail)" class="mail">&#64;</a>
+                            }
+                            @if (ViewBag.BlogConfig.GithubLogin != null)
+                            {
+                                <a href="@string.Format("https://github.com/{0}", ViewBag.BlogConfig.GithubLogin)" class="git">Q</a>
+                            }
+                            @if (ViewBag.BlogConfig.TwitterLogin != null)
+                            {
+                                <a href="@string.Format("https://twitter.com/{0}", ViewBag.BlogConfig.TwitterLogin)" class="twitter">a</a>
+                            }
+                            @if (ViewBag.BlogConfig.FacebookLogin != null)
+                            {
+                                <a href="@string.Format("https://www.facebook.com/{0}", ViewBag.BlogConfig.FacebookLogin)" class="facebook">b</a>
+                            }
+                            @if (ViewBag.BlogConfig.GoogleLogin != null)
+                            {
+                                <a href="@string.Format("https://plus.google.com/{0}", ViewBag.BlogConfig.GoogleLogin)" class="gplus">c</a>
+                            }
+                        </p>
+                        @{Html.RenderAction("PostsStatistics", "Section");}
+                        <p>@ViewBag.BlogConfig.Copyright</p>
                     </div>
                 </div>
             </div>
-            <div class="centerCol col-sm-8 col-sm-offset-4 col-md-offset-3 col-md-6 col-lg-7">
+            <div id="content" class="centerCol col-sm-8 col-sm-offset-4 col-md-offset-3 col-md-6 col-lg-7">
                 <header>
                     <div class="search">
-                        <input type="search" placeholder="search" class="form-control" />
-                        <input type="submit" />
+                        @using (Html.BeginForm("SearchResult", "Search"))
+                        {
+                            <input name="q" type="search" placeholder="search" class="form-control" />
+                            <input type="submit" />
+                        }
                     </div>
                     <a href="#" id="tags-button"><span class="glyphicon glyphicon-tags" aria-hidden="true"></span> filter by tags</a>&nbsp;<a href="#" id="archive-button"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> archive</a>
+                    <nav class="pull-right views"><a href="#" class="gridView" id="gridView">grid view</a> </nav>
+                    <div class="clearfix"></div>
+                    <nav id="tags">
+                        @{Html.RenderAction("TagsList", "Section");}
+                    </nav>
+                    <nav id="archive">
+                        @{Html.RenderAction("ArchivesList", "Section");}
+                    </nav>
                 </header>
-                @*@RenderBody()*@
+                @RenderBody()
             </div>
+            <section class="rightSide col-sm-8 col-sm-offset-4 col-md-3 col-md-offset-0 col-lg-2">
+                @{Html.RenderAction("List", "Section");}
+            </section>
         </div>
     </div>
-    
+
     @if (IsSectionDefined("Script"))
     {
         <script type="text/javascript">
@@ -101,4 +141,5 @@
         }
     }
 </body>
+
 </html>

@@ -20,6 +20,11 @@
 					@Html.EditorFor(config => config.Title)
 					@Html.EditorFor(config => config.Subtitle)
 					@Html.EditorFor(config => config.OwnerEmail)
+                    @Html.EditorFor(config => config.TwitterLogin)
+                    @Html.EditorFor(config => config.FacebookLogin)
+                    @Html.EditorFor(config => config.GoogleLogin)
+                    @Html.EditorFor(config => config.GithubLogin)
+                    @Html.EditorFor(config => config.RssLogin)
 
 					@Html.EditorFor(config => config.MetaDescription)
 					@Html.EditorFor(config => config.Copyright)
@@ -32,7 +37,9 @@
 					@Html.EditorFor(config => config.MinNumberOfPostForSignificantTag)
 					@Html.EditorFor(config => config.NumberOfDayToCloseComments)
 					
-					@Html.EditorFor(config => config.Id)
+                    @Html.EditorFor(config => config.PostsOnPage)
+
+				    @Html.EditorFor(config => config.Id)
 					<div><input type="submit" value="Save" /></div>
 				</div>
 			</div>

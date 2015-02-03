@@ -9,16 +9,17 @@ namespace RaccoonBlog.Web.ViewModels
 	{
 		public bool HasNextPage
 		{
-			get { return CurrentPage*RaccoonController.PageSize < PostsCount; }
+			get { return CurrentPage*PageSize < PostsCount; }
 		}
 
 		public bool HasPrevPage
 		{
-			get { return CurrentPage*RaccoonController.PageSize > RaccoonController.PageSize*RaccoonController.DefaultPage; }
+			get { return CurrentPage*PageSize > PageSize*RaccoonController.DefaultPage; }
 		}
 
 		public int CurrentPage { get; set; }
 		public int PostsCount { get; set; }
+	    public int PageSize { get; set; }
 
 		public IList<PostSummary> Posts { get; set; }
 
