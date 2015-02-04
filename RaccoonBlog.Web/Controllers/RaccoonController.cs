@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using HibernatingRhinos.Loci.Common.Controllers;
 using RaccoonBlog.Web.Helpers.Results;
@@ -11,7 +13,7 @@ namespace RaccoonBlog.Web.Controllers
 	public abstract class RaccoonController : RavenController
 	{
 		public const int DefaultPage = 1;
-        
+
 		private BlogConfig blogConfig;
 		public BlogConfig BlogConfig
 		{
@@ -33,17 +35,36 @@ namespace RaccoonBlog.Web.Controllers
 			}
 		}
 
+		private List<Section> sections;
+		public List<Section> Sections
+		{
+			get
+			{
+				if (sections == null)
+				{
+					using (RavenSession.Advanced.DocumentStore.AggressivelyCacheFor(TimeSpan.FromMinutes(5)))
+					{
+						sections = RavenSession
+							.Query<Section>()
+							.ToList();
+					}
+				}
+				return sections;
+			}
+		}
+
 		protected override void OnActionExecuted(ActionExecutedContext filterContext)
 		{
 			base.OnActionExecuted(filterContext);
 
 			ViewBag.BlogConfig = BlogConfig;
+			ViewBag.Sections = Sections;
 		}
-        
-        public int PageSize
-        {
-            get { return BlogConfig.PostsOnPage; }
-        }
+
+		public int PageSize
+		{
+			get { return BlogConfig.PostsOnPage; }
+		}
 
 		protected int CurrentPage
 		{

@@ -69,7 +69,7 @@ namespace RaccoonBlog.Web.Controllers
 			if (true.Equals(HttpContext.Items["CurrentlyProcessingException"]))
 				return View(new SectionDetails[0]);
 
-			var sections = RavenSession.Query<Section>()
+			var sections = Sections
                 .Where(s => s.IsActive && s.IsRightSide)
 				.OrderBy(x => x.Position)
 				.ToList();

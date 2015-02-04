@@ -20,7 +20,6 @@
 	@Styles.Render("~/Content/css/socicon")
 	@Html.RenderTheme(ViewBag.BlogConfig.CustomCss as string)
 	@RenderSection("Style", false)
-
 </head>
 <body>
 	<div class="container">
@@ -34,7 +33,7 @@
 				<div class="clearfix"></div>
 				<div class="collapseMobile">
 					<div class="about">
-						@{Html.RenderAction("ContactMe", "Section");}
+						@Html.RenderSection("Contact Me")
 					</div>
 					<div class="pull-down">
 						<p class="socicon">
@@ -63,7 +62,7 @@
 								<a href="@string.Format("https://plus.google.com/{0}", ViewBag.BlogConfig.GoogleLogin)" class="gplus">c</a>
 							}
 						</p>
-						@{Html.RenderAction("PostsStatistics", "Section");}
+						@Html.RenderSection("Stats")
 						<p>@ViewBag.BlogConfig.Copyright</p>
 					</div>
 				</div>
@@ -77,18 +76,25 @@
 							<input type="submit" />
 						}
 					</div>
-					<a href="#" id="tags-button"><span class="glyphicon glyphicon-tags" aria-hidden="true"></span> filter by tags</a>&nbsp;<a href="#" id="archive-button"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> archive</a>
+					@if (Html.IsSectionActive("Tags"))
+					{
+						<a href="#" id="tags-button">
+							<span class="glyphicon glyphicon-tags" aria-hidden="true"></span> filter by tags
+						</a>
+					}
+					@if (Html.IsSectionActive("Archive"))
+					{
+						<a href="#" id="archive-button">
+							<span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> archive
+						</a>
+					}
 					<nav class="pull-right views">
 						<a href="#" class="stackView active" id="stackView">stack view</a>
 						<a href="#" class="gridView" id="gridView">grid view</a>
 					</nav>
 					<div class="clearfix"></div>
-					<nav id="tags">
-						@{Html.RenderAction("TagsList", "Section");}
-					</nav>
-					<nav id="archive">
-						@{Html.RenderAction("ArchivesList", "Section");}
-					</nav>
+					@Html.RenderSection("Tags")
+					@Html.RenderSection("Archive")
 				</header>
 
 				@RenderBody()

@@ -1,12 +1,14 @@
 ﻿@model IList<TagsListViewModel>
 @{
-	Layout = "";    
+	Layout = "";
 }
-<ul>
-	@foreach (var tag in Model)
-	{
-		<li>
-			<a href="@Url.Action("Tag", "Posts", new { tag.Slug })">@tag.Name</a>&nbsp;<span>(@tag.Count)</span>&nbsp;<a href="@Url.Action("Rss", "Syndication", new { Tag = tag.Slug })" class="rss">rss</a>
-		</li>
-	}
-</ul>
+<nav id="tags">
+	<ul>
+		@foreach (var tag in Model)
+		{
+			<li>
+				<a href="@Url.Action("Tag", "Posts", new { tag.Slug })">@tag.Name</a>&nbsp;<span>(@tag.Count)</span>&nbsp;<a href="@Url.Action("Rss", "Syndication", new { Tag = tag.Slug })" class="rss">rss</a>
+			</li>
+		}
+	</ul>
+</nav>
