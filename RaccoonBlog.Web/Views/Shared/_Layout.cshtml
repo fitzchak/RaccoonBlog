@@ -1,140 +1,144 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="@ViewBag.BlogConfig.MetaDescription">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="@ViewBag.BlogConfig.MetaDescription">
 	@{
 		ViewBag.Message = TempData["Message"] as string;
 	}
-    @if (string.IsNullOrWhiteSpace(Context.Request.QueryString["key"]) == false)
-    {
-        <meta name="robots" content="noindex" />
-    }
-    <title>
-        @if (ViewBag.Title != null)
-        { <text> @ViewBag.Title - </text> }@ViewBag.BlogConfig.Title
-    </title>
+	@if (string.IsNullOrWhiteSpace(Context.Request.QueryString["key"]) == false)
+	{
+		<meta name="robots" content="noindex" />
+	}
+	<title>
+		@if (ViewBag.Title != null)
+		{ <text> @ViewBag.Title - </text> }@ViewBag.BlogConfig.Title
+	</title>
 
-    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,400italic,700italic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
-	
-    @Styles.Render("~/Content/css/socicon")
-    @Html.RenderTheme(ViewBag.BlogConfig.CustomCss as string)
+	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,400italic,700italic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
+
+	@Styles.Render("~/Content/css/socicon")
+	@Html.RenderTheme(ViewBag.BlogConfig.CustomCss as string)
 	@RenderSection("Style", false)
 
 </head>
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="leftSide col-sm-4 col-md-3">
-                <a href="#" class="logo"><h1>@ViewBag.BlogConfig.Title</h1></a><img src="~/Content/img/rihno.svg" class="rihno" />
-                <button class="menu-button" id="open-button"><i class="glyphicon glyphicon-info-sign hide-sm" aria-hidden="true"></i></button>
-                <div class="clearfix"></div>
-                <div class="collapseMobile">
-                    <div class="about">
-                        @{Html.RenderAction("ContactMe", "Section");}
-                    </div>
-                    <div class="pull-down">
-                        <p class="socicon">
-                            @if (ViewBag.BlogConfig.RssLogin != null)
-                            {
-                                <a href="@string.Format("http://feeds.feedburner.com/{0}", ViewBag.BlogConfig.RssLogin)" class="rss">,</a>
-                            }
-                            @if (ViewBag.BlogConfig.OwnerEmail != null)
-                            {
-                                <a href="@string.Format("mailto:{0}", ViewBag.BlogConfig.OwnerEmail)" class="mail">&#64;</a>
-                            }
-                            @if (ViewBag.BlogConfig.GithubLogin != null)
-                            {
-                                <a href="@string.Format("https://github.com/{0}", ViewBag.BlogConfig.GithubLogin)" class="git">Q</a>
-                            }
-                            @if (ViewBag.BlogConfig.TwitterLogin != null)
-                            {
-                                <a href="@string.Format("https://twitter.com/{0}", ViewBag.BlogConfig.TwitterLogin)" class="twitter">a</a>
-                            }
-                            @if (ViewBag.BlogConfig.FacebookLogin != null)
-                            {
-                                <a href="@string.Format("https://www.facebook.com/{0}", ViewBag.BlogConfig.FacebookLogin)" class="facebook">b</a>
-                            }
-                            @if (ViewBag.BlogConfig.GoogleLogin != null)
-                            {
-                                <a href="@string.Format("https://plus.google.com/{0}", ViewBag.BlogConfig.GoogleLogin)" class="gplus">c</a>
-                            }
-                        </p>
-                        @{Html.RenderAction("PostsStatistics", "Section");}
-                        <p>@ViewBag.BlogConfig.Copyright</p>
-                    </div>
-                </div>
-            </div>
-            <div id="content" class="centerCol col-sm-8 col-sm-offset-4 col-md-offset-3 col-md-6 col-lg-7">
-                <header>
-                    <div class="search">
-                        @using (Html.BeginForm("SearchResult", "Search"))
-                        {
-                            <input name="q" type="search" placeholder="search" class="form-control" />
-                            <input type="submit" />
-                        }
-                    </div>
-                    <a href="#" id="tags-button"><span class="glyphicon glyphicon-tags" aria-hidden="true"></span> filter by tags</a>&nbsp;<a href="#" id="archive-button"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> archive</a>
-                    <nav class="pull-right views"><a href="#" class="gridView" id="gridView">grid view</a> </nav>
-                    <div class="clearfix"></div>
-                    <nav id="tags">
-                        @{Html.RenderAction("TagsList", "Section");}
-                    </nav>
-                    <nav id="archive">
-                        @{Html.RenderAction("ArchivesList", "Section");}
-                    </nav>
-                </header>
-                @RenderBody()
-            </div>
-            <section class="rightSide col-sm-8 col-sm-offset-4 col-md-3 col-md-offset-0 col-lg-2">
-                @{Html.RenderAction("List", "Section");}
-            </section>
-        </div>
-    </div>
+	<div class="container">
+		<div class="row">
+			<div class="leftSide col-sm-4 col-md-3">
+				<a href="#" class="logo"><h1>@ViewBag.BlogConfig.Title</h1></a><img src="~/Content/img/rihno.svg" class="rihno" />
+				<button class="menu-button" id="open-button"><i class="glyphicon glyphicon-info-sign hide-sm" aria-hidden="true"></i></button>
+				<div class="clearfix"></div>
+				<div class="collapseMobile">
+					<div class="about">
+						@{Html.RenderAction("ContactMe", "Section");}
+					</div>
+					<div class="pull-down">
+						<p class="socicon">
+							@if (ViewBag.BlogConfig.RssLogin != null)
+							{
+								<a href="@string.Format("http://feeds.feedburner.com/{0}", ViewBag.BlogConfig.RssLogin)" class="rss">,</a>
+							}
+							@if (ViewBag.BlogConfig.OwnerEmail != null)
+							{
+								<a href="@string.Format("mailto:{0}", ViewBag.BlogConfig.OwnerEmail)" class="mail">&#64;</a>
+							}
+							@if (ViewBag.BlogConfig.GithubLogin != null)
+							{
+								<a href="@string.Format("https://github.com/{0}", ViewBag.BlogConfig.GithubLogin)" class="git">Q</a>
+							}
+							@if (ViewBag.BlogConfig.TwitterLogin != null)
+							{
+								<a href="@string.Format("https://twitter.com/{0}", ViewBag.BlogConfig.TwitterLogin)" class="twitter">a</a>
+							}
+							@if (ViewBag.BlogConfig.FacebookLogin != null)
+							{
+								<a href="@string.Format("https://www.facebook.com/{0}", ViewBag.BlogConfig.FacebookLogin)" class="facebook">b</a>
+							}
+							@if (ViewBag.BlogConfig.GoogleLogin != null)
+							{
+								<a href="@string.Format("https://plus.google.com/{0}", ViewBag.BlogConfig.GoogleLogin)" class="gplus">c</a>
+							}
+						</p>
+						@{Html.RenderAction("PostsStatistics", "Section");}
+						<p>@ViewBag.BlogConfig.Copyright</p>
+					</div>
+				</div>
+			</div>
+			<div id="content" class="centerCol col-sm-8 col-sm-offset-4 col-md-offset-3 col-md-6 col-lg-7">
+				<header>
+					<div class="search">
+						@using (Html.BeginForm("SearchResult", "Search"))
+						{
+							<input name="q" type="search" placeholder="search" class="form-control" />
+							<input type="submit" />
+						}
+					</div>
+					<a href="#" id="tags-button"><span class="glyphicon glyphicon-tags" aria-hidden="true"></span> filter by tags</a>&nbsp;<a href="#" id="archive-button"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> archive</a>
+					<nav class="pull-right views">
+						<a href="#" class="stackView active" id="stackView">stack view</a>
+						<a href="#" class="gridView" id="gridView">grid view</a>
+					</nav>
+					<div class="clearfix"></div>
+					<nav id="tags">
+						@{Html.RenderAction("TagsList", "Section");}
+					</nav>
+					<nav id="archive">
+						@{Html.RenderAction("ArchivesList", "Section");}
+					</nav>
+				</header>
 
-    @if (IsSectionDefined("Script"))
-    {
-        <script type="text/javascript">
-            window.RaccoonRoutes = {};
-        </script>
-        <!--[if IE 8]>
-            <script type="text/javascript" src="~/Content/js/respond.src.js"></script>
-        <![endif]-->
-        @Scripts.Render("~/Content/js/jquery")
-        @Scripts.Render("~/Content/js/jquery-migrate")
-        @Scripts.Render("~/Content/js/bootstrap")
-        @Scripts.Render("~/Content/js")
-        <script type="text/javascript">
-            $(function () {
-                var timer;
-                function resizeImagesToScreen() {
-                    $('#content img').aeImageResize({ width: $('#content').width() });
-                }
-                resizeImagesToScreen();
-                $(window).resize(function () {
-                    clearTimeout(timer);
-                    timer = setTimeout(resizeImagesToScreen, 50);
-                });
-            });
-        </script>
-        @RenderSection("Script")
-        if (string.IsNullOrEmpty(ViewBag.BlogConfig.GoogleAnalyticsKey) == false)
-        {
-            <script type="text/javascript">
-                var _gaq = _gaq || [];
-                _gaq.push(['_setAccount', '@ViewBag.BlogConfig.GoogleAnalyticsKey']);
-                _gaq.push(['_trackPageview']);
+				@RenderBody()
+			</div>
+			<section class="rightSide col-sm-8 col-sm-offset-4 col-md-3 col-md-offset-0 col-lg-2">
+				@{Html.RenderAction("List", "Section");}
+			</section>
+		</div>
+	</div>
 
-                (function () {
-                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-                })();
-            </script>
-        }
-    }
+	@if (IsSectionDefined("Script"))
+	{
+		<script type="text/javascript">
+			window.RaccoonRoutes = {};
+		</script>
+		<!--[if IE 8]>
+			<script type="text/javascript" src="~/Content/js/respond.src.js"></script>
+		<![endif]-->
+		@Scripts.Render("~/Content/js/jquery")
+		@Scripts.Render("~/Content/js/jquery-migrate")
+		@Scripts.Render("~/Content/js/bootstrap")
+		@Scripts.Render("~/Content/js")
+		<script type="text/javascript">
+			$(function () {
+				var timer;
+				function resizeImagesToScreen() {
+					$('#content img').aeImageResize({ width: $('#content').width() });
+				}
+				resizeImagesToScreen();
+				$(window).resize(function () {
+					clearTimeout(timer);
+					timer = setTimeout(resizeImagesToScreen, 50);
+				});
+			});
+		</script>
+		@RenderSection("Script")
+		if (string.IsNullOrEmpty(ViewBag.BlogConfig.GoogleAnalyticsKey) == false)
+		{
+			<script type="text/javascript">
+				var _gaq = _gaq || [];
+				_gaq.push(['_setAccount', '@ViewBag.BlogConfig.GoogleAnalyticsKey']);
+				_gaq.push(['_trackPageview']);
+
+				(function () {
+					var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+					ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+					var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+				})();
+			</script>
+		}
+	}
 </body>
 
 </html>

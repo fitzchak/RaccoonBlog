@@ -354,7 +354,6 @@
     <Content Include="Content\css\normalize.css" />
     <Content Include="Content\css\prism.css" />
     <Content Include="Content\css\socicon.css" />
-    <Content Include="Content\css\styles.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\fonts\socicon-webfont.svg" />
     <Content Include="Content\css\img\commentDate.png" />
@@ -898,7 +897,7 @@
     <Content Include="Content\css\fonts\socicon-webfont.woff2" />
     <Content Include="Content\css\custom\ayende.styles.less" />
     <Content Include="Content\css\openid\styles.less" />
-    <Content Include="Content\css\bootstrap\styles.less" />
+    <Content Include="Content\css\styles.less" />
     <Content Include="Content\css\custom\ayende.styles.css.map">
       <DependentUpon>ayende.styles.css</DependentUpon>
     </Content>
@@ -920,8 +919,6 @@
     <Content Include="Content\js\moment.min.js" />
     <Content Include="Content\js\bootstrap.js" />
     <Content Include="Content\js\bootstrap.min.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Views\MailTemplates\_Layout.cshtml" />
     <Content Include="Views\Section\FuturePosts.cshtml" />
     <Content Include="Views\Shared\500.cshtml" />

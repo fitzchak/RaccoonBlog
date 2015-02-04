@@ -1,14 +1,20 @@
 ﻿@model IList<SectionDetails>
 @{
-    Layout = "";    
+	Layout = "";
 }
-
 @{Html.RenderAction("AdministrationPanel", "Section");}
-    
-@foreach (var section in Model) {
-    if (section.IsActionSection()) {
-        Html.RenderAction(section.ActionName, section.ControllerName, new { sectionTitle = section.Title });
-    } else {
-        @(section.Body)
-    }
+
+@foreach (var section in Model)
+{
+	if (section.IsActionSection())
+	{
+		Html.RenderAction(section.ActionName, section.ControllerName, new { sectionTitle = section.Title });
+	}
+	else
+	{
+		<div id="@Html.ConvertSectionTitleToId(section.Title)">
+			<h4>@(section.Title)</h4>
+			@(section.Body)
+		</div>
+	}
 }

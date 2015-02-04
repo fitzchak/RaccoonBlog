@@ -19,7 +19,7 @@ namespace RaccoonBlog.Web.Models
 		public bool IsActive { get; set; }
 
         [Required]
-        [Display(Name = "Right Side?")]
+        [Display(Name = "Visible on Right Side?")]
         public bool IsRightSide { get; set; }
 
 		[Display(Name = "Position")]

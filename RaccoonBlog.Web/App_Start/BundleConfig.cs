@@ -91,7 +91,7 @@ namespace RaccoonBlog.Web
 				var bundle = new Bundle(themeBundleName, new ThemeLessTransform())
 				.Include(ThemeDirectory + file.Name)
 				.Include("~/Content/css/bootstrap/bootstrap.custom.less")
-				.Include("~/Content/css/bootstrap/styles.less");
+				.Include("~/Content/css/styles.less");
 
 				var stylesFile = themeName + ThemeStylesExtension;
 				if (File.Exists(themePath + stylesFile))

@@ -1,13 +1,4 @@
-﻿.leftSide .rihno {
-  display: block;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  background: url(../img/rihno.svg) no-repeat;
-  width: 180px;
-  /* Width of new image */
-  height: auto;
-  /* Height of new image */
-  padding-left: 180px;
-  /* Equal to width of new image */
+﻿div.leftSide a.logo {
+  background: url(../img/logo.svg) center no-repeat;
+  background-size: contain;
 }
-/*# sourceMappingURL=ayende.styles.css.map */

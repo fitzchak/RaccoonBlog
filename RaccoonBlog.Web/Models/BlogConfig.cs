@@ -1,11 +1,14 @@
-using System;
 using System.ComponentModel.DataAnnotations;
-using RaccoonBlog.Web.Helpers.Validation;
 
 namespace RaccoonBlog.Web.Models
 {
 	public class BlogConfig : Model
 	{
+		public BlogConfig()
+		{
+			PostsOnPage = 10;
+		}
+
 		[Required]
 		[Display(Name = "Blog title")]
 		public string Title { get; set; }

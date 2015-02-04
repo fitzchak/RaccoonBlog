@@ -8,6 +8,17 @@ namespace RaccoonBlog.Web.Helpers
 
     public static class HtmlHelperExtensions
 	{
+	    public static string ConvertSectionTitleToId(this HtmlHelper helper, string sectionTitle)
+	    {
+		    if (string.IsNullOrEmpty(sectionTitle)) 
+				return string.Empty;
+
+		    return sectionTitle
+				.Trim()
+				.Replace(" ", "-")
+				.ToLowerInvariant();
+	    }
+
 		public static MvcHtmlString Link(this HtmlHelper helper, string text, string href, object htmlAttributes)
 		{
 			var tag = new TagBuilder("a");

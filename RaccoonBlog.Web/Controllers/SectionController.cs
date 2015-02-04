@@ -80,17 +80,9 @@ namespace RaccoonBlog.Web.Controllers
         [ChildActionOnly]
 	    public ActionResult ContactMe()
         {
-            var user = RavenSession.GetCurrentUser();
+	        var user = RavenSession.GetUserByEmail(BlogConfig.OwnerEmail);
 
-            var vm = new ContactMeViewModel();
-            if (user != null)
-            {
-                vm.FullName = user.FullName;
-                vm.Email = user.Email;
-                vm.Phone = user.Phone;
-            }
-
-            return View(vm);
+            return View(new ContactMeViewModel(user));
         }
         
 		[ChildActionOnly]
