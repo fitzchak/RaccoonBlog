@@ -13,10 +13,29 @@ using RaccoonBlog.Web.Infrastructure.Common;
 namespace RaccoonBlog.Web.Controllers
 {
 	public class SectionController : AggresivelyCachingRacconController
-	{
+    {
+        [ChildActionOnly]
+        public ActionResult PostsSeries(string sectionTitle)
+        {
+            ViewBag.SectionTitle = sectionTitle;
+
+            var series = RavenSession.Query<Posts_Series.Result, Posts_Series>()
+                .OrderByDescending(x => x.MaxDate)
+                .Take(5)
+                .ToList();
+
+            var vm = series.Select(result => new PostsSeriesViewModel
+            {
+                SeriesTitle = result.Series, 
+                PostsCount = result.Count
+            }).ToList();
+
+            return View(vm);
+        }
+
 		[ChildActionOnly]
 		public ActionResult FuturePosts(string sectionTitle)
-        {
+		{
             ViewBag.SectionTitle = sectionTitle;
 
 			RavenQueryStatistics stats;

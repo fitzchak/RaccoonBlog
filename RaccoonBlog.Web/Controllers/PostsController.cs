@@ -42,6 +42,20 @@ namespace RaccoonBlog.Web.Controllers
 			return ListView(stats.TotalResults, posts);
 		}
 
+	    public ActionResult Series(string seriesTitle)
+	    {
+            RavenQueryStatistics stats;
+            var posts = RavenSession.Query<Post>()
+                .Include(x => x.AuthorId)
+				.Statistics(out stats)
+				.WhereIsPublicPost()
+                .Where(post => post.Title.StartsWith(seriesTitle))
+                .OrderByDescending(post => post.PublishAt)
+                .Paging(CurrentPage, DefaultPage, PageSize)
+                .ToList();
+
+            return ListView(stats.TotalResults, posts);
+	    }
 
 		public ActionResult Archive(int year, int? month, int? day)
 		{

@@ -447,6 +447,7 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\TagsResolver.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\UserAdminMapperProfile.cs" />
     <Compile Include="Infrastructure\Indexes\PostComments_CreationDate.cs" />
+    <Compile Include="Infrastructure\Indexes\Posts_Series.cs" />
     <Compile Include="Infrastructure\Indexes\Statistics_Count.cs" />
     <Compile Include="Models\BlogConfig.cs" />
     <Compile Include="Models\Model.cs" />
@@ -499,6 +500,7 @@
     <Compile Include="ViewModels\FuturePostViewModel.cs" />
     <Compile Include="ViewModels\NewCommentEmailViewModel.cs" />
     <Compile Include="ViewModels\PostReference.cs" />
+    <Compile Include="ViewModels\PostsSeriesViewModel.cs" />
     <Compile Include="ViewModels\PostsStatisticsViewModel.cs" />
     <Compile Include="ViewModels\PostSummaryJson.cs" />
     <Compile Include="ViewModels\PostViewModel.cs" />
@@ -970,6 +972,7 @@
     <Content Include="Areas\Admin\Views\Users\ChangePassword.cshtml" />
     <Content Include="Content\js\jquery-1.11.2.min.map" />
     <Content Include="Views\Section\ContactMe.cshtml" />
+    <Content Include="Views\Section\PostsSeries.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\css\openid\images\" />
