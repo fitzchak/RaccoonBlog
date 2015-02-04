@@ -17,8 +17,6 @@
 		{ <text> @ViewBag.Title - </text> }@ViewBag.BlogConfig.Title
 	</title>
 
-	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,400italic,700italic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
-
 	@Styles.Render("~/Content/css/socicon")
 	@Html.RenderTheme(ViewBag.BlogConfig.CustomCss as string)
 	@RenderSection("Style", false)
@@ -28,7 +26,10 @@
 	<div class="container">
 		<div class="row">
 			<div class="leftSide col-sm-4 col-md-3">
-				<a href="#" class="logo"><h1>@ViewBag.BlogConfig.Title</h1></a><img src="~/Content/img/rihno.svg" class="rihno" />
+				<a href="@Url.Action("Index", "Posts")" class="logo">
+					<h1>@ViewBag.BlogConfig.Title</h1>
+				</a>
+				<img src="~/Content/img/rihno.svg" class="rihno" />
 				<button class="menu-button" id="open-button"><i class="glyphicon glyphicon-info-sign hide-sm" aria-hidden="true"></i></button>
 				<div class="clearfix"></div>
 				<div class="collapseMobile">

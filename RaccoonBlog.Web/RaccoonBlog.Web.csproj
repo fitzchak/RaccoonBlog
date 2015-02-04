@@ -334,6 +334,12 @@
     <Content Include="Content\css\custom\ayende.styles.min.css">
       <DependentUpon>ayende.styles.css</DependentUpon>
     </Content>
+    <Content Include="Content\css\custom\ayende.variables.css">
+      <DependentUpon>ayende.variables.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\custom\ayende.variables.min.css">
+      <DependentUpon>ayende.variables.css</DependentUpon>
+    </Content>
     <Content Include="Content\css\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\css\fonts\socicon-webfont.svg" />
     <Content Include="Content\css\fullcalendar.css" />
@@ -570,6 +576,7 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\js\jquery.ui.core.js" />
     <Content Include="Content\js\jquery.ui.core.min.js" />
