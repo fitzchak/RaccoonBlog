@@ -51,14 +51,29 @@ namespace RaccoonBlog.Web.Controllers
 				return View(new SectionDetails[0]);
 
 			var sections = RavenSession.Query<Section>()
-                //.Where(s => s.ActionName != "ArchivesList" && s.ActionName != "TagsList" && s.ControllerName != null && s.ActionName != null)
-                .Where(s => s.ActionName == "RecentComments" || s.ActionName == "FuturePosts")
+                .Where(s => s.IsActive && s.IsRightSide)
 				.OrderBy(x => x.Position)
 				.ToList();
 
 			return View(sections.MapTo<SectionDetails>());
 		}
 
+        [ChildActionOnly]
+	    public ActionResult ContactMe()
+        {
+            var user = RavenSession.GetCurrentUser();
+
+            var vm = new ContactMeViewModel();
+            if (user != null)
+            {
+                vm.FullName = user.FullName;
+                vm.Email = user.Email;
+                vm.Phone = user.Phone;
+            }
+
+            return View(vm);
+        }
+        
 		[ChildActionOnly]
 		public ActionResult TagsList()
 		{

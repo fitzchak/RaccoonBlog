@@ -328,6 +328,12 @@
     <Content Include="Content\css\bootstrap\bootstrap.min.css">
       <DependentUpon>bootstrap.css</DependentUpon>
     </Content>
+    <Content Include="Content\css\custom\ayende.styles.css">
+      <DependentUpon>ayende.styles.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\custom\ayende.styles.min.css">
+      <DependentUpon>ayende.styles.css</DependentUpon>
+    </Content>
     <Content Include="Content\css\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\css\fonts\socicon-webfont.svg" />
     <Content Include="Content\css\fullcalendar.css" />
@@ -488,6 +494,7 @@
     <Compile Include="ViewModels\AdminPostDetailsViewModel.cs" />
     <Compile Include="Helpers\CommenterUtil.cs" />
     <Compile Include="ViewModels\CommentInput.cs" />
+    <Compile Include="ViewModels\ContactMeViewModel.cs" />
     <Compile Include="ViewModels\CurrentUserViewModel.cs" />
     <Compile Include="ViewModels\FuturePostViewModel.cs" />
     <Compile Include="ViewModels\NewCommentEmailViewModel.cs" />
@@ -890,6 +897,9 @@
     <Content Include="Content\css\custom\ayende.styles.less" />
     <Content Include="Content\css\openid\styles.less" />
     <Content Include="Content\css\bootstrap\styles.less" />
+    <Content Include="Content\css\custom\ayende.styles.css.map">
+      <DependentUpon>ayende.styles.css</DependentUpon>
+    </Content>
     <None Include="Content\js\jquery-1.11.2.intellisense.js" />
     <Content Include="Content\js\jquery-1.11.2.js" />
     <Content Include="Content\js\jquery-1.11.2.min.js" />
@@ -959,6 +969,7 @@
     <Content Include="Areas\Admin\Views\Users\List.cshtml" />
     <Content Include="Areas\Admin\Views\Users\ChangePassword.cshtml" />
     <Content Include="Content\js\jquery-1.11.2.min.map" />
+    <Content Include="Views\Section\ContactMe.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\css\openid\images\" />

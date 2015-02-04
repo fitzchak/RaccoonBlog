@@ -313,14 +313,15 @@ hr {
 	
 	a {
 		&.logo {
-			background:url(../img/logo.svg) center no-repeat;
-			background-size:contain;
+			/*background:url(../img/logo.svg) center no-repeat;*/
+			/*background-size:contain;*/
 			display:inline-block;
 			width:60%;
 			max-width:300px;
 			height:60px;
 			float:left;
 			margin-right:3%;
+            color: @brand-info;
 			
 			@media (min-width: @screen-sm) {		
 				width:100%;
@@ -330,7 +331,11 @@ hr {
 			
 			h1 {
 				margin:0;
-				text-indent:-9999px;
+                font-family: @font-family-sans-serif;
+                line-height: 1.428571429;
+                font-size: 40px;
+                font-weight: 600;
+				/*text-indent:-9999px;*/
 			}
 		}
 	}

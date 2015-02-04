@@ -23,7 +23,7 @@
             <a style='text-decoration:none;' type="icon_link" onclick="popUp=window.open('@string.Format("https://plus.google.com/share?url={0}", string.Format("{0}{1}/{2}", Request.Url.OriginalString, post.Id, post.Slug))', 'popupwindow', 'scrollbars=yes,width=600,height=400');popUp.focus();return false;" href="javascript: void(0)">
                 <span class="socicon gplus">c</span><span>share</span>
             </a>
-            <a href="#comments">
+            <a href="@Url.Action("Details", "PostDetails", new { post.Id, post.Slug })#comments">
                 <span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span>@post.CommentsCount comments</span>
             </a>
             @if (post.Tags.Count > 0)
@@ -66,13 +66,4 @@
 	<script>
 		window.twttr = (function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], t = window.twttr || {}; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); t._e = []; t.ready = function (f) { t._e.push(f); }; return t; }(document, "script", "twitter-wjs"));
 	</script>
-	@*<script>
-		(function (d, s, id) {
-			var js, fjs = d.getElementsByTagName(s)[0];
-			if (d.getElementById(id)) return;
-			js = d.createElement(s); js.id = id;
-			js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
-			fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));
-	</script>*@
 }

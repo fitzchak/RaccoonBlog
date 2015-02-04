@@ -12,6 +12,9 @@ namespace RaccoonBlog.Web.ViewModels
 		[Display(Name = "Email")]
 		public string Email { get; set; }
 
+        [Display(Name = "Phone")]
+	    public string Phone { get; set; }
+
 		[Display(Name = "Enabled?")]
 		public bool Enabled { get; set; }
 

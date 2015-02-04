@@ -1,0 +1,10 @@
+﻿@model ContactMeViewModel
+@{
+    Layout = "";
+}
+
+<span>Hi!</span><br />
+<span>My name is</span> <span>@Model.FullName</span><br />
+<span>and you can reach me by phone or email:</span><br />
+<p class="mail"><a href="@string.Format("mailto:{0}", Model.Email)">@Model.Email</a></p>
+<p class="phone">@Model.Phone</p>

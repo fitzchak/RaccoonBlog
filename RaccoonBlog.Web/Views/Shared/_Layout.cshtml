@@ -33,12 +33,7 @@
                 <div class="clearfix"></div>
                 <div class="collapseMobile">
                     <div class="about">
-                        @*@{Html.RenderAction("PostsStatistics", "Section");}*@
-                        <span>Hi!</span><br />
-                        <span>My name is</span> <span>Oren Eini</span><br />
-                        <span>and you can reach me by phone or email:</span><br />
-                        <p class="mail"><a href="@string.Format("mailto:{0}", ViewBag.BlogConfig.OwnerEmail)">@ViewBag.BlogConfig.OwnerEmail</a></p>
-                        <p class="phone">+972 52-548-6969</p>
+                        @{Html.RenderAction("ContactMe", "Section");}
                     </div>
                     <div class="pull-down">
                         <p class="socicon">
