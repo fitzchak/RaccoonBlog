@@ -15,18 +15,26 @@ namespace RaccoonBlog.Web.Infrastructure.Indexes
 			{
 				Posts = new List<PostInformation>();
 			}
+
 			public string Series { get; set; }
+
 			public List<PostInformation> Posts { get; set; }
+
 			public int Count { get; set; }
+
 			public DateTimeOffset MaxDate { get; set; }
+
 			public DateTimeOffset MinDate { get; set; }
+
 			public int Days { get; set; }
 		}
 
 		public class PostInformation
 		{
 			public string Id { get; set; }
+
 			public string Title { get; set; }
+
 			public DateTimeOffset PublishAt { get; set; }
 		}
 
@@ -41,16 +49,16 @@ namespace RaccoonBlog.Web.Infrastructure.Indexes
 							   Series = series,
 							   Posts = new[] { new { p.Id, p.Title, p.PublishAt } },
 							   Count = 1,
-							   MaxDate = p.PublishAt,
-							   MinDate = p.PublishAt,
+							   MaxDate = (DateTimeOffset)p.PublishAt,
+							   MinDate = (DateTimeOffset)p.PublishAt,
 							   Days = 1
 						   };
 
 			Reduce = results => from r in results
 								group r by r.Series
 									into g
-									let maxDate = g.Select(x => DateTimeOffset.Parse(x.MaxDate.ToString())).Max()
-									let minDate = g.Select(x => DateTimeOffset.Parse(x.MinDate.ToString())).Min()
+									let maxDate = g.Select(x => x.MaxDate).Max()
+									let minDate = g.Select(x => x.MinDate).Min()
 									select new
 									{
 										Series = g.Key,
