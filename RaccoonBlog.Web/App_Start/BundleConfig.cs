@@ -11,6 +11,8 @@ namespace RaccoonBlog.Web
 {
 	public static class BundleConfig
 	{
+		public const string AdminThemeDirectory = "~/Areas/Admin/Content/css/";
+
 		public const string ThemeDirectory = "~/Content/css/custom/";
 
 		private const string ThemeVariablesExtension = ".variables.less";
@@ -53,9 +55,12 @@ namespace RaccoonBlog.Web
                 .Include("~/Content/js/setup.js"));
 
 			bundles
-				.Add(new StyleBundle("~/Content/css/bootstrap", "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css")
-				.Include("~/Content/css/bootstrap.css")
-				.Include("~/Content/css/bootstrap-theme.css"));
+				.Add(new Bundle(AdminThemeDirectory + "admin", new ThemeLessTransform())
+				.Include("~/Content/css/bootstrap/normalize.less")
+				.Include("~/Areas/Admin/Content/css/admin.settings.less")
+				.Include("~/Areas/Admin/Content/css/admin.base.less")
+				.Include("~/Areas/Admin/Content/css/admin.site.less")
+				.Include("~/Areas/Admin/Content/css/AdminStyle.css"));
 
 			bundles
 				.Add((new StyleBundle("~/Content/css/socicon"))

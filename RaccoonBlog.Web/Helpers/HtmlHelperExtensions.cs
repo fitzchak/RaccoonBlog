@@ -73,6 +73,16 @@ namespace RaccoonBlog.Web.Helpers
 
 		public static IHtmlString RenderTheme(this HtmlHelper helper, string themeName)
 		{
+			return RenderThemeInternal(BundleConfig.ThemeDirectory, themeName);
+		}
+
+		public static IHtmlString RenderAdminTheme(this HtmlHelper helper)
+		{
+			return RenderThemeInternal(BundleConfig.AdminThemeDirectory, "admin");
+		}
+
+		private static IHtmlString RenderThemeInternal(string themeDirectory, string themeName)
+		{
 			if (string.IsNullOrEmpty(themeName))
 				return null;
 
@@ -80,7 +90,7 @@ namespace RaccoonBlog.Web.Helpers
 			try
 			{
 				BundleTable.EnableOptimizations = true;
-				return Styles.Render(BundleConfig.ThemeDirectory + themeName);
+				return Styles.Render(themeDirectory + themeName);
 			}
 			finally
 			{

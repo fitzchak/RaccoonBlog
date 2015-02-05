@@ -1,4 +1,6 @@
-﻿namespace RaccoonBlog.Web.Helpers
+﻿using System.Linq;
+
+namespace RaccoonBlog.Web.Helpers
 {
 	using System;
 	using System.Collections.Generic;
@@ -17,12 +19,17 @@
 
 		public void Process(BundleContext context, BundleResponse response)
 		{
+			var pathsAllowed = new[]
+				                   {
+					                   context.HttpContext.Server.MapPath("~/Content/css/"),
+					                   context.HttpContext.Server.MapPath(BundleConfig.AdminThemeDirectory)
+				                   };
+
 			var builder = new StringBuilder();
 			foreach (var bundleFile in response.Files)
 			{
-				string pathAllowed = context.HttpContext.Server.MapPath("~/Content/css/");
 				string normalizeFile = context.HttpContext.Server.MapPath(bundleFile.IncludedVirtualPath);
-				if (normalizeFile.StartsWith(pathAllowed) == false)
+				if (pathsAllowed.Any(normalizeFile.StartsWith) == false)
 					throw new Exception("Path not allowed");
 
 				if (File.Exists(normalizeFile) == false)

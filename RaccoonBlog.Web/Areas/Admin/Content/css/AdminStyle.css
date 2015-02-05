@@ -843,14 +843,6 @@ a:hover.action-delete
 	float: right;
 	right: 200px;
 	width: 860px;
-	height: 600px;
-}
-#id-form2
-{
-	margin-bottom: 10px;
-	float: left;
-	width: 860px;
-	height: 600px;
 }
 
 .inp-form-error

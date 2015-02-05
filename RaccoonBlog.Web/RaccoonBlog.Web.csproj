@@ -319,10 +319,8 @@
     <Content Include="Areas\Admin\Content\images\shared\corner_top_left.jpg" />
     <Content Include="Areas\Admin\Content\images\shared\corner_top_right.jpg" />
     <Content Include="Areas\Admin\Content\images\shared\icon_idlogo.jpg" />
-    <Content Include="Content\css\bootstrap-theme.css" />
-    <Content Include="Content\css\bootstrap-theme.min.css" />
-    <Content Include="Content\css\bootstrap.css" />
-    <Content Include="Content\css\bootstrap.min.css" />
+    <None Include="Areas\Admin\Content\css\admin.site.less" />
+    <None Include="Areas\Admin\Content\css\admin.settings.less" />
     <Content Include="Content\css\anytime.css" />
     <Content Include="Content\css\bootstrap\bootstrap.css">
       <DependentUpon>bootstrap.less</DependentUpon>
@@ -359,7 +357,6 @@
     <Content Include="Content\css\img\search-icon.svg" />
     <Content Include="Content\css\img\side_bkg.jpg" />
     <Content Include="Content\css\img\side_bkg.png" />
-    <Content Include="Content\css\normalize.css" />
     <Content Include="Content\css\prism.css" />
     <Content Include="Content\css\socicon.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
@@ -528,8 +525,7 @@
     <Content Include="Content\css\images\openid-inputicon.gif" />
     <Content Include="Content\css\images\openid-providers-en.png" />
     <Content Include="Content\css\images\printer.png" />
-    <Content Include="Content\css\base.less.css" />
-    <Content Include="Content\css\ResetCss.css" />
+    <None Include="Areas\Admin\Content\css\admin.base.less" />
     <Content Include="Content\js\date.f-0.5.0.js" />
     <Content Include="Content\js\date.f-0.5.0.min.js" />
     <Content Include="Content\js\fullcalendar.js" />
@@ -814,8 +810,6 @@
     <Content Include="Content\js\ckeditor\skins\v2\skin.js" />
     <Content Include="Content\js\ckeditor\skins\v2\templates.css" />
     <Content Include="Content\js\ckeditor\themes\default\theme.js" />
-    <Content Include="Content\css\bootstrap-theme.css.map" />
-    <Content Include="Content\css\bootstrap.css.map" />
     <Content Include="Content\css\bootstrap\wells.less" />
     <Content Include="Content\css\bootstrap\variables.less" />
     <Content Include="Content\css\bootstrap\utilities.less" />
