@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers
 {
@@ -8,14 +7,17 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers
 	{
 		private const string TagsSeparator = "|";
 
-		public static string ResolveTags(ICollection<String> tags)
-		{	
+		public static string ResolveTags(ICollection<string> tags)
+		{
 			return string.Join(TagsSeparator, tags);
 		}
 
-		public static ICollection<String> ResolveTagsInput(string tags)
+		public static ICollection<string> ResolveTagsInput(string tags)
 		{
-			return tags.Split(new[] {TagsSeparator}, StringSplitOptions.RemoveEmptyEntries);
+			if (string.IsNullOrEmpty(tags))
+				return new string[0];
+
+			return tags.Split(new[] { TagsSeparator }, StringSplitOptions.RemoveEmptyEntries);
 		}
 	}
 }
