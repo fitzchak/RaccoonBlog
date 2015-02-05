@@ -1,4 +1,4 @@
-﻿@model IList<PostsSeriesViewModel>
+﻿@model List<RecentSeriesViewModel>
 @{
     Layout = "";
 }
@@ -14,7 +14,7 @@
                 <li><a href="@Url.Action("Series", "Posts", new { series.SeriesTitle })">@series.SeriesTitle</a> <em>(@series.PostsCount)</em></li>
             }
         </ol>
-        
-        //TODO: URL to more series
+
+        <a href="@Url.Action("PostsSeries", "Series")">more</a>
     }
 </div>

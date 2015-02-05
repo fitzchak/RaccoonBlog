@@ -49,21 +49,20 @@
 
 <nav>
     <hr/>
-    <ul class="pager">
-        <li class='@(Model.HasPrevPage ? "" : "disabled")'>
-            <a href="@Url.Action(@ViewBag.CurrentAction, new { page = Model.CurrentPage - 1 })" aria-label="Previous">
-                <span aria-hidden="true">&laquo;&nbsp;Previous</span>
-            </a>
-        </li>
-        <li class='@(Model.HasNextPage ? "" : "disabled")'>
-            <a href="@Url.Action(@ViewBag.CurrentAction, new { page = Model.CurrentPage + 1 })" aria-label="Next">
-                <span aria-hidden="true">Next&nbsp;&raquo;</span>
-            </a>
-        </li>
-    </ul>
+    <ul id="paginationList" class="pagination"></ul>
 </nav>
 @section Script {
-	<script>
-		window.twttr = (function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], t = window.twttr || {}; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); t._e = []; t.ready = function (f) { t._e.push(f); }; return t; }(document, "script", "twitter-wjs"));
-	</script>
+    <script>
+        window.twttr = (function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], t = window.twttr || {}; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); t._e = []; t.ready = function (f) { t._e.push(f); }; return t; }(document, "script", "twitter-wjs"));
+    </script>
+    @Scripts.Render("~/Content/js/jquery-twbsPagination")
+    <script>
+        var params = window.location.search;
+        $("#paginationList").twbsPagination({
+            totalPages: @(Model.PostsCount / Model.PageSize),
+            visiblePages: 10,
+            //href: params == '' ? '?page={{number}}' : params + '&page={{number}}'
+            href: '?page={{number}}'
+        });
+    </script>
 }

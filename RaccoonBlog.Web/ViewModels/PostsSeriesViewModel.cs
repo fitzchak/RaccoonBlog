@@ -1,6 +1,6 @@
 ﻿namespace RaccoonBlog.Web.ViewModels
 {
-    public class PostsSeriesViewModel
+    public class RecentSeriesViewModel
     {
         public string SeriesTitle { get; set; }
         public int PostsCount { get; set; }

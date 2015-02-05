@@ -252,6 +252,7 @@
     <Compile Include="App_Start\CommonSetup.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="Controllers\SeriesController.cs" />
     <Compile Include="Helpers\ThemeLessTransform.cs" />
     <Compile Include="Helpers\RouteCollectionExtension.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
@@ -269,6 +270,7 @@
     <Compile Include="Helpers\Validation\NonEmptyGuid.cs" />
     <Compile Include="Helpers\ViewExtensions.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\StringToGuidConverter.cs" />
+    <Compile Include="Infrastructure\AutoMapper\Profiles\SeriesMapperProfile.cs" />
     <Compile Include="Infrastructure\Common\DocumentSessionExtensions.cs" />
     <Content Include="Areas\Admin\Content\css\images\nav_logout.gif" />
     <Content Include="Areas\Admin\Content\css\AdminStyle.css" />
@@ -511,6 +513,7 @@
     <Compile Include="ViewModels\PostViewModel.cs" />
     <Compile Include="ViewModels\PostsViewModel.cs" />
     <Compile Include="ViewModels\SectionDetails.cs" />
+    <Compile Include="ViewModels\SeriesPostsViewModel.cs" />
     <Compile Include="ViewModels\TagDetails.cs" />
     <Compile Include="ViewModels\TagsListViewModel.cs" />
     <Compile Include="ViewModels\UserInput.cs" />
@@ -536,6 +539,8 @@
     <Content Include="Content\js\jquery.md5.js" />
     <Content Include="Content\js\jquery.openid.js" />
     <Content Include="Content\js\jquery.openid.min.js" />
+    <Content Include="Content\js\jquery.twbsPagination.js" />
+    <Content Include="Content\js\jquery.twbsPagination.min.js" />
     <Content Include="Content\js\openid-en.js" />
     <Content Include="Content\js\openid-jquery.js" />
     <Content Include="Content\js\raccoon-blog.js" />
@@ -977,6 +982,7 @@
     <Content Include="Content\js\jquery-1.11.2.min.map" />
     <Content Include="Views\Section\ContactMe.cshtml" />
     <Content Include="Views\Section\PostsSeries.cshtml" />
+    <Content Include="Views\Series\PostsSeries.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\css\openid\images\" />

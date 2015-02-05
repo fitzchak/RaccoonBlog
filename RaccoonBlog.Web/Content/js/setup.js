@@ -14,7 +14,8 @@
 
 	var bodyEl = document.body,
 		openbtn = document.getElementById( 'open-button' ),
-		showgrid = document.getElementById( 'gridView' ),
+		showgrid = document.getElementById('gridView'),
+        showstack = document.getElementById('stackView'),
 		openTags = document.getElementById( 'tags-button' ),
 		openArch = document.getElementById( 'archive-button' ),
 		isOpen = false;
@@ -30,7 +31,8 @@
 		if (openbtn.addEventListener) {
 			
     		openbtn.addEventListener("click", toggleMenu, false);
-			showgrid.addEventListener("click", toggleGrid, false);
+    		showgrid.addEventListener("click", toggleGrid, false);
+		    showstack.addEventListener("click", toggleStack, false);
 			openTags.addEventListener("click", toggleTags, false);
 			openArch.addEventListener("click", toggleArch, false);
 			
@@ -38,7 +40,8 @@
 		else {
 			
  	  		openbtn.attachEvent("onclick", toggleMenu);
-			showgrid.attachEvent("onclick", toggleGrid);
+ 	  		showgrid.attachEvent("onclick", toggleGrid);
+ 	  		showstack.attachEvent("onclick", toggleStack);
 			openTags.attachEvent("onclick", toggleTags);
 			openArch.attachEvent("onclick", toggleArch);
 		}
@@ -57,19 +60,26 @@
 	}
 	
 	function toggleGrid() {
-
-		if( isGrid ) {
-			$(bodyEl).removeClass('show-grid');
-			
+		if( !isGrid ) {
+		    $(bodyEl).addClass('show-grid');
+		    $(showgrid).addClass('active');
+		    $(showstack).removeClass('active');
+		    isGrid = true;
+		    adjustSize();
 		}
-		else {
-			$(bodyEl).addClass('show-grid');
-		}
-		isGrid = !isGrid;
-		adjustSize();
 	}
-	
-		function toggleTags() {
+
+    function toggleStack() {
+        if (isGrid) {
+            $(bodyEl).removeClass('show-grid');
+            $(showgrid).removeClass('active');
+            $(showstack).addClass('active');
+            isGrid = false;
+            adjustSize();
+        }
+    }	
+
+	function toggleTags() {
 
 		if( isTags ) {
 			$('#tags').removeClass('open');

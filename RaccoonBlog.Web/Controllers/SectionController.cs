@@ -20,11 +20,12 @@ namespace RaccoonBlog.Web.Controllers
             ViewBag.SectionTitle = sectionTitle;
 
             var series = RavenSession.Query<Posts_Series.Result, Posts_Series>()
+                .Where(x => x.Count > 1)
                 .OrderByDescending(x => x.MaxDate)
                 .Take(5)
                 .ToList();
 
-            var vm = series.Select(result => new PostsSeriesViewModel
+            var vm = series.Select(result => new RecentSeriesViewModel
             {
                 SeriesTitle = result.Series, 
                 PostsCount = result.Count

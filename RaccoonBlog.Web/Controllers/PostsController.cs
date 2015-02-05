@@ -82,6 +82,8 @@ namespace RaccoonBlog.Web.Controllers
 
 		private ActionResult ListView(int count, IList<Post> posts)
 		{
+		    ViewBag.ChangeViewStyle = true;
+
 			var summaries = posts.MapTo<PostsViewModel.PostSummary>();
 			foreach (var post in posts)
 			{

@@ -70,12 +70,26 @@
     <hr />
 </article>
 
-<section class="postsInSeries">
-    <a name="postsInSeries"></a>
-    <h2>Other posts in series</h2>
+@if (Model.PostsInSeries != null) { 
+    <section class="postsInSeries">
+        <a name="postsInSeries"></a>
+        <h2>Other posts in series</h2>
     
-
-</section>
+        <ol>
+            @foreach (var post in Model.PostsInSeries)
+            {
+                if (post.Id == Model.Post.Id)
+                {
+                    <li><strong><em>(@(post.PublishAt.ToString("d")))</em>&nbsp;<a href="@Url.Action("Details", new { post.Id, post.Slug })">@(post.Title)</a></strong></li>
+                }
+                else
+                {
+                    <li><em>(@(post.PublishAt.ToString("d")))</em>&nbsp;<a href="@Url.Action("Details", new { post.Id, post.Slug })">@(post.Title)</a></li>
+                }
+            }
+        </ol>
+    </section>
+}
 
 <section class="comments">
     <a name="comments"></a>

@@ -42,6 +42,10 @@ namespace RaccoonBlog.Web
 				.Add(new ScriptBundle("~/Content/js/bootstrap", "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js")
 				.Include("~/Content/js/bootstrap.js"));
 
+            bundles
+                .Add(new ScriptBundle("~/Content/js/jquery-twbsPagination")
+                .Include("~/Content/js/jquery.twbsPagination.js"));
+
 			bundles
 				.Add(new ScriptBundle("~/Content/js")
 				.Include("~/Content/js/jquery.ae.image.resize.min.js")

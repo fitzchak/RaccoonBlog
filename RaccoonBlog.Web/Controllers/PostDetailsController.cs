@@ -14,7 +14,11 @@ using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public class PostDetailsController : RaccoonController
+    using System.Collections.Generic;
+    using RaccoonBlog.Web.Infrastructure.Indexes;
+    using Raven.Client.Linq;
+
+    public class PostDetailsController : RaccoonController
 	{
 		public ActionResult Details(int id, string slug, Guid key)
 		{
@@ -29,6 +33,7 @@ namespace RaccoonBlog.Web.Controllers
 			if (post.IsPublicPost(key) == false)
 				return HttpNotFound();
 
+		    IList<PostInSeries> postsInSeries = GetPostsForCurrentSeries(post.Title);
 
 			var comments = RavenSession.Load<PostComments>(post.CommentsId) ?? new PostComments();
 			var vm = new PostViewModel
@@ -38,6 +43,7 @@ namespace RaccoonBlog.Web.Controllers
 			         	NextPost = RavenSession.GetNextPrevPost(post, true),
 			         	PreviousPost = RavenSession.GetNextPrevPost(post, false),
 			         	AreCommentsClosed = comments.AreCommentsClosed(post, BlogConfig.NumberOfDayToCloseComments),
+                        PostsInSeries = postsInSeries
 			         };
 
 			vm.Post.Author = RavenSession.Load<User>(post.AuthorId).MapTo<PostViewModel.UserDetails>();
@@ -182,5 +188,32 @@ namespace RaccoonBlog.Web.Controllers
 			vm.Input = commenter.MapTo<CommentInput>();
 			vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
 		}
+
+        private IList<PostInSeries> GetPostsForCurrentSeries(string postTitle)
+        {
+            IList<PostInSeries> postsInSeries = null;
+            Posts_Series.Result series = null;
+            var seriesTitle = postTitle.Split(':');
+
+            if (seriesTitle.Length > 1)
+            {
+                string title = seriesTitle[0].Trim().ToLower();
+
+                series = RavenSession.Query<Posts_Series.Result, Posts_Series>()
+                        .Where(x => x.Series.StartsWith(title))
+                        .OrderByDescending(x => x.MaxDate)
+                        .FirstOrDefault();
+
+                postsInSeries = series.Posts.Select(s => new PostInSeries()
+                {
+                    Id = RavenIdResolver.Resolve(s.Id), 
+                    Slug = SlugConverter.TitleToSlug(s.Title), 
+                    Title = HttpUtility.HtmlDecode(s.Title),
+                    PublishAt = s.PublishAt
+                }).ToList();
+            }
+
+            return postsInSeries;
+        }
 	}
 }

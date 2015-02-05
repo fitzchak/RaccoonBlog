@@ -4,13 +4,16 @@ using System.Web.Mvc;
 
 namespace RaccoonBlog.Web.ViewModels
 {
-	public class PostViewModel
+    using RaccoonBlog.Web.Infrastructure.Indexes;
+
+    public class PostViewModel
 	{
 		public PostReference PreviousPost { get; set; }
 		public PostReference NextPost { get; set; }
 
 		public PostDetails Post { get; set; }
 		public IList<Comment> Comments { get; set; }
+        public IList<PostInSeries> PostsInSeries { get; set; }
 		public CommentInput Input { get; set; }
 
 		public bool AreCommentsClosed { get; set; }
