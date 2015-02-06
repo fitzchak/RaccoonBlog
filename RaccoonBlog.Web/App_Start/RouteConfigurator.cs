@@ -168,7 +168,7 @@ namespace RaccoonBlog.Web
 	            );
 
             routes.MapRouteLowerCase("PostsController-Series",
-                "posts/series/{seriesTitle}",
+                "posts/series/{seriesId}/{seriesSlug}",
                 new { controller = "Posts", action = "Series" },
                 new[] { "RaccoonBlog.Web.Controllers" }
                 );

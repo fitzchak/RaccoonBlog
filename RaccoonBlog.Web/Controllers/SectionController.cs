@@ -27,7 +27,8 @@ namespace RaccoonBlog.Web.Controllers
 
             var vm = series.Select(result => new RecentSeriesViewModel
             {
-                SeriesTitle = result.Series, 
+                SeriesId = result.SerieId,
+                SeriesSlug = SlugConverter.TitleToSlug(result.Series), 
                 PostsCount = result.Count
             }).ToList();
 

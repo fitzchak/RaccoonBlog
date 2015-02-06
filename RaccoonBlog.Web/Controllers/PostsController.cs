@@ -42,15 +42,25 @@ namespace RaccoonBlog.Web.Controllers
 			return ListView(stats.TotalResults, posts);
 		}
 
-	    public ActionResult Series(string seriesTitle)
+	    public ActionResult Series(int seriesId, string seriesSlug)
 	    {
+            var post = RavenSession
+                .Include<Post>(x => x.CommentsId)
+                .Include(x => x.AuthorId)
+                .Load(seriesId);
+
+            if (post == null)
+                return HttpNotFound();
+
+	        var serieTitle = post.Title.Split(':')[0];
+
             RavenQueryStatistics stats;
             var posts = RavenSession.Query<Post>()
                 .Include(x => x.AuthorId)
 				.Statistics(out stats)
 				.WhereIsPublicPost()
-                .Where(post => post.Title.StartsWith(seriesTitle))
-                .OrderByDescending(post => post.PublishAt)
+                .Where(p => p.Title.StartsWith(serieTitle))
+                .OrderByDescending(p => p.PublishAt)
                 .Paging(CurrentPage, DefaultPage, PageSize)
                 .ToList();
 

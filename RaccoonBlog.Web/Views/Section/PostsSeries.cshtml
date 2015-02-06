@@ -11,7 +11,7 @@
         <ol>
             @foreach (var series in Model)
             {
-                <li><a href="@Url.Action("Series", "Posts", new { series.SeriesTitle })">@series.SeriesTitle</a> <em>(@series.PostsCount)</em></li>
+                <li><a href="@Url.Action("Series", "Posts", new { series.SeriesId, series.SeriesSlug })">@series.SeriesSlug</a> <em>(@series.PostsCount)</em></li>
             }
         </ol>
 

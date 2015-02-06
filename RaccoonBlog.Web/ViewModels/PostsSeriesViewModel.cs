@@ -2,7 +2,8 @@
 {
     public class RecentSeriesViewModel
     {
-        public string SeriesTitle { get; set; }
+        public int SeriesId { get; set; }
+        public string SeriesSlug { get; set; }
         public int PostsCount { get; set; }
     }
 }
