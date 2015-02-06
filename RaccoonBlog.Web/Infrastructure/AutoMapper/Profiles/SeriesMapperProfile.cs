@@ -17,7 +17,7 @@
                 .ForMember(x => x.Title, o => o.MapFrom(m => m.Title))
                 ;
 
-            Mapper.CreateMap<Posts_Series.Result, SeriesPostsViewModel>()
+            Mapper.CreateMap<Posts_Series.Result, SeriesWithPosts>()
                 .ForMember(x => x.Series, o => o.MapFrom(x => x.Series))
                 .ForMember(x => x.PostsInSeries, o => o.Ignore())
                 ;

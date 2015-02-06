@@ -8,6 +8,18 @@
     {
         public SeriesPostsViewModel()
         {
+            SeriesWithPosts = new List<SeriesWithPosts>();
+        }
+        public int CurrentPage { get; set; }
+        public int PostsCount { get; set; }
+        public int PageSize { get; set; }
+        public IList<SeriesWithPosts> SeriesWithPosts { get; set; }
+    }
+
+    public class SeriesWithPosts
+    {
+        public SeriesWithPosts()
+        {
             PostsInSeries = new ListStack<PostInSeries>();
         }
         public string Series { get; set; }

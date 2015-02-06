@@ -88,13 +88,12 @@
 							<span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> archive
 						</a>
 					}
-                    @if (ViewBag.ChangeViewStyle != null)
-                    {
-                        <nav class="pull-right views">
-                            <a href="#" class="stackView active" id="stackView">stack view</a>
-                            <a href="#" class="gridView" id="gridView">grid view</a>
-                        </nav>
-                    }
+                    
+                    <nav class="pull-right views @(ViewBag.ChangeViewStyle == null ? "hide" : "")">
+                        <a href="#" class="stackView active" id="stackView">stack view</a>
+                        <a href="#" class="gridView" id="gridView">grid view</a>
+                    </nav>
+                    
 					<div class="clearfix"></div>
 					@Html.RenderSection("Tags")
 					@Html.RenderSection("Archive")

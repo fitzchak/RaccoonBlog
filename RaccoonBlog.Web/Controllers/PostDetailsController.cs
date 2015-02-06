@@ -210,7 +210,8 @@ namespace RaccoonBlog.Web.Controllers
                     Slug = SlugConverter.TitleToSlug(s.Title), 
                     Title = HttpUtility.HtmlDecode(s.Title),
                     PublishAt = s.PublishAt
-                }).ToList();
+                })
+                .OrderByDescending(p => p.PublishAt).ToList();
             }
 
             return postsInSeries;

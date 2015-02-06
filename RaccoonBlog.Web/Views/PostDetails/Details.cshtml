@@ -78,13 +78,20 @@
         <ol>
             @foreach (var post in Model.PostsInSeries)
             {
-                if (post.Id == Model.Post.Id)
+                if (post.PublishAt >= DateTimeOffset.UtcNow)
                 {
-                    <li><strong><em>(@(post.PublishAt.ToString("d")))</em>&nbsp;<a href="@Url.Action("Details", new { post.Id, post.Slug })">@(post.Title)</a></strong></li>
+                    <li><em>(@(post.PublishAt.ToString("d")))</em>&nbsp;@(post.Title)</li>
                 }
                 else
                 {
-                    <li><em>(@(post.PublishAt.ToString("d")))</em>&nbsp;<a href="@Url.Action("Details", new { post.Id, post.Slug })">@(post.Title)</a></li>
+                    if (post.Id == Model.Post.Id)
+                    {
+                        <li><strong><em>(@(post.PublishAt.ToString("d")))</em>&nbsp;<a href="@Url.Action("Details", new { post.Id, post.Slug })">@(post.Title)</a></strong></li>
+                    }
+                    else
+                    {
+                        <li><em>(@(post.PublishAt.ToString("d")))</em>&nbsp;<a href="@Url.Action("Details", new { post.Id, post.Slug })">@(post.Title)</a></li>
+                    }
                 }
             }
         </ol>

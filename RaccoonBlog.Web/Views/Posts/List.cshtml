@@ -46,7 +46,6 @@
     </article>
 }
 <div class="clearfix"></div>
-
 <nav>
     <hr/>
     <ul id="paginationList" class="pagination"></ul>
@@ -57,12 +56,12 @@
     </script>
     @Scripts.Render("~/Content/js/jquery-twbsPagination")
     <script>
-        var params = window.location.search;
+        var total = @(Model.PostsCount / Model.PageSize);
+
         $("#paginationList").twbsPagination({
-            totalPages: @(Model.PostsCount / Model.PageSize),
+            totalPages: (total > 0) ? total : 1,
             visiblePages: 10,
-            //href: params == '' ? '?page={{number}}' : params + '&page={{number}}'
             href: '?page={{number}}'
         });
-    </script>
+</script>
 }
