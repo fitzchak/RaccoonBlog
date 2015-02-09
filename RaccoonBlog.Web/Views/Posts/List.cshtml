@@ -10,7 +10,14 @@
             @post.PublishedAt.ToString("yyyy HH:mm")
         </time>
         <a href="@Url.Action("Details", "PostDetails", new { post.Id, post.Slug })">
-            <h2>@post.Title</h2>
+            @if (string.IsNullOrEmpty(post.Title.ToString().ToSeriesTitle()))
+            {
+                <h2>@post.Title</h2>
+            }
+            else
+            {
+                <h2><span class="seriesTitle">@Html.Raw(post.Title.ToString().ToSeriesTitle())</span>@Html.Raw(post.Title.ToString().ToPostTitle())</h2>
+            }
         </a>
         <div class="clearfix"></div>
         <div class="postData">

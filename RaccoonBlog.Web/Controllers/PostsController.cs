@@ -11,7 +11,9 @@ using Raven.Client;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public class PostsController : AggresivelyCachingRacconController
+    using RaccoonBlog.Web.Helpers;
+
+    public class PostsController : AggresivelyCachingRacconController
 	{
 		public ActionResult Index()
 		{
@@ -52,14 +54,12 @@ namespace RaccoonBlog.Web.Controllers
             if (post == null)
                 return HttpNotFound();
 
-	        var serieTitle = post.Title.Split(':')[0];
-
             RavenQueryStatistics stats;
             var posts = RavenSession.Query<Post>()
                 .Include(x => x.AuthorId)
 				.Statistics(out stats)
 				.WhereIsPublicPost()
-                .Where(p => p.Title.StartsWith(serieTitle))
+                .Where(p => p.Title.StartsWith(post.Title.ToSeriesTitle()))
                 .OrderByDescending(p => p.PublishAt)
                 .Paging(CurrentPage, DefaultPage, PageSize)
                 .ToList();

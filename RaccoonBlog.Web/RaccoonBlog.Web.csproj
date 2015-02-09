@@ -253,6 +253,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="Controllers\SeriesController.cs" />
+    <Compile Include="Helpers\PostSeriesTitleExtensions.cs" />
     <Compile Include="Helpers\ThemeLessTransform.cs" />
     <Compile Include="Helpers\RouteCollectionExtension.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
@@ -903,10 +904,10 @@
     <Content Include="Content\css\fonts\socicon-webfont.woff2" />
     <Content Include="Content\css\custom\ayende.styles.less" />
     <Content Include="Content\css\openid\styles.less" />
-    <Content Include="Content\css\styles.less" />
     <Content Include="Content\css\custom\ayende.styles.css.map">
       <DependentUpon>ayende.styles.css</DependentUpon>
     </Content>
+    <Content Include="Content\css\styles.less" />
     <None Include="Content\js\jquery-1.11.2.intellisense.js" />
     <Content Include="Content\js\jquery-1.11.2.js" />
     <Content Include="Content\js\jquery-1.11.2.min.js" />

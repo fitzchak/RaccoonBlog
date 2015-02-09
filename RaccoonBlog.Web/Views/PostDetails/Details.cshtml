@@ -23,7 +23,14 @@
         @Model.Post.PublishedAt.ToString("yyyy HH:mm")
     </time>
     <a href="@Url.Action("Details", new { Model.Post.Id, Model.Post.Slug })">
-        <h2>@Model.Post.Title</h2>
+        @if (string.IsNullOrEmpty(Model.Post.Title.ToString().ToSeriesTitle()))
+        {
+            <h2>@Model.Post.Title</h2>
+        }
+        else
+        {
+            <h2><span class="seriesTitle">@Html.Raw(Model.Post.Title.ToString().ToSeriesTitle())</span>@Html.Raw(Model.Post.Title.ToString().ToPostTitle())</h2>
+        }
     </a>
     <div class="clearfix"></div>
     <div class="postData">
@@ -70,32 +77,36 @@
     <hr />
 </article>
 
-@if (Model.PostsInSeries != null) { 
+@if (Model.SeriesInfo != null) { 
     <section class="postsInSeries">
         <a name="postsInSeries"></a>
-        <h2>Other posts in series</h2>
-    
+        <h3>
+            This post is part of <a href="@Url.Action("Series", "Posts", new { Model.SeriesInfo.SeriesId, Model.SeriesInfo.SeriesSlug })">&quot;@Model.SeriesInfo.SeriesTitle&quot;</a> series <br/>
+            <a href="#" id="seriesShow" class="btn btn-default">show more in this series<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></a>
+        </h3>
+        
         <ol>
-            @foreach (var post in Model.PostsInSeries)
+            @foreach (var post in Model.SeriesInfo.PostsInSeries)
             {
                 if (post.PublishAt >= DateTimeOffset.UtcNow)
                 {
-                    <li><em>(@(post.PublishAt.ToString("d")))</em>&nbsp;@(post.Title)</li>
+                    <li><em>(@(post.PublishAt.ToString("MM/dd/yyyy")))</em>&nbsp;@(post.Title)</li>
                 }
                 else
                 {
                     if (post.Id == Model.Post.Id)
                     {
-                        <li><strong><em>(@(post.PublishAt.ToString("d")))</em>&nbsp;<a href="@Url.Action("Details", new { post.Id, post.Slug })">@(post.Title)</a></strong></li>
+                        <li><strong><em>(@(post.PublishAt.ToString("MM/dd/yyyy")))</em>&nbsp;<a href="@Url.Action("Details", new { post.Id, post.Slug })">@(post.Title)</a></strong></li>
                     }
                     else
                     {
-                        <li><em>(@(post.PublishAt.ToString("d")))</em>&nbsp;<a href="@Url.Action("Details", new { post.Id, post.Slug })">@(post.Title)</a></li>
+                        <li><em>(@(post.PublishAt.ToString("MM/dd/yyyy")))</em>&nbsp;<a href="@Url.Action("Details", new { post.Id, post.Slug })">@(post.Title)</a></li>
                     }
                 }
             }
         </ol>
     </section>
+    <hr />
 }
 
 <section class="comments">

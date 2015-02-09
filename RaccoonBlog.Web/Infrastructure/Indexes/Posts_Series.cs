@@ -8,7 +8,9 @@ using Raven.Client.Indexes;
 
 namespace RaccoonBlog.Web.Infrastructure.Indexes
 {
-	public class Posts_Series : AbstractIndexCreationTask<Post, Posts_Series.Result>
+    using RaccoonBlog.Web.Helpers;
+
+    public class Posts_Series : AbstractIndexCreationTask<Post, Posts_Series.Result>
 	{
 		public class Result
 		{
@@ -19,9 +21,9 @@ namespace RaccoonBlog.Web.Infrastructure.Indexes
 
 			public int SerieId { get; set; }
 
-			public string Series { get; set; }
+		    public string Series { get; set; }
 
-			public List<PostInformation> Posts { get; set; }
+		    public List<PostInformation> Posts { get; set; }
 
 			public int Count { get; set; }
 
@@ -36,9 +38,11 @@ namespace RaccoonBlog.Web.Infrastructure.Indexes
 		{
 			public string Id { get; set; }
 
-			public string Title { get; set; }
+		    private string title;
 
-			public DateTimeOffset PublishAt { get; set; }
+		    public string Title { get; set; }
+
+		    public DateTimeOffset PublishAt { get; set; }
 		}
 
 		public Posts_Series()

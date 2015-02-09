@@ -31,13 +31,13 @@
 
             foreach (var result in series)
             {
-                var svm = result.MapTo<SeriesWithPosts>();
+                var svm = result.MapTo<SeriesInfo>();
                 
                 foreach (var post in result.Posts)
                 {
                     svm.PostsInSeries.Add(post.MapTo<PostInSeries>());
                 }
-                vm.SeriesWithPosts.Add(svm);
+                vm.SeriesInfo.Add(svm);
             }
 
             return View(vm);

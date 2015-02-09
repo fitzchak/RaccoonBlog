@@ -33,7 +33,7 @@ namespace RaccoonBlog.Web.Controllers
 			if (post.IsPublicPost(key) == false)
 				return HttpNotFound();
 
-		    IList<PostInSeries> postsInSeries = GetPostsForCurrentSeries(post.Title);
+            SeriesInfo seriesInfo = GetSeriesInfo(post.Title);
 
 			var comments = RavenSession.Load<PostComments>(post.CommentsId) ?? new PostComments();
 			var vm = new PostViewModel
@@ -43,7 +43,7 @@ namespace RaccoonBlog.Web.Controllers
 			         	NextPost = RavenSession.GetNextPrevPost(post, true),
 			         	PreviousPost = RavenSession.GetNextPrevPost(post, false),
 			         	AreCommentsClosed = comments.AreCommentsClosed(post, BlogConfig.NumberOfDayToCloseComments),
-                        PostsInSeries = postsInSeries
+                        SeriesInfo = seriesInfo
 			         };
 
 			vm.Post.Author = RavenSession.Load<User>(post.AuthorId).MapTo<PostViewModel.UserDetails>();
@@ -72,7 +72,7 @@ namespace RaccoonBlog.Web.Controllers
 			return View("Details", vm);
 		}
 
-		[ValidateInput(false)]
+        [ValidateInput(false)]
 		[HttpPost]
 		public ActionResult Comment(CommentInput input, int id, Guid key)
 		{
@@ -189,21 +189,38 @@ namespace RaccoonBlog.Web.Controllers
 			vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
 		}
 
-        private IList<PostInSeries> GetPostsForCurrentSeries(string postTitle)
+        private SeriesInfo GetSeriesInfo(string title)
+        {
+            SeriesInfo seriesInfo = null;
+            IList<PostInSeries> postsInSeries = null;
+            string seriesTitle = title.ToSeriesTitle();
+
+            if (!string.IsNullOrEmpty(seriesTitle))
+            {
+                var series = RavenSession.Query<Posts_Series.Result, Posts_Series>()
+                    .Where(x => x.Series.StartsWith(seriesTitle))
+                    .OrderByDescending(x => x.MaxDate)
+                    .FirstOrDefault();
+
+                postsInSeries = GetPostsForCurrentSeries(series);
+
+                seriesInfo = new SeriesInfo
+                {
+                    SeriesId = series.SerieId,
+                    SeriesTitle = seriesTitle,
+                    PostsInSeries = postsInSeries
+                };
+            }
+
+            return seriesInfo;
+        }
+
+        private IList<PostInSeries> GetPostsForCurrentSeries(Posts_Series.Result series)
         {
             IList<PostInSeries> postsInSeries = null;
-            Posts_Series.Result series = null;
-            var seriesTitle = postTitle.Split(':');
 
-            if (seriesTitle.Length > 1)
+            if (series != null)
             {
-                string title = seriesTitle[0].Trim().ToLower();
-
-                series = RavenSession.Query<Posts_Series.Result, Posts_Series>()
-                        .Where(x => x.Series.StartsWith(title))
-                        .OrderByDescending(x => x.MaxDate)
-                        .FirstOrDefault();
-
                 postsInSeries = series.Posts.Select(s => new PostInSeries()
                 {
                     Id = RavenIdResolver.Resolve(s.Id), 

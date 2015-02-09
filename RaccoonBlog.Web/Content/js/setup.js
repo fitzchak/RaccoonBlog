@@ -18,10 +18,13 @@
         showstack = document.getElementById('stackView'),
 		openTags = document.getElementById( 'tags-button' ),
 		openArch = document.getElementById( 'archive-button' ),
+		openSeries = document.getElementById( 'seriesShow' ),
 		isOpen = false;
 		isGrid = false;
 		isTags = false;
 		isArchive = false;
+		isSeries = false;
+
 
 	function init() {
 		initEvents();
@@ -35,6 +38,10 @@
 		    showstack.addEventListener("click", toggleStack, false);
 			openTags.addEventListener("click", toggleTags, false);
 			openArch.addEventListener("click", toggleArch, false);
+			if (openSeries != null) {
+			    openSeries.addEventListener("click", toggleSeries, false);
+			}
+			
 			
 		}
 		else {
@@ -44,6 +51,9 @@
  	  		showstack.attachEvent("onclick", toggleStack);
 			openTags.attachEvent("onclick", toggleTags);
 			openArch.attachEvent("onclick", toggleArch);
+		    if (openSeries != null) {
+		        openSeries.attachEvent("onclick", toggleSeries);
+		    }
 		}
 		
 	}
@@ -78,12 +88,25 @@
             adjustSize();
         }
     }	
+	
+	function toggleSeries() {
+		event.preventDefault(); 
+		if( isSeries ) {
+			$('.postsInSeries').removeClass('open');
+			
+		}
+		else {
+			$('.postsInSeries').addClass('open');
+		}
+		isSeries = !isSeries;
+	}
+
+	
 
 	function toggleTags() {
-
+		alert('test');
 		if( isTags ) {
 			$('#tags').removeClass('open');
-			
 		}
 		else {
 			$('#archive').removeClass('open');

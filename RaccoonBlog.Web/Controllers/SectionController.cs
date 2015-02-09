@@ -24,12 +24,15 @@ namespace RaccoonBlog.Web.Controllers
                 .OrderByDescending(x => x.MaxDate)
                 .Take(5)
                 .ToList();
-
+            
             var vm = series.Select(result => new RecentSeriesViewModel
             {
                 SeriesId = result.SerieId,
                 SeriesSlug = SlugConverter.TitleToSlug(result.Series), 
-                PostsCount = result.Count
+                PostsCount = result.Count,
+                PostInformation = result.Posts
+                                    .OrderByDescending(post => post.PublishAt)
+                                    .FirstOrDefault(post => post.PublishAt <= DateTimeOffset.UtcNow)
             }).ToList();
 
             return View(vm);

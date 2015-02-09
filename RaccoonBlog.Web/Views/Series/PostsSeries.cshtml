@@ -1,20 +1,18 @@
 ﻿@model SeriesPostsViewModel
 
-@foreach (var series in Model.SeriesWithPosts)
+@foreach (var series in Model.SeriesInfo)
 {
-    <article>
-        <h2>@series.Series</h2>
-        <ol>
-            @foreach (var post in series.PostsInSeries)
-            {
-                <li>
-                    <a href="@Url.Action("Details", "PostDetails", new { @post.Id, @post.Slug })">
-                        <h4>@post.Title</h4>
-                    </a>
-                </li>
-            }
-        </ol>
-    </article>
+    <h2>@Html.Raw(series.PostsInSeries[0].Title.ToSeriesTitle())</h2>
+    <ol>
+        @foreach (var post in series.PostsInSeries)
+        {
+            <li>
+                <a href="@Url.Action("Details", "PostDetails", new { @post.Id, @post.Slug })">
+                    <h4>@Html.Raw(post.Title.ToPostTitle())</h4>
+                </a>
+            </li>
+        }
+    </ol>
 }
 <nav>
     <hr />
