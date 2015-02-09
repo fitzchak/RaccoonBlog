@@ -1,28 +1,28 @@
 // JavaScript Document
 
-(function() {
-	
+(function () {
+
 	$('#archive > ul > li > a').click(function (e) {
 		e.preventDefault();
-        if ($(this).parent().hasClass('open')) {
-            $(this).parent().removeClass('open');
-        } else {
+		if ($(this).parent().hasClass('open')) {
+			$(this).parent().removeClass('open');
+		} else {
 			$('#archive .open').removeClass('open');
-            $(this).parent().addClass('open');
-        }
-    });
+			$(this).parent().addClass('open');
+		}
+	});
 
 	var bodyEl = document.body,
-		openbtn = document.getElementById( 'open-button' ),
-		showgrid = document.getElementById('gridView'),
-        showstack = document.getElementById('stackView'),
-		openTags = document.getElementById( 'tags-button' ),
-		openArch = document.getElementById( 'archive-button' ),
-		openSeries = document.getElementById( 'seriesShow' ),
-		isOpen = false;
-		isGrid = false;
-		isTags = false;
-		isArchive = false;
+		openbtn = $('#open-button'),
+		showgrid = $('#gridView'),
+        showstack = $('#stackView'),
+		openTags = $('#tags-button'),
+		openArch = $('#archive-button'),
+		openSeries = $('#seriesShow'),
+		isOpen = false,
+		isGrid = false,
+		isTags = false,
+		isArchive = false,
 		isSeries = false;
 
 
@@ -31,69 +31,50 @@
 	}
 
 	function initEvents() {
-		if (openbtn.addEventListener) {
-			
-    		openbtn.addEventListener("click", toggleMenu, false);
-    		showgrid.addEventListener("click", toggleGrid, false);
-		    showstack.addEventListener("click", toggleStack, false);
-			openTags.addEventListener("click", toggleTags, false);
-			openArch.addEventListener("click", toggleArch, false);
-			if (openSeries != null) {
-			    openSeries.addEventListener("click", toggleSeries, false);
-			}
-			
-			
-		}
-		else {
-			
- 	  		openbtn.attachEvent("onclick", toggleMenu);
- 	  		showgrid.attachEvent("onclick", toggleGrid);
- 	  		showstack.attachEvent("onclick", toggleStack);
-			openTags.attachEvent("onclick", toggleTags);
-			openArch.attachEvent("onclick", toggleArch);
-		    if (openSeries != null) {
-		        openSeries.attachEvent("onclick", toggleSeries);
-		    }
-		}
-		
+		openbtn.click(toggleMenu);
+		showgrid.click(toggleGrid);
+		showstack.click(toggleStack);
+		openTags.click(toggleTags);
+		openArch.click(toggleArch);
+		openSeries.click(toggleSeries);
 	}
 
 	function toggleMenu() {
-		if( isOpen ) {
+		if (isOpen) {
 			$(bodyEl).removeClass('show-menu');
-			
+
 		}
 		else {
 			$(bodyEl).addClass('show-menu');
 		}
 		isOpen = !isOpen;
 	}
-	
+
 	function toggleGrid() {
-		if( !isGrid ) {
-		    $(bodyEl).addClass('show-grid');
-		    $(showgrid).addClass('active');
-		    $(showstack).removeClass('active');
-		    isGrid = true;
-		    adjustSize();
+		if (!isGrid) {
+			$(bodyEl).addClass('show-grid');
+			$(showgrid).addClass('active');
+			$(showstack).removeClass('active');
+			isGrid = true;
+			adjustSize();
 		}
 	}
 
-    function toggleStack() {
-        if (isGrid) {
-            $(bodyEl).removeClass('show-grid');
-            $(showgrid).removeClass('active');
-            $(showstack).addClass('active');
-            isGrid = false;
-            adjustSize();
-        }
-    }	
-	
-	function toggleSeries() {
-		event.preventDefault(); 
-		if( isSeries ) {
+	function toggleStack() {
+		if (isGrid) {
+			$(bodyEl).removeClass('show-grid');
+			$(showgrid).removeClass('active');
+			$(showstack).addClass('active');
+			isGrid = false;
+			adjustSize();
+		}
+	}
+
+	function toggleSeries(e) {
+		e.preventDefault();
+		if (isSeries) {
 			$('.postsInSeries').removeClass('open');
-			
+
 		}
 		else {
 			$('.postsInSeries').addClass('open');
@@ -101,11 +82,8 @@
 		isSeries = !isSeries;
 	}
 
-	
-
 	function toggleTags() {
-		alert('test');
-		if( isTags ) {
+		if (isTags) {
 			$('#tags').removeClass('open');
 		}
 		else {
@@ -115,12 +93,11 @@
 		isTags = !isTags;
 		isArchive = false;
 	}
-	
-		function toggleArch() {
 
-		if( isArchive ) {
+	function toggleArch() {
+		if (isArchive) {
 			$('#archive').removeClass('open');
-			
+
 		}
 		else {
 			$('#tags').removeClass('open');
@@ -131,25 +108,22 @@
 	}
 
 	init();
-
 })();
 
-var adjustSize = function(){
+var adjustSize = function () {
 	if ($(window).width() < 992) {
-		$('.rightSide').css('min-height',0);		
+		$('.rightSide').css('min-height', 0);
 	}
 	else {
-		$('.rightSide').css('min-height',$('.centerCol').height()+70);		
+		$('.rightSide').css('min-height', $('.centerCol').height() + 70);
 	}
-
-	
 }
 
-window.onresize = function(event) {
-    adjustSize();
+window.onresize = function (event) {
+	adjustSize();
 }
 
-$(document).ready(function(e) {
-    adjustSize();
+$(document).ready(function (e) {
+	adjustSize();
 });
 

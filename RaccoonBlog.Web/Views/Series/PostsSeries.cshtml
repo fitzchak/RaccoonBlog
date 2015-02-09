@@ -1,32 +1,44 @@
 ﻿@model SeriesPostsViewModel
-
-@foreach (var series in Model.SeriesInfo)
-{
-    <h2>@Html.Raw(series.PostsInSeries[0].Title.ToSeriesTitle())</h2>
-    <ol>
-        @foreach (var post in series.PostsInSeries)
-        {
-            <li>
-                <a href="@Url.Action("Details", "PostDetails", new { @post.Id, @post.Slug })">
-                    <h4>@Html.Raw(post.Title.ToPostTitle())</h4>
-                </a>
-            </li>
-        }
-    </ol>
-}
-<nav>
-    <hr />
-    <ul id="paginationList" class="pagination"></ul>
-</nav>
+<div id="series">
+	@foreach (var series in Model.SeriesInfo)
+	{
+		<h2>@Html.Raw(series.PostsInSeries[0].Title.ToSeriesTitle())</h2>
+		<ol>
+			@foreach (var post in series.PostsInSeries)
+			{
+				if (post.PublishAt >= DateTimeOffset.UtcNow)
+				{
+					<li>
+						<em>(@post.PublishAt.ToString("MM/dd/yyyy"))</em>
+						<h4>@Html.Raw(post.Title.ToPostTitle())</h4>
+					</li>
+				}
+				else
+				{
+					<li>
+						<em>(@post.PublishAt.ToString("MM/dd/yyyy"))</em>
+						<a href="@Url.Action("Details", "PostDetails", new { @post.Id, @post.Slug })">
+							<h4>@Html.Raw(post.Title.ToPostTitle())</h4>
+						</a>
+					</li>
+				}
+			}
+		</ol>
+	}
+	<nav>
+		<hr />
+		<ul id="paginationList" class="pagination"></ul>
+	</nav>
+</div>
 @section Script {
-    @Scripts.Render("~/Content/js/jquery-twbsPagination")
-    <script>
-        var total = @(Model.PostsCount / Model.PageSize);
+	@Scripts.Render("~/Content/js/jquery-twbsPagination")
+	<script>
+		var total = @(Model.PostsCount / Model.PageSize);
 
-        $("#paginationList").twbsPagination({
-            totalPages: (total > 0) ? total : 1,
-            visiblePages: 10,
-            href: '?page={{number}}'
-        });
-    </script>
+		$("#paginationList").twbsPagination({
+			totalPages: (total > 0) ? total : 1,
+			visiblePages: 10,
+			href: '?page={{number}}'
+		});
+	</script>
 }

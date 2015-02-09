@@ -37,6 +37,12 @@
                 {
                     svm.PostsInSeries.Add(post.MapTo<PostInSeries>());
                 }
+
+	            svm.PostsInSeries = svm
+					.PostsInSeries
+					.OrderByDescending(x => x.PublishAt)
+					.ToList();
+
                 vm.SeriesInfo.Add(svm);
             }
 
