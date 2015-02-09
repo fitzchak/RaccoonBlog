@@ -49,18 +49,19 @@ namespace RaccoonBlog.Web
                 .Include("~/Content/js/jquery.twbsPagination.js"));
 
 			bundles
-				.Add(new ScriptBundle("~/Content/js")
+				.Add(new ScriptBundle("~/Content/js/main")
 				.Include("~/Content/js/jquery.ae.image.resize.min.js")
 				.Include("~/Content/js/raccoon-blog.js")
                 .Include("~/Content/js/setup.js"));
 
-			bundles
-				.Add(new Bundle(AdminThemeDirectory + "admin", new ThemeLessTransform())
+			var adminBundle = new Bundle(AdminThemeDirectory + "admin", new ThemeLessTransform())
 				.Include("~/Content/css/bootstrap/normalize.less")
 				.Include("~/Areas/Admin/Content/css/admin.settings.less")
 				.Include("~/Areas/Admin/Content/css/admin.base.less")
 				.Include("~/Areas/Admin/Content/css/admin.site.less")
-				.Include("~/Areas/Admin/Content/css/AdminStyle.css"));
+				.Include("~/Areas/Admin/Content/css/AdminStyle.css");
+
+			bundles.Add(adminBundle);
 
 			bundles
 				.Add((new StyleBundle("~/Content/css/socicon"))
