@@ -1,4 +1,4 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 /* CSS Document */
 
 html, body {
@@ -1090,6 +1090,11 @@ width:100%;
 		strong {
 			color:@brand-primary;
 			font-size:14px;
+
+			&.comment-body {
+				-ms-word-break: break-word;
+				word-break: break-word;
+			}
 		}
 	}
 }

@@ -11,13 +11,13 @@
 
             <li>
                 <div>
-                    <strong>@comment.ShortBody</strong>
+                    <strong class="comment-body">@comment.ShortBody</strong>
                     <a href="@(postUrl)#comment@(comment.CommentId)">
                         Read all.
                     </a>
                 </div>
                 <p />
-                <div><strong>By</strong>&nbsp;@comment.Author on <em>@comment.PostTitle</em></div>
+                <div><strong>By</strong>&nbsp;@comment.Author on <em>@Html.Raw(@comment.PostTitle)</em></div>
                 <p />
             </li>
         }
