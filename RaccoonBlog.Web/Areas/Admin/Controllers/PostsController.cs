@@ -127,17 +127,14 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			return View("Details", vm);
 		}
 
-		public ActionResult ListFeed(long start = 0, long end = int.MaxValue)
+		public ActionResult ListFeed(DateTime start, DateTime end)
 		{
-			var startAsDateTimeOffset = DateTimeOffsetUtil.ConvertFromUnixTimestamp(start);
-			var endAsDateTimeOffset = DateTimeOffsetUtil.ConvertFromUnixTimestamp(end);
-
 			var posts = RavenSession.Query<Post>()
 				.Where(post => post.IsDeleted == false)
 				.Where
 				(
-					post => post.PublishAt >= startAsDateTimeOffset &&
-					        post.PublishAt <= endAsDateTimeOffset
+					post => post.PublishAt >= start &&
+							post.PublishAt <= end
 				)
 				.OrderBy(post => post.PublishAt)
 				.Take(256)

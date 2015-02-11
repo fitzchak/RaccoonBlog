@@ -1378,3 +1378,8 @@ a:hover.back-login
 {
 	background-color: Gray;
 }
+
+#postsCalendar .fc-view-container .fc-content {
+	white-space: normal;
+	color: #FFF;
+}
