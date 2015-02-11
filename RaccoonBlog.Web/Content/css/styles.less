@@ -1,10 +1,11 @@
-﻿@charset "utf-8";
+@charset "utf-8";
 /* CSS Document */
 
 html, body {
 	margin:0;
 	padding:0;
 	height:100%;
+	width:100%;
 }
 
 body {
@@ -46,30 +47,23 @@ hr {
 	}
 }
 
-.leftSide {
-	text-align:center;
-
-	color:@brand-info;
-	background-color:#faaa47;
-	background:url(../img/side_bkg.jpg) #faaa47 right no-repeat;
-	padding:20px 15px;
-	
-	@media (min-width: @screen-sm) {
-		position:fixed;
-		height:100%;
-    }
-	
-	.menu-button {
+.menu-button {
 		background:none;
 		border:none;
-		float:right;
+		//float:right;
 		font-size:35px;
-		margin-top:10px;
+		position:absolute;
+		z-index:90;
+		
+		top:30px;
+		right:10px;
+		margin-right:0;
+		
 
 		@media (min-width: @screen-sm) {
 			display:none;
 		}
-		//ADDED
+
 		&:focus {
 			outline:none;
 		}
@@ -77,8 +71,23 @@ hr {
 		&:active {
 			color:@brand-primary;
 		}
-		//END-ADDED
 	}
+
+.leftSide {
+	text-align:center;
+
+	color:@brand-info;
+	background-color:#faaa47;
+	background:url(../img/side_bkg.jpg) #faaa47 right no-repeat;
+	padding:20px 15px;
+	position:relative;
+	
+	@media (min-width: @screen-sm) {
+		position:fixed;
+		height:100%;
+    }
+	
+	
 	
 	.rihno {
 		height:40px;
@@ -314,7 +323,7 @@ hr {
 	a {
 		&.logo {
 			display:inline-block;
-			width:60%;
+			width:55%;
 			max-width:300px;
 			height:60px;
 			float:left;
@@ -1329,6 +1338,7 @@ transform: none;
 		border-color:@brand-success;
 		background-color:@brand-success;
 		color:#FFF;
+
 	}
 }
 
