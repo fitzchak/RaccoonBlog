@@ -454,6 +454,7 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\MvcHtmlStringConverter.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\TagsResolver.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\UserAdminMapperProfile.cs" />
+    <Compile Include="Infrastructure\Common\TimeConverter.cs" />
     <Compile Include="Infrastructure\Common\TitleConverter.cs" />
     <Compile Include="Infrastructure\Indexes\PostComments_CreationDate.cs" />
     <Compile Include="Infrastructure\Indexes\Posts_Series.cs" />

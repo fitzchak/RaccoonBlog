@@ -43,5 +43,18 @@
         public string Slug { get; set; }
         public DateTimeOffset PublishAt { get; set; }
         public string Title { get; set; }
+
+		public string Time
+		{
+			get
+			{
+				var totalMinutes = (PublishAt - DateTimeOffset.Now).TotalMinutes;
+
+				if (totalMinutes < 0)
+					throw new InvalidOperationException(string.Format("Future post error: the post is already published. Post Id: {0}, PublishAt: {1}, Now: {2}", Title, PublishAt, DateTimeOffset.Now));
+
+				return TimeConverter.DistanceOfTimeInWords(totalMinutes) + " from now";
+			}
+		}
     }
 }

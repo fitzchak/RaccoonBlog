@@ -34,7 +34,7 @@ namespace RaccoonBlog.Web.Controllers
                 PostsCount = result.Count,
                 PostInformation = result.Posts
                                     .OrderByDescending(post => post.PublishAt)
-                                    .FirstOrDefault(post => post.PublishAt <= DateTimeOffset.UtcNow)
+                                    .FirstOrDefault(post => post.PublishAt <= DateTimeOffset.Now)
             }).ToList();
 
             return View(vm);
