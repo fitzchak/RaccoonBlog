@@ -1,8 +1,9 @@
-﻿@model SeriesPostsViewModel
+﻿@using RaccoonBlog.Web.Infrastructure.Common
+@model SeriesPostsViewModel
 <div id="series">
 	@foreach (var series in Model.SeriesInfo)
 	{
-		<h2>@Html.Raw(series.PostsInSeries[0].Title.ToSeriesTitle())</h2>
+		<h2>@Html.Raw(TitleConverter.ToSeriesTitle(series.PostsInSeries[0].Title))</h2>
 		<ol>
 			@foreach (var post in series.PostsInSeries)
 			{
@@ -10,7 +11,7 @@
 				{
 					<li>
 						<em>(@post.PublishAt.ToString("MM/dd/yyyy"))</em>
-						<h4>@Html.Raw(post.Title.ToPostTitle())</h4>
+						<h4>@Html.Raw(TitleConverter.ToPostTitle(post.Title))</h4>
 					</li>
 				}
 				else
@@ -18,7 +19,7 @@
 					<li>
 						<em>(@post.PublishAt.ToString("MM/dd/yyyy"))</em>
 						<a href="@Url.Action("Details", "PostDetails", new { @post.Id, @post.Slug })">
-							<h4>@Html.Raw(post.Title.ToPostTitle())</h4>
+							<h4>@Html.Raw(TitleConverter.ToPostTitle(post.Title))</h4>
 						</a>
 					</li>
 				}

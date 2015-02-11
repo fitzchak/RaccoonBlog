@@ -5,14 +5,14 @@ using System.Web.Mvc;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Infrastructure.Common;
+using RaccoonBlog.Web.Infrastructure.Indexes;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
 using Raven.Client;
+using Raven.Client.Linq;
 
 namespace RaccoonBlog.Web.Controllers
 {
-    using RaccoonBlog.Web.Helpers;
-
     public class PostsController : AggresivelyCachingRacconController
 	{
 		public ActionResult Index()
@@ -54,12 +54,14 @@ namespace RaccoonBlog.Web.Controllers
             if (post == null)
                 return HttpNotFound();
 
+		    var seriesTitle = TitleConverter.ToSeriesTitle(post.Title);
+
             RavenQueryStatistics stats;
             var posts = RavenSession.Query<Post>()
                 .Include(x => x.AuthorId)
 				.Statistics(out stats)
 				.WhereIsPublicPost()
-                .Where(p => p.Title.StartsWith(post.Title.ToSeriesTitle()))
+				.Where(p => p.Title.StartsWith(seriesTitle))
                 .OrderByDescending(p => p.PublishAt)
                 .Paging(CurrentPage, DefaultPage, PageSize)
                 .ToList();
@@ -95,8 +97,23 @@ namespace RaccoonBlog.Web.Controllers
 		    ViewBag.ChangeViewStyle = true;
 
 			var summaries = posts.MapTo<PostsViewModel.PostSummary>();
+
+			var serieTitles = summaries
+				.Select(x => TitleConverter.ToSeriesTitle(x.Title))
+				.Where(x => string.IsNullOrEmpty(x) == false)
+				.Distinct()
+				.ToList();
+
+			var series = RavenSession
+				.Query<Posts_Series.Result, Posts_Series>()
+				.Where(x => x.Series.In(serieTitles) && x.Count > 1)
+				.ToList();
+
 			foreach (var post in posts)
 			{
+				var postSummary = summaries.First(x => x.Id == RavenIdResolver.Resolve(post.Id));
+				postSummary.IsSerie = series.Any(x => string.Equals(x.Series, TitleConverter.ToSeriesTitle(postSummary.Title), StringComparison.OrdinalIgnoreCase));
+
 				if (string.IsNullOrWhiteSpace(post.AuthorId))
 					continue;
 
@@ -104,9 +121,12 @@ namespace RaccoonBlog.Web.Controllers
 				if (author == null)
 					continue;
 
-				var postSummary = summaries.First(x => x.Id == RavenIdResolver.Resolve(post.Id));
+				
 				postSummary.Author = author.MapTo<PostsViewModel.PostSummary.UserDetails>();
 			}
+
+			
+
 			return View("List", new PostsViewModel
 			{
                 PageSize = BlogConfig.PostsOnPage,

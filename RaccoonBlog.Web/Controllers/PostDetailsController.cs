@@ -192,17 +192,19 @@ namespace RaccoonBlog.Web.Controllers
         private SeriesInfo GetSeriesInfo(string title)
         {
             SeriesInfo seriesInfo = null;
-            IList<PostInSeries> postsInSeries = null;
-            string seriesTitle = title.ToSeriesTitle();
+	        string seriesTitle = TitleConverter.ToSeriesTitle(title);
 
             if (!string.IsNullOrEmpty(seriesTitle))
             {
                 var series = RavenSession.Query<Posts_Series.Result, Posts_Series>()
-                    .Where(x => x.Series.StartsWith(seriesTitle))
+                    .Where(x => x.Series.StartsWith(seriesTitle) && x.Count > 1)
                     .OrderByDescending(x => x.MaxDate)
                     .FirstOrDefault();
 
-                postsInSeries = GetPostsForCurrentSeries(series);
+	            if (series == null) 
+					return null;
+
+                var postsInSeries = GetPostsForCurrentSeries(series);
 
                 seriesInfo = new SeriesInfo
                 {
@@ -221,14 +223,17 @@ namespace RaccoonBlog.Web.Controllers
 
             if (series != null)
             {
-                postsInSeries = series.Posts.Select(s => new PostInSeries()
-                {
-                    Id = RavenIdResolver.Resolve(s.Id), 
-                    Slug = SlugConverter.TitleToSlug(s.Title), 
-                    Title = HttpUtility.HtmlDecode(s.Title),
-                    PublishAt = s.PublishAt
-                })
-                .OrderByDescending(p => p.PublishAt).ToList();
+                postsInSeries = series
+					.Posts
+					.Select(s => new PostInSeries
+					{
+						Id = RavenIdResolver.Resolve(s.Id), 
+						Slug = SlugConverter.TitleToSlug(s.Title), 
+						Title = HttpUtility.HtmlDecode(TitleConverter.ToPostTitle(s.Title)),
+						PublishAt = s.PublishAt
+					})
+					.OrderByDescending(p => p.PublishAt)
+					.ToList();
             }
 
             return postsInSeries;

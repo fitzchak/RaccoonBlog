@@ -1,4 +1,4 @@
-﻿@using dotless.Core.Parser.Tree
+﻿@using RaccoonBlog.Web.Infrastructure.Common
 @model PostViewModel
 @{
 	ViewBag.Title = @Model.Post.Title;
@@ -23,13 +23,13 @@
         @Model.Post.PublishedAt.ToString("yyyy HH:mm")
     </time>
     <a href="@Url.Action("Details", new { Model.Post.Id, Model.Post.Slug })">
-        @if (string.IsNullOrEmpty(Model.Post.Title.ToString().ToSeriesTitle()))
+        @if (Model.SeriesInfo == null)
         {
             <h2>@Model.Post.Title</h2>
         }
         else
         {
-            <h2><span class="seriesTitle">@Html.Raw(Model.Post.Title.ToString().ToSeriesTitle())</span>@Html.Raw(Model.Post.Title.ToString().ToPostTitle())</h2>
+            <h2><span class="seriesTitle">@Html.Raw(TitleConverter.ToSeriesTitle(Model.Post.Title))</span>@Html.Raw(TitleConverter.ToPostTitle(Model.Post.Title))</h2>
         }
     </a>
     <div class="clearfix"></div>

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Indexes;
 using RaccoonBlog.Web.Models;
@@ -28,7 +29,8 @@ namespace RaccoonBlog.Web.Controllers
             var vm = series.Select(result => new RecentSeriesViewModel
             {
                 SeriesId = result.SerieId,
-                SeriesSlug = SlugConverter.TitleToSlug(result.Series), 
+                SeriesSlug = SlugConverter.TitleToSlug(result.Series),
+				SeriesTitle = TitleConverter.ToSeriesTitle(result.Posts.First().Title),
                 PostsCount = result.Count,
                 PostInformation = result.Posts
                                     .OrderByDescending(post => post.PublishAt)

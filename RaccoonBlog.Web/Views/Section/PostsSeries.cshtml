@@ -1,4 +1,5 @@
-﻿@model List<RecentSeriesViewModel>
+﻿@using RaccoonBlog.Web.Infrastructure.Common
+@model List<RecentSeriesViewModel>
 @{
     Layout = "";
 }
@@ -12,8 +13,8 @@
             @foreach (var series in Model)
             {
                 <li>
-                    <a href="@Url.Action("Series", "Posts", new { series.SeriesId, series.SeriesSlug })"><strong>@series.SeriesSlug</strong></a> <em>(@series.PostsCount)</em>:<br/>
-                    <em>@series.PostInformation.PublishAt.ToString("MM/dd/yyyy")</em> - @Html.Raw(@series.PostInformation.Title.ToPostTitle())
+                    <a href="@Url.Action("Series", "Posts", new { series.SeriesId, series.SeriesSlug })"><strong>@series.SeriesTitle</strong></a> <em>(@series.PostsCount)</em>:<br/>
+                    <em>@series.PostInformation.PublishAt.ToString("MM/dd/yyyy")</em> - @Html.Raw(TitleConverter.ToPostTitle(@series.PostInformation.Title))
                 </li>
             }
         </ol>

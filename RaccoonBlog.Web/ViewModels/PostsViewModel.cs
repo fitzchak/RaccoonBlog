@@ -26,7 +26,7 @@ namespace RaccoonBlog.Web.ViewModels
 		public class PostSummary
 		{
 			public int Id { get; set; }
-			public MvcHtmlString Title { get; set; }
+			public string Title { get; set; }
 			public string Slug { get; set; }
 			public MvcHtmlString Body { get; set; }
 			public ICollection<TagDetails> Tags { get; set; }
@@ -34,6 +34,8 @@ namespace RaccoonBlog.Web.ViewModels
 			public DateTimeOffset PublishedAt { get; set; }
 			public int CommentsCount { get; set; }
 			public UserDetails Author { get; set; }
+
+			public bool IsSerie { get; set; }
 
 			public class UserDetails
 			{

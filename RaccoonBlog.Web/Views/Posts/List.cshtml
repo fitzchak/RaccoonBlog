@@ -1,4 +1,5 @@
-﻿@model PostsViewModel
+﻿@using RaccoonBlog.Web.Infrastructure.Common
+@model PostsViewModel
 @{
 	ViewBag.CurrentAction = @ViewContext.Controller.ValueProvider.GetValue("action").RawValue.ToString();
 }
@@ -10,13 +11,13 @@
             @post.PublishedAt.ToString("yyyy HH:mm")
         </time>
         <a href="@Url.Action("Details", "PostDetails", new { post.Id, post.Slug })">
-            @if (string.IsNullOrEmpty(post.Title.ToString().ToSeriesTitle()))
+            @if (post.IsSerie == false)
             {
                 <h2>@post.Title</h2>
             }
             else
             {
-                <h2><span class="seriesTitle">@Html.Raw(post.Title.ToString().ToSeriesTitle())</span>@Html.Raw(post.Title.ToString().ToPostTitle())</h2>
+                <h2><span class="seriesTitle">@Html.Raw(TitleConverter.ToSeriesTitle(post.Title))</span>@Html.Raw(TitleConverter.ToPostTitle(post.Title))</h2>
             }
         </a>
         <div class="clearfix"></div>
