@@ -61,6 +61,10 @@ namespace RaccoonBlog.Web
 				.Include("~/Areas/Admin/Content/css/admin.site.less")
 				.Include("~/Areas/Admin/Content/css/AdminStyle.css");
 
+#if !DEBUG
+			adminBundle.Transforms.Add(new CssMinify());
+#endif
+
 			bundles.Add(adminBundle);
 
 			bundles
