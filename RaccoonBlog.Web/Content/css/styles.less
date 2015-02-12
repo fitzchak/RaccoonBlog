@@ -1459,6 +1459,44 @@ div#series {
 			}
 		}
 	}
+
+	div.count {
+		display:inline-block;
+		background-color:@brand-primary;
+		color:#FFF;
+		font-size:18px;
+		font-weight:600;
+		line-height:0.9;
+		padding:10px 10px; 
+		margin: 10px 0 0 0;
+		text-transform: uppercase;
+
+		span {
+			margin-right:5px;
+		}
+		
+		@media (min-width: @screen-sm) {
+			text-align:center;
+			width:80px;
+			float:left;
+			padding:10px 0; 
+			margin: 0 13px 0 0;
+
+			span {
+				display:block;
+				margin:0 0 3px 0;
+				font-size:36px;
+				font-weight:normal;
+				line-height:20px;
+			}
+	    }
+	}
+	
+	h2 {
+			@media (max-width: @screen-sm) {
+			margin-top:5px;
+			}
+	}
 }
 
 

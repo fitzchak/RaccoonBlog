@@ -3,7 +3,9 @@
 <div id="series">
 	@foreach (var series in Model.SeriesInfo)
 	{
+		<div class="count"><span>@series.PostsInSeries.Count</span>posts</div>
 		<h2>@Html.Raw(TitleConverter.ToSeriesTitle(series.PostsInSeries[0].Title))</h2>
+		<div class="clearfix"></div>
 		<ol>
 			@{
 		var latest = true;
