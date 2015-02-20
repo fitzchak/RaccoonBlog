@@ -5,6 +5,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=no">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="format-detection" content="telephone=no" />
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="icon" href="favicon.ico">
     <meta name="description" content="@ViewBag.BlogConfig.MetaDescription">
 	@{
 		ViewBag.Message = TempData["Message"] as string;
@@ -22,7 +24,7 @@
 	@Html.RenderTheme(ViewBag.BlogConfig.CustomCss as string)
 	@RenderSection("Style", false)
 </head>
-<body>
+<body class="show-grid">
 	<div class="container">
 		<div class="row">
 			<div class="leftSide col-sm-4 col-md-3">
@@ -91,8 +93,8 @@
 					}
                     
                     <nav class="pull-right views @(ViewBag.ChangeViewStyle == null ? "hide" : "")">
-                        <a href="#" class="stackView active" id="stackView">stack view</a>
-                        <a href="#" class="gridView" id="gridView">grid view</a>
+                        <a href="#" class="stackView" id="stackView">stack view</a>
+                        <a href="#" class="gridView active" id="gridView">grid view</a>
                     </nav>
                     
 					<div class="clearfix"></div>

@@ -13,12 +13,16 @@
 		text = "and you can reach me by phone:";
 	}
 	else if (string.IsNullOrEmpty(Model.Email) == false)
-	{
-		text = "and you can reach me by email:";
+    {
+        text = "and you can reach me by phone or email:";
 	}
 }
 <span>Hi!</span><br />
 <span>My name is</span> <span>@Model.FullName</span><br />
+<span>
+    Founder, <a href="http://www.hibernatingrhinos.com/" target="_blank"><strong> Hibernating Rhinos LTD</strong></a> and
+    <a href="http://ravendb.net/" target="_blank"><strong>RavenDB</strong></a>.
+</span><br/>
 @if (string.IsNullOrEmpty(text) == false)
 {
 	<span>@text</span><br />
@@ -31,3 +35,5 @@
 {
 	<p class="phone">@Model.Phone</p>
 }
+
+

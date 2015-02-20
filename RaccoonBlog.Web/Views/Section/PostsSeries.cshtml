@@ -14,7 +14,7 @@
             {
                 <li>
                     <a href="@Url.Action("Series", "Posts", new { series.SeriesId, series.SeriesSlug })"><strong>@series.SeriesTitle</strong></a> <em>(@series.PostsCount)</em>:<br/>
-                    <em>@series.PostInformation.PublishAt.ToString("MM/dd/yyyy")</em> - @Html.Raw(TitleConverter.ToPostTitle(@series.PostInformation.Title))
+                    <em>@series.PostInformation.PublishAt.ToString("dd MMM yyyy")</em> - @Html.Raw(TitleConverter.ToPostTitle(@series.PostInformation.Title))
                 </li>
             }
         </ol>

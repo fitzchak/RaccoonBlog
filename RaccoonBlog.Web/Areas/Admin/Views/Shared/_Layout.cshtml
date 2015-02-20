@@ -31,32 +31,32 @@
 		});
 	</script>
 </head>
-<body class="admin-area">
-	<header>
-		<div id="logo">
-			<a href="@Url.Action("Index", "Posts")"><img src="@Url.Content("~/Content/css/images/logo-admin.png")" width="51" height="40" alt="Logo"></a>
-		</div>
-		<nav>
-			@{Html.RenderPartial("RenderMenu", RaccoonBlog.Web.Areas.Admin.Helpers.MenuUtil.GetTopMenu(Url));}
-		</nav>
-		<div id="nav-right">
-			<a href="@Url.Action("Logout", "Login")">Logout</a>
-		</div>
-	</header>
-	<div class="clr"></div>
+<body class="admin-area show-grid">
+    <header>
+        <div id="logo">
+            <a href="@Url.Action("Index", "Posts")"><img src="@Url.Content("~/Content/css/images/logo-admin.png")" width="51" height="40" alt="Logo"></a>
+        </div>
+        <nav>
+            @{Html.RenderPartial("RenderMenu", RaccoonBlog.Web.Areas.Admin.Helpers.MenuUtil.GetTopMenu(Url));}
+        </nav>
+        <div id="nav-right">
+            <a href="@Url.Action("Logout", "Login")">Logout</a>
+        </div>
+    </header>
+    <div class="clr"></div>
 
-	<div id="content-outer">
-		<div id="content-admin">
-			@RenderBody()
-		</div>
-	</div>
-	<div class="clr"></div>
+    <div id="content-outer">
+        <div id="content-admin">
+            @RenderBody()
+        </div>
+    </div>
+    <div class="clr"></div>
 
-	<footer>
-		<div id="footer-left">
-			Admin Skin &copy; Copyright Internet Dreams Ltd. <a href="">www.netdreams.co.uk</a>.
-			All rights reserved.
-		</div>
-	</footer>
+    <footer>
+        <div id="footer-left">
+            Admin Skin &copy; Copyright Internet Dreams Ltd. <a href="">www.netdreams.co.uk</a>.
+            All rights reserved.
+        </div>
+    </footer>
 </body>
 </html>

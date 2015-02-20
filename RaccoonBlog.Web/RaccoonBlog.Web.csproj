@@ -363,6 +363,12 @@
     <Content Include="Content\css\img\side_bkg.png" />
     <Content Include="Content\css\prism.css" />
     <Content Include="Content\css\socicon.css" />
+    <Content Include="Content\css\styles.css">
+      <DependentUpon>styles.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\styles.min.css">
+      <DependentUpon>styles.css</DependentUpon>
+    </Content>
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\fonts\socicon-webfont.svg" />
     <Content Include="Content\css\img\commentDate.png" />
@@ -374,6 +380,8 @@
     <Content Include="Content\img\ico_stack_active.svg" />
     <Content Include="Content\img\ico_stack_inactive.svg" />
     <Content Include="Content\img\logo.svg" />
+    <Content Include="Content\img\readmore.png" />
+    <Content Include="Content\img\readmore2.png" />
     <Content Include="Content\img\rihno.svg" />
     <Content Include="Content\img\rss.png" />
     <Content Include="Content\img\search-icon.svg" />
@@ -912,6 +920,12 @@
       <DependentUpon>ayende.styles.css</DependentUpon>
     </Content>
     <Content Include="Content\css\styles.less" />
+    <Content Include="Content\css\custom\ayende.variables.css.map">
+      <DependentUpon>ayende.variables.css</DependentUpon>
+    </Content>
+    <Content Include="Content\css\styles.css.map">
+      <DependentUpon>styles.css</DependentUpon>
+    </Content>
     <None Include="Content\js\jquery-1.11.2.intellisense.js" />
     <Content Include="Content\js\jquery-1.11.2.js" />
     <Content Include="Content\js\jquery-1.11.2.min.js" />
