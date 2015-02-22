@@ -6,11 +6,11 @@
 	string text = null;
 	if (string.IsNullOrEmpty(Model.Phone) == false && string.IsNullOrEmpty(Model.Email) == false)
 	{
-		text = "and you can reach me by phone or email:";
+		text = "You can reach me by phone or email:";
 	}
 	else if (string.IsNullOrEmpty(Model.Phone) == false)
 	{
-		text = "and you can reach me by phone:";
+		text = "You can reach me by phone:";
 	}
 	else if (string.IsNullOrEmpty(Model.Email) == false)
     {
