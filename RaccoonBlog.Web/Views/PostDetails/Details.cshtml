@@ -37,7 +37,42 @@
     <div class="articleContent">
         @Model.Post.Body
     </div>
-    <hr />
+
+    <div class="postData">
+
+
+
+        <a href='@string.Format("http://twitter.com/intent/tweet?status={0}+{1} via @{2}", Model.Post.Title, Request.Url.OriginalString, Model.Post.Author.TwitterNick)'>
+            <span class="socicon twitter">a</span><span>Tweet</span>
+        </a>
+        <a style='text-decoration:none;' type="icon_link" onclick="window.open('@string.Format("http://www.facebook.com/sharer/sharer.php?u={0}&title={1}", Request.Url.OriginalString, Model.Post.Title)','sharer','toolbar=0,status=0,width=580,height=325');" href="javascript: void(0)">
+            <span class="socicon facebook">b</span><span>share</span>
+        </a>
+        <a style='text-decoration:none;' type="icon_link" onclick="popUp=window.open('@string.Format("https://plus.google.com/share?url={0}", Request.Url.OriginalString)', 'popupwindow', 'scrollbars=yes,width=600,height=400');popUp.focus();return false" href="javascript: void(0)">
+            <span class="socicon gplus">c</span><span>share</span>
+        </a>
+        <a href="#comments">
+            <span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span>@Model.Comments.Count comments</span>
+        </a>
+        @if (Model.Post.Tags.Count > 0)
+        {
+            <div class="tags pull-right-lg">
+                <span class="glyphicon glyphicon-tag" aria-hidden="true"></span> Tags:
+                <ul>
+                    @foreach (var tag in Model.Post.Tags)
+                    {
+                        <li><a href="@Url.Action("Tag", "Posts", new {tag.Slug})">@tag.Name</a></li>
+                    }
+                </ul>
+            </div>
+        }
+
+
+        <div class="clearfix"></div>
+        <hr style="margin: 0;" />
+    </div>
+
+
     <nav class="nextPrev">
         @if (Model.PreviousPost != null)
         {
@@ -48,84 +83,40 @@
             <a class="pull-right" href="@Url.Action("Details", new {id = Model.NextPost.DomainId, Model.NextPost.Slug})">next post&nbsp;›</a>
         }
     </nav>
-    <hr/>
-    <div class="postData">
 
-        @if (Model.SeriesInfo != null)
-        {
+
+    @if (Model.SeriesInfo != null)
+    {
+        <section class="postsInSeries">
             <h4 class="text-left">
-                This post is part of <a href="@Url.Action("Series", "Posts", new {Model.SeriesInfo.SeriesId, Model.SeriesInfo.SeriesSlug})">&quot;@Model.SeriesInfo.SeriesTitle&quot;</a> series
+                More posts in &quot;@Model.SeriesInfo.SeriesTitle&quot; series:
             </h4>
-        }
-        <div class="row">
-            <div class="col-sm-8 pull-right text-right">
+            <a name="postsInSeries"></a>
 
-                <a href='@string.Format("http://twitter.com/intent/tweet?status={0}+{1} via @{2}", Model.Post.Title, Request.Url.OriginalString, Model.Post.Author.TwitterNick)'>
-                    <span class="socicon twitter">a</span><span>Tweet</span>
-                </a>
-                <a style='text-decoration:none;' type="icon_link" onclick="window.open('@string.Format("http://www.facebook.com/sharer/sharer.php?u={0}&title={1}", Request.Url.OriginalString, Model.Post.Title)','sharer','toolbar=0,status=0,width=580,height=325');" href="javascript: void(0)">
-                    <span class="socicon facebook">b</span><span>share</span>
-                </a>
-                <a style='text-decoration:none;' type="icon_link" onclick="popUp=window.open('@string.Format("https://plus.google.com/share?url={0}", Request.Url.OriginalString)', 'popupwindow', 'scrollbars=yes,width=600,height=400');popUp.focus();return false" href="javascript: void(0)">
-                    <span class="socicon gplus">c</span><span>share</span>
-                </a>
-                <a href="#comments">
-                    <span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span>@Model.Comments.Count comments</span>
-                </a>
-                @if (Model.Post.Tags.Count > 0)
+
+            <ol>
+                @foreach (var post in Model.SeriesInfo.PostsInSeries)
                 {
-                    <div class="tags pull-right-lg">
-                        <span class="glyphicon glyphicon-tag" aria-hidden="true"></span> Tags:
-                        <ul>
-                            @foreach (var tag in Model.Post.Tags)
-                            {
-                                <li><a href="@Url.Action("Tag", "Posts", new {tag.Slug})">@tag.Name</a></li>
-                            }
-                        </ul>
-                    </div>
-                }
-            </div>
-
-            @if (Model.SeriesInfo != null)
-            {<div class="col-sm-4">
-                <a href="#" id="seriesShow">show more in this series<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></a>
-            </div>
-
-
-            }
-
-        </div>
-        @if (Model.SeriesInfo != null) {
-            <section class="postsInSeries">
-                <a name="postsInSeries"></a>
-
-
-                <ol>
-                    @foreach (var post in Model.SeriesInfo.PostsInSeries)
+                    if (post.PublishAt >= DateTimeOffset.Now)
                     {
-                        if (post.PublishAt >= DateTimeOffset.Now)
+                        <li><em>(@(post.PublishAt.ToString("dd MMM yyyy")))</em>&nbsp;@(post.Title)</li>
+                    }
+                    else
+                    {
+                        if (post.Id == Model.Post.Id)
                         {
-                            <li><em>(@(post.PublishAt.ToString("dd MMM yyyy")))</em>&nbsp;@(post.Title)</li>
+                            <li><strong><em>(@(post.PublishAt.ToString("dd MMM yyyy")))</em>&nbsp;<a href="@Url.Action("Details", new { post.Id, post.Slug })">@(post.Title)</a></strong></li>
                         }
                         else
                         {
-                            if (post.Id == Model.Post.Id)
-                            {
-                                <li><strong><em>(@(post.PublishAt.ToString("dd MMM yyyy")))</em>&nbsp;<a href="@Url.Action("Details", new { post.Id, post.Slug })">@(post.Title)</a></strong></li>
-                            }
-                            else
-                            {
-                                <li><em>(@(post.PublishAt.ToString("dd MMM yyyy")))</em>&nbsp;<a href="@Url.Action("Details", new { post.Id, post.Slug })">@(post.Title)</a></li>
-                            }
+                            <li><em>(@(post.PublishAt.ToString("dd MMM yyyy")))</em>&nbsp;<a href="@Url.Action("Details", new { post.Id, post.Slug })">@(post.Title)</a></li>
                         }
                     }
-                </ol>
-            </section>
-        }
-
-        <div class="clearfix"></div>
-        <hr style="margin: 0;" />
-    </div>
+                }
+            </ol>
+        </section>
+    }
+    <hr />
 </article>
 
 

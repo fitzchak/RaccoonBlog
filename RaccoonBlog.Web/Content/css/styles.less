@@ -382,8 +382,8 @@ hr {
             position: relative;
             z-index: 9;
             display: inline-block;
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             text-align: center;
             -webkit-transition: color .15s ease;
             -moz-transition: color .15s ease;
@@ -396,10 +396,10 @@ hr {
                 content: '';
                 position: absolute;
                 left: -5px;
-                top: -8px;
+                top: -5px;
                 border: 3px solid @brand-primary;
-                width: 50px;
-                height: 50px;
+                width: 42px;
+                height: 42px;
                 -webkit-border-radius: 50px;
                 border-radius: 50px;
                 opacity: 0;
@@ -987,43 +987,49 @@ article {
 .show-grid {
 
     .postsList {
-    article {
-        position: relative;
-        width: 48%;
-        float: left;
-        height: 400px;
-        overflow: hidden;
-        border-bottom: 3px solid @brand-primary;
+        article {
+            position: relative;
+            
+            height: 400px;
+            overflow: hidden;
+            border-bottom: 3px solid @brand-primary;
 
-        &:nth-of-type(odd) {
-            margin-right: 3.5%;
+            @media (min-width: @screen-lg) {
+                width: 48%;
+                float: left;
+
+                &:nth-of-type(odd) {
+                margin-right: 3.5%;
+                }
+            }
+
+            
+
+            h2 {
+                font-size: 24px;
+            }
         }
 
-        h2 {
-            font-size: 24px;
+        .postData {
+            display: none;
         }
-    }
 
-    .postData {
-        display: none;
-    }
-
-    .read-more {
-        display: block;
-        width: 100%;
-        background: url(../../img/readmore.png) bottom repeat-x;
-        height: 100px;
-        position: absolute;
-        bottom: 0;
-
-        a {
+        .read-more {
+            display: block;
+            width: 100%;
+            background: url(../../img/readmore.png) bottom repeat-x;
+            height: 100px;
             position: absolute;
-            background-color: @brand-success;
-            padding: 5px 10px;
-            right: 5px;
-            bottom: 5px;
+            bottom: 0;
+
+            a {
+                position: absolute;
+                background-color: @brand-success;
+                padding: 5px 10px;
+                right: 5px;
+                bottom: 5px;
+            }
         }
-    }
     }
 }
 
@@ -1041,7 +1047,7 @@ blockquote {
     word-wrap: break-word;
 
     & > div {
-        background-color: transparent;
+        background-color: transparent !important;
     }
 }
 
@@ -1407,10 +1413,18 @@ pre[class*="language-"]:before, pre[class*="language-"]:after {
 }
 
 .postsInSeries {
+    margin-top:10px;
+    background-color: @gray-lighter;
+    padding: 15px;
+    //-webkit-border-radius: 7px;
+    //border-radius: 7px;
 
+    h4 {
+        margin-top:0;
+    }
 
     ol {
-        max-height: 0px;
+        //max-height: 0px;
         overflow: hidden;
         -webkit-transition: max-height .5s ease;
         -moz-transition: max-height .5s ease;
@@ -1423,12 +1437,11 @@ pre[class*="language-"]:before, pre[class*="language-"]:after {
 
 
         li {
-            background-color: @gray-lighter;
-            padding: 5px 10px;
+            padding: 5px;
 
-            &:hover {
+            /*&:hover {
                 background-color: lighten(@gray-lighter,1%);
-            }
+            }*/
 
             em {
                 display: inline-block;
@@ -1439,9 +1452,12 @@ pre[class*="language-"]:before, pre[class*="language-"]:after {
 
             a {
                 color: @brand-primary;
+                margin:-4px -6px;
+                padding:4px 6px;
 
                 &:hover {
                     color: @brand-success;
+                    background-color:#FFF;
                 }
             }
         }
@@ -1449,7 +1465,7 @@ pre[class*="language-"]:before, pre[class*="language-"]:after {
 
     margin-bottom: 10px;
 
-   
+
 
     &.open {
         ol {
@@ -1470,7 +1486,7 @@ pre[class*="language-"]:before, pre[class*="language-"]:after {
         -webkit-border-radius: 50px;
         border-radius: 50px;
         min-width: 24px;
-        height: 43px;
+        //height: 43px;
         color: #ffbf66;
         margin-right: 15px;
         margin-bottom: 10px;
