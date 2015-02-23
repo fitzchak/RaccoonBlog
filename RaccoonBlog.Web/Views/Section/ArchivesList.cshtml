@@ -4,19 +4,21 @@
 }
 <nav id="archive">
 	<ul>
-		@foreach (var year in Model.GroupBy(x => x.Year))
-		{
-			var currentYear = year.Key;
+		@{
+			var url = Url.Action(MVC.Posts.ActionNames.Archive, MVC.Posts.Name, new { Year = 9999, Month = 99 }); // Url.Action is slow
 
-			<li>
-				<a href="#">@year.Key</a>
-				<ul>
-					@foreach (var postCount in Model.Where(x => x.Year == currentYear))
-					{
-						<li><a href="@Url.Action("Archive", "Posts", new { postCount.Year, postCount.Month })"> @(new DateTime(postCount.Year, @postCount.Month, 1).ToString("MMMM", System.Globalization.CultureInfo.InvariantCulture)) </a> (@postCount.Count)</li>
-					}
-				</ul>
-			</li>
+			foreach (var g in Model.GroupBy(x => x.Year))
+			{
+				<li>
+					<a href="#">@g.Key</a>
+					<ul>
+						@foreach (var postCount in g)
+						{
+							<li><a href="@(url.Replace("9999", postCount.Year.ToString()).Replace("99", postCount.Month.ToString()))"> @(new DateTime(postCount.Year, @postCount.Month, 1).ToString("MMMM", System.Globalization.CultureInfo.InvariantCulture)) </a> (@postCount.Count)</li>
+						}
+					</ul>
+				</li>
+			}
 		}
 	</ul>
 </nav>

@@ -8,16 +8,16 @@ using RaccoonBlog.Web.Models;
 
 namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
-	public class SettingsController : AdminController
+	public partial class SettingsController : AdminController
 	{
 		[HttpGet]
-		public ActionResult Index()
+		public virtual ActionResult Index()
 		{
 			return View(BlogConfig);
 		}
 
 		[HttpPost]
-		public ActionResult Index(BlogConfig config)
+		public virtual ActionResult Index(BlogConfig config)
 		{
 			if (ModelState.IsValid == false)
 			{
@@ -36,7 +36,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult RssFutureAccess()
+		public virtual ActionResult RssFutureAccess()
 		{
 			return View(new GenerateFutureRssAccessInput
 			{
@@ -46,7 +46,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult RssFutureAccess(GenerateFutureRssAccessInput input)
+		public virtual ActionResult RssFutureAccess(GenerateFutureRssAccessInput input)
 		{
 			if (ModelState.IsValid == false)
 				return View(input);

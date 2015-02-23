@@ -13,9 +13,9 @@ using Raven.Client.Linq;
 
 namespace RaccoonBlog.Web.Controllers
 {
-    public class PostsController : AggresivelyCachingRacconController
+	public partial class PostsController : AggresivelyCachingRacconController
 	{
-		public ActionResult Index()
+		public virtual ActionResult Index()
 		{
 			RavenQueryStatistics stats;
 			var posts = RavenSession.Query<Post>()
@@ -29,7 +29,7 @@ namespace RaccoonBlog.Web.Controllers
 			return ListView(stats.TotalResults, posts);
 		}
 
-		public ActionResult Tag(string slug)
+		public virtual ActionResult Tag(string slug)
 		{
 			RavenQueryStatistics stats;
 			var posts = RavenSession.Query<Post>()
@@ -44,7 +44,7 @@ namespace RaccoonBlog.Web.Controllers
 			return ListView(stats.TotalResults, posts);
 		}
 
-	    public ActionResult Series(int seriesId, string seriesSlug)
+		public virtual ActionResult Series(int seriesId, string seriesSlug)
 	    {
             var post = RavenSession
                 .Include<Post>(x => x.CommentsId)
@@ -69,7 +69,7 @@ namespace RaccoonBlog.Web.Controllers
             return ListView(stats.TotalResults, posts);
 	    }
 
-		public ActionResult Archive(int year, int? month, int? day)
+		public virtual ActionResult Archive(int year, int? month, int? day)
 		{
 			RavenQueryStatistics stats;
 			var postsQuery = RavenSession.Query<Post>()

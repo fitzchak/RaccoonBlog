@@ -6,9 +6,9 @@ using dotless.Core.configuration;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public class CssController : Controller
+	public partial class CssController : Controller
 	{
-		public ActionResult Merge(string[] files)
+		public virtual ActionResult Merge(string[] files)
 		{
 			var builder = new StringBuilder();
 			foreach (var file in files)

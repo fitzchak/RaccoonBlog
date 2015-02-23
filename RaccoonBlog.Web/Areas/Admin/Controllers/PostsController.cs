@@ -18,16 +18,16 @@ using Raven.Json.Linq;
 
 namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
-	public class PostsController : AdminController
+	public partial class PostsController : AdminController
 	{
-		public ActionResult Index()
+		public virtual ActionResult Index()
 		{
 			// the actual UI is handled via JavaScript
 			return View("List");
 		}
 
 		[HttpGet]
-		public ActionResult Add()
+		public virtual ActionResult Add()
 		{
 			return View("Edit", new PostInput
 			{
@@ -39,7 +39,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult Edit(int id)
+		public virtual ActionResult Edit(int id)
 		{
 			var post = RavenSession.Load<Post>(id);
 			if (post == null)
@@ -49,7 +49,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 
 		[HttpPost]
 		[ValidateInput(false)]
-		public ActionResult Update(PostInput input)
+		public virtual ActionResult Update(PostInput input)
 		{
 			if (!ModelState.IsValid)
 				return View("Edit", input);
@@ -99,7 +99,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			return RedirectToAction("Details", new {Id = post.MapTo<PostReference>().DomainId});
 		}
 
-		public ActionResult Details(int id)
+		public virtual ActionResult Details(int id)
 		{
 			var post = RavenSession
 				.Include<Post>(x => x.CommentsId)
@@ -127,7 +127,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			return View("Details", vm);
 		}
 
-		public ActionResult ListFeed(DateTime start, DateTime end)
+		public virtual ActionResult ListFeed(DateTime start, DateTime end)
 		{
 			var posts = RavenSession.Query<Post>()
 				.Where(post => post.IsDeleted == false)
@@ -146,7 +146,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 
 		[HttpPost]
 		[AjaxOnly]
-		public ActionResult SetPostDate(int id, long date)
+		public virtual ActionResult SetPostDate(int id, long date)
 		{
 			var post = RavenSession
 				.Include<Post>(x => x.CommentsId)
@@ -161,7 +161,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult CommentsAdmin(int id, CommentCommandOptions command, int[] commentIds)
+		public virtual ActionResult CommentsAdmin(int id, CommentCommandOptions command, int[] commentIds)
 		{
 			if (commentIds == null || commentIds.Length == 0)
 				ModelState.AddModelError("CommentIdsAreEmpty", "Not comments was selected.");
@@ -240,7 +240,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult Delete(int id)
+		public virtual ActionResult Delete(int id)
 		{
 			var post = RavenSession.Load<Post>(id);
 			post.IsDeleted = true;
@@ -253,13 +253,13 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult DeleteAllSpamComments()
+		public virtual ActionResult DeleteAllSpamComments()
 		{
 			return View();
 		}
 
 		[HttpPost]
-		public ActionResult DeleteAllSpamComments(bool deleteAll)
+		public virtual ActionResult DeleteAllSpamComments(bool deleteAll)
 		{
 			var patchCommands = RavenSession.Query<PostComments>()
 				.Where(x => x.Spam.Count > 0)

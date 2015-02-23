@@ -2,14 +2,14 @@ using System.Web.Mvc;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public class SearchController : RaccoonController
+	public partial class SearchController : RaccoonController
 	{
-		public ActionResult SearchResult(string q)
+		public virtual ActionResult SearchResult(string q)
 		{
 			return View((object)q);
-		} 
-		
-		public ActionResult GoogleCse()
+		}
+
+		public virtual ActionResult GoogleCse()
 		{
 			return View();
 		}

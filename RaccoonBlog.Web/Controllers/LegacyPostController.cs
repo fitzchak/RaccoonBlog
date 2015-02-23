@@ -7,9 +7,9 @@ using System.Web.Mvc;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public class LegacyPostController : RaccoonController
+	public partial class LegacyPostController : RaccoonController
 	{
-		public ActionResult RedirectLegacyPost(int year, int month, int day, string slug)
+		public virtual ActionResult RedirectLegacyPost(int year, int month, int day, string slug)
 		{
 			// attempt to find a post with match slug in the given date, but will back off the exact date if we can't find it
 			var post = RavenSession.Query<Post>()
@@ -34,7 +34,7 @@ namespace RaccoonBlog.Web.Controllers
 			return RedirectToActionPermanent("Details", "PostDetails", new { Id = postReference.DomainId, postReference.Slug });
 		}
 
-		public ActionResult RedirectLegacyArchive(int year, int month, int day)
+		public virtual ActionResult RedirectLegacyArchive(int year, int month, int day)
 		{
 			return RedirectToActionPermanent("Archive", "Posts", new { year, month, day });
 		}

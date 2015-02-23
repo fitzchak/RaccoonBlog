@@ -18,9 +18,9 @@ namespace RaccoonBlog.Web.Controllers
     using RaccoonBlog.Web.Infrastructure.Indexes;
     using Raven.Client.Linq;
 
-    public class PostDetailsController : RaccoonController
+	public partial class PostDetailsController : RaccoonController
 	{
-		public ActionResult Details(int id, string slug, Guid key)
+		public virtual ActionResult Details(int id, string slug, Guid key)
 		{
 			var post = RavenSession
 				.Include<Post>(x => x.CommentsId)
@@ -74,7 +74,7 @@ namespace RaccoonBlog.Web.Controllers
 
         [ValidateInput(false)]
 		[HttpPost]
-		public ActionResult Comment(CommentInput input, int id, Guid key)
+		public virtual ActionResult Comment(CommentInput input, int id, Guid key)
 		{
 		    if (ModelState.IsValid)
 		    {

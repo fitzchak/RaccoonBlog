@@ -7,9 +7,9 @@ using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
-	public class UsersController : AdminController
+	public partial class UsersController : AdminController
 	{
-		public ActionResult Index()
+		public virtual ActionResult Index()
 		{
 			var users = RavenSession.Query<User>()
 				.OrderBy(u => u.FullName)
@@ -20,13 +20,13 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult Add()
+		public virtual ActionResult Add()
 		{
 			return View("Edit", new UserInput());
 		}
 
 		[HttpPost]
-		public ActionResult Add(UserInput input)
+		public virtual ActionResult Add(UserInput input)
 		{
 			if (!ModelState.IsValid)
 				return View("Edit", input);
@@ -38,7 +38,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult Edit(int id)
+		public virtual ActionResult Edit(int id)
 		{
 			var user = RavenSession.Load<User>(id);
 			if (user == null)
@@ -47,7 +47,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult Update(UserInput input)
+		public virtual ActionResult Update(UserInput input)
 		{
 			if (!ModelState.IsValid)
 				return View("Edit", input);
@@ -59,7 +59,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult ChangePassword(int id)
+		public virtual ActionResult ChangePassword(int id)
 		{
 			var user = RavenSession.Load<User>(id);
 			if (user == null)
@@ -69,7 +69,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult ChangePassword(ChangePasswordModel input)
+		public virtual ActionResult ChangePassword(ChangePasswordModel input)
 		{
 			if (!ModelState.IsValid)
 				return View("ChangePassword", input);
@@ -91,7 +91,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult SetActivation(int id, bool isActive)
+		public virtual ActionResult SetActivation(int id, bool isActive)
 		{
 			var user = RavenSession.Load<User>(id);
 			if (user == null)

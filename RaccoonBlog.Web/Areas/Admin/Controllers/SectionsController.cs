@@ -6,9 +6,9 @@ using RaccoonBlog.Web.Models;
 
 namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
-	public class SectionsController : AdminController
+	public partial class SectionsController : AdminController
 	{
-		public ActionResult Index()
+		public virtual ActionResult Index()
 		{
 			var sections = RavenSession.Query<Section>()
 				.OrderBy(x => x.Position)
@@ -18,13 +18,13 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult Add()
+		public virtual ActionResult Add()
 		{
 			return View("Edit", new Section());
 		}
 
 		[HttpGet]
-		public ActionResult Edit(string id)
+		public virtual ActionResult Edit(string id)
 		{
 			var section = RavenSession.Load<Section>(id);
 			if (section == null)
@@ -33,7 +33,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult Update(Section section)
+		public virtual ActionResult Update(Section section)
 		{
 			if (!ModelState.IsValid)
 				return View("Edit", section);
@@ -50,7 +50,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult Delete(string id)
+		public virtual ActionResult Delete(string id)
 		{
 			var section = RavenSession.Load<Section>(id);
 			if (section == null)
@@ -67,7 +67,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 
 		[AjaxOnly]
 		[HttpPost]
-		public ActionResult SetPosition(string id, int newPosition)
+		public virtual ActionResult SetPosition(string id, int newPosition)
 		{
 			var section = RavenSession.Load<Section>(id);
 			if (section == null)

@@ -10,7 +10,7 @@ using Raven.Imports.Newtonsoft.Json.Serialization;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public abstract class RaccoonController : RavenController
+	public abstract partial class RaccoonController : RavenController
 	{
 		public const int DefaultPage = 1;
 

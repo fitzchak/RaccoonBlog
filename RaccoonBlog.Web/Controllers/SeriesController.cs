@@ -10,9 +10,9 @@
     using System.Linq;
     using System.Web.Mvc;
 
-    public class SeriesController : RaccoonController
+	public partial class SeriesController : RaccoonController
     {
-        public ActionResult PostsSeries()
+		public virtual ActionResult PostsSeries()
         {
             RavenQueryStatistics stats;
             var series = RavenSession.Query<Posts_Series.Result, Posts_Series>()

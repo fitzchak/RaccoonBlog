@@ -19,9 +19,9 @@ using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public class SocialController : RaccoonController
+	public partial class SocialController : RaccoonController
 	{
-		public ActionResult Login(string url, string returnUrl)
+		public virtual ActionResult Login(string url, string returnUrl)
 		{
 			if (string.IsNullOrWhiteSpace(returnUrl))
 				returnUrl = Request.UrlReferrer != null ? Request.UrlReferrer.ToString() : Url.RouteUrl("homepage");

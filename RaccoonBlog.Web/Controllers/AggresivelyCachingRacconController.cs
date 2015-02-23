@@ -3,7 +3,7 @@ using System.Web.Mvc;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public abstract class AggresivelyCachingRacconController : RaccoonController
+	public abstract partial class AggresivelyCachingRacconController : RaccoonController
 	{
 		IDisposable aggressivelyCacheFor;
 

@@ -7,10 +7,10 @@ using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
-	public class LoginController : RaccoonController
+	public partial class LoginController : RaccoonController
 	{
 		[HttpGet]
-		public ActionResult Index(string returnUrl)
+		public virtual ActionResult Index(string returnUrl)
 		{
 			if (Request.IsAuthenticated)
 			{
@@ -21,7 +21,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult Index(LogOnModel input)
+		public virtual ActionResult Index(LogOnModel input)
 		{
 			var user = RavenSession.GetUserByEmail(input.Login);
 
@@ -52,14 +52,14 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult LogOut(string returnurl)
+		public virtual ActionResult LogOut(string returnurl)
 		{
 			FormsAuthentication.SignOut();
 			return RedirectFromLoginPage(returnurl);
 		}
 
 		[ChildActionOnly]
-		public ActionResult CurrentUser()
+		public virtual ActionResult CurrentUser()
 		{
 			if (Request.IsAuthenticated == false)
 				return View(new CurrentUserViewModel());

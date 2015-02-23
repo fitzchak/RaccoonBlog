@@ -13,10 +13,10 @@ using RaccoonBlog.Web.Infrastructure.Common;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public class SectionController : AggresivelyCachingRacconController
+	public partial class SectionController : AggresivelyCachingRacconController
     {
         [ChildActionOnly]
-        public ActionResult PostsSeries(string sectionTitle)
+		public virtual ActionResult PostsSeries(string sectionTitle)
         {
             ViewBag.SectionTitle = sectionTitle;
 
@@ -41,7 +41,7 @@ namespace RaccoonBlog.Web.Controllers
         }
 
 		[ChildActionOnly]
-		public ActionResult FuturePosts(string sectionTitle)
+		public virtual ActionResult FuturePosts(string sectionTitle)
 		{
             ViewBag.SectionTitle = sectionTitle;
 
@@ -71,7 +71,7 @@ namespace RaccoonBlog.Web.Controllers
 		}
 
 		[ChildActionOnly]
-		public ActionResult List()
+		public virtual ActionResult List()
 		{
 			if (true.Equals(HttpContext.Items["CurrentlyProcessingException"]))
 				return View(new SectionDetails[0]);
@@ -85,7 +85,7 @@ namespace RaccoonBlog.Web.Controllers
 		}
 
         [ChildActionOnly]
-	    public ActionResult ContactMe()
+		public virtual ActionResult ContactMe()
         {
 	        var user = RavenSession.GetUserByEmail(BlogConfig.OwnerEmail);
 
@@ -93,7 +93,7 @@ namespace RaccoonBlog.Web.Controllers
         }
         
 		[ChildActionOnly]
-		public ActionResult TagsList()
+		public virtual ActionResult TagsList()
 		{
 			var mostRecentTag = new DateTimeOffset(DateTimeOffset.Now.Year - 2,
 												   DateTimeOffset.Now.Month,
@@ -109,7 +109,7 @@ namespace RaccoonBlog.Web.Controllers
 		}
 
 		[ChildActionOnly]
-		public ActionResult ArchivesList()
+		public virtual ActionResult ArchivesList()
 		{
 			var now = DateTime.Now;
 
@@ -124,7 +124,7 @@ namespace RaccoonBlog.Web.Controllers
 		}
 
 		[ChildActionOnly]
-		public ActionResult PostsStatistics()
+		public virtual ActionResult PostsStatistics()
 		{
 			var statistics = RavenSession.Query<Posts_Statistics.ReduceResult, Posts_Statistics>()
 				.FirstOrDefault() ?? new Posts_Statistics.ReduceResult();
@@ -133,7 +133,7 @@ namespace RaccoonBlog.Web.Controllers
 		}
 
 		[ChildActionOnly]
-        public ActionResult RecentComments(string sectionTitle)
+		public virtual ActionResult RecentComments(string sectionTitle)
 		{
 		    ViewBag.SectionTitle = sectionTitle;
 			var commentsTuples = RavenSession.QueryForRecentComments(q => q.Take(5));
@@ -149,7 +149,7 @@ namespace RaccoonBlog.Web.Controllers
 		}
 
 		[ChildActionOnly]
-		public ActionResult AdministrationPanel()
+		public virtual ActionResult AdministrationPanel()
 		{
 			var user = RavenSession.GetCurrentUser();
 
