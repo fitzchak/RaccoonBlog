@@ -105,7 +105,11 @@
 				@RenderBody()
 			</div>
 			<section class="rightSide col-sm-8 col-sm-offset-4 col-md-3 col-md-offset-0 col-lg-2">
-				@{Html.RenderAction("List", "Section");}
+				@if (HttpContext.Current.Request.IsAuthenticated)
+				{
+					@Html.Action(MVC.Section.ActionNames.AdministrationPanel, MVC.Section.Name)
+				}
+				@{Html.RenderAction(MVC.Section.ActionNames.List, MVC.Section.Name);}
 			</section>
 		</div>
 	</div>

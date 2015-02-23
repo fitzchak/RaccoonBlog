@@ -71,6 +71,7 @@ namespace RaccoonBlog.Web.Controllers
 		}
 
 		[ChildActionOnly]
+		[OutputCache(Duration = 360)]
 		public virtual ActionResult List()
 		{
 			if (true.Equals(HttpContext.Items["CurrentlyProcessingException"]))
@@ -85,6 +86,7 @@ namespace RaccoonBlog.Web.Controllers
 		}
 
         [ChildActionOnly]
+		[OutputCache(Duration = 3600)]
 		public virtual ActionResult ContactMe()
         {
 	        var user = RavenSession.GetUserByEmail(BlogConfig.OwnerEmail);
@@ -93,6 +95,7 @@ namespace RaccoonBlog.Web.Controllers
         }
         
 		[ChildActionOnly]
+		[OutputCache(Duration = 3600)]
 		public virtual ActionResult TagsList()
 		{
 			var mostRecentTag = new DateTimeOffset(DateTimeOffset.Now.Year - 2,
@@ -109,6 +112,7 @@ namespace RaccoonBlog.Web.Controllers
 		}
 
 		[ChildActionOnly]
+		[OutputCache(Duration = 3600)]
 		public virtual ActionResult ArchivesList()
 		{
 			var now = DateTime.Now;
@@ -124,6 +128,7 @@ namespace RaccoonBlog.Web.Controllers
 		}
 
 		[ChildActionOnly]
+		[OutputCache(Duration = 360)]
 		public virtual ActionResult PostsStatistics()
 		{
 			var statistics = RavenSession.Query<Posts_Statistics.ReduceResult, Posts_Statistics>()
