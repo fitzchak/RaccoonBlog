@@ -31,11 +31,6 @@ namespace RaccoonBlog.Web
 				.Add(new ScriptBundle("~/Content/js/jquery", "https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
 				.Include("~/Content/js/jquery-1.11.2.js"));
 
-            bundles
-                .Add(new ScriptBundle("~/Content/js/jquery-validate")
-                .Include("~/Content/js/jquery.validate.js")
-                .Include("~/Content/js/jquery.validate.unobtrusive.js"));
-
 			bundles
 				.Add(new ScriptBundle("~/Content/js/jquery-migrate", "http://code.jquery.com/jquery-migrate-1.2.1.min.js")
 				.Include("~/Content/js/jquery-migrate-1.2.1.js"));
@@ -49,7 +44,11 @@ namespace RaccoonBlog.Web
 				.Include("~/Content/js/jquery.ae.image.resize.min.js")
 				.Include("~/Content/js/raccoon-blog.js")
                 .Include("~/Content/js/setup.js")
-				.Include("~/Content/js/jquery.twbsPagination.js"));
+				.Include("~/Content/js/jquery.twbsPagination.js")
+				.Include("~/Content/js/jquery.validate.js")
+				.Include("~/Content/js/jquery.validate.unobtrusive.js")
+				.Include("~/Content/js/jquery.openid.js")
+				.Include("~/Content/js/openid-en.js"));
 
 			var adminBundle = new Bundle(AdminThemeDirectory + "admin", new ThemeLessTransform())
 				.Include("~/Content/css/bootstrap/normalize.less")
@@ -65,8 +64,9 @@ namespace RaccoonBlog.Web
 			bundles.Add(adminBundle);
 
 			bundles
-				.Add((new StyleBundle("~/Content/css/socicon"))
-				.Include("~/Content/css/socicon.css"));
+				.Add((new StyleBundle("~/Content/css/styles"))
+				.Include("~/Content/css/socicon.css")
+				.Include("~/Content/css/openid/openid.css"));
 		}
 
 		public static void RegisterThemeBundles(HttpContext context, BundleCollection bundles)

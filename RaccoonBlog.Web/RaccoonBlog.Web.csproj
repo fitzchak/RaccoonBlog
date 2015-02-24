@@ -93,6 +93,9 @@
       <HintPath>..\packages\DotNetOpenAuth.InfoCard.UI.4.3.4.13329\lib\net45-full\DotNetOpenAuth.InfoCard.UI.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="DotNetOpenAuth.Mvc5">
+      <HintPath>..\packages\DotNetOpenAuth.Mvc5.4.3.4.13329\lib\net45-full\DotNetOpenAuth.Mvc5.dll</HintPath>
+    </Reference>
     <Reference Include="DotNetOpenAuth.OAuth">
       <HintPath>..\packages\DotNetOpenAuth.OAuth.Core.4.3.4.13329\lib\net45-full\DotNetOpenAuth.OAuth.dll</HintPath>
       <Private>True</Private>
@@ -260,6 +263,9 @@
     <Reference Include="System.Configuration" />
     <Reference Include="T4MVCExtensions">
       <HintPath>..\packages\T4MVCExtensions.3.14.0\lib\net40\T4MVCExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Validation">
+      <HintPath>..\packages\Validation.2.0.2.13022\lib\portable-windows8+net40+sl5+windowsphone8\Validation.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -432,6 +438,7 @@
     <Content Include="Content\css\img\search-icon.svg" />
     <Content Include="Content\css\img\side_bkg.jpg" />
     <Content Include="Content\css\img\side_bkg.png" />
+    <Content Include="Content\css\openid\openid.css" />
     <Content Include="Content\css\prism.css" />
     <Content Include="Content\css\socicon.css" />
     <Content Include="Content\css\styles.css">
@@ -1080,9 +1087,7 @@
     <Content Include="Views\Section\PostsSeries.cshtml" />
     <Content Include="Views\Series\PostsSeries.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Content\css\openid\images\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Views\PostDetails\Details.cshtml" />
   </ItemGroup>

@@ -137,7 +137,7 @@ namespace RaccoonBlog.Web.Controllers
 						FullName = DemandLevel.Require,
 						Nickname = DemandLevel.Require,
 					});
-					return request.RedirectingResponse.AsActionResult();
+					return request.RedirectingResponse.AsActionResultMvc5();
 				}
 			}
 			catch (ProtocolException ex)
