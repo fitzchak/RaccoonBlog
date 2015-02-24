@@ -116,8 +116,6 @@
 	<hr />
 </article>
 
-
-
 <section class="comments">
 	<a name="comments"></a>
 	<h2>Comments</h2>
@@ -128,13 +126,17 @@
 		{
 			<article class="comment important">
 				<a name='@(string.Format("comment{0}", (comment.i+1)))'></a>
-				<div class="avatar"><img src='@(string.Format("http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon", @comment.value.EmailHash))' alt="@comment.value.Author" /></div>
-				<div class="postedBy"><a target="_blank" title='@(string.Format("Comment by {0}", @comment.value.Author))'>@comment.value.Author</a></div>
+				<div class="avatar">
+					<img src='@(string.Format("http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon", @comment.value.EmailHash))' alt="@comment.value.Author"/>
+				</div>
+				<div class="postedBy">
+					<a href="@comment.value.Url" target="_blank" title='@(string.Format("Comment by {0}", @comment.value.Author))'>@comment.value.Author</a>
+				</div>
 				<time>
 					@DateTime.Parse(@comment.value.CreatedAt).ToString("dd MMM yyyy")<br />
 					@DateTime.Parse(@comment.value.CreatedAt).ToString("HH:mm tt")
 				</time>
-				<div class="comment-body raw_html">
+				<div class="comment-body">
 					@comment.value.Body
 				</div>
 			</article>
@@ -143,22 +145,22 @@
 		{
 			<article class="comment">
 				<a name='@(string.Format("comment{0}", (comment.i+1)))'></a>
-				<div class="avatar"><img src='@(string.Format("http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon", @comment.value.EmailHash))' alt="@comment.value.Author" /></div>
+				<div class="avatar">
+					<img src='@(string.Format("http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon", @comment.value.EmailHash))' alt="@comment.value.Author"/>
+				</div>
 				<time>
 					@DateTime.Parse(@comment.value.CreatedAt).ToString("dd MMM yyyy")<br />
 					@DateTime.Parse(@comment.value.CreatedAt).ToString("HH:mm tt")
 				</time>
-				<div class="postedBy"><a target="_blank" title='@(string.Format("Comment by {0}", @comment.value.Author))'>@comment.value.Author</a></div>
-				<div class="comment-body raw_html">
+				<div class="postedBy">
+					<a href="@comment.value.Url" target="_blank" title='@(string.Format("Comment by {0}", @comment.value.Author))'>@comment.value.Author</a>
+				</div>
+				<div class="comment-body">
 					@comment.value.Body
 				</div>
 			</article>
 		}
 	}
-
-	<div class="messageWrapper">
-		<div id="message" style="visibility:hidden"></div>
-	</div>
 
 	<article id="postComment">
 		@if (Model.Post.IsCommentAllowed == false || Model.AreCommentsClosed)
