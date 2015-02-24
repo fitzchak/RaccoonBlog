@@ -192,46 +192,56 @@
 						<div class="form_item form-group col-sm-12 col-md-4">
 
 							<div class="input-group">
-								<label class="input-group-addon"> <span class="form_item_name">Name</span></label>
-								<input data-val="true" data-val-required="The Name field is required." id="Input_Name" class="form-control" name="Input.Name" type="text">
-								<span class="field-validation-valid" data-valmsg-for="Input.Name" data-valmsg-replace="true"></span>
+								<label class="input-group-addon">
+									<span class="form_item_name">Name</span>
+								</label>
+								@Html.TextBoxFor(x => x.Input.Name, new { @class = "form-control" })
+								@Html.ValidationMessageFor(x => x.Input.Name)
 							</div>
 						</div>
 						<div class="form_item form-group col-sm-6 col-md-4">
 							<div class="input-group">
-								<label class="input-group-addon"> <span class="form_item_name">Email</span></label>
-								<input class="email form-control" data-val="true" data-val-email="The Email field is not a valid e-mail address." data-val-required="The Email field is required." id="Input_Email" name="Input.Email" type="email" value="">
-								<span class="field-validation-valid" data-valmsg-for="Input.Email" data-valmsg-replace="true"></span>
+								<label class="input-group-addon">
+									<span class="form_item_name">Email</span>
+								</label>
+								@Html.TextBoxFor(x => x.Input.Email, new { @class = "form-control email", type = "email" })
+								@Html.ValidationMessageFor(x => x.Input.Email)
 							</div>
 						</div>
 						<div class="form_item form-group col-sm-6 col-md-4">
 							<div class="input-group">
-								<label class="input-group-addon"> <span class="form_item_name">Url</span> </label>
-								<input id="Input_Url" class="form-control" name="Input.Url" type="text" value="">
-								<span class="field-validation-valid" data-valmsg-for="Input.Url" data-valmsg-replace="true"></span>
+								<label class="input-group-addon">
+									<span class="form_item_name">Url</span>
+								</label>
+								@Html.TextBoxFor(x => x.Input.Url, new { @class = "form-control" })
+								@Html.ValidationMessageFor(x => x.Input.Url)
 							</div>
 						</div>
 						<div class="form_item form-group col-sm-12">
 							<div class="input-group">
-								<label class="input-group-addon"> <span class="form_item_name">Comments</span></label>
-								<textarea data-val="true" data-val-required="The Comments field is required." id="Input_Body" class="form-control" name="Input.Body" rows="9"></textarea>
-								<span class="field-validation-valid" data-valmsg-for="Input.Body" data-valmsg-replace="true"></span>
+								<label class="input-group-addon">
+									<span class="form_item_name">Comments</span>
+								</label>
+								@Html.TextAreaFor(x => x.Input.Body, new { rows = 9, @class = "form-control" })
+								@Html.ValidationMessageFor(x => x.Input.Body)
 							</div>
 						</div>
 						@if (Model.IsTrustedCommenter == false)
 						{
-							<div class="form_item">
-								<label>
-									<span class="form_item_name">Are you human?</span>
+							<div class="form_item form-group col-sm-12">
+								<div class="input-group">
+									<label class="input-group-addon">
+										<span class="form_item_name">Human?</span>
+									</label>
 									@Html.GenerateCaptcha()
 									@Html.ValidationMessage("CaptchaNotValid")
-								</label>
+								</div>
 							</div>
 						}
 					</div>
-					<input id="Input_CommenterKey" name="Input.CommenterKey" type="hidden" value="">
+					@Html.HiddenFor(x => x.Input.CommenterKey)
 					<input type="submit" value="Post Comment" class="btn btn-primary pull-right">
-					<div class="clr"></div>
+					<div class="clearfix"></div>
 				}
 			</div>
 		}
@@ -241,7 +251,7 @@
 	<link rel="canonical" href="@Url.AbsoluteAction("Details", new { Model.Post.Id, Model.Post.Slug })">
 }
 @section Script {
-	<script>
+	<script type="text/javascript">
 		window.twttr = (function (d, s, id) {
 			var js, fjs = d.getElementsByTagName(s)[0], t = window.twttr || {};
 			if (d.getElementById(id)) return;
