@@ -72,26 +72,27 @@
 			</div>
 			<div id="content" class="centerCol col-sm-8 col-sm-offset-4 col-md-offset-3 col-md-6 col-lg-7">
 				<header>
-					<div class="search">
-						@using (Html.BeginForm("SearchResult", "Search"))
-						{
-							<input name="q" type="search" placeholder="search" class="form-control" />
-							<input type="submit" />
-						}
-					</div>
-					@if (Html.IsSectionActive("Tags"))
-					{
-						<a href="#" id="tags-button">
-							<span class="glyphicon glyphicon-tags" aria-hidden="true"></span> filter by tags
-						</a>
-					}
-					@if (Html.IsSectionActive("Archive"))
-					{
-						<a href="#" id="archive-button">
-							<span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> archive
-						</a>
-					}
-                    
+				    <div class="search">
+				        @using (Html.BeginForm("SearchResult", "Search"))
+				        {
+				            <input name="q" type="search" placeholder="search" class="form-control" />
+				            <input type="submit" />
+				        }
+				    </div>
+                    <div style="display:inline-block">
+                        @if (Html.IsSectionActive("Tags"))
+                        {
+                            <a href="#" id="tags-button">
+                                <span class="glyphicon glyphicon-tags" aria-hidden="true"></span> filter by tags
+                            </a>
+                        }
+                        @if (Html.IsSectionActive("Archive"))
+                        {
+                            <a href="#" id="archive-button">
+                                <span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> archive
+                            </a>
+                        }
+                    </div>
                     <nav class="pull-right views @(ViewBag.ChangeViewStyle == null ? "hide" : "")">
                         <a href="#" class="stackView" id="stackView">stack view</a>
                         <a href="#" class="gridView active" id="gridView">grid view</a>
