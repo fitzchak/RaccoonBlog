@@ -2,11 +2,14 @@
 
 namespace RaccoonBlog.Web.Areas.Admin.Models
 {
-	public class MenuItem
+    using RaccoonBlog.Web.Areas.Admin.Enums;
+
+    public class MenuItem
 	{
 		public string Title { get; set; }
 		public string Url { get; set; }
 		public bool IsCurrent { get; set; }
+	    public MenuButtonType Type { get; set; }
 		public IList<MenuItem> SubMenus { get; set; }
 	}
 }

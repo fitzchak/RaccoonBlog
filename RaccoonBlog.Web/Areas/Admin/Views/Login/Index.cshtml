@@ -1,85 +1,57 @@
 ﻿@using HibernatingRhinos.Loci.Common.Models
 @model LogOnModel
 @{
-	Layout = null;
+    Layout = null;
 }
-<!DOCTYPE html>
-<html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta charset="utf-8">
-	<title>RaccoonBlog :: Login</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="theme-color" content="#FFF" />
+    <meta name="msapplication-tap-highlight" content="no" />
 
-	@Html.RenderAdminTheme()
+    <title>RaccoonBlog :: Login</title>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" type="text/javascript"></script>
-	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700&subset=latin,latin-ext' rel='stylesheet' type='text/css' />
+    @Html.RenderAdminTheme()
+    <!--[if IE 8]>
+    @Scripts.Render("~/Content/js/respond")
+    <![endif]-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" type="text/javascript"></script>
 </head>
-<body id="login-bg">
-	<div id="login-holder">
-		<div id="logo-login">
-			<a href="@Url.RouteUrl("homepage")"><img src="@Url.Content("~/Content/css/images/logo-admin.png")" width="51" height="50" alt="Logo"></a>
-		</div>
-		<div class="clear">
-		</div>
-		<div id="loginbox">
-			@if (ViewData.ModelState.IsValid == false)
-			{
-				<div class="form-error">
-					@Html.ValidationSummary(true)
-				</div>
-			}
-			<article id="user-input" style="width: 350px">
-				<form action="@Url.Action("Index")" method="post">
-					<div style="width: 350px; height: 200px">
-						<div style="float: left; padding-left: 17px; font-size: 16px" class="login-form">
-							<div id="id-form" style="top: 0;">
-								@Html.EditorFor(x => x.Login)
-								@Html.EditorFor(x => x.Password)
-								@Html.EditorFor(x => x.RememberMe)
-								@Html.HiddenFor(x => x.ReturnUrl)
-								<div style="float: right; width: 600px">
-									<input style="width: 180px" type="submit" value="Login">
-								</div>
-							</div>
-							<div class="clear"></div>
-						</div>
-					</div>
-				</form>
-				<div id="forgotbox">
-					<div id="forgotbox-text">
-						Please send us your email and we'll reset your password.
-					</div>
-					<div id="content-table-inner" class="inputform">
-						<div id="id-form" style="top: 0;">
-							@Html.EditorFor(x => x.Login)
-							@Html.EditorFor(x => x.Password)
-							<div>
-								<input type="submit" value="Login">
-							</div>
-						</div>
-						<div class="clear"></div>
-					</div>
-				</div>
-			</article>
-			<div class="clear">
-				&nbsp;
-			</div>
-			@section Script {
-				<script type="text/javascript" src="@Url.Content("~/Content/js/showdown.js")"> </script>
-				<script type="text/javascript">
-					$(function () {
-						var $textarea = $('textarea[name$="Body"]').keydown(function () {
-							$('.markdown-preview-container').show('medium');
-						});
-						var $preview = $('.markdown-preview');
-						var converter = new Showdown.converter();
-						$textarea.keyup(function () {
-							$preview.html(converter.makeHtml($textarea.val()));
-						}).trigger('keyup');
-					});
-				</script>
-			}
-		</div>
-	</div>
+<body id="login">
+    <div class="center">
+        <header>
+            <div class="logo">Racoon blog</div>
+        </header>
+        @using (Html.BeginForm("Index"))
+        {
+            @Html.HiddenFor(x => x.ReturnUrl)
+            
+            <div class="form-group">
+                @Html.LabelFor(x => x.Login)
+                @Html.TextBoxFor(x => x.Login, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Password)
+                @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
+            </div>
+            <div class="checkbox">
+                <label>
+                    @Html.CheckBoxFor(x => x.RememberMe)
+                    Remember me
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        }
+    </div>
+    
+    <footer>
+        <span class="small">Footer copyrights, things and stuff.</span>
+    </footer>
+    
+    @Scripts.Render("~/Admin/Content/js/setup")
 </body>
 </html>

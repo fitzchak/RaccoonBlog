@@ -8,43 +8,31 @@
 		@Html.ValidationSummary(true)
 	</div>
 }
-<article id="user-input">
-	<div id="page-heading">
-		<h1>Settings</h1>
-	</div>
-	@using (Html.BeginForm())
-	{
-		<div>
-			<div id="content-table-inner" class="inputform">
-				<div id="id-form" style="top: 0;">
-					@Html.EditorFor(config => config.Title)
-					@Html.EditorFor(config => config.Subtitle)
-					@Html.EditorFor(config => config.OwnerEmail)
-					@Html.EditorFor(config => config.TwitterLogin)
-					@Html.EditorFor(config => config.FacebookLogin)
-					@Html.EditorFor(config => config.GoogleLogin)
-					@Html.EditorFor(config => config.GithubLogin)
-					@Html.EditorFor(config => config.RssLogin)
+<h3>Settings</h3>
+<hr />
+@using (Html.BeginForm("Index", "Settings", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.EditorFor(x => x.Title, "TextLong")
+    @Html.EditorFor(x => x.Subtitle, "TextLong")
+    @Html.EditorFor(x => x.OwnerEmail, "EmailAddress")
+    @Html.EditorFor(x => x.TwitterLogin, "TextLong")
+    @Html.EditorFor(x => x.FacebookLogin, "TextLong")
+    @Html.EditorFor(x => x.GoogleLogin, "TextLong")
+    @Html.EditorFor(x => x.GithubLogin, "TextLong")
+    @Html.EditorFor(x => x.RssLogin, "TextLong")
+    @Html.EditorFor(x => x.MetaDescription, "TextLong")
+    @Html.EditorFor(x => x.Copyright, "TextLong")
+    @Html.EditorFor(x => x.CustomCss, "TextLong")
+    @Html.EditorFor(x => x.AkismetKey, "TextLong")
+    @Html.EditorFor(x => x.GoogleAnalyticsKey, "TextLong")
+    @Html.EditorFor(x => x.FuturePostsEncryptionKey, "TextLong")
+    @Html.EditorFor(x => x.MinNumberOfPostForSignificantTag)
+    @Html.EditorFor(x => x.NumberOfDayToCloseComments)
+    @Html.EditorFor(x => x.PostsOnPage)
 
-					@Html.EditorFor(config => config.MetaDescription)
-					@Html.EditorFor(config => config.Copyright)
-					@Html.EditorFor(config => config.CustomCss)
-
-					@Html.EditorFor(config => config.AkismetKey)
-					@Html.EditorFor(config => config.GoogleAnalyticsKey)
-					@Html.EditorFor(config => config.FuturePostsEncryptionKey)
-
-					@Html.EditorFor(config => config.MinNumberOfPostForSignificantTag)
-					@Html.EditorFor(config => config.NumberOfDayToCloseComments)
-					
-					@Html.EditorFor(config => config.PostsOnPage)
-
-					@Html.EditorFor(config => config.Id)
-					<div><input type="submit" value="Save" /></div>
-				</div>
-				<div class="clear"></div>
-			</div>
-		</div>
-	}
-</article>
-<div class="clear"></div>
+    <div class="form-group">
+        <div class="col-sm-12">
+            <button type="submit" class="btn btn-primary pull-right">save</button>
+        </div>
+    </div>
+}

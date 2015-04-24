@@ -39,6 +39,10 @@ namespace RaccoonBlog.Web
 				.Add(new ScriptBundle("~/Content/js/bootstrap", "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js")
 				.Include("~/Content/js/bootstrap.js"));
 
+            bundles
+                .Add(new ScriptBundle("~/Admin/Content/js/bootstrap")
+                .Include("~/Areas/Admin/Content/js/bootstrap.js"));
+
 			bundles
 				.Add(new ScriptBundle("~/Content/js/main")
 				.Include("~/Content/js/jquery.ae.image.resize.min.js")
@@ -50,23 +54,35 @@ namespace RaccoonBlog.Web
 				.Include("~/Content/js/jquery.openid.js")
 				.Include("~/Content/js/openid-en.js"));
 
-			var adminBundle = new Bundle(AdminThemeDirectory + "admin", new ThemeLessTransform())
-				.Include("~/Content/css/bootstrap/normalize.less")
-				.Include("~/Areas/Admin/Content/css/admin.settings.less")
-				.Include("~/Areas/Admin/Content/css/admin.base.less")
-				.Include("~/Areas/Admin/Content/css/admin.site.less")
-				.Include("~/Areas/Admin/Content/css/AdminStyle.css");
+            bundles
+                .Add(new ScriptBundle("~/Content/js/respond")
+                .Include("~/Content/js/respond.src.js"));
+
+            bundles
+                .Add(new ScriptBundle("~/Admin/Content/js/setup")
+                .Include("~/Areas/Admin/Content/js/setup.js"));
+
+            bundles
+                .Add(new ScriptBundle("~/Content/js/fullcalendar")
+                .Include("~/Content/js/moment.js")
+                .Include("~/Areas/Admin/Content/js/fullcalendar.js"));
+
+            bundles
+                .Add(new ScriptBundle("~/Admin/Content/tinymce")
+                .Include("~/Areas/Admin/Content/js/tinymce/tinymce.min.js"));
 
 #if !DEBUG
 			adminBundle.Transforms.Add(new CssMinify());
 #endif
 
-			bundles.Add(adminBundle);
-
 			bundles
 				.Add((new StyleBundle("~/Content/css/styles"))
 				.Include("~/Content/css/socicon.css")
 				.Include("~/Content/css/openid/openid.css"));
+
+            bundles
+                .Add(new StyleBundle("~/Admin/Content/css/fullcalendar")
+                .Include("~/Areas/Admin/Content/css/fullcalendar.css"));
 		}
 
 		public static void RegisterThemeBundles(HttpContext context, BundleCollection bundles)
@@ -82,31 +98,42 @@ namespace RaccoonBlog.Web
 				if (themeBundlesRegistered)
 					return;
 
-				foreach (var bundle in CreateThemeBundles(context))
+                foreach (var bundle in CreateThemeBundles(context, ThemeDirectory))
+                    bundles.Add(bundle);
+
+                foreach (var bundle in CreateThemeBundles(context, AdminThemeDirectory))
 					bundles.Add(bundle);
 
 				themeBundlesRegistered = true;
 			}
 		}
 
-		private static IEnumerable<Bundle> CreateThemeBundles(HttpContext context)
+		private static IEnumerable<Bundle> CreateThemeBundles(HttpContext context, string themeDirectory)
 		{
-			var themePath = context.Server.MapPath(ThemeDirectory);
+            var themePath = context.Server.MapPath(themeDirectory);
 			if (Directory.Exists(themePath) == false)
 				yield break;
 
 			foreach (var file in Directory.GetFiles(themePath, "*" + ThemeVariablesExtension).Select(x => new FileInfo(x)))
 			{
 				var themeName = file.Name.Substring(0, file.Name.IndexOf(ThemeVariablesExtension, StringComparison.OrdinalIgnoreCase));
-				var themeBundleName = (ThemeDirectory + themeName).ToLowerInvariant();
+                var themeBundleName = (themeDirectory + themeName).ToLowerInvariant();
 				var bundle = new Bundle(themeBundleName, new ThemeLessTransform())
-				.Include(ThemeDirectory + file.Name)
-				.Include("~/Content/css/bootstrap/bootstrap.custom.less")
-				.Include("~/Content/css/styles.less");
+                .Include(themeDirectory + file.Name)
+				.Include("~/Content/css/bootstrap/bootstrap.custom.less");
+
+			    if (themeDirectory.Equals(ThemeDirectory))
+			    {
+			        bundle.Include("~/Content/css/styles.less");
+			    }
+                else if (themeDirectory.Equals(AdminThemeDirectory))
+			    {
+			        bundle.Include("~/Areas/Admin/Content/css/bootstrap/bootstrap-extend.less");
+			    }
 
 				var stylesFile = themeName + ThemeStylesExtension;
 				if (File.Exists(themePath + stylesFile))
-					bundle.Include(ThemeDirectory + stylesFile);
+                    bundle.Include(themeDirectory + stylesFile);
 
 #if !DEBUG
 				bundle.Transforms.Add(new CssMinify());

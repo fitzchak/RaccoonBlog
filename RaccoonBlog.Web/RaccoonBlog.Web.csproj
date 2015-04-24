@@ -295,6 +295,7 @@
     <Compile Include="App_Start\CommonSetup.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="Areas\Admin\Enums\MenuButtonType.cs" />
     <Compile Include="Controllers\SeriesController.cs" />
     <Compile Include="CssController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -353,55 +354,143 @@
     <Compile Include="WelcomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Content Include="Areas\Admin\Content\css\images\nav_logout.gif" />
-    <Content Include="Areas\Admin\Content\css\AdminStyle.css" />
-    <Content Include="Areas\Admin\Content\images\forms\bg_related_act.gif" />
-    <Content Include="Areas\Admin\Content\images\forms\bubble_inner.gif" />
-    <Content Include="Areas\Admin\Content\images\forms\bubble_left.gif" />
-    <Content Include="Areas\Admin\Content\images\forms\bubble_right.gif" />
-    <Content Include="Areas\Admin\Content\images\forms\choose-file.gif" />
-    <Content Include="Areas\Admin\Content\images\forms\error_left.gif" />
-    <Content Include="Areas\Admin\Content\images\forms\error_right.gif" />
-    <Content Include="Areas\Admin\Content\images\forms\form_inp.gif" />
-    <Content Include="Areas\Admin\Content\images\forms\form_inp_error.gif" />
-    <Content Include="Areas\Admin\Content\images\forms\form_reset.gif" />
-    <Content Include="Areas\Admin\Content\images\forms\form_select.gif" />
-    <Content Include="Areas\Admin\Content\images\forms\form_select_small.gif" />
-    <Content Include="Areas\Admin\Content\images\forms\form_submit.gif" />
-    <Content Include="Areas\Admin\Content\images\forms\form_textarea.gif" />
-    <Content Include="Areas\Admin\Content\images\forms\header_related_act.gif" />
-    <Content Include="Areas\Admin\Content\images\forms\icon_calendar.jpg" />
-    <Content Include="Areas\Admin\Content\images\forms\icon_edit.gif" />
-    <Content Include="Areas\Admin\Content\images\forms\icon_list_arrow.gif" />
-    <Content Include="Areas\Admin\Content\images\forms\icon_minus.gif" />
-    <Content Include="Areas\Admin\Content\images\forms\icon_plus.gif" />
-    <Content Include="Areas\Admin\Content\images\forms\lines_dotted_short.gif" />
-    <Content Include="Areas\Admin\Content\images\forms\step_1.gif" />
-    <Content Include="Areas\Admin\Content\images\forms\step_dark_left.gif" />
-    <Content Include="Areas\Admin\Content\images\forms\step_dark_right.gif" />
-    <Content Include="Areas\Admin\Content\images\forms\step_dark_round.gif" />
-    <Content Include="Areas\Admin\Content\images\forms\step_light_left.gif" />
-    <Content Include="Areas\Admin\Content\images\forms\step_light_right.gif" />
-    <Content Include="Areas\Admin\Content\images\forms\step_light_round.gif" />
-    <Content Include="Areas\Admin\Content\images\forms\upload_file.gif" />
-    <Content Include="Areas\Admin\Content\images\login\icon_back_login.gif" />
-    <Content Include="Areas\Admin\Content\images\login\inp_login.gif" />
-    <Content Include="Areas\Admin\Content\images\login\loginbox_bg.png" />
-    <Content Include="Areas\Admin\Content\images\login\login_bg.jpg" />
-    <Content Include="Areas\Admin\Content\images\login\submit_login.gif" />
-    <Content Include="Areas\Admin\Content\images\shared\blank.gif" />
-    <Content Include="Areas\Admin\Content\images\shared\border_bit.jpg" />
-    <Content Include="Areas\Admin\Content\images\shared\cal_th_repeat.jpg" />
-    <Content Include="Areas\Admin\Content\images\shared\cal_top_bg.jpg" />
-    <Content Include="Areas\Admin\Content\images\shared\cal_top_repeat.jpg" />
-    <Content Include="Areas\Admin\Content\css\images\content_repeat.jpg" />
-    <Content Include="Areas\Admin\Content\images\shared\corner_bottom_left.jpg" />
-    <Content Include="Areas\Admin\Content\images\shared\corner_bottom_right.jpg" />
-    <Content Include="Areas\Admin\Content\images\shared\corner_top_left.jpg" />
-    <Content Include="Areas\Admin\Content\images\shared\corner_top_right.jpg" />
-    <Content Include="Areas\Admin\Content\images\shared\icon_idlogo.jpg" />
-    <Content Include="Areas\Admin\Content\css\admin.site.less" />
-    <Content Include="Areas\Admin\Content\css\admin.settings.less" />
+    <Content Include="Areas\Admin\Content\css\bootstrap\bootstrap-extend.css">
+      <DependentUpon>bootstrap-extend.less</DependentUpon>
+    </Content>
+    <Content Include="Areas\Admin\Content\css\bootstrap\bootstrap-extend.min.css">
+      <DependentUpon>bootstrap-extend.css</DependentUpon>
+    </Content>
+    <Content Include="Areas\Admin\Content\css\fullcalendar.css" />
+    <Content Include="Areas\Admin\Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Areas\Admin\Content\img\logo.svg" />
+    <Content Include="Areas\Admin\Content\js\bootstrap.js" />
+    <Content Include="Areas\Admin\Content\js\fullcalendar.js" />
+    <Content Include="Areas\Admin\Content\js\setup.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\changelog.txt" />
+    <Content Include="Areas\Admin\Content\js\tinymce\langs\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\license.txt" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\advlist\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\advlist\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\anchor\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\anchor\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\autolink\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\autolink\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\autoresize\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\autoresize\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\autosave\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\autosave\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\bbcode\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\bbcode\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\charmap\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\charmap\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\code\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\code\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\colorpicker\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\colorpicker\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\contextmenu\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\contextmenu\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\directionality\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\directionality\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\emoticons\img\smiley-cool.gif" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\emoticons\img\smiley-cry.gif" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\emoticons\img\smiley-embarassed.gif" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\emoticons\img\smiley-foot-in-mouth.gif" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\emoticons\img\smiley-frown.gif" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\emoticons\img\smiley-innocent.gif" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\emoticons\img\smiley-kiss.gif" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\emoticons\img\smiley-laughing.gif" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\emoticons\img\smiley-money-mouth.gif" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\emoticons\img\smiley-sealed.gif" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\emoticons\img\smiley-smile.gif" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\emoticons\img\smiley-surprised.gif" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\emoticons\img\smiley-tongue-out.gif" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\emoticons\img\smiley-undecided.gif" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\emoticons\img\smiley-wink.gif" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\emoticons\img\smiley-yell.gif" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\emoticons\img\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\emoticons\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\emoticons\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\example\dialog.html" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\example\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\example\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\example_dependency\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\example_dependency\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\fullpage\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\fullpage\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\fullscreen\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\fullscreen\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\hr\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\hr\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\image\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\image\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\importcss\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\importcss\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\insertdatetime\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\insertdatetime\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\layer\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\layer\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\legacyoutput\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\legacyoutput\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\link\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\link\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\lists\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\lists\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\media\moxieplayer.swf" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\media\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\media\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\nonbreaking\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\nonbreaking\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\noneditable\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\noneditable\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\pagebreak\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\pagebreak\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\paste\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\paste\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\preview\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\preview\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\print\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\print\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\save\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\save\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\searchreplace\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\searchreplace\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\spellchecker\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\spellchecker\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\tabfocus\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\tabfocus\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\table\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\table\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\template\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\template\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\textcolor\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\textcolor\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\textpattern\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\textpattern\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\visualblocks\css\visualblocks.css" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\visualblocks\css\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\visualblocks\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\visualblocks\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\visualchars\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\visualchars\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\wordcount\plugin.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\plugins\wordcount\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\skins\lightgray\content.inline.min.css" />
+    <Content Include="Areas\Admin\Content\js\tinymce\skins\lightgray\content.min.css" />
+    <Content Include="Areas\Admin\Content\js\tinymce\skins\lightgray\fonts\tinymce-small.svg" />
+    <Content Include="Areas\Admin\Content\js\tinymce\skins\lightgray\fonts\tinymce.svg" />
+    <Content Include="Areas\Admin\Content\js\tinymce\skins\lightgray\fonts\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\skins\lightgray\img\anchor.gif" />
+    <Content Include="Areas\Admin\Content\js\tinymce\skins\lightgray\img\loader.gif" />
+    <Content Include="Areas\Admin\Content\js\tinymce\skins\lightgray\img\object.gif" />
+    <Content Include="Areas\Admin\Content\js\tinymce\skins\lightgray\img\trans.gif" />
+    <Content Include="Areas\Admin\Content\js\tinymce\skins\lightgray\img\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\skins\lightgray\skin.ie7.min.css" />
+    <Content Include="Areas\Admin\Content\js\tinymce\skins\lightgray\skin.min.css" />
+    <Content Include="Areas\Admin\Content\js\tinymce\skins\lightgray\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\themes\modern\theme.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\themes\modern\_notes\dwsync.xml" />
+    <Content Include="Areas\Admin\Content\js\tinymce\tinymce.min.js" />
+    <Content Include="Areas\Admin\Content\js\tinymce\_notes\dwsync.xml" />
     <Content Include="Content\css\anytime.css" />
     <Content Include="Content\css\bootstrap\bootstrap.css">
       <DependentUpon>bootstrap.less</DependentUpon>
@@ -469,45 +558,6 @@
     <Content Include="Content\css\anytime.min.css" />
     <Content Include="Content\js\anytime.min.js" />
     <Content Include="Content\css\images\logo-admin.png" />
-    <Content Include="Areas\Admin\Content\css\images\nav_divider.jpg" />
-    <Content Include="Areas\Admin\Content\css\images\nav_item_0.gif" />
-    <Content Include="Areas\Admin\Content\css\images\nav_item_1.gif" />
-    <Content Include="Areas\Admin\Content\images\shared\side_shadowleft.jpg" />
-    <Content Include="Areas\Admin\Content\images\shared\side_shadowright.jpg" />
-    <Content Include="Areas\Admin\Content\images\shared\top_search_btn.gif" />
-    <Content Include="Areas\Admin\Content\images\shared\top_search_inp.gif" />
-    <Content Include="Areas\Admin\Content\images\shared\top_search_select.gif" />
-    <Content Include="Areas\Admin\Content\images\shared\year_next.gif" />
-    <Content Include="Areas\Admin\Content\images\shared\year_prev.gif" />
-    <Content Include="Areas\Admin\Content\images\table\actions_slider_bg.gif" />
-    <Content Include="Areas\Admin\Content\images\table\action_delete.gif" />
-    <Content Include="Areas\Admin\Content\images\table\action_edit.gif" />
-    <Content Include="Areas\Admin\Content\images\table\content_round_repeat.jpg" />
-    <Content Include="Areas\Admin\Content\images\table\content_round_top.jpg" />
-    <Content Include="Areas\Admin\Content\images\table\dropdown_actions.gif" />
-    <Content Include="Areas\Admin\Content\images\table\icon_close_blue.gif" />
-    <Content Include="Areas\Admin\Content\images\table\icon_close_green.gif" />
-    <Content Include="Areas\Admin\Content\images\table\icon_close_red.gif" />
-    <Content Include="Areas\Admin\Content\images\table\icon_close_yellow.gif" />
-    <Content Include="Areas\Admin\Content\images\table\message_blue.gif" />
-    <Content Include="Areas\Admin\Content\images\table\message_green.gif" />
-    <Content Include="Areas\Admin\Content\images\table\message_red.gif" />
-    <Content Include="Areas\Admin\Content\images\table\message_yellow.gif" />
-    <Content Include="Areas\Admin\Content\images\table\paging_far_left.gif" />
-    <Content Include="Areas\Admin\Content\images\table\paging_far_right.gif" />
-    <Content Include="Areas\Admin\Content\images\table\paging_left.gif" />
-    <Content Include="Areas\Admin\Content\images\table\paging_right.gif" />
-    <Content Include="Areas\Admin\Content\images\table\select_number_rows.gif" />
-    <Content Include="Areas\Admin\Content\images\table\table_header.jpg" />
-    <Content Include="Areas\Admin\Content\images\table\table_header_checkbox.jpg" />
-    <Content Include="Areas\Admin\Content\images\table\table_header_options.jpg" />
-    <Content Include="Areas\Admin\Content\images\table\table_header_repeat.jpg" />
-    <Content Include="Areas\Admin\Content\images\table\table_icon_1.gif" />
-    <Content Include="Areas\Admin\Content\images\table\table_icon_2.gif" />
-    <Content Include="Areas\Admin\Content\images\table\table_icon_3.gif" />
-    <Content Include="Areas\Admin\Content\images\table\table_icon_4.gif" />
-    <Content Include="Areas\Admin\Content\images\table\table_icon_5.gif" />
-    <Content Include="Areas\Admin\Content\images\table\table_sort_arrow.gif" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Infrastructure\Common\DateTimeOffsetUtil.cs" />
     <Compile Include="Controllers\CssController.cs" />
@@ -623,7 +673,6 @@
     <Content Include="Content\css\images\openid-inputicon.gif" />
     <Content Include="Content\css\images\openid-providers-en.png" />
     <Content Include="Content\css\images\printer.png" />
-    <Content Include="Areas\Admin\Content\css\admin.base.less" />
     <Content Include="Content\js\date.f-0.5.0.js" />
     <Content Include="Content\js\date.f-0.5.0.min.js" />
     <Content Include="Content\js\fullcalendar.js" />
@@ -1010,6 +1059,29 @@
     <Content Include="Content\css\styles.css.map">
       <DependentUpon>styles.css</DependentUpon>
     </Content>
+    <Content Include="Areas\Admin\Content\css\bootstrap\bootstrap-extend.less" />
+    <Content Include="Areas\Admin\Content\css\bootstrap\bootstrap-extend.css.map">
+      <DependentUpon>bootstrap-extend.css</DependentUpon>
+    </Content>
+    <Content Include="Areas\Admin\Content\css\admin.variables.less" />
+    <Content Include="Areas\Admin\Content\css\admin.styles.less" />
+    <Content Include="Areas\Admin\Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Areas\Admin\Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Areas\Admin\Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Areas\Admin\Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Areas\Admin\Content\js\tinymce\langs\readme.md" />
+    <Content Include="Areas\Admin\Content\js\tinymce\skins\lightgray\fonts\tinymce-small.eot" />
+    <Content Include="Areas\Admin\Content\js\tinymce\skins\lightgray\fonts\tinymce-small.ttf" />
+    <Content Include="Areas\Admin\Content\js\tinymce\skins\lightgray\fonts\tinymce-small.woff" />
+    <Content Include="Areas\Admin\Content\js\tinymce\skins\lightgray\fonts\tinymce.eot" />
+    <Content Include="Areas\Admin\Content\js\tinymce\skins\lightgray\fonts\tinymce.ttf" />
+    <Content Include="Areas\Admin\Content\js\tinymce\skins\lightgray\fonts\tinymce.woff" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\TextAbove.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\TextLong.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\EmailAddress.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\BooleanLong.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\Int32.cshtml" />
     <None Include="Content\js\jquery-1.11.2.intellisense.js" />
     <Content Include="Content\js\jquery-1.11.2.js" />
     <Content Include="Content\js\jquery-1.11.2.min.js" />
@@ -1136,31 +1208,21 @@
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\Boolean.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\EmailAddress.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\HiddenInput.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\MultilineText.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\Password.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\String.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\NameWithDescription.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Views\Posts\DeleteAllSpamComments.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\DateTime.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="connString.config" />
     <Content Include="Areas\Admin\Views\Shared\RenderMenu.cshtml" />
     <Content Include="Areas\Admin\Views\Settings\RssFutureAccess.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\Int32.cshtml" />
     <None Include="Content\js\ckeditor\.htaccess" />
     <None Include="Content\js\ckeditor\ckeditor.pack" />
     <None Include="Content\js\ckeditor\ckeditor.php" />

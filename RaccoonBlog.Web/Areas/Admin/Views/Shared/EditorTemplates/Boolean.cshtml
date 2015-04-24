@@ -1,13 +1,4 @@
 ﻿@functions{
-    private List<SelectListItem> TriStateValues {
-        get {
-            return new List<SelectListItem> {
-                new SelectListItem { Text = "Not Set", Value = String.Empty, Selected = !Value.HasValue },
-                new SelectListItem { Text = "True", Value = "true", Selected = Value.HasValue && Value.Value },
-                new SelectListItem { Text = "False", Value = "false", Selected = Value.HasValue && !Value.Value },
-            };
-        }
-    }
     private bool? Value {
         get {
             if (ViewData.Model == null) {
@@ -17,14 +8,12 @@
         }
     }
 }
-<div class="form_item">
-    <label>
-        <span class="form_item_title">@ViewData.ModelMetadata.DisplayName</span>
-        @if (ViewData.ModelMetadata.IsNullableValueType) {
-            @Html.DropDownList(string.Empty, TriStateValues)
-        } else {
-            @Html.CheckBox(string.Empty, Value ?? false)
-        }
-        @Html.ValidationMessage(string.Empty)
-    </label>
+
+<div class="col-sm-offset-2 col-lg-offset-0 col-sm-10 col-lg-12">
+    <div class="checkbox">
+        <label>
+            @Html.CheckBox(string.Empty, Value ?? false) @ViewData.ModelMetadata.DisplayName
+            @Html.ValidationMessage(string.Empty)
+        </label>
+    </div>
 </div>

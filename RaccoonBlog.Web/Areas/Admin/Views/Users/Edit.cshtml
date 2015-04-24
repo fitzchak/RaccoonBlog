@@ -1,7 +1,6 @@
 ﻿@model UserInput
 @{
-	ViewBag.H1 = Model.IsNewUser() ? "Create a New User" : "Edit User " + Model.FullName;
-	ViewBag.SubmitButtonText = Model.IsNewUser() ? "Create User" : "Update User";
+	ViewBag.H1 = Model.IsNewUser() ? "Create new user" : "Edit User " + Model.FullName;
 
 	ViewBag.Title = ViewBag.H1;
 }
@@ -11,45 +10,24 @@
 		@Html.ValidationSummary(true)
 	</div>
 }
-<article id="user-input">
-	<div id="page-heading">
-		<h1>@ViewBag.H1</h1>
-	</div>
-	<form action="@Url.Action("Update")" method="post">
-	<div>
-		<div id="content-table-inner" class="inputform" style="height: 310px">
-			<div id="id-form" style="top: 0;">
-				@Html.EditorFor(x => x.FullName)
-				@Html.EditorFor(x => x.Email)
-				@Html.EditorFor(x => x.Phone)
-				@Html.EditorFor(x => x.Enabled)
-				@Html.EditorFor(x => x.TwitterNick)
-				@Html.EditorFor(x => x.RelatedTwitterNick)
-				@Html.EditorFor(x => x.RelatedTwitNickDes)
-				@Html.EditorFor(x => x.Id)
-				@Html.HiddenFor(x => x.Id)
-				<div>
-					<input type="submit" value="@ViewBag.SubmitButtonText"></div>
-			</div>
-			<div class="clear"></div>
-		</div>
-	</div>
-	</form>
-</article>
-<div class="clear">
-	&nbsp;</div>
-@section Script {
-	<script type="text/javascript" src="@Url.Content("~/Content/js/showdown.js")"> </script>
-	<script type="text/javascript">
-		$(function() {
-			var $textarea = $('textarea[name$="Body"]').keydown(function() {
-				$('.markdown-preview-container').show('medium');
-			});
-			var $preview = $('.markdown-preview');
-			var converter = new Showdown.converter();
-			$textarea.keyup(function() {
-				$preview.html(converter.makeHtml($textarea.val()));
-			}).trigger('keyup');
-		});
-	</script>
+
+<h3 class="pull-left-sm">@ViewBag.H1</h3>
+<a href="@Url.Action("Index", "Users")" class="btn btn-primary btn-sm pull-right-sm">view users</a>
+<div class="clearfix"></div>
+<hr />
+
+@using (Html.BeginForm("Update", "Users", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.EditorFor(x => x.Id)
+    @Html.EditorFor(x => x.FullName, "TextLong")
+    @Html.EditorFor(x => x.Email, "EmailAddress")
+    @Html.EditorFor(x => x.TwitterNick, "TextLong")
+    @Html.EditorFor(x => x.RelatedTwitterNick, "TextLong")
+    @Html.EditorFor(x => x.RelatedTwitNickDes, "TextLong")
+    @Html.EditorFor(x => x.Enabled, "BooleanLong")
+    <div class="form-group">
+        <div class="col-sm-12">
+            <button type="submit" class="btn btn-primary pull-right">save</button>
+        </div>
+    </div>
 }

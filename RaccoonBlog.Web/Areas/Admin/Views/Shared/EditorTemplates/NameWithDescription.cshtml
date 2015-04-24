@@ -1,0 +1,10 @@
+﻿<div class="form-group">
+    <label class="col-sm-6 col-md-4 text-right-sm">
+        @ViewData.ModelMetadata.DisplayName
+        <div class="small">@ViewData.ModelMetadata.Description</div>
+    </label>
+    <div class="col-sm-6 col-md-8">
+        @Html.TextBox(string.Empty, ViewData.TemplateInfo.FormattedModelValue, new { @class = "form-control" })
+        @Html.ValidationMessage(string.Empty)
+    </div>
+</div>

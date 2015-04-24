@@ -109,7 +109,7 @@ namespace RaccoonBlog.Web.Models
 		[Display(Name = "Tags")]
 		public string Tags { get; set; }
 
-		[Display(Name = "Allow Comments?")]
+		[Display(Name = "Allow Comments")]
 		public bool AllowComments { get; set; }
 
 		public bool IsNewPost()

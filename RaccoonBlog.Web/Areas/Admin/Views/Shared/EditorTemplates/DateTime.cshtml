@@ -1,16 +1,9 @@
-﻿<div class="form_item">
-	<label>
-		<span class="form_item_title">@ViewData.ModelMetadata.DisplayName<span class="form_item_description">@ViewData.ModelMetadata.Description</span></span>
-		
-		@{
-			var value = ViewData.TemplateInfo.FormattedModelValue;
-			string date = value.ToString();
-			if ((value is DateTimeOffset))
-			{
-				date = ((DateTimeOffset) value).ToString("MM/dd/yyyy hh:mm:ss tt K");
-			}
-		}
-		@Html.TextBox(string.Empty, @date, new Dictionary<string, object> { { "type", "datetime" } })
-		@Html.ValidationMessage(string.Empty)
-	</label>
+﻿<div class="form-group">
+    <label class="col-sm-2 col-lg-12">
+        @ViewData.ModelMetadata.DisplayName
+    </label>
+    <div class="col-sm-10 col-lg-12">
+        @Html.TextBox(string.Empty, ViewData.TemplateInfo.FormattedModelValue, new { @class = "form-control", type = "date" })
+        @Html.ValidationMessage(string.Empty)
+    </div>
 </div>

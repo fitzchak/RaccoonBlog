@@ -2,37 +2,19 @@
 @{
 	ViewBag.Title = "Blog Configuration";
 }
-<article id="user-input">
-    @if (ViewData.ModelState.IsValid == false)
-    {
-        <div class="form-error">
-            @Html.ValidationSummary(true)
-        </div>
-    }
-    <div id="page-heading">
-        <h1>Generate RSS with Future Access link</h1>
-    </div>
-    @using (Html.BeginForm())
-    {
-        <div>
-            <div id="content-table-inner" class="inputform">
-                <div id="id-form" style="top: 0;">
-                    @Html.EditorFor(input => input.User)
-                    @Html.EditorFor(input => input.ExpiredOn)
-                    @Html.EditorFor(input => input.NumberOfFutureDays)
-                    
-                    @if (Model.Token != null)
-                    {
-                        @Html.DisplayFor(input => input.Token)
-                        @Html.ActionLink("RSS Feed Link", "Rss", "Syndication", new {area = "", token = Model.Token}, new {})
-                    }
 
-                    <div><input type="submit" value="Save" /></div>
-                </div>
-				<div class="clear"></div>
-            </div>
-        </div>
-    }
+<h3>Generate RSS with Future Access link</h3>
+<hr />
+
+@using (Html.BeginForm("RssFutureAccess", "Settings", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.EditorFor(x => x.User, "NameWithDescription")
+    @Html.EditorFor(x => x.ExpiredOn, "NameWithDescription")
+    @Html.EditorFor(x => x.NumberOfFutureDays, "NameWithDescription")
     
-</article>
-<div class="clear"></div>
+    <div class="form-group">
+        <div class="col-sm-12">
+            <button type="submit" class="btn btn-primary pull-right">Save</button>
+        </div>
+    </div>
+}
