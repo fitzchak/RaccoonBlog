@@ -17,6 +17,8 @@ namespace RaccoonBlog.Web.Controllers
 	{
 		public virtual ActionResult Index()
 		{
+			ViewBag.IsHomePage = CurrentPage == DefaultPage;
+
 			RavenQueryStatistics stats;
 			var posts = RavenSession.Query<Post>()
 				.Include(x => x.AuthorId)

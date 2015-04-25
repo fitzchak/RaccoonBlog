@@ -53,6 +53,13 @@ namespace RaccoonBlog.Web.Controllers
 			}
 		}
 
+		protected override void OnActionExecuting(ActionExecutingContext filterContext)
+		{
+			ViewBag.IsHomePage = false;
+
+			base.OnActionExecuting(filterContext);
+		}
+
 		protected override void OnActionExecuted(ActionExecutedContext filterContext)
 		{
 			base.OnActionExecuted(filterContext);

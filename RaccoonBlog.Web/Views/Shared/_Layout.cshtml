@@ -35,7 +35,7 @@
 				<button class="menu-button" id="open-button"><i class="glyphicon glyphicon-info-sign hide-sm" aria-hidden="true"></i></button>
 				<div class="clearfix"></div>
 				<div class="collapseMobile">
-					<div class="about">
+					<div class="about @(ViewBag.IsHomePage ? "home" : string.Empty)">
 						@Html.RenderSection("Contact Me")
 					</div>
 					<div class="pull-down">
