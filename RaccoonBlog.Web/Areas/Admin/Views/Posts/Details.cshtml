@@ -5,33 +5,32 @@
 
 <article class="post">
 	<header>
-		<h1><a href="@Url.Action("Details", new { Model.Post.Id, Model.Post.Slug })">@Model.Post.Title</a></h1>
-		<div id="post-admin">
-			<ul style="list-style-type: none">
-				<li><a href="@Url.Action("Details", "PostDetails", new { Model.Post.Id, Model.Post.Slug, area = "" })">View</a></li>
-				<li><a href="@Url.Action("Details", "PostDetails", new { Model.Post.Id, Model.Post.Slug, key = @Model.Post.Key, area = "" })">Private View</a></li>
-				<li><a href="@Url.Action("Edit", "Posts", new { id = @Model.Post.Id})">Edit</a></li>
-				<li>
-					<form action="@Url.Action("Delete", new { Model.Post.Id })" method="post">
-						<input type="submit" value="Delete" class="confirm">
-					</form>
-				</li>
-			</ul>
-		</div>
+	    <h3 class="pull-left-sm"><a href="@Url.Action("Details", new { Model.Post.Id, Model.Post.Slug })">@Model.Post.Title</a></h3>
+
+	    <div id="post-admin" class="pull-right-sm">
+	        <a class="btn btn-primary" href="@Url.Action("Details", "PostDetails", new { Model.Post.Id, Model.Post.Slug, area = "" })">View</a>
+	        <a class="btn btn-primary" href="@Url.Action("Details", "PostDetails", new { Model.Post.Id, Model.Post.Slug, key = @Model.Post.Key, area = "" })">Private View</a>
+	        <a class="btn btn-primary" href="@Url.Action("Edit", "Posts", new { id = @Model.Post.Id})">Edit</a>
+	        <form action="@Url.Action("Delete", new { Model.Post.Id })" method="post" style="display: inline-block">
+	            <input class="btn btn-warning" type="submit" value="Delete" class="confirm">
+	        </form>
+
+	    </div>
+	    <div class="clearfix"></div>
+        <hr/>
+		
 	</header>
 	
 	<nav id="headerPrevNext">
-		<ul>
 			@if (Model.PreviousPost != null)
 			{
-				<li><a href="@Url.Action("Details", new { Id = Model.PreviousPost.DomainId })">previous: @Model.PreviousPost.Title</a></li>
+				<a class="btn btn-default" href="@Url.Action("Details", new { Id = Model.PreviousPost.DomainId })">previous: @Model.PreviousPost.Title</a>
 			}
 		
 			@if (Model.NextPost != null)
 			{
-				<li> <a href="@Url.Action("Details", new { Id = Model.NextPost.DomainId })">next: @Model.NextPost.Title</a></li>
+				<a class="btn btn-default" href="@Url.Action("Details", new { Id = Model.NextPost.DomainId })">next: @Model.NextPost.Title</a>
 			}
-		</ul>
 	</nav>
 
 	<div class="post_body raw_html">
@@ -58,11 +57,11 @@
 		</ul>
 	</div>
 	
-
+    <hr/>
 	<section class="comments">
 		<header>
 			<a name="comments"></a>
-			<h1>Comments (@Model.Comments.Count)</h1>
+			<h3>Comments (@Model.Comments.Count)</h3>
 		</header>
 		@if (Model.Comments.Count == 0) { 
 			<p>No comments posted yet.</p>
@@ -77,19 +76,18 @@
 						<img src="http://www.gravatar.com/avatar.php?gravatar_id=@(comment.EmailHash)&amp;size=50&amp;default=identicon" alt="Gravatar">
 					</div>
 
-					<div class="comment_title">
-						@comment.CreatedAt by
-						<address>
-							<a title="@(string.IsNullOrEmpty(comment.Url) ? "Comment by " + comment.Author : comment.Url)" href="@comment.Url">@comment.Author</a>
-						</address>
-					</div>
-					<p>@comment.Body</p>
+				    <div class="comment_title">
+				        <div class="small pull-right-sm">@comment.CreatedAt</div>  <a title="@(string.IsNullOrEmpty(comment.Url) ? "Comment by " + comment.Author : comment.Url)" href="@comment.Url">@comment.Author</a>
+				    </div>
+                    <div class="comment_body">
+                        <p>@comment.Body</p>
+                    </div>
 				</article>
 			}
 			<div id="comments-admin">
-				<input type="submit" name="command" value="Delete" class="confirm">
-				<input type="submit" name="command" value="Mark Spam" class="confirm">
-				<input type="submit" name="command" value="Mark Ham" class="confirm">
+				<input type="submit" namea="command" value="Delete" class="btn btn-primary" class="confirm">
+                <input type="submit" name="command" value="Mark Spam" class="btn btn-primary" class="confirm">
+                <input type="submit" name="command" value="Mark Ham" class="btn btn-primary" class="confirm">
 			</div>
 		</form>
 	</section>
