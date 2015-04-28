@@ -54,27 +54,57 @@ namespace RaccoonBlog.Web
 				.Include("~/Content/js/jquery.openid.js")
 				.Include("~/Content/js/openid-en.js"));
 
+			bundles
+				.Add(new ScriptBundle("~/Content/js/admin/main")
+				.Include("~/Areas/Admin/Content/js/setup.js")
+				.Include("~/Content/js/moment.js")
+				.Include("~/Areas/Admin/Content/js/fullcalendar.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/tinymce.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/themes/modern/theme.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/advlist/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/autolink/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/lists/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/link/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/image/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/charmap/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/print/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/hr/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/anchor/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/pagebreak/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/searchreplace/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/wordcount/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/visualblocks/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/visualchars/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/code/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/fullscreen/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/insertdatetime/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/media/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/nonbreaking/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/save/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/table/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/directionality/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/emoticons/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/template/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/paste/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/textcolor/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/colorpicker/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/textpattern/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/preview/plugin.min.js")
+				.Include("~/Areas/Admin/Content/js/tinymce/plugins/contextmenu/plugin.min.js"));
+
             bundles
                 .Add(new ScriptBundle("~/Content/js/respond")
                 .Include("~/Content/js/respond.src.js"));
-
-            bundles
-                .Add(new ScriptBundle("~/Admin/Content/js/setup")
-                .Include("~/Areas/Admin/Content/js/setup.js"));
-
-            bundles
-                .Add(new ScriptBundle("~/Content/js/fullcalendar")
-                .Include("~/Content/js/moment.js")
-                .Include("~/Areas/Admin/Content/js/fullcalendar.js"));
-
-            bundles
-                .Add(new ScriptBundle("~/Admin/Content/tinymce")
-                .Include("~/Areas/Admin/Content/js/tinymce/tinymce.min.js"));
 
 			bundles
 				.Add((new StyleBundle("~/Content/css/styles"))
 				.Include("~/Content/css/socicon.css")
 				.Include("~/Content/css/openid/openid.css"));
+
+			bundles
+				.Add((new StyleBundle("~/Areas/Admin/Content/js/tinymce/skins/lightgray/styles"))
+				.Include("~/Areas/Admin/Content/js/tinymce/skins/lightgray/skin.min.css")
+				.Include("~/Areas/Admin/Content/js/tinymce/skins/lightgray/content.min.css"));
 
             bundles
                 .Add(new StyleBundle("~/Admin/Content/css/fullcalendar")
