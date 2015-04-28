@@ -39,7 +39,7 @@
 }
 
 <h3 class="pull-left-sm">@ViewBag.H1</h3>
-<a href='@Url.Action("Index", "Sections")' class="btn btn-primary btn-sm pull-right-sm">view sections</a>
+<a href='@Url.Action("Index", "Sections")' class="btn btn-primary btn-sm pull-right-sm">View sections</a>
 <div class="clearfix"></div>
 <hr />
 @using (Html.BeginForm("Update", "Sections", FormMethod.Post, new {@class = "form-horizontal"}))
@@ -58,6 +58,6 @@
             @Html.TextAreaFor(x => x.Body, new { rows = "20" })
         </div>
     </div>
-    <input type="submit" class="btn btn-primary pull-right" style="margin-top:20px" />
+    <input type="submit" value="Save" class="btn btn-primary pull-right" style="margin-top:20px" />
     <div class="clearfix"></div>
 }
