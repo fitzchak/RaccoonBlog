@@ -15,7 +15,6 @@ using Microsoft.Owin.Security;
 using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Models;
-using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Controllers
 {
@@ -72,44 +71,19 @@ namespace RaccoonBlog.Web.Controllers
 		{
 			var claims = response.ExternalIdentity;
 
-			if (string.IsNullOrWhiteSpace(commenter.Name))
-			{
-				var email = claims.FindFirst(ClaimTypes.Email);
+			var emailClaim = claims.FindFirst(ClaimTypes.Email);
+			var nameClaim = claims.FindFirst(ClaimTypes.Name);
+			var urlClaim = claims.FindFirst("urn:google:profile");
 
-			}
-			
-			//TODO: 
-			/*
-			var claimsResponse = response.GetExtension<ClaimsResponse>();
-			if (claimsResponse != null)
-			{
-				if (string.IsNullOrWhiteSpace(commenter.Name) && string.IsNullOrWhiteSpace(claimsResponse.Nickname) == false)
-					commenter.Name = claimsResponse.Nickname;
-				else if (string.IsNullOrWhiteSpace(commenter.Name) && string.IsNullOrWhiteSpace(claimsResponse.FullName) == false)
-					commenter.Name = claimsResponse.FullName;
-				if (string.IsNullOrWhiteSpace(commenter.Email) && string.IsNullOrWhiteSpace(claimsResponse.Email) == false)
-					commenter.Email = claimsResponse.Email;
-			}
-			var fetchResponse = response.GetExtension<FetchResponse>();
-			if (fetchResponse != null) // let us try from the attributes
-			{
-				if (string.IsNullOrWhiteSpace(commenter.Email))
-					commenter.Email = fetchResponse.GetAttributeValue(WellKnownAttributes.Contact.Email);
-				if (string.IsNullOrWhiteSpace(commenter.Name))
-				{
-					commenter.Name = fetchResponse.GetAttributeValue(WellKnownAttributes.Name.FullName) ??
-									 fetchResponse.GetAttributeValue(WellKnownAttributes.Name.First) + " " +
-									 fetchResponse.GetAttributeValue(WellKnownAttributes.Name.Last);
-				}
+			if (string.IsNullOrWhiteSpace(commenter.Email) && emailClaim != null && string.IsNullOrWhiteSpace(emailClaim.Value) == false)
+				commenter.Email = emailClaim.Value;
 
-				if (string.IsNullOrWhiteSpace(commenter.Url))
-				{
-					commenter.Url = fetchResponse.GetAttributeValue(WellKnownAttributes.Contact.Web.Blog) ??
-								fetchResponse.GetAttributeValue(WellKnownAttributes.Contact.Web.Homepage);
-				}
-			}*/
+			if (string.IsNullOrWhiteSpace(commenter.Name) && nameClaim != null && string.IsNullOrWhiteSpace(nameClaim.Value) == false)
+				commenter.Name = nameClaim.Value;
+
+			if (string.IsNullOrWhiteSpace(commenter.Url) && urlClaim != null && string.IsNullOrWhiteSpace(urlClaim.Value) == false)
+				commenter.Url = urlClaim.Value;
 		}
-
 		
 		[AllowAnonymous]
 		public virtual async Task<ActionResult> ExternalLoginCallback(string returnUrl)
