@@ -107,7 +107,7 @@ namespace RaccoonBlog.Web
 				.Include("~/Areas/Admin/Content/js/tinymce/skins/lightgray/content.min.css"));
 
             bundles
-                .Add(new StyleBundle("~/Admin/Content/css/fullcalendar")
+				.Add(new StyleBundle("~/Areas/Admin/Content/css/styles")
                 .Include("~/Areas/Admin/Content/css/fullcalendar.css"));
 		}
 
