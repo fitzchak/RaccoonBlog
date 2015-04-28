@@ -58,7 +58,10 @@ namespace RaccoonBlog.Web
 				.Add(new ScriptBundle("~/Content/js/admin/main")
 				.Include("~/Areas/Admin/Content/js/setup.js")
 				.Include("~/Content/js/moment.js")
-				.Include("~/Areas/Admin/Content/js/fullcalendar.js")
+				.Include("~/Areas/Admin/Content/js/fullcalendar.js"));
+
+			bundles
+				.Add(new ScriptBundle("~/Areas/Admin/Content/js/tinymce/scripts")
 				.Include("~/Areas/Admin/Content/js/tinymce/tinymce.min.js")
 				.Include("~/Areas/Admin/Content/js/tinymce/themes/modern/theme.min.js")
 				.Include("~/Areas/Admin/Content/js/tinymce/plugins/advlist/plugin.min.js")
@@ -100,11 +103,6 @@ namespace RaccoonBlog.Web
 				.Add((new StyleBundle("~/Content/css/styles"))
 				.Include("~/Content/css/socicon.css")
 				.Include("~/Content/css/openid/openid.css"));
-
-			bundles
-				.Add((new StyleBundle("~/Areas/Admin/Content/js/tinymce/skins/lightgray/styles"))
-				.Include("~/Areas/Admin/Content/js/tinymce/skins/lightgray/skin.min.css")
-				.Include("~/Areas/Admin/Content/js/tinymce/skins/lightgray/content.min.css"));
 
             bundles
 				.Add(new StyleBundle("~/Areas/Admin/Content/css/styles")
