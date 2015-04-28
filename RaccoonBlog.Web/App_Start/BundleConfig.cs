@@ -71,10 +71,6 @@ namespace RaccoonBlog.Web
                 .Add(new ScriptBundle("~/Admin/Content/tinymce")
                 .Include("~/Areas/Admin/Content/js/tinymce/tinymce.min.js"));
 
-#if !DEBUG
-			adminBundle.Transforms.Add(new CssMinify());
-#endif
-
 			bundles
 				.Add((new StyleBundle("~/Content/css/styles"))
 				.Include("~/Content/css/socicon.css")
