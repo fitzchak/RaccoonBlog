@@ -6,8 +6,12 @@
 
 using System;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
-
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Models;
@@ -17,132 +21,142 @@ namespace RaccoonBlog.Web.Controllers
 {
 	public partial class SocialController : RaccoonController
 	{
-		//	public virtual ActionResult Login(string url, string returnUrl)
-		//	{
-		//		if (string.IsNullOrWhiteSpace(returnUrl))
-		//			returnUrl = Request.UrlReferrer != null ? Request.UrlReferrer.ToString() : Url.RouteUrl("homepage");
 
-		//		using (var openIdRelyingParty = new OpenIdRelyingParty())
-		//		{
-		//			var response = openIdRelyingParty.GetResponse();
-		//			if (response == null)
-		//			{
-		//				return HandleNullResponse(url, returnUrl);
-		//			}
+		public virtual ActionResult Login(string provider, string redirectUrl)
+		{
+			// Request a redirect to the external login provider
+			return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Social", new { ReturnUrl = redirectUrl }));
+		}
 
-		//			switch (response.Status)
-		//			{
-		//				case AuthenticationStatus.Authenticated:
-		//					var claimedIdentifier = response.ClaimedIdentifier.ToString();
-		//					var commenter = RavenSession.Query<Commenter>()
-		//										.FirstOrDefault(c => c.OpenId == claimedIdentifier) ?? new Commenter
-		//																							   {
-		//																								Key = Guid.NewGuid(),
-		//																								OpenId = claimedIdentifier,
-		//																							   };
+		private IAuthenticationManager AuthenticationManager
+		{
+			get
+			{
+				return HttpContext.GetOwinContext().Authentication;
+			}
+		}
 
-		//					SetCommenterValuesFromOpenIdResponse(response, commenter);
 
-		//					CommenterUtil.SetCommenterCookie(Response, commenter.Key.MapTo<string>());
-		//					RavenSession.Store(commenter);
+		private const string XsrfKey = "XsrfId";
 
-		//					return Redirect(returnUrl);
-		//				case AuthenticationStatus.Canceled:
-		//					TempData["Message"] = "Canceled at provider";
-		//					return Redirect(returnUrl);
-		//				case AuthenticationStatus.Failed:
-		//					TempData["Message"] = response.Exception.Message;
-		//					return Redirect(returnUrl);
-		//			}
-		//			return new EmptyResult();
-		//		}
-		//	}
+		internal class ChallengeResult : HttpUnauthorizedResult
+		{
+			public ChallengeResult(string provider, string returnUrl)
+				: this(provider, returnUrl, null)
+			{
+			}
 
-		//	private static void SetCommenterValuesFromOpenIdResponse(IAuthenticationResponse response, Commenter commenter)
-		//	{
-		//		var claimsResponse = response.GetExtension<ClaimsResponse>();
-		//		if (claimsResponse != null)
-		//		{
-		//			if (string.IsNullOrWhiteSpace(commenter.Name) && string.IsNullOrWhiteSpace(claimsResponse.Nickname) == false)
-		//				commenter.Name = claimsResponse.Nickname;
-		//			else if (string.IsNullOrWhiteSpace(commenter.Name) && string.IsNullOrWhiteSpace(claimsResponse.FullName) == false)
-		//				commenter.Name = claimsResponse.FullName;
-		//			if (string.IsNullOrWhiteSpace(commenter.Email) && string.IsNullOrWhiteSpace(claimsResponse.Email) == false)
-		//				commenter.Email = claimsResponse.Email;
-		//		}
-		//		var fetchResponse = response.GetExtension<FetchResponse>();
-		//		if (fetchResponse != null) // let us try from the attributes
-		//		{
-		//			if (string.IsNullOrWhiteSpace(commenter.Email))
-		//				commenter.Email = fetchResponse.GetAttributeValue(WellKnownAttributes.Contact.Email);
-		//			if (string.IsNullOrWhiteSpace(commenter.Name))
-		//			{
-		//				commenter.Name = fetchResponse.GetAttributeValue(WellKnownAttributes.Name.FullName) ??
-		//								 fetchResponse.GetAttributeValue(WellKnownAttributes.Name.First) + " " +
-		//								 fetchResponse.GetAttributeValue(WellKnownAttributes.Name.Last);
-		//			}
+			public ChallengeResult(string provider, string redirectUri, string userId)
+			{
+				LoginProvider = provider;
+				RedirectUri = redirectUri;
+				UserId = userId;
+			}
 
-		//			if (string.IsNullOrWhiteSpace(commenter.Url))
-		//			{
-		//				commenter.Url = fetchResponse.GetAttributeValue(WellKnownAttributes.Contact.Web.Blog) ??
-		//							fetchResponse.GetAttributeValue(WellKnownAttributes.Contact.Web.Homepage);
-		//			}
-		//		}
-		//	}
+			public string LoginProvider { get; set; }
+			public string RedirectUri { get; set; }
+			public string UserId { get; set; }
 
-		//	private ActionResult HandleNullResponse(string url, string returnUrl)
-		//	{
-		//		Identifier id;
-		//		if (Identifier.TryParse(url, out id) == false)
-		//			ModelState.AddModelError("identifier", "The specified login identifier is invalid");
+			public override void ExecuteResult(ControllerContext context)
+			{
+				var properties = new AuthenticationProperties { RedirectUri = RedirectUri };
+				if (UserId != null)
+				{
+					properties.Dictionary[XsrfKey] = UserId;
+				}
+				context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
+			}
+		}
 
-		//		if (ModelState.IsValid == false)
-		//		{
-		//			if (Request.IsAjaxRequest())
-		//				return Json(new {Success = false, message = ModelState.FirstErrorMessage()});
+		private static void SetCommenterValuesFromResponse(ExternalLoginInfo response, Commenter commenter)
+		{
+			var claims = response.ExternalIdentity;
 
-		//			TempData["Message"] = ModelState.FirstErrorMessage();
-		//			return Redirect(returnUrl);
-		//		}
+			if (string.IsNullOrWhiteSpace(commenter.Name))
+			{
+				var email = claims.FindFirst(ClaimTypes.Email);
 
-		//		try
-		//		{
-		//			var theReturnUrlForOpenId = new UriBuilder(Url.AbsoluteAction("Login"))
-		//			{
-		//				Query = "returnUrl=" + Uri.EscapeUriString(returnUrl)
-		//			}.Uri;
+			}
+			
+			//TODO: 
+			/*
+			var claimsResponse = response.GetExtension<ClaimsResponse>();
+			if (claimsResponse != null)
+			{
+				if (string.IsNullOrWhiteSpace(commenter.Name) && string.IsNullOrWhiteSpace(claimsResponse.Nickname) == false)
+					commenter.Name = claimsResponse.Nickname;
+				else if (string.IsNullOrWhiteSpace(commenter.Name) && string.IsNullOrWhiteSpace(claimsResponse.FullName) == false)
+					commenter.Name = claimsResponse.FullName;
+				if (string.IsNullOrWhiteSpace(commenter.Email) && string.IsNullOrWhiteSpace(claimsResponse.Email) == false)
+					commenter.Email = claimsResponse.Email;
+			}
+			var fetchResponse = response.GetExtension<FetchResponse>();
+			if (fetchResponse != null) // let us try from the attributes
+			{
+				if (string.IsNullOrWhiteSpace(commenter.Email))
+					commenter.Email = fetchResponse.GetAttributeValue(WellKnownAttributes.Contact.Email);
+				if (string.IsNullOrWhiteSpace(commenter.Name))
+				{
+					commenter.Name = fetchResponse.GetAttributeValue(WellKnownAttributes.Name.FullName) ??
+									 fetchResponse.GetAttributeValue(WellKnownAttributes.Name.First) + " " +
+									 fetchResponse.GetAttributeValue(WellKnownAttributes.Name.Last);
+				}
 
-		//			using (var openIdRelyingParty = new OpenIdRelyingParty())
-		//			{
-		//				var request = openIdRelyingParty.CreateRequest(url, Realm.AutoDetect, theReturnUrlForOpenId);
-		//				request.AddExtension(new FetchRequest // requires for Google 
-		//				{
-		//					Attributes =
-		//						{
-		//							new AttributeRequest(WellKnownAttributes.Name.First, true),
-		//							new AttributeRequest(WellKnownAttributes.Name.Last, true),
-		//							new AttributeRequest(WellKnownAttributes.Contact.Email, true),
-		//							new AttributeRequest(WellKnownAttributes.Contact.Web.Blog, true),
-		//							new AttributeRequest(WellKnownAttributes.Contact.Web.Homepage, true),
-		//							new AttributeRequest(WellKnownAttributes.Name.FullName, false),
-		//						}
-		//				});
-		//				request.AddExtension(new ClaimsRequest // other providers
-		//				{
-		//					Email = DemandLevel.Require,
-		//					FullName = DemandLevel.Require,
-		//					Nickname = DemandLevel.Require,
-		//				});
-		//				return request.RedirectingResponse.AsActionResultMvc5();
-		//			}
-		//		}
-		//		catch (ProtocolException ex)
-		//		{
-		//			if (Request.IsAjaxRequest())
-		//				return Json(new {message = ex.Message});
-		//			TempData["Message"] = ex.Message;
-		//			return Redirect(returnUrl);
-		//		}
-		//	}
+				if (string.IsNullOrWhiteSpace(commenter.Url))
+				{
+					commenter.Url = fetchResponse.GetAttributeValue(WellKnownAttributes.Contact.Web.Blog) ??
+								fetchResponse.GetAttributeValue(WellKnownAttributes.Contact.Web.Homepage);
+				}
+			}*/
+		}
+
+		
+		[AllowAnonymous]
+		public virtual async Task<ActionResult> ExternalLoginCallback(string returnUrl)
+		{
+			var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
+			if (loginInfo == null)
+			{
+				//TODO: better hadling (HandleNullResponse)
+				return Redirect("homepage");
+			}
+
+			//TODO: handle falures
+
+			var claimedIdentifier = loginInfo.Login.ProviderKey + "@" + loginInfo.Login.LoginProvider;
+			var commenter = RavenSession.Query<Commenter>()
+								.FirstOrDefault(c => c.OpenId == claimedIdentifier) ?? new Commenter
+																					   {
+																						   Key = Guid.NewGuid(),
+																						   OpenId = claimedIdentifier,
+																					   };
+
+			SetCommenterValuesFromResponse(loginInfo, commenter);
+
+			CommenterUtil.SetCommenterCookie(Response, commenter.Key.MapTo<string>());
+			RavenSession.Store(commenter);
+
+			return Redirect(returnUrl);
+
+			/*
+			// Sign in the user with this external login provider if the user already has a login
+			var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+			switch (result)
+			{
+				case SignInStatus.Success:
+					return RedirectToLocal(returnUrl);
+				case SignInStatus.LockedOut:
+					return View("Lockout");
+				case SignInStatus.RequiresVerification:
+					return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
+				case SignInStatus.Failure:
+				default:
+					// If the user does not have an account, then prompt the user to create an account
+					ViewBag.ReturnUrl = returnUrl;
+					ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+					return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+			}*/
+			throw new NotImplementedException();
+		}
 	}
 }

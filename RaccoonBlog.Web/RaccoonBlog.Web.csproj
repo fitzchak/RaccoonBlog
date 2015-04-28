@@ -503,7 +503,6 @@
     <Content Include="Content\css\img\search-icon.svg" />
     <Content Include="Content\css\img\side_bkg.jpg" />
     <Content Include="Content\css\img\side_bkg.png" />
-    <Content Include="Content\css\openid\openid.css" />
     <Content Include="Content\css\prism.css" />
     <Content Include="Content\css\socicon.css" />
     <Content Include="Content\css\styles.css">
@@ -645,9 +644,6 @@
     <Content Include="Content\css\images\balloon.png" />
     <Content Include="Content\css\images\feed-icon-14x14.png" />
     <Content Include="Content\css\images\indicator.gif" />
-    <Content Include="Content\css\images\openid-icons.png" />
-    <Content Include="Content\css\images\openid-inputicon.gif" />
-    <Content Include="Content\css\images\openid-providers-en.png" />
     <Content Include="Content\css\images\printer.png" />
     <Content Include="Content\js\date.f-0.5.0.js" />
     <Content Include="Content\js\date.f-0.5.0.min.js" />
@@ -656,12 +652,8 @@
     <Content Include="Content\js\jquery.ae.image.resize.js" />
     <Content Include="Content\js\jquery.ae.image.resize.min.js" />
     <Content Include="Content\js\jquery.md5.js" />
-    <Content Include="Content\js\jquery.openid.js" />
-    <Content Include="Content\js\jquery.openid.min.js" />
     <Content Include="Content\js\jquery.twbsPagination.js" />
     <Content Include="Content\js\jquery.twbsPagination.min.js" />
-    <Content Include="Content\js\openid-en.js" />
-    <Content Include="Content\js\openid-jquery.js" />
     <Content Include="Content\js\raccoon-blog.js" />
     <Content Include="Content\js\RequiredIfValidation.js" />
     <Content Include="Content\js\respond.src.js" />

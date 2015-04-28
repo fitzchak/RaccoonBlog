@@ -172,15 +172,12 @@
 			if (Model.IsLoggedInCommenter == false)
 			{
 				<div class="openid-wrapper">
-					<form id="openid" action="@Url.Action("Login", "Social")" method="post">
-						<noscript>
-							<p>
-								OpenID is service that allows you to log-on to many different websites using a single identity.
-								Find out <a href="http://openid.net/what/">more about OpenID</a> and <a href="http://openid.net/get/">how to get an OpenID enabled account</a>.
-							</p>
-						</noscript>
-
-						@Html.Hidden("returnUrl", Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))
+					<form action="@Url.Action("Login", "Social")" method="post">
+						@Html.Hidden("redirectUrl", Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))
+						<button type="submit" name="provider" value="Google" class="btn btn-default">Google</button>
+						<button type="submit" name="url" value="live" class="btn btn-default">Live</button>
+						<button type="submit" name="provider" value="Twitter" class="btn btn-default">Twitter</button>
+						<button type="submit" name="url" value="facebook" class="btn btn-default">Facebook</button>
 					</form>
 				</div>
 			}
@@ -266,21 +263,4 @@
 			return t;
 		}(document, "script", "twitter-wjs"));
 	</script>
-	@if (Model.IsLoggedInCommenter == false)
-	{
-		<script type="text/javascript">
-
-			$(function () {
-				$('#openid').openid({
-					img_path: '@Url.Content("~/Content/css/images/")',
-					txt: {
-						label: 'Select your Open ID provider',
-						username: 'Username',
-						title: 'Social Login',
-						sign: 'Sign In'
-					}
-				});
-			});
-		</script>
-	}
 }
