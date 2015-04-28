@@ -1732,3 +1732,52 @@ li.future {
 #codeSnippetWrapper, #codeSnippet {
     background-color:transparent !important;
 }
+
+.openAuth-wrapper {
+    float:right;
+    margin-top:16px;
+    margin-bottom:15px;
+    form {
+        display: inline-block;
+    }
+
+    span {
+        background-color:@gray-lighter;
+        height:35px;
+        padding: 7px 10px;
+        font-weight:bold;
+        font-size:12px;
+    }
+
+    button {
+        font-family: "socicon";
+        font-size:17px;
+        margin-left:-3px;
+        padding:0;
+
+        width:35px;
+        height:35px;
+        text-align:center;
+        //border-radius:30px;
+        border:none;
+        color:#FFF !important;
+        outline: none !important;
+
+
+        &.btn-fb {
+            background-color:#3b5998;
+        }
+
+        &.btn-twitter {
+            background-color:#00aced;
+        }
+
+        &.btn-google {
+            background-color:#dd4b39;
+        }
+
+        &.btn-ms {
+            background-color:#00adef;
+        }
+    }
+}
