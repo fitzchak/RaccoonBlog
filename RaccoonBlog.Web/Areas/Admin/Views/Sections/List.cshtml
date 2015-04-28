@@ -1,34 +1,43 @@
-﻿@using RaccoonBlog.Web.Models
-@model IEnumerable<Section>
-@{
-    ViewBag.Title = "Manage sections";
-}
-<h3 class="pull-left-sm">All sections</h3>
-<a href='@Url.Action("Add", "Sections")' class="btn btn-primary btn-sm pull-right-sm">Add new section</a>
-<div class="clearfix"></div>
-<hr />
+﻿@model IEnumerable<RaccoonBlog.Web.Models.Section>
+	@{
+		ViewBag.Title = "Manage sections";
+	}
+	<h3 class="pull-left-sm">All sections</h3>
+	<a href='@Url.Action("Add", "Sections")' class="btn btn-primary btn-sm pull-right-sm">Add new section</a>
+	<div class="clearfix"></div>
+	<hr />
 
-@foreach (var section1 in Model)
-{
-    <div class="row section">
-        <div class="col-sm-4 col-md-3 col-lg-6">
-            <div class="small">Title</div>
-            <div class="lead">@section1.Title</div>
-        </div>
-        <div class="col-sm-4 col-md-3 col-lg-2">
-            <div class="form-group">
-                <select class="form-control">
-                    <option selected="@(section1.IsActive ? true : false)">Active</option>
-                    <option selected="@(!section1.IsActive ? true : false)">Disabled</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-sm-4 col-md-3 col-lg-2"> <a href="@Url.Action("Edit","Sections", new { section1.Id })" class="btn btn-primary btn-block">Edit</a></div>
-        <div class="col-sm-4 col-md-3 col-lg-2">
-            @using (Html.BeginForm("Delete", "Sections", new { section1.Id }))
-            {
-                <input type="submit" value="Delete" class="btn btn-warning btn-block">
-            }
-        </div>
-    </div>
-}
+	@foreach (var s in Model)
+	{
+		<div class="row section">
+			<div class="col-sm-4 col-md-3 col-lg-6">
+				<div class="small">Title</div>
+				<div class="lead">@s.Title</div>
+			</div>
+			<div class="col-sm-4 col-md-3 col-lg-2">
+				<div class="form-group">
+					<select class="form-control" data-id="@s.Id">
+						<option selected="@(s.IsActive ? true : false)" value="true">Active</option>
+						<option selected="@(!s.IsActive ? true : false)" value="false">Disabled</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-sm-4 col-md-3 col-lg-2"> <a href="@Url.Action("Edit","Sections", new { s.Id })" class="btn btn-primary btn-block">Edit</a></div>
+			<div class="col-sm-4 col-md-3 col-lg-2">
+				@using (Html.BeginForm("Delete", "Sections", new { s.Id }))
+				{
+					<input type="submit" value="Delete" class="btn btn-warning btn-block">
+				}
+			</div>
+		</div>
+	}
+	<script type="text/javascript">
+		$('div.section select').change(function () {
+			var id = $(this).data('id');
+			var value = $(this).val();
+
+			var queryString = "?id=" + id + "&activate=" + value;
+
+			$.post('@Url.Action(MVC.Admin.Sections.ActionNames.Activate, MVC.Admin.Sections.Name)' + queryString);
+		});
+	</script>

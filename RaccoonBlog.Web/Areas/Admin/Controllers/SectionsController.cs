@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using RaccoonBlog.Web.Helpers.Attributes;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
@@ -30,6 +31,18 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			if (section == null)
 				return HttpNotFound("Section does not exist.");
 			return View(section);
+		}
+
+		[HttpPost]
+		public virtual ActionResult Activate(string id, bool activate)
+		{
+			var section = RavenSession.Load<Section>(id);
+			if (section == null)
+				return HttpNotFound("Section does not exist.");
+
+			section.IsActive = activate;
+
+			return new HttpStatusCodeResult(HttpStatusCode.OK);
 		}
 
 		[HttpPost]

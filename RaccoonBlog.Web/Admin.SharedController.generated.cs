@@ -48,13 +48,15 @@ namespace T4MVC.Admin
             public partial class _EditorTemplatesClass
             {
                 public readonly string Boolean = "Boolean";
+                public readonly string BooleanLong = "BooleanLong";
                 public readonly string DateTime = "DateTime";
                 public readonly string EmailAddress = "EmailAddress";
                 public readonly string HiddenInput = "HiddenInput";
                 public readonly string Int32 = "Int32";
-                public readonly string MultilineText = "MultilineText";
+                public readonly string NameWithDescription = "NameWithDescription";
                 public readonly string Password = "Password";
-                public readonly string String = "String";
+                public readonly string TextAbove = "TextAbove";
+                public readonly string TextLong = "TextLong";
             }
         }
     }

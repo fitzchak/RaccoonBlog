@@ -66,6 +66,12 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult Activate()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Activate);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public virtual System.Web.Mvc.ActionResult Update()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Update);
@@ -101,6 +107,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
             public readonly string Index = "Index";
             public readonly string Add = "Add";
             public readonly string Edit = "Edit";
+            public readonly string Activate = "Activate";
             public readonly string Update = "Update";
             public readonly string Delete = "Delete";
             public readonly string SetPosition = "SetPosition";
@@ -112,6 +119,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
             public const string Index = "Index";
             public const string Add = "Add";
             public const string Edit = "Edit";
+            public const string Activate = "Activate";
             public const string Update = "Update";
             public const string Delete = "Delete";
             public const string SetPosition = "SetPosition";
@@ -125,6 +133,15 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         public class ActionParamsClass_Edit
         {
             public readonly string id = "id";
+        }
+        static readonly ActionParamsClass_Activate s_params_Activate = new ActionParamsClass_Activate();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Activate ActivateParams { get { return s_params_Activate; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Activate
+        {
+            public readonly string id = "id";
+            public readonly string active = "active";
         }
         static readonly ActionParamsClass_Update s_params_Update = new ActionParamsClass_Update();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -205,6 +222,19 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             EditOverride(callInfo, id);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ActivateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id, bool active);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Activate(string id, bool active)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Activate);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "active", active);
+            ActivateOverride(callInfo, id, active);
             return callInfo;
         }
 
