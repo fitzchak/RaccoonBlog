@@ -141,7 +141,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         public class ActionParamsClass_Activate
         {
             public readonly string id = "id";
-            public readonly string active = "active";
+            public readonly string activate = "activate";
         }
         static readonly ActionParamsClass_Update s_params_Update = new ActionParamsClass_Update();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -226,15 +226,15 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         }
 
         [NonAction]
-        partial void ActivateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id, bool active);
+        partial void ActivateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id, bool activate);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Activate(string id, bool active)
+        public override System.Web.Mvc.ActionResult Activate(string id, bool activate)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Activate);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "active", active);
-            ActivateOverride(callInfo, id, active);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "activate", activate);
+            ActivateOverride(callInfo, id, activate);
             return callInfo;
         }
 
