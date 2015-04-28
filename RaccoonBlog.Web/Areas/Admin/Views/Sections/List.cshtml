@@ -31,13 +31,16 @@
 			</div>
 		</div>
 	}
-	<script type="text/javascript">
-		$('div.section select').change(function () {
-			var id = $(this).data('id');
-			var value = $(this).val();
+	@section Script
+	{
+		<script type="text/javascript">
+			$('div.section select').change(function () {
+				var id = $(this).data('id');
+				var value = $(this).val();
 
-			var queryString = "?id=" + id + "&activate=" + value;
+				var queryString = "?id=" + id + "&activate=" + value;
 
-			$.post('@Url.Action(MVC.Admin.Sections.ActionNames.Activate, MVC.Admin.Sections.Name)' + queryString);
-		});
-	</script>
+				$.post('@Url.Action(MVC.Admin.Sections.ActionNames.Activate, MVC.Admin.Sections.Name)' + queryString);
+			});
+		</script>
+	}
