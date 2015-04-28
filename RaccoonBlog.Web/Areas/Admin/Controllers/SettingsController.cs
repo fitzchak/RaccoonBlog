@@ -27,7 +27,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 				return View(BlogConfig);
 			}
 
-			RavenSession.Store(config);
+			RavenSession.Store(config, "Blog/Config");
 
 			ViewBag.Message = "Configurations successfully saved!";
 			if (Request.IsAjaxRequest())
