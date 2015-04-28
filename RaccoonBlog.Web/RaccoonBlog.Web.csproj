@@ -278,6 +278,7 @@
     <Compile Include="ErrorController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ConfigurationHelper.cs" />
     <Compile Include="Helpers\ThemeLessTransform.cs" />
     <Compile Include="Helpers\RouteCollectionExtension.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />

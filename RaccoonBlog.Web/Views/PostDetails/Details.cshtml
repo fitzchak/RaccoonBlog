@@ -127,7 +127,7 @@
 			<article class="comment important">
 				<a name='@(string.Format("comment{0}", (comment.i+1)))'></a>
 				<div class="avatar">
-					<img src='@(string.Format("http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon", @comment.value.EmailHash))' alt="@comment.value.Author"/>
+					<img src='@(string.Format("http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon", @comment.value.EmailHash))' alt="@comment.value.Author" />
 				</div>
 				<div class="postedBy">
 					<a href="@comment.value.Url" target="_blank" title='@(string.Format("Comment by {0}", @comment.value.Author))'>@comment.value.Author</a>
@@ -146,7 +146,7 @@
 			<article class="comment">
 				<a name='@(string.Format("comment{0}", (comment.i+1)))'></a>
 				<div class="avatar">
-					<img src='@(string.Format("http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon", @comment.value.EmailHash))' alt="@comment.value.Author"/>
+					<img src='@(string.Format("http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon", @comment.value.EmailHash))' alt="@comment.value.Author" />
 				</div>
 				<time>
 					@DateTime.Parse(@comment.value.CreatedAt).ToString("dd MMM yyyy")<br />
@@ -171,13 +171,25 @@
 		{
 			if (Model.IsLoggedInCommenter == false)
 			{
-				<div class="openid-wrapper">
+				<div class="openAuth-wrapper">
 					<form action="@Url.Action("Login", "Social")" method="post">
 						@Html.Hidden("redirectUrl", Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))
-						<button type="submit" name="provider" value="Google" class="btn btn-default">Google</button>
-						<button type="submit" name="provider" value="Live" class="btn btn-default">Live</button>
-						<button type="submit" name="provider" value="Twitter" class="btn btn-default">Twitter</button>
-						<button type="submit" name="provider" value="Facebook" class="btn btn-default">Facebook</button>
+						@if (ConfigurationHelper.GoogleOAuthKeys != null)
+						{
+							<button type="submit" name="provider" value="Google" class="btn btn-default">Google</button>
+						}
+						@if (ConfigurationHelper.MicrosoftOAuthKeys != null)
+						{
+							<button type="submit" name="provider" value="Microsoft" class="btn btn-default">Live</button>
+						}
+						@if (ConfigurationHelper.TwitterOAuthKeys != null)
+						{
+							<button type="submit" name="provider" value="Twitter" class="btn btn-default">Twitter</button>
+						}
+						@if (ConfigurationHelper.FacebookOAuthKeys != null)
+						{
+							<button type="submit" name="provider" value="Facebook" class="btn btn-default">Facebook</button>
+						}
 					</form>
 				</div>
 			}
