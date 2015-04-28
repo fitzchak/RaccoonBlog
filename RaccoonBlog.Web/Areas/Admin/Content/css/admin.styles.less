@@ -46,7 +46,7 @@
 
     @media (min-width: @screen-tablet) {
 
-        .active a {
+        .active>a {
             font-weight: bold;
             color: @brand-warning;
         }
@@ -197,6 +197,7 @@ footer {
 }
 
 .user {
+    padding-top:10px;
 	border-bottom:1px solid lighten(@gray-light,40%);
 	
 	&>div {
@@ -238,6 +239,7 @@ footer {
     margin-bottom:5px;
     input[type="radio"], input[type="checkbox"] {
         float:left;
+        pointer-events: none;
     }
 
     .avatar {
@@ -262,6 +264,8 @@ footer {
 	        margin-left:83px;
         }
     }
+
+    
 }
 
 .input-validation-error {
@@ -275,6 +279,11 @@ footer {
     font-size:12px !important;
 
 }
+
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+                               background-color:transparent;
+                               color:@brand-warning;
+                           }
 
 /*
 

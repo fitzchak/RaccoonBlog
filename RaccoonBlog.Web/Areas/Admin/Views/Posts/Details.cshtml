@@ -99,15 +99,26 @@
 }
 
 @section Script {
-	<script type="text/javascript">
-		$(function () {
-			$('.comment').click(function () {
-				var c = $(this).children('input:checkbox');
-				c.attr('checked', !c.attr('checked'));
-			});
-			$('.confirm').click(function () {
-				if (!confirm('Are you sure you want to ' + $(this).val().toLowerCase() + '?')) return false;
-			});
-		});
-	</script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".comment").click(function (e) {
+                e.stopPropagation();
+            });
+        });
+
+        $(function () {
+            $('.comment').click(function () {
+                var c = $(this).children('input:checkbox');
+                //c.click(function(e) {
+                    //e.preventDefault();
+                    //c.attr('checked', !c.attr('checked'));
+                    //alert('test');
+                //});
+                c.attr('checked', !c.attr('checked'));
+            });
+            $('.confirm').click(function () {
+                if (!confirm('Are you sure you want to ' + $(this).val().toLowerCase() + '?')) return false;
+            });
+        });
+    </script>
 }
