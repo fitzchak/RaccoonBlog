@@ -175,9 +175,9 @@
 					<form action="@Url.Action("Login", "Social")" method="post">
 						@Html.Hidden("redirectUrl", Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))
 						<button type="submit" name="provider" value="Google" class="btn btn-default">Google</button>
-						<button type="submit" name="url" value="live" class="btn btn-default">Live</button>
+						<button type="submit" name="provider" value="Live" class="btn btn-default">Live</button>
 						<button type="submit" name="provider" value="Twitter" class="btn btn-default">Twitter</button>
-						<button type="submit" name="url" value="facebook" class="btn btn-default">Facebook</button>
+						<button type="submit" name="provider" value="Facebook" class="btn btn-default">Facebook</button>
 					</form>
 				</div>
 			}
