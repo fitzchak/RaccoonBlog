@@ -238,9 +238,6 @@ namespace Links
                 public static readonly string feed_icon_14x14_png = Url("feed-icon-14x14.png");
                 public static readonly string indicator_gif = Url("indicator.gif");
                 public static readonly string logo_admin_png = Url("logo-admin.png");
-                public static readonly string openid_icons_png = Url("openid-icons.png");
-                public static readonly string openid_inputicon_gif = Url("openid-inputicon.gif");
-                public static readonly string openid_providers_en_png = Url("openid-providers-en.png");
                 public static readonly string printer_png = Url("printer.png");
             }
         
@@ -263,15 +260,6 @@ namespace Links
                 public static readonly string search_icon_svg = Url("search-icon.svg");
                 public static readonly string side_bkg_jpg = Url("side_bkg.jpg");
                 public static readonly string side_bkg_png = Url("side_bkg.png");
-            }
-        
-            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-            public static class openid {
-                private const string URLPATH = "~/Content/css/openid";
-                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                public static readonly string openid_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/openid.min.css") ? Url("openid.min.css") : Url("openid.css");
-                     
             }
         
             public static readonly string prism_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/prism.min.css") ? Url("prism.min.css") : Url("prism.css");
@@ -1232,8 +1220,6 @@ namespace Links
             public static readonly string jquery_ae_image_resize_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ae.image.resize.min.js") ? Url("jquery.ae.image.resize.min.js") : Url("jquery.ae.image.resize.js");
             public static readonly string jquery_ae_image_resize_min_js = Url("jquery.ae.image.resize.min.js");
             public static readonly string jquery_md5_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.md5.min.js") ? Url("jquery.md5.min.js") : Url("jquery.md5.js");
-            public static readonly string jquery_openid_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.openid.min.js") ? Url("jquery.openid.min.js") : Url("jquery.openid.js");
-            public static readonly string jquery_openid_min_js = Url("jquery.openid.min.js");
             public static readonly string jquery_tmpl_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.tmpl.min.js") ? Url("jquery.tmpl.min.js") : Url("jquery.tmpl.js");
             public static readonly string jquery_tmpl_min_js = Url("jquery.tmpl.min.js");
             public static readonly string jquery_twbsPagination_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.twbsPagination.min.js") ? Url("jquery.twbsPagination.min.js") : Url("jquery.twbsPagination.js");
@@ -1251,8 +1237,6 @@ namespace Links
             public static readonly string moment_with_locales_min_js = Url("moment-with-locales.min.js");
             public static readonly string moment_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/moment.min.js") ? Url("moment.min.js") : Url("moment.js");
             public static readonly string moment_min_js = Url("moment.min.js");
-            public static readonly string openid_en_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/openid-en.min.js") ? Url("openid-en.min.js") : Url("openid-en.js");
-            public static readonly string openid_jquery_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/openid-jquery.min.js") ? Url("openid-jquery.min.js") : Url("openid-jquery.js");
             public static readonly string raccoon_blog_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/raccoon-blog.min.js") ? Url("raccoon-blog.min.js") : Url("raccoon-blog.js");
             public static readonly string RequiredIfValidation_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/RequiredIfValidation.min.js") ? Url("RequiredIfValidation.min.js") : Url("RequiredIfValidation.js");
             public static readonly string respond_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/respond.src.min.js") ? Url("respond.src.min.js") : Url("respond.src.js");
@@ -2308,13 +2292,6 @@ namespace Links
                     {
                     }
                 }
-                public static partial class openid 
-                {
-                    public static class Assets
-                    {
-                        public const string openid_css = "~/Content/css/openid/openid.css";
-                    }
-                }
                 public static class Assets
                 {
                     public const string anytime_css = "~/Content/css/anytime.css";
@@ -3051,8 +3028,6 @@ namespace Links
                     public const string jquery_ae_image_resize_js = "~/Content/js/jquery.ae.image.resize.js"; 
                     public const string jquery_ae_image_resize_min_js = "~/Content/js/jquery.ae.image.resize.min.js"; 
                     public const string jquery_md5_js = "~/Content/js/jquery.md5.js"; 
-                    public const string jquery_openid_js = "~/Content/js/jquery.openid.js"; 
-                    public const string jquery_openid_min_js = "~/Content/js/jquery.openid.min.js"; 
                     public const string jquery_tmpl_js = "~/Content/js/jquery.tmpl.js"; 
                     public const string jquery_tmpl_min_js = "~/Content/js/jquery.tmpl.min.js"; 
                     public const string jquery_twbsPagination_js = "~/Content/js/jquery.twbsPagination.js"; 
@@ -3069,8 +3044,6 @@ namespace Links
                     public const string moment_with_locales_min_js = "~/Content/js/moment-with-locales.min.js"; 
                     public const string moment_js = "~/Content/js/moment.js"; 
                     public const string moment_min_js = "~/Content/js/moment.min.js"; 
-                    public const string openid_en_js = "~/Content/js/openid-en.js"; 
-                    public const string openid_jquery_js = "~/Content/js/openid-jquery.js"; 
                     public const string raccoon_blog_js = "~/Content/js/raccoon-blog.js"; 
                     public const string RequiredIfValidation_js = "~/Content/js/RequiredIfValidation.js"; 
                     public const string respond_src_js = "~/Content/js/respond.src.js"; 

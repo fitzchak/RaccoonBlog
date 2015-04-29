@@ -64,6 +64,13 @@ namespace RaccoonBlog.Web.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Login);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ExternalLoginCallback()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ExternalLoginCallback);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public SocialController Actions { get { return MVC.Social; } }
@@ -81,12 +88,14 @@ namespace RaccoonBlog.Web.Controllers
         public class ActionNamesClass
         {
             public readonly string Login = "Login";
+            public readonly string ExternalLoginCallback = "ExternalLoginCallback";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string Login = "Login";
+            public const string ExternalLoginCallback = "ExternalLoginCallback";
         }
 
 
@@ -96,7 +105,15 @@ namespace RaccoonBlog.Web.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Login
         {
-            public readonly string url = "url";
+            public readonly string provider = "provider";
+            public readonly string redirectUrl = "redirectUrl";
+        }
+        static readonly ActionParamsClass_ExternalLoginCallback s_params_ExternalLoginCallback = new ActionParamsClass_ExternalLoginCallback();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ExternalLoginCallback ExternalLoginCallbackParams { get { return s_params_ExternalLoginCallback; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ExternalLoginCallback
+        {
             public readonly string returnUrl = "returnUrl";
         }
         static readonly ViewsClass s_views = new ViewsClass();
@@ -119,16 +136,28 @@ namespace RaccoonBlog.Web.Controllers
         public T4MVC_SocialController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void LoginOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string url, string returnUrl);
+        partial void LoginOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string provider, string redirectUrl);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Login(string url, string returnUrl)
+        public override System.Web.Mvc.ActionResult Login(string provider, string redirectUrl)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Login);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "url", url);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "returnUrl", returnUrl);
-            LoginOverride(callInfo, url, returnUrl);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "provider", provider);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "redirectUrl", redirectUrl);
+            LoginOverride(callInfo, provider, redirectUrl);
             return callInfo;
+        }
+
+        [NonAction]
+        partial void ExternalLoginCallbackOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string returnUrl);
+
+        [NonAction]
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ExternalLoginCallback(string returnUrl)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ExternalLoginCallback);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "returnUrl", returnUrl);
+            ExternalLoginCallbackOverride(callInfo, returnUrl);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
         }
 
     }

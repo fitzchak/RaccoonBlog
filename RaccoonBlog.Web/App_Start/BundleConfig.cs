@@ -50,9 +50,7 @@ namespace RaccoonBlog.Web
                 .Include("~/Content/js/setup.js")
 				.Include("~/Content/js/jquery.twbsPagination.js")
 				.Include("~/Content/js/jquery.validate.js")
-				.Include("~/Content/js/jquery.validate.unobtrusive.js")
-				.Include("~/Content/js/jquery.openid.js")
-				.Include("~/Content/js/openid-en.js"));
+				.Include("~/Content/js/jquery.validate.unobtrusive.js"));
 
 			bundles
 				.Add(new ScriptBundle("~/Content/js/admin/main")
@@ -101,8 +99,7 @@ namespace RaccoonBlog.Web
 
 			bundles
 				.Add((new StyleBundle("~/Content/css/styles"))
-				.Include("~/Content/css/socicon.css")
-				.Include("~/Content/css/openid/openid.css"));
+					.Include("~/Content/css/socicon.css"));
 
             bundles
 				.Add(new StyleBundle("~/Areas/Admin/Content/css/styles")

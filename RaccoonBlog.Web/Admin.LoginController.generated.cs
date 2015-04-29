@@ -27,9 +27,6 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
     public partial class LoginController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public LoginController() { }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected LoginController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
