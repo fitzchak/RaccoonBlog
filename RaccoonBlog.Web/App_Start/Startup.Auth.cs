@@ -29,7 +29,7 @@ namespace RaccoonBlog.Web
 
 			AddGoogle(app);
 			AddMicrosoftAccount(app);
-			AddTwitterAccount(app);
+			//AddTwitterAccount(app);
 			AddFacebookAccount(app);
 		}
 
@@ -39,11 +39,14 @@ namespace RaccoonBlog.Web
 			if (keys == null)
 				return;
 
-			app.UseFacebookAuthentication(new FacebookAuthenticationOptions
-			{
-				AppId = keys.Item1,
-				AppSecret = keys.Item2
-			});
+			var facebookAuthenticationOptions = new FacebookAuthenticationOptions
+						{
+							AppId = keys.Item1,
+							AppSecret = keys.Item2
+						};
+			facebookAuthenticationOptions.Scope.Add("email");
+
+			app.UseFacebookAuthentication(facebookAuthenticationOptions);
 		}
 
 		private static void AddTwitterAccount(IAppBuilder app)

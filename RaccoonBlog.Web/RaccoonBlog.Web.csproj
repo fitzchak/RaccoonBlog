@@ -550,8 +550,6 @@
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Helpers\Attributes\AjaxOnlyAttribute.cs" />
     <Compile Include="Helpers\ModelStateExtensions.cs" />
-    <Compile Include="Helpers\TwitterButtonDataCount.cs" />
-    <Compile Include="Helpers\TwitterExtensions.cs" />
     <Compile Include="Helpers\UrlHelperExtensions.cs" />
     <Compile Include="Helpers\Validation\RequiredIfAttribute.cs" />
     <Compile Include="Helpers\Results\JsonNetResult.cs" />

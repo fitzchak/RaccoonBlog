@@ -33,7 +33,8 @@ namespace RaccoonBlog.Web.Helpers
 		{
 			get
 			{
-				return twitterOAuthKeys ?? (twitterOAuthKeys = GetKeys("Twitter", "ConsumerKey", "ConsumerSecret"));
+				//return twitterOAuthKeys ?? (twitterOAuthKeys = GetKeys("Twitter", "ConsumerKey", "ConsumerSecret"));
+				return null;
 			}
 		}
 
