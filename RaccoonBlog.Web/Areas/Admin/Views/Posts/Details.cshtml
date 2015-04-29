@@ -7,15 +7,18 @@
 	<header>
 	    <h3 class="pull-left-sm"><a href="@Url.Action("Details", new { Model.Post.Id, Model.Post.Slug })">@Model.Post.Title</a></h3>
 
-	    <div id="post-admin" class="pull-right-sm">
-	        <a class="btn btn-primary" href="@Url.Action("Details", "PostDetails", new { Model.Post.Id, Model.Post.Slug, area = "" })">View</a>
-	        <a class="btn btn-primary" href="@Url.Action("Details", "PostDetails", new { Model.Post.Id, Model.Post.Slug, key = @Model.Post.Key, area = "" })">Private View</a>
-	        <a class="btn btn-primary" href="@Url.Action("Edit", "Posts", new { id = @Model.Post.Id})">Edit</a>
-	        <form action="@Url.Action("Delete", new { Model.Post.Id })" method="post" style="display: inline-block">
-	            <input class="btn btn-warning" type="submit" value="Delete" class="confirm">
-	        </form>
+		<div id="post-admin" class="pull-right-sm">
+			@if ((DateTime.UtcNow - Model.Post.PublishedAt).TotalMilliseconds > 0)
+			{
+				<a class="btn btn-primary" href="@Url.Action("Details", "PostDetails", new { Model.Post.Id, Model.Post.Slug, area = "" })">View</a>
+			}
+			<a class="btn btn-primary" href="@Url.Action("Details", "PostDetails", new { Model.Post.Id, Model.Post.Slug, key = @Model.Post.Key, area = "" })">Private View</a>
+			<a class="btn btn-primary" href="@Url.Action("Edit", "Posts", new { id = @Model.Post.Id})">Edit</a>
+			<form action="@Url.Action("Delete", new { Model.Post.Id })" method="post" style="display: inline-block">
+				<input class="btn btn-warning" type="submit" value="Delete" class="confirm">
+			</form>
 
-	    </div>
+		</div>
 	    <div class="clearfix"></div>
         <hr/>
 		
