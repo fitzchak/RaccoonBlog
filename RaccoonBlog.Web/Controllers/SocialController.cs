@@ -92,7 +92,7 @@ namespace RaccoonBlog.Web.Controllers
 			if (loginInfo == null)
 			{
 				//TODO: better hadling (HandleNullResponse)
-				return Redirect("homepage");
+				return RedirectToRoute("homepage");
 			}
 
 			//TODO: handle falures
