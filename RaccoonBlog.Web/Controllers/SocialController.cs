@@ -88,14 +88,14 @@ namespace RaccoonBlog.Web.Controllers
 		[AllowAnonymous]
 		public virtual async Task<ActionResult> ExternalLoginCallback(string returnUrl)
 		{
-			var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
-			if (loginInfo == null)
-			{
-				//TODO: better hadling (HandleNullResponse)
-				return RedirectToRoute("homepage");
-			}
+			Uri returnUri;
+			Uri.TryCreate(returnUrl, UriKind.Absolute, out returnUri);
 
-			//TODO: handle falures
+			var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
+			if (loginInfo == null || returnUri == null)
+			{
+				return returnUri != null ? (ActionResult)Redirect(returnUri.AbsoluteUri) : RedirectToRoute("homepage");
+			}
 
 			var claimedIdentifier = loginInfo.Login.ProviderKey + "@" + loginInfo.Login.LoginProvider;
 			var commenter = RavenSession.Query<Commenter>()
@@ -110,27 +110,7 @@ namespace RaccoonBlog.Web.Controllers
 			CommenterUtil.SetCommenterCookie(Response, commenter.Key.MapTo<string>());
 			RavenSession.Store(commenter);
 
-			return Redirect(returnUrl);
-
-			/*
-			// Sign in the user with this external login provider if the user already has a login
-			var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
-			switch (result)
-			{
-				case SignInStatus.Success:
-					return RedirectToLocal(returnUrl);
-				case SignInStatus.LockedOut:
-					return View("Lockout");
-				case SignInStatus.RequiresVerification:
-					return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
-				case SignInStatus.Failure:
-				default:
-					// If the user does not have an account, then prompt the user to create an account
-					ViewBag.ReturnUrl = returnUrl;
-					ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-					return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
-			}*/
-			throw new NotImplementedException();
+			return Redirect(returnUri.AbsoluteUri);
 		}
 	}
 }

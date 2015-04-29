@@ -178,7 +178,7 @@
                 <div class="openAuth-wrapper">
                     <span class="btn">Sign in with</span>
                     <form action="@Url.Action("Login", "Social")" method="post">
-                        @Html.Hidden("redirectUrl", Url.RelativeToAbsolute((string)ViewBag.CurrentUrl))
+                        @Html.Hidden("redirectUrl", Url.RelativeToAbsolute((string)ViewBag.CurrentUrl + "#postComment"))
                         @if (ConfigurationHelper.GoogleOAuthKeys != null)
                         {
                             <button type="submit" name="provider" value="Google" class="btn btn-default btn-google">c</button>
