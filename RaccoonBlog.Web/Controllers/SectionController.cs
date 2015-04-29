@@ -74,9 +74,7 @@ namespace RaccoonBlog.Web.Controllers
 		}
 
 		[ChildActionOnly]
-#if !DEBUG
-		[OutputCache(Duration = 300)]
-#endif
+		[DonutOutputCache(Duration = 300)]
 		public virtual ActionResult List()
 		{
 			if (true.Equals(HttpContext.Items["CurrentlyProcessingException"]))
