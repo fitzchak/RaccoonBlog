@@ -105,6 +105,8 @@ namespace RaccoonBlog.Web.Controllers
 
                 CommenterUtil.SetCommenterCookie(Response, input.CommenterKey.MapTo<string>());
 
+				OutputCacheManager.RemoveItem(SectionController.NameConst, MVC.Section.ActionNames.List);
+
                 return PostingCommentSucceeded(post, input);
 		    }
 

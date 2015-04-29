@@ -2,7 +2,6 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using RaccoonBlog.Web.Helpers.Attributes;
-using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Models;
 
 namespace RaccoonBlog.Web.Areas.Admin.Controllers
@@ -30,6 +29,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			var section = RavenSession.Load<Section>(id);
 			if (section == null)
 				return HttpNotFound("Section does not exist.");
+
 			return View(section);
 		}
 
@@ -41,6 +41,8 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 				return HttpNotFound("Section does not exist.");
 
 			section.IsActive = activate;
+
+			OutputCacheManager.RemoveItems(MVC.Section.Name);
 
 			return new HttpStatusCodeResult(HttpStatusCode.OK);
 		}
@@ -59,6 +61,9 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 					.FirstOrDefault() + 1;
 			}
 			RavenSession.Store(section);
+
+			OutputCacheManager.RemoveItems(MVC.Section.Name);
+
 			return RedirectToAction("Index");
 		}
 
@@ -70,7 +75,9 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 				return HttpNotFound("Section does not exist.");
 
 			RavenSession.Delete(section);
-			
+
+			OutputCacheManager.RemoveItems(MVC.Section.Name);
+
 			if (Request.IsAjaxRequest())
 			{
 				return Json(new { Success = true });
@@ -115,6 +122,9 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			}
 
 			section.Position = newPosition;
+
+			OutputCacheManager.RemoveItems(MVC.Section.Name);
+
 			return Json(new { success = true });
 		}
 	}

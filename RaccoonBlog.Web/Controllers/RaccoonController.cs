@@ -10,6 +10,8 @@ using Raven.Imports.Newtonsoft.Json.Serialization;
 
 namespace RaccoonBlog.Web.Controllers
 {
+	using DevTrends.MvcDonutCaching;
+
 	public abstract partial class RaccoonController : RavenController
 	{
 		public const int DefaultPage = 1;
@@ -51,6 +53,12 @@ namespace RaccoonBlog.Web.Controllers
 				}
 				return sections;
 			}
+		}
+
+		private OutputCacheManager outputCacheManager;
+		protected OutputCacheManager OutputCacheManager
+		{
+			get { return outputCacheManager ?? (outputCacheManager = new OutputCacheManager()); }
 		}
 
 		protected override void OnActionExecuting(ActionExecutingContext filterContext)

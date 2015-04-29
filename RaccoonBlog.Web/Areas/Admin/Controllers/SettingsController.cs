@@ -8,6 +8,9 @@ using RaccoonBlog.Web.Models;
 
 namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
+	using DevTrends.MvcDonutCaching;
+	using Web.Controllers;
+
 	public partial class SettingsController : AdminController
 	{
 		[HttpGet]
@@ -28,6 +31,8 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			}
 
 			RavenSession.Store(config, "Blog/Config");
+
+			OutputCacheManager.RemoveItem(MVC.Section.Name, MVC.Section.ActionNames.ContactMe);
 
 			ViewBag.Message = "Configurations successfully saved!";
 			if (Request.IsAjaxRequest())

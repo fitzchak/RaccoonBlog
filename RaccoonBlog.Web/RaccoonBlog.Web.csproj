@@ -75,6 +75,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\DataAnnotationsExtensions.MVC3.1.1.0.0\lib\NETFramework40\DataAnnotationsExtensions.ClientValidation.dll</HintPath>
     </Reference>
+    <Reference Include="DevTrends.MvcDonutCaching">
+      <HintPath>..\packages\MvcDonutCaching.1.3.1-beta1\lib\net40\DevTrends.MvcDonutCaching.dll</HintPath>
+    </Reference>
     <Reference Include="dotless.Core, Version=1.4.1.0, Culture=neutral, PublicKeyToken=96b446c9e63eae34, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\dotless.1.4.1.0\lib\dotless.Core.dll</HintPath>
@@ -692,6 +695,7 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="DevTrends.MvcDonutCaching.README.txt" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\js\jquery.ui.core.js" />

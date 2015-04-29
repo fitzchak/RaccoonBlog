@@ -13,6 +13,9 @@ using RaccoonBlog.Web.Infrastructure.Common;
 
 namespace RaccoonBlog.Web.Controllers
 {
+	using System.Web.UI;
+	using DevTrends.MvcDonutCaching;
+
 	public partial class SectionController : AggresivelyCachingRacconController
     {
         [ChildActionOnly]
@@ -72,7 +75,7 @@ namespace RaccoonBlog.Web.Controllers
 
 		[ChildActionOnly]
 #if !DEBUG
-		[OutputCache(Duration = 360)]
+		[OutputCache(Duration = 300, Location = OutputCacheLocation.Server)]
 #endif
 		public virtual ActionResult List()
 		{
@@ -88,7 +91,7 @@ namespace RaccoonBlog.Web.Controllers
 		}
 
         [ChildActionOnly]
-		[OutputCache(Duration = 3600)]
+		[DonutOutputCache(Duration = 3600, Location = OutputCacheLocation.Server)]
 		public virtual ActionResult ContactMe()
         {
 	        var user = RavenSession.GetUserByEmail(BlogConfig.OwnerEmail);
