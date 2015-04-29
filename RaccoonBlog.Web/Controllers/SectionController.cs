@@ -75,7 +75,7 @@ namespace RaccoonBlog.Web.Controllers
 
 		[ChildActionOnly]
 #if !DEBUG
-		[OutputCache(Duration = 300, Location = OutputCacheLocation.Server)]
+		[OutputCache(Duration = 300)]
 #endif
 		public virtual ActionResult List()
 		{
@@ -91,7 +91,7 @@ namespace RaccoonBlog.Web.Controllers
 		}
 
         [ChildActionOnly]
-		[DonutOutputCache(Duration = 3600, Location = OutputCacheLocation.Server)]
+		[DonutOutputCache(Duration = 3600)]
 		public virtual ActionResult ContactMe()
         {
 	        var user = RavenSession.GetUserByEmail(BlogConfig.OwnerEmail);
