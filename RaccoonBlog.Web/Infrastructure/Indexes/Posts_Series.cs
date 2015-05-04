@@ -38,8 +38,6 @@ namespace RaccoonBlog.Web.Infrastructure.Indexes
 		{
 			public string Id { get; set; }
 
-		    private string title;
-
 		    public string Title { get; set; }
 
 		    public DateTimeOffset PublishAt { get; set; }
@@ -49,6 +47,7 @@ namespace RaccoonBlog.Web.Infrastructure.Indexes
 		{
 			Map = posts => from p in posts
 						   let parts = p.Title.Split(':')
+						   where p.IsDeleted == false
 						   where parts.Length > 1
 						   let series = parts[0].Trim().ToLower()
 						   select new
