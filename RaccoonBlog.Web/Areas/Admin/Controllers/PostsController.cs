@@ -34,7 +34,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 				AllowComments = true,
 				ContentType = DynamicContentType.Html,
 				CreatedAt = DateTimeOffset.Now,
-				PublishAt = DateTimeOffset.MinValue // force auto schedule
+				PublishAt = null // force auto schedule
 			});
 		}
 

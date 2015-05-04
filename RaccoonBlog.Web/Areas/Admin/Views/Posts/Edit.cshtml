@@ -1,50 +1,42 @@
 ﻿@using RaccoonBlog.Web.Models
 @model PostInput
-<!-- TinyMCE -->    
+<!-- TinyMCE -->
 @section Script {
-    
-    <script src="~/Areas/Admin/Content/datepicker/js/bootstrap-datetimepicker.min.js"></script>
-    <link href="~/Areas/Admin/Content/datepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
-    
-    <script type="text/javascript">
-        $(function () {
-            $('.datepicker input').datetimepicker({
-                minDate('@DateTimeOffset.MinValue');
-            });   
-        });
-    </script>
-    
 
+	<script type="text/javascript">
+		$(function () {
+			$('.datepicker input').datetimepicker();
+		});
+	</script>
 
-
-    <script type="text/javascript">
-        tinymce.init({
-            selector: "textarea",
-            theme: "modern",
-            plugins: [
+	<script type="text/javascript">
+		tinymce.init({
+			selector: "textarea",
+			theme: "modern",
+			plugins: [
                 "advlist autolink lists link image charmap print preview hr anchor pagebreak",
                 "searchreplace wordcount visualblocks visualchars code fullscreen",
                 "insertdatetime media nonbreaking save table contextmenu directionality",
                 "emoticons template paste textcolor colorpicker textpattern"
-            ],
-            toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
-            toolbar2: "print preview media | forecolor backcolor emoticons",
-            image_advtab: true,
-            templates: [
+			],
+			toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+			toolbar2: "print preview media | forecolor backcolor emoticons",
+			image_advtab: true,
+			templates: [
                 { title: 'Test template 1', content: 'Test 1' },
                 { title: 'Test template 2', content: 'Test 2' }
-            ]
-        });
-    </script>
+			]
+		});
+	</script>
 }
 @{
-    ViewBag.Title = @Model.Title;
+	ViewBag.Title = @Model.Title;
 }
 @if (ViewData.ModelState.IsValid == false)
 {
-    <div class="form-error">
-        @Html.ValidationSummary(true)
-    </div>
+	<div class="form-error">
+		@Html.ValidationSummary(true)
+	</div>
 }
 <h3 class="pull-left-sm">@(Model.IsNewPost() ? "Add new post" : "Edit Post")</h3>
 <a href='@Url.Action("Index", "Posts")' class="btn btn-primary btn-sm pull-right-sm">View posts</a>
@@ -53,20 +45,20 @@
 
 @using (Html.BeginForm("Update", "Posts", FormMethod.Post, new { @class = "form-horizontal" }))
 {
-    <div class="row">
-        <div class="col-lg-4">
-            @Html.HiddenFor(x => x.Id)
-            @Html.EditorFor(x => x.Title, "TextAbove")
-            @Html.EditorFor(x => x.CreatedAt, "DateTime")
-            @Html.EditorFor(x => x.PublishAt, "DateTime")
-            @Html.EditorFor(x => x.Tags, "TextAbove")
-            @Html.EditorFor(x => x.AllowComments)
-        </div>
-        <div class="col-lg-8">
-            @Html.TextAreaFor(x => x.Body, new { rows = "20" })
-        </div>
-        
-    </div>
-    <input type="submit" value="Save" class="btn btn-primary pull-right" style="margin-top:20px" />
-    <div class="clearfix"></div>
+	<div class="row">
+		<div class="col-lg-4">
+			@Html.HiddenFor(x => x.Id)
+			@Html.EditorFor(x => x.Title, "TextAbove")
+			@Html.EditorFor(x => x.CreatedAt, "DateTime")
+			@Html.EditorFor(x => x.PublishAt, "DateTime")
+			@Html.EditorFor(x => x.Tags, "TextAbove")
+			@Html.EditorFor(x => x.AllowComments)
+		</div>
+		<div class="col-lg-8">
+			@Html.TextAreaFor(x => x.Body, new { rows = "20" })
+		</div>
+
+	</div>
+	<input type="submit" value="Save" class="btn btn-primary pull-right" style="margin-top:20px" />
+	<div class="clearfix"></div>
 }

@@ -56,7 +56,8 @@ namespace RaccoonBlog.Web
 				.Add(new ScriptBundle("~/Content/js/admin/main")
 				.Include("~/Areas/Admin/Content/js/setup.js")
 				.Include("~/Content/js/moment.js")
-				.Include("~/Areas/Admin/Content/js/fullcalendar.js"));
+				.Include("~/Areas/Admin/Content/js/fullcalendar.js")
+				.Include("~/Areas/Admin/Content/datepicker/js/bootstrap-datetimepicker.min.js"));
 
 			bundles
 				.Add(new ScriptBundle("~/Areas/Admin/Content/js/tinymce/scripts")
@@ -103,7 +104,8 @@ namespace RaccoonBlog.Web
 
             bundles
 				.Add(new StyleBundle("~/Areas/Admin/Content/css/styles")
-                .Include("~/Areas/Admin/Content/css/fullcalendar.css"));
+                .Include("~/Areas/Admin/Content/css/fullcalendar.css")
+				.Include("~/Areas/Admin/Content/datepicker/css/bootstrap-datetimepicker.min.css"));
 		}
 
 		public static void RegisterThemeBundles(HttpContext context, BundleCollection bundles)

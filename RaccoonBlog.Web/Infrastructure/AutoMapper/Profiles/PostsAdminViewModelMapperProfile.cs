@@ -1,3 +1,4 @@
+using System;
 using System.Web;
 using AutoMapper;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
@@ -36,6 +37,7 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 				.ForMember(x => x.LastEditedByUserId, o => o.Ignore())
 				.ForMember(x => x.LastEditedAt, o => o.Ignore())
 				.ForMember(x => x.Tags, o => o.MapFrom(m => TagsResolver.ResolveTagsInput(m.Tags)))
+				.ForMember(x => x.PublishAt, o => o.MapFrom(m => m.PublishAt.HasValue ? m.PublishAt.Value : DateTimeOffset.MinValue))
 				;
 
 			Mapper.CreateMap<Post, AdminPostDetailsViewModel.PostDetails>()
