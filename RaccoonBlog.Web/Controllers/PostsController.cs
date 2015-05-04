@@ -48,22 +48,19 @@ namespace RaccoonBlog.Web.Controllers
 
 		public virtual ActionResult Series(int seriesId, string seriesSlug)
 	    {
-            var post = RavenSession
-                .Include<Post>(x => x.CommentsId)
-                .Include(x => x.AuthorId)
-                .Load(seriesId);
+			var serie = RavenSession
+				.Query<Posts_Series.Result, Posts_Series>()
+				.FirstOrDefault(x => x.SerieId == seriesId);
 
-            if (post == null)
+			if (serie == null)
                 return HttpNotFound();
-
-		    var seriesTitle = TitleConverter.ToSeriesTitle(post.Title);
 
             RavenQueryStatistics stats;
             var posts = RavenSession.Query<Post>()
                 .Include(x => x.AuthorId)
 				.Statistics(out stats)
 				.WhereIsPublicPost()
-				.Where(p => p.Title.StartsWith(seriesTitle))
+				.Where(p => p.Id.In(serie.Posts.Select(x => x.Id)))
                 .OrderByDescending(p => p.PublishAt)
                 .Paging(CurrentPage, DefaultPage, PageSize)
                 .ToList();
