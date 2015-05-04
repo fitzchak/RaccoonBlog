@@ -85,35 +85,36 @@
 	</nav>
 
 
-	@if (Model.SeriesInfo != null)
-	{
-		<section class="postsInSeries">
-			<h4 class="text-left">
-				More posts in &quot;@Model.SeriesInfo.SeriesTitle&quot; series:
-			</h4>
-			<ol>
-				@foreach (var post in Model.SeriesInfo.PostsInSeries)
-				{
-					if (post.PublishAt >= DateTimeOffset.Now)
-					{
-						<li><em>(@(post.PublishAt.ToString("dd MMM yyyy")))</em>&nbsp;@(post.Title)</li>
-					}
-					else
-					{
-						if (post.Id == Model.Post.Id)
-						{
-							<li><strong><em>(@(post.PublishAt.ToString("dd MMM yyyy")))</em>&nbsp;<a href="@Url.Action("Details", new { post.Id, post.Slug })">@(post.Title)</a></strong></li>
-						}
-						else
-						{
-							<li><em>(@(post.PublishAt.ToString("dd MMM yyyy")))</em>&nbsp;<a href="@Url.Action("Details", new { post.Id, post.Slug })">@(post.Title)</a></li>
-						}
-					}
-				}
-			</ol>
-		</section>
-	}
-	<hr />
+    @if (Model.SeriesInfo != null)
+    {
+        <section class="postsInSeries" data-state="closed">
+            <h4 class="text-left">
+                More posts in &quot;@Model.SeriesInfo.SeriesTitle&quot; series:
+            </h4>
+            <ol>
+                @foreach (var post in Model.SeriesInfo.PostsInSeries)
+                {
+                    if (post.PublishAt >= DateTimeOffset.Now)
+                    {
+                        <li><em>(@(post.PublishAt.ToString("dd MMM yyyy")))</em>&nbsp;@(post.Title)</li>
+                    }
+                    else
+                    {
+                        if (post.Id == Model.Post.Id)
+                        {
+                            <li><strong><em>(@(post.PublishAt.ToString("dd MMM yyyy")))</em>&nbsp;<a href="@Url.Action("Details", new { post.Id, post.Slug })">@(post.Title)</a></strong></li>
+                        }
+                        else
+                        {
+                            <li><em>(@(post.PublishAt.ToString("dd MMM yyyy")))</em>&nbsp;<a href="@Url.Action("Details", new { post.Id, post.Slug })">@(post.Title)</a></li>
+                        }
+                    }
+                }
+            </ol>
+            <a href="#" class="morePosts btn btn-sm btn-default">show all</a>
+        </section>
+    }
+    <hr />
 </article>
 
 <section class="comments">

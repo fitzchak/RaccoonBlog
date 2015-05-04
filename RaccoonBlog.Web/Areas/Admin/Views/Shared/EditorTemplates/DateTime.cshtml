@@ -3,7 +3,9 @@
         @ViewData.ModelMetadata.DisplayName
     </label>
     <div class="col-sm-10 col-lg-12">
-        @Html.TextBox(string.Empty, ViewData.TemplateInfo.FormattedModelValue, new { @class = "form-control", type = "date" })
-        @Html.ValidationMessage(string.Empty)
+        <div class='date datepicker' >
+            @Html.TextBox(string.Empty, ViewData.TemplateInfo.FormattedModelValue, new { @class = "form-control" })
+            @Html.ValidationMessage(string.Empty)
+        </div>
     </div>
 </div>

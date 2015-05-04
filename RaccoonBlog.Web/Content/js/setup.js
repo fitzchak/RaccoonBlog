@@ -162,6 +162,21 @@ window.onresize = function (event) {
 }
 
 $(document).ready(function (e) {
+    
+    $('.postsInSeries .morePosts').click(function () {
+        if ($('.postsInSeries').attr('data-state') != 'open') {
+            $('.postsInSeries ol').addClass('open');
+            $('.postsInSeries').attr('data-state', 'open');
+            $(this).html('hide');
+        } else {
+            $('.postsInSeries ol').removeClass('open');
+            $('.postsInSeries').attr('data-state', 'closed');
+            $(this).html('show all');
+        }
+
+
+    });
+
     adjustSize();
     var viewCookieValue = readCookie('view');
     if (viewCookieValue == 'stack') {
