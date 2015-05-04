@@ -342,6 +342,9 @@
       <DependentUpon>bootstrap-extend.css</DependentUpon>
     </Content>
     <Content Include="Areas\Admin\Content\css\fullcalendar.css" />
+    <Content Include="Areas\Admin\Content\datepicker\css\bootstrap-datetimepicker.css" />
+    <Content Include="Areas\Admin\Content\datepicker\css\bootstrap-datetimepicker.min.css" />
+    <Content Include="Areas\Admin\Content\datepicker\js\bootstrap-datetimepicker.min.js" />
     <Content Include="Areas\Admin\Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Areas\Admin\Content\img\logo.svg" />
     <Content Include="Areas\Admin\Content\js\bootstrap.js" />

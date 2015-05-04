@@ -1,7 +1,22 @@
 ﻿@using RaccoonBlog.Web.Models
 @model PostInput
-<!-- TinyMCE -->
+<!-- TinyMCE -->    
 @section Script {
+    
+    <script src="~/Areas/Admin/Content/datepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <link href="~/Areas/Admin/Content/datepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    
+    <script type="text/javascript">
+        $(function () {
+            $('.datepicker input').datetimepicker({
+                minDate('@DateTimeOffset.MinValue');
+            });   
+        });
+    </script>
+    
+
+
+
     <script type="text/javascript">
         tinymce.init({
             selector: "textarea",
