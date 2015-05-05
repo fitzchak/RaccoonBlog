@@ -1357,7 +1357,7 @@ pre[class*="language-"]:before, pre[class*="language-"]:after {
                 padding-left: 80px;
                 margin-top: -46px;
                 margin-bottom: 0;
-
+                
 
                 br {
                     display: none;
@@ -1365,6 +1365,7 @@ pre[class*="language-"]:before, pre[class*="language-"]:after {
 
 
                 @media (min-width: @screen-sm) {
+                    position:relative;
                     width:auto;
                     padding:11px 10px 11px 30px;
                     margin:0;
@@ -1401,7 +1402,7 @@ pre[class*="language-"]:before, pre[class*="language-"]:after {
                 @media (min-width: @screen-sm) {
                     font-size: 20px;
                     padding:3px 18px; 
-                    margin-left:-20px; 
+                    margin-left:-18px; 
                     width:auto; 
                     display:inline-block;
                     padding-top:14px !important;
@@ -1460,7 +1461,7 @@ pre[class*="language-"]:before, pre[class*="language-"]:after {
 
                     @media (min-width: @screen-sm) {
                         padding:3px 20px;
-                        margin-right:-20px;
+                        margin-right:-18px;
                     }
                 }
 
@@ -1816,3 +1817,7 @@ li.future {
         }
     }
 }
+
+.csharpcode, .csharpcode pre {
+               background-color:transparent !important;
+    }
