@@ -163,7 +163,8 @@ window.onresize = function (event) {
 
 $(document).ready(function (e) {
     
-    $('.postsInSeries .morePosts').click(function () {
+    $('.postsInSeries .morePosts').click(function (event) {
+        event.preventDefault();
         if ($('.postsInSeries').attr('data-state') != 'open') {
             $('.postsInSeries ol').addClass('open');
             $('.postsInSeries').attr('data-state', 'open');
