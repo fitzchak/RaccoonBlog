@@ -24,7 +24,7 @@ namespace RaccoonBlog.ImportFromSubtext
 	        return isTest ? GetInMemoryDocumentStore() : GetDocumentStore();
 	    }
 
-	    private static DocumentStore GetInMemoryDocumentStore()
+	    private static IDocumentStore GetInMemoryDocumentStore()
 	    {
 	        var documentStore = new EmbeddableDocumentStore
 	            {
@@ -35,7 +35,7 @@ namespace RaccoonBlog.ImportFromSubtext
 	        return documentStore;
 	    }
 
-	    private static DocumentStore GetDocumentStore()
+		private static IDocumentStore GetDocumentStore()
 	    {
 	        return new DocumentStore
 	            {

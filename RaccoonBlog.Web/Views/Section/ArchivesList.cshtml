@@ -1,10 +1,24 @@
 ﻿@model IList<RaccoonBlog.Web.Infrastructure.Indexes.Posts_ByMonthPublished_Count.ReduceResult>
 @{
-    Layout = "";    
+	Layout = "";
 }
-<ul>
-    @foreach (var postCount in Model)
-    {
-        <li><a href="@Url.Action("Archive", "Posts", new { postCount.Year, postCount.Month })"> @(new DateTime(postCount.Year, @postCount.Month,1).ToString("MMMM, yyyy", System.Globalization.CultureInfo.InvariantCulture)) </a> (@postCount.Count)</li>
-    }
-</ul>
+<nav id="archive">
+	<ul>
+		@{
+			var url = Url.Action(MVC.Posts.ActionNames.Archive, MVC.Posts.Name, new { Year = 9999, Month = 99 }); // Url.Action is slow
+
+			foreach (var g in Model.GroupBy(x => x.Year))
+			{
+				<li>
+					<a href="#">@g.Key</a>
+					<ul>
+						@foreach (var postCount in g)
+						{
+							<li><a href="@(url.Replace("9999", postCount.Year.ToString()).Replace("99", postCount.Month.ToString()))"> @(new DateTime(postCount.Year, @postCount.Month, 1).ToString("MMMM", System.Globalization.CultureInfo.InvariantCulture)) </a> (@postCount.Count)</li>
+						}
+					</ul>
+				</li>
+			}
+		}
+	</ul>
+</nav>

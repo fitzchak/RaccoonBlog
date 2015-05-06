@@ -9,23 +9,24 @@ namespace RaccoonBlog.Web.ViewModels
 	{
 		public bool HasNextPage
 		{
-			get { return CurrentPage*RaccoonController.PageSize < PostsCount; }
+			get { return CurrentPage*PageSize < PostsCount; }
 		}
 
 		public bool HasPrevPage
 		{
-			get { return CurrentPage*RaccoonController.PageSize > RaccoonController.PageSize*RaccoonController.DefaultPage; }
+			get { return CurrentPage*PageSize > PageSize*RaccoonController.DefaultPage; }
 		}
 
 		public int CurrentPage { get; set; }
 		public int PostsCount { get; set; }
+	    public int PageSize { get; set; }
 
 		public IList<PostSummary> Posts { get; set; }
 
 		public class PostSummary
 		{
 			public int Id { get; set; }
-			public MvcHtmlString Title { get; set; }
+			public string Title { get; set; }
 			public string Slug { get; set; }
 			public MvcHtmlString Body { get; set; }
 			public ICollection<TagDetails> Tags { get; set; }
@@ -33,6 +34,8 @@ namespace RaccoonBlog.Web.ViewModels
 			public DateTimeOffset PublishedAt { get; set; }
 			public int CommentsCount { get; set; }
 			public UserDetails Author { get; set; }
+
+			public bool IsSerie { get; set; }
 
 			public class UserDetails
 			{

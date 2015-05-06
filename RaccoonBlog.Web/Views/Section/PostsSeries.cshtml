@@ -1,0 +1,24 @@
+﻿@using RaccoonBlog.Web.Infrastructure.Common
+@model List<RecentSeriesViewModel>
+@{
+    Layout = "";
+}
+
+<div id="postsSeries">
+    <h4>@ViewBag.SectionTitle.ToUpper()</h4>
+
+    @if (Model.Count > 0)
+    {
+        <ol>
+            @foreach (var series in Model)
+            {
+                <li>
+                    <a href="@Url.Action("Series", "Posts", new { series.SeriesId, series.SeriesSlug })"><strong>@series.SeriesTitle</strong></a> <em>(@series.PostsCount)</em>:<br/>
+                    <em>@series.PostInformation.PublishAt.ToString("dd MMM yyyy")</em> - @Html.Raw(TitleConverter.ToPostTitle(@series.PostInformation.Title))
+                </li>
+            }
+        </ol>
+
+        <a href="@Url.Action("PostsSeries", "Series")">View all series</a>
+    }
+</div>

@@ -36,6 +36,8 @@ namespace RaccoonBlog.Web.Infrastructure.Indexes
 			Store(x => x.PostId, FieldStorage.Yes);
 			Store(x => x.PostCommentsId, FieldStorage.Yes);
 			Store(x => x.PostPublishAt, FieldStorage.Yes);
+
+			MaxIndexOutputsPerDocument = 512;
 		}
 	}
 }

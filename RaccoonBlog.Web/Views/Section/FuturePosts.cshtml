@@ -3,25 +3,28 @@
 @{
 	Layout = "";    
 }
-@if (Model.Posts.Count > 0)
-{
-	<ol>
-		@foreach (var futurePost in Model.Posts)
-		{
-			<li>@futurePost.Title - @futurePost.Time</li>
-		}
-	</ol>
+<div id="futurePosts">
+    <h4>@ViewBag.SectionTitle.ToUpper()</h4>
+    @if (Model.Posts.Count > 0)
+    {
+        <ol>
+            @foreach (var futurePost in Model.Posts)
+            {
+                <li>@futurePost.Title - <em>@futurePost.Time</em></li>
+            }
+        </ol>
 
-	if (Model.TotalCount > Model.Posts.Count)
-	{
-		<p>And @(Model.TotalCount - Model.Posts.Count) more posts are pending...</p>
-	}
-	if (Model.LastPostDate != null)
-	{
-		<p>There are posts all the way to @Model.LastPostDate.Value.ToString("MMM dd, yyyy",CultureInfo.InvariantCulture)</p>
-	}
-}
-else
-{
-	<p>No future posts left, oh my!</p>
-}
+        if (Model.TotalCount > Model.Posts.Count)
+        {
+            <p>And @(Model.TotalCount - Model.Posts.Count) more posts are pending...</p>
+        }
+        if (Model.LastPostDate != null)
+        {
+            <p>There are posts all the way to @Model.LastPostDate.Value.ToString("MMM dd, yyyy", CultureInfo.InvariantCulture)</p>
+        }
+    }
+    else
+    {
+        <p>No future posts left, oh my!</p>
+    }
+</div>

@@ -1,0 +1,55 @@
+﻿@using RaccoonBlog.Web.Infrastructure.Common
+@model SeriesPostsViewModel
+<div id="series">
+    @foreach (var series in Model.SeriesInfo)
+    {
+        <div class="postTitle">
+            <div class="count"><span>@series.PostsInSeries.Count</span>posts</div>
+            <h2>@Html.Raw(TitleConverter.ToSeriesTitle(series.PostsInSeries[0].Title))</h2>
+            <div class="clearfix"></div>
+        </div>
+        <ol>
+            @{
+        var latest = true;
+
+        foreach (var post in series.PostsInSeries)
+        {
+            if (post.PublishAt >= DateTimeOffset.Now)
+            {
+                <li class="future">
+                    <em>(@post.PublishAt.ToString("dd MMM yyyy"))</em>
+                    <h4>@Html.Raw(TitleConverter.ToPostTitle(post.Title)) <small>(@post.Time)</small></h4>
+                </li>
+            }
+            else
+            {
+                <li class="@(latest ? "recent" : string.Empty)">
+                    <em>(@post.PublishAt.ToString("dd MMM yyyy"))</em>
+                    <a href="@Url.Action("Details", "PostDetails", new { @post.Id, @post.Slug })">
+                        <h4>@Html.Raw(TitleConverter.ToPostTitle(post.Title))</h4>
+                    </a>
+                </li>
+
+                latest = false;
+            }
+        }
+            }
+        </ol>
+    }
+    <nav>
+        <hr />
+        <ul id="paginationList" class="pagination"></ul>
+        <div class="clearfix"></div>
+    </nav>
+</div>
+@section Script {
+	<script>
+    var total = @(decimal.Ceiling((decimal)Model.PostsCount / Model.PageSize));
+
+		$("#paginationList").twbsPagination({
+			totalPages: (total > 0) ? total : 1,
+			visiblePages: 5,
+			href: '?page={{number}}'
+		});
+	</script>
+}

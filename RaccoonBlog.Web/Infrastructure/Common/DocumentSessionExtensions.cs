@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Web;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Indexes;
@@ -24,7 +25,7 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 				.OrderByDescending(x => x.PostPublishAt)
 				.ThenByDescending(x => x.CreatedAt)
 				.Where(x => x.PostPublishAt < DateTimeOffset.Now.AsMinutes())
-				.AsProjection<PostComments_CreationDate.ReduceResult>();
+				.ProjectFromIndexFieldsInto<PostComments_CreationDate.ReduceResult>();
 
 			var commentsIdentifiers = processQuery(query)
 				.ToList();
@@ -71,7 +72,11 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 			if (HttpContext.Current.Request.IsAuthenticated == false)
 				return null;
 
-			var email = HttpContext.Current.User.Identity.Name;
+			var claimsIdentity = HttpContext.Current.User.Identity as ClaimsIdentity;
+			if (claimsIdentity == null) 
+				return null;
+
+			var email = claimsIdentity.FindFirst(ClaimTypes.Email).Value;
 			var user = session.GetUserByEmail(email);
 			return user;
 		}

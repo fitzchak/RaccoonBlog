@@ -1,14 +1,14 @@
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using RaccoonBlog.Web.Helpers.Attributes;
-using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Models;
 
 namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
-	public class SectionsController : AdminController
+	public partial class SectionsController : AdminController
 	{
-		public ActionResult Index()
+		public virtual ActionResult Index()
 		{
 			var sections = RavenSession.Query<Section>()
 				.OrderBy(x => x.Position)
@@ -18,22 +18,37 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult Add()
+		public virtual ActionResult Add()
 		{
 			return View("Edit", new Section());
 		}
 
 		[HttpGet]
-		public ActionResult Edit(string id)
+		public virtual ActionResult Edit(string id)
 		{
 			var section = RavenSession.Load<Section>(id);
 			if (section == null)
 				return HttpNotFound("Section does not exist.");
+
 			return View(section);
 		}
 
 		[HttpPost]
-		public ActionResult Update(Section section)
+		public virtual ActionResult Activate(string id, bool activate)
+		{
+			var section = RavenSession.Load<Section>(id);
+			if (section == null)
+				return HttpNotFound("Section does not exist.");
+
+			section.IsActive = activate;
+
+			OutputCacheManager.RemoveItems(MVC.Section.Name);
+
+			return new HttpStatusCodeResult(HttpStatusCode.OK);
+		}
+
+		[HttpPost]
+		public virtual ActionResult Update(Section section)
 		{
 			if (!ModelState.IsValid)
 				return View("Edit", section);
@@ -46,18 +61,23 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 					.FirstOrDefault() + 1;
 			}
 			RavenSession.Store(section);
+
+			OutputCacheManager.RemoveItems(MVC.Section.Name);
+
 			return RedirectToAction("Index");
 		}
 
 		[HttpPost]
-		public ActionResult Delete(string id)
+		public virtual ActionResult Delete(string id)
 		{
 			var section = RavenSession.Load<Section>(id);
 			if (section == null)
 				return HttpNotFound("Section does not exist.");
 
 			RavenSession.Delete(section);
-			
+
+			OutputCacheManager.RemoveItems(MVC.Section.Name);
+
 			if (Request.IsAjaxRequest())
 			{
 				return Json(new { Success = true });
@@ -67,7 +87,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 
 		[AjaxOnly]
 		[HttpPost]
-		public ActionResult SetPosition(string id, int newPosition)
+		public virtual ActionResult SetPosition(string id, int newPosition)
 		{
 			var section = RavenSession.Load<Section>(id);
 			if (section == null)
@@ -102,6 +122,9 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			}
 
 			section.Position = newPosition;
+
+			OutputCacheManager.RemoveItems(MVC.Section.Name);
+
 			return Json(new { success = true });
 		}
 	}

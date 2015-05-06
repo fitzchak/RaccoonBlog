@@ -1,13 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Web;
-using System.Web.Http;
 using System.Web.Mvc;
+using System.Web.Optimization;
 using System.Web.Routing;
+
 using DataAnnotationsExtensions.ClientValidation;
+
+using Glimpse.RavenDb;
+
 using HibernatingRhinos.Loci.Common.Controllers;
 using HibernatingRhinos.Loci.Common.Tasks;
 using RaccoonBlog.Web.Areas.Admin.Controllers;
@@ -18,7 +20,6 @@ using Raven.Abstractions.Logging;
 using Raven.Client;
 using Raven.Client.Document;
 using Raven.Client.Indexes;
-using Raven.Client.MvcIntegration;
 
 namespace RaccoonBlog.Web
 {
@@ -28,11 +29,12 @@ namespace RaccoonBlog.Web
 		{
 			BeginRequest += (sender, args) =>
 			{
+				BundleConfig.RegisterThemeBundles(HttpContext.Current, BundleTable.Bundles);
 				HttpContext.Current.Items["CurrentRequestRavenSession"] = RavenController.DocumentStore.OpenSession();
 			};
 			EndRequest += (sender, args) =>
 			{
-				using (var session = (IDocumentSession) HttpContext.Current.Items["CurrentRequestRavenSession"])
+				using (var session = (IDocumentSession)HttpContext.Current.Items["CurrentRequestRavenSession"])
 				{
 					if (session == null)
 						return;
@@ -56,15 +58,17 @@ namespace RaccoonBlog.Web
 			InitializeDocumentStore();
 			LogManager.GetCurrentClassLogger().Info("Started Raccoon Blog");
 
-			ModelBinders.Binders.Add(typeof (CommentCommandOptions), new RemoveSpacesEnumBinder());
-			ModelBinders.Binders.Add(typeof (Guid), new GuidBinder());
+			ModelBinders.Binders.Add(typeof(CommentCommandOptions), new RemoveSpacesEnumBinder());
+			ModelBinders.Binders.Add(typeof(Guid), new GuidBinder());
 
 			DataAnnotationsModelValidatorProviderExtensions.RegisterValidationExtensions();
 
 			AutoMapperConfiguration.Configure();
+			BundleConfig.RegisterBundles(BundleTable.Bundles);
 
 			RavenController.DocumentStore = DocumentStore;
 			TaskExecutor.DocumentStore = DocumentStore;
+			Profiler.AttachTo((DocumentStore)DocumentStore);
 
 			// In case the versioning bundle is installed, make sure it will version
 			// only what we opt-in to version
@@ -97,12 +101,12 @@ namespace RaccoonBlog.Web
 		{
 			try
 			{
-				IndexCreation.CreateIndexes(typeof (Tags_Count).Assembly, DocumentStore);
+				IndexCreation.CreateIndexes(typeof(Tags_Count).Assembly, DocumentStore);
 			}
 			catch (WebException e)
 			{
 				var socketException = e.InnerException as SocketException;
-				if(socketException == null)
+				if (socketException == null)
 					throw;
 
 				switch (socketException.SocketErrorCode)

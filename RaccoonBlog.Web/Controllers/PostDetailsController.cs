@@ -14,9 +14,13 @@ using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public class PostDetailsController : RaccoonController
+    using System.Collections.Generic;
+    using RaccoonBlog.Web.Infrastructure.Indexes;
+    using Raven.Client.Linq;
+
+	public partial class PostDetailsController : RaccoonController
 	{
-		public ActionResult Details(int id, string slug, Guid key)
+		public virtual ActionResult Details(int id, string slug, Guid key)
 		{
 			var post = RavenSession
 				.Include<Post>(x => x.CommentsId)
@@ -29,6 +33,7 @@ namespace RaccoonBlog.Web.Controllers
 			if (post.IsPublicPost(key) == false)
 				return HttpNotFound();
 
+            SeriesInfo seriesInfo = GetSeriesInfo(post.Title);
 
 			var comments = RavenSession.Load<PostComments>(post.CommentsId) ?? new PostComments();
 			var vm = new PostViewModel
@@ -38,6 +43,7 @@ namespace RaccoonBlog.Web.Controllers
 			         	NextPost = RavenSession.GetNextPrevPost(post, true),
 			         	PreviousPost = RavenSession.GetNextPrevPost(post, false),
 			         	AreCommentsClosed = comments.AreCommentsClosed(post, BlogConfig.NumberOfDayToCloseComments),
+                        SeriesInfo = seriesInfo
 			         };
 
 			vm.Post.Author = RavenSession.Load<User>(post.AuthorId).MapTo<PostViewModel.UserDetails>();
@@ -66,38 +72,45 @@ namespace RaccoonBlog.Web.Controllers
 			return View("Details", vm);
 		}
 
-		[ValidateInput(false)]
+        [ValidateInput(false)]
 		[HttpPost]
-		public ActionResult Comment(CommentInput input, int id, Guid key)
+		public virtual ActionResult Comment(CommentInput input, int id, Guid key)
 		{
-			var post = RavenSession
-				.Include<Post>(x => x.CommentsId)
-				.Load(id);
+		    if (ModelState.IsValid)
+		    {
+                var post = RavenSession
+                    .Include<Post>(x => x.CommentsId)
+                    .Load(id);
 
-			if (post == null || post.IsPublicPost(key) == false)
-				return HttpNotFound();
+                if (post == null || post.IsPublicPost(key) == false)
+                    return HttpNotFound();
 
-			var comments = RavenSession.Load<PostComments>(post.CommentsId);
-			if (comments == null)
-				return HttpNotFound();
+                var comments = RavenSession.Load<PostComments>(post.CommentsId);
+                if (comments == null)
+                    return HttpNotFound();
 
-			var commenter = RavenSession.GetCommenter(input.CommenterKey);
-			if (commenter == null)
-			{
-				input.CommenterKey = Guid.NewGuid();
-			}
+                var commenter = RavenSession.GetCommenter(input.CommenterKey);
+                if (commenter == null)
+                {
+                    input.CommenterKey = Guid.NewGuid();
+                }
 
-			ValidateCommentsAllowed(post, comments);
-			ValidateCaptcha(input, commenter);
+                ValidateCommentsAllowed(post, comments);
+                ValidateCaptcha(input, commenter);
 
-			if (ModelState.IsValid == false)
-				return PostingCommentFailed(post, input, key);
+                if (ModelState.IsValid == false)
+                    return PostingCommentFailed(post, input, key);
 
-			TaskExecutor.ExcuteLater(new AddCommentTask(input, Request.MapTo<AddCommentTask.RequestValues>(), id));
+                TaskExecutor.ExcuteLater(new AddCommentTask(input, Request.MapTo<AddCommentTask.RequestValues>(), id));
 
-			CommenterUtil.SetCommenterCookie(Response, input.CommenterKey.MapTo<string>());
+                CommenterUtil.SetCommenterCookie(Response, input.CommenterKey.MapTo<string>());
 
-			return PostingCommentSucceeded(post, input);
+				OutputCacheManager.RemoveItem(SectionController.NameConst, MVC.Section.ActionNames.List);
+
+                return PostingCommentSucceeded(post, input);
+		    }
+
+		    return RedirectToAction("Details");
 		}
 
 		private ActionResult PostingCommentSucceeded(Post post, CommentInput input)
@@ -177,5 +190,55 @@ namespace RaccoonBlog.Web.Controllers
 			vm.Input = commenter.MapTo<CommentInput>();
 			vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
 		}
+
+        private SeriesInfo GetSeriesInfo(string title)
+        {
+            SeriesInfo seriesInfo = null;
+	        string seriesTitle = TitleConverter.ToSeriesTitle(title);
+
+            if (!string.IsNullOrEmpty(seriesTitle))
+            {
+                var series = RavenSession.Query<Posts_Series.Result, Posts_Series>()
+                    .Where(x => x.Series.StartsWith(seriesTitle) && x.Count > 1)
+                    .OrderByDescending(x => x.MaxDate)
+                    .FirstOrDefault();
+
+	            if (series == null) 
+					return null;
+
+                var postsInSeries = GetPostsForCurrentSeries(series);
+
+                seriesInfo = new SeriesInfo
+                {
+                    SeriesId = series.SerieId,
+                    SeriesTitle = seriesTitle,
+                    PostsInSeries = postsInSeries
+                };
+            }
+
+            return seriesInfo;
+        }
+
+        private IList<PostInSeries> GetPostsForCurrentSeries(Posts_Series.Result series)
+        {
+            IList<PostInSeries> postsInSeries = null;
+
+            if (series != null)
+            {
+                postsInSeries = series
+					.Posts
+					.Select(s => new PostInSeries
+					{
+						Id = RavenIdResolver.Resolve(s.Id), 
+						Slug = SlugConverter.TitleToSlug(s.Title), 
+						Title = HttpUtility.HtmlDecode(TitleConverter.ToPostTitle(s.Title)),
+						PublishAt = s.PublishAt
+					})
+					.OrderByDescending(p => p.PublishAt)
+					.ToList();
+            }
+
+            return postsInSeries;
+        }
 	}
 }

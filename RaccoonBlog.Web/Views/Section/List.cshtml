@@ -1,29 +1,19 @@
 ﻿@model IList<SectionDetails>
 @{
-    Layout = "";    
+	Layout = "";
 }
-<div id="sidebar">
-    <aside class="section">
-        <form action="@Url.Action("SearchResult", "Search")">
-            <label>
-                <span>Search:</span>
-                <input id="search" type="search" name="q" size="32" placeholder="Search">
-            </label>
-        </form>
-    </aside>
 
-    
-	@{Html.RenderAction("AdministrationPanel", "Section");}
-
-
-	@foreach (var section in Model) {
-        <aside class="section">
-            <h1>@(section.Title)</h1>
-            @if (section.IsActionSection()) { 
-                Html.RenderAction(section.ActionName, section.ControllerName);
-            } else {
-                @(section.Body)
-            }
-        </aside>
+@foreach (var section in Model)
+{
+	if (section.IsActionSection())
+	{
+		Html.RenderAction(section.ActionName, section.ControllerName, new { sectionTitle = section.Title });
 	}
-</div>
+	else
+	{
+		<div id="@Html.ConvertSectionTitleToId(section.Title)">
+			<h4>@(section.Title)</h4>
+			@(section.Body)
+		</div>
+	}
+}

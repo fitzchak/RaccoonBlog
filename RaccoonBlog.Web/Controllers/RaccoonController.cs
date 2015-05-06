@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using HibernatingRhinos.Loci.Common.Controllers;
 using RaccoonBlog.Web.Helpers.Results;
@@ -8,10 +10,11 @@ using Raven.Imports.Newtonsoft.Json.Serialization;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public abstract class RaccoonController : RavenController
+	using DevTrends.MvcDonutCaching;
+
+	public abstract partial class RaccoonController : RavenController
 	{
 		public const int DefaultPage = 1;
-		public const int PageSize = 25;
 
 		private BlogConfig blogConfig;
 		public BlogConfig BlogConfig
@@ -34,11 +37,48 @@ namespace RaccoonBlog.Web.Controllers
 			}
 		}
 
+		private List<Section> sections;
+		public List<Section> Sections
+		{
+			get
+			{
+				if (sections == null)
+				{
+					using (RavenSession.Advanced.DocumentStore.AggressivelyCacheFor(TimeSpan.FromMinutes(5)))
+					{
+						sections = RavenSession
+							.Query<Section>()
+							.ToList();
+					}
+				}
+				return sections;
+			}
+		}
+
+		private OutputCacheManager outputCacheManager;
+		protected OutputCacheManager OutputCacheManager
+		{
+			get { return outputCacheManager ?? (outputCacheManager = new OutputCacheManager()); }
+		}
+
+		protected override void OnActionExecuting(ActionExecutingContext filterContext)
+		{
+			ViewBag.IsHomePage = false;
+
+			base.OnActionExecuting(filterContext);
+		}
+
 		protected override void OnActionExecuted(ActionExecutedContext filterContext)
 		{
 			base.OnActionExecuted(filterContext);
 
 			ViewBag.BlogConfig = BlogConfig;
+			ViewBag.Sections = Sections;
+		}
+
+		public int PageSize
+		{
+			get { return BlogConfig.PostsOnPage; }
 		}
 
 		protected int CurrentPage

@@ -3,17 +3,17 @@ using RaccoonBlog.Web.Models;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public class WelcomeController : RaccoonController
+	public partial class WelcomeController : RaccoonController
 	{
 		//
 		// GET: /Welcome/
-		public ActionResult Index()
+		public virtual ActionResult Index()
 		{
 			return AssertConfigurationIsNeeded() ?? View(BlogConfig.New());
 		}
 
 		[HttpPost]
-		public ActionResult CreateBlog(BlogConfig config)
+		public virtual ActionResult CreateBlog(BlogConfig config)
 		{
 			var result = AssertConfigurationIsNeeded();
 			if (result != null)
@@ -42,7 +42,7 @@ namespace RaccoonBlog.Web.Controllers
 			return RedirectToAction("Success", config);
 		}
 
-		public ActionResult Success()
+		public virtual ActionResult Success()
 		{
 			BlogConfig bc;
 

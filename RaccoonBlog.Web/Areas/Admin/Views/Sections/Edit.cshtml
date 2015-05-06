@@ -1,7 +1,31 @@
 ﻿@using RaccoonBlog.Web.Models
 @model Section
+
+<!-- TinyMCE -->
+@section Script {
+    <script type="text/javascript">
+        tinymce.init({
+            selector: "textarea",
+            theme: "modern",
+            plugins: [
+                "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+                "searchreplace wordcount visualblocks visualchars code fullscreen",
+                "insertdatetime media nonbreaking save table contextmenu directionality",
+                "emoticons template paste textcolor colorpicker textpattern"
+            ],
+            toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+            toolbar2: "print preview media | forecolor backcolor emoticons",
+            image_advtab: true,
+            templates: [
+                { title: 'Test template 1', content: 'Test 1' },
+                { title: 'Test template 2', content: 'Test 2' }
+            ]
+        });
+    </script>
+}
+
 @{
-	ViewBag.H1 = Model.IsNewSection() ? "Create a New Section" : "Edit Section " + Model.Title;
+	ViewBag.H1 = Model.IsNewSection() ? "Add new section" : "Edit Section " + Model.Title;
 	ViewBag.SubmitButtonText = Model.IsNewSection() ? "Create Section" : "Update Section";
 
 	ViewBag.Title = ViewBag.H1;
@@ -12,38 +36,27 @@
 		@Html.ValidationSummary(true)
 	</div>
 }
-<article id="user-input">
-	<div id="page-heading">
-		<h1>@ViewBag.H1</h1>
-	</div>
-	<form action="@Url.Action("Update")" method="post">
-	<div>
-		<div id="content-table-inner" class="inputform" >
-			<div id="id-form" style="top: 0;">
-				@Html.EditorFor(x => x.Title)
-				@Html.EditorFor(x => x.ControllerName)
-				@Html.EditorFor(x => x.ActionName)
-				@Html.EditorFor(x => x.IsActive)
-				@Html.EditorFor(x => x.Position)
-				
-				@Html.TextAreaFor(x => x.Body, new { @class = "adminRichText" })
 
-				@Html.HiddenFor(x => x.Id)
-				<div>
-					<input type="submit" value="@ViewBag.SubmitButtonText">
-					<input type="reset" value="Reset Section">
-				</div>
-			</div>
-		</div>
-	</div>
-	</form>
-</article>
-@section Script {
-	<script type="text/javascript" src="@Url.Script("ckeditor/ckeditor.js")"></script>
-	<script type="text/javascript" src="@Url.Script("ckeditor/adapters/jquery.js")"></script>
-	<script type="text/javascript">
-		jQuery(document).ready(function () {
-			jQuery(".adminRichText").ckeditor();
-		});
-	</script>
+<h3 class="pull-left-sm">@ViewBag.H1</h3>
+<a href='@Url.Action("Index", "Sections")' class="btn btn-primary btn-sm pull-right-sm">View sections</a>
+<div class="clearfix"></div>
+<hr />
+@using (Html.BeginForm("Update", "Sections", FormMethod.Post, new {@class = "form-horizontal"}))
+{
+    <div class="row">
+        <div class="col-lg-4">
+            @Html.HiddenFor(x => x.Id)
+            @Html.EditorFor(x => x.Title, "TextAbove")
+            @Html.EditorFor(x => x.ControllerName, "TextAbove")
+            @Html.EditorFor(x => x.ActionName, "TextAbove")
+            @Html.EditorFor(x => x.Position, "TextAbove")
+            @Html.EditorFor(x => x.IsActive)
+            @Html.EditorFor(x => x.IsRightSide)
+        </div>
+        <div class="col-lg-8">
+            @Html.TextAreaFor(x => x.Body, new { rows = "20" })
+        </div>
+    </div>
+    <input type="submit" value="Save" class="btn btn-primary pull-right" style="margin-top:20px" />
+    <div class="clearfix"></div>
 }

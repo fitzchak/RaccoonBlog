@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Indexes;
 using RaccoonBlog.Web.Models;
@@ -12,11 +13,41 @@ using RaccoonBlog.Web.Infrastructure.Common;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public class SectionController : AggresivelyCachingRacconController
-	{
+	using System.Web.UI;
+	using DevTrends.MvcDonutCaching;
+
+	public partial class SectionController : AggresivelyCachingRacconController
+    {
+        [ChildActionOnly]
+		public virtual ActionResult PostsSeries(string sectionTitle)
+        {
+            ViewBag.SectionTitle = sectionTitle;
+
+            var series = RavenSession.Query<Posts_Series.Result, Posts_Series>()
+                .Where(x => x.Count > 1)
+                .OrderByDescending(x => x.MaxDate)
+                .Take(5)
+                .ToList();
+            
+            var vm = series.Select(result => new RecentSeriesViewModel
+            {
+                SeriesId = result.SerieId,
+                SeriesSlug = SlugConverter.TitleToSlug(result.Series),
+				SeriesTitle = TitleConverter.ToSeriesTitle(result.Posts.First().Title),
+                PostsCount = result.Count,
+                PostInformation = result.Posts
+                                    .OrderByDescending(post => post.PublishAt)
+                                    .FirstOrDefault(post => post.PublishAt <= DateTimeOffset.Now)
+            }).ToList();
+
+            return View(vm);
+        }
+
 		[ChildActionOnly]
-		public ActionResult FuturePosts()
+		public virtual ActionResult FuturePosts(string sectionTitle)
 		{
+            ViewBag.SectionTitle = sectionTitle;
+
 			RavenQueryStatistics stats;
 			var futurePosts = RavenSession.Query<Post>()
 				.Statistics(out stats)
@@ -43,21 +74,32 @@ namespace RaccoonBlog.Web.Controllers
 		}
 
 		[ChildActionOnly]
-		public ActionResult List()
+		[DonutOutputCache(Duration = 300)]
+		public virtual ActionResult List()
 		{
 			if (true.Equals(HttpContext.Items["CurrentlyProcessingException"]))
 				return View(new SectionDetails[0]);
 
-			var sections = RavenSession.Query<Section>()
-				.Where(s => s.IsActive)
+			var sections = Sections
+                .Where(s => s.IsActive && s.IsRightSide)
 				.OrderBy(x => x.Position)
 				.ToList();
 
 			return View(sections.MapTo<SectionDetails>());
 		}
 
+        [ChildActionOnly]
+		[DonutOutputCache(Duration = 3600)]
+		public virtual ActionResult ContactMe()
+        {
+	        var user = RavenSession.GetUserByEmail(BlogConfig.OwnerEmail);
+
+            return View(new ContactMeViewModel(user));
+        }
+        
 		[ChildActionOnly]
-		public ActionResult TagsList()
+		[OutputCache(Duration = 3600)]
+		public virtual ActionResult TagsList()
 		{
 			var mostRecentTag = new DateTimeOffset(DateTimeOffset.Now.Year - 2,
 												   DateTimeOffset.Now.Month,
@@ -73,22 +115,24 @@ namespace RaccoonBlog.Web.Controllers
 		}
 
 		[ChildActionOnly]
-		public ActionResult ArchivesList()
+		[OutputCache(Duration = 3600)]
+		public virtual ActionResult ArchivesList()
 		{
 			var now = DateTime.Now;
 
-			var dates = RavenSession.Query<Posts_ByMonthPublished_Count.ReduceResult, Posts_ByMonthPublished_Count>()
-				.OrderByDescending(x => x.Year)
-				.ThenByDescending(x => x.Month)
-				// filter future stats
-				.Where(x=> x.Year < now.Year || x.Year == now.Year && x.Month <= now.Month)
-				.ToList();
-
+            var dates = RavenSession.Query<Posts_ByMonthPublished_Count.ReduceResult, Posts_ByMonthPublished_Count>()
+                .OrderByDescending(x => x.Year)
+                .ThenByDescending(x => x.Month)
+                // filter future stats
+                .Where(x => x.Year < now.Year || x.Year == now.Year && x.Month <= now.Month)
+                .ToList();
+            
 			return View(dates);
 		}
 
 		[ChildActionOnly]
-		public ActionResult PostsStatistics()
+		[OutputCache(Duration = 360)]
+		public virtual ActionResult PostsStatistics()
 		{
 			var statistics = RavenSession.Query<Posts_Statistics.ReduceResult, Posts_Statistics>()
 				.FirstOrDefault() ?? new Posts_Statistics.ReduceResult();
@@ -97,8 +141,9 @@ namespace RaccoonBlog.Web.Controllers
 		}
 
 		[ChildActionOnly]
-		public ActionResult RecentComments()
+		public virtual ActionResult RecentComments(string sectionTitle)
 		{
+		    ViewBag.SectionTitle = sectionTitle;
 			var commentsTuples = RavenSession.QueryForRecentComments(q => q.Take(5));
 
 			var result = new List<RecentCommentViewModel>();
@@ -112,7 +157,7 @@ namespace RaccoonBlog.Web.Controllers
 		}
 
 		[ChildActionOnly]
-		public ActionResult AdministrationPanel()
+		public virtual ActionResult AdministrationPanel()
 		{
 			var user = RavenSession.GetCurrentUser();
 

@@ -1,13 +1,17 @@
 ﻿@model IList<TagsListViewModel>
 @{
-	Layout = "";    
+	Layout = "";
 }
-<ul>
-	@foreach (var tag in Model)
-	{
-		<li>
-			<a href="@Url.Action("Tag", "Posts", new { tag.Slug })">@tag.Name</a> (@tag.Count)
-			<span class="rss"><a href="@Url.Action("Rss", "Syndication", new { Tag = tag.Slug })">rss</a></span>
-		</li>
-	}
-</ul>
+<nav id="tags">
+	<ul>
+		@{
+			var url = Url.Action(MVC.Posts.ActionNames.Tag, MVC.Posts.Name, new { Slug = "_s_"}); // Url.Action is slow
+			foreach (var tag in Model)
+			{
+				<li>
+					<a href="@url.Replace("_s_", tag.Slug)">@tag.Name</a>&nbsp;<span>(@tag.Count)</span>&nbsp;<a href="@Url.Action("Rss", "Syndication", new { Tag = tag.Slug })" class="rss">rss</a>
+				</li>
+			}
+		}
+	</ul>
+</nav>

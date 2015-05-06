@@ -1,34 +1,43 @@
+using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
 using HibernatingRhinos.Loci.Common.Models;
+
 using RaccoonBlog.Web.Controllers;
+using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
-	public class LoginController : RaccoonController
+	public partial class LoginController : RaccoonController
 	{
+		private readonly SignInHelper signInHelper;
+
+		public LoginController()
+		{
+			signInHelper = new SignInHelper(System.Web.HttpContext.Current.GetOwinContext().Authentication);
+		}
+
 		[HttpGet]
-		public ActionResult Index(string returnUrl)
+		public virtual ActionResult Index(string returnUrl)
 		{
 			if (Request.IsAuthenticated)
 			{
 				return RedirectFromLoginPage();
 			}
 
-			return View(new LogOnModel {ReturnUrl = returnUrl});
+			return View(new LogOnModel { ReturnUrl = returnUrl });
 		}
 
 		[HttpPost]
-		public ActionResult Index(LogOnModel input)
+		public virtual ActionResult Index(LogOnModel input)
 		{
 			var user = RavenSession.GetUserByEmail(input.Login);
 
 			if (user == null || user.ValidatePassword(input.Password) == false)
 			{
 				ModelState.AddModelError("UserNotExistOrPasswordNotMatch",
-				                         "Email and password do not match to any known user.");
+										 "Email and password do not match to any known user.");
 			}
 			else if (user.Enabled == false)
 			{
@@ -37,11 +46,11 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 
 			if (ModelState.IsValid)
 			{
-				FormsAuthentication.SetAuthCookie(input.Login, true);
+				signInHelper.SignIn(input, true);
 				return RedirectFromLoginPage(input.ReturnUrl);
 			}
 
-			return View(new LogOnModel {Login = input.Login, ReturnUrl = input.ReturnUrl});
+			return View(new LogOnModel { Login = input.Login, ReturnUrl = input.ReturnUrl });
 		}
 
 		private ActionResult RedirectFromLoginPage(string retrunUrl = null)
@@ -52,20 +61,20 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult LogOut(string returnurl)
+		public virtual ActionResult LogOut(string returnurl)
 		{
-			FormsAuthentication.SignOut();
+			signInHelper.SignOut();
 			return RedirectFromLoginPage(returnurl);
 		}
 
 		[ChildActionOnly]
-		public ActionResult CurrentUser()
+		public virtual ActionResult CurrentUser()
 		{
 			if (Request.IsAuthenticated == false)
 				return View(new CurrentUserViewModel());
 
 			var user = RavenSession.GetUserByEmail(HttpContext.User.Identity.Name);
-			return View(new CurrentUserViewModel {FullName = user.FullName}); // TODO: we don't really need a VM here
+			return View(new CurrentUserViewModel { FullName = user.FullName }); // TODO: we don't really need a VM here
 		}
 	}
 }

@@ -2,31 +2,27 @@
 @{
 	ViewBag.Title = "Users";
 }
-<article class="useradmin-list">
-	<h1>Users</h1>
-	<ul>
-		<li>@Html.ActionLink("Create New User", "Add")</li>
-	</ul>
-	<ul class="admin-list">
-		@foreach (var user in Model) {
-			<li>
-				@Html.DisplayFor(u => user.FullName)
-				@Html.DisplayFor(u => user.Email)
-				@Html.DisplayFor(u => user.Enabled)
-				@Html.DisplayFor(u => user.TwitterNick)
-				
-				<div class="commands-section">
-					<ul>
-						<li><a href="@Url.Action("Edit", new {user.Id})">Edit</a></li>
-						<li><a href="@Url.Action("ChangePassword", new {user.Id})">Change Password</a></li>
-						<li>
-							<form action="@Url.Action("SetActivation", new {user.Id, isActive = user.Enabled == false})" method="post">
-								<input type="submit" value="@(user.Enabled ? "Disable" : "Activate")" style="width: 100px;">
-							</form>
-						</li>
-					</ul>
-				</div>
-			</li>
-		}
-	</ul>
-</article>
+
+<h3 class="pull-left-sm">All users</h3>
+<a href="@Url.Action("Add", "Users")" class="btn btn-primary btn-sm pull-right-sm">Add new user</a>
+<div class="clearfix"></div>
+<hr />
+
+@foreach (var user in Model)
+{
+    <div class="row user">
+        <div class="col-sm-6 col-md-4 col-lg-3"> <div class="small">Full Name</div><div class="lead">@user.FullName</div></div>
+        <div class="col-sm-6 col-md-4 col-lg-3"> <div class="small">Email</div><div class="lead">@user.Email</div> </div>
+        <div class="col-sm-6 col-md-4 col-lg-3"> <div class="small">Phone</div><div class="lead">@user.Phone</div> </div>
+        <div class="col-sm-6 col-md-4 col-lg-3"> <div class="small">Enabled</div><div class="lead">@(user.Enabled ? "yes" : "no")</div> </div>
+        <div class="col-sm-6 col-md-4 col-lg-3"> <div class="small">Twitter Nick </div><div class="lead">@user.TwitterNick</div>	</div>
+        <div class="col-sm-6 col-md-4 col-lg-3"> <a href="@Url.Action("Edit", new {user.Id})" class="btn btn-primary btn-block">Edit</a></div>
+        <div class="col-sm-6 col-md-4 col-lg-3"> <a href="@Url.Action("ChangePassword", new {user.Id})" class="btn btn-primary btn-block">Change Password</a></div>
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            @using (Html.BeginForm("SetActivation", "Users", new { id = user.Id, isActive = user.Enabled == false }))
+            {
+                <input type="submit" value="@(user.Enabled ? "Disable" : "Activate")" class="btn btn-warning btn-block">
+            }
+        </div>
+    </div>
+}

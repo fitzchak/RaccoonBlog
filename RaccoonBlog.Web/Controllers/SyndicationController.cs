@@ -14,11 +14,11 @@ using RaccoonBlog.Web.Helpers;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public class SyndicationController : RaccoonController
+	public partial class SyndicationController : RaccoonController
 	{
 		private static readonly string EtagInitValue = Guid.NewGuid().ToString();
 
-		public ActionResult Rsd()
+		public virtual ActionResult Rsd()
 		{
 			var ns = XNamespace.Get("http://archipelago.phrasewise.com/rsd");
 
@@ -48,7 +48,7 @@ namespace RaccoonBlog.Web.Controllers
 			public IRavenQueryable<Post> PostsQuery;
 		}
 
-		public ActionResult Rss(string tag, string token)
+		public virtual ActionResult Rss(string tag, string token)
 		{
 			RavenQueryStatistics stats;
 
@@ -183,7 +183,7 @@ namespace RaccoonBlog.Web.Controllers
 			}
 		}
 
-		public ActionResult CommentsRss(int? id)
+		public virtual ActionResult CommentsRss(int? id)
 		{
 			RavenQueryStatistics stats = null;
 			var commentsTuples = RavenSession.QueryForRecentComments(q =>
@@ -235,7 +235,7 @@ namespace RaccoonBlog.Web.Controllers
 			return requestETagHeader == responseETagHeader;
 		}
 
-		public ActionResult LegacyRss()
+		public virtual ActionResult LegacyRss()
 		{
 			return RedirectToActionPermanent("Rss", "Syndication");
 		}

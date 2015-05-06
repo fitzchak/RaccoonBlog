@@ -6,48 +6,27 @@ using RaccoonBlog.Web.Areas.Admin.Models;
 
 namespace RaccoonBlog.Web.Areas.Admin.Helpers
 {
-	public static class MenuUtil
+    using RaccoonBlog.Web.Areas.Admin.Enums;
+
+    public static class MenuUtil
 	{
 		public static IList<MenuItem> GetTopMenu(UrlHelper url)
 		{
 			var items = new List<MenuItem>
 			{
-				new MenuItem {Title = "Back To Blog", Url = url.RouteUrl("homepage")},
-				new MenuItem
-				{
-					Title = "Posts",
-					SubMenus = new List<MenuItem>
-					{
-						new MenuItem {Title = "All posts", Url = url.Action("Index", "Posts")},
-						new MenuItem {Title = "Create a new post", Url = url.Action("Add", "Posts")}
-					}
-				},
-				new MenuItem
-				{
-					Title = "Sections",
-					SubMenus = new List<MenuItem>
-					{
-						new MenuItem {Title = "Sections list", Url = url.Action("Index", "Sections")},
-						new MenuItem {Title = "Add a new section", Url = url.Action("Add", "Sections")}
-					}
-				},
-				new MenuItem
-				{
-					Title = "Users",
-					SubMenus = new List<MenuItem>
-					{
-						new MenuItem {Title = "All users", Url = url.Action("Index", "Users")},
-						new MenuItem {Title = "Add a new user", Url = url.Action("Add", "Users")}
-					}
-				},
-				new MenuItem
-				{
-					Title = "Tools",
-					SubMenus = new List<MenuItem>
-					{
-						new MenuItem {Title = "Settings", Url = url.Action("Index", "Settings")},
-						new MenuItem {Title = "RSS Future Access", Url = url.Action("RssFutureAccess", "Settings")},
-					}
+				new MenuItem {Title = "Back To Blog", Url = url.RouteUrl("homepage"), Type = MenuButtonType.Plain},
+				new MenuItem {Title = "Posts", Url = url.Action("Index", "Posts"), Type = MenuButtonType.Plain},
+                new MenuItem {Title = "Add new post", Url = url.Action("Add", "Posts"), Type = MenuButtonType.Add},
+				new MenuItem {Title = "Sections", Url = url.Action("Index", "Sections"), Type = MenuButtonType.Plain},
+                new MenuItem {Title = "Add new section", Url = url.Action("Add", "Sections"), Type = MenuButtonType.Add},
+				new MenuItem {Title = "Users", Url = url.Action("Index", "Users"), Type = MenuButtonType.Plain},
+                new MenuItem {Title = "Add new user", Url = url.Action("Add", "Users"), Type = MenuButtonType.Add},
+				new MenuItem {Title = "Tools", Type = MenuButtonType.Toggle,
+                    SubMenus = new List<MenuItem>
+                    {
+                        new MenuItem {Title = "Settings", Url = url.Action("Index", "Settings"), Type = MenuButtonType.Plain},
+                        new MenuItem {Title = "RSS Future Access", Url = url.Action("RssFutureAccess", "Settings"), Type = MenuButtonType.Plain},
+                    }
 				},
 			};
 

@@ -1,7 +1,9 @@
-﻿<div class="form_item">
-    <label>
-        <span class="form_item_title">@ViewData.ModelMetadata.DisplayName</span>
-		@Html.TextBox(string.Empty, ViewData.TemplateInfo.FormattedModelValue, new { type = "email", @class = "email" })
-        @Html.ValidationMessage(string.Empty)
+﻿<div class="form-group">
+    <label class="col-sm-5 col-md-4 col-lg-3 control-label">
+        @ViewData.ModelMetadata.DisplayName
     </label>
+    <div class="col-sm-7 col-md-8 col-lg-9">
+        @Html.TextBox(string.Empty, ViewData.TemplateInfo.FormattedModelValue, new { @class = "form-control", type = "email" })
+        @Html.ValidationMessage(string.Empty)
+    </div>
 </div>

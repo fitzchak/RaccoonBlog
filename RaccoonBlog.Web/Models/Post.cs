@@ -104,12 +104,12 @@ namespace RaccoonBlog.Web.Models
 
 		[Display(Name = "Publish At")]
 		[DataType(DataType.DateTime)]
-		public DateTimeOffset PublishAt { get; set; }
+		public DateTimeOffset? PublishAt { get; set; }
 
 		[Display(Name = "Tags")]
 		public string Tags { get; set; }
 
-		[Display(Name = "Allow Comments?")]
+		[Display(Name = "Allow Comments")]
 		public bool AllowComments { get; set; }
 
 		public bool IsNewPost()

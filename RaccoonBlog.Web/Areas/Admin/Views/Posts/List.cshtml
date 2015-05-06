@@ -1,52 +1,48 @@
 ﻿@{
 	ViewBag.Title = "Manage posts";
 }
-<div class="messageWrapper"><div id="message" style="visibility:hidden"></div></div>
+<h3 class="pull-left-sm">All posts</h3>
+<a href="@Url.Action("Add", "Posts")" class="btn btn-primary btn-sm pull-right-sm">Add new post</a>
+<div class="clearfix"></div>
+<hr />
 <div id="postsCalendar">
-
 </div>
-<div>
-	<p>In order to post new posts, please use Windows Live Writer.</p>
-</div>
-@section Style {
-	<link href="@Url.Content("~/Content/css/fullcalendar.css")" rel="stylesheet" type="text/css">
-}
 @section Script {
-	<script src="@Url.Content("~/Content/js/fullcalendar.js")" type="text/javascript"></script>
 	<script type="text/javascript">
-		$(function () {
-			renderCalander(true);
-		});
-		function renderCalander(weekends) {
-			$('#postsCalendar').empty().fullCalendar({
-				header: {
-					left: 'prev,next today',
-					center: 'title',
-					right: 'month,agendaWeek,agendaDay'
-				},
-				weekends: weekends,
-				editable: true,
-				disableResizing: true,
-				eventSources: [{
-					url: '@Url.AbsoluteAction("ListFeed")',
-					type: 'POST',
-					error: function (xhr, ajaxOptions, error) {
-						alert('There was an error while fetching events! Error Code: ' + xhr.status + ' Error: ' + error);
-					}
-				}],
-				eventDrop: function (event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
-					var jqxhr = $.post('@Url.AbsoluteAction("SetPostDate", new { id = 1024 })'.replace('/1024', '/' + event.id), { date: event.start.valueOf() }, null, 'json');
-					jqxhr.error(failAction);
-					jqxhr.success(function (data, textStatus, jqXHR) {
-						if (!data.success) failAction();
-						else Raccoon.Util.Views.setMessage('Change post date succeed: ' + event.title);
-					});
-					function failAction() {
-						revertFunc();
-						Raccoon.Util.Views.setMessage('Change post date failed: ' + event.title, 'fail');
-					}
-				}
-			});
-		}
+        $(function () {
+            renderCalander(true);
+        });
+        function renderCalander(weekends) {
+            $('#postsCalendar').empty().fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                contentHeight: 'auto',
+                weekends: weekends,
+                editable: true,
+                disableResizing: true,
+                eventSources: [{
+                	url: '@Url.AbsoluteAction("ListFeed")',
+                    type: 'POST',
+                    error: function (xhr, ajaxOptions, error) {
+                        alert('There was an error while fetching events! Error Code: ' + xhr.status + ' Error: ' + error);
+                    }
+                }],
+                eventDrop: function (event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
+                	var jqxhr = $.post('@Url.AbsoluteAction("SetPostDate", new { id = 1024 })'.replace('/1024', '/' + event.id), { date: event.start.valueOf() }, null, 'json');
+                    jqxhr.error(failAction);
+                    jqxhr.success(function (data, textStatus, jqXHR) {
+                        if (!data.success) failAction();
+                        else Raccoon.Util.Views.setMessage('Change post date succeed: ' + event.title);
+                    });
+                    function failAction() {
+                        revertFunc();
+                        Raccoon.Util.Views.setMessage('Change post date failed: ' + event.title, 'fail');
+                    }
+                }
+            });
+        }
 	</script>
 }

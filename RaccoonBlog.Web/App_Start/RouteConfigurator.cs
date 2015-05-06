@@ -21,6 +21,7 @@ namespace RaccoonBlog.Web
 			routes.IgnoreRoute("{*favicon}", new { favicon = @"(.*/)?favicon.ico(/.*)?" });
 
 			Syndication();
+		    Series();
 
 			Posts();
 			LegacyPost();
@@ -157,5 +158,20 @@ namespace RaccoonBlog.Web
 			  new[] { "RaccoonBlog.Web.Controllers" }
 			  );
 		}
+
+	    private void Series()
+	    {
+	        routes.MapRouteLowerCase("SeriesController-PostsSeries",
+	            "posts/series",
+	            new {controller = "Series", action = "PostsSeries"},
+	            new[] {"RaccoonBlog.Web.Controllers"}
+	            );
+
+            routes.MapRouteLowerCase("PostsController-Series",
+                "posts/series/{seriesId}/{seriesSlug}",
+                new { controller = "Posts", action = "Series" },
+                new[] { "RaccoonBlog.Web.Controllers" }
+                );
+	    }
 	}
 }
