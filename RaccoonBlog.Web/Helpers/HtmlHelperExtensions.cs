@@ -7,11 +7,64 @@ using System.Web.Mvc.Html;
 using System.Web.Optimization;
 
 using RaccoonBlog.Web.Models;
+using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Helpers
 {
 	public static class HtmlHelperExtensions
 	{
+		private static readonly MvcHtmlString Empty = new MvcHtmlString(string.Empty);
+
+		public static MvcHtmlString PreviousSeriesArticleLink(this HtmlHelper helper, PostViewModel model)
+		{
+			if (model.SeriesInfo == null)
+				return Empty;
+
+			var postIndexInSeries = GetCurrentPostIndexInSeries(model);
+			if (postIndexInSeries <= 0 || model.SeriesInfo.PostsInSeries.Count <= 1)
+				return Empty;
+
+			var previousPostInSeries = model.SeriesInfo.PostsInSeries[postIndexInSeries - 1];
+			return helper.ActionLink(
+				"‹ previous series post",
+				MVC.PostDetails.ActionNames.Details,
+				MVC.PostDetails.Name,
+				new { id = previousPostInSeries.Id, previousPostInSeries.Slug },
+				new { @class = "pull-left" });
+		}
+
+		public static MvcHtmlString NextSeriesArticleLink(this HtmlHelper helper, PostViewModel model)
+		{
+			if (model.SeriesInfo == null)
+				return Empty;
+
+			var postIndexInSeries = GetCurrentPostIndexInSeries(model);
+			var nextPostIndexInSeries = postIndexInSeries + 1;
+			if (nextPostIndexInSeries >= model.SeriesInfo.PostsInSeries.Count)
+				return Empty;
+
+			var nextPostInSeries = model.SeriesInfo.PostsInSeries[nextPostIndexInSeries];
+			return helper.ActionLink(
+				"next series post ›",
+				MVC.PostDetails.ActionNames.Details,
+				MVC.PostDetails.Name,
+				new { id = nextPostInSeries.Id, nextPostInSeries.Slug },
+				new { @class = "pull-right" });
+		}
+
+		private static int GetCurrentPostIndexInSeries(PostViewModel model)
+		{
+			var currentPostId = model.Post.Id;
+			for (var index = 0; index < model.SeriesInfo.PostsInSeries.Count; index++)
+			{
+				var postInSeries = model.SeriesInfo.PostsInSeries[index];
+				if (postInSeries.Id == currentPostId)
+					return index;
+			}
+
+			return 0;
+		}
+
 		public static bool IsSectionActive(this HtmlHelper helper, string sectionTitle)
 		{
 			var sections = helper.ViewBag.Sections as List<Section>;

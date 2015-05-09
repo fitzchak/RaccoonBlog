@@ -13,10 +13,12 @@
         {
             <a class="pull-left" href="@Url.Action("Details", new {id = Model.PreviousPost.DomainId, Model.PreviousPost.Slug})">‹&nbsp;previous post</a>
         }
+		@Html.PreviousSeriesArticleLink(Model)
         @if (Model.NextPost != null)
         {
             <a class="pull-right" href="@Url.Action("Details", new {id = Model.NextPost.DomainId, Model.NextPost.Slug})">next post&nbsp;›</a>
         }
+		@Html.NextSeriesArticleLink(Model)
     </nav>
     <time>
         <span>@Model.Post.PublishedAt.ToString("MMM dd")</span>
@@ -72,18 +74,20 @@
         <hr style="margin: 0;" />
     </div>
 
+	<nav class="nextPrev">
+		@if (Model.PreviousPost != null)
+		{
+			<a class="pull-left" href="@Url.Action("Details", new {id = Model.PreviousPost.DomainId, Model.PreviousPost.Slug})">‹&nbsp;previous post</a>
+		}
+		
+		@Html.PreviousSeriesArticleLink(Model)
 
-    <nav class="nextPrev">
-        @if (Model.PreviousPost != null)
-        {
-            <a class="pull-left" href="@Url.Action("Details", new {id = Model.PreviousPost.DomainId, Model.PreviousPost.Slug})">‹&nbsp;previous post</a>
-        }
-        @if (Model.NextPost != null)
-        {
-            <a class="pull-right" href="@Url.Action("Details", new {id = Model.NextPost.DomainId, Model.NextPost.Slug})">next post&nbsp;›</a>
-        }
-    </nav>
-
+		@if (Model.NextPost != null)
+		{
+			<a class="pull-right" href="@Url.Action("Details", new {id = Model.NextPost.DomainId, Model.NextPost.Slug})">next post&nbsp;›</a>
+		}
+		@Html.NextSeriesArticleLink(Model)
+	</nav>
 
     @if (Model.SeriesInfo != null)
     {
@@ -91,27 +95,30 @@
             <h4 class="text-left">
                 More posts in &quot;@Model.SeriesInfo.SeriesTitle&quot; series:
             </h4>
-            <ol>
-                @foreach (var post in Model.SeriesInfo.PostsInSeries)
-                {
-                    if (post.PublishAt >= DateTimeOffset.Now)
-                    {
-                        <li><em>(@(post.PublishAt.ToString("dd MMM yyyy")))</em>&nbsp;@(post.Title)</li>
-                    }
-                    else
-                    {
-                        if (post.Id == Model.Post.Id)
-                        {
-                            <li><strong><em>(@(post.PublishAt.ToString("dd MMM yyyy")))</em>&nbsp;<a href="@Url.Action("Details", new { post.Id, post.Slug })">@(post.Title)</a></strong></li>
-                        }
-                        else
-                        {
-                            <li><em>(@(post.PublishAt.ToString("dd MMM yyyy")))</em>&nbsp;<a href="@Url.Action("Details", new { post.Id, post.Slug })">@(post.Title)</a></li>
-                        }
-                    }
-                }
-            </ol>
-            <button class="morePosts btn btn-sm btn-default">show all</button>
+	        <ol>
+		        @foreach (var post in Model.SeriesInfo.PostsInSeries)
+		        {
+			        if (post.PublishAt >= DateTimeOffset.Now)
+			        {
+				        <li><em>(@(post.PublishAt.ToString("dd MMM yyyy")))</em>&nbsp;@(post.Title)</li>
+			        }
+			        else
+			        {
+				        if (post.Id == Model.Post.Id)
+				        {
+					        <li><strong><em>(@(post.PublishAt.ToString("dd MMM yyyy")))</em>&nbsp;<a href="@Url.Action("Details", new { post.Id, post.Slug })">@(post.Title)</a></strong></li>
+				        }
+				        else
+				        {
+					        <li><em>(@(post.PublishAt.ToString("dd MMM yyyy")))</em>&nbsp;<a href="@Url.Action("Details", new { post.Id, post.Slug })">@(post.Title)</a></li>
+				        }
+			        }
+		        }
+	        </ol>
+			@if (Model.SeriesInfo.PostsInSeries.Count > 3)
+			{
+				<button class="morePosts btn btn-sm btn-default">show all</button>
+			}
         </section>
     }
     <hr />
