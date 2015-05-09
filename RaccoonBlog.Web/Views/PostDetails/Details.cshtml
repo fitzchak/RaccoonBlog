@@ -128,43 +128,43 @@
     <a name="comments"></a>
     <h2>Comments</h2>
 
-    @foreach (var comment in Model.Comments.Select((value, i) => new { value, i }))
+    @foreach (var comment in Model.Comments)
     {
-        if (@comment.value.IsImportant)
+        if (@comment.IsImportant)
         {
             <article class="comment important">
-                <a name='@(string.Format("comment{0}", (comment.i+1)))'></a>
+                <a name='@(string.Format("comment{0}", (comment.Id)))'></a>
                 <div class="avatar">
-                    <img src='@(string.Format("http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon", @comment.value.EmailHash))' alt="@comment.value.Author" />
+                    <img src='@(string.Format("http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon", @comment.EmailHash))' alt="@comment.Author" />
                 </div>
                 <div class="postedBy">
-                    <a href="@comment.value.Url" target="_blank" title='@(string.Format("Comment by {0}", @comment.value.Author))'>@comment.value.Author</a>
+                    <a href="@comment.Url" target="_blank" title='@(string.Format("Comment by {0}", @comment.Author))'>@comment.Author</a>
                 </div>
                 <time>
-                    @DateTime.Parse(@comment.value.CreatedAt).ToString("dd MMM yyyy")<br />
-                    @DateTime.Parse(@comment.value.CreatedAt).ToString("HH:mm tt")
+                    @DateTime.Parse(@comment.CreatedAt).ToString("dd MMM yyyy")<br />
+                    @DateTime.Parse(@comment.CreatedAt).ToString("HH:mm tt")
                 </time>
                 <div class="comment-body">
-                    @comment.value.Body
+                    @comment.Body
                 </div>
             </article>
         }
         else
         {
             <article class="comment">
-                <a name='@(string.Format("comment{0}", (comment.i+1)))'></a>
+                <a name='@(string.Format("comment{0}", (comment.Id)))'></a>
                 <div class="avatar">
-                    <img src='@(string.Format("http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon", @comment.value.EmailHash))' alt="@comment.value.Author" />
+                    <img src='@(string.Format("http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon", @comment.EmailHash))' alt="@comment.Author" />
                 </div>
                 <time>
-                    @DateTime.Parse(@comment.value.CreatedAt).ToString("dd MMM yyyy")<br />
-                    @DateTime.Parse(@comment.value.CreatedAt).ToString("HH:mm tt")
+                    @DateTime.Parse(@comment.CreatedAt).ToString("dd MMM yyyy")<br />
+                    @DateTime.Parse(@comment.CreatedAt).ToString("HH:mm tt")
                 </time>
                 <div class="postedBy">
-                    <a href="@comment.value.Url" target="_blank" title='@(string.Format("Comment by {0}", @comment.value.Author))'>@comment.value.Author</a>
+                    <a href="@comment.Url" target="_blank" title='@(string.Format("Comment by {0}", @comment.Author))'>@comment.Author</a>
                 </div>
                 <div class="comment-body">
-                    @comment.value.Body
+                    @comment.Body
                 </div>
             </article>
         }
