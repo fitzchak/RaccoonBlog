@@ -78,7 +78,7 @@ hr {
     text-align: center;
     color: @brand-info;
     background-color: #faaa47;
-    background: url(../img/side_bkg.jpg) #faaa47 right no-repeat;
+    background: url(../img/side_bkg.jpg) #faaa47 top right repeat-y;
     padding: 20px 15px;
     position: relative;
 
@@ -898,21 +898,30 @@ article {
         background-color: @brand-primary;
         color: #FFF;
         font-size: 18px;
-        font-weight: 600;
+        font-weight: normal;
         line-height: 0.9;
         padding: 10px 10px;
         margin: 0 0 20px 0;
 
         span {
             margin-right: 5px;
+            
         }
 
         @media (min-width: @screen-sm) {
-            text-align:center; width:115px; float:left; padding:10px 0; margin: 0 13px 0 0; span {
+            text-align:center;
+            width:95px; float:left;
+            padding:8px 0 10px;
+            margin: 0 13px 0 0; 
+            font-weight:300;
+            letter-spacing: 1.4pt;
+            span {
                 display: block;
                 margin: 0;
-                font-size: 36px;
-                font-weight: normal;
+                font-size: 26px;
+                letter-spacing:normal;
+                
+                margin-bottom:3px;
             }
         }
     }
@@ -923,7 +932,8 @@ article {
         font-size: 24px;
 
         @media (min-width: @screen-sm) {
-            margin-left:128px;
+            margin-left:108px;
+            line-height: 1;
         }
 
         @media (min-width: @screen-lg) {
@@ -1308,8 +1318,8 @@ pre[class*="language-"]:before, pre[class*="language-"]:after {
 //ADD
 
 .comments {
+    margin-top: -30px;
 
-    margin-top:-30px;
     h2 {
         margin-top: 0;
     }
@@ -1318,7 +1328,8 @@ pre[class*="language-"]:before, pre[class*="language-"]:after {
         padding: 10px 0;
 
         &.comment {
-            overflow-x:hidden;
+            overflow-x: hidden;
+
             .avatar {
                 -webkit-border-radius: 40px;
                 border-radius: 40px;
@@ -1357,7 +1368,7 @@ pre[class*="language-"]:before, pre[class*="language-"]:after {
                 padding-left: 80px;
                 margin-top: -46px;
                 margin-bottom: 0;
-                
+
 
                 br {
                     display: none;
@@ -1365,58 +1376,44 @@ pre[class*="language-"]:before, pre[class*="language-"]:after {
 
 
                 @media (min-width: @screen-sm) {
-                    position:relative;
-                    width:auto;
-                    padding:11px 10px 11px 30px;
-                    margin:0;
-                    background:url(../img/commentDate.png) top left no-repeat;
-                    br {
+                    position:relative; width:auto; padding:11px 10px 11px 30px; margin:0; background:url(../img/commentDate.png) top left no-repeat; br {
                         display: block;
                     }
                 }
             }
 
             .postedBy {
-                
                 min-height: 46px;
                 width: 100%;
                 background-color: @gray-lighter;
                 padding-left: 80px;
-                line-height:1;
-                padding-top:8px !important;
+                line-height: 1;
+                padding-top: 8px !important;
                 font-size: 16px;
 
                 a {
-                    overflow:hidden;
-                    text-overflow:ellipsis;
-                    white-space:nowrap;
-                    display:inline-block;
-                    max-width:100%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    display: inline-block;
+                    max-width: 100%;
+                    height:29px;
                 }
 
                 @media (max-width: @screen-sm) {
                     padding-top:14px !important;
-                    
                 }
 
                 @media (min-width: @screen-sm) {
-                    font-size: 20px;
-                    padding:3px 18px; 
-                    margin-left:-18px; 
-                    width:auto; 
-                    display:inline-block;
-                    padding-top:14px !important;
-                    max-width:64%;
+                    font-size: 20px; padding:3px 18px; margin-left:-18px; width:auto; display:inline-block; padding-top:14px !important; max-width:64%;
                 }
 
                 @media (min-width: @screen-md) {
-                    font-size: 20px;
-                    padding-top:12px !important;
+                    font-size: 20px; padding-top:12px !important;
                 }
 
                 @media (min-width: @screen-md) {
-                    font-size: 24px;
-                    padding-top:9px !important;
+                    font-size: 24px; padding-top:9px !important;
                 }
             }
 
@@ -1428,7 +1425,7 @@ pre[class*="language-"]:before, pre[class*="language-"]:after {
                 clear: both;
 
                 @media (min-width: @screen-sm) {
-                   margin-left:77px;
+                    margin-left:77px;
                 }
             }
 
@@ -1440,7 +1437,6 @@ pre[class*="language-"]:before, pre[class*="language-"]:after {
                 }
 
                 time {
-                    
                     float: right;
                     padding-left: 0;
                     padding-right: 80px;
@@ -1448,9 +1444,7 @@ pre[class*="language-"]:before, pre[class*="language-"]:after {
 
                     @media (min-width: @screen-sm) {
                         //margin:0;
-                        position:relative;
-                        padding:11px 30px 11px 10px;
-                        background:url(../img/commentDateImp.png) top right no-repeat;
+                        position:relative; padding:11px 30px 11px 10px; background:url(../img/commentDateImp.png) top right no-repeat;
                     }
                 }
 
@@ -1460,20 +1454,26 @@ pre[class*="language-"]:before, pre[class*="language-"]:after {
                     padding-right: 80px;
 
                     @media (min-width: @screen-sm) {
-                        padding:3px 20px;
-                        margin-right:-18px;
+                        padding:3px 20px; margin-right:-18px;
                     }
                 }
 
                 .comment-body {
                     background-color: #FFF7CD;
                     text-align: left;
+
                     @media (min-width: @screen-sm) {
-                    margin-left:0;
-                    margin-right:77px;
-                }
+                        margin-left:0; margin-right:77px;
+                    }
                 }
             }
+        }
+
+        label {
+            display: inline-block;
+            padding:2px 15px;
+            margin-bottom:-1px;
+            font-weight:normal;
         }
 
         .input-group-addon {
@@ -1485,9 +1485,13 @@ pre[class*="language-"]:before, pre[class*="language-"]:after {
     }
 }
 
+#recaptcha_widget_div {
+        border: 1px solid @brand-primary !important;
+    }
+
 .form_item {
 
-    input, textarea {
+    input, textarea, {
         padding: 5px 20px;
         border-color: @brand-primary;
         //background-color: @gray-lighter;
@@ -1496,6 +1500,7 @@ pre[class*="language-"]:before, pre[class*="language-"]:after {
     //  -webkit-box-shadow:inset 0 2px 10px -3px rgba(0,0,0,0.4);
     //box-shadow:inset 0 2px 10px -3px rgba(0,0,0,0.4);
     }
+
 
     label {
         //border-color: @brand-success;

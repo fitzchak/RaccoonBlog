@@ -9,7 +9,7 @@
         <article>
             <time>
                 <span>@post.PublishedAt.ToString("MMM dd")</span>
-                @post.PublishedAt.ToString("yyyy HH:mm")
+                @post.PublishedAt.ToString("yyyy")
             </time>
             <a href="@Url.Action("Details", "PostDetails", new { post.Id, post.Slug })">
                 @if (post.IsSerie == false)
