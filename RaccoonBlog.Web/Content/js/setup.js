@@ -74,14 +74,20 @@ var bodyEl = document.body,
 	}
 
 	function toggleMenu() {
-		if (isOpen) {
-			$(bodyEl).removeClass('show-menu');
+	    if ($(window).width() > 768) {
+	        if ($('.container').hasClass('visited')) {
+	            $('.container').removeClass('visited');
+	        } 
+	    } else {
+	        if (isOpen) {
+			    $(bodyEl).removeClass('show-menu');
 
-		}
-		else {
-			$(bodyEl).addClass('show-menu');
-		}
-		isOpen = !isOpen;
+		    }
+		    else {
+			    $(bodyEl).addClass('show-menu');
+		    }
+	        isOpen = !isOpen;
+	    }
 	}
 
 	
@@ -163,6 +169,7 @@ window.onresize = function (event) {
 
 $(document).ready(function (e) {
     
+    
     $('.postsInSeries .morePosts').click(function (event) {
         event.preventDefault();
         if ($('.postsInSeries').attr('data-state') != 'open') {
@@ -178,7 +185,52 @@ $(document).ready(function (e) {
 
     });
 
+    $('#commentPreview').click(function (event) {
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        for (var i = 0; i < 50; i++)
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+        var source = 'http://www.gravatar.com/avatar.php?gravatar_id=' + text + '&size=50&default=identicon';
+        
+
+        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        
+            
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = monthNames[today.getMonth()];
+        var yyyy = today.getFullYear();
+        var posttime = today.getHours() +':'+today.getMinutes();
+
+        if(dd<10) {
+            dd='0'+dd
+        } 
+
+        if(mm<10) {
+            mm='0'+mm
+        } 
+
+        var currentTime =  dd+' '+mm+' '+yyyy+'<br/>'+posttime;
+
+        $('.comment.preview time').html(currentTime);
+        
+        $('.comment.preview .avatar img').attr("src", source);
+        $('.comment.preview .comment-body').html($('#Input_Body').val());
+        $('.comment.preview .postedBy a').html($('#Input_Name').val());
+        $('.comment.preview').addClass('active');
+    });
+
     adjustSize();
+    
+    var visitCookieVaule = readCookie('newVisit');
+    if (visitCookieVaule == 'visited') {
+        $('.container').addClass('visited');
+    } else {
+        createCookie('newVisit', 'visited');
+    }
+
     var viewCookieValue = readCookie('view');
     if (viewCookieValue == 'stack') {
         $(bodyEl).removeClass('show-grid');
@@ -195,9 +247,7 @@ $(document).ready(function (e) {
         isGrid = true;
         createCookie('view', 'grid');
         adjustSize();
-
      
     }
-        
         
 });
