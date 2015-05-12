@@ -25,14 +25,14 @@
 	@RenderSection("Style", false)
 </head>
 <body class="show-grid">
-	<div class="container">
+	<div class="container visited">
 		<div class="row">
 			<div class="leftSide col-sm-4 col-md-3">
 			    <a href="@Url.Action("Index", "Posts")" class="logo">
 			        <h1>@ViewBag.BlogConfig.Title</h1>
 			    </a>
 
-			    <img src="~/Content/img/rihno.svg" class="rihno" />
+                <a href="@Url.Action("Index", "Posts")" style="display: block;"><img src="~/Content/css/img/rihno.svg" class="rihno" /></a>
                 
                 <a href="@Url.Action("Index", "Posts")" class="logo-vertical">
                     <h1>@ViewBag.BlogConfig.Title</h1>

@@ -86,7 +86,9 @@ hr {
     z-index: 20;
 
     @media (min-width: @screen-sm) {
-        position:fixed; height:100%; min-height:550px;
+        left:0;
+        top:0;
+        position:absolute; height:100%; min-height:550px;
     }
 
 
@@ -1087,7 +1089,7 @@ article {
         .read-more {
             display: block;
             width: 100%;
-            background: url(../../img/readmore.png) bottom repeat-x;
+            background: url(../img/readmore.png) bottom repeat-x;
             height: 100px;
             position: absolute;
             bottom: 0;
@@ -1908,6 +1910,9 @@ li.future {
 .visited {
 
     @media (min-width: @screen-sm) {
+
+       
+
         .leftSide {
             width: 110px;
             text-align:center;
@@ -1919,6 +1924,7 @@ li.future {
 
         .rihno {
             width: 100%;
+            margin-top:0;
             margin-bottom:20px;
             margin-left:0;
         }
@@ -1928,9 +1934,16 @@ li.future {
         }
 
         .menu-button {
-            display:block;
-            position:relative;
-            margin:0 25px;
+            display:inline-block;
+            position:static;
+            margin:10px 0 0;
+            //margin:0 25px;
+        }
+
+        .socicon {
+            a+a {
+                margin-top:4px;
+            }
         }
     }
 
@@ -1942,7 +1955,13 @@ li.future {
         }
     }
 
-    #content {
+    .rightSide {
+         @media (min-width: @screen-sm) and (max-width: @screen-md){
+            width: 100%; margin-left:0; padding-left:180px; padding-right:60px;
+        }
+    }
+
+    #content  {
         @media (min-width: @screen-sm) {
             width: 100%; margin-left:0; padding-left:180px; padding-right:60px;
         }

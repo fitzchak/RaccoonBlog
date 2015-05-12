@@ -99,7 +99,8 @@ var bodyEl = document.body,
 			$(showstack).addClass('active');
 			isGrid = false;
 		    createCookie('view', 'stack');
-			adjustSize();
+		    adjustSize();
+		    scrollLeftSide();
 		}
 	}
     
@@ -111,6 +112,7 @@ var bodyEl = document.body,
 	        isGrid = true;
 	        createCookie('view', 'grid');
 	        adjustSize();
+	        scrollLeftSide();
 	    }
 	}
 
@@ -163,9 +165,21 @@ var adjustSize = function () {
 	}
 }
 
-window.onresize = function (event) {
-	adjustSize();
+var scrollLeftSide = function () {
+    if ($(window).width() > 768) {
+        var offsetTop = $(window).scrollTop();
+        $('.leftSide').css('top', offsetTop);
+    }
 }
+
+window.onresize = function (event) {
+    adjustSize();
+    scrollLeftSide();
+}
+
+
+
+$(window).scroll(function () { scrollLeftSide(); })
 
 $(document).ready(function (e) {
     
@@ -223,11 +237,13 @@ $(document).ready(function (e) {
     });
 
     adjustSize();
+    scrollLeftSide();
     
     var visitCookieVaule = readCookie('newVisit');
     if (visitCookieVaule == 'visited') {
-        $('.container').addClass('visited');
+        
     } else {
+        $('.container').removeClass('visited');
         createCookie('newVisit', 'visited');
     }
 
@@ -239,6 +255,7 @@ $(document).ready(function (e) {
         isGrid = false;
         createCookie('view', 'stack');
         adjustSize();
+        scrollLeftSide();
 
     } else {
         $(bodyEl).addClass('show-grid');
@@ -247,6 +264,7 @@ $(document).ready(function (e) {
         isGrid = true;
         createCookie('view', 'grid');
         adjustSize();
+        scrollLeftSide();
      
     }
         
