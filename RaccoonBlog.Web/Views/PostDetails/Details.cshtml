@@ -13,12 +13,15 @@
         {
             <a class="pull-left" href="@Url.Action("Details", new {id = Model.PreviousPost.DomainId, Model.PreviousPost.Slug})">‹&nbsp;previous post</a>
         }
-		@Html.PreviousSeriesArticleLink(Model)
+		
         @if (Model.NextPost != null)
         {
             <a class="pull-right" href="@Url.Action("Details", new {id = Model.NextPost.DomainId, Model.NextPost.Slug})">next post&nbsp;›</a>
         }
+        <div class="clearfix-xs"></div>
+        @Html.PreviousSeriesArticleLink(Model)
 		@Html.NextSeriesArticleLink(Model)
+        <div class="clearfix"></div>
     </nav>
     <time>
         <span>@Model.Post.PublishedAt.ToString("MMM dd")</span>
@@ -80,13 +83,16 @@
 			<a class="pull-left" href="@Url.Action("Details", new {id = Model.PreviousPost.DomainId, Model.PreviousPost.Slug})">‹&nbsp;previous post</a>
 		}
 		
-		@Html.PreviousSeriesArticleLink(Model)
+		
 
 		@if (Model.NextPost != null)
 		{
 			<a class="pull-right" href="@Url.Action("Details", new {id = Model.NextPost.DomainId, Model.NextPost.Slug})">next post&nbsp;›</a>
 		}
+        <div class="clearfix-xs"></div>
+        @Html.PreviousSeriesArticleLink(Model)
 		@Html.NextSeriesArticleLink(Model)
+        <div class="clearfix"></div>
 	</nav>
 
     @if (Model.SeriesInfo != null)

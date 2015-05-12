@@ -866,10 +866,12 @@ article {
     }
 
     .nextPrev {
-        height: 30px;
+        margin-left:-2px;
+        margin-right:-2px;
 
         a {
             padding: 5px 10px;
+            margin:0 2px;
             display: inline-block;
 
             &:last-of-type {
@@ -917,7 +919,7 @@ article {
             width:95px; float:left;
             padding:8px 0 10px;
             margin: 0 13px 0 0; 
-            font-weight:300;
+            font-weight:normal;
             letter-spacing: 1.4pt;
             span {
                 display: block;
@@ -1372,6 +1374,7 @@ pre[class*="language-"]:before, pre[class*="language-"]:after {
                 padding-left: 80px;
                 margin-top: -46px;
                 margin-bottom: 0;
+                font-weight:600;
 
 
                 br {
@@ -1490,7 +1493,7 @@ pre[class*="language-"]:before, pre[class*="language-"]:after {
 }
 
 #recaptcha_widget_div {
-        border: 1px solid @brand-primary !important;
+        //border: 1px solid @brand-primary !important;
     }
 
 .form_item {
@@ -1830,3 +1833,27 @@ li.future {
 .csharpcode, .csharpcode pre {
                background-color:transparent !important;
     }
+
+.pull-right-sm {
+	@media (min-width: @screen-tablet) {
+		float:right !important;
+	}
+}
+
+.pull-left-sm {
+	@media (min-width: @screen-tablet) {
+		float:left !important;
+	}
+}
+
+.text-right-sm {
+	@media (min-width: @screen-tablet) {
+		text-align:right !important;
+	}
+}
+
+.clearfix-xs {
+    @media (max-width: @screen-tablet) {
+        clear:both;
+    }
+}
