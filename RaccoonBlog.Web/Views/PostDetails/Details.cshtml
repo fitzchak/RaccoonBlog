@@ -22,7 +22,7 @@
     </nav>
     <time>
         <span>@Model.Post.PublishedAt.ToString("MMM dd")</span>
-        @Model.Post.PublishedAt.ToString("yyyy HH:mm")
+        @Model.Post.PublishedAt.ToString("yyyy")
     </time>
     <a href="@Url.Action("Details", new { Model.Post.Id, Model.Post.Slug })">
         @if (Model.SeriesInfo == null)
@@ -213,53 +213,45 @@
                 {
                     <div class="row">
                         <div class="form_item form-group col-sm-12 col-md-4">
-
-                            <div class="input-group">
-                                <label class="input-group-addon">
+                                <label>
                                     <span class="form_item_name">Name</span>
                                 </label>
                                 @Html.TextBoxFor(x => x.Input.Name, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(x => x.Input.Name)
-                            </div>
                         </div>
                         <div class="form_item form-group col-sm-6 col-md-4">
-                            <div class="input-group">
-                                <label class="input-group-addon">
+                            
+                                <label>
                                     <span class="form_item_name">Email</span>
                                 </label>
                                 @Html.TextBoxFor(x => x.Input.Email, new { @class = "form-control email", type = "email" })
                                 @Html.ValidationMessageFor(x => x.Input.Email)
-                            </div>
+                            
                         </div>
                         <div class="form_item form-group col-sm-6 col-md-4">
-                            <div class="input-group">
-                                <label class="input-group-addon">
+                                <label>
                                     <span class="form_item_name">Url</span>
                                 </label>
                                 @Html.TextBoxFor(x => x.Input.Url, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(x => x.Input.Url)
-                            </div>
                         </div>
                         <div class="form_item form-group col-sm-12">
-                            <div class="input-group">
-                                <label class="input-group-addon">
+                            
+                                <label>
                                     <span class="form_item_name">Comments</span>
                                 </label>
                                 @Html.TextAreaFor(x => x.Input.Body, new { rows = 9, @class = "form-control" })
                                 @Html.ValidationMessageFor(x => x.Input.Body)
-                            </div>
                         </div>
                         @if (Model.IsTrustedCommenter == false)
                         {
                             <div class="form_item form-group col-sm-12">
-                                <div class="input-group">
-                                    <label class="input-group-addon">
+                                    <label  >
                                         <span class="form_item_name">Human?</span>
                                     </label>
                                     @Html.GenerateCaptcha()
                                     @Html.ValidationMessage("CaptchaNotValid")
                                 </div>
-                            </div>
                         }
                     </div>
                     @Html.HiddenFor(x => x.Input.CommenterKey)
