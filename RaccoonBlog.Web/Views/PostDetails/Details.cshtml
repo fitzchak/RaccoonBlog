@@ -213,49 +213,52 @@
                 {
                     <div class="row">
                         <div class="form_item form-group col-sm-12 col-md-4">
-                                <label>
-                                    <span class="form_item_name">Name</span>
-                                </label>
-                                @Html.TextBoxFor(x => x.Input.Name, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(x => x.Input.Name)
+                            <label>
+                                <span class="form_item_name">Name</span>
+                            </label>
+                            @Html.TextBoxFor(x => x.Input.Name, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.Input.Name)
                         </div>
                         <div class="form_item form-group col-sm-6 col-md-4">
                             
-                                <label>
-                                    <span class="form_item_name">Email</span>
-                                </label>
-                                @Html.TextBoxFor(x => x.Input.Email, new { @class = "form-control email", type = "email" })
-                                @Html.ValidationMessageFor(x => x.Input.Email)
+                            <label>
+                                <span class="form_item_name">Email</span>
+                            </label>
+                            @Html.TextBoxFor(x => x.Input.Email, new { @class = "form-control email", type = "email" })
+                            @Html.ValidationMessageFor(x => x.Input.Email)
                             
                         </div>
                         <div class="form_item form-group col-sm-6 col-md-4">
-                                <label>
-                                    <span class="form_item_name">Url</span>
-                                </label>
-                                @Html.TextBoxFor(x => x.Input.Url, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(x => x.Input.Url)
+                            <label>
+                                <span class="form_item_name">Url</span>
+                            </label>
+                            @Html.TextBoxFor(x => x.Input.Url, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.Input.Url)
                         </div>
                         <div class="form_item form-group col-sm-12">
                             
-                                <label>
-                                    <span class="form_item_name">Comments</span>
-                                </label>
-                                @Html.TextAreaFor(x => x.Input.Body, new { rows = 9, @class = "form-control" })
-                                @Html.ValidationMessageFor(x => x.Input.Body)
+                            <label>
+                                <span class="form_item_name">Comments</span>
+                            </label>
+                            @Html.TextAreaFor(x => x.Input.Body, new { rows = 9, @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.Input.Body)
                         </div>
                         @if (Model.IsTrustedCommenter == false)
                         {
                             <div class="form_item form-group col-sm-12">
-                                    <label  >
-                                        <span class="form_item_name">Human?</span>
-                                    </label>
-                                    @Html.GenerateCaptcha()
-                                    @Html.ValidationMessage("CaptchaNotValid")
-                                </div>
+                                <label  >
+                                    <span class="form_item_name">Human?</span>
+                                </label>
+                                @Html.GenerateCaptcha()
+                                @Html.ValidationMessage("CaptchaNotValid")
+                            </div>
                         }
                     </div>
+                    <div class="pull-right">
+                    <input type="button" id="commentPreview" value="Comment Preview" class="btn btn-default">
                     @Html.HiddenFor(x => x.Input.CommenterKey)
-                    <input type="submit" value="Post Comment" class="btn btn-primary pull-right">
+                <input type="submit" value="Post Comment" class="btn btn-primary">
+                    </div>
                     <div class="clearfix"></div>
                 }
             </div>
