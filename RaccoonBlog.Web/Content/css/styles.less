@@ -86,9 +86,7 @@ hr {
     z-index: 20;
 
     @media (min-width: @screen-sm) {
-        left:0;
-        top:0;
-        position:absolute; height:100%; min-height:550px;
+        left:0; top:0; position:absolute; height:100%; min-height:550px;
     }
 
 
@@ -101,13 +99,11 @@ hr {
         float: left;
 
         @media (min-width: @screen-sm) {
-            height:auto; float:none; margin-top:10px; margin-bottom:0; height:50px;
-            margin-left:15px;
+            height:auto; float:none; margin-top:10px; margin-bottom:0; height:50px; margin-left:15px;
         }
 
         @media (min-height: 500px) and (min-width: @screen-sm) {
-            margin-left:15px;
-            height:100px; width:auto;
+            margin-left:15px; height:100px; width:auto;
         }
 
         @media (min-height: 670px) and (min-width: @screen-sm) {
@@ -1340,16 +1336,34 @@ pre[class*="language-"]:before, pre[class*="language-"]:after {
             overflow-x: hidden;
 
             &.preview {
-                display:none;
+                -webkit-animation: popup .1s ease-out; /* Safari, Chrome and Opera > 12.1 */
+                -moz-animation: popup .1s ease-out; /* Firefox < 16 */
+                -ms-animation: popup .1s ease-out; /* Internet Explorer */
+                -o-animation: popup .1s ease-out; /* Opera < 12.1 */
+                animation: popup .1s ease-out;
+                display: none;
+                background-color: lighten(#faaa47,25%);
+                margin-left: -10px;
+                margin-right: -10px;
+                padding: 10px;
+                -webkit-border-radius: 5px;
+                border-radius: 5px;
+
+                h4 {
+                    margin-top: 0;
+                    text-align: center;
+                }
+
 
                 .avatar {
                     img {
-                        height:58px;
-                        width:58px;
+                        height: 58px;
+                        width: 58px;
                     }
                 }
+
                 &.active {
-                    display:block;
+                    display: block;
                 }
             }
 
@@ -1911,11 +1925,11 @@ li.future {
 
     @media (min-width: @screen-sm) {
 
-       
+
 
         .leftSide {
             width: 110px;
-            text-align:center;
+            text-align: center;
 
             .logo {
                 display: none;
@@ -1924,9 +1938,9 @@ li.future {
 
         .rihno {
             width: 100%;
-            margin-top:0;
-            margin-bottom:20px;
-            margin-left:0;
+            margin-top: 0;
+            margin-bottom: 20px;
+            margin-left: 0;
         }
 
         .logo-vertical {
@@ -1934,15 +1948,15 @@ li.future {
         }
 
         .menu-button {
-            display:inline-block;
-            position:static;
-            margin:10px 0 0;
+            display: inline-block;
+            position: static;
+            margin: 10px 0 0;
             //margin:0 25px;
         }
 
         .socicon {
-            a+a {
-                margin-top:4px;
+            a + a {
+                margin-top: 4px;
             }
         }
     }
@@ -1956,12 +1970,12 @@ li.future {
     }
 
     .rightSide {
-         @media (min-width: @screen-sm) and (max-width: @screen-md){
+        @media (min-width: @screen-sm) and (max-width: @screen-md) {
             width: 100%; margin-left:0; padding-left:180px; padding-right:60px;
         }
     }
 
-    #content  {
+    #content {
         @media (min-width: @screen-sm) {
             width: 100%; margin-left:0; padding-left:180px; padding-right:60px;
         }
