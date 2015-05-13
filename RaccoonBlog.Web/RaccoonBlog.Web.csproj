@@ -505,6 +505,7 @@
     <Content Include="Content\css\img\ico_phone.svg" />
     <Content Include="Content\css\img\ico_stack_active.svg" />
     <Content Include="Content\css\img\ico_stack_inactive.svg" />
+    <Content Include="Content\css\img\logo-vertical.svg" />
     <Content Include="Content\css\img\logo.svg" />
     <Content Include="Content\css\img\readmore.png" />
     <Content Include="Content\css\img\readmore2.png" />
