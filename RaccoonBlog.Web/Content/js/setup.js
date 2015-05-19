@@ -5,13 +5,14 @@
 function createCookie(name, value, days) {
     var expires;
 
-    if (days) {
-        var date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toGMTString();
-    } else {
-        expires = "";
+    if (!days) {
+	    days = 365;
     }
+
+    var date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    expires = "; expires=" + date.toGMTString();
+
     document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + expires + "; path=/";
 }
 
@@ -174,18 +175,14 @@ var scrollLeftSide = function () {
     }*/
 }
 
-window.onresize = function (event) {
+window.onresize = function () {
     adjustSize();
     scrollLeftSide();
 }
 
+$(window).scroll(function() { scrollLeftSide(); });
 
-
-$(window).scroll(function () { scrollLeftSide(); })
-
-$(document).ready(function (e) {
-
-
+$(document).ready(function () {
     $('.postsInSeries .morePosts').click(function (event) {
         event.preventDefault();
         if ($('.postsInSeries').attr('data-state') != 'open') {
@@ -197,11 +194,9 @@ $(document).ready(function (e) {
             $('.postsInSeries').attr('data-state', 'closed');
             $(this).html('show all');
         }
-
-
     });
 
-    $('#commentPreview').click(function (event) {
+    $('#commentPreview').click(function () {
         if ($('form:last').valid()){
             var text = "";
             var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -222,11 +217,11 @@ $(document).ready(function (e) {
             var posttime = today.getHours() + ':' + today.getMinutes();
 
             if (dd < 10) {
-                dd = '0' + dd
+	            dd = '0' + dd;
             }
 
             if (mm < 10) {
-                mm = '0' + mm
+	            mm = '0' + mm;
             }
 
             var currentTime = dd + ' ' + mm + ' ' + yyyy + '<br/>' + posttime;
@@ -245,7 +240,7 @@ $(document).ready(function (e) {
 
     var visitCookieVaule = readCookie('newVisit');
     if (visitCookieVaule == 'visited') {
-
+    	createCookie('newVisit', 'visited');
     } else {
         $('.container').removeClass('visited');
         createCookie('newVisit', 'visited');

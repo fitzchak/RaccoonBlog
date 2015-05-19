@@ -517,12 +517,6 @@
     <Content Include="Content\css\img\side_bkg.png" />
     <Content Include="Content\css\prism.css" />
     <Content Include="Content\css\socicon.css" />
-    <Content Include="Content\css\styles.css">
-      <DependentUpon>styles.less</DependentUpon>
-    </Content>
-    <Content Include="Content\css\styles.min.css">
-      <DependentUpon>styles.css</DependentUpon>
-    </Content>
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\fonts\socicon-webfont.svg" />
     <Content Include="Content\css\img\commentDate.png" />
@@ -1015,9 +1009,6 @@
     <Content Include="Content\css\custom\ayende.variables.css.map">
       <DependentUpon>ayende.variables.css</DependentUpon>
     </Content>
-    <Content Include="Content\css\styles.css.map">
-      <DependentUpon>styles.css</DependentUpon>
-    </Content>
     <Content Include="Areas\Admin\Content\css\bootstrap\bootstrap-extend.less" />
     <Content Include="Areas\Admin\Content\css\bootstrap\bootstrap-extend.css.map">
       <DependentUpon>bootstrap-extend.css</DependentUpon>
@@ -1221,7 +1212,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>27606</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
