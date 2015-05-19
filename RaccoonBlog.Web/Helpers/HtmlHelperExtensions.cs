@@ -20,11 +20,16 @@ namespace RaccoonBlog.Web.Helpers
 			if (model.SeriesInfo == null)
 				return Empty;
 
-			var postIndexInSeries = GetCurrentPostIndexInSeries(model);
-			if (postIndexInSeries <= 0 || model.SeriesInfo.PostsInSeries.Count <= 1)
+			if (model.SeriesInfo.PostsInSeries == null)
 				return Empty;
 
-			var previousPostInSeries = model.SeriesInfo.PostsInSeries[postIndexInSeries - 1];
+			var postsInSeries = FilterPostsInSeries(model);
+
+			var postIndexInSeries = GetCurrentPostIndexInSeries(model, postsInSeries);
+			if (postIndexInSeries <= 0 || postsInSeries.Count <= 1)
+				return Empty;
+
+			var previousPostInSeries = postsInSeries[postIndexInSeries - 1];
 			return helper.ActionLink(
 				"‹ previous series post",
 				MVC.PostDetails.ActionNames.Details,
@@ -38,12 +43,17 @@ namespace RaccoonBlog.Web.Helpers
 			if (model.SeriesInfo == null)
 				return Empty;
 
-			var postIndexInSeries = GetCurrentPostIndexInSeries(model);
-			var nextPostIndexInSeries = postIndexInSeries + 1;
-			if (nextPostIndexInSeries >= model.SeriesInfo.PostsInSeries.Count)
+			if (model.SeriesInfo.PostsInSeries == null)
 				return Empty;
 
-			var nextPostInSeries = model.SeriesInfo.PostsInSeries[nextPostIndexInSeries];
+			var postsInSeries = FilterPostsInSeries(model);
+
+			var postIndexInSeries = GetCurrentPostIndexInSeries(model, postsInSeries);
+			var nextPostIndexInSeries = postIndexInSeries + 1;
+			if (nextPostIndexInSeries >= postsInSeries.Count)
+				return Empty;
+
+			var nextPostInSeries = postsInSeries[nextPostIndexInSeries];
 			return helper.ActionLink(
 				"next series post ›",
 				MVC.PostDetails.ActionNames.Details,
@@ -52,12 +62,22 @@ namespace RaccoonBlog.Web.Helpers
 				new { @class = "pull-right" });
 		}
 
-		private static int GetCurrentPostIndexInSeries(PostViewModel model)
+		private static List<PostInSeries> FilterPostsInSeries(PostViewModel model)
+		{
+			return model
+				.SeriesInfo
+				.PostsInSeries
+				.OrderBy(x => x.PublishAt)
+				.Where(x => x.PublishAt <= DateTimeOffset.UtcNow)
+				.ToList();
+		}
+
+		private static int GetCurrentPostIndexInSeries(PostViewModel model, List<PostInSeries> postsInSeries)
 		{
 			var currentPostId = model.Post.Id;
-			for (var index = 0; index < model.SeriesInfo.PostsInSeries.Count; index++)
+			for (var index = 0; index < postsInSeries.Count; index++)
 			{
-				var postInSeries = model.SeriesInfo.PostsInSeries[index];
+				var postInSeries = postsInSeries[index];
 				if (postInSeries.Id == currentPostId)
 					return index;
 			}
