@@ -131,6 +131,11 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 			{
 				get { return new MailHttpRequset(ConfigurationManager.AppSettings["MainUrl"]); }
 			}
+
+			public override object GetService(Type serviceType)
+			{
+				return null;
+			}
 		}
 
 		public class MailHttpResponse : HttpResponseBase

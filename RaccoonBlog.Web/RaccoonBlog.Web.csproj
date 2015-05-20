@@ -499,13 +499,17 @@
     <Content Include="Content\css\fullcalendar.css" />
     <Content Include="Content\css\fullcalendar.min.css" />
     <Content Include="Content\css\fullcalendar.print.css" />
+    <Content Include="Content\css\img\commentPreviewDate.png" />
     <Content Include="Content\css\img\ico_grid_active.svg" />
     <Content Include="Content\css\img\ico_grid_inactive.svg" />
     <Content Include="Content\css\img\ico_mail.svg" />
     <Content Include="Content\css\img\ico_phone.svg" />
     <Content Include="Content\css\img\ico_stack_active.svg" />
     <Content Include="Content\css\img\ico_stack_inactive.svg" />
+    <Content Include="Content\css\img\logo-vertical.svg" />
     <Content Include="Content\css\img\logo.svg" />
+    <Content Include="Content\css\img\readmore.png" />
+    <Content Include="Content\css\img\readmore2.png" />
     <Content Include="Content\css\img\rihno.svg" />
     <Content Include="Content\css\img\rss.png" />
     <Content Include="Content\css\img\search-icon.svg" />
@@ -513,34 +517,13 @@
     <Content Include="Content\css\img\side_bkg.png" />
     <Content Include="Content\css\prism.css" />
     <Content Include="Content\css\socicon.css" />
-    <Content Include="Content\css\styles.css">
-      <DependentUpon>styles.less</DependentUpon>
-    </Content>
-    <Content Include="Content\css\styles.min.css">
-      <DependentUpon>styles.css</DependentUpon>
-    </Content>
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\fonts\socicon-webfont.svg" />
     <Content Include="Content\css\img\commentDate.png" />
     <Content Include="Content\css\img\commentDateImp.png" />
-    <Content Include="Content\img\ico_grid_active.svg" />
-    <Content Include="Content\img\ico_grid_inactive.svg" />
-    <Content Include="Content\img\ico_mail.svg" />
-    <Content Include="Content\img\ico_phone.svg" />
-    <Content Include="Content\img\ico_stack_active.svg" />
-    <Content Include="Content\img\ico_stack_inactive.svg" />
-    <Content Include="Content\img\logo.svg" />
-    <Content Include="Content\img\readmore.png" />
-    <Content Include="Content\img\readmore2.png" />
-    <Content Include="Content\img\rihno.svg" />
-    <Content Include="Content\img\rss.png" />
-    <Content Include="Content\img\search-icon.svg" />
-    <Content Include="Content\img\side_bkg.jpg" />
-    <Content Include="Content\img\side_bkg.png" />
     <Content Include="Content\js\anytime.js" />
     <Content Include="Content\css\anytime.min.css" />
     <Content Include="Content\js\anytime.min.js" />
-    <Content Include="Content\css\images\logo-admin.png" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Infrastructure\Common\DateTimeOffsetUtil.cs" />
     <Compile Include="Controllers\CssController.cs" />
@@ -647,10 +630,6 @@
     <Compile Include="Helpers\Attributes\ValidatePasswordLengthAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\css\images\balloon.png" />
-    <Content Include="Content\css\images\feed-icon-14x14.png" />
-    <Content Include="Content\css\images\indicator.gif" />
-    <Content Include="Content\css\images\printer.png" />
     <Content Include="Content\js\date.f-0.5.0.js" />
     <Content Include="Content\js\date.f-0.5.0.min.js" />
     <Content Include="Content\js\fullcalendar.js" />
@@ -1030,9 +1009,6 @@
     <Content Include="Content\css\custom\ayende.variables.css.map">
       <DependentUpon>ayende.variables.css</DependentUpon>
     </Content>
-    <Content Include="Content\css\styles.css.map">
-      <DependentUpon>styles.css</DependentUpon>
-    </Content>
     <Content Include="Areas\Admin\Content\css\bootstrap\bootstrap-extend.less" />
     <Content Include="Areas\Admin\Content\css\bootstrap\bootstrap-extend.css.map">
       <DependentUpon>bootstrap-extend.css</DependentUpon>
@@ -1236,7 +1212,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>27606</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

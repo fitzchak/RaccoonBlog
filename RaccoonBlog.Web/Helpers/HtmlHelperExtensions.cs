@@ -7,11 +7,84 @@ using System.Web.Mvc.Html;
 using System.Web.Optimization;
 
 using RaccoonBlog.Web.Models;
+using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Helpers
 {
 	public static class HtmlHelperExtensions
 	{
+		private static readonly MvcHtmlString Empty = new MvcHtmlString(string.Empty);
+
+		public static MvcHtmlString PreviousSeriesArticleLink(this HtmlHelper helper, PostViewModel model)
+		{
+			if (model.SeriesInfo == null)
+				return Empty;
+
+			if (model.SeriesInfo.PostsInSeries == null)
+				return Empty;
+
+			var postsInSeries = FilterPostsInSeries(model);
+
+			var postIndexInSeries = GetCurrentPostIndexInSeries(model, postsInSeries);
+			if (postIndexInSeries <= 0 || postsInSeries.Count <= 1)
+				return Empty;
+
+			var previousPostInSeries = postsInSeries[postIndexInSeries - 1];
+			return helper.ActionLink(
+				"‹ previous series post",
+				MVC.PostDetails.ActionNames.Details,
+				MVC.PostDetails.Name,
+				new { id = previousPostInSeries.Id, previousPostInSeries.Slug },
+				new { @class = "pull-left" });
+		}
+
+		public static MvcHtmlString NextSeriesArticleLink(this HtmlHelper helper, PostViewModel model)
+		{
+			if (model.SeriesInfo == null)
+				return Empty;
+
+			if (model.SeriesInfo.PostsInSeries == null)
+				return Empty;
+
+			var postsInSeries = FilterPostsInSeries(model);
+
+			var postIndexInSeries = GetCurrentPostIndexInSeries(model, postsInSeries);
+			var nextPostIndexInSeries = postIndexInSeries + 1;
+			if (nextPostIndexInSeries >= postsInSeries.Count)
+				return Empty;
+
+			var nextPostInSeries = postsInSeries[nextPostIndexInSeries];
+			return helper.ActionLink(
+				"next series post ›",
+				MVC.PostDetails.ActionNames.Details,
+				MVC.PostDetails.Name,
+				new { id = nextPostInSeries.Id, nextPostInSeries.Slug },
+				new { @class = "pull-right" });
+		}
+
+		private static List<PostInSeries> FilterPostsInSeries(PostViewModel model)
+		{
+			return model
+				.SeriesInfo
+				.PostsInSeries
+				.OrderBy(x => x.PublishAt)
+				.Where(x => x.PublishAt <= DateTimeOffset.UtcNow)
+				.ToList();
+		}
+
+		private static int GetCurrentPostIndexInSeries(PostViewModel model, List<PostInSeries> postsInSeries)
+		{
+			var currentPostId = model.Post.Id;
+			for (var index = 0; index < postsInSeries.Count; index++)
+			{
+				var postInSeries = postsInSeries[index];
+				if (postInSeries.Id == currentPostId)
+					return index;
+			}
+
+			return 0;
+		}
+
 		public static bool IsSectionActive(this HtmlHelper helper, string sectionTitle)
 		{
 			var sections = helper.ViewBag.Sections as List<Section>;

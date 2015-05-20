@@ -230,18 +230,6 @@ namespace Links
             public static readonly string fullcalendar_print_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/fullcalendar.print.min.css") ? Url("fullcalendar.print.min.css") : Url("fullcalendar.print.css");
                  
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-            public static class images {
-                private const string URLPATH = "~/Content/css/images";
-                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                public static readonly string balloon_png = Url("balloon.png");
-                public static readonly string feed_icon_14x14_png = Url("feed-icon-14x14.png");
-                public static readonly string indicator_gif = Url("indicator.gif");
-                public static readonly string logo_admin_png = Url("logo-admin.png");
-                public static readonly string printer_png = Url("printer.png");
-            }
-        
-            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
             public static class img {
                 private const string URLPATH = "~/Content/css/img";
                 public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
@@ -254,7 +242,10 @@ namespace Links
                 public static readonly string ico_phone_svg = Url("ico_phone.svg");
                 public static readonly string ico_stack_active_svg = Url("ico_stack_active.svg");
                 public static readonly string ico_stack_inactive_svg = Url("ico_stack_inactive.svg");
+                public static readonly string logo_vertical_svg = Url("logo-vertical.svg");
                 public static readonly string logo_svg = Url("logo.svg");
+                public static readonly string readmore_png = Url("readmore.png");
+                public static readonly string readmore2_png = Url("readmore2.png");
                 public static readonly string rihno_svg = Url("rihno.svg");
                 public static readonly string rss_png = Url("rss.png");
                 public static readonly string search_icon_svg = Url("search-icon.svg");
@@ -288,27 +279,6 @@ namespace Links
             public static readonly string socicon_webfont_ttf = Url("socicon-webfont.ttf");
             public static readonly string socicon_webfont_woff = Url("socicon-webfont.woff");
             public static readonly string socicon_webfont_woff2 = Url("socicon-webfont.woff2");
-        }
-    
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public static class img {
-            private const string URLPATH = "~/Content/img";
-            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-            public static readonly string ico_grid_active_svg = Url("ico_grid_active.svg");
-            public static readonly string ico_grid_inactive_svg = Url("ico_grid_inactive.svg");
-            public static readonly string ico_mail_svg = Url("ico_mail.svg");
-            public static readonly string ico_phone_svg = Url("ico_phone.svg");
-            public static readonly string ico_stack_active_svg = Url("ico_stack_active.svg");
-            public static readonly string ico_stack_inactive_svg = Url("ico_stack_inactive.svg");
-            public static readonly string logo_svg = Url("logo.svg");
-            public static readonly string readmore_png = Url("readmore.png");
-            public static readonly string readmore2_png = Url("readmore2.png");
-            public static readonly string rihno_svg = Url("rihno.svg");
-            public static readonly string rss_png = Url("rss.png");
-            public static readonly string search_icon_svg = Url("search-icon.svg");
-            public static readonly string side_bkg_jpg = Url("side_bkg.jpg");
-            public static readonly string side_bkg_png = Url("side_bkg.png");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -1361,6 +1331,31 @@ namespace Links
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                public static class datepicker {
+                    private const string URLPATH = "~/Areas/Admin/Content/datepicker";
+                    public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                    public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                    public static class css {
+                        private const string URLPATH = "~/Areas/Admin/Content/datepicker/css";
+                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                        public static readonly string bootstrap_datetimepicker_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap-datetimepicker.min.css") ? Url("bootstrap-datetimepicker.min.css") : Url("bootstrap-datetimepicker.css");
+                             
+                        public static readonly string bootstrap_datetimepicker_min_css = Url("bootstrap-datetimepicker.min.css");
+                    }
+                
+                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                    public static class js {
+                        private const string URLPATH = "~/Areas/Admin/Content/datepicker/js";
+                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                        public static readonly string bootstrap_datetimepicker_min_js = Url("bootstrap-datetimepicker.min.js");
+                    }
+                
+                }
+            
+                [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
                 public static class fonts {
                     private const string URLPATH = "~/Areas/Admin/Content/fonts";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
@@ -2280,12 +2275,6 @@ namespace Links
                     {
                     }
                 }
-                public static partial class images 
-                {
-                    public static class Assets
-                    {
-                    }
-                }
                 public static partial class img 
                 {
                     public static class Assets
@@ -2304,12 +2293,6 @@ namespace Links
                 }
             }
             public static partial class fonts 
-            {
-                public static class Assets
-                {
-                }
-            }
-            public static partial class img 
             {
                 public static class Assets
                 {

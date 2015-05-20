@@ -13,7 +13,7 @@ namespace RaccoonBlog.Web.Helpers
 			var control = new RecaptchaControl
 			              {
 			              	ID = "recaptcha",
-			              	Theme = "clean",
+			              	Theme = "white",
 			              	PublicKey = ConfigurationManager.AppSettings["ReCaptchaPublicKey"],
 			              	PrivateKey = ConfigurationManager.AppSettings["ReCaptchaPrivateKey"]
 			              };
