@@ -37,7 +37,16 @@
             <h2><span class="seriesTitle">@Html.Raw(TitleConverter.ToSeriesTitle(Model.Post.Title))</span>@Html.Raw(TitleConverter.ToPostTitle(Model.Post.Title))</h2>
         }
     </a>
-    <div class="clearfix"></div>
+	<div class="clearfix"></div>
+	<div class="timetoread">
+		@{
+			var timeToRead = PostHelper.CalculateTimeToRead(@Model.Post.Body);
+		}
+		<div>
+			<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+			time to read <strong class="force">@timeToRead.TimeToReadInMinutes min</strong> | <strong class="force">@timeToRead.WordCount words</strong>
+		</div>
+	</div>
     <hr />
     <div class="articleContent">
         @Model.Post.Body
