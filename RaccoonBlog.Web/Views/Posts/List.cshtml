@@ -5,60 +5,66 @@
 }
 <div class="postsList">
     @foreach (var post in Model.Posts)
-    {
-        <article>
-            <time>
-                <span>@post.PublishedAt.ToString("MMM dd")</span>
-                @post.PublishedAt.ToString("yyyy")
-            </time>
-            <a href="@Url.Action("Details", "PostDetails", new { post.Id, post.Slug })">
-                @if (post.IsSerie == false)
-                {
-                    <h2>@post.Title</h2>
-                }
-                else
-                {
-                    <h2><span class="seriesTitle">@Html.Raw(TitleConverter.ToSeriesTitle(post.Title))</span>@Html.Raw(TitleConverter.ToPostTitle(post.Title))</h2>
-                }
-            </a>
-            <div class="clearfix"></div>
-            <div class="timetoread">
-                <div><span class="glyphicon glyphicon-time" aria-hidden="true"></span> <span class="collapse"> time to read</span> <strong>5 min</strong> <span class="collapse">| <strong>238 words</strong></span></div>
-            </div>
-            <hr/>
-            <div class="postData">
-                <a href='@string.Format("http://twitter.com/intent/tweet?status={0}+{1} via @{2}", post.Title, string.Format("{0}{1}/{2}", Request.Url.OriginalString, post.Id, post.Slug), post.Author.TwitterNick)'>
-                    <span class="socicon twitter">a</span><span>Tweet</span>
-                </a>
-                <a style='text-decoration:none;' type="icon_link" onclick="window.open('@string.Format("http://www.facebook.com/sharer/sharer.php?u={0}&title={1}", string.Format("{0}{1}/{2}", Request.Url.OriginalString, post.Id, post.Slug), post.Title)','sharer','toolbar=0,status=0,width=580,height=325');" href="javascript: void(0)">
-                    <span class="socicon facebook">b</span><span>share</span>
-                </a>
-                <a style='text-decoration:none;' type="icon_link" onclick="popUp=window.open('@string.Format("https://plus.google.com/share?url={0}", string.Format("{0}{1}/{2}", Request.Url.OriginalString, post.Id, post.Slug))', 'popupwindow', 'scrollbars=yes,width=600,height=400');popUp.focus();return false;" href="javascript: void(0)">
-                    <span class="socicon gplus">c</span><span>share</span>
-                </a>
-                <a href="@Url.Action("Details", "PostDetails", new { post.Id, post.Slug })#comments">
-                    <span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span>@post.CommentsCount comments</span>
-                </a>
-                @if (post.Tags.Count > 0)
-                {
-                    <div class="tags pull-right-lg">
-                        <span class="glyphicon glyphicon-tag" aria-hidden="true"></span> Tags:
-                        <ul>
-                            @foreach (var tag in post.Tags)
-                            {
-                                <li><a href="@Url.Action("Tag", "Posts", new {tag.Slug})">@tag.Name</a></li>
-                            }
-                        </ul>
-                    </div>
-                }
-                <div class="clearfix"></div>
-            </div>
-            <div class="articleContent">
-                @post.Body
-            </div>
-            <div class="read-more"><a href="@Url.Action("Details", "PostDetails", new { post.Id, post.Slug })">read more ›</a></div>
-        </article>
-    }
+	{
+		<article>
+			<time>
+				<span>@post.PublishedAt.ToString("MMM dd")</span>
+				@post.PublishedAt.ToString("yyyy")
+			</time>
+			<a href="@Url.Action("Details", "PostDetails", new { post.Id, post.Slug })">
+				@if (post.IsSerie == false)
+				{
+					<h2>@post.Title</h2>
+				}
+				else
+				{
+					<h2><span class="seriesTitle">@Html.Raw(TitleConverter.ToSeriesTitle(post.Title))</span>@Html.Raw(TitleConverter.ToPostTitle(post.Title))</h2>
+				}
+			</a>
+			<div class="clearfix"></div>
+			<div class="timetoread">
+				@{
+					var timeToRead = PostHelper.CalculateTimeToRead(post.Body);
+				}
+				<div>
+					<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+					<span class="collapse"> time to read</span> <strong>@timeToRead.TimeToReadInMinutes min</strong> <span class="collapse">| <strong>@timeToRead.WordCount words</strong></span>
+				</div>
+			</div>
+			<hr />
+			<div class="postData">
+				<a href='@string.Format("http://twitter.com/intent/tweet?status={0}+{1} via @{2}", post.Title, string.Format("{0}{1}/{2}", Request.Url.OriginalString, post.Id, post.Slug), post.Author.TwitterNick)'>
+					<span class="socicon twitter">a</span><span>Tweet</span>
+				</a>
+				<a style='text-decoration:none;' type="icon_link" onclick="window.open('@string.Format("http://www.facebook.com/sharer/sharer.php?u={0}&title={1}", string.Format("{0}{1}/{2}", Request.Url.OriginalString, post.Id, post.Slug), post.Title)','sharer','toolbar=0,status=0,width=580,height=325');" href="javascript: void(0)">
+					<span class="socicon facebook">b</span><span>share</span>
+				</a>
+				<a style='text-decoration:none;' type="icon_link" onclick="popUp=window.open('@string.Format("https://plus.google.com/share?url={0}", string.Format("{0}{1}/{2}", Request.Url.OriginalString, post.Id, post.Slug))', 'popupwindow', 'scrollbars=yes,width=600,height=400');popUp.focus();return false;" href="javascript: void(0)">
+					<span class="socicon gplus">c</span><span>share</span>
+				</a>
+				<a href="@Url.Action("Details", "PostDetails", new { post.Id, post.Slug })#comments">
+					<span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span>@post.CommentsCount comments</span>
+				</a>
+				@if (post.Tags.Count > 0)
+				{
+					<div class="tags pull-right-lg">
+						<span class="glyphicon glyphicon-tag" aria-hidden="true"></span> Tags:
+						<ul>
+							@foreach (var tag in post.Tags)
+							{
+								<li><a href="@Url.Action("Tag", "Posts", new {tag.Slug})">@tag.Name</a></li>
+							}
+						</ul>
+					</div>
+				}
+				<div class="clearfix"></div>
+			</div>
+			<div class="articleContent">
+				@post.Body
+			</div>
+			<div class="read-more"><a href="@Url.Action("Details", "PostDetails", new { post.Id, post.Slug })">read more ›</a></div>
+		</article>
+	}
 </div>
 <div class="clearfix"></div>
 <nav>
