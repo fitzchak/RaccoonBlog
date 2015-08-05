@@ -22,6 +22,9 @@
                 }
             </a>
             <div class="clearfix"></div>
+            <div class="timetoread">
+                <div><span class="glyphicon glyphicon-time" aria-hidden="true"></span> <span class="collapse"> time to read</span> <strong>5 min</strong> <span class="collapse">| <strong>238 words</strong></span></div>
+            </div>
             <hr/>
             <div class="postData">
                 <a href='@string.Format("http://twitter.com/intent/tweet?status={0}+{1} via @{2}", post.Title, string.Format("{0}{1}/{2}", Request.Url.OriginalString, post.Id, post.Slug), post.Author.TwitterNick)'>
