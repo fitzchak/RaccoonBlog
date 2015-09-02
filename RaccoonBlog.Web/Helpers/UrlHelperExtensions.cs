@@ -10,6 +10,14 @@ namespace RaccoonBlog.Web.Helpers
 {
 	public static class UrlHelperExtensions
 	{
+		public static string PostUrl(this UrlHelper url, int postId, string postSlug)
+		{
+			var fullUrl = HttpContext.Current.Request.Url.OriginalString;
+			fullUrl = fullUrl.TrimEnd('/') + "/";
+
+			return string.Format("{0}{1}/{2}", fullUrl, postId, postSlug);
+		}
+
 		public static string AbsoluteAction(this UrlHelper url, [AspMvcAction] string action, object routeValues)
 		{
 			return AbsoluteActionUtil(url, url.Action(action, routeValues));

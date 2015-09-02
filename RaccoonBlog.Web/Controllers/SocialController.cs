@@ -23,6 +23,8 @@ namespace RaccoonBlog.Web.Controllers
 
 		public virtual ActionResult Login(string provider, string redirectUrl)
 		{
+			Session["Dummy"] = "Dummy"; // OWIN External Login hack
+
 			// Request a redirect to the external login provider
 			return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Social", new { ReturnUrl = redirectUrl }));
 		}
@@ -88,6 +90,8 @@ namespace RaccoonBlog.Web.Controllers
 		[AllowAnonymous]
 		public virtual async Task<ActionResult> ExternalLoginCallback(string returnUrl)
 		{
+			Session["Dummy"] = "Dummy"; // OWIN External Login hack
+
 			Uri returnUri;
 			Uri.TryCreate(returnUrl, UriKind.Absolute, out returnUri);
 
