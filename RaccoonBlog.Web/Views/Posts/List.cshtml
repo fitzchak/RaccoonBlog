@@ -33,13 +33,13 @@
 			</div>
 			<hr />
 			<div class="postData">
-				<a href='@string.Format("http://twitter.com/intent/tweet?status={0}+{1} via @{2}", post.Title, string.Format("{0}{1}/{2}", Request.Url.OriginalString, post.Id, post.Slug), post.Author.TwitterNick)'>
+				<a href='@string.Format("http://twitter.com/intent/tweet?status={0}+{1} via @{2}", post.Title, Url.PostUrl(post.Id, post.Slug), post.Author.TwitterNick)'>
 					<span class="socicon twitter">a</span><span>Tweet</span>
 				</a>
-				<a style='text-decoration:none;' type="icon_link" onclick="window.open('@string.Format("http://www.facebook.com/sharer/sharer.php?u={0}&title={1}", string.Format("{0}{1}/{2}", Request.Url.OriginalString, post.Id, post.Slug), post.Title)','sharer','toolbar=0,status=0,width=580,height=325');" href="javascript: void(0)">
+				<a style='text-decoration:none;' type="icon_link" onclick="window.open('@string.Format("http://www.facebook.com/sharer/sharer.php?u={0}&title={1}", Url.PostUrl(post.Id, post.Slug), post.Title)','sharer','toolbar=0,status=0,width=580,height=325');" href="javascript: void(0)">
 					<span class="socicon facebook">b</span><span>share</span>
 				</a>
-				<a style='text-decoration:none;' type="icon_link" onclick="popUp=window.open('@string.Format("https://plus.google.com/share?url={0}", string.Format("{0}{1}/{2}", Request.Url.OriginalString, post.Id, post.Slug))', 'popupwindow', 'scrollbars=yes,width=600,height=400');popUp.focus();return false;" href="javascript: void(0)">
+				<a style='text-decoration:none;' type="icon_link" onclick="popUp=window.open('@string.Format("https://plus.google.com/share?url={0}", Url.PostUrl(post.Id, post.Slug))', 'popupwindow', 'scrollbars=yes,width=600,height=400');popUp.focus();return false;" href="javascript: void(0)">
 					<span class="socicon gplus">c</span><span>share</span>
 				</a>
 				<a href="@Url.Action("Details", "PostDetails", new { post.Id, post.Slug })#comments">
