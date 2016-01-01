@@ -28,15 +28,15 @@ namespace RaccoonBlog.Web
 			bundles.UseCdn = true;
 
 			bundles
-				.Add(new ScriptBundle("~/Content/js/jquery", "https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
+				.Add(new ScriptBundle("~/Content/js/jquery", "//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
 				.Include("~/Content/js/jquery-1.11.2.js"));
 
 			bundles
-				.Add(new ScriptBundle("~/Content/js/jquery-migrate", "http://code.jquery.com/jquery-migrate-1.2.1.min.js")
+				.Add(new ScriptBundle("~/Content/js/jquery-migrate", "//code.jquery.com/jquery-migrate-1.2.1.min.js")
 				.Include("~/Content/js/jquery-migrate-1.2.1.js"));
 
 			bundles
-				.Add(new ScriptBundle("~/Content/js/bootstrap", "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js")
+				.Add(new ScriptBundle("~/Content/js/bootstrap", "//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js")
 				.Include("~/Content/js/bootstrap.js"));
 
             bundles
