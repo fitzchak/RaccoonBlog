@@ -174,15 +174,15 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Raven.Abstractions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
-      <HintPath>..\packages\RavenDB.Client.3.0.3660\lib\net45\Raven.Abstractions.dll</HintPath>
+      <HintPath>..\packages\RavenDB.Client.3.0.30037\lib\net45\Raven.Abstractions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Raven.Client.Lightweight, Version=3.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
-      <HintPath>..\packages\RavenDB.Client.3.0.3660\lib\net45\Raven.Client.Lightweight.dll</HintPath>
+      <HintPath>..\packages\RavenDB.Client.3.0.30037\lib\net45\Raven.Client.Lightweight.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Raven.Client.MvcIntegration, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RavenDB.Client.MvcIntegration.3.0.3660\lib\net45\Raven.Client.MvcIntegration.dll</HintPath>
+      <HintPath>..\packages\RavenDB.Client.MvcIntegration.3.0.30037\lib\net45\Raven.Client.MvcIntegration.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RazorEngine, Version=3.5.3.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
@@ -275,6 +275,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\Enums\MenuButtonType.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\SeriesController.cs" />
     <Compile Include="CssController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -282,6 +283,7 @@
     <Compile Include="ErrorController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Attributes\CustomHandleErrorAttribute.cs" />
     <Compile Include="Helpers\ConfigurationHelper.cs" />
     <Compile Include="Helpers\PostHelper.cs" />
     <Compile Include="Helpers\SignInHelper.cs" />
@@ -496,12 +498,19 @@
     <Content Include="Content\css\custom\ayende.variables.min.css">
       <DependentUpon>ayende.variables.css</DependentUpon>
     </Content>
+    <Content Include="Content\css\error.css">
+      <DependentUpon>error.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\error.min.css">
+      <DependentUpon>error.css</DependentUpon>
+    </Content>
     <Content Include="Content\css\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\css\fonts\socicon-webfont.svg" />
     <Content Include="Content\css\fullcalendar.css" />
     <Content Include="Content\css\fullcalendar.min.css" />
     <Content Include="Content\css\fullcalendar.print.css" />
     <Content Include="Content\css\img\commentPreviewDate.png" />
+    <Content Include="Content\css\img\error.png" />
     <Content Include="Content\css\img\ico_grid_active.svg" />
     <Content Include="Content\css\img\ico_grid_inactive.svg" />
     <Content Include="Content\css\img\ico_mail.svg" />
@@ -1034,6 +1043,11 @@
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\EmailAddress.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\BooleanLong.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\Int32.cshtml" />
+    <Content Include="Content\css\error.less" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <None Include="Content\js\jquery-1.11.2.intellisense.js" />
     <Content Include="Content\js\jquery-1.11.2.js" />
     <Content Include="Content\js\jquery-1.11.2.min.js" />
@@ -1060,9 +1074,6 @@
     <None Include="T4MVC.tt.settings.xml" />
     <Content Include="Views\MailTemplates\_Layout.cshtml" />
     <Content Include="Views\Section\FuturePosts.cshtml" />
-    <Content Include="Views\Shared\500.cshtml" />
-    <Content Include="Views\Error\500.htm" />
-    <Content Include="Views\Error\404.htm" />
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\HiddenInput.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\String.cshtml" />
@@ -1102,7 +1113,6 @@
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Shared\404.cshtml" />
     <Content Include="Areas\Admin\Views\Users\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Users\List.cshtml" />
     <Content Include="Areas\Admin\Views\Users\ChangePassword.cshtml" />
@@ -1110,6 +1120,7 @@
     <Content Include="Views\Section\ContactMe.cshtml" />
     <Content Include="Views\Section\PostsSeries.cshtml" />
     <Content Include="Views\Series\PostsSeries.cshtml" />
+    <Content Include="Views\Shared\_ErrorLayout.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

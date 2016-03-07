@@ -29,6 +29,7 @@ namespace RaccoonBlog.Web
 
 			Search();
 			Css();
+		    Error();
 
 			routes.MapRouteLowerCase("Default",
 				"{controller}/{action}",
@@ -43,7 +44,22 @@ namespace RaccoonBlog.Web
 			   );
 		}
 
-		private void Css()
+        private void Error()
+        {
+            routes.MapRouteLowerCase("Error",
+                "error",
+                new { controller = MVC.Error.Name, action = MVC.Error.ActionNames.Error },
+                new[] { "RaccoonBlog.Web.Controllers" }
+                );
+
+            routes.MapRouteLowerCase("Error404",
+                "error/404",
+                new { controller = MVC.Error.Name, action = MVC.Error.ActionNames.Error404 },
+                new[] { "RaccoonBlog.Web.Controllers" }
+                );
+        }
+
+        private void Css()
 		{
 			routes.MapRouteLowerCase("CssController",
 				"css",

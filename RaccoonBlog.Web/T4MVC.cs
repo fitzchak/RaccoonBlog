@@ -29,6 +29,7 @@ public static partial class MVC
     static readonly AdminClass s_Admin = new AdminClass();
     public static AdminClass Admin { get { return s_Admin; } }
     public static RaccoonBlog.Web.Controllers.CssController Css = new RaccoonBlog.Web.Controllers.T4MVC_CssController();
+    public static RaccoonBlog.Web.Controllers.ErrorController Error = new RaccoonBlog.Web.Controllers.T4MVC_ErrorController();
     public static RaccoonBlog.Web.Controllers.LegacyPostController LegacyPost = new RaccoonBlog.Web.Controllers.T4MVC_LegacyPostController();
     public static RaccoonBlog.Web.Controllers.PostDetailsController PostDetails = new RaccoonBlog.Web.Controllers.T4MVC_PostDetailsController();
     public static RaccoonBlog.Web.Controllers.PostsController Posts = new RaccoonBlog.Web.Controllers.T4MVC_PostsController();
@@ -38,7 +39,6 @@ public static partial class MVC
     public static RaccoonBlog.Web.Controllers.SocialController Social = new RaccoonBlog.Web.Controllers.T4MVC_SocialController();
     public static RaccoonBlog.Web.Controllers.SyndicationController Syndication = new RaccoonBlog.Web.Controllers.T4MVC_SyndicationController();
     public static RaccoonBlog.Web.Controllers.WelcomeController Welcome = new RaccoonBlog.Web.Controllers.T4MVC_WelcomeController();
-    public static T4MVC.ErrorController Error = new T4MVC.ErrorController();
     public static T4MVC.MailTemplatesController MailTemplates = new T4MVC.MailTemplatesController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
@@ -236,6 +236,7 @@ namespace Links
                 public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
                 public static readonly string commentDate_png = Url("commentDate.png");
                 public static readonly string commentDateImp_png = Url("commentDateImp.png");
+                public static readonly string commentPreviewDate_png = Url("commentPreviewDate.png");
                 public static readonly string ico_grid_active_svg = Url("ico_grid_active.svg");
                 public static readonly string ico_grid_inactive_svg = Url("ico_grid_inactive.svg");
                 public static readonly string ico_mail_svg = Url("ico_mail.svg");
@@ -258,10 +259,6 @@ namespace Links
             public static readonly string socicon_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/socicon.min.css") ? Url("socicon.min.css") : Url("socicon.css");
                  
             public static readonly string styles_less = Url("styles.less");
-            public static readonly string styles_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/styles.min.css") ? Url("styles.min.css") : Url("styles.css");
-                 
-            public static readonly string styles_css_map = Url("styles.css.map");
-            public static readonly string styles_min_css = Url("styles.min.css");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
