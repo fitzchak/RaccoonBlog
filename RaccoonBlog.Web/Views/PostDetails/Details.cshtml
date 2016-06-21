@@ -7,7 +7,7 @@
     ViewBag.CurrentUrl = Url.Action("Details", new { Model.Post.Id, Model.Post.Slug });
 }
 
-<article>
+<article class="article-body">
     <nav class="nextPrev">
         @if (Model.PreviousPost != null)
         {
@@ -186,7 +186,7 @@
     }
     
     <article class="comment preview">
-        <h4>Comment preview</h4>
+        <h4 class="preview-title">Comment preview</h4>
         <a name="comment-preview"></a>
         <div class="avatar">
             <img src='http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon' alt="" />
@@ -270,7 +270,10 @@
                             <label>
                                 <span class="form_item_name">Comments</span>
                             </label>
-                            @Html.TextAreaFor(x => x.Input.Body, new { rows = 9, @class = "form-control" })
+                            <div class="textarea_wrap">
+                                @Html.TextAreaFor(x => x.Input.Body, new { rows = 9, @class = "form-control" })
+                                <span class="lang"></span>
+                            </div>
                             @Html.ValidationMessageFor(x => x.Input.Body)
                         </div>
                         @if (Model.IsTrustedCommenter == false)

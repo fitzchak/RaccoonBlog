@@ -43,10 +43,13 @@ namespace RaccoonBlog.Web
                 .Add(new ScriptBundle("~/Admin/Content/js/bootstrap")
                 .Include("~/Areas/Admin/Content/js/bootstrap.js"));
 
-            bundles
-                .Add(new ScriptBundle("~/Content/js/main")
-                .Include("~/Content/js/jquery.ae.image.resize.min.js")
-                .Include("~/Content/js/raccoon-blog.js")
+			bundles
+				.Add(new ScriptBundle("~/Content/js/main")
+                .Include("~/Content/js/moment.js")
+                .Include("~/Content/js/lib/MarkdownDeepLib.min.js")
+				.Include("~/Content/js/jquery.ae.image.resize.min.js")
+                .Include("~/Content/js/utils.js")
+				.Include("~/Content/js/raccoon-blog.js")
                 .Include("~/Content/js/setup.js")
                 .Include("~/Content/js/jquery.twbsPagination.js")
                 .Include("~/Content/js/jquery.validate.js")

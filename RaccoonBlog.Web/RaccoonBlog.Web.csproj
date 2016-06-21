@@ -109,8 +109,8 @@
       <HintPath>..\Libs\Joel.Net.Akismet\Joel.Net.Akismet.dll</HintPath>
     </Reference>
     <Reference Include="MarkdownDeep, Version=1.5.4615.26275, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MarkdownDeep.Full.1.5\lib\.NetFramework 3.5\MarkdownDeep.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -663,6 +663,7 @@
     <Content Include="Content\js\respond.src.js" />
     <Content Include="Content\js\setup.js" />
     <Content Include="Content\js\showdown.js" />
+    <Content Include="Content\js\utils.js" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -1080,6 +1081,13 @@
       <LastGenOutput>T4MVC.cs</LastGenOutput>
     </None>
     <None Include="T4MVC.tt.settings.xml" />
+    <Content Include="Content\license\MarkdownDeep License.txt" />
+    <Content Include="Content\js\lib\MarkdownDeepLib.min.js" />
+    <Content Include="Content\css\img\mdd_ajax_loader.gif" />
+    <Content Include="Content\css\img\mdd_gripper.png" />
+    <Content Include="Content\css\img\mdd_modal_background.png" />
+    <Content Include="Content\css\mdd_styles.css" />
+    <Content Include="Content\css\img\mdd_toolbar.png" />
     <Content Include="Views\MailTemplates\_Layout.cshtml" />
     <Content Include="Views\Section\FuturePosts.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
@@ -1134,6 +1142,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\ViewModels\" />
+    <Folder Include="Content\images\" />
+    <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\PostDetails\Details.cshtml" />
