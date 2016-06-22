@@ -1,21 +1,22 @@
 using System.ComponentModel.DataAnnotations;
+using RaccoonBlog.Web.Helpers;
 
 namespace RaccoonBlog.Web.Models
 {
-	public class BlogConfig : Model
-	{
-		public BlogConfig()
-		{
-			PostsOnPage = 10;
-		}
+    public class BlogConfig : Model
+    {
+        public BlogConfig()
+        {
+            PostsOnPage = 10;
+        }
 
-		[Required]
-		[Display(Name = "Blog title")]
-		public string Title { get; set; }
+        [Required]
+        [Display(Name = "Blog title")]
+        public string Title { get; set; }
 
-		[Required]
-		[Display(Name = "Owner Email")]
-		public string OwnerEmail { get; set; }
+        [Required]
+        [Display(Name = "Owner Email")]
+        public string OwnerEmail { get; set; }
 
         [Display(Name = "Twitter Login")]
         public string TwitterLogin { get; set; }
@@ -32,52 +33,62 @@ namespace RaccoonBlog.Web.Models
         [Display(Name = "Rss Login")]
         public string RssLogin { get; set; }
 
-		[Display(Name = "Slogan")]
-		public string Subtitle { get; set; }
+        [Display(Name = "Slogan")]
+        public string Subtitle { get; set; }
 
-		[Required]
-		[Display(Name = "Custom CSS")]
-		public string CustomCss { get; set; }
+        [Required]
+        [Display(Name = "Custom CSS")]
+        public string CustomCss { get; set; }
 
-		[Display(Name = "Copyright string")]
-		public string Copyright { get; set; }
+        [Display(Name = "Copyright string")]
+        public string Copyright { get; set; }
 
-		[Display(Name = "Akismet Key")]
-		public string AkismetKey { get; set; }
+        [Display(Name = "Akismet Key")]
+        public string AkismetKey { get; set; }
 
-		[Display(Name = "Google-Analytics Key")]
-		public string GoogleAnalyticsKey { get; set; }
+        [Display(Name = "Google-Analytics Key")]
+        public string GoogleAnalyticsKey { get; set; }
 
-		[Display(Name = "FuturePostsEncryptionKey")]
-		public string FuturePostsEncryptionKey { get; set; }
+        [Display(Name = "FuturePostsEncryptionKey")]
+        public string FuturePostsEncryptionKey { get; set; }
 
-		[Display(Name = "MetaDescription")]
-		public string MetaDescription { get; set; }
+        [Display(Name = "FuturePostsEncryptionIv")]
+        [StringLength(16, ErrorMessage = "IV must be 16 characters long.", MinimumLength = 16)]
+        public string FuturePostsEncryptionIv { get; set; }
 
-		[Display(Name = "MinNumberOfPostForSignificantTag")]
-		public int MinNumberOfPostForSignificantTag { get; set; }
+        [Display(Name = "FuturePostsEncryptionSalt")]
+        public string FuturePostsEncryptionSalt { get; set; }
 
-		[Display(Name = "NumberOfDayToCloseComments")]
-		public int NumberOfDayToCloseComments { get; set; }
+        [Display(Name = "MetaDescription")]
+        public string MetaDescription { get; set; }
+
+        [Display(Name = "MinNumberOfPostForSignificantTag")]
+        public int MinNumberOfPostForSignificantTag { get; set; }
+
+        [Display(Name = "NumberOfDayToCloseComments")]
+        public int NumberOfDayToCloseComments { get; set; }
 
         [Display(Name = "Posts On Page")]
-	    public int PostsOnPage { get; set; }
+        public int PostsOnPage { get; set; }
 
-		public static BlogConfig New()
-		{
-			return new BlogConfig
-			       	{
-						Id = "Blog/Config",
-						CustomCss = "hibernatingrhinos"
-			       	};
-		}
+        public static BlogConfig New()
+        {
+            return new BlogConfig
+            {
+                Id = "Blog/Config",
+                CustomCss = "hibernatingrhinos",
+                FuturePostsEncryptionKey = CryptographyUtil.GenerateKey(),
+                FuturePostsEncryptionSalt = CryptographyUtil.GenerateRandomString(16),
+                FuturePostsEncryptionIv = CryptographyUtil.GenerateIv()
+            };
+        }
 
-		public static BlogConfig NewDummy()
-		{
-			return new BlogConfig
-			{
-				Id = "Blog/Config/Dummy",
-			};
-		}
-	}
+        public static BlogConfig NewDummy()
+        {
+            return new BlogConfig
+            {
+                Id = "Blog/Config/Dummy",
+            };
+        }
+    }
 }

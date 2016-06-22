@@ -207,6 +207,10 @@ namespace Links
                 public static readonly string ayende_variables_min_css = Url("ayende.variables.min.css");
             }
         
+            public static readonly string error_less = Url("error.less");
+            public static readonly string error_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/error.min.css") ? Url("error.min.css") : Url("error.css");
+                 
+            public static readonly string error_min_css = Url("error.min.css");
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
             public static class fonts {
                 private const string URLPATH = "~/Content/css/fonts";
@@ -237,6 +241,7 @@ namespace Links
                 public static readonly string commentDate_png = Url("commentDate.png");
                 public static readonly string commentDateImp_png = Url("commentDateImp.png");
                 public static readonly string commentPreviewDate_png = Url("commentPreviewDate.png");
+                public static readonly string error_png = Url("error.png");
                 public static readonly string ico_grid_active_svg = Url("ico_grid_active.svg");
                 public static readonly string ico_grid_inactive_svg = Url("ico_grid_inactive.svg");
                 public static readonly string ico_mail_svg = Url("ico_mail.svg");
@@ -1325,6 +1330,18 @@ namespace Links
                 
                     public static readonly string fullcalendar_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/fullcalendar.min.css") ? Url("fullcalendar.min.css") : Url("fullcalendar.css");
                          
+                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                    public static class images {
+                        private const string URLPATH = "~/Areas/Admin/Content/css/images";
+                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                        public static readonly string content_repeat_jpg = Url("content_repeat.jpg");
+                        public static readonly string nav_divider_jpg = Url("nav_divider.jpg");
+                        public static readonly string nav_item_0_gif = Url("nav_item_0.gif");
+                        public static readonly string nav_item_1_gif = Url("nav_item_1.gif");
+                        public static readonly string nav_logout_gif = Url("nav_logout.gif");
+                    }
+                
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -1377,9 +1394,24 @@ namespace Links
                     private const string URLPATH = "~/Areas/Admin/Content/js";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                    public static class app {
+                        private const string URLPATH = "~/Areas/Admin/Content/js/app";
+                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                        public static readonly string rssFutureAccess_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/rssFutureAccess.min.js") ? Url("rssFutureAccess.min.js") : Url("rssFutureAccess.js");
+                    }
+                
                     public static readonly string bootstrap_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap.min.js") ? Url("bootstrap.min.js") : Url("bootstrap.js");
                     public static readonly string fullcalendar_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/fullcalendar.min.js") ? Url("fullcalendar.min.js") : Url("fullcalendar.js");
-                    public static readonly string setup_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/setup.min.js") ? Url("setup.min.js") : Url("setup.js");
+                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                    public static class lib {
+                        private const string URLPATH = "~/Areas/Admin/Content/js/lib";
+                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                        public static readonly string clipboard_min_js = Url("clipboard.min.js");
+                    }
+                
                     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
                     public static class tinymce {
                         private const string URLPATH = "~/Areas/Admin/Content/js/tinymce";

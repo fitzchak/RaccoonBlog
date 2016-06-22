@@ -160,10 +160,10 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         }
 
         [NonAction]
-        partial void RssFutureAccessOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, RaccoonBlog.Web.Areas.Admin.ViewModels.GenerateFutureRssAccessInput input);
+        partial void RssFutureAccessOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, RaccoonBlog.Web.Areas.Admin.Models.FutureRssAccess input);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult RssFutureAccess(RaccoonBlog.Web.Areas.Admin.ViewModels.GenerateFutureRssAccessInput input)
+        public override System.Web.Mvc.ActionResult RssFutureAccess(RaccoonBlog.Web.Areas.Admin.Models.FutureRssAccess input)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RssFutureAccess);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "input", input);
