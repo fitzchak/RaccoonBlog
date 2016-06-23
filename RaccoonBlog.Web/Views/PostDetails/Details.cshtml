@@ -8,21 +8,7 @@
 }
 
 <article class="article-body">
-    <nav class="nextPrev">
-        @if (Model.PreviousPost != null)
-        {
-            <a class="pull-left" href="@Url.Action("Details", new {id = Model.PreviousPost.DomainId, Model.PreviousPost.Slug})">‹&nbsp;previous post</a>
-        }
-		
-        @if (Model.NextPost != null)
-        {
-            <a class="pull-right" href="@Url.Action("Details", new {id = Model.NextPost.DomainId, Model.NextPost.Slug})">next post&nbsp;›</a>
-        }
-        <div class="clearfix-xs"></div>
-        @Html.PreviousSeriesArticleLink(Model)
-		@Html.NextSeriesArticleLink(Model)
-        <div class="clearfix"></div>
-    </nav>
+    @Html.Partial("NextPrevNav")
     <time>
         <span>@Model.Post.PublishedAt.ToString("MMM dd")</span>
         @Model.Post.PublishedAt.ToString("yyyy")
@@ -86,29 +72,15 @@
         <hr style="margin: 0;" />
     </div>
 
-	<nav class="nextPrev">
-		@if (Model.PreviousPost != null)
-		{
-			<a class="pull-left" href="@Url.Action("Details", new {id = Model.PreviousPost.DomainId, Model.PreviousPost.Slug})">‹&nbsp;previous post</a>
-		}
-		
-		
-
-		@if (Model.NextPost != null)
-		{
-			<a class="pull-right" href="@Url.Action("Details", new {id = Model.NextPost.DomainId, Model.NextPost.Slug})">next post&nbsp;›</a>
-		}
-        <div class="clearfix-xs"></div>
-        @Html.PreviousSeriesArticleLink(Model)
-		@Html.NextSeriesArticleLink(Model)
-        <div class="clearfix"></div>
-	</nav>
+    @Html.Partial("NextPrevNav")
 
     @if (Model.SeriesInfo != null)
     {
         <section class="postsInSeries" data-state="closed">
             <h4 class="text-left">
-                More posts in &quot;@Model.SeriesInfo.SeriesTitle&quot; series:
+                More posts in <a href="@Url.Series(Model.SeriesInfo.SeriesId, Model.SeriesInfo.SeriesSlug)">
+                &quot;@(Model.SeriesInfo.SeriesTitle)&quot;
+                </a> series:
             </h4>
 	        <ol>
 		        @foreach (var post in Model.SeriesInfo.PostsInSeries)
