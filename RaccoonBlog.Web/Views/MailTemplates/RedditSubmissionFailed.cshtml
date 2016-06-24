@@ -1,0 +1,10 @@
+﻿@model RedditSubmissionFailedViewModel
+<h1>
+    Reddit post submission to /r/@Model.Submission.Subreddit failed for post "@Model.Post.Title"
+</h1>
+<p>
+    Current submission status: <strong>@Model.Submission.Status</strong> <br />
+    <a href="@Url.AbsoluteAction(MVC.Admin.Settings.ActionNames.RedditSubmission, MVC.Admin.Settings.Name)">
+        Manage Reddit submissions
+    </a>
+</p>

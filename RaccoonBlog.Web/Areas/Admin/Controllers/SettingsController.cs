@@ -1,9 +1,14 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using RaccoonBlog.Web.Areas.Admin.Models;
+using RaccoonBlog.Web.Areas.Admin.ViewModels;
 using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Models;
+using RaccoonBlog.Web.Models.SocialNetwork;
+using RaccoonBlog.Web.Services;
+using RaccoonBlog.Web.Services.Reddit;
 using Raven.Abstractions.Data;
 using Raven.Client;
 
@@ -28,14 +33,14 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
                 return View(BlogConfig);
             }
 
-            var current = RavenSession.Load<BlogConfig>("Blog/Config");
+            var current = RavenSession.Load<BlogConfig>(BlogConfig.Key);
             if (IsFuturePostsEncryptionOptionsChanged(current, config))
             {
                 RemoveFutureRssAccessOnEncryptionConfigChange();
             }
 
             RavenSession.Advanced.Evict(current);
-            RavenSession.Store(config, "Blog/Config");
+            RavenSession.Store(config, BlogConfig.Key);
             RavenSession.SaveChanges();
 
             OutputCacheManager.RemoveItem(MVC.Section.Name, MVC.Section.ActionNames.ContactMe);
@@ -58,6 +63,47 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
                 {
                     AllowStale = false
                 });
+        }
+
+        [HttpGet]
+        public virtual async Task<ActionResult> RedditSubmission()
+        {
+            var model = await PrepareRedditManualSubmissionViewModel();
+            return View(model);
+        }
+
+        [HttpGet]
+        public virtual async Task<ActionResult> SubmitToReddit(string postId, string sr)
+        {
+            var post = RavenSession.Load<Post>(postId);
+            var redditSubmitUrl = RedditHelper.SubmitUrl(sr, post);
+            var postSubmission = post.Integration.Reddit.GetPostSubmissionForSubreddit(sr);
+            postSubmission.Status = Reddit.SubmissionStatus.ManualSubmissionPending;
+            postSubmission.Attempts = 0;
+
+            RavenSession.SaveChanges();
+
+            return Redirect(redditSubmitUrl);
+        }
+
+        [HttpGet]
+        public virtual async Task<ActionResult> ResetFailedRedditSubmission(string postId, string sr)
+        {
+            var post = RavenSession.Load<Post>(postId);
+            var postSubmission = post.Integration.Reddit.GetPostSubmissionForSubreddit(sr);
+            postSubmission.Status = null;
+            postSubmission.Attempts = 0;
+            RavenSession.SaveChanges();
+            return RedirectToAction(MVC.Admin.Settings.ActionNames.RedditSubmission);
+
+        }
+
+        private async Task<RedditManualSubmissionViewModel> PrepareRedditManualSubmissionViewModel()
+        {
+            var model = new RedditManualSubmissionViewModel();
+            model.SubredditsToSubmitTo = RedditHelper.ParseSubreddits(BlogConfig);
+            model.NotSubmittedPosts = RedditHelper.GetPostsForManualRedditSubmission(RavenSession, DateTimeOffset.UtcNow);
+            return model;
         }
 
         [HttpGet]

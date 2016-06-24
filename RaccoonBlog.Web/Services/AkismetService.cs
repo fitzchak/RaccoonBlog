@@ -16,7 +16,7 @@ namespace RaccoonBlog.Web.Services
 				{
 					using (var session = MvcApplication.DocumentStore.OpenSession())
 					{
-						akismetKey = session.Load<BlogConfig>("Blog/Config").AkismetKey;
+						akismetKey = session.Load<BlogConfig>(BlogConfig.Key).AkismetKey;
 					}
 				}
 				return akismetKey;

@@ -15,7 +15,7 @@
     <AssemblyName>RaccoonBlog.Web</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -89,6 +89,10 @@
     <Reference Include="DotNetOpenAuth.Mvc5">
       <HintPath>..\packages\DotNetOpenAuth.Mvc5.4.3.4.13329\lib\net45-full\DotNetOpenAuth.Mvc5.dll</HintPath>
     </Reference>
+    <Reference Include="FluentScheduler, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b76503528a14ebd1, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentScheduler.4.1.1\lib\net40\FluentScheduler.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Glimpse.AspNet">
       <HintPath>..\packages\Glimpse.AspNet.1.9.2\lib\net45\Glimpse.AspNet.dll</HintPath>
     </Reference>
@@ -98,8 +102,13 @@
     <Reference Include="Glimpse.Mvc5">
       <HintPath>..\packages\Glimpse.Mvc5.1.5.3\lib\net45\Glimpse.Mvc5.dll</HintPath>
     </Reference>
-    <Reference Include="Glimpse.RavenDb">
-      <HintPath>..\packages\Glimpse.RavenDb.3.0\lib\net45\Glimpse.RavenDb.dll</HintPath>
+    <Reference Include="Glimpse.RavenDb, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibs\Glimpse.RavenDb.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="JetBrains.Annotations, Version=8.0.5.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -161,9 +170,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="NLog, Version=3.2.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -192,6 +201,10 @@
     <Reference Include="Recaptcha, Version=1.0.5.0, Culture=neutral, PublicKeyToken=9afc4d65b28c38c2, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\recaptcha.1.0.5.0\lib\.NetFramework 4.0\Recaptcha.dll</HintPath>
+    </Reference>
+    <Reference Include="RedditSharp, Version=1.0.22.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RedditSharp.1.0.22\lib\RedditSharp.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System" />
@@ -276,6 +289,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\Enums\MenuButtonType.cs" />
     <Compile Include="Areas\Admin\Models\FutureRssAccess.cs" />
+    <Compile Include="Areas\Admin\ViewModels\RedditManualSubmissionViewModel.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\SeriesController.cs" />
     <Compile Include="CssController.generated.cs">
@@ -290,6 +304,7 @@
     <Compile Include="Helpers\FutureRssAccessToken.cs" />
     <Compile Include="Helpers\PostHelper.cs" />
     <Compile Include="Helpers\PostUrlHelperExtensions.cs" />
+    <Compile Include="Helpers\RedditHelper.cs" />
     <Compile Include="Helpers\SignInHelper.cs" />
     <Compile Include="Helpers\ThemeLessTransform.cs" />
     <Compile Include="Helpers\RouteCollectionExtension.cs" />
@@ -309,12 +324,16 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\StringToGuidConverter.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\SeriesMapperProfile.cs" />
     <Compile Include="Infrastructure\Common\DocumentSessionExtensions.cs" />
+    <Compile Include="Infrastructure\Jobs\RedditIntegration.cs" />
+    <Compile Include="Infrastructure\Jobs\SocialNetworkIntegrationJobsRegistry.cs" />
     <Compile Include="LegacyPostController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="MailTemplatesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SocialNetworkIntegration.cs" />
+    <Compile Include="Models\SocialNetwork\Reddit.cs" />
     <Compile Include="PostDetailsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -330,6 +349,11 @@
     <Compile Include="SeriesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\Reddit\FailingCaptchaSolver.cs" />
+    <Compile Include="Services\SubmitToRedditStrategy.cs" />
+    <Compile Include="Services\Reddit\Credentials.cs" />
+    <Compile Include="Services\Reddit\LinkPost.cs" />
+    <Compile Include="Services\Reddit\AuthToken.cs" />
     <Compile Include="SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -340,11 +364,12 @@
     <Compile Include="SyndicationController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="T4MVC.cs">
+    <Compile Include="T4MVC1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\RedditSubmissionFailedViewModel.cs" />
     <Compile Include="WelcomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -1054,6 +1079,7 @@
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\BooleanLong.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\Int32.cshtml" />
     <Content Include="Content\css\error.less" />
+    <Content Include="Areas\Admin\Views\Settings\RedditSubmission.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -1079,7 +1105,7 @@
     <None Include="T4MVC.tt.hooks.t4" />
     <None Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>T4MVC.cs</LastGenOutput>
+      <LastGenOutput>T4MVC1.cs</LastGenOutput>
     </None>
     <None Include="T4MVC.tt.settings.xml" />
     <Content Include="Content\license\MarkdownDeep License.txt" />
@@ -1142,9 +1168,9 @@
     <Content Include="Views\Shared\_ErrorLayout.cshtml" />
     <Content Include="Views\PostDetails\NextPrevNav.cshtml" />
     <Content Include="Views\PostDetails\MarkdownHelp.cshtml" />
+    <Content Include="Views\MailTemplates\RedditSubmissionFailed.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Admin\ViewModels\" />
     <Folder Include="Content\images\" />
     <Folder Include="Scripts\" />
   </ItemGroup>
@@ -1250,11 +1276,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>27606</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/RaccoonBlog.Web</IISUrl>
+          <IISUrl>http://localhost:27606/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

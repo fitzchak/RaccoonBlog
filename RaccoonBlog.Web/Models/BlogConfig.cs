@@ -5,6 +5,8 @@ namespace RaccoonBlog.Web.Models
 {
     public class BlogConfig : Model
     {
+        public const string Key = "Blog/Config";
+
         public BlogConfig()
         {
             PostsOnPage = 10;
@@ -71,11 +73,26 @@ namespace RaccoonBlog.Web.Models
         [Display(Name = "Posts On Page")]
         public int PostsOnPage { get; set; }
 
+        [Display(Name = "Reddit User")]
+        public string RedditUser { get; set; }
+
+        [Display(Name = "Reddit Password")]
+        public string RedditPassword { get; set; }
+
+        [Display(Name = "Reddit Client App ID")]
+        public string RedditClientAppId { get; set; }
+
+        [Display(Name = "Reddit Client Secret")]
+        public string RedditClientSecret { get; set; }
+
+        [Display(Name = "Reddit Subreddits To Submit To On Publish - comma-separated e.g. /r/test,/r/example")]
+        public string RedditSubredditsToSubmitToOnPublish { get; set; }
+
         public static BlogConfig New()
         {
             return new BlogConfig
             {
-                Id = "Blog/Config",
+                Id = BlogConfig.Key,
                 CustomCss = "hibernatingrhinos",
                 FuturePostsEncryptionKey = CryptographyUtil.GenerateKey(),
                 FuturePostsEncryptionSalt = CryptographyUtil.GenerateRandomString(16),

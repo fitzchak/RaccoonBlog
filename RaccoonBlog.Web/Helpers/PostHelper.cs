@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Web.Mvc;
+using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
+using RaccoonBlog.Web.Infrastructure.Common;
+using RaccoonBlog.Web.Models;
 
 namespace RaccoonBlog.Web.Helpers
 {
@@ -26,6 +29,14 @@ namespace RaccoonBlog.Web.Helpers
 				WordCount = wordCount
 			};
 		}
+
+	    public static string Url(Post post)
+	    {
+            var slug = SlugConverter.TitleToSlug(post.Title);
+            var id = RavenIdResolver.Resolve(post.Id);
+            var blogUrl = ConfigurationHelper.MainBlogUrl.TrimEnd('/');
+            return $"{blogUrl}/{id}/{slug}";
+	    }
 
 		public class TimeToRead
 		{
