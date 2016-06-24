@@ -26,6 +26,8 @@
     @Html.EditorFor(x => x.AkismetKey, "TextLong")
     @Html.EditorFor(x => x.GoogleAnalyticsKey, "TextLong")
     @Html.EditorFor(x => x.FuturePostsEncryptionKey, "TextLong")
+    @Html.EditorFor(x => x.FuturePostsEncryptionIv, "TextLong", new { maxlength = 16 })
+    @Html.EditorFor(x => x.FuturePostsEncryptionSalt, "TextLong")
     @Html.EditorFor(x => x.MinNumberOfPostForSignificantTag)
     @Html.EditorFor(x => x.NumberOfDayToCloseComments)
     @Html.EditorFor(x => x.PostsOnPage)

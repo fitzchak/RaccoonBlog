@@ -110,11 +110,7 @@ namespace RaccoonBlog.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string _404 = "404";
-                public readonly string _500 = "500";
             }
-            public readonly string _404 = "~/Views/Error/404.htm";
-            public readonly string _500 = "~/Views/Error/500.htm";
         }
     }
 

@@ -37,14 +37,12 @@ namespace T4MVC
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _ErrorLayout = "_ErrorLayout";
                 public readonly string _Layout = "_Layout";
-                public readonly string _404 = "404";
-                public readonly string _500 = "500";
                 public readonly string Error = "Error";
             }
+            public readonly string _ErrorLayout = "~/Views/Shared/_ErrorLayout.cshtml";
             public readonly string _Layout = "~/Views/Shared/_Layout.cshtml";
-            public readonly string _404 = "~/Views/Shared/404.cshtml";
-            public readonly string _500 = "~/Views/Shared/500.cshtml";
             public readonly string Error = "~/Views/Shared/Error.cshtml";
             static readonly _DisplayTemplatesClass s_DisplayTemplates = new _DisplayTemplatesClass();
             public _DisplayTemplatesClass DisplayTemplates { get { return s_DisplayTemplates; } }

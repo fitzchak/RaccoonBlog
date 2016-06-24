@@ -275,6 +275,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\Enums\MenuButtonType.cs" />
+    <Compile Include="Areas\Admin\Models\FutureRssAccess.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\SeriesController.cs" />
     <Compile Include="CssController.generated.cs">
@@ -285,12 +286,13 @@
     </Compile>
     <Compile Include="Helpers\Attributes\CustomHandleErrorAttribute.cs" />
     <Compile Include="Helpers\ConfigurationHelper.cs" />
+    <Compile Include="Helpers\CryptographyUtil.cs" />
+    <Compile Include="Helpers\FutureRssAccessToken.cs" />
     <Compile Include="Helpers\PostHelper.cs" />
     <Compile Include="Helpers\SignInHelper.cs" />
     <Compile Include="Helpers\ThemeLessTransform.cs" />
     <Compile Include="Helpers\RouteCollectionExtension.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\ViewModels\GenerateFutureRssAccessInput.cs" />
     <Compile Include="Areas\Admin\Controllers\SettingsController.cs" />
     <Compile Include="Areas\Admin\Helpers\MenuUtil.cs" />
     <Compile Include="Areas\Admin\Models\MenuItem.cs" />
@@ -309,6 +311,9 @@
     <Compile Include="LegacyPostController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="MailTemplatesController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="PostDetailsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -322,6 +327,9 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="SeriesController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="SocialController.generated.cs">
@@ -346,6 +354,11 @@
       <DependentUpon>bootstrap-extend.css</DependentUpon>
     </Content>
     <Content Include="Areas\Admin\Content\css\fullcalendar.css" />
+    <Content Include="Areas\Admin\Content\css\images\content_repeat.jpg" />
+    <Content Include="Areas\Admin\Content\css\images\nav_divider.jpg" />
+    <Content Include="Areas\Admin\Content\css\images\nav_item_0.gif" />
+    <Content Include="Areas\Admin\Content\css\images\nav_item_1.gif" />
+    <Content Include="Areas\Admin\Content\css\images\nav_logout.gif" />
     <Content Include="Areas\Admin\Content\datepicker\css\bootstrap-datetimepicker.css" />
     <Content Include="Areas\Admin\Content\datepicker\css\bootstrap-datetimepicker.min.css" />
     <Content Include="Areas\Admin\Content\datepicker\js\bootstrap-datetimepicker.min.js" />
@@ -353,7 +366,8 @@
     <Content Include="Areas\Admin\Content\img\logo.svg" />
     <Content Include="Areas\Admin\Content\js\bootstrap.js" />
     <Content Include="Areas\Admin\Content\js\fullcalendar.js" />
-    <Content Include="Areas\Admin\Content\js\setup.js" />
+    <Content Include="Areas\Admin\Content\js\app\rssFutureAccess.js" />
+    <Content Include="Areas\Admin\Content\js\lib\clipboard.min.js" />
     <Content Include="Areas\Admin\Content\js\tinymce\changelog.txt" />
     <Content Include="Areas\Admin\Content\js\tinymce\langs\_notes\dwsync.xml" />
     <Content Include="Areas\Admin\Content\js\tinymce\license.txt" />
@@ -570,9 +584,6 @@
     <Compile Include="Infrastructure\Indexes\PostComments_CreationDate.cs" />
     <Compile Include="Infrastructure\Indexes\Posts_Series.cs" />
     <Compile Include="Infrastructure\Indexes\Statistics_Count.cs" />
-    <Compile Include="MailTemplatesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\BlogConfig.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="Models\PostComments.cs" />
@@ -616,9 +627,6 @@
     <Compile Include="Infrastructure\Common\SlugConverter.cs" />
     <Compile Include="Services\RssModels\UserInfo.cs" />
     <Compile Include="Services\RssModels\WordpressCategory.cs" />
-    <Compile Include="SharedController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\AdminPostDetailsViewModel.cs" />
     <Compile Include="Helpers\CommenterUtil.cs" />
     <Compile Include="ViewModels\CommentInput.cs" />
@@ -1101,9 +1109,11 @@
     </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Content\js\jquery.unobtrusive-ajax.js" />
     <Content Include="Content\js\jquery.unobtrusive-ajax.min.js" />
@@ -1122,7 +1132,9 @@
     <Content Include="Views\Series\PostsSeries.cshtml" />
     <Content Include="Views\Shared\_ErrorLayout.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Areas\Admin\ViewModels\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Views\PostDetails\Details.cshtml" />
   </ItemGroup>

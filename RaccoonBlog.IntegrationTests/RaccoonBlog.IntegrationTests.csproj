@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoMapper\AutoMappedConfigurationTester.cs" />
+    <Compile Include="CryptographyUtilTests.cs" />
     <Compile Include="Routing\AdminAreaRoutesTests.cs" />
     <Compile Include="Routing\RoutesTests.cs" />
     <Compile Include="ControllersCore\SlugGenerationTests.cs" />
