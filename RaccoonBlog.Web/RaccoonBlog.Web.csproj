@@ -289,6 +289,7 @@
     <Compile Include="Helpers\CryptographyUtil.cs" />
     <Compile Include="Helpers\FutureRssAccessToken.cs" />
     <Compile Include="Helpers\PostHelper.cs" />
+    <Compile Include="Helpers\PostUrlHelperExtensions.cs" />
     <Compile Include="Helpers\SignInHelper.cs" />
     <Compile Include="Helpers\ThemeLessTransform.cs" />
     <Compile Include="Helpers\RouteCollectionExtension.cs" />
@@ -1139,6 +1140,7 @@
     <Content Include="Views\Section\PostsSeries.cshtml" />
     <Content Include="Views\Series\PostsSeries.cshtml" />
     <Content Include="Views\Shared\_ErrorLayout.cshtml" />
+    <Content Include="Views\PostDetails\NextPrevNav.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\ViewModels\" />
