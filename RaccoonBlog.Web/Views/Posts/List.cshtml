@@ -6,7 +6,7 @@
 <div class="postsList">
     @foreach (var post in Model.Posts)
 	{
-		<article>
+		<article class="article-body">
 			<time>
 				<span>@post.PublishedAt.ToString("MMM dd")</span>
 				@post.PublishedAt.ToString("yyyy")
