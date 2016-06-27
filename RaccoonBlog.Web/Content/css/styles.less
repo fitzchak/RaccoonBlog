@@ -1425,10 +1425,16 @@ pre[class*="language-"]:before, pre[class*="language-"]:after {
             letter-spacing: 1.1px;
             top: 1px;
             right: 1px;
+            transition: opacity 0.3s ease-in-out;
+            cursor: pointer;
 
             &:before {
                 display: block;
                 content: 'Markdown';
+            }
+
+            &:hover {
+                opacity: 1;
             }
         }
 
@@ -1442,6 +1448,10 @@ pre[class*="language-"]:before, pre[class*="language-"]:after {
 
     h2 {
         margin-top: 0;
+    }
+
+    [data-toggle=modal] .glyphicon-info-sign {
+        font-size: 17px;
     }
 
     article {
@@ -1619,11 +1629,11 @@ pre[class*="language-"]:before, pre[class*="language-"]:after {
                 code {
                     background-color: #fff;
                     padding: 10px 20px;
-                    font-size:85%;
-                    color:@text-color;
+                    font-size: 85%;
+                    color: @text-color;
                     white-space: pre-wrap;
                     word-wrap: break-word;
-                    display:block;
+                    display: block;
                     border-radius: 3px;
                     box-shadow: 0 1px 1px 0px rgba(0,0,0,.2);
                     tab-size: 4;
@@ -1694,13 +1704,18 @@ pre[class*="language-"]:before, pre[class*="language-"]:after {
     }
 }
 
+#markdownHelp {
+    display: none;
+
+}
+
 #recaptcha_widget_div {
     //border: 1px solid @brand-primary !important;
 }
 
 .form_item {
 
-    input, textarea, {
+    input, textarea {
         padding: 5px 14px;
         border-color: @brand-primary;
         //background-color: @gray-lighter;

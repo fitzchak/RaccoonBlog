@@ -1141,6 +1141,7 @@
     <Content Include="Views\Series\PostsSeries.cshtml" />
     <Content Include="Views\Shared\_ErrorLayout.cshtml" />
     <Content Include="Views\PostDetails\NextPrevNav.cshtml" />
+    <Content Include="Views\PostDetails\MarkdownHelp.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\ViewModels\" />

@@ -236,7 +236,10 @@
     function getMarkdownConverter() {
         var markdown = new MarkdownDeep.Markdown();
         markdown.ExtraMode = true;
-        markdown.SafeMode = false;
+        markdown.SafeMode = true;
+        markdown.NoFollowLinks = true;
+        markdown.NewWindowForExternalLinks = true;
+        markdown.MarkdownInHtml = false;
         return markdown;
     }
 

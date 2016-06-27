@@ -89,6 +89,13 @@ internal partial class T4MVC_System_Web_Mvc_ActionResult : System.Web.Mvc.Action
 namespace Links
 {
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+    public static class Scripts {
+        private const string URLPATH = "~/Scripts";
+        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+    }
+
+    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
     public static class Content {
         private const string URLPATH = "~/Content";
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
@@ -250,6 +257,10 @@ namespace Links
                 public static readonly string ico_stack_inactive_svg = Url("ico_stack_inactive.svg");
                 public static readonly string logo_vertical_svg = Url("logo-vertical.svg");
                 public static readonly string logo_svg = Url("logo.svg");
+                public static readonly string mdd_ajax_loader_gif = Url("mdd_ajax_loader.gif");
+                public static readonly string mdd_gripper_png = Url("mdd_gripper.png");
+                public static readonly string mdd_modal_background_png = Url("mdd_modal_background.png");
+                public static readonly string mdd_toolbar_png = Url("mdd_toolbar.png");
                 public static readonly string readmore_png = Url("readmore.png");
                 public static readonly string readmore2_png = Url("readmore2.png");
                 public static readonly string rihno_svg = Url("rihno.svg");
@@ -259,6 +270,8 @@ namespace Links
                 public static readonly string side_bkg_png = Url("side_bkg.png");
             }
         
+            public static readonly string mdd_styles_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/mdd_styles.min.css") ? Url("mdd_styles.min.css") : Url("mdd_styles.css");
+                 
             public static readonly string prism_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/prism.min.css") ? Url("prism.min.css") : Url("prism.css");
                  
             public static readonly string socicon_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/socicon.min.css") ? Url("socicon.min.css") : Url("socicon.css");
@@ -281,6 +294,13 @@ namespace Links
             public static readonly string socicon_webfont_ttf = Url("socicon-webfont.ttf");
             public static readonly string socicon_webfont_woff = Url("socicon-webfont.woff");
             public static readonly string socicon_webfont_woff2 = Url("socicon-webfont.woff2");
+        }
+    
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class images {
+            private const string URLPATH = "~/Content/images";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -1205,6 +1225,14 @@ namespace Links
             public static readonly string jquery_validate_min_js = Url("jquery.validate.min.js");
             public static readonly string jquery_validate_unobtrusive_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.validate.unobtrusive.min.js") ? Url("jquery.validate.unobtrusive.min.js") : Url("jquery.validate.unobtrusive.js");
             public static readonly string jquery_validate_unobtrusive_min_js = Url("jquery.validate.unobtrusive.min.js");
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class lib {
+                private const string URLPATH = "~/Content/js/lib";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                public static readonly string MarkdownDeepLib_min_js = Url("MarkdownDeepLib.min.js");
+            }
+        
             public static readonly string moment_with_locales_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/moment-with-locales.min.js") ? Url("moment-with-locales.min.js") : Url("moment-with-locales.js");
             public static readonly string moment_with_locales_min_js = Url("moment-with-locales.min.js");
             public static readonly string moment_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/moment.min.js") ? Url("moment.min.js") : Url("moment.js");
@@ -1214,6 +1242,15 @@ namespace Links
             public static readonly string respond_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/respond.src.min.js") ? Url("respond.src.min.js") : Url("respond.src.js");
             public static readonly string setup_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/setup.min.js") ? Url("setup.min.js") : Url("setup.js");
             public static readonly string showdown_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/showdown.min.js") ? Url("showdown.min.js") : Url("showdown.js");
+            public static readonly string utils_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/utils.min.js") ? Url("utils.min.js") : Url("utils.js");
+        }
+    
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class license {
+            private const string URLPATH = "~/Content/license";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string MarkdownDeep_License_txt = Url("MarkdownDeep License.txt");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -2276,6 +2313,12 @@ namespace Links
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
     public static partial class Bundles
     {
+        public static partial class Scripts 
+        {
+            public static class Assets
+            {
+            }
+        }
         public static partial class Content 
         {
             public static partial class css 
@@ -2317,11 +2360,18 @@ namespace Links
                     public const string fullcalendar_css = "~/Content/css/fullcalendar.css";
                     public const string fullcalendar_min_css = "~/Content/css/fullcalendar.min.css";
                     public const string fullcalendar_print_css = "~/Content/css/fullcalendar.print.css";
+                    public const string mdd_styles_css = "~/Content/css/mdd_styles.css";
                     public const string prism_css = "~/Content/css/prism.css";
                     public const string socicon_css = "~/Content/css/socicon.css";
                 }
             }
             public static partial class fonts 
+            {
+                public static class Assets
+                {
+                }
+            }
+            public static partial class images 
             {
                 public static class Assets
                 {
@@ -3020,6 +3070,13 @@ namespace Links
                         public const string contents_css = "~/Content/js/ckeditor/contents.css";
                     }
                 }
+                public static partial class lib 
+                {
+                    public static class Assets
+                    {
+                        public const string MarkdownDeepLib_min_js = "~/Content/js/lib/MarkdownDeepLib.min.js"; 
+                    }
+                }
                 public static class Assets
                 {
                     public const string anytime_js = "~/Content/js/anytime.js"; 
@@ -3061,6 +3118,13 @@ namespace Links
                     public const string respond_src_js = "~/Content/js/respond.src.js"; 
                     public const string setup_js = "~/Content/js/setup.js"; 
                     public const string showdown_js = "~/Content/js/showdown.js"; 
+                    public const string utils_js = "~/Content/js/utils.js"; 
+                }
+            }
+            public static partial class license 
+            {
+                public static class Assets
+                {
                 }
             }
             public static partial class themes 
