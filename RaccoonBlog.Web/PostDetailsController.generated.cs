@@ -129,8 +129,12 @@ namespace RaccoonBlog.Web.Controllers
             public class _ViewNamesClass
             {
                 public readonly string Details = "Details";
+                public readonly string MarkdownHelp = "MarkdownHelp";
+                public readonly string NextPrevNav = "NextPrevNav";
             }
             public readonly string Details = "~/Views/PostDetails/Details.cshtml";
+            public readonly string MarkdownHelp = "~/Views/PostDetails/MarkdownHelp.cshtml";
+            public readonly string NextPrevNav = "~/Views/PostDetails/NextPrevNav.cshtml";
         }
     }
 
