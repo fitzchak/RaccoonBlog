@@ -74,12 +74,14 @@
 
     @Html.Partial("NextPrevNav")
 
+    
+
     @if (Model.SeriesInfo != null)
     {
         <section class="postsInSeries" data-state="closed">
             <h4 class="text-left">
                 More posts in <a href="@Url.Series(Model.SeriesInfo.SeriesId, Model.SeriesInfo.SeriesSlug)">
-                &quot;@(Model.SeriesInfo.SeriesTitle)&quot;
+                &quot;@Html.Raw(Model.SeriesInfo.SeriesTitle)&quot;
                 </a> series:
             </h4>
 	        <ol>
