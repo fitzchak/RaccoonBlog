@@ -240,7 +240,16 @@
         markdown.NoFollowLinks = true;
         markdown.NewWindowForExternalLinks = true;
         markdown.MarkdownInHtml = false;
-        return markdown;
+
+        return {
+            Transform: function(body) {
+                return markdown.Transform.call(markdown, supportGithubPreCodeBlocks(body));
+            }
+        };
+
+        function supportGithubPreCodeBlocks(body) {
+            return body.replace(/^```+\s*$/gm, '~~~');
+        }
     }
 
 })(window);
