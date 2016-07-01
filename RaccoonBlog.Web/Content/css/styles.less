@@ -1285,6 +1285,7 @@ article {
         border-bottom: none;
         padding-bottom: 0;
     }
+
     .modal-footer {
         border-top: none;
         padding-top: 0;
@@ -1320,56 +1321,56 @@ article {
             -webkit-animation-delay: .05s;
             -moz-animation-delay: .05s;
             -o-animation-delay: .05s;
-            animation-delay: .05s;            
+            animation-delay: .05s;
         }
 
         &:nth-of-type(3) {
             -webkit-animation-delay: .10s;
             -moz-animation-delay: .10s;
             -o-animation-delay: .10s;
-            animation-delay: .10s;            
+            animation-delay: .10s;
         }
 
         &:nth-of-type(4) {
             -webkit-animation-delay: .15s;
             -moz-animation-delay: .15s;
             -o-animation-delay: .15s;
-            animation-delay: .15s;            
+            animation-delay: .15s;
         }
 
         &:nth-of-type(5) {
             -webkit-animation-delay: .20s;
             -moz-animation-delay: .20s;
             -o-animation-delay: .20s;
-            animation-delay: .20s;            
+            animation-delay: .20s;
         }
 
         &:nth-of-type(6) {
             -webkit-animation-delay: .25s;
             -moz-animation-delay: .25s;
             -o-animation-delay: .25s;
-            animation-delay: .25s;            
+            animation-delay: .25s;
         }
 
         &:nth-of-type(7) {
             -webkit-animation-delay: .30s;
             -moz-animation-delay: .30s;
             -o-animation-delay: .30s;
-            animation-delay: .30s;            
+            animation-delay: .30s;
         }
 
         &:nth-of-type(8) {
             -webkit-animation-delay: .35s;
             -moz-animation-delay: .35s;
             -o-animation-delay: .35s;
-            animation-delay: .35s;            
+            animation-delay: .35s;
         }
 
         &:nth-of-type(9) {
             -webkit-animation-delay: .40s;
             -moz-animation-delay: .40s;
             -o-animation-delay: .40s;
-            animation-delay: .40s;            
+            animation-delay: .40s;
         }
 
         h3 {
@@ -1863,17 +1864,26 @@ pre[class*="language-"]:before, pre[class*="language-"]:after {
 
                 code {
                     background-color: #fff;
-                    padding: 10px 20px;
                     font-size: 85%;
                     color: @text-color;
-                    white-space: pre-wrap;
-                    -ms-word-wrap: break-word;
-                    word-wrap: break-word;
-                    display: block;
                     border-radius: 3px;
-                    box-shadow: 0 1px 1px 0px rgba(0,0,0,.2);
-                    -o-tab-size: 4;
-                    tab-size: 4;
+                    box-shadow: 0 1px 1px 0px rgba(0,0,0,.2);                    
+                }
+
+                pre {
+                    box-shadow: 0 1px 1px 0px rgba(0, 0, 0, 0.2);
+                    border-radius: 3px;
+                    font-size: inherit;
+
+                    code {
+                        padding: 10px 20px;
+                        display: block;
+                        white-space: pre-wrap;
+                        -ms-word-wrap: break-word;
+                        word-wrap: break-word;
+                        -o-tab-size: 4;
+                        tab-size: 4;
+                    }
                 }
 
                 hr {
