@@ -97,8 +97,9 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 			viewModel.PostSlug = SlugConverter.TitleToSlug(post.Title);
 			viewModel.BlogName = DocumentSession.Load<BlogConfig>("Blog/Config").Title;
 			viewModel.Key = post.ShowPostEvenIfPrivate.MapTo<string>();
+		    viewModel.IsSpam = comment.IsSpam;
 
-			var subject = string.Format("{2}Comment on: {0} from {1}", viewModel.PostTitle, viewModel.BlogName, comment.IsSpam ? "[Spam] " : string.Empty);
+			var subject = string.Format("{2}Comment on: {0} from {1}", viewModel.PostTitle, viewModel.BlogName, viewModel.IsSpam ? "[DETECTED SPAM] " : string.Empty);
 
 			TaskExecutor.ExcuteLater(new SendEmailTask(viewModel.Email, subject, "NewComment", postAuthor.Email, viewModel));
 		}
