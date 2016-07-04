@@ -28,6 +28,8 @@ namespace RaccoonBlog.Web.Infrastructure.Jobs
 
         public void Execute()
         {
+            _log.Info("Started execution Reddit integration job.");
+
             lock (_lock)
             {
                 if (_shuttingDown)
@@ -41,6 +43,8 @@ namespace RaccoonBlog.Web.Infrastructure.Jobs
                     session.SaveChanges();
                 }
             }
+
+            _log.Info("Finished execution Reddit integration job.");
         }
 
 
