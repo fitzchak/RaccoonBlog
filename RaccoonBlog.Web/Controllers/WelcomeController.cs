@@ -23,7 +23,7 @@ namespace RaccoonBlog.Web.Controllers
 				return View("Index");
 
 			// Create the blog by storing the config
-			config.Id = "Blog/Config";
+			config.Id = BlogConfig.Key;
 			RavenSession.Store(config);
 
 			// Create default sections
@@ -50,7 +50,7 @@ namespace RaccoonBlog.Web.Controllers
 			// otherwise we might get a null BlogConfig even though a valid one exists
 			using (RavenSession.Advanced.DocumentStore.DisableAggressiveCaching())
 			{
-				bc = RavenSession.Load<BlogConfig>("Blog/Config");
+				bc = RavenSession.Load<BlogConfig>(BlogConfig.Key);
 			}
 
 			return bc == null ? View("Index") : View(bc);

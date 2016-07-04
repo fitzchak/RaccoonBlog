@@ -39,6 +39,8 @@ namespace RaccoonBlog.Web.Models
 		public bool IsDeleted { get; set; }
 		public bool AllowComments { get; set; }
 
+        public SocialNetworkIntegration Integration { get; set; }
+
 		private Guid _showPostEvenIfPrivate;
 		public Guid ShowPostEvenIfPrivate
 		{

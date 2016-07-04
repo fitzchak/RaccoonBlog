@@ -25,7 +25,7 @@ namespace RaccoonBlog.Web.Controllers
 				{
 					using (RavenSession.Advanced.DocumentStore.AggressivelyCacheFor(TimeSpan.FromMinutes(5)))
 					{
-						blogConfig = RavenSession.Load<BlogConfig>("Blog/Config");
+						blogConfig = RavenSession.Load<BlogConfig>(BlogConfig.Key);
 					}
 
 					if (blogConfig == null && "welcome".Equals((string)RouteData.Values["controller"], StringComparison.OrdinalIgnoreCase) == false) // first launch

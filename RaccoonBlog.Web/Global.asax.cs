@@ -1,21 +1,25 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
 using DataAnnotationsExtensions.ClientValidation;
-
+using FluentScheduler;
 using Glimpse.RavenDb;
 
 using HibernatingRhinos.Loci.Common.Controllers;
 using HibernatingRhinos.Loci.Common.Tasks;
+using NLog.Fluent;
 using RaccoonBlog.Web.Areas.Admin.Controllers;
+using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Helpers.Binders;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Indexes;
+using RaccoonBlog.Web.Infrastructure.Jobs;
 using Raven.Abstractions.Logging;
 using Raven.Client;
 using Raven.Client.Document;
@@ -25,6 +29,8 @@ namespace RaccoonBlog.Web
 {
 	public class MvcApplication : HttpApplication
 	{
+        private static readonly NLog.Logger _log = NLog.LogManager.GetCurrentClassLogger();
+
 		public MvcApplication()
 		{
 			BeginRequest += (sender, args) =>
@@ -81,20 +87,28 @@ namespace RaccoonBlog.Web
 				});
 				s.SaveChanges();
 			}
-		}
+
+            JobManager.JobException += JobExceptionHandler;
+            JobManager.Initialize(new SocialNetworkIntegrationJobsRegistry());
+        }
 
 		public static IDocumentStore DocumentStore { get; private set; }
 
-		private static void InitializeDocumentStore()
+        static void JobExceptionHandler(JobExceptionInfo info, FluentScheduler.UnhandledExceptionEventArgs e)
+        {
+            _log.FatalException($"Error executing background job {info.Name}.", e.ExceptionObject);
+        }
+
+        private static void InitializeDocumentStore()
 		{
 			if (DocumentStore != null) return; // prevent misuse
 
-			DocumentStore = new DocumentStore
+		    DocumentStore = new DocumentStore
 			{
 				ConnectionStringName = "RavenDB",
 			}.Initialize();
 
-			TryCreatingIndexesOrRedirectToErrorPage();
+            TryCreatingIndexesOrRedirectToErrorPage();
 		}
 
 		private static void TryCreatingIndexesOrRedirectToErrorPage()

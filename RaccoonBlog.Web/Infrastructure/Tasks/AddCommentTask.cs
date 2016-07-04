@@ -95,7 +95,7 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 			viewModel.PostId = RavenIdResolver.Resolve(post.Id);
 			viewModel.PostTitle = HttpUtility.HtmlDecode(post.Title);
 			viewModel.PostSlug = SlugConverter.TitleToSlug(post.Title);
-			viewModel.BlogName = DocumentSession.Load<BlogConfig>("Blog/Config").Title;
+			viewModel.BlogName = DocumentSession.Load<BlogConfig>(BlogConfig.Key).Title;
 			viewModel.Key = post.ShowPostEvenIfPrivate.MapTo<string>();
 		    viewModel.IsSpam = comment.IsSpam;
 

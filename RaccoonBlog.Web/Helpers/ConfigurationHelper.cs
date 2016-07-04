@@ -46,7 +46,9 @@ namespace RaccoonBlog.Web.Helpers
 			}
 		}
 
-		private static Tuple<string, string> GetKeys(string provider, string idKey, string secretKey)
+	    public static string MainBlogUrl => ConfigurationManager.AppSettings["MainUrl"];
+
+	    private static Tuple<string, string> GetKeys(string provider, string idKey, string secretKey)
 		{
 			var keyPrefix = "Raccoon/OAuth/" + provider;
 			var id = ConfigurationManager.AppSettings[keyPrefix + "/" + idKey];

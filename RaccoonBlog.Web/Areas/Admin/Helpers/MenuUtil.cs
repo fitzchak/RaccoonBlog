@@ -26,6 +26,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Helpers
                     {
                         new MenuItem {Title = "Settings", Url = url.Action("Index", "Settings"), Type = MenuButtonType.Plain},
                         new MenuItem {Title = "RSS Future Access", Url = url.Action("RssFutureAccess", "Settings"), Type = MenuButtonType.Plain},
+                        new MenuItem {Title = "Reddit submission", Url = url.Action("RedditSubmission", "Settings"), Type = MenuButtonType.Plain},
                     }
 				},
 			};
