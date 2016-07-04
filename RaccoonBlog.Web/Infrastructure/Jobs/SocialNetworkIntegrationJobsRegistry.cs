@@ -10,7 +10,7 @@ namespace RaccoonBlog.Web.Infrastructure.Jobs
             Schedule<RedditIntegration>()
                 .WithName("RedditIntegration")
                 .NonReentrant()
-                .ToRunEvery(1)
+                .ToRunEvery(5)
                 .Minutes();
         }
     }
