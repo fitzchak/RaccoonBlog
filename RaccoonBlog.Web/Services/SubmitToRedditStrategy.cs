@@ -120,8 +120,6 @@ namespace RaccoonBlog.Web.Services
 
         private void SubmitPostToSubreddit(Post post, Subreddit subreddit)
         {
-            _log.Info($"Submitting \"{post.Title}\" to /r/{subreddit.Name}.");
-
             var redditIntegration = post.Integration.Reddit;
             var postSubmission = redditIntegration.GetPostSubmissionForSubreddit(subreddit.Name) ??
                 new PostSubmission()
@@ -139,12 +137,14 @@ namespace RaccoonBlog.Web.Services
             if (postSubmission.ShouldTrySubmit == false)
                 return;
 
+            _log.Info($"Submitting \"{post.Title}\" to /r/{subreddit.Name}.");
+
             try
             {
                 subreddit.SubmitPost(post.Title, PostHelper.Url(post));
                 postSubmission.Status = SubmissionStatus.Submitted;
                 _log.Info(
-                    $"Link to post \"{post.Title}\" with ID {post.Id} has been successfully submitted to /r/{subreddit.Name}.");
+                    $"Post \"{post.Title}\" with ID {post.Id} has been successfully submitted to /r/{subreddit.Name}.");
             }
             catch (DuplicateLinkException duplicateLinkException)
             {
