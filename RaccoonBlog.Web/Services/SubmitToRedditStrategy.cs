@@ -156,7 +156,7 @@ namespace RaccoonBlog.Web.Services
             }
             catch (Exception exception)
             {
-                _log.ErrorException($"Error submitting post \"{post.Title}\" with ID {post.Id} to Reddit", exception);
+                _log.ErrorException($"Error submitting post \"{post.Title}\" with ID {post.Id} to /r/{subreddit.Name}", exception);
                 postSubmission.Status = SubmissionStatus.UnknownFailure;
             }
 
@@ -167,7 +167,7 @@ namespace RaccoonBlog.Web.Services
 
         private void NotifyOnFailure(Post post, PostSubmission postSubmission)
         {
-            if (postSubmission.IsFailure)
+            if (postSubmission.IsFailure == false)
                 return;
 
             try

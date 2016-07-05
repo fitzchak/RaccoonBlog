@@ -4,7 +4,9 @@
 </h1>
 <p>
     Current submission status: <strong>@Model.Submission.Status</strong> <br />
-    <a href="@Url.AbsoluteAction(MVC.Admin.Settings.ActionNames.RedditSubmission, MVC.Admin.Settings.Name)">
+    Attempt#: <strong>@Model.Submission.Attempts</strong> <br/>
+
+    <a href="@Url.AbsoluteAction(MVC.Admin.Settings.ActionNames.RedditSubmission, MVC.Admin.Settings.Name, new { Area = MVC.Admin.Name })">
         Manage Reddit submissions
     </a>
 </p>
