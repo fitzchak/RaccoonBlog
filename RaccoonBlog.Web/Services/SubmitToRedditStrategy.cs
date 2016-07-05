@@ -143,6 +143,8 @@ namespace RaccoonBlog.Web.Services
             {
                 subreddit.SubmitPost(post.Title, PostHelper.Url(post));
                 postSubmission.Status = SubmissionStatus.Submitted;
+                _log.Info(
+                    $"Link to post \"{post.Title}\" with ID {post.Id} has been successfully submitted to /r/{subreddit.Name}.");
             }
             catch (DuplicateLinkException duplicateLinkException)
             {
