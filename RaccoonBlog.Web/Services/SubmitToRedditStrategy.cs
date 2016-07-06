@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using HibernatingRhinos.Loci.Common.Tasks;
 using JetBrains.Annotations;
 using NLog;
@@ -141,7 +142,7 @@ namespace RaccoonBlog.Web.Services
 
             try
             {
-                subreddit.SubmitPost(post.Title, PostHelper.Url(post));
+                subreddit.SubmitPost(HttpUtility.HtmlDecode(post.Title), PostHelper.Url(post));
                 postSubmission.Status = SubmissionStatus.Submitted;
                 _log.Info(
                     $"Post \"{post.Title}\" with ID {post.Id} has been successfully submitted to /r/{subreddit.Name}.");
