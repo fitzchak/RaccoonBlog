@@ -13,7 +13,6 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers
 		public static MvcHtmlString Resolve(string inputBody)
 		{
 			var html = FormatMarkdown(inputBody);
-			html = SanitizeHtml.Sanitize(html);
 			return MvcHtmlString.Create(html);
 		}
 
