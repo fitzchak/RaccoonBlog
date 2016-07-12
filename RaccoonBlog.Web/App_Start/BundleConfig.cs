@@ -47,7 +47,6 @@ namespace RaccoonBlog.Web
 				.Add(new ScriptBundle("~/Content/js/main")
                 .Include("~/Content/js/moment.js")
                 .Include("~/Content/js/lib/MarkdownDeepLib.min.js")
-				.Include("~/Content/js/jquery.ae.image.resize.min.js")
                 .Include("~/Content/js/utils.js")
 				.Include("~/Content/js/raccoon-blog.js")
                 .Include("~/Content/js/setup.js")

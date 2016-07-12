@@ -133,19 +133,6 @@
 		@Scripts.Render("~/Content/js/jquery-migrate")
 		@Scripts.Render("~/Content/js/bootstrap")
 		@Scripts.Render("~/Content/js/main")
-		<script type="text/javascript">
-			$(function () {
-				var timer;
-				function resizeImagesToScreen() {
-					$('#content img').aeImageResize({ width: $('#content').width() });
-				}
-				resizeImagesToScreen();
-				$(window).resize(function () {
-					clearTimeout(timer);
-					timer = setTimeout(resizeImagesToScreen, 50);
-				});
-			});
-		</script>
 		@RenderSection("Script")
 		if (string.IsNullOrEmpty(ViewBag.BlogConfig.GoogleAnalyticsKey) == false)
 		{

@@ -29,11 +29,8 @@
 
         $('.comments textarea').keydown(handleTabsInComment);
 
-        $('#commentPreview').click(function () {
-            $('.comments textarea').blur(updateCommentPreview);
-            updateCommentPreview();
-        });
-
+        setupResponsiveImages();
+        enableCommentsPreview();
         adjustSize();
         handleVisitCookies();
         setPreferredView();
@@ -47,6 +44,17 @@
         openTags.click(toggleTags);
         openArch.click(toggleArch);
         openSeries.click(toggleSeries);
+    }
+
+    function setupResponsiveImages() {
+        $('#content img').addClass('img-responsive');
+    }
+
+    function enableCommentsPreview() {
+        $('#commentPreview').click(function () {
+            $('.comments textarea').blur(updateCommentPreview);
+            updateCommentPreview();
+        });
     }
 
     function initMorePostsInSeries() {
