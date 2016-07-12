@@ -2531,17 +2531,21 @@ li.future {
 
     #content {
 
-        img {            
-            margin:10px auto;
+        .articleContent {
+            img {
+                margin: 10px auto;
 
-            @media (max-width: @screen-xs-max) {
-                display:block !important;
-                float:none !important;
+                @media (max-width: @screen-xs-max) {
+                    display: block !important;
+                    float: none !important;
+                }
+
+                @media (min-width: @screen-sm) {
+                    margin: 15px;
+                }
+
+                &:extend(.img-responsive);
             }
-            @media (min-width: @screen-sm) {
-                margin:15px;
-            }
-            &:extend(.img-responsive);
         }
 
         @media (min-width: @screen-sm) {
