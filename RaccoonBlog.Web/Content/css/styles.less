@@ -2530,6 +2530,19 @@ li.future {
     }
 
     #content {
+
+        .img-responsive {            
+            margin:10px auto;
+
+            @media (max-width: @screen-xs-max) {
+                display:block;
+                float:none !important;
+            }
+            @media (min-width: @screen-sm) {
+                margin:15px;
+            }
+        }
+
         @media (min-width: @screen-sm) {
             width: 100%;
             margin-left: 0;
