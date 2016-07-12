@@ -1,20 +1,128 @@
-﻿@model RaccoonBlog.Web.Areas.Admin.ViewModels.GenerateFutureRssAccessInput
+﻿@using RaccoonBlog.Web.Areas.Admin.Models
+@model RaccoonBlog.Web.Areas.Admin.Models.FutureRssAccess
 @{
-	ViewBag.Title = "Blog Configuration";
+    ViewBag.Title = "Blog Configuration";
+    var hasCfgErrors = false;
+    var accessList = ViewData["FutureRssAccessList"] as IList<FutureRssAccess>;
 }
 
-<h3>Generate RSS with Future Access link</h3>
-<hr />
+<div class="future-rss">
+    <h3>Generate RSS with Future Access link</h3>
+    <hr />
 
-@using (Html.BeginForm("RssFutureAccess", "Settings", FormMethod.Post, new { @class = "form-horizontal" }))
-{
-    @Html.EditorFor(x => x.User, "NameWithDescription")
-    @Html.EditorFor(x => x.ExpiredOn, "NameWithDescription")
-    @Html.EditorFor(x => x.NumberOfFutureDays, "NameWithDescription")
-    
-    <div class="form-group">
-        <div class="col-sm-12">
-            <button type="submit" class="btn btn-primary pull-right">Save</button>
+    <p class="text-info bg-info note">
+        <i class="glyphicon glyphicon-info-sign"></i>
+        &nbsp;
+        Changing future RSS access encryption keys on the settings page will revoke all current access tokens.
+    </p>
+
+    @if (ViewContext.ViewData.ModelState.Keys.Any(x => x.StartsWith("Exists")))
+    {
+        <p class="text-warning bg-warning note">
+            <i class="glyphicon glyphicon-warning-sign"></i>
+            &nbsp;
+            @ViewContext.ViewData.ModelState["Exists"].Errors.Single().ErrorMessage
+        </p>
+    }
+
+    @if (ViewContext.ViewData.ModelState.Keys.Any(x => x.StartsWith("BlogConfig")))
+    {
+        hasCfgErrors = true;
+        
+            var confErrors = ViewContext.ViewData.ModelState
+                .Where(x => x.Key.StartsWith("BlogConfig"))
+                .Select(x => x.Key.Split('.').ElementAtOrDefault(1))
+                .Where(x => x != null)
+                .ToArray();
+            var confErrorsText = string.Join(", ", confErrors);
+        
+            <p class="bg-danger text-danger note">
+                <i class="glyphicon glyphicon-alert text-warning"></i>
+                &nbsp;
+                Blog configuration does not contain @confErrorsText.
+                Please
+                @Html.ActionLink("go to settings", MVC.Admin.Settings.ActionNames.Index, MVC.Admin.Settings.Name)
+                to fill the missing fields.
+            </p>
+    }
+        <br />
+
+    @using (Html.BeginForm("RssFutureAccess", "Settings", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        @Html.EditorFor(x => x.User, "NameWithDescription")
+        @Html.EditorFor(x => x.ExpiredOn, "NameWithDescription")
+        @Html.EditorFor(x => x.NumberOfFutureDays, "NameWithDescription")
+
+        <div class="form-group">
+            <div class="col-sm-offset-10 col-sm-2">
+                <button type="submit" class="btn btn-primary btn-block pull-right" @(hasCfgErrors ? "disabled" : string.Empty)>
+                    <i class="glyphicon glyphicon-link"></i>
+                    &nbsp;Create access link
+                </button>
+            </div>
         </div>
-    </div>
+
+        if (!string.IsNullOrEmpty(Model.Token))
+        {
+            <div class="form-group">
+
+                <label class="col-sm-6 col-md-4 control-label" for="future-rss-linkbox">RSS Link</label>
+                <div class="col-sm-4 col-md-6">
+                    <input class="form-control linkbox"
+                           id="new-link"
+                           type="text"
+                           value="@Url.Action(MVC.Syndication.ActionNames.Rss, MVC.Syndication.Name,
+                              new {area = string.Empty, token = Model.Token},
+                              Request.Url.Scheme)" />
+
+                </div>
+                <div class="col-sm-2 col-md-2">
+                    <button type="button" class="copy-link-btn btn btn-block"
+                            data-clipboard-target="#new-link">
+                        <i class="glyphicon glyphicon-copy"></i>
+                        &nbsp;Copy to clipboard
+                    </button>
+                </div>
+            </div>
+        }
+    }
+
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>Link</th>
+                <th>User</th>
+                <th>Expires On</th>
+                <th># Future days</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (accessList != null)
+            {
+                foreach (var access in accessList)
+                {
+                    <tr>
+                        <td>
+                            <input class="linkbox linkbox_wide"
+                                   type="text"
+                                   value="@Url.Action(MVC.Syndication.ActionNames.Rss, MVC.Syndication.Name,
+                              new {area = string.Empty, token = access.Token},
+                              Request.Url.Scheme)" />
+                        </td>
+                        <td>@access.User</td>
+                        <td>@access.ExpiredOn</td>
+                        <td>@access.NumberOfFutureDays</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="4">No data available</td></tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section Script
+{
+    <script type="text/javascript" src="~/Areas/Admin/Content/js/app/rssFutureAccess.js"></script>
 }

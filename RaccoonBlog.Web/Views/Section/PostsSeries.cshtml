@@ -13,7 +13,11 @@
             @foreach (var series in Model)
             {
                 <li>
-                    <a href="@Url.Action("Series", "Posts", new { series.SeriesId, series.SeriesSlug })"><strong>@series.SeriesTitle</strong></a> <em>(@series.PostsCount)</em>:<br/>
+                    <a href="@Url.Action("Series", "Posts", new {series.SeriesId, series.SeriesSlug})">
+                        <strong>
+                            @Html.Raw(series.SeriesTitle)
+                        </strong>
+                    </a> <em>(@series.PostsCount)</em>:<br/>
                     <em>@series.PostInformation.PublishAt.ToString("dd MMM yyyy")</em> - @Html.Raw(TitleConverter.ToPostTitle(@series.PostInformation.Title))
                 </li>
             }

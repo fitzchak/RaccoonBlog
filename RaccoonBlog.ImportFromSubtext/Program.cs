@@ -63,7 +63,7 @@ namespace RaccoonBlog.ImportFromSubtext
 			using (IDocumentSession s = store.OpenSession())
 			{
 				var config = BlogConfig.New();
-				config.Id = "Blog/Config";
+				config.Id = BlogConfig.Key;
 				config.CustomCss = "hibernatingrhinos";
 				config.Subtitle = "Unnatural acts on source code";
 				config.Title = "Ayende @ Rahien";

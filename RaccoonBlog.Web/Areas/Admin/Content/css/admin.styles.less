@@ -285,25 +285,80 @@ footer {
                                color:@brand-warning;
                            }
 
-/*
-
--webkit-transition: all 0.4s ease;
--moz-transition: all 0.4s ease;
--ms-transition: all 0.4s ease;
--o-transition: all 0.4s ease;
-transition: all 0.4s ease;
-
-@media (min-width: @screen-phone) {
-	
-}
-@media (min-width: @screen-tablet) {
-	
-}
-@media (min-width: @screen-desktop) {
-	
-}
-@media (min-width: @screen-lg-desktop) {
-	
+.cfg-warning .bg-danger {
+    padding: 10px;
 }
 
-*/
+.note {
+    padding: 10px;
+}
+
+.future-rss {
+    .linkbox {
+        padding: 5px;
+    }
+
+    .linkbox_wide {
+        width: 100%;
+    }
+}
+
+.copy-link-btn {
+    transition: 1s;
+}
+
+@-moz-keyframes blink-green-animation {
+    0% {
+        background-color: initial;
+        opacity:1;
+    }
+    50% {
+        background-color: @brand-success;
+    }
+    100% {
+        background-color: initial;
+        opacity:1;
+    }
+}
+
+@-webkit-keyframes blink-green-animation {
+    0% {
+        background-color: initial;
+        opacity:1;
+    }
+    50% {
+        background-color: @brand-success;
+    }
+    100% {
+        background-color: initial;
+        opacity:1;
+    }
+}
+
+@keyframes blink-green-animation {
+    0% {
+        background-color: initial;
+        color: initial;
+        opacity:1;
+    }
+    50% {
+        background-color: @brand-success;
+        color: #fff;
+    }
+    100% {
+        background-color: initial;
+        color: initial;
+        opacity:1;
+    }
+}
+
+.blink-green {
+    animation-name: blink-green-animation;
+    animation-duration: 900ms;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+}   
+
+.reddit-submission {
+    min-height: 700px;
+}

@@ -7,22 +7,8 @@
     ViewBag.CurrentUrl = Url.Action("Details", new { Model.Post.Id, Model.Post.Slug });
 }
 
-<article>
-    <nav class="nextPrev">
-        @if (Model.PreviousPost != null)
-        {
-            <a class="pull-left" href="@Url.Action("Details", new {id = Model.PreviousPost.DomainId, Model.PreviousPost.Slug})">‹&nbsp;previous post</a>
-        }
-		
-        @if (Model.NextPost != null)
-        {
-            <a class="pull-right" href="@Url.Action("Details", new {id = Model.NextPost.DomainId, Model.NextPost.Slug})">next post&nbsp;›</a>
-        }
-        <div class="clearfix-xs"></div>
-        @Html.PreviousSeriesArticleLink(Model)
-		@Html.NextSeriesArticleLink(Model)
-        <div class="clearfix"></div>
-    </nav>
+<article class="article-body">
+    @Html.Partial("NextPrevNav")
     <time>
         <span>@Model.Post.PublishedAt.ToString("MMM dd")</span>
         @Model.Post.PublishedAt.ToString("yyyy")
@@ -48,7 +34,7 @@
 		</div>
 	</div>
     <hr />
-    <div class="articleContent">
+    <div class="articleContent clearfix">
         @Model.Post.Body
     </div>
 
@@ -86,29 +72,17 @@
         <hr style="margin: 0;" />
     </div>
 
-	<nav class="nextPrev">
-		@if (Model.PreviousPost != null)
-		{
-			<a class="pull-left" href="@Url.Action("Details", new {id = Model.PreviousPost.DomainId, Model.PreviousPost.Slug})">‹&nbsp;previous post</a>
-		}
-		
-		
+    @Html.Partial("NextPrevNav")
 
-		@if (Model.NextPost != null)
-		{
-			<a class="pull-right" href="@Url.Action("Details", new {id = Model.NextPost.DomainId, Model.NextPost.Slug})">next post&nbsp;›</a>
-		}
-        <div class="clearfix-xs"></div>
-        @Html.PreviousSeriesArticleLink(Model)
-		@Html.NextSeriesArticleLink(Model)
-        <div class="clearfix"></div>
-	</nav>
+    
 
     @if (Model.SeriesInfo != null)
     {
         <section class="postsInSeries" data-state="closed">
             <h4 class="text-left">
-                More posts in &quot;@Model.SeriesInfo.SeriesTitle&quot; series:
+                More posts in <a href="@Url.Series(Model.SeriesInfo.SeriesId, Model.SeriesInfo.SeriesSlug)">
+                &quot;@Html.Raw(Model.SeriesInfo.SeriesTitle)&quot;
+                </a> series:
             </h4>
 	        <ol>
 		        @foreach (var post in Model.SeriesInfo.PostsInSeries)
@@ -150,13 +124,13 @@
             <article class="comment important">
                 <a name='@(string.Format("comment{0}", (comment.Id)))'></a>
                 <div class="avatar">
-                    <img src='@(string.Format("http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon", @comment.EmailHash))' alt="@comment.Author" />
+                    <img src='@(string.Format("http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon", @comment.EmailHash))' alt="@comment.Author"/>
                 </div>
                 <div class="postedBy">
                     <a href="@comment.Url" target="_blank" title='@(string.Format("Comment by {0}", @comment.Author))'>@comment.Author</a>
                 </div>
                 <time>
-                    @DateTime.Parse(@comment.CreatedAt).ToString("dd MMM yyyy")<br />
+                    @DateTime.Parse(@comment.CreatedAt).ToString("dd MMM yyyy")<br/>
                     @DateTime.Parse(@comment.CreatedAt).ToString("HH:mm tt")
                 </time>
                 <div class="comment-body">
@@ -169,10 +143,10 @@
             <article class="comment">
                 <a name='@(string.Format("comment{0}", (comment.Id)))'></a>
                 <div class="avatar">
-                    <img src='@(string.Format("http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon", @comment.EmailHash))' alt="@comment.Author" />
+                    <img src='@(string.Format("http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon", @comment.EmailHash))' alt="@comment.Author"/>
                 </div>
                 <time>
-                    @DateTime.Parse(@comment.CreatedAt).ToString("dd MMM yyyy")<br />
+                    @DateTime.Parse(@comment.CreatedAt).ToString("dd MMM yyyy")<br/>
                     @DateTime.Parse(@comment.CreatedAt).ToString("HH:mm tt")
                 </time>
                 <div class="postedBy">
@@ -184,12 +158,12 @@
             </article>
         }
     }
-    
+
     <article class="comment preview">
-        <h4>Comment preview</h4>
+        <h4 class="preview-title">Comment preview</h4>
         <a name="comment-preview"></a>
         <div class="avatar">
-            <img src='http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon' alt="" />
+            <img src='http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon' alt=""/>
         </div>
         <time>
         </time>
@@ -208,7 +182,7 @@
         else
         {
 
-            <h3 style="float:left">
+            <h3 style="float: left">
                 <a id="comments-form-location">Join the conversation...</a>
             </h3>
             if (Model.IsLoggedInCommenter == false)
@@ -250,13 +224,13 @@
                             @Html.ValidationMessageFor(x => x.Input.Name)
                         </div>
                         <div class="form_item form-group col-sm-6 col-md-4">
-                            
+
                             <label>
                                 <span class="form_item_name">Email</span>
                             </label>
                             @Html.TextBoxFor(x => x.Input.Email, new { @class = "form-control email", type = "email" })
                             @Html.ValidationMessageFor(x => x.Input.Email)
-                            
+
                         </div>
                         <div class="form_item form-group col-sm-6 col-md-4">
                             <label>
@@ -266,17 +240,31 @@
                             @Html.ValidationMessageFor(x => x.Input.Url)
                         </div>
                         <div class="form_item form-group col-sm-12">
-                            
+
                             <label>
-                                <span class="form_item_name">Comments</span>
+                                <span class="form_item_name">
+                                    Comments
+                                </span>
                             </label>
-                            @Html.TextAreaFor(x => x.Input.Body, new { rows = 9, @class = "form-control" })
+                            &nbsp;
+                            <a href="#" data-toggle="modal" data-target="#markdownHelp"
+                               data-keyboard="true">
+                                <i class="glyphicon glyphicon-info-sign" ></i>
+                            </a>
+                            <div class="textarea_wrap">
+                                @Html.TextAreaFor(x => x.Input.Body, new { rows = 9, @class = "form-control" })
+
+                                <span class="lang"
+                                      data-toggle="modal"
+                                      data-target="#markdownHelp"
+                                      data-keyboard="true"></span>
+                            </div>
                             @Html.ValidationMessageFor(x => x.Input.Body)
                         </div>
                         @if (Model.IsTrustedCommenter == false)
                         {
                             <div class="form_item form-group col-sm-12">
-                                <label  >
+                                <label>
                                     <span class="form_item_name">Human?</span>
                                 </label>
                                 @Html.GenerateCaptcha()
@@ -285,9 +273,9 @@
                         }
                     </div>
                     <div class="pull-right">
-                    <input type="button" id="commentPreview" value="Comment Preview" class="btn btn-default">
-                    @Html.HiddenFor(x => x.Input.CommenterKey)
-                <input type="submit" value="Post Comment" class="btn btn-primary">
+                        <input type="button" id="commentPreview" value="Comment Preview" class="btn btn-default">
+                        @Html.HiddenFor(x => x.Input.CommenterKey)
+                        <input type="submit" value="Post Comment" class="btn btn-primary">
                     </div>
                     <div class="clearfix"></div>
                 }
@@ -295,6 +283,35 @@
         }
     </article>
 </section>
+
+<div id="markdownHelp" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row">
+                    <div class="col-sm-10">
+                        <h3 class="modal-title">Markdown formatting</h3>
+                    </div>
+                    <div class="col-sm-2">
+                        <span class="esc-info">
+                            <kbd>ESC</kbd> to close
+                        </span>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("MarkdownHelp")
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Style {
     <link rel="canonical" href="@Url.AbsoluteAction("Details", new { Model.Post.Id, Model.Post.Slug })">
 }

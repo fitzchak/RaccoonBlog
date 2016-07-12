@@ -1,103 +1,192 @@
 using System;
-using System.IO;
-using System.Security.Cryptography;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
+using RaccoonBlog.Web.Areas.Admin.Models;
 using RaccoonBlog.Web.Areas.Admin.ViewModels;
 using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Models;
+using RaccoonBlog.Web.Models.SocialNetwork;
+using RaccoonBlog.Web.Services;
+using RaccoonBlog.Web.Services.Reddit;
+using Raven.Abstractions.Data;
+using Raven.Client;
 
 namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
-	using DevTrends.MvcDonutCaching;
-	using Web.Controllers;
+    public partial class SettingsController : AdminController
+    {
+        [HttpGet]
+        public virtual ActionResult Index()
+        {
+            return View(BlogConfig);
+        }
 
-	public partial class SettingsController : AdminController
-	{
-		[HttpGet]
-		public virtual ActionResult Index()
-		{
-			return View(BlogConfig);
-		}
+        [HttpPost]
+        public virtual ActionResult Index(BlogConfig config)
+        {
+            if (ModelState.IsValid == false)
+            {
+                ViewBag.Message = ModelState.FirstErrorMessage();
+                if (Request.IsAjaxRequest())
+                    return Json(new { Success = false, ViewBag.Message });
+                return View(BlogConfig);
+            }
 
-		[HttpPost]
-		public virtual ActionResult Index(BlogConfig config)
-		{
-			if (ModelState.IsValid == false)
-			{
-				ViewBag.Message = ModelState.FirstErrorMessage();
-				if (Request.IsAjaxRequest())
-					return Json(new { Success = false, ViewBag.Message });
-				return View(BlogConfig);
-			}
+            var current = RavenSession.Load<BlogConfig>(BlogConfig.Key);
+            if (IsFuturePostsEncryptionOptionsChanged(current, config))
+            {
+                RemoveFutureRssAccessOnEncryptionConfigChange();
+            }
 
-			RavenSession.Store(config, "Blog/Config");
+            RavenSession.Advanced.Evict(current);
+            RavenSession.Store(config, BlogConfig.Key);
+            RavenSession.SaveChanges();
 
-			OutputCacheManager.RemoveItem(MVC.Section.Name, MVC.Section.ActionNames.ContactMe);
+            OutputCacheManager.RemoveItem(MVC.Section.Name, MVC.Section.ActionNames.ContactMe);
 
-			ViewBag.Message = "Configurations successfully saved!";
-			if (Request.IsAjaxRequest())
-				return Json(new { Success = true, ViewBag.Message });
-			return View(config);
-		}
+            ViewBag.Message = "Configurations successfully saved!";
+            if (Request.IsAjaxRequest())
+                return Json(new { Success = true, ViewBag.Message });
+            return View(config);
+        }
 
-		[HttpGet]
-		public virtual ActionResult RssFutureAccess()
-		{
-			return View(new GenerateFutureRssAccessInput
-			{
-				ExpiredOn = DateTime.UtcNow.AddYears(1),
-				NumberOfFutureDays = 180,
-			});
-		}
+        private void RemoveFutureRssAccessOnEncryptionConfigChange()
+        {
+            var tagName = RavenSession.Advanced.DocumentStore.Conventions.GetTypeTagName(typeof(FutureRssAccess));
+            RavenSession.Advanced.DocumentStore
+                .AsyncDatabaseCommands
+                .DeleteByIndexAsync(Constants.DocumentsByEntityNameIndex, new IndexQuery()
+                {
+                    Query = $"Tag:{ tagName }"
+                }, new BulkOperationOptions()
+                {
+                    AllowStale = false
+                });
+        }
 
-		[HttpPost]
-		public virtual ActionResult RssFutureAccess(GenerateFutureRssAccessInput input)
-		{
-			if (ModelState.IsValid == false)
-				return View(input);
+        [HttpGet]
+        public virtual async Task<ActionResult> RedditSubmission()
+        {
+            var model = await PrepareRedditManualSubmissionViewModel();
+            return View(model);
+        }
 
-			input.Token = GetFutureAccessToken(input.ExpiredOn, input.NumberOfFutureDays, input.User);
-			return View(input);
-		}
+        [HttpGet]
+        public virtual async Task<ActionResult> SubmitToReddit(string postId, string sr)
+        {
+            var post = RavenSession.Load<Post>(postId);
+            var redditSubmitUrl = RedditHelper.SubmitUrl(sr, post);
+            var postSubmission = post.Integration.Reddit.GetPostSubmissionForSubreddit(sr);
+            postSubmission.Status = Reddit.SubmissionStatus.ManualSubmissionPending;
+            postSubmission.Attempts = 0;
 
-		private string GetFutureAccessToken(DateTime expiresOn, int numberOfDays, string user)
-		{
-			using (var aes = new AesManaged())
-			{
-				aes.Padding = PaddingMode.PKCS7;
+            RavenSession.SaveChanges();
 
-				if (string.IsNullOrWhiteSpace(BlogConfig.FuturePostsEncryptionKey))
-				{
-					// Setting the encryption key will invalidate the previous generated links,
-					// but here it is null anyway, to this is not a problem.
-					BlogConfig.FuturePostsEncryptionKey = Convert.ToBase64String(aes.Key);
-				}
-				else
-					aes.Key = Convert.FromBase64String("cxL93ropkZOh5aY+ghhUw+tVVs4/CmhtCCQqUeG4po4=");
+            return Redirect(redditSubmitUrl);
+        }
 
-				using (var memoryStream = new MemoryStream())
-				{
-					using (var cryptoStream = new CryptoStream(memoryStream, aes.CreateEncryptor(), CryptoStreamMode.Write))
-					{
-						using (var writer = new BinaryWriter(cryptoStream))
-						{
-							writer.Write(expiresOn.ToBinary());
-							writer.Write(numberOfDays);
-							writer.Write(user);
-							writer.Flush();
-						}
-						cryptoStream.Flush();
-					}
-					var encrypted = memoryStream.ToArray();
-					var iv = aes.IV;
+        [HttpGet]
+        public virtual async Task<ActionResult> ResetFailedRedditSubmission(string postId, string sr)
+        {
+            var post = RavenSession.Load<Post>(postId);
+            var postSubmission = post.Integration.Reddit.GetPostSubmissionForSubreddit(sr);
+            postSubmission.Status = null;
+            postSubmission.Attempts = 0;
+            RavenSession.SaveChanges();
+            return RedirectToAction(MVC.Admin.Settings.ActionNames.RedditSubmission);
 
-					var result = new byte[iv.Length + encrypted.Length];
-					iv.CopyTo(result, 0);
-					encrypted.CopyTo(result, iv.Length);
+        }
 
-					return Convert.ToBase64String(result);
-				}
-			}
-		}
-	}
+        private async Task<RedditManualSubmissionViewModel> PrepareRedditManualSubmissionViewModel()
+        {
+            var model = new RedditManualSubmissionViewModel();
+            model.SubredditsToSubmitTo = RedditHelper.ParseSubreddits(BlogConfig);
+            model.NotSubmittedPosts = RedditHelper.GetPostsForManualRedditSubmission(RavenSession, DateTimeOffset.UtcNow);
+            return model;
+        }
+
+        [HttpGet]
+        public virtual ActionResult RssFutureAccess()
+        {
+            ValidateConfiguration();
+            SetFutureRssAccessList(RavenSession);
+
+            return View(FutureRssAccess.Default);
+        }
+
+        [HttpPost]
+        public virtual ActionResult RssFutureAccess(FutureRssAccess input)
+        {
+            ValidateConfiguration();
+
+            if (ExistsRssFutureAccess(input))
+            {
+                ModelState.AddModelError("Exists", "Access has already been set up with same parameters.");
+            }
+
+            if (ModelState.IsValid == false)
+            {
+                SetFutureRssAccessList(RavenSession);
+                return View(input);
+            }
+
+            input.Token = GetFutureAccessToken(input.ExpiredOn, input.NumberOfFutureDays, input.User);
+
+            RavenSession.Store(input);
+            RavenSession.SaveChanges();
+
+            SetFutureRssAccessList(RavenSession);
+
+            return View(input);
+        }
+
+        private bool ExistsRssFutureAccess(FutureRssAccess input)
+        {
+            var exists = RavenSession.Query<FutureRssAccess>()
+                .Any(x => x.ExpiredOn == input.ExpiredOn &&
+                          x.NumberOfFutureDays == input.NumberOfFutureDays &&
+                          x.User == input.User);
+            return exists;
+        }
+
+        private bool IsFuturePostsEncryptionOptionsChanged(BlogConfig current, BlogConfig config)
+        {
+            return current.FuturePostsEncryptionKey != config.FuturePostsEncryptionKey ||
+                   current.FuturePostsEncryptionIv != config.FuturePostsEncryptionIv ||
+                   current.FuturePostsEncryptionSalt != config.FuturePostsEncryptionSalt;
+        }
+
+        private void SetFutureRssAccessList(IDocumentSession session)
+        {
+            ViewData["FutureRssAccessList"] = session.Query<FutureRssAccess>()
+                .Customize(x => x.WaitForNonStaleResultsAsOfNow())
+                .OrderBy(x => x.ExpiredOn)
+                .ToList();
+        }
+
+        private void ValidateConfiguration()
+        {
+            if (string.IsNullOrEmpty(BlogConfig.FuturePostsEncryptionKey))
+            {
+                ModelState.AddModelError("BlogConfig.FuturePostsEncryptionKey", $"Future posts RSS token encryption key is not set.");
+            }
+
+            if (string.IsNullOrEmpty(BlogConfig.FuturePostsEncryptionIv))
+            {
+                ModelState.AddModelError("BlogConfig.FuturePostsEncryptionIv", $"Future posts RSS token encryption IV is not set.");
+            }
+
+            if (string.IsNullOrEmpty(BlogConfig.FuturePostsEncryptionSalt))
+            {
+                ModelState.AddModelError("BlogConfig.FuturePostsEncryptionSalt", $"Future posts RSS token encryption Salt is missing.");
+            }
+        }
+
+        private string GetFutureAccessToken(DateTime expiresOn, int numberOfDays, string user)
+        {
+            return new FutureRssAccessToken(expiresOn, numberOfDays, user)
+                .GetToken(BlogConfig);
+        }
+    }
 }

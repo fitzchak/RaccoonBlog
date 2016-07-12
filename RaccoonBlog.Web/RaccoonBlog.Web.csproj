@@ -15,7 +15,7 @@
     <AssemblyName>RaccoonBlog.Web</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -89,6 +89,10 @@
     <Reference Include="DotNetOpenAuth.Mvc5">
       <HintPath>..\packages\DotNetOpenAuth.Mvc5.4.3.4.13329\lib\net45-full\DotNetOpenAuth.Mvc5.dll</HintPath>
     </Reference>
+    <Reference Include="FluentScheduler, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b76503528a14ebd1, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentScheduler.4.1.1\lib\net40\FluentScheduler.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Glimpse.AspNet">
       <HintPath>..\packages\Glimpse.AspNet.1.9.2\lib\net45\Glimpse.AspNet.dll</HintPath>
     </Reference>
@@ -98,8 +102,13 @@
     <Reference Include="Glimpse.Mvc5">
       <HintPath>..\packages\Glimpse.Mvc5.1.5.3\lib\net45\Glimpse.Mvc5.dll</HintPath>
     </Reference>
-    <Reference Include="Glimpse.RavenDb">
-      <HintPath>..\packages\Glimpse.RavenDb.3.0\lib\net45\Glimpse.RavenDb.dll</HintPath>
+    <Reference Include="Glimpse.RavenDb, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibs\Glimpse.RavenDb.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="JetBrains.Annotations, Version=8.0.5.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -109,8 +118,8 @@
       <HintPath>..\Libs\Joel.Net.Akismet\Joel.Net.Akismet.dll</HintPath>
     </Reference>
     <Reference Include="MarkdownDeep, Version=1.5.4615.26275, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MarkdownDeep.Full.1.5\lib\.NetFramework 3.5\MarkdownDeep.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -161,9 +170,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="NLog, Version=3.2.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -192,6 +201,10 @@
     <Reference Include="Recaptcha, Version=1.0.5.0, Culture=neutral, PublicKeyToken=9afc4d65b28c38c2, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\recaptcha.1.0.5.0\lib\.NetFramework 4.0\Recaptcha.dll</HintPath>
+    </Reference>
+    <Reference Include="RedditSharp, Version=1.0.22.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RedditSharp.1.0.22\lib\RedditSharp.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System" />
@@ -275,6 +288,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\Enums\MenuButtonType.cs" />
+    <Compile Include="Areas\Admin\Models\FutureRssAccess.cs" />
+    <Compile Include="Areas\Admin\ViewModels\RedditManualSubmissionViewModel.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\SeriesController.cs" />
     <Compile Include="CssController.generated.cs">
@@ -285,12 +300,15 @@
     </Compile>
     <Compile Include="Helpers\Attributes\CustomHandleErrorAttribute.cs" />
     <Compile Include="Helpers\ConfigurationHelper.cs" />
+    <Compile Include="Helpers\CryptographyUtil.cs" />
+    <Compile Include="Helpers\FutureRssAccessToken.cs" />
     <Compile Include="Helpers\PostHelper.cs" />
+    <Compile Include="Helpers\PostUrlHelperExtensions.cs" />
+    <Compile Include="Helpers\RedditHelper.cs" />
     <Compile Include="Helpers\SignInHelper.cs" />
     <Compile Include="Helpers\ThemeLessTransform.cs" />
     <Compile Include="Helpers\RouteCollectionExtension.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\ViewModels\GenerateFutureRssAccessInput.cs" />
     <Compile Include="Areas\Admin\Controllers\SettingsController.cs" />
     <Compile Include="Areas\Admin\Helpers\MenuUtil.cs" />
     <Compile Include="Areas\Admin\Models\MenuItem.cs" />
@@ -306,9 +324,16 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\StringToGuidConverter.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\SeriesMapperProfile.cs" />
     <Compile Include="Infrastructure\Common\DocumentSessionExtensions.cs" />
+    <Compile Include="Infrastructure\Jobs\RedditIntegration.cs" />
+    <Compile Include="Infrastructure\Jobs\SocialNetworkIntegrationJobsRegistry.cs" />
     <Compile Include="LegacyPostController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="MailTemplatesController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SocialNetworkIntegration.cs" />
+    <Compile Include="Models\SocialNetwork\Reddit.cs" />
     <Compile Include="PostDetailsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -324,6 +349,14 @@
     <Compile Include="SeriesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\Reddit\FailingCaptchaSolver.cs" />
+    <Compile Include="Services\SubmitToRedditStrategy.cs" />
+    <Compile Include="Services\Reddit\Credentials.cs" />
+    <Compile Include="Services\Reddit\LinkPost.cs" />
+    <Compile Include="Services\Reddit\AuthToken.cs" />
+    <Compile Include="SharedController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="SocialController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -331,11 +364,12 @@
     <Compile Include="SyndicationController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="T4MVC.cs">
+    <Compile Include="T4MVC1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\RedditSubmissionFailedViewModel.cs" />
     <Compile Include="WelcomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -346,6 +380,11 @@
       <DependentUpon>bootstrap-extend.css</DependentUpon>
     </Content>
     <Content Include="Areas\Admin\Content\css\fullcalendar.css" />
+    <Content Include="Areas\Admin\Content\css\images\content_repeat.jpg" />
+    <Content Include="Areas\Admin\Content\css\images\nav_divider.jpg" />
+    <Content Include="Areas\Admin\Content\css\images\nav_item_0.gif" />
+    <Content Include="Areas\Admin\Content\css\images\nav_item_1.gif" />
+    <Content Include="Areas\Admin\Content\css\images\nav_logout.gif" />
     <Content Include="Areas\Admin\Content\datepicker\css\bootstrap-datetimepicker.css" />
     <Content Include="Areas\Admin\Content\datepicker\css\bootstrap-datetimepicker.min.css" />
     <Content Include="Areas\Admin\Content\datepicker\js\bootstrap-datetimepicker.min.js" />
@@ -353,7 +392,8 @@
     <Content Include="Areas\Admin\Content\img\logo.svg" />
     <Content Include="Areas\Admin\Content\js\bootstrap.js" />
     <Content Include="Areas\Admin\Content\js\fullcalendar.js" />
-    <Content Include="Areas\Admin\Content\js\setup.js" />
+    <Content Include="Areas\Admin\Content\js\app\rssFutureAccess.js" />
+    <Content Include="Areas\Admin\Content\js\lib\clipboard.min.js" />
     <Content Include="Areas\Admin\Content\js\tinymce\changelog.txt" />
     <Content Include="Areas\Admin\Content\js\tinymce\langs\_notes\dwsync.xml" />
     <Content Include="Areas\Admin\Content\js\tinymce\license.txt" />
@@ -556,7 +596,6 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\AbstractProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\EmailViewModelMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\GuidToStringConverter.cs" />
-    <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\SanitizeHtml.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\UrlResolver.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\SectionMapperProfile.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\TagsListViewModelMapperProfile.cs" />
@@ -570,9 +609,6 @@
     <Compile Include="Infrastructure\Indexes\PostComments_CreationDate.cs" />
     <Compile Include="Infrastructure\Indexes\Posts_Series.cs" />
     <Compile Include="Infrastructure\Indexes\Statistics_Count.cs" />
-    <Compile Include="MailTemplatesController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\BlogConfig.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="Models\PostComments.cs" />
@@ -616,9 +652,6 @@
     <Compile Include="Infrastructure\Common\SlugConverter.cs" />
     <Compile Include="Services\RssModels\UserInfo.cs" />
     <Compile Include="Services\RssModels\WordpressCategory.cs" />
-    <Compile Include="SharedController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\AdminPostDetailsViewModel.cs" />
     <Compile Include="Helpers\CommenterUtil.cs" />
     <Compile Include="ViewModels\CommentInput.cs" />
@@ -645,8 +678,6 @@
     <Content Include="Content\js\date.f-0.5.0.min.js" />
     <Content Include="Content\js\fullcalendar.js" />
     <Content Include="Content\js\fullcalendar.min.js" />
-    <Content Include="Content\js\jquery.ae.image.resize.js" />
-    <Content Include="Content\js\jquery.ae.image.resize.min.js" />
     <Content Include="Content\js\jquery.md5.js" />
     <Content Include="Content\js\jquery.twbsPagination.js" />
     <Content Include="Content\js\jquery.twbsPagination.min.js" />
@@ -655,6 +686,7 @@
     <Content Include="Content\js\respond.src.js" />
     <Content Include="Content\js\setup.js" />
     <Content Include="Content\js\showdown.js" />
+    <Content Include="Content\js\utils.js" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -1044,6 +1076,7 @@
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\BooleanLong.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\Int32.cshtml" />
     <Content Include="Content\css\error.less" />
+    <Content Include="Areas\Admin\Views\Settings\RedditSubmission.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -1069,9 +1102,16 @@
     <None Include="T4MVC.tt.hooks.t4" />
     <None Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>T4MVC.cs</LastGenOutput>
+      <LastGenOutput>T4MVC1.cs</LastGenOutput>
     </None>
     <None Include="T4MVC.tt.settings.xml" />
+    <Content Include="Content\license\MarkdownDeep License.txt" />
+    <Content Include="Content\js\lib\MarkdownDeepLib.min.js" />
+    <Content Include="Content\css\img\mdd_ajax_loader.gif" />
+    <Content Include="Content\css\img\mdd_gripper.png" />
+    <Content Include="Content\css\img\mdd_modal_background.png" />
+    <Content Include="Content\css\mdd_styles.css" />
+    <Content Include="Content\css\img\mdd_toolbar.png" />
     <Content Include="Views\MailTemplates\_Layout.cshtml" />
     <Content Include="Views\Section\FuturePosts.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
@@ -1101,9 +1141,11 @@
     </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Content\js\jquery.unobtrusive-ajax.js" />
     <Content Include="Content\js\jquery.unobtrusive-ajax.min.js" />
@@ -1121,8 +1163,14 @@
     <Content Include="Views\Section\PostsSeries.cshtml" />
     <Content Include="Views\Series\PostsSeries.cshtml" />
     <Content Include="Views\Shared\_ErrorLayout.cshtml" />
+    <Content Include="Views\PostDetails\NextPrevNav.cshtml" />
+    <Content Include="Views\PostDetails\MarkdownHelp.cshtml" />
+    <Content Include="Views\MailTemplates\RedditSubmissionFailed.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Content\images\" />
+    <Folder Include="Scripts\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Views\PostDetails\Details.cshtml" />
   </ItemGroup>
@@ -1225,11 +1273,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>27606</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/RaccoonBlog.Web</IISUrl>
+          <IISUrl>http://localhost:27606/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

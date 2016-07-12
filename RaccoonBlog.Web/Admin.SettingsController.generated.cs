@@ -58,6 +58,20 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
             return RedirectToActionPermanent(taskResult.Result);
         }
 
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> SubmitToReddit()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.SubmitToReddit);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ResetFailedRedditSubmission()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ResetFailedRedditSubmission);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public SettingsController Actions { get { return MVC.Admin.Settings; } }
@@ -75,6 +89,9 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
+            public readonly string RedditSubmission = "RedditSubmission";
+            public readonly string SubmitToReddit = "SubmitToReddit";
+            public readonly string ResetFailedRedditSubmission = "ResetFailedRedditSubmission";
             public readonly string RssFutureAccess = "RssFutureAccess";
         }
 
@@ -82,6 +99,9 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         public class ActionNameConstants
         {
             public const string Index = "Index";
+            public const string RedditSubmission = "RedditSubmission";
+            public const string SubmitToReddit = "SubmitToReddit";
+            public const string ResetFailedRedditSubmission = "ResetFailedRedditSubmission";
             public const string RssFutureAccess = "RssFutureAccess";
         }
 
@@ -93,6 +113,24 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         public class ActionParamsClass_Index
         {
             public readonly string config = "config";
+        }
+        static readonly ActionParamsClass_SubmitToReddit s_params_SubmitToReddit = new ActionParamsClass_SubmitToReddit();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_SubmitToReddit SubmitToRedditParams { get { return s_params_SubmitToReddit; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_SubmitToReddit
+        {
+            public readonly string postId = "postId";
+            public readonly string sr = "sr";
+        }
+        static readonly ActionParamsClass_ResetFailedRedditSubmission s_params_ResetFailedRedditSubmission = new ActionParamsClass_ResetFailedRedditSubmission();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ResetFailedRedditSubmission ResetFailedRedditSubmissionParams { get { return s_params_ResetFailedRedditSubmission; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ResetFailedRedditSubmission
+        {
+            public readonly string postId = "postId";
+            public readonly string sr = "sr";
         }
         static readonly ActionParamsClass_RssFutureAccess s_params_RssFutureAccess = new ActionParamsClass_RssFutureAccess();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -113,9 +151,11 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
             public class _ViewNamesClass
             {
                 public readonly string Index = "Index";
+                public readonly string RedditSubmission = "RedditSubmission";
                 public readonly string RssFutureAccess = "RssFutureAccess";
             }
             public readonly string Index = "~/Areas/Admin/Views/Settings/Index.cshtml";
+            public readonly string RedditSubmission = "~/Areas/Admin/Views/Settings/RedditSubmission.cshtml";
             public readonly string RssFutureAccess = "~/Areas/Admin/Views/Settings/RssFutureAccess.cshtml";
         }
     }
@@ -149,6 +189,43 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         }
 
         [NonAction]
+        partial void RedditSubmissionOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> RedditSubmission()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RedditSubmission);
+            RedditSubmissionOverride(callInfo);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+        }
+
+        [NonAction]
+        partial void SubmitToRedditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string postId, string sr);
+
+        [NonAction]
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> SubmitToReddit(string postId, string sr)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.SubmitToReddit);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "postId", postId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "sr", sr);
+            SubmitToRedditOverride(callInfo, postId, sr);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+        }
+
+        [NonAction]
+        partial void ResetFailedRedditSubmissionOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string postId, string sr);
+
+        [NonAction]
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ResetFailedRedditSubmission(string postId, string sr)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ResetFailedRedditSubmission);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "postId", postId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "sr", sr);
+            ResetFailedRedditSubmissionOverride(callInfo, postId, sr);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+        }
+
+        [NonAction]
         partial void RssFutureAccessOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
 
         [NonAction]
@@ -160,10 +237,10 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         }
 
         [NonAction]
-        partial void RssFutureAccessOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, RaccoonBlog.Web.Areas.Admin.ViewModels.GenerateFutureRssAccessInput input);
+        partial void RssFutureAccessOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, RaccoonBlog.Web.Areas.Admin.Models.FutureRssAccess input);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult RssFutureAccess(RaccoonBlog.Web.Areas.Admin.ViewModels.GenerateFutureRssAccessInput input)
+        public override System.Web.Mvc.ActionResult RssFutureAccess(RaccoonBlog.Web.Areas.Admin.Models.FutureRssAccess input)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RssFutureAccess);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "input", input);

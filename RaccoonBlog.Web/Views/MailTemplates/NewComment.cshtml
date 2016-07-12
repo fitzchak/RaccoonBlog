@@ -1,7 +1,25 @@
 @model NewCommentEmailViewModel
 <h1>
-	A new @(Model.IsSpam ? "spam" : null)
-	comment on @Model.BlogName blog</h1>
+    A new
+    @if (Model.IsSpam)
+    {
+        <span style="color: red;">SPAM</span>
+    } 
+    comment on @Model.BlogName blog
+</h1>
+@if (Model.IsSpam)
+{
+    <p style="color: red; font-weight: bold;">
+        <strong>
+            This comment has been identified as SPAM.
+        </strong>
+        If it's not SPAM please go to
+        <a href="@Url.AbsoluteAction("Details", "Posts", new {id = Model.PostId, slug = Model.PostSlug, area = "Admin"})#comment@(Model.Id)">
+            post's admin page
+        </a>
+        and mark it as HAM.
+    </p>
+}
 <strong>Post:</strong> <a href="@Url.AbsoluteAction("Details", "PostDetails", new { id = Model.PostId, slug = Model.PostSlug, key = Model.Key })">@Model.PostTitle</a>
 <ul>
 	<li><strong>Author:</strong> @Model.Author</li>

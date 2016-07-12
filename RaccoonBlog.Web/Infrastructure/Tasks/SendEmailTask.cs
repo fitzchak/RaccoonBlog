@@ -92,7 +92,7 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 	    {
 	        get
 	        {
-                var commentsMederatorEmails = DocumentSession.Load<BlogConfig>("Blog/Config").OwnerEmail;
+                var commentsMederatorEmails = DocumentSession.Load<BlogConfig>(BlogConfig.Key).OwnerEmail;
 	            return commentsMederatorEmails
 	                .Split(new[] {';'}, StringSplitOptions.RemoveEmptyEntries)
 	                .Select(x => new MailAddress(x.Trim()));
