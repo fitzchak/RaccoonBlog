@@ -29,7 +29,6 @@
 
         $('.comments textarea').keydown(handleTabsInComment);
 
-        setupResponsiveImages();
         enableCommentsPreview();
         adjustSize();
         handleVisitCookies();
@@ -44,10 +43,6 @@
         openTags.click(toggleTags);
         openArch.click(toggleArch);
         openSeries.click(toggleSeries);
-    }
-
-    function setupResponsiveImages() {
-        $('#content img').addClass('img-responsive');
     }
 
     function enableCommentsPreview() {

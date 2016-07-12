@@ -2531,7 +2531,7 @@ li.future {
 
     #content {
 
-        .img-responsive {            
+        img {            
             margin:10px auto;
 
             @media (max-width: @screen-xs-max) {
@@ -2541,6 +2541,7 @@ li.future {
             @media (min-width: @screen-sm) {
                 margin:15px;
             }
+            &:extend(.img-responsive);
         }
 
         @media (min-width: @screen-sm) {
