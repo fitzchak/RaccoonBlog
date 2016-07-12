@@ -40,10 +40,12 @@ namespace T4MVC
                 public readonly string _Layout = "_Layout";
                 public readonly string _ViewStart = "_ViewStart";
                 public readonly string NewComment = "NewComment";
+                public readonly string RedditSubmissionFailed = "RedditSubmissionFailed";
             }
             public readonly string _Layout = "~/Views/MailTemplates/_Layout.cshtml";
             public readonly string _ViewStart = "~/Views/MailTemplates/_ViewStart.cshtml";
             public readonly string NewComment = "~/Views/MailTemplates/NewComment.cshtml";
+            public readonly string RedditSubmissionFailed = "~/Views/MailTemplates/RedditSubmissionFailed.cshtml";
         }
     }
 

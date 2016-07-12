@@ -1209,8 +1209,6 @@ namespace Links
             public static readonly string jquery_migrate_1_2_1_min_js = Url("jquery-migrate-1.2.1.min.js");
             public static readonly string jquery_ui_1_11_2_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-ui-1.11.2.min.js") ? Url("jquery-ui-1.11.2.min.js") : Url("jquery-ui-1.11.2.js");
             public static readonly string jquery_ui_1_11_2_min_js = Url("jquery-ui-1.11.2.min.js");
-            public static readonly string jquery_ae_image_resize_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ae.image.resize.min.js") ? Url("jquery.ae.image.resize.min.js") : Url("jquery.ae.image.resize.js");
-            public static readonly string jquery_ae_image_resize_min_js = Url("jquery.ae.image.resize.min.js");
             public static readonly string jquery_md5_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.md5.min.js") ? Url("jquery.md5.min.js") : Url("jquery.md5.js");
             public static readonly string jquery_tmpl_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.tmpl.min.js") ? Url("jquery.tmpl.min.js") : Url("jquery.tmpl.js");
             public static readonly string jquery_tmpl_min_js = Url("jquery.tmpl.min.js");
@@ -3094,8 +3092,6 @@ namespace Links
                     public const string jquery_migrate_1_2_1_min_js = "~/Content/js/jquery-migrate-1.2.1.min.js"; 
                     public const string jquery_ui_1_11_2_js = "~/Content/js/jquery-ui-1.11.2.js"; 
                     public const string jquery_ui_1_11_2_min_js = "~/Content/js/jquery-ui-1.11.2.min.js"; 
-                    public const string jquery_ae_image_resize_js = "~/Content/js/jquery.ae.image.resize.js"; 
-                    public const string jquery_ae_image_resize_min_js = "~/Content/js/jquery.ae.image.resize.min.js"; 
                     public const string jquery_md5_js = "~/Content/js/jquery.md5.js"; 
                     public const string jquery_tmpl_js = "~/Content/js/jquery.tmpl.js"; 
                     public const string jquery_tmpl_min_js = "~/Content/js/jquery.tmpl.min.js"; 
