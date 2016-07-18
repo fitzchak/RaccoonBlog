@@ -31,13 +31,14 @@
 
         enableCommentsPreview();
         adjustSize();
-        handleVisitCookies();
+        showSidebarOnFirstVisit();
         setPreferredView();
+        makeTablesResponsive();
     }
 
     function initEvents() {
         openbtn.click(toggleMenu);
-        enlargebtn.click(enlargeMenu);
+        enlargebtn.click(toggleSidebar);
         showgrid.click(toggleGrid);
         showstack.click(toggleStack);
         openTags.click(toggleTags);
@@ -50,6 +51,10 @@
             $('.comments textarea').blur(updateCommentPreview);
             updateCommentPreview();
         });
+    }
+
+    function makeTablesResponsive() {
+        $('.articleContent>table').addClass('table').wrap("<div class='table-responsive'></div>");
     }
 
     function initMorePostsInSeries() {
@@ -79,12 +84,8 @@
         });
     }
 
-    function enlargeMenu() {
-        if ($('.container').hasClass('visited')) {
-            $('.container').removeClass('visited');
-        } else {
-            $('.container').addClass('visited');
-        }
+    function toggleSidebar() {
+        $('.container').toggleClass('hideSidebar');
     }
 
     function toggleMenu() {
@@ -98,7 +99,7 @@
     }
 
     function toggleStack() {
-        if (!isGrid) 
+        if (!isGrid)
             return;
 
         $(bodyEl).removeClass('show-grid');
@@ -166,13 +167,14 @@
         }
     }
 
-    function handleVisitCookies() {
-        var visitCookieVaule = cookies.read('newVisit');
-        if (visitCookieVaule == 'visited') {
-            cookies.create('newVisit', 'visited');
-        } else {
-            $('.container').removeClass('visited');
-            cookies.create('newVisit', 'visited');
+    function showSidebarOnFirstVisit() {
+        var visitCookieVaule = cookies.read('visitStatus');
+        if (visitCookieVaule != 'visited') {
+            var showCondition = $(window).width() > $(window).height();
+            if (showCondition) {
+                toggleSidebar();
+            }
+            cookies.create('visitStatus', 'visited');
         }
     }
 
@@ -216,7 +218,7 @@
     }
 
     function updateCommentPreview() {
-        
+
         if (!$('form:last').valid())
             return;
 
@@ -245,7 +247,7 @@
         markdown.MarkdownInHtml = false;
 
         return {
-            Transform: function(body) {
+            Transform: function (body) {
                 return markdown.Transform.call(markdown, supportGithubPreCodeBlocks(body));
             }
         };
