@@ -125,7 +125,7 @@ namespace RaccoonBlog.Web.Controllers
             var dates = RavenSession.Query<Posts_ByMonthPublished_Count.ReduceResult, Posts_ByMonthPublished_Count>()
                 .OrderByDescending(x => x.Year)
                 .ThenByDescending(x => x.Month)
-                // filter future stats
+                .Take(1024)
                 .Where(x => x.Year < now.Year || x.Year == now.Year && x.Month <= now.Month)
                 .ToList();
             
