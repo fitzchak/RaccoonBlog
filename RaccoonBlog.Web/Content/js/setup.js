@@ -168,13 +168,13 @@
     }
 
     function showSidebarOnFirstVisit() {
-        var visitCookieVaule = cookies.read('visitStatus');
+        var visitCookieVaule = cookies.read('newVisit');
         if (visitCookieVaule != 'visited') {
             var showCondition = $(window).width() > $(window).height();
             if (showCondition) {
                 toggleSidebar();
             }
-            cookies.create('visitStatus', 'visited');
+            cookies.create('newVisit', 'visited');
         }
     }
 
