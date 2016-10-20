@@ -118,7 +118,7 @@ namespace RaccoonBlog.Web.Services
 			using (var session = MvcApplication.DocumentStore.OpenSession())
 			{
 				var thePost = session.Load<Models.Post>(postid);
-				if (thePost.IsDeleted)
+				if (thePost == null)
 				{
 					throw new InvalidOperationException("You cannot get deleted post");
 				}
@@ -167,7 +167,6 @@ namespace RaccoonBlog.Web.Services
 			using (var session = MvcApplication.DocumentStore.OpenSession())
 			{
 				var list = session.Query<Models.Post>()
-					.Where(p => p.IsDeleted == false)
 					.OrderByDescending(x => x.PublishAt)
 					.Take(numberOfPosts)
 					.ToList();
@@ -220,7 +219,12 @@ namespace RaccoonBlog.Web.Services
 
 				if (thePost != null)
 				{
-					thePost.IsDeleted = true;
+                    if (string.IsNullOrEmpty(thePost.CommentsId) == false)
+                    {
+                        session.Delete(thePost.CommentsId);
+                    }
+
+                    session.Delete<Models.Post>(thePost);
 				}
 
 				session.SaveChanges();

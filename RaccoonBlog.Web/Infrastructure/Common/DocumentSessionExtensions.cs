@@ -34,7 +34,7 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 			        let comments = documentSession.Load<PostComments>(commentIdentifier.PostCommentsId)
 			        let post = documentSession.Load<Post>(commentIdentifier.PostId)
 			        let comment = comments.Comments.FirstOrDefault(x => x.Id == commentIdentifier.CommentId)
-			        where comment != null && post.IsDeleted == false
+			        where comment != null 
 			        select Tuple.Create(comment, post))
 				.ToList();
 		}

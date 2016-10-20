@@ -47,7 +47,6 @@ namespace RaccoonBlog.Web.Infrastructure.Indexes
 		{
 			Map = posts => from p in posts
 						   let parts = p.Title.Split(':')
-						   where p.IsDeleted == false
 						   where parts.Length > 1
 						   let series = parts[0].Trim().ToLower()
 						   select new

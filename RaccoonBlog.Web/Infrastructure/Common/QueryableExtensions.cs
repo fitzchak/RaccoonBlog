@@ -16,7 +16,7 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 		public static IQueryable<Post> WhereIsPublicPost(this IQueryable<Post> query)
 		{
 			return query
-				.Where(post => post.PublishAt < DateTimeOffset.Now.AsMinutes() && post.IsDeleted == false);
+				.Where(post => post.PublishAt < DateTimeOffset.Now.AsMinutes());
 		}
 	}
 }

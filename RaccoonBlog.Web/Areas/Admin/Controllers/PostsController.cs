@@ -131,7 +131,6 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		public virtual ActionResult ListFeed(DateTime start, DateTime end)
 		{
 			var posts = RavenSession.Query<Post>()
-				.Where(post => post.IsDeleted == false)
 				.Where
 				(
 					post => post.PublishAt >= start &&
@@ -243,17 +242,32 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		[HttpPost]
 		public virtual ActionResult Delete(int id)
 		{
-			var post = RavenSession.Load<Post>(id);
-			post.IsDeleted = true;
+            var post = RavenSession.Load<Post>(id);
+            if (post == null)
+            {
+                return SuccessResponse();
+            }
 
-			if (Request.IsAjaxRequest())
-			{
-				return Json(new {Success = true});
-			}
-			return RedirectToAction("Index");
-		}
+            if (string.IsNullOrEmpty(post.CommentsId) == false)
+            {
+                RavenSession.Delete(post.CommentsId);
+            }
 
-		[HttpGet]
+            RavenSession.Delete<Post>(id);
+
+            return SuccessResponse();
+        }
+
+        private ActionResult SuccessResponse()
+        {
+            if (Request.IsAjaxRequest())
+            {
+                return Json(new { Success = true });
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
 		public virtual ActionResult DeleteAllSpamComments()
 		{
 			return View();

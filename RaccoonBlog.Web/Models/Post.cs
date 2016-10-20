@@ -36,7 +36,6 @@ namespace RaccoonBlog.Web.Models
 		public string LastEditedByUserId { get; set; }
 		public DateTimeOffset? LastEditedAt { get; set; }
 
-		public bool IsDeleted { get; set; }
 		public bool AllowComments { get; set; }
 
         public SocialNetworkIntegration Integration { get; set; }
@@ -71,9 +70,6 @@ namespace RaccoonBlog.Web.Models
 
 		public bool IsPublicPost(Guid key)
 		{
-			if (IsDeleted)
-				return false;
-
 			if (PublishAt <= DateTimeOffset.Now)
 				return true;
 

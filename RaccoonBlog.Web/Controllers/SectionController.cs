@@ -53,14 +53,13 @@ namespace RaccoonBlog.Web.Controllers
 			RavenQueryStatistics stats;
 			var futurePosts = RavenSession.Query<Post>()
 				.Statistics(out stats)
-				.Where(x => x.PublishAt > DateTimeOffset.Now.AsMinutes() && x.IsDeleted == false)
+				.Where(x => x.PublishAt > DateTimeOffset.Now.AsMinutes())
 				.Select(x => new Post {Title = x.Title, PublishAt = x.PublishAt})
 				.OrderBy(x => x.PublishAt)
 				.Take(5)
 				.ToList();
 
 			var lastPost = RavenSession.Query<Post>()
-				.Where(x => x.IsDeleted == false)
 				.OrderByDescending(x => x.PublishAt)
 				.Select(x => new Post { PublishAt = x.PublishAt })
 				.FirstOrDefault();
