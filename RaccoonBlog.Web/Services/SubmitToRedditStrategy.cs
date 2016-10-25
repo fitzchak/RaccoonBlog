@@ -142,10 +142,16 @@ namespace RaccoonBlog.Web.Services
 
             try
             {
-                subreddit.SubmitPost(HttpUtility.HtmlDecode(post.Title), PostHelper.Url(post));
+                var redditPost = subreddit.SubmitPost(HttpUtility.HtmlDecode(post.Title), PostHelper.Url(post));
+                if (redditPost == null)
+                {
+                    throw new Exception($"Got null from reddit submit for {post.Id}");
+                }
+
                 postSubmission.Status = SubmissionStatus.Submitted;
+
                 _log.Info(
-                    $"Post \"{post.Title}\" with ID {post.Id} has been successfully submitted to /r/{subreddit.Name}.");
+                    $"Post \"{post.Title}\" with ID {post.Id} has been successfully submitted to /r/{subreddit.Name} with permalink {redditPost.Permalink}.");
             }
             catch (DuplicateLinkException duplicateLinkException)
             {

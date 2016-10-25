@@ -2454,7 +2454,7 @@ li.future {
         }
     }*/
 
-    .visited {
+    .hideSidebar {
         .leftSide {
             .menu-enlarge {
                 .glyphicon-circle-arrow-left:before {
@@ -2465,7 +2465,7 @@ li.future {
     }
 }
 
-.visited {
+.hideSidebar {
 
     @media (min-width: @screen-sm) {
 
@@ -2530,6 +2530,24 @@ li.future {
     }
 
     #content {
+
+        .articleContent {
+            img {
+                margin: 10px auto;
+
+                @media (max-width: @screen-xs-max) {
+                    display: block !important;
+                    float: none !important;
+                }
+
+                @media (min-width: @screen-sm) {
+                    margin: 15px;
+                }
+
+                &:extend(.img-responsive);
+            }
+        }
+
         @media (min-width: @screen-sm) {
             width: 100%;
             margin-left: 0;

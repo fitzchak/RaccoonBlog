@@ -31,7 +31,6 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 				.ForMember(x => x.LegacySlug, o => o.Ignore())
 				.ForMember(x => x.ShowPostEvenIfPrivate, o => o.Ignore())
 				.ForMember(x => x.SkipAutoReschedule, o => o.Ignore())
-				.ForMember(x => x.IsDeleted, o => o.Ignore())
 				.ForMember(x => x.CommentsCount, o => o.Ignore())
 				.ForMember(x => x.CommentsId, o => o.Ignore())
 				.ForMember(x => x.LastEditedByUserId, o => o.Ignore())

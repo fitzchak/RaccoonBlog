@@ -53,14 +53,13 @@ namespace RaccoonBlog.Web.Controllers
 			RavenQueryStatistics stats;
 			var futurePosts = RavenSession.Query<Post>()
 				.Statistics(out stats)
-				.Where(x => x.PublishAt > DateTimeOffset.Now.AsMinutes() && x.IsDeleted == false)
+				.Where(x => x.PublishAt > DateTimeOffset.Now.AsMinutes())
 				.Select(x => new Post {Title = x.Title, PublishAt = x.PublishAt})
 				.OrderBy(x => x.PublishAt)
 				.Take(5)
 				.ToList();
 
 			var lastPost = RavenSession.Query<Post>()
-				.Where(x => x.IsDeleted == false)
 				.OrderByDescending(x => x.PublishAt)
 				.Select(x => new Post { PublishAt = x.PublishAt })
 				.FirstOrDefault();
@@ -125,7 +124,7 @@ namespace RaccoonBlog.Web.Controllers
             var dates = RavenSession.Query<Posts_ByMonthPublished_Count.ReduceResult, Posts_ByMonthPublished_Count>()
                 .OrderByDescending(x => x.Year)
                 .ThenByDescending(x => x.Month)
-                // filter future stats
+                .Take(1024)
                 .Where(x => x.Year < now.Year || x.Year == now.Year && x.Month <= now.Month)
                 .ToList();
             
