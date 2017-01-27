@@ -268,7 +268,10 @@
                                     <span class="form_item_name">Human?</span>
                                 </label>
                                 @Html.GenerateCaptcha()
-                                @Html.ValidationMessage("CaptchaNotValid")
+                                
+                                <span class="captcha-error">
+                                    @Html.ValidationMessage("CaptchaNotValid")
+                                </span>
                             </div>
                         }
                     </div>

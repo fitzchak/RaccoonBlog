@@ -115,7 +115,20 @@ namespace RaccoonBlog.Web.Controllers
 		    return RedirectToAction("Details");
 		}
 
-		private ActionResult PostingCommentSucceeded(Post post, CommentInput input)
+        private bool CheckRecaptchaChallengeSupplied()
+	    {
+	        var recaptchaChallengeField = Request.Form.GetValues("recaptcha_challenge_field");
+	        if (recaptchaChallengeField == null
+	            || recaptchaChallengeField.Length == 0
+	            || recaptchaChallengeField.GetValue(0) as string == string.Empty)
+	        {
+	            return false;
+	        }
+
+	        return true;
+	    }
+
+    private ActionResult PostingCommentSucceeded(Post post, CommentInput input)
 		{
 			const string successMessage = "Your comment will be posted soon. Thanks!";
 			if (Request.IsAjaxRequest())
@@ -142,7 +155,14 @@ namespace RaccoonBlog.Web.Controllers
 			    (commenter != null && commenter.IsTrustedCommenter == true))
 				return;
 
-			if (RecaptchaValidatorWrapper.Validate(ControllerContext.HttpContext))
+            var captchaChallegeSupplied = CheckRecaptchaChallengeSupplied();
+            if (captchaChallegeSupplied == false)
+            {
+                ModelState.AddModelError("CaptchaNotValid", "ReCaptcha challenge was not supplied.");
+                return;
+            }
+
+            if (RecaptchaValidatorWrapper.Validate(ControllerContext.HttpContext))
 				return;
 
 			ModelState.AddModelError("CaptchaNotValid",
