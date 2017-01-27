@@ -1,90 +1,90 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="format-detection" content="telephone=no" />
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="icon" href="/favicon.ico">
     <meta name="description" content="@ViewBag.BlogConfig.MetaDescription">
-	@{
-		ViewBag.Message = TempData["Message"] as string;
-	}
-	@if (string.IsNullOrWhiteSpace(Context.Request.QueryString["key"]) == false)
-	{
-		<meta name="robots" content="noindex" />
-	}
-	<title>
-		@if (ViewBag.Title != null)
-		{ <text> @ViewBag.Title - </text> }@ViewBag.BlogConfig.Title
-	</title>
+    @{
+        ViewBag.Message = TempData["Message"] as string;
+    }
+    @if (string.IsNullOrWhiteSpace(Context.Request.QueryString["key"]) == false)
+    {
+        <meta name="robots" content="noindex" />
+    }
+    <title>
+        @if (ViewBag.Title != null)
+        { <text> @ViewBag.Title - </text> }@ViewBag.BlogConfig.Title
+    </title>
 
-	@Styles.Render("~/Content/css/styles")
-	@Html.RenderTheme(ViewBag.BlogConfig.CustomCss as string)
-	@RenderSection("Style", false)
+    @Styles.Render("~/Content/css/styles")
+    @Html.RenderTheme(ViewBag.BlogConfig.CustomCss as string)
+    @RenderSection("Style", false)
 </head>
 <body class="show-grid">
-	<div class="container hideSidebar">
-		<div class="row">
-			<div class="leftSide col-sm-4 col-md-3">
-			    <a href="@Url.Action("Index", "Posts")" class="logo">
-			        <h1>@ViewBag.BlogConfig.Title</h1>
-			    </a>
+    <div class="container hideSidebar">
+        <div class="row">
+            <div class="leftSide col-sm-4 col-md-3">
+                <a href="@Url.Action("Index", "Posts")" class="logo">
+                    <h1>@ViewBag.BlogConfig.Title</h1>
+                </a>
 
                 <a href="@Url.Action("Index", "Posts")" style="display: block;"><img src="~/Content/css/img/rihno.svg" class="rihno" /></a>
-                
+
                 <a href="@Url.Action("Index", "Posts")" class="logo-vertical">
                     <h1>@ViewBag.BlogConfig.Title</h1>
                 </a>
-			    <button class="menu-button" id="open-button"><i class="glyphicon glyphicon-circle-arrow-down hide-sm" aria-hidden="true"></i></button>
+                <button class="menu-button" id="open-button"><i class="glyphicon glyphicon-circle-arrow-down hide-sm" aria-hidden="true"></i></button>
                 <button class="menu-enlarge" id="enlarge-button"><i class="glyphicon glyphicon-circle-arrow-left hide-sm" aria-hidden="true"></i></button>
-				<div class="clearfix"></div>
-				<div class="collapseMobile">
-					<div class="about @(ViewBag.IsHomePage ? "home" : string.Empty)">
-						@Html.RenderSection("Contact Me")
-					</div>
-					<div class="pull-down">
-						<p class="socicon">
-							@if (ViewBag.BlogConfig.RssLogin != null)
-							{
-								<a href="@string.Format("http://feeds.feedburner.com/{0}", ViewBag.BlogConfig.RssLogin)" class="rss">,</a>
-							}
-							@if (ViewBag.BlogConfig.OwnerEmail != null)
-							{
-								<a href="@string.Format("mailto:{0}", ViewBag.BlogConfig.OwnerEmail)" class="mail">&#64;</a>
-							}
-							@if (ViewBag.BlogConfig.GithubLogin != null)
-							{
-								<a href="@string.Format("https://github.com/{0}", ViewBag.BlogConfig.GithubLogin)" class="git">Q</a>
-							}
-							@if (ViewBag.BlogConfig.TwitterLogin != null)
-							{
-								<a href="@string.Format("https://twitter.com/{0}", ViewBag.BlogConfig.TwitterLogin)" class="twitter">a</a>
-							}
-							@if (ViewBag.BlogConfig.FacebookLogin != null)
-							{
-								<a href="@string.Format("https://www.facebook.com/{0}", ViewBag.BlogConfig.FacebookLogin)" class="facebook">b</a>
-							}
-							@if (ViewBag.BlogConfig.GoogleLogin != null)
-							{
-								<a href="@string.Format("https://plus.google.com/{0}", ViewBag.BlogConfig.GoogleLogin)" class="gplus">c</a>
-							}
-						</p>
-						@Html.RenderSection("Stats")
-						<p class="copyright">@ViewBag.BlogConfig.Copyright</p>
-					</div>
-				</div>
-			</div>
-			<div id="content" class="centerCol col-sm-8 col-sm-offset-4 col-md-offset-3 col-md-6 col-lg-7">
-				<header>
-				    <div class="search">
-				        @using (Html.BeginForm("SearchResult", "Search"))
-				        {
-				            <input name="q" type="search" placeholder="search" class="form-control" />
-				            <input type="submit" />
-				        }
-				    </div>
+                <div class="clearfix"></div>
+                <div class="collapseMobile">
+                    <div class="about @(ViewBag.IsHomePage ? "home" : string.Empty)">
+                        @Html.RenderSection("Contact Me")
+                    </div>
+                    <div class="pull-down">
+                        <p class="socicon">
+                            @if (ViewBag.BlogConfig.RssLogin != null)
+                            {
+                                <a href="@string.Format("http://feeds.feedburner.com/{0}", ViewBag.BlogConfig.RssLogin)" class="rss">,</a>
+                            }
+                            @if (ViewBag.BlogConfig.OwnerEmail != null)
+                            {
+                                <a href="@string.Format("mailto:{0}", ViewBag.BlogConfig.OwnerEmail)" class="mail">&#64;</a>
+                            }
+                            @if (ViewBag.BlogConfig.GithubLogin != null)
+                            {
+                                <a href="@string.Format("https://github.com/{0}", ViewBag.BlogConfig.GithubLogin)" class="git">Q</a>
+                            }
+                            @if (ViewBag.BlogConfig.TwitterLogin != null)
+                            {
+                                <a href="@string.Format("https://twitter.com/{0}", ViewBag.BlogConfig.TwitterLogin)" class="twitter">a</a>
+                            }
+                            @if (ViewBag.BlogConfig.FacebookLogin != null)
+                            {
+                                <a href="@string.Format("https://www.facebook.com/{0}", ViewBag.BlogConfig.FacebookLogin)" class="facebook">b</a>
+                            }
+                            @if (ViewBag.BlogConfig.GoogleLogin != null)
+                            {
+                                <a href="@string.Format("https://plus.google.com/{0}", ViewBag.BlogConfig.GoogleLogin)" class="gplus">c</a>
+                            }
+                        </p>
+                        @Html.RenderSection("Stats")
+                        <p class="copyright">@ViewBag.BlogConfig.Copyright</p>
+                    </div>
+                </div>
+            </div>
+            <div id="content" class="centerCol col-sm-8 col-sm-offset-4 col-md-offset-3 col-md-6 col-lg-7">
+                <header>
+                    <div class="search">
+                        @using (Html.BeginForm("SearchResult", "Search"))
+                        {
+                            <input name="q" type="search" placeholder="search" class="form-control" />
+                            <input type="submit" />
+                        }
+                    </div>
                     <div style="display:inline-block">
                         @if (Html.IsSectionActive("Tags"))
                         {
@@ -103,53 +103,52 @@
                         <a href="#" class="stackView" id="stackView">stack view</a>
                         <a href="#" class="gridView active" id="gridView">grid view</a>
                     </nav>
-                    
-					<div class="clearfix"></div>
-					@Html.RenderSection("Tags")
-					@Html.RenderSection("Archive")
-				</header>
+
+                    <div class="clearfix"></div>
+                    @Html.RenderSection("Tags")
+                    @Html.RenderSection("Archive")
+                </header>
                 <div class="banner">
                 </div>
-				@RenderBody()
-			</div>
-			<section class="rightSide col-sm-8 col-sm-offset-4 col-md-3 col-md-offset-0 col-lg-2">
-				@if (HttpContext.Current.Request.IsAuthenticated)
-				{
-					@Html.Action(MVC.Section.ActionNames.AdministrationPanel, MVC.Section.Name)
-				}
-				@{Html.RenderAction(MVC.Section.ActionNames.List, MVC.Section.Name);}
-			</section>
-		</div>
-	</div>
+                @RenderBody()
+            </div>
+            <section class="rightSide col-sm-8 col-sm-offset-4 col-md-3 col-md-offset-0 col-lg-2">
+                @if (HttpContext.Current.Request.IsAuthenticated)
+                {
+                    @Html.Action(MVC.Section.ActionNames.AdministrationPanel, MVC.Section.Name)
+                }
+                @{Html.RenderAction(MVC.Section.ActionNames.List, MVC.Section.Name);}
+            </section>
+        </div>
+    </div>
 
-	@if (IsSectionDefined("Script"))
-	{
-		<script type="text/javascript">
-			window.RaccoonRoutes = {};
-		</script>
-		<!--[if IE 8]>
-			<script type="text/javascript" src="~/Content/js/respond.src.js"></script>
-		<![endif]-->
-		@Scripts.Render("~/Content/js/jquery")
-		@Scripts.Render("~/Content/js/jquery-migrate")
-		@Scripts.Render("~/Content/js/bootstrap")
-		@Scripts.Render("~/Content/js/main")
-		@RenderSection("Script")
-		if (string.IsNullOrEmpty(ViewBag.BlogConfig.GoogleAnalyticsKey) == false)
-		{
-			<script type="text/javascript">
-				var _gaq = _gaq || [];
-				_gaq.push(['_setAccount', '@ViewBag.BlogConfig.GoogleAnalyticsKey']);
-				_gaq.push(['_trackPageview']);
+    @if (IsSectionDefined("Script"))
+    {
+        <script type="text/javascript">
+            window.RaccoonRoutes = {};
+        </script>
+        <!--[if IE 8]>
+            <script type="text/javascript" src="~/Content/js/respond.src.js"></script>
+        <![endif]-->
+        @Scripts.Render("~/Content/js/jquery")
+        @Scripts.Render("~/Content/js/jquery-migrate")
+        @Scripts.Render("~/Content/js/bootstrap")
+        @Scripts.Render("~/Content/js/main")
+        @RenderSection("Script")
+        if (string.IsNullOrEmpty(ViewBag.BlogConfig.GoogleAnalyticsKey) == false)
+        {
+            <script type="text/javascript">
+                var _gaq = _gaq || [];
+                _gaq.push(['_setAccount', '@ViewBag.BlogConfig.GoogleAnalyticsKey']);
+                _gaq.push(['_trackPageview']);
 
-				(function () {
-					var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-					ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-					var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-				})();
-			</script>
-		}
-	}
+                (function () {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            </script> }
+    }
 </body>
 
 </html>

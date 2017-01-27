@@ -18,68 +18,68 @@ namespace RaccoonBlog.Web.Controllers
     using RaccoonBlog.Web.Infrastructure.Indexes;
     using Raven.Client.Linq;
 
-	public partial class PostDetailsController : RaccoonController
-	{
-		public virtual ActionResult Details(int id, string slug, Guid key)
-		{
-			var post = RavenSession
-				.Include<Post>(x => x.CommentsId)
-				.Include(x => x.AuthorId)
-				.Load(id);
+    public partial class PostDetailsController : RaccoonController
+    {
+        public virtual ActionResult Details(int id, string slug, Guid key)
+        {
+            var post = RavenSession
+                .Include<Post>(x => x.CommentsId)
+                .Include(x => x.AuthorId)
+                .Load(id);
 
-			if (post == null)
-				return HttpNotFound();
+            if (post == null)
+                return HttpNotFound();
 
-			if (post.IsPublicPost(key) == false)
-				return HttpNotFound();
+            if (post.IsPublicPost(key) == false)
+                return HttpNotFound();
 
             SeriesInfo seriesInfo = GetSeriesInfo(post.Title);
 
-			var comments = RavenSession.Load<PostComments>(post.CommentsId) ?? new PostComments();
-			var vm = new PostViewModel
-			         {
-			         	Post = post.MapTo<PostViewModel.PostDetails>(),
-			         	Comments = comments.Comments
+            var comments = RavenSession.Load<PostComments>(post.CommentsId) ?? new PostComments();
+            var vm = new PostViewModel
+            {
+                Post = post.MapTo<PostViewModel.PostDetails>(),
+                Comments = comments.Comments
                             .OrderBy(x => x.CreatedAt)
                             .MapTo<PostViewModel.Comment>(),
-			         	NextPost = RavenSession.GetNextPrevPost(post, true),
-			         	PreviousPost = RavenSession.GetNextPrevPost(post, false),
-			         	AreCommentsClosed = comments.AreCommentsClosed(post, BlogConfig.NumberOfDayToCloseComments),
-                        SeriesInfo = seriesInfo
-			         };
+                NextPost = RavenSession.GetNextPrevPost(post, true),
+                PreviousPost = RavenSession.GetNextPrevPost(post, false),
+                AreCommentsClosed = comments.AreCommentsClosed(post, BlogConfig.NumberOfDayToCloseComments),
+                SeriesInfo = seriesInfo
+            };
 
-			vm.Post.Author = RavenSession.Load<User>(post.AuthorId).MapTo<PostViewModel.UserDetails>();
+            vm.Post.Author = RavenSession.Load<User>(post.AuthorId).MapTo<PostViewModel.UserDetails>();
 
-			var comment = TempData["new-comment"] as CommentInput;
+            var comment = TempData["new-comment"] as CommentInput;
 
-			if(comment != null)
-			{
-				vm.Comments.Add(new PostViewModel.Comment
-				{
-					CreatedAt = DateTimeOffset.Now.ToString(),
-					Author = comment.Name,
-					Body = MarkdownResolver.Resolve(comment.Body),
-					Id = -1,
-					Url = UrlResolver.Resolve(comment.Url),
-					Tooltip = "Comment by " + comment.Name,
-					EmailHash = EmailHashResolver.Resolve(comment.Email)
-				});
-			}
+            if (comment != null)
+            {
+                vm.Comments.Add(new PostViewModel.Comment
+                {
+                    CreatedAt = DateTimeOffset.Now.ToString(),
+                    Author = comment.Name,
+                    Body = MarkdownResolver.Resolve(comment.Body),
+                    Id = -1,
+                    Url = UrlResolver.Resolve(comment.Url),
+                    Tooltip = "Comment by " + comment.Name,
+                    EmailHash = EmailHashResolver.Resolve(comment.Email)
+                });
+            }
 
-			if (vm.Post.Slug != slug)
-				return RedirectToActionPermanent("Details", new {id, vm.Post.Slug});
+            if (vm.Post.Slug != slug)
+                return RedirectToActionPermanent("Details", new { id, vm.Post.Slug });
 
-			SetWhateverUserIsTrustedCommenter(vm);
+            SetWhateverUserIsTrustedCommenter(vm);
 
-			return View("Details", vm);
-		}
+            return View("Details", vm);
+        }
 
         [ValidateInput(false)]
-		[HttpPost]
-		public virtual ActionResult Comment(CommentInput input, int id, Guid key)
-		{
-		    if (ModelState.IsValid)
-		    {
+        [HttpPost]
+        public virtual ActionResult Comment(CommentInput input, int id, Guid key)
+        {
+            if (ModelState.IsValid)
+            {
                 var post = RavenSession
                     .Include<Post>(x => x.CommentsId)
                     .Load(id);
@@ -107,53 +107,53 @@ namespace RaccoonBlog.Web.Controllers
 
                 CommenterUtil.SetCommenterCookie(Response, input.CommenterKey.MapTo<string>());
 
-				OutputCacheManager.RemoveItem(SectionController.NameConst, MVC.Section.ActionNames.List);
+                OutputCacheManager.RemoveItem(SectionController.NameConst, MVC.Section.ActionNames.List);
 
                 return PostingCommentSucceeded(post, input);
-		    }
+            }
 
-		    return RedirectToAction("Details");
-		}
+            return RedirectToAction("Details");
+        }
 
         private bool CheckRecaptchaChallengeSupplied()
-	    {
-	        var recaptchaChallengeField = Request.Form.GetValues("recaptcha_challenge_field");
-	        if (recaptchaChallengeField == null
-	            || recaptchaChallengeField.Length == 0
-	            || recaptchaChallengeField.GetValue(0) as string == string.Empty)
-	        {
-	            return false;
-	        }
+        {
+            var recaptchaChallengeField = Request.Form.GetValues("recaptcha_challenge_field");
+            if (recaptchaChallengeField == null
+                || recaptchaChallengeField.Length == 0
+                || recaptchaChallengeField.GetValue(0) as string == string.Empty)
+            {
+                return false;
+            }
 
-	        return true;
-	    }
+            return true;
+        }
 
-    private ActionResult PostingCommentSucceeded(Post post, CommentInput input)
-		{
-			const string successMessage = "Your comment will be posted soon. Thanks!";
-			if (Request.IsAjaxRequest())
-				return Json(new {Success = true, message = successMessage});
+        private ActionResult PostingCommentSucceeded(Post post, CommentInput input)
+        {
+            const string successMessage = "Your comment will be posted soon. Thanks!";
+            if (Request.IsAjaxRequest())
+                return Json(new { Success = true, message = successMessage });
 
-			TempData["new-comment"] = input;
-			var postReference = post.MapTo<PostReference>();
+            TempData["new-comment"] = input;
+            var postReference = post.MapTo<PostReference>();
 
-			return Redirect(Url.Action("Details",
-				new { Id = postReference.DomainId, postReference.Slug, key = post.ShowPostEvenIfPrivate }) + "#comments-form-location");
-		}
+            return Redirect(Url.Action("Details",
+                new { Id = postReference.DomainId, postReference.Slug, key = post.ShowPostEvenIfPrivate }) + "#comments-form-location");
+        }
 
-		private void ValidateCommentsAllowed(Post post, PostComments comments)
-		{
-			if (comments.AreCommentsClosed(post, BlogConfig.NumberOfDayToCloseComments))
-				ModelState.AddModelError("CommentsClosed", "This post is closed for new comments.");
-			if (post.AllowComments == false)
-				ModelState.AddModelError("CommentsClosed", "This post does not allow comments.");
-		}
+        private void ValidateCommentsAllowed(Post post, PostComments comments)
+        {
+            if (comments.AreCommentsClosed(post, BlogConfig.NumberOfDayToCloseComments))
+                ModelState.AddModelError("CommentsClosed", "This post is closed for new comments.");
+            if (post.AllowComments == false)
+                ModelState.AddModelError("CommentsClosed", "This post does not allow comments.");
+        }
 
-		private void ValidateCaptcha(CommentInput input, Commenter commenter)
-		{
-			if (Request.IsAuthenticated ||
-			    (commenter != null && commenter.IsTrustedCommenter == true))
-				return;
+        private void ValidateCaptcha(CommentInput input, Commenter commenter)
+        {
+            if (Request.IsAuthenticated ||
+                (commenter != null && commenter.IsTrustedCommenter == true))
+                return;
 
             var captchaChallegeSupplied = CheckRecaptchaChallengeSupplied();
             if (captchaChallegeSupplied == false)
@@ -163,60 +163,60 @@ namespace RaccoonBlog.Web.Controllers
             }
 
             if (RecaptchaValidatorWrapper.Validate(ControllerContext.HttpContext))
-				return;
+                return;
 
-			ModelState.AddModelError("CaptchaNotValid",
-			                         "You did not type the verification word correctly. Please try again.");
-		}
+            ModelState.AddModelError("CaptchaNotValid",
+                                     "You did not type the verification word correctly. Please try again.");
+        }
 
-		private ActionResult PostingCommentFailed(Post post, CommentInput input, Guid key)
-		{
-			if (Request.IsAjaxRequest())
-				return Json(new {Success = false, message = ModelState.FirstErrorMessage()});
+        private ActionResult PostingCommentFailed(Post post, CommentInput input, Guid key)
+        {
+            if (Request.IsAjaxRequest())
+                return Json(new { Success = false, message = ModelState.FirstErrorMessage() });
 
-			var postReference = post.MapTo<PostReference>();
-			var result = Details(postReference.DomainId, postReference.Slug, key);
-			var model = result as ViewResult;
-			if (model != null)
-			{
-				var viewModel = model.Model as PostViewModel;
-				if (viewModel != null)
-					viewModel.Input = input;
-			}
-			return result;
-		}
+            var postReference = post.MapTo<PostReference>();
+            var result = Details(postReference.DomainId, postReference.Slug, key);
+            var model = result as ViewResult;
+            if (model != null)
+            {
+                var viewModel = model.Model as PostViewModel;
+                if (viewModel != null)
+                    viewModel.Input = input;
+            }
+            return result;
+        }
 
-		private void SetWhateverUserIsTrustedCommenter(PostViewModel vm)
-		{
-			if (Request.IsAuthenticated)
-			{
-				var user = RavenSession.GetCurrentUser();
-				vm.Input = user.MapTo<CommentInput>();
-				vm.IsTrustedCommenter = true;
-				vm.IsLoggedInCommenter = true;
-				return;
-			}
+        private void SetWhateverUserIsTrustedCommenter(PostViewModel vm)
+        {
+            if (Request.IsAuthenticated)
+            {
+                var user = RavenSession.GetCurrentUser();
+                vm.Input = user.MapTo<CommentInput>();
+                vm.IsTrustedCommenter = true;
+                vm.IsLoggedInCommenter = true;
+                return;
+            }
 
-			var cookie = Request.Cookies[CommenterUtil.CommenterCookieName];
-			if (cookie == null) return;
+            var cookie = Request.Cookies[CommenterUtil.CommenterCookieName];
+            if (cookie == null) return;
 
-			var commenter = RavenSession.GetCommenter(cookie.Value);
-			if (commenter == null)
-			{
-				vm.IsLoggedInCommenter = false;
-				Response.Cookies.Set(new HttpCookie(CommenterUtil.CommenterCookieName) {Expires = DateTime.Now.AddYears(-1)});
-				return;
-			}
+            var commenter = RavenSession.GetCommenter(cookie.Value);
+            if (commenter == null)
+            {
+                vm.IsLoggedInCommenter = false;
+                Response.Cookies.Set(new HttpCookie(CommenterUtil.CommenterCookieName) { Expires = DateTime.Now.AddYears(-1) });
+                return;
+            }
 
-			vm.IsLoggedInCommenter = string.IsNullOrWhiteSpace(commenter.OpenId) == false;
-			vm.Input = commenter.MapTo<CommentInput>();
-			vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
-		}
+            vm.IsLoggedInCommenter = string.IsNullOrWhiteSpace(commenter.OpenId) == false;
+            vm.Input = commenter.MapTo<CommentInput>();
+            vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
+        }
 
         private SeriesInfo GetSeriesInfo(string title)
         {
             SeriesInfo seriesInfo = null;
-	        string seriesTitle = TitleConverter.ToSeriesTitle(title);
+            string seriesTitle = TitleConverter.ToSeriesTitle(title);
 
             if (!string.IsNullOrEmpty(seriesTitle))
             {
@@ -225,8 +225,8 @@ namespace RaccoonBlog.Web.Controllers
                     .OrderByDescending(x => x.MaxDate)
                     .FirstOrDefault();
 
-	            if (series == null) 
-					return null;
+                if (series == null)
+                    return null;
 
                 var postsInSeries = GetPostsForCurrentSeries(series);
 
@@ -248,19 +248,19 @@ namespace RaccoonBlog.Web.Controllers
             if (series != null)
             {
                 postsInSeries = series
-					.Posts
-					.Select(s => new PostInSeries
-					{
-						Id = RavenIdResolver.Resolve(s.Id), 
-						Slug = SlugConverter.TitleToSlug(s.Title), 
-						Title = HttpUtility.HtmlDecode(TitleConverter.ToPostTitle(s.Title)),
-						PublishAt = s.PublishAt
-					})
-					.OrderByDescending(p => p.PublishAt)
-					.ToList();
+                    .Posts
+                    .Select(s => new PostInSeries
+                    {
+                        Id = RavenIdResolver.Resolve(s.Id),
+                        Slug = SlugConverter.TitleToSlug(s.Title),
+                        Title = HttpUtility.HtmlDecode(TitleConverter.ToPostTitle(s.Title)),
+                        PublishAt = s.PublishAt
+                    })
+                    .OrderByDescending(p => p.PublishAt)
+                    .ToList();
             }
 
             return postsInSeries;
         }
-	}
+    }
 }
