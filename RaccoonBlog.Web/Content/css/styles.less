@@ -537,7 +537,11 @@ hr {
 }
 
 header {
-    border-bottom: 1px solid @gray-light;
+
+    & + .postsList {
+        border-bottom: 1px solid @gray-light;
+    }
+
     padding-bottom: 35px;
 
     .search {
@@ -1989,6 +1993,11 @@ pre[class*="language-"]:before, pre[class*="language-"]:after {
     }
 }
 
+.captcha-error {
+    .field-validation-error {
+        font-size: 16px;
+    }
+}
 
 
 .seriesTitle {
@@ -2572,4 +2581,8 @@ li.future {
     -ms-transition: width .3s ease, margin .3s ease, padding .3s ease;
     -o-transition: width .3s ease, margin .3s ease, padding .3s ease;
     transition: width .3s ease, margin .3s ease, padding .3s ease;
+}
+
+.img-center {
+    margin: auto;
 }

@@ -23,16 +23,16 @@
             <h2><span class="seriesTitle">@Html.Raw(TitleConverter.ToSeriesTitle(Model.Post.Title))</span>@Html.Raw(TitleConverter.ToPostTitle(Model.Post.Title))</h2>
         }
     </a>
-	<div class="clearfix"></div>
-	<div class="timetoread">
-		@{
-			var timeToRead = PostHelper.CalculateTimeToRead(@Model.Post.Body);
-		}
-		<div>
-			<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-			time to read <strong class="force">@timeToRead.TimeToReadInMinutes min</strong> | <strong class="force">@timeToRead.WordCount words</strong>
-		</div>
-	</div>
+    <div class="clearfix"></div>
+    <div class="timetoread">
+        @{
+            var timeToRead = PostHelper.CalculateTimeToRead(@Model.Post.Body);
+        }
+        <div>
+            <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+            time to read <strong class="force">@timeToRead.TimeToReadInMinutes min</strong> | <strong class="force">@timeToRead.WordCount words</strong>
+        </div>
+    </div>
     <hr />
     <div class="articleContent clearfix">
         @Model.Post.Body
@@ -74,40 +74,36 @@
 
     @Html.Partial("NextPrevNav")
 
-    
+
 
     @if (Model.SeriesInfo != null)
     {
         <section class="postsInSeries" data-state="closed">
             <h4 class="text-left">
                 More posts in <a href="@Url.Series(Model.SeriesInfo.SeriesId, Model.SeriesInfo.SeriesSlug)">
-                &quot;@Html.Raw(Model.SeriesInfo.SeriesTitle)&quot;
+                    &quot;@Html.Raw(Model.SeriesInfo.SeriesTitle)&quot;
                 </a> series:
             </h4>
-	        <ol>
-		        @foreach (var post in Model.SeriesInfo.PostsInSeries)
-		        {
-			        if (post.PublishAt >= DateTimeOffset.Now)
-			        {
-				        <li><em>(@(post.PublishAt.ToString("dd MMM yyyy")))</em>&nbsp;@(post.Title)</li>
-			        }
-			        else
-			        {
-				        if (post.Id == Model.Post.Id)
-				        {
-					        <li><strong><em>(@(post.PublishAt.ToString("dd MMM yyyy")))</em>&nbsp;<a href="@Url.Action("Details", new { post.Id, post.Slug })">@(post.Title)</a></strong></li>
-				        }
-				        else
-				        {
-					        <li><em>(@(post.PublishAt.ToString("dd MMM yyyy")))</em>&nbsp;<a href="@Url.Action("Details", new { post.Id, post.Slug })">@(post.Title)</a></li>
-				        }
-			        }
-		        }
-	        </ol>
-			@if (Model.SeriesInfo.PostsInSeries.Count > 3)
-			{
-				<button class="morePosts btn btn-sm btn-default">show all</button>
-			}
+            <ol>
+                @foreach (var post in Model.SeriesInfo.PostsInSeries)
+                {
+                    if (post.PublishAt >= DateTimeOffset.Now)
+                    {
+                        <li><em>(@(post.PublishAt.ToString("dd MMM yyyy")))</em>&nbsp;@(post.Title)</li>    }
+                    else
+                    {
+                        if (post.Id == Model.Post.Id)
+                        {
+                            <li><strong><em>(@(post.PublishAt.ToString("dd MMM yyyy")))</em>&nbsp;<a href="@Url.Action("Details", new { post.Id, post.Slug })">@(post.Title)</a></strong></li>    }
+                        else
+                        {
+                            <li><em>(@(post.PublishAt.ToString("dd MMM yyyy")))</em>&nbsp;<a href="@Url.Action("Details", new { post.Id, post.Slug })">@(post.Title)</a></li>    }
+                    }
+                }
+            </ol>
+            @if (Model.SeriesInfo.PostsInSeries.Count > 3)
+            {
+                <button class="morePosts btn btn-sm btn-default">show all</button>}
         </section>
     }
     <hr />
@@ -124,13 +120,13 @@
             <article class="comment important">
                 <a name='@(string.Format("comment{0}", (comment.Id)))'></a>
                 <div class="avatar">
-                    <img src='@(string.Format("http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon", @comment.EmailHash))' alt="@comment.Author"/>
+                    <img src='@(string.Format("http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon", @comment.EmailHash))' alt="@comment.Author" />
                 </div>
                 <div class="postedBy">
                     <a href="@comment.Url" target="_blank" title='@(string.Format("Comment by {0}", @comment.Author))'>@comment.Author</a>
                 </div>
                 <time>
-                    @DateTime.Parse(@comment.CreatedAt).ToString("dd MMM yyyy")<br/>
+                    @DateTime.Parse(@comment.CreatedAt).ToString("dd MMM yyyy")<br />
                     @DateTime.Parse(@comment.CreatedAt).ToString("HH:mm tt")
                 </time>
                 <div class="comment-body">
@@ -143,10 +139,10 @@
             <article class="comment">
                 <a name='@(string.Format("comment{0}", (comment.Id)))'></a>
                 <div class="avatar">
-                    <img src='@(string.Format("http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon", @comment.EmailHash))' alt="@comment.Author"/>
+                    <img src='@(string.Format("http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon", @comment.EmailHash))' alt="@comment.Author" />
                 </div>
                 <time>
-                    @DateTime.Parse(@comment.CreatedAt).ToString("dd MMM yyyy")<br/>
+                    @DateTime.Parse(@comment.CreatedAt).ToString("dd MMM yyyy")<br />
                     @DateTime.Parse(@comment.CreatedAt).ToString("HH:mm tt")
                 </time>
                 <div class="postedBy">
@@ -163,7 +159,7 @@
         <h4 class="preview-title">Comment preview</h4>
         <a name="comment-preview"></a>
         <div class="avatar">
-            <img src='http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon' alt=""/>
+            <img src='http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon' alt="" />
         </div>
         <time>
         </time>
@@ -249,7 +245,7 @@
                             &nbsp;
                             <a href="#" data-toggle="modal" data-target="#markdownHelp"
                                data-keyboard="true">
-                                <i class="glyphicon glyphicon-info-sign" ></i>
+                                <i class="glyphicon glyphicon-info-sign"></i>
                             </a>
                             <div class="textarea_wrap">
                                 @Html.TextAreaFor(x => x.Input.Body, new { rows = 9, @class = "form-control" })
@@ -268,7 +264,10 @@
                                     <span class="form_item_name">Human?</span>
                                 </label>
                                 @Html.GenerateCaptcha()
-                                @Html.ValidationMessage("CaptchaNotValid")
+
+                                <span class="captcha-error">
+                                    @Html.ValidationMessage("CaptchaNotValid")
+                                </span>
                             </div>
                         }
                     </div>
