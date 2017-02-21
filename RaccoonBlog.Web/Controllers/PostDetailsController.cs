@@ -54,16 +54,24 @@ namespace RaccoonBlog.Web.Controllers
 
             if (comment != null)
             {
-                vm.Comments.Add(new PostViewModel.Comment
+                var newCommentEmailHash = EmailHashResolver.Resolve(comment.Email);
+                var newCommentContent = MarkdownResolver.Resolve(comment.Body);
+                if (vm.Comments.Any(x =>
+                    x.Author == comment.Name
+                    && x.EmailHash == newCommentEmailHash
+                    && x.Body.ToString() == newCommentContent.ToString()) == false)
                 {
-                    CreatedAt = DateTimeOffset.Now.ToString(),
-                    Author = comment.Name,
-                    Body = MarkdownResolver.Resolve(comment.Body),
-                    Id = -1,
-                    Url = UrlResolver.Resolve(comment.Url),
-                    Tooltip = "Comment by " + comment.Name,
-                    EmailHash = EmailHashResolver.Resolve(comment.Email)
-                });
+                    vm.Comments.Add(new PostViewModel.Comment
+                    {
+                        CreatedAt = DateTimeOffset.Now.UtcDateTime.ToString(),
+                        Author = comment.Name,
+                        Body = newCommentContent,
+                        Id = -1,
+                        Url = UrlResolver.Resolve(comment.Url),
+                        Tooltip = "Comment by " + comment.Name,
+                        EmailHash = newCommentEmailHash
+                    });
+                }
             }
 
             if (vm.Post.Slug != slug)
