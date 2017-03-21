@@ -6,7 +6,7 @@
 	string text = null;
 	if (string.IsNullOrEmpty(Model.Phone) == false && string.IsNullOrEmpty(Model.Email) == false)
 	{
-		text = "You can reach me by phone or email:";
+		text = "You can reach me by email or phone:";
 	}
 	else if (string.IsNullOrEmpty(Model.Phone) == false)
 	{
@@ -14,7 +14,7 @@
 	}
 	else if (string.IsNullOrEmpty(Model.Email) == false)
 	{
-		text = "You can reach me by phone or email:";
+		text = "You can reach me by email:";
 	}
 }
 <span>Hi!</span><br />
