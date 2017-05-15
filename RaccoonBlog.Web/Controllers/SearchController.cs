@@ -1,17 +1,17 @@
+using System.Configuration;
 using System.Web.Mvc;
 
 namespace RaccoonBlog.Web.Controllers
 {
 	public partial class SearchController : RaccoonController
 	{
-		public virtual ActionResult SearchResult(string q)
-		{
-			return View((object)q);
-		}
+	    private static string GoogleCustomSearchId => ConfigurationManager.AppSettings["Raccoon/GoogleCustomSearch/Id"];
 
-		public virtual ActionResult GoogleCse()
-		{
-			return View();
+	    public virtual ActionResult SearchResult(string q)
+	    {
+	        ViewBag.GoogleCustomSearchId = GoogleCustomSearchId;
+		    ViewBag.SearchTerm = q;
+			return View((object)q);
 		}
 	}
 }

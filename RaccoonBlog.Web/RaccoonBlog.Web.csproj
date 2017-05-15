@@ -1167,9 +1167,6 @@
     <Content Include="Views\Search\SearchResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Search\GoogleCse.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Section\PostsStatistics.cshtml" />
   </ItemGroup>
   <ItemGroup>
