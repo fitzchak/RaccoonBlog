@@ -73,7 +73,8 @@ namespace RaccoonBlog.Web.Controllers
 		{
 			var claims = response.ExternalIdentity;
 
-			var emailClaim = claims.FindFirst(ClaimTypes.Email);
+			var emailClaim = claims.FindFirst(ClaimTypes.Email) ??
+                claims.FindFirst("email");
 			var nameClaim = claims.FindFirst(ClaimTypes.Name);
 			var urlClaim = claims.FindFirst("urn:google:profile");
 
