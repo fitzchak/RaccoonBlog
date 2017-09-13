@@ -86,8 +86,8 @@ namespace RaccoonBlog.Web
 				ClientId = keys.Item1,
 				ClientSecret = keys.Item2,
 			};
-			microsoftAccountAuthenticationOptions.Scope.Add("wl.basic");
-			microsoftAccountAuthenticationOptions.Scope.Add("wl.emails");
+			microsoftAccountAuthenticationOptions.Scope.Add("https://graph.microsoft.com/user.read");
+			microsoftAccountAuthenticationOptions.Scope.Add("https://graph.microsoft.com/mail.read");
 
 			app.UseMicrosoftAccountAuthentication(microsoftAccountAuthenticationOptions);
 		}
