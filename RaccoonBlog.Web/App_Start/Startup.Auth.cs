@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Facebook;
@@ -85,11 +87,27 @@ namespace RaccoonBlog.Web
 			{
 				ClientId = keys.Item1,
 				ClientSecret = keys.Item2,
+                Provider = new MSProvider()
 			};
-			microsoftAccountAuthenticationOptions.Scope.Add("wl.basic");
-			microsoftAccountAuthenticationOptions.Scope.Add("wl.emails");
 
-			app.UseMicrosoftAccountAuthentication(microsoftAccountAuthenticationOptions);
+            microsoftAccountAuthenticationOptions.Scope.Add("https://graph.microsoft.com/user.read");
+
+            app.UseMicrosoftAccountAuthentication(microsoftAccountAuthenticationOptions);
 		}
 	}
+
+    internal class MSProvider : MicrosoftAccountAuthenticationProvider
+    {
+        public override Task Authenticated(MicrosoftAccountAuthenticatedContext context)
+        {
+            // In some cases (hotmail.com and others) the email is empty, but the email is in the userPrincipalName.
+            // Override with this. See https://github.com/aspnet/AspNetKatana/issues/107
+            if (string.IsNullOrEmpty(context.Email) && context.User.GetValue("userPrincipalName") != null)
+            {
+                context.Identity.AddClaim(new Claim("email", context.User.GetValue("userPrincipalName").ToString()));
+            }
+            return base.Authenticated(context);
+
+        }
+    }
 }

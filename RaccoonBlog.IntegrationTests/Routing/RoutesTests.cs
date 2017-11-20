@@ -71,7 +71,6 @@ namespace RaccoonBlog.IntegrationTests.Routing
 		public void SearchControllerRoutes()
 		{
 			"~/search".ShouldMapTo<SearchController>(c => c.SearchResult(null));
-			"~/search/google_cse.xml".ShouldMapTo<SearchController>(c => c.GoogleCse());
 		}
 
 		[Fact]

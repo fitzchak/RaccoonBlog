@@ -134,18 +134,6 @@ namespace RaccoonBlog.Web.Controllers
             SearchResultOverride(callInfo, q);
             return callInfo;
         }
-
-        [NonAction]
-        partial void GoogleCseOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult GoogleCse()
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.GoogleCse);
-            GoogleCseOverride(callInfo);
-            return callInfo;
-        }
-
     }
 }
 
