@@ -226,7 +226,7 @@
         var html = markdown.Transform(rawBody);
         $('.comment.preview .comment-body').html(html);
 
-        var source = 'http://www.gravatar.com/avatar.php?gravatar_id=' +
+        var source = 'https://www.gravatar.com/avatar.php?gravatar_id=' +
             utils.randomString(50) + '&size=50&default=identicon';
 
         var mdate = moment();

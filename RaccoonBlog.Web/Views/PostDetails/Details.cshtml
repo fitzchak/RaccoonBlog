@@ -120,7 +120,7 @@
             <article class="comment important">
                 <a name='@(string.Format("comment{0}", (comment.Id)))'></a>
                 <div class="avatar">
-                    <img src='@(string.Format("http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon", @comment.EmailHash))' alt="@comment.Author" />
+                    <img src='@(string.Format("https://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon", @comment.EmailHash))' alt="@comment.Author" />
                 </div>
                 <div class="postedBy">
                     <a href="@comment.Url" target="_blank" title='@(string.Format("Comment by {0}", @comment.Author))'>@comment.Author</a>
@@ -139,7 +139,7 @@
             <article class="comment">
                 <a name='@(string.Format("comment{0}", (comment.Id)))'></a>
                 <div class="avatar">
-                    <img src='@(string.Format("http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon", @comment.EmailHash))' alt="@comment.Author" />
+                    <img src='@(string.Format("https://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon", @comment.EmailHash))' alt="@comment.Author" />
                 </div>
                 <time>
                     @DateTime.Parse(@comment.CreatedAt).ToString("dd MMM yyyy")<br />
@@ -159,7 +159,7 @@
         <h4 class="preview-title">Comment preview</h4>
         <a name="comment-preview"></a>
         <div class="avatar">
-            <img src='http://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon' alt="" />
+            <img src='https://www.gravatar.com/avatar.php?gravatar_id={0}&size=50&default=identicon' alt="" />
         </div>
         <time>
         </time>
