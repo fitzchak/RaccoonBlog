@@ -281,6 +281,10 @@
     <Compile Include="ErrorController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\Html5Helpers.cs" />
+    <Compile Include="Extensions\TimeSpanExtenstions.cs" />
+    <Compile Include="Extensions\XmlResult.cs" />
     <Compile Include="Helpers\Attributes\CustomHandleErrorAttribute.cs" />
     <Compile Include="Helpers\ConfigurationHelper.cs" />
     <Compile Include="Helpers\CryptographyUtil.cs" />
@@ -309,12 +313,17 @@
     <Compile Include="Infrastructure\Common\DocumentSessionExtensions.cs" />
     <Compile Include="Infrastructure\Jobs\RedditIntegration.cs" />
     <Compile Include="Infrastructure\Jobs\SocialNetworkIntegrationJobsRegistry.cs" />
+    <Compile Include="Infrastructure\Tasks\BackgroundTask.cs" />
+    <Compile Include="Infrastructure\Tasks\TaskExecutor.cs" />
     <Compile Include="LegacyPostController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="MailTemplatesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\Configs.cs" />
+    <Compile Include="Models\DynamicContent.cs" />
     <Compile Include="Models\SocialNetworkIntegration.cs" />
     <Compile Include="Models\SocialNetwork\Reddit.cs" />
     <Compile Include="PostDetailsController.generated.cs">
@@ -1223,12 +1232,6 @@
     <None Include="Properties\PublishProfiles\blog.ayende.com.pubxml" />
     <None Include="Properties\PublishProfiles\oreneini.com.pubxml" />
     <None Include="Properties\PublishProfiles\blog.hibernatingrhinos.com.pubxml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\HibernatingRhinos.Loci.Common\Loci.Common.csproj">
-      <Project>{238D8AAA-FD89-48E7-9446-ADCDE845B58E}</Project>
-      <Name>Loci.Common</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
