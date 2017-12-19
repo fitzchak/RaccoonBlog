@@ -24,6 +24,7 @@
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>83e16d4f</NuGetPackageImportStamp>
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -272,6 +273,7 @@
     <Compile Include="Areas\Admin\Models\FutureRssAccess.cs" />
     <Compile Include="Areas\Admin\ViewModels\RedditManualSubmissionViewModel.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\RavenController.cs" />
     <Compile Include="Controllers\SeriesController.cs" />
     <Compile Include="CssController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
