@@ -2,15 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Web;
-using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
-using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.Models.SocialNetwork;
 using RaccoonBlog.Web.Services.Reddit;
-using Raven.Client;
-using Raven.Client.Linq;
+using Raven.Client.Documents.Session;
 
 namespace RaccoonBlog.Web.Helpers
 {
@@ -79,8 +75,8 @@ namespace RaccoonBlog.Web.Helpers
         private static string ToQueryString(NameValueCollection nvc)
         {
             var array = (from key in nvc.AllKeys
-                         from value in nvc.GetValues(key)
-                         select string.Format("{0}={1}", HttpUtility.UrlEncode(key), HttpUtility.UrlEncode(value)))
+                    from value in nvc.GetValues(key)
+                    select $"{HttpUtility.UrlEncode(key)}={HttpUtility.UrlEncode(value)}")
                 .ToArray();
             return "?" + string.Join("&", array);
         }

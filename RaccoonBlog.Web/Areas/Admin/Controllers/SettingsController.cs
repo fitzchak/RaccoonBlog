@@ -7,10 +7,9 @@ using RaccoonBlog.Web.Areas.Admin.ViewModels;
 using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.Models.SocialNetwork;
-using RaccoonBlog.Web.Services;
-using RaccoonBlog.Web.Services.Reddit;
-using Raven.Abstractions.Data;
-using Raven.Client;
+using Raven.Client.Documents.Operations;
+using Raven.Client.Documents.Queries;
+using Raven.Client.Documents.Session;
 
 namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
@@ -53,16 +52,14 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 
         private void RemoveFutureRssAccessOnEncryptionConfigChange()
         {
-            var tagName = RavenSession.Advanced.DocumentStore.Conventions.GetTypeTagName(typeof(FutureRssAccess));
-            RavenSession.Advanced.DocumentStore
-                .AsyncDatabaseCommands
-                .DeleteByIndexAsync(Constants.DocumentsByEntityNameIndex, new IndexQuery()
-                {
-                    Query = $"Tag:{ tagName }"
-                }, new BulkOperationOptions()
-                {
-                    AllowStale = false
-                });
+            var store = RavenSession.Advanced.DocumentStore;
+            var collectionName = store.Conventions.GetCollectionName(typeof(FutureRssAccess));
+#pragma warning disable 4014
+            store.Operations.SendAsync(new DeleteByQueryOperation(new IndexQuery { Query = "FROM " + collectionName }, new QueryOperationOptions
+#pragma warning restore 4014
+            {
+                AllowStale = false
+            }));
         }
 
         [HttpGet]
@@ -95,7 +92,6 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
             postSubmission.Attempts = 0;
             RavenSession.SaveChanges();
             return RedirectToAction(MVC.Admin.Settings.ActionNames.RedditSubmission);
-
         }
 
         private async Task<RedditManualSubmissionViewModel> PrepareRedditManualSubmissionViewModel()
@@ -160,7 +156,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         private void SetFutureRssAccessList(IDocumentSession session)
         {
             ViewData["FutureRssAccessList"] = session.Query<FutureRssAccess>()
-                .Customize(x => x.WaitForNonStaleResultsAsOfNow())
+                .Customize(x => x.WaitForNonStaleResults())
                 .OrderBy(x => x.ExpiredOn)
                 .ToList();
         }

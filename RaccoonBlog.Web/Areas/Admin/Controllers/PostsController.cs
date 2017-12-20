@@ -12,10 +12,6 @@ using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.Services;
 using RaccoonBlog.Web.ViewModels;
-using Raven.Abstractions.Commands;
-using Raven.Abstractions.Data;
-using Raven.Json.Linq;
-
 
 namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
@@ -42,7 +38,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		[HttpGet]
 		public virtual ActionResult Edit(int id)
 		{
-			var post = RavenSession.Load<Post>(id);
+			var post = RavenSession.Load<Post>("posts/" + id);
 			if (post == null)
 				return HttpNotFound("Post does not exist.");
 			return View(post.MapTo<PostInput>());
@@ -55,7 +51,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			if (!ModelState.IsValid)
 				return View("Edit", input);
 
-			var post = RavenSession.Load<Post>(input.Id) ?? new Post {CreatedAt = DateTimeOffset.Now};
+			var post = RavenSession.Load<Post>("posts/" + input.Id) ?? new Post {CreatedAt = DateTimeOffset.Now};
 			input.MapPropertiesToInstance(post);
 
 			// Be able to record the user making the actual post
