@@ -11,21 +11,17 @@ using DataAnnotationsExtensions.ClientValidation;
 using FluentScheduler;
 using Glimpse.RavenDb;
 using HibernatingRhinos.Loci.Common.Tasks;
+using NLog;
 using NLog.Fluent;
 using RaccoonBlog.Web.Areas.Admin.Controllers;
 using RaccoonBlog.Web.Controllers;
-using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Helpers.Binders;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Indexes;
 using RaccoonBlog.Web.Infrastructure.Jobs;
-using Raven.Abstractions.Logging;
-using Raven.Client;
-using Raven.Client.Document;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Indexes;
 using Raven.Client.Documents.Session;
-using Raven.Client.Indexes;
 
 namespace RaccoonBlog.Web
 {
@@ -38,7 +34,7 @@ namespace RaccoonBlog.Web
 			BeginRequest += (sender, args) =>
 			{
 				BundleConfig.RegisterThemeBundles(HttpContext.Current, BundleTable.Bundles);
-				HttpContext.Current.Items["CurrentRequestRavenSession"] = RavenController.DocumentStore.OpenSession();
+				HttpContext.Current.Items["CurrentRequestRavenSession"] = RaccoonController.DocumentStore.OpenSession();
 			};
 			EndRequest += (sender, args) =>
 			{
@@ -74,9 +70,8 @@ namespace RaccoonBlog.Web
 			AutoMapperConfiguration.Configure();
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-			RavenController.DocumentStore = DocumentStore;
+			RaccoonController.DocumentStore = DocumentStore;
 			TaskExecutor.DocumentStore = DocumentStore;
-			Profiler.AttachTo((DocumentStore)DocumentStore);
 
 			// In case the versioning bundle is installed, make sure it will version
 			// only what we opt-in to version
