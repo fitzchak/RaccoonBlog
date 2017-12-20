@@ -70,7 +70,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public virtual async Task<ActionResult> SubmitToReddit(string postId, string sr)
+        public virtual ActionResult SubmitToReddit(string postId, string sr)
         {
             var post = RavenSession.Load<Post>(postId);
             var redditSubmitUrl = RedditHelper.SubmitUrl(sr, post);
@@ -84,7 +84,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public virtual async Task<ActionResult> ResetFailedRedditSubmission(string postId, string sr)
+        public virtual ActionResult ResetFailedRedditSubmission(string postId, string sr)
         {
             var post = RavenSession.Load<Post>(postId);
             var postSubmission = post.Integration.Reddit.GetPostSubmissionForSubreddit(sr);

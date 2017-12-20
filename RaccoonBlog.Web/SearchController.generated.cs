@@ -5,7 +5,8 @@
 
 // Make sure the compiler doesn't complain about missing Xml comments and CLS compliance
 // 0108: suppress "Foo hides inherited member Foo. Use the new keyword if hiding was intended." when a controller and its abstract parent are both processed
-#pragma warning disable 1591, 3008, 3009, 0108
+// 0114: suppress "Foo.BarController.Baz()' hides inherited member 'Qux.BarController.Baz()'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword." when an action (with an argument) overrides an action in a parent controller
+#pragma warning disable 1591, 3008, 3009, 0108, 0114
 #region T4MVC
 
 using System;
@@ -73,7 +74,7 @@ namespace RaccoonBlog.Web.Controllers
         public readonly string Name = "Search";
         [GeneratedCode("T4MVC", "2.0")]
         public const string NameConst = "Search";
-
+        [GeneratedCode("T4MVC", "2.0")]
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionNamesClass ActionNames { get { return s_actions; } }
@@ -81,14 +82,12 @@ namespace RaccoonBlog.Web.Controllers
         public class ActionNamesClass
         {
             public readonly string SearchResult = "SearchResult";
-            public readonly string GoogleCse = "GoogleCse";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string SearchResult = "SearchResult";
-            public const string GoogleCse = "GoogleCse";
         }
 
 
@@ -110,10 +109,8 @@ namespace RaccoonBlog.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string GoogleCse = "GoogleCse";
                 public readonly string SearchResult = "SearchResult";
             }
-            public readonly string GoogleCse = "~/Views/Search/GoogleCse.cshtml";
             public readonly string SearchResult = "~/Views/Search/SearchResult.cshtml";
         }
     }
@@ -134,8 +131,9 @@ namespace RaccoonBlog.Web.Controllers
             SearchResultOverride(callInfo, q);
             return callInfo;
         }
+
     }
 }
 
 #endregion T4MVC
-#pragma warning restore 1591, 3008, 3009, 0108
+#pragma warning restore 1591, 3008, 3009, 0108, 0114

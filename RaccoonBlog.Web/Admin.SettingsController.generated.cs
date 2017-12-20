@@ -5,7 +5,8 @@
 
 // Make sure the compiler doesn't complain about missing Xml comments and CLS compliance
 // 0108: suppress "Foo hides inherited member Foo. Use the new keyword if hiding was intended." when a controller and its abstract parent are both processed
-#pragma warning disable 1591, 3008, 3009, 0108
+// 0114: suppress "Foo.BarController.Baz()' hides inherited member 'Qux.BarController.Baz()'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword." when an action (with an argument) overrides an action in a parent controller
+#pragma warning disable 1591, 3008, 3009, 0108, 0114
 #region T4MVC
 
 using System;
@@ -60,17 +61,15 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> SubmitToReddit()
+        public virtual System.Web.Mvc.ActionResult SubmitToReddit()
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.SubmitToReddit);
-            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.SubmitToReddit);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ResetFailedRedditSubmission()
+        public virtual System.Web.Mvc.ActionResult ResetFailedRedditSubmission()
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ResetFailedRedditSubmission);
-            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ResetFailedRedditSubmission);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -81,7 +80,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         public readonly string Name = "Settings";
         [GeneratedCode("T4MVC", "2.0")]
         public const string NameConst = "Settings";
-
+        [GeneratedCode("T4MVC", "2.0")]
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionNamesClass ActionNames { get { return s_actions; } }
@@ -196,33 +195,33 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RedditSubmission);
             RedditSubmissionOverride(callInfo);
-            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+            return System.Threading.Tasks.Task.FromResult(callInfo as System.Web.Mvc.ActionResult);
         }
 
         [NonAction]
         partial void SubmitToRedditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string postId, string sr);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> SubmitToReddit(string postId, string sr)
+        public override System.Web.Mvc.ActionResult SubmitToReddit(string postId, string sr)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.SubmitToReddit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "postId", postId);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "sr", sr);
             SubmitToRedditOverride(callInfo, postId, sr);
-            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+            return callInfo;
         }
 
         [NonAction]
         partial void ResetFailedRedditSubmissionOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string postId, string sr);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ResetFailedRedditSubmission(string postId, string sr)
+        public override System.Web.Mvc.ActionResult ResetFailedRedditSubmission(string postId, string sr)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ResetFailedRedditSubmission);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "postId", postId);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "sr", sr);
             ResetFailedRedditSubmissionOverride(callInfo, postId, sr);
-            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+            return callInfo;
         }
 
         [NonAction]
@@ -252,4 +251,4 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 }
 
 #endregion T4MVC
-#pragma warning restore 1591, 3008, 3009, 0108
+#pragma warning restore 1591, 3008, 3009, 0108, 0114
