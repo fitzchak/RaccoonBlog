@@ -10,11 +10,10 @@ using System.Web.Routing;
 using DataAnnotationsExtensions.ClientValidation;
 using FluentScheduler;
 using Glimpse.RavenDb;
-
-using HibernatingRhinos.Loci.Common.Controllers;
 using HibernatingRhinos.Loci.Common.Tasks;
 using NLog.Fluent;
 using RaccoonBlog.Web.Areas.Admin.Controllers;
+using RaccoonBlog.Web.Controllers;
 using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Helpers.Binders;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
@@ -23,6 +22,9 @@ using RaccoonBlog.Web.Infrastructure.Jobs;
 using Raven.Abstractions.Logging;
 using Raven.Client;
 using Raven.Client.Document;
+using Raven.Client.Documents;
+using Raven.Client.Documents.Indexes;
+using Raven.Client.Documents.Session;
 using Raven.Client.Indexes;
 
 namespace RaccoonBlog.Web

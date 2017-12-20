@@ -1,7 +1,7 @@
 ﻿using System;
-using Raven.Abstractions.Exceptions;
-using Raven.Abstractions.Logging;
-using Raven.Client;
+using NLog;
+using Raven.Client.Documents.Session;
+using Raven.Client.Exceptions;
 
 namespace HibernatingRhinos.Loci.Common.Tasks
 {
@@ -9,7 +9,7 @@ namespace HibernatingRhinos.Loci.Common.Tasks
 	{
 		protected IDocumentSession DocumentSession;
 
-		private readonly ILog logger = LogManager.GetCurrentClassLogger();
+		private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
 		protected virtual void Initialize(IDocumentSession session)
 		{

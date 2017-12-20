@@ -2,19 +2,35 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using HibernatingRhinos.Loci.Common.Controllers;
+using System.Xml.Linq;
+using DevTrends.MvcDonutCaching;
+using HibernatingRhinos.Loci.Common.Extensions;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using RaccoonBlog.Web.Helpers.Results;
 using RaccoonBlog.Web.Models;
-using Raven.Imports.Newtonsoft.Json;
-using Raven.Imports.Newtonsoft.Json.Serialization;
+using Raven.Client.Documents;
+using Raven.Client.Documents.Session;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	using DevTrends.MvcDonutCaching;
-
-	public abstract partial class RaccoonController : RavenController
+	public abstract class RaccoonController : Controller
 	{
-		public const int DefaultPage = 1;
+	    public static IDocumentStore DocumentStore { get; set; }
+
+	    public IDocumentSession RavenSession { get; set; }
+
+	    protected HttpStatusCodeResult HttpNotModified()
+	    {
+	        return new HttpStatusCodeResult(304);
+	    }
+
+	    protected ActionResult Xml(XDocument xml, string etag)
+	    {
+	        return new XmlResult(xml, etag);
+	    }
+
+        public const int DefaultPage = 1;
 
 		private BlogConfig blogConfig;
 		public BlogConfig BlogConfig
@@ -56,16 +72,12 @@ namespace RaccoonBlog.Web.Controllers
 		}
 
 		private OutputCacheManager outputCacheManager;
-		protected OutputCacheManager OutputCacheManager
-		{
-			get { return outputCacheManager ?? (outputCacheManager = new OutputCacheManager()); }
-		}
+		protected OutputCacheManager OutputCacheManager => outputCacheManager ?? (outputCacheManager = new OutputCacheManager());
 
-		protected override void OnActionExecuting(ActionExecutingContext filterContext)
+	    protected override void OnActionExecuting(ActionExecutingContext filterContext)
 		{
-			ViewBag.IsHomePage = false;
-
-			base.OnActionExecuting(filterContext);
+		    ViewBag.IsHomePage = false;
+            RavenSession = (IDocumentSession)HttpContext.Items["CurrentRequestRavenSession"];
 		}
 
 		protected override void OnActionExecuted(ActionExecutedContext filterContext)

@@ -12,6 +12,7 @@ using RaccoonBlog.Web.Services.Reddit;
 using RaccoonBlog.Web.ViewModels;
 using Raven.Abstractions.Extensions;
 using Raven.Client;
+using Raven.Client.Documents.Session;
 using Raven.Client.Linq;
 
 using RedditSharp;

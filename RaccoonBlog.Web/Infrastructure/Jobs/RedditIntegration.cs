@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Web;
 using System.Web.Hosting;
 using FluentScheduler;
-using HibernatingRhinos.Loci.Common.Controllers;
-using RaccoonBlog.Web.Helpers;
-using RaccoonBlog.Web.Models;
+using RaccoonBlog.Web.Controllers;
 using RaccoonBlog.Web.Services;
-using Raven.Client;
+using Raven.Client.Documents;
 
 namespace RaccoonBlog.Web.Infrastructure.Jobs
 {
@@ -22,7 +19,7 @@ namespace RaccoonBlog.Web.Infrastructure.Jobs
 
         public RedditIntegration()
         {
-            _documentStore = RavenController.DocumentStore;
+            _documentStore = RaccoonController.DocumentStore;
             HostingEnvironment.RegisterObject(this);
         }
 

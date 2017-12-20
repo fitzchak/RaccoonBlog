@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
-using Raven.Abstractions.Extensions;
 
 namespace RaccoonBlog.Web.Models.SocialNetwork
 {
