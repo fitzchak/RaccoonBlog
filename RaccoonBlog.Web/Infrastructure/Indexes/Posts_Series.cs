@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using RaccoonBlog.Web.Models;
-
-using Raven.Client.Indexes;
+using Raven.Client.Documents.Indexes;
 
 namespace RaccoonBlog.Web.Infrastructure.Indexes
 {
-    using RaccoonBlog.Web.Helpers;
-
     public class Posts_Series : AbstractIndexCreationTask<Post, Posts_Series.Result>
 	{
 		public class Result

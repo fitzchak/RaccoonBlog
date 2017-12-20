@@ -8,8 +8,8 @@ using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Infrastructure.Indexes;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
-using Raven.Client;
-using Raven.Client.Linq;
+using Raven.Client.Documents;
+using Raven.Client.Documents.Linq;
 
 namespace RaccoonBlog.Web.Controllers
 {
@@ -19,10 +19,9 @@ namespace RaccoonBlog.Web.Controllers
 		{
 			ViewBag.IsHomePage = CurrentPage == DefaultPage;
 
-			RavenQueryStatistics stats;
-			var posts = RavenSession.Query<Post>()
+		    var posts = RavenSession.Query<Post>()
 				.Include(x => x.AuthorId)
-				.Statistics(out stats)
+				.Statistics(out var stats)
 				.WhereIsPublicPost()
 				.OrderByDescending(post => post.PublishAt)
 				.Paging(CurrentPage, DefaultPage, PageSize)
@@ -33,10 +32,9 @@ namespace RaccoonBlog.Web.Controllers
 
 		public virtual ActionResult Tag(string slug)
 		{
-			RavenQueryStatistics stats;
 			var posts = RavenSession.Query<Post>()
 				.Include(x => x.AuthorId)
-				.Statistics(out stats)
+				.Statistics(out var stats)
 				.WhereIsPublicPost()
 				.Where(post => post.TagsAsSlugs.Any(postTag => postTag == slug))
 				.OrderByDescending(post => post.PublishAt)
@@ -55,10 +53,9 @@ namespace RaccoonBlog.Web.Controllers
 			if (serie == null)
                 return HttpNotFound();
 
-            RavenQueryStatistics stats;
             var posts = RavenSession.Query<Post>()
                 .Include(x => x.AuthorId)
-				.Statistics(out stats)
+				.Statistics(out var stats)
 				.WhereIsPublicPost()
 				.Where(p => p.Id.In(serie.Posts.Select(x => x.Id)))
                 .OrderByDescending(p => p.PublishAt)
@@ -70,10 +67,9 @@ namespace RaccoonBlog.Web.Controllers
 
 		public virtual ActionResult Archive(int year, int? month, int? day)
 		{
-			RavenQueryStatistics stats;
 			var postsQuery = RavenSession.Query<Post>()
 				.Include(x => x.AuthorId)
-				.Statistics(out stats)
+				.Statistics(out var stats)
 				.WhereIsPublicPost()
 				.Where(post => post.PublishAt.Year == year);
 			

@@ -26,7 +26,7 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 				.OrderByDescending(x => x.PostPublishAt)
 				.ThenByDescending(x => x.CreatedAt)
 				.Where(x => x.PostPublishAt < DateTimeOffset.Now.AsMinutes())
-				.ProjectFromIndexFieldsInto<PostComments_CreationDate.ReduceResult>();
+				.ProjectInto<PostComments_CreationDate.ReduceResult>();
 
 			var commentsIdentifiers = processQuery(query)
 				.ToList();

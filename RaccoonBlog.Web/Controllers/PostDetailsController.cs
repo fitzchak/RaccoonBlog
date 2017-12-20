@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -8,16 +9,13 @@ using RaccoonBlog.Web.Helpers.Validation;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Infrastructure.Common;
+using RaccoonBlog.Web.Infrastructure.Indexes;
 using RaccoonBlog.Web.Infrastructure.Tasks;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Controllers
 {
-    using System.Collections.Generic;
-    using RaccoonBlog.Web.Infrastructure.Indexes;
-    using Raven.Client.Linq;
-
     public partial class PostDetailsController : RaccoonController
     {
         public virtual ActionResult Details(int id, string slug, Guid key)
@@ -25,7 +23,7 @@ namespace RaccoonBlog.Web.Controllers
             var post = RavenSession
                 .Include<Post>(x => x.CommentsId)
                 .Include(x => x.AuthorId)
-                .Load(id);
+                .Load("posts/" + id);
 
             if (post == null)
                 return HttpNotFound();
@@ -90,7 +88,7 @@ namespace RaccoonBlog.Web.Controllers
             {
                 var post = RavenSession
                     .Include<Post>(x => x.CommentsId)
-                    .Load(id);
+                    .Load("posts/" + id);
 
                 if (post == null || post.IsPublicPost(key) == false)
                     return HttpNotFound();

@@ -2,13 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Indexes;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
-using Raven.Client;
-using Raven.Client.Linq;
 using RaccoonBlog.Web.Infrastructure.Common;
 
 namespace RaccoonBlog.Web.Controllers
@@ -50,9 +47,8 @@ namespace RaccoonBlog.Web.Controllers
 		{
             ViewBag.SectionTitle = sectionTitle;
 
-			RavenQueryStatistics stats;
 			var futurePosts = RavenSession.Query<Post>()
-				.Statistics(out stats)
+				.Statistics(out var stats)
 				.Where(x => x.PublishAt > DateTimeOffset.Now.AsMinutes())
 				.Select(x => new Post {Title = x.Title, PublishAt = x.PublishAt})
 				.OrderBy(x => x.PublishAt)

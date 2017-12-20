@@ -1,6 +1,4 @@
 using System;
-using System.IO;
-using System.Security.Cryptography;
 using System.Web.Mvc;
 using System.Linq;
 using System.Xml.Linq;
@@ -8,10 +6,10 @@ using HibernatingRhinos.Loci.Common.Models;
 using NLog;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Models;
-using Raven.Client;
-using Raven.Client.Linq;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Helpers;
+using Raven.Client.Documents.Linq;
+using Raven.Client.Documents.Session;
 
 namespace RaccoonBlog.Web.Controllers
 {
@@ -53,9 +51,7 @@ namespace RaccoonBlog.Web.Controllers
 
         public virtual ActionResult Rss(string tag, string token)
         {
-            RavenQueryStatistics stats;
-
-            var queryBehavior = SetQueryLimitsBasedOnToken(token, RavenSession.Query<Post>().Statistics(out stats));
+            var queryBehavior = SetQueryLimitsBasedOnToken(token, RavenSession.Query<Post>().Statistics(out var stats));
 
             var postsQuery = queryBehavior.PostsQuery;
 
@@ -171,7 +167,7 @@ namespace RaccoonBlog.Web.Controllers
 
         public virtual ActionResult CommentsRss(int? id)
         {
-            RavenQueryStatistics stats = null;
+            QueryStatistics stats = null;
             var commentsTuples = RavenSession.QueryForRecentComments(q =>
             {
                 if (id != null)
@@ -182,8 +178,7 @@ namespace RaccoonBlog.Web.Controllers
                 return q.Statistics(out stats).Take(30);
             });
 
-            string responseETagHeader;
-            if (CheckEtag(stats, out responseETagHeader))
+            if (CheckEtag(stats, out var responseETagHeader))
                 return HttpNotModified();
 
             var rss = new XDocument(
@@ -214,7 +209,7 @@ namespace RaccoonBlog.Web.Controllers
 
         }
 
-        private bool CheckEtag(RavenQueryStatistics stats, out string responseETagHeader)
+        private bool CheckEtag(QueryStatistics stats, out string responseETagHeader)
         {
             string requestETagHeader = Request.Headers["If-None-Match"] ?? string.Empty;
             responseETagHeader = stats.Timestamp.ToString("o") + EtagInitValue;

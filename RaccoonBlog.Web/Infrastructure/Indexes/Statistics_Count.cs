@@ -1,6 +1,6 @@
 using System.Linq;
 using RaccoonBlog.Web.Models;
-using Raven.Client.Indexes;
+using Raven.Client.Documents.Indexes;
 
 namespace RaccoonBlog.Web.Infrastructure.Indexes
 {

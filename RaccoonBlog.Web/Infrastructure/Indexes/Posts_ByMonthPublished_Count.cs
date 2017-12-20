@@ -1,6 +1,6 @@
 using System.Linq;
 using RaccoonBlog.Web.Models;
-using Raven.Client.Indexes;
+using Raven.Client.Documents.Indexes;
 
 namespace RaccoonBlog.Web.Infrastructure.Indexes
 {
@@ -21,9 +21,6 @@ namespace RaccoonBlog.Web.Infrastructure.Indexes
 								group result by new {result.Year, result.Month}
 								into g
 								select new {g.Key.Year, g.Key.Month, Count = g.Sum(x => x.Count)};
-
-			Sort(x=>x.Month, global::Raven.Abstractions.Indexing.SortOptions.Int);
-			Sort(x => x.Year, global::Raven.Abstractions.Indexing.SortOptions.Int);
 		}
 	}
 }
