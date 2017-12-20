@@ -3,10 +3,7 @@
     using RaccoonBlog.Web.Infrastructure.AutoMapper;
     using RaccoonBlog.Web.Infrastructure.Common;
     using RaccoonBlog.Web.Infrastructure.Indexes;
-    using RaccoonBlog.Web.ViewModels;
-    using Raven.Client;
-    using Raven.Client.Linq;
-    using System.Collections.Generic;
+    using ViewModels;
     using System.Linq;
     using System.Web.Mvc;
 
@@ -14,9 +11,8 @@
     {
 		public virtual ActionResult PostsSeries()
         {
-            RavenQueryStatistics stats;
             var series = RavenSession.Query<Posts_Series.Result, Posts_Series>()
-                .Statistics(out stats)
+                .Statistics(out var stats)
                 .Where(x => x.Count > 1)
                 .OrderByDescending(x => x.MaxDate)
                 .Paging(CurrentPage, DefaultPage, PageSize)

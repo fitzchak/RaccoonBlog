@@ -9,7 +9,6 @@ using System.Web.Routing;
 
 using DataAnnotationsExtensions.ClientValidation;
 using FluentScheduler;
-using Glimpse.RavenDb;
 using HibernatingRhinos.Loci.Common.Tasks;
 using NLog;
 using NLog.Fluent;

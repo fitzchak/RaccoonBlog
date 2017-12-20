@@ -35,7 +35,7 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 			var post = DocumentSession
 				.Include<Post>(x => x.AuthorId)
 				.Include(x => x.CommentsId)
-				.Load(postId);
+				.Load("posts/" + postId);
 			var postAuthor = DocumentSession.Load<User>(post.AuthorId);
 			var comments = DocumentSession.Load<PostComments>(post.CommentsId);
 

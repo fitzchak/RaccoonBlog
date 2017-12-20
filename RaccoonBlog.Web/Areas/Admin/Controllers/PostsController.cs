@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using HibernatingRhinos.Loci.Common.Extensions;
 using HibernatingRhinos.Loci.Common.Models;
@@ -12,6 +13,8 @@ using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.Services;
 using RaccoonBlog.Web.ViewModels;
+using Raven.Client.Documents.Commands.Batches;
+using Raven.Client.Documents.Operations;
 
 namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
@@ -100,7 +103,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		{
 			var post = RavenSession
 				.Include<Post>(x => x.CommentsId)
-				.Load(id);
+				.Load("posts/" + id);
 
 			if (post == null)
 				return HttpNotFound();
@@ -146,7 +149,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		{
 			var post = RavenSession
 				.Include<Post>(x => x.CommentsId)
-				.Load(id);
+				.Load("posts/" + id);
 			if (post == null)
 				return Json(new {success = false});
 
@@ -162,7 +165,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			if (commentIds == null || commentIds.Length == 0)
 				ModelState.AddModelError("CommentIdsAreEmpty", "Not comments was selected.");
 
-			var post = RavenSession.Load<Post>(id);
+			var post = RavenSession.Load<Post>("posts/" + id);
 			if (post == null)
 				return HttpNotFound();
 
@@ -238,18 +241,16 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		[HttpPost]
 		public virtual ActionResult Delete(int id)
 		{
-            var post = RavenSession.Load<Post>(id);
-            if (post == null)
-            {
-                return SuccessResponse();
-            }
+            var post = RavenSession.Load<Post>("posts/" + id);
+		    if (post == null)
+		        return SuccessResponse();
 
-            if (string.IsNullOrEmpty(post.CommentsId) == false)
+		    if (string.IsNullOrEmpty(post.CommentsId) == false)
             {
                 RavenSession.Delete(post.CommentsId);
             }
 
-            RavenSession.Delete<Post>(id);
+            RavenSession.Delete(post);
 
             return SuccessResponse();
         }
@@ -270,27 +271,15 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		public virtual ActionResult DeleteAllSpamComments(bool deleteAll)
+		public virtual async Task<ActionResult> DeleteAllSpamCommentsAsync(bool deleteAll)
 		{
-			var patchCommands = RavenSession.Query<PostComments>()
-				.Where(x => x.Spam.Count > 0)
-				.ToList()
-				.Select(x => new PatchCommandData
-				             {
-				             	Key = x.Id,
-				             	Patches = new[]
-				             	          {
-				             	          	new PatchRequest
-				             	          	{
-				             	          		Type = PatchCommandType.Set,
-				             	          		Name = "Spam",
-				             	          		Value = new RavenJArray(),
-				             	          	},
-				             	          }
-				             });
-
-			DocumentStore.DatabaseCommands.Batch(patchCommands);
-
+		    await DocumentStore.Operations.SendAsync(new PatchByQueryOperation(@"
+from PostComments
+where Spam.Count > 0
+update {
+    this.Spam = [];
+}
+"));
 			return View();
 		}
 	}

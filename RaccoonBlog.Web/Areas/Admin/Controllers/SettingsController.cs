@@ -52,11 +52,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 
         private void RemoveFutureRssAccessOnEncryptionConfigChange()
         {
-            var store = RavenSession.Advanced.DocumentStore;
-            var collectionName = store.Conventions.GetCollectionName(typeof(FutureRssAccess));
-#pragma warning disable 4014
-            store.Operations.SendAsync(new DeleteByQueryOperation(new IndexQuery { Query = "FROM " + collectionName }, new QueryOperationOptions
-#pragma warning restore 4014
+            DocumentStore.Operations.SendAsync(new DeleteByQueryOperation(new IndexQuery { Query = RavenSession.Query<FutureRssAccess>().ToString() }, new QueryOperationOptions
             {
                 AllowStale = false
             }));

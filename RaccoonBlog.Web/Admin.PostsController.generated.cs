@@ -365,7 +365,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         partial void DeleteAllSpamCommentsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, bool deleteAll);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult DeleteAllSpamComments(bool deleteAll)
+        public async override Task<ActionResult> DeleteAllSpamCommentsAsync(bool deleteAll)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DeleteAllSpamComments);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "deleteAll", deleteAll);

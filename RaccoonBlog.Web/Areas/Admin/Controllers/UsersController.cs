@@ -40,7 +40,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		[HttpGet]
 		public virtual ActionResult Edit(int id)
 		{
-			var user = RavenSession.Load<User>(id);
+			var user = RavenSession.Load<User>("users/" + id);
 			if (user == null)
 				return HttpNotFound("User does not exist.");
 			return View(user.MapTo<UserInput>());
@@ -52,7 +52,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			if (!ModelState.IsValid)
 				return View("Edit", input);
 
-			var user = RavenSession.Load<User>(input.Id) ?? new User();
+			var user = RavenSession.Load<User>("users/" + input.Id) ?? new User();
 			input.MapPropertiesToInstance(user);
 			RavenSession.Store(user);
 			return RedirectToAction("Index");
@@ -61,7 +61,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		[HttpGet]
 		public virtual ActionResult ChangePassword(int id)
 		{
-			var user = RavenSession.Load<User>(id);
+			var user = RavenSession.Load<User>("users/" + id);
 			if (user == null)
 				return HttpNotFound("User does not exist.");
 
@@ -74,7 +74,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			if (!ModelState.IsValid)
 				return View("ChangePassword", input);
 
-			var user = RavenSession.Load<User>(input.Id);
+			var user = RavenSession.Load<User>("users/" + input.Id);
 			if (user == null)
 				return HttpNotFound("User does not exist.");
 
@@ -93,7 +93,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		[HttpPost]
 		public virtual ActionResult SetActivation(int id, bool isActive)
 		{
-			var user = RavenSession.Load<User>(id);
+			var user = RavenSession.Load<User>("users/" + id);
 			if (user == null)
 				return HttpNotFound("User does not exist.");
 

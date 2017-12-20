@@ -3,18 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using HibernatingRhinos.Loci.Common.Tasks;
-using JetBrains.Annotations;
 using NLog;
 using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Infrastructure.Tasks;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.Services.Reddit;
 using RaccoonBlog.Web.ViewModels;
-using Raven.Abstractions.Extensions;
-using Raven.Client;
 using Raven.Client.Documents.Session;
-using Raven.Client.Linq;
-
 using RedditSharp;
 using RedditSharp.Things;
 using Post = RaccoonBlog.Web.Models.Post;
