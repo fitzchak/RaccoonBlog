@@ -17,16 +17,16 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 	{
 		public static IList<Tuple<PostComments.Comment, Post>> QueryForRecentComments(
 			this IDocumentSession documentSession,
-			Func<IRavenQueryable<PostComments_CreationDate.ReduceResult>, IQueryable<PostComments_CreationDate.ReduceResult>> processQuery)
+			Func<IRavenQueryable<PostComments_CreationDate.Result>, IQueryable<PostComments_CreationDate.Result>> processQuery)
 		{
 			var query = documentSession
-				.Query<PostComments_CreationDate.ReduceResult, PostComments_CreationDate>()
+				.Query<PostComments_CreationDate.Result, PostComments_CreationDate>()
 				.Include(comment => comment.PostCommentsId)
 				.Include(comment => comment.PostId)
 				.OrderByDescending(x => x.PostPublishAt)
 				.ThenByDescending(x => x.CreatedAt)
 				.Where(x => x.PostPublishAt < DateTimeOffset.Now.AsMinutes())
-				.ProjectInto<PostComments_CreationDate.ReduceResult>();
+				.ProjectInto<PostComments_CreationDate.Result>();
 
 			var commentsIdentifiers = processQuery(query)
 				.ToList();

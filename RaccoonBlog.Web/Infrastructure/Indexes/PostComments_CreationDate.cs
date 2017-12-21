@@ -5,9 +5,9 @@ using Raven.Client.Documents.Indexes;
 
 namespace RaccoonBlog.Web.Infrastructure.Indexes
 {
-	public class PostComments_CreationDate : AbstractIndexCreationTask<PostComments, PostComments_CreationDate.ReduceResult>
+	public class PostComments_CreationDate : AbstractIndexCreationTask<PostComments, PostComments_CreationDate.Result>
 	{
-		public class ReduceResult
+		public class Result
 		{
 			public DateTimeOffset CreatedAt { get; set; }
 			public int CommentId { get; set; }
@@ -18,17 +18,17 @@ namespace RaccoonBlog.Web.Infrastructure.Indexes
 
 		public PostComments_CreationDate()
 		{
-			Map = postComments => from postComment in postComments
-			                      from comment in postComment.Comments
-			                      where comment.IsSpam == false
-			                      select new
-			                             {
-			                             	comment.CreatedAt,
-			                             	CommentId = comment.Id,
-			                             	PostCommentsId = postComment.Id,
-			                             	PostId = postComment.Post.Id,
-			                             	PostPublishAt = postComment.Post.PublishAt
-			                             };
+		    Map = postComments => from postComment in postComments
+		        from comment in postComment.Comments
+		        where comment.IsSpam == false
+		        select new
+		        {
+		            comment.CreatedAt,
+		            CommentId = comment.Id,
+		            PostCommentsId = postComment.Id,
+		            PostId = postComment.Post.Id,
+		            PostPublishAt = postComment.Post.PublishAt
+		        };
 
 			Store(x => x.CreatedAt, FieldStorage.Yes);
 			Store(x => x.CommentId, FieldStorage.Yes);
