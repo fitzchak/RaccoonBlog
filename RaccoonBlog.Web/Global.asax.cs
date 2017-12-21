@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
+using System.Net.Security;
 using System.Net.Sockets;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -95,19 +99,34 @@ namespace RaccoonBlog.Web
             _log.FatalException($"Error executing background job {info.Name}.", e.ExceptionObject);
         }
 
-        private static void InitializeDocumentStore()
-		{
-			if (DocumentStore != null) return; // prevent misuse
+	    private static void InitializeDocumentStore()
+	    {
+	        if (DocumentStore != null) return; // prevent misuse
 
-		    DocumentStore = new DocumentStore
-			{
-				ConnectionStringName = "RavenDB",
-			}.Initialize();
+	        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+	        ServicePointManager.ServerCertificateValidationCallback += OnServerCertificateCustomValidationCallback;
 
-            TryCreatingIndexesOrRedirectToErrorPage();
-		}
+            var urls = WebConfigurationManager.AppSettings["Raven/Urls"];
+	        var database = WebConfigurationManager.AppSettings["Raven/Database"];
+	        var certificatePath = WebConfigurationManager.AppSettings["Raven/CertificatePath"];
+	        var certificatePassword = WebConfigurationManager.AppSettings["Raven/CertificatePassword"];
+	        var certificate = new X509Certificate2(certificatePath, certificatePassword);
+            DocumentStore = new DocumentStore
+	        {
+	            Urls = urls.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries),
+                Database = database,
+                Certificate = certificate,
+            }.Initialize();
 
-		private static void TryCreatingIndexesOrRedirectToErrorPage()
+	        // TryCreatingIndexesOrRedirectToErrorPage();
+	    }
+
+	    private static bool OnServerCertificateCustomValidationCallback(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
+	    {
+	        return true;
+	    }
+
+	    private static void TryCreatingIndexesOrRedirectToErrorPage()
 		{
 			try
 			{
