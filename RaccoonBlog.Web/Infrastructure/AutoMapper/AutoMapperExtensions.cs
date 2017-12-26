@@ -30,13 +30,5 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper
 
 			return (TResult) Mapper.Map(self, value, self.GetType(), typeof (TResult));
 		}
-
-		public static TResult DynamicMapTo<TResult>(this object self)
-		{
-			if (self == null)
-				throw new ArgumentNullException();
-
-			return (TResult) Mapper.DynamicMap(self, self.GetType(), typeof (TResult));
-		}
 	}
 }

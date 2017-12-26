@@ -8,29 +8,29 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper
 {
 	public class AutoMapperConfiguration
 	{
-		public static void Configure()
-		{
-		    Mapper.Initialize(cfg =>
-		    {
-		        cfg.CreateMap<string, MvcHtmlString>().ConvertUsing<MvcHtmlStringConverter>();
-		        cfg.CreateMap<Guid, string>().ConvertUsing<GuidToStringConverter>();
-		    });
+	    public static void Configure()
+	    {
+	        Mapper.Initialize(cfg =>
+	        {
+	            cfg.CreateMap<string, MvcHtmlString>().ConvertUsing<MvcHtmlStringConverter>();
+	            cfg.CreateMap<Guid, string>().ConvertUsing<GuidToStringConverter>();
 
-			Mapper.CreateMap<Guid, string>().ConvertUsing<GuidToStringConverter>();
+	            cfg.CreateMap<Guid, string>().ConvertUsing<GuidToStringConverter>();
 
-			Mapper.CreateMap<DateTimeOffset, DateTime>().ConvertUsing<DateTimeTypeConverter>();
+	            cfg.CreateMap<DateTimeOffset, DateTime>().ConvertUsing<DateTimeTypeConverter>();
 
 
-			// TODO: It would make sense to add all of those automatically with an IoC.
-			Mapper.AddProfile(new PostViewModelMapperProfile());
-			Mapper.AddProfile(new PostsViewModelMapperProfile());
-			Mapper.AddProfile(new TagsListViewModelMapperProfile());
-			Mapper.AddProfile(new SectionMapperProfile());
-			Mapper.AddProfile(new EmailViewModelMapperProfile());
-            Mapper.AddProfile(new SeriesMapperProfile());
+	            // TODO: It would make sense to add all of those automatically with an IoC.
+	            cfg.AddProfile(new PostViewModelMapperProfile());
+	            cfg.AddProfile(new PostsViewModelMapperProfile());
+	            cfg.AddProfile(new TagsListViewModelMapperProfile());
+	            cfg.AddProfile(new SectionMapperProfile());
+	            cfg.AddProfile(new EmailViewModelMapperProfile());
+	            cfg.AddProfile(new SeriesMapperProfile());
 
-			Mapper.AddProfile(new UserAdminMapperProfile());
-			Mapper.AddProfile(new PostsAdminViewModelMapperProfile());
-		}
+	            cfg.AddProfile(new UserAdminMapperProfile());
+	            cfg.AddProfile(new PostsAdminViewModelMapperProfile());
+	        });
+	    }
 	}
 }
