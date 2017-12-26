@@ -1,5 +1,5 @@
 using System;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Html;
 
 namespace RaccoonBlog.Web.ViewModels
 {
@@ -10,7 +10,7 @@ namespace RaccoonBlog.Web.ViewModels
 		public string Url { get; set; }
 		public string Email { get; set; }
 		public DateTimeOffset CreatedAt { get; set; }
-		public MvcHtmlString Body { get; set; }
+		public HtmlString Body { get; set; }
 		public bool IsSpam { get; set; }
 
 		public int PostId { get; set; }

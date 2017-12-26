@@ -49,7 +49,7 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 
 			CreateMap<User, CommentInput>()
 				.ForMember(x => x.Name, o => o.MapFrom(m => m.FullName))
-				.ForMember(x => x.Url, o => o.MapFrom(m => UrlHelper.RelativeToAbsolute(UrlHelper.RouteUrl("homepage"))))
+				//.ForMember(x => x.Url, o => o.MapFrom(m => UrlHelper.RelativeToAbsolute(UrlHelper.RouteUrl("homepage"))))
 				.ForMember(x => x.Body, o => o.Ignore())
 				.ForMember(x => x.CommenterKey, o => o.Ignore())
 				;
@@ -61,7 +61,7 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 			//    .ForMember(x => x.CommenterKey, o => o.Ignore())
 			//    ;
 
-			CreateMap<HttpRequestWrapper, Tasks.AddCommentTask.RequestValues>();
+			// CreateMap<HttpRequestWrapper, Tasks.AddCommentTask.RequestValues>();
 
 			CreateMap<User, PostViewModel.UserDetails>();
 		}

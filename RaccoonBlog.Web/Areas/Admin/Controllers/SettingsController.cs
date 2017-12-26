@@ -1,7 +1,7 @@
-using System;
+/*using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using RaccoonBlog.Web.Areas.Admin.Models;
 using RaccoonBlog.Web.Areas.Admin.ViewModels;
 using RaccoonBlog.Web.Helpers;
@@ -13,16 +13,16 @@ using Raven.Client.Documents.Session;
 
 namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
-    public partial class SettingsController : AdminController
+    public class SettingsController : AdminController
     {
         [HttpGet]
-        public virtual ActionResult Index()
+        public ActionResult Index()
         {
             return View(BlogConfig);
         }
 
         [HttpPost]
-        public virtual ActionResult Index(BlogConfig config)
+        public ActionResult Index(BlogConfig config)
         {
             if (ModelState.IsValid == false)
             {
@@ -59,14 +59,14 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public virtual async Task<ActionResult> RedditSubmission()
+        public async Task<ActionResult> RedditSubmission()
         {
             var model = await PrepareRedditManualSubmissionViewModel();
             return View(model);
         }
 
         [HttpGet]
-        public virtual ActionResult SubmitToReddit(string postId, string sr)
+        public ActionResult SubmitToReddit(string postId, string sr)
         {
             var post = RavenSession.Load<Post>(postId);
             var redditSubmitUrl = RedditHelper.SubmitUrl(sr, post);
@@ -80,7 +80,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public virtual ActionResult ResetFailedRedditSubmission(string postId, string sr)
+        public ActionResult ResetFailedRedditSubmission(string postId, string sr)
         {
             var post = RavenSession.Load<Post>(postId);
             var postSubmission = post.Integration.Reddit.GetPostSubmissionForSubreddit(sr);
@@ -99,7 +99,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public virtual ActionResult RssFutureAccess()
+        public ActionResult RssFutureAccess()
         {
             ValidateConfiguration();
             SetFutureRssAccessList(RavenSession);
@@ -108,7 +108,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public virtual ActionResult RssFutureAccess(FutureRssAccess input)
+        public ActionResult RssFutureAccess(FutureRssAccess input)
         {
             ValidateConfiguration();
 
@@ -149,7 +149,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
                    current.FuturePostsEncryptionSalt != config.FuturePostsEncryptionSalt;
         }
 
-        private void SetFutureRssAccessList(IDocumentSession session)
+        private void SetFutureRssAccessList(IAsyncDocumentSession session)
         {
             ViewData["FutureRssAccessList"] = session.Query<FutureRssAccess>()
                 .Customize(x => x.WaitForNonStaleResults())
@@ -181,4 +181,4 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
                 .GetToken(BlogConfig);
         }
     }
-}
+}*/

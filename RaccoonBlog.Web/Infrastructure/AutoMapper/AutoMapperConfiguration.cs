@@ -1,6 +1,6 @@
 using System;
-using System.Web.Mvc;
 using AutoMapper;
+using Microsoft.AspNetCore.Html;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 
@@ -12,7 +12,7 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper
 	    {
 	        Mapper.Initialize(cfg =>
 	        {
-	            cfg.CreateMap<string, MvcHtmlString>().ConvertUsing<MvcHtmlStringConverter>();
+	            cfg.CreateMap<string, HtmlString>().ConvertUsing<HtmlStringConverter>();
 	            cfg.CreateMap<Guid, string>().ConvertUsing<GuidToStringConverter>();
 
 	            cfg.CreateMap<Guid, string>().ConvertUsing<GuidToStringConverter>();

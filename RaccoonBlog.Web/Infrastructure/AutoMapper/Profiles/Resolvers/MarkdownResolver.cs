@@ -1,8 +1,8 @@
 using System;
 using System.Text.RegularExpressions;
 using System.Web;
-using System.Web.Mvc;
-using MarkdownDeep;
+using HeyRed.MarkdownSharp;
+using Microsoft.AspNetCore.Html;
 
 namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers
 {
@@ -10,10 +10,10 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers
 	{
         private static readonly Regex Backticks = new Regex(@"^```+\s*$", RegexOptions.Multiline);
 
-		public static MvcHtmlString Resolve(string inputBody)
+		public static HtmlString Resolve(string inputBody)
 		{
 			var html = FormatMarkdown(inputBody);
-			return MvcHtmlString.Create(html);
+			return new HtmlString(html);
 		}
 
 	    private static string NormalizeContent(string content)
@@ -44,11 +44,11 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers
 	    private static Markdown GetMarkdownTransformer()
 	    {
 	        var md = new Markdown();
-	        md.ExtraMode = true;
+	        /*md.ExtraMode = true;
 	        md.SafeMode = true;
 	        md.NoFollowLinks = true;
 	        md.NewWindowForExternalLinks = true;
-	        md.MarkdownInHtml = false;
+	        md.MarkdownInHtml = false;*/
 	        return md;
 	    }
 	}

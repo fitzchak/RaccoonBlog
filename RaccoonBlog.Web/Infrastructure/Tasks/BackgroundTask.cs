@@ -1,5 +1,5 @@
-﻿using System;
-using NLog;
+﻿/*
+using System;
 using Raven.Client.Documents.Session;
 using Raven.Client.Exceptions;
 
@@ -7,11 +7,11 @@ namespace HibernatingRhinos.Loci.Common.Tasks
 {
 	public abstract class BackgroundTask
 	{
-		protected IDocumentSession DocumentSession;
+		protected IAsyncDocumentSession DocumentSession;
 
 		private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-		protected virtual void Initialize(IDocumentSession session)
+		protected void Initialize(IAsyncDocumentSession session)
 		{
 			DocumentSession = session;
 			DocumentSession.Advanced.UseOptimisticConcurrency = true;
@@ -21,7 +21,7 @@ namespace HibernatingRhinos.Loci.Common.Tasks
 		{
 		}
 
-		public bool? Run(IDocumentSession openSession)
+		public bool? Run(IAsyncDocumentSession openSession)
 		{
 			Initialize(openSession);
 			try
@@ -52,3 +52,4 @@ namespace HibernatingRhinos.Loci.Common.Tasks
 		public abstract void Execute();
 	}
 }
+*/

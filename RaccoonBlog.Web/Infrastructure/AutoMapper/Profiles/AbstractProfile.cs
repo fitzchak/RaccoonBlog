@@ -1,14 +1,11 @@
-using System.Web;
-using System.Web.Mvc;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 {
 	public abstract class AbstractProfile : Profile
 	{
-		protected UrlHelper UrlHelper
-		{
-			get { return new UrlHelper(HttpContext.Current.Request.RequestContext); }
-		}
+		//protected UrlHelper UrlHelper => new UrlHelper(HttpContext.Current.Request.RequestContext);
 	}
 }

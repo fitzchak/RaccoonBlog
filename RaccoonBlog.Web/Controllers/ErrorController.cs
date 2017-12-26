@@ -1,10 +1,10 @@
-﻿using System.Web.Mvc;
+﻿/*using System.Web.Mvc;
 
 using NLog;
 
 namespace RaccoonBlog.Web.Controllers
 {
-    public partial class ErrorController : Controller
+    public class ErrorController : Controller
     {
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
@@ -35,4 +35,4 @@ namespace RaccoonBlog.Web.Controllers
             return View(MVC.Shared.Views.Error);
         }
     }
-}
+}*/

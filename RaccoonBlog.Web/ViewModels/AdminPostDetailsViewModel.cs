@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Html;
 
 namespace RaccoonBlog.Web.ViewModels
 {
@@ -17,7 +17,7 @@ namespace RaccoonBlog.Web.ViewModels
 		public class Comment
 		{
 			public int Id { get; set; }
-			public MvcHtmlString Body { get; set; }
+			public HtmlString Body { get; set; }
 			public string Author { get; set; }
 			public string Url { get; set; }    // Look for HTML injection.
 			public string EmailHash { get; set; }
@@ -29,9 +29,9 @@ namespace RaccoonBlog.Web.ViewModels
 		public class PostDetails
 		{
 			public int Id { get; set; }
-			public MvcHtmlString Title { get; set; }
+			public HtmlString Title { get; set; }
 			public string Slug { get; set; }
-			public MvcHtmlString Body { get; set; }
+			public HtmlString Body { get; set; }
 
 			public DateTimeOffset CreatedAt { get; set; }
 			public DateTimeOffset PublishedAt { get; set; }

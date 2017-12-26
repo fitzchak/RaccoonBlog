@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Indexes;
@@ -15,8 +16,8 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 {
 	public static class DocumentSessionExtensions
 	{
-		public static IList<Tuple<PostComments.Comment, Post>> QueryForRecentComments(
-			this IDocumentSession documentSession,
+		public static async Task<IList<Tuple<PostComments.Comment, Post>>> QueryForRecentComments(
+			this IAsyncDocumentSession documentSession,
 			Func<IRavenQueryable<PostComments_CreationDate.Result>, IQueryable<PostComments_CreationDate.Result>> processQuery)
 		{
 			var query = documentSession
@@ -28,19 +29,22 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 				.Where(x => x.PostPublishAt < DateTimeOffset.Now.AsMinutes())
 				.ProjectInto<PostComments_CreationDate.Result>();
 
-			var commentsIdentifiers = processQuery(query)
-				.ToList();
+			var commentsIdentifiers = await processQuery(query)
+				.ToListAsync();
 
-			return (from commentIdentifier in commentsIdentifiers
-			        let comments = documentSession.Load<PostComments>(commentIdentifier.PostCommentsId)
-			        let post = documentSession.Load<Post>(commentIdentifier.PostId)
-			        let comment = comments.Comments.FirstOrDefault(x => x.Id == commentIdentifier.CommentId)
-			        where comment != null 
-			        select Tuple.Create(comment, post))
-				.ToList();
+		    var list = new List<Tuple<PostComments.Comment, Post>>();
+		    foreach (var commentIdentifier in commentsIdentifiers)
+		    {
+		        var comments = await documentSession.LoadAsync<PostComments>(commentIdentifier.PostCommentsId);
+		        var post = await documentSession.LoadAsync<Post>(commentIdentifier.PostId);
+		        var comment = comments.Comments.FirstOrDefault(x => x.Id == commentIdentifier.CommentId);
+		        if (comment != null) 
+		            list.Add(Tuple.Create(comment, post));
+		    }
+		    return list;
 		}
 
-		public static PostReference GetNextPrevPost(this IDocumentSession session, Post compareTo, bool isNext)
+		public static async Task<PostReference> GetNextPrevPost(this IAsyncDocumentSession session, Post compareTo, bool isNext)
 		{
 			var queryable = session.Query<Post>()
 				.WhereIsPublicPost();
@@ -58,9 +62,9 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 					.OrderByDescending(post => post.PublishAt);
 			}
 
-			var postReference = queryable
+			var postReference = await queryable
 				.Select(p => new Post {Id = p.Id, Title = p.Title})
-				.FirstOrDefault();
+				.FirstOrDefaultAsync();
 
 			if (postReference == null)
 				return null;
@@ -68,26 +72,26 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 			return postReference.MapTo<PostReference>();
 		}
 
-		public static User GetCurrentUser(this IDocumentSession session)
+		public static User GetCurrentUser(this IAsyncDocumentSession session)
 		{
-			if (HttpContext.Current.Request.IsAuthenticated == false)
+			//if (HttpContext.Current.Request.IsAuthenticated == false)
 				return null;
 
-			var claimsIdentity = HttpContext.Current.User.Identity as ClaimsIdentity;
+			/*var claimsIdentity = HttpContext.Current.User.Identity as ClaimsIdentity;
 			if (claimsIdentity == null) 
 				return null;
 
 			var email = claimsIdentity.FindFirst(ClaimTypes.Email).Value;
 			var user = session.GetUserByEmail(email);
-			return user;
+			return user;*/
 		}
 
-		public static User GetUserByEmail(this IDocumentSession session, string email)
+		public static Task<User> GetUserByEmail(this IAsyncDocumentSession session, string email)
 		{
-			return session.Query<User>().FirstOrDefault(u => u.Email == email);
+			return session.Query<User>().FirstOrDefaultAsync(u => u.Email == email);
 		}
 
-		public static Commenter GetCommenter(this IDocumentSession session, string commenterKey)
+		public static Commenter GetCommenter(this IAsyncDocumentSession session, string commenterKey)
 		{
 			Guid guid;
 			if (Guid.TryParse(commenterKey, out guid) == false)
@@ -95,14 +99,14 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 			return GetCommenter(session, guid);
 		}
 
-		public static Commenter GetCommenter(this IDocumentSession session, Guid? commenterKey)
+		public static Commenter GetCommenter(this IAsyncDocumentSession session, Guid? commenterKey)
 		{
 			if (commenterKey == null)
 				return null;
 			return GetCommenter(session, commenterKey.Value);
 		}
 
-		public static Commenter GetCommenter(this IDocumentSession session, Guid commenterKey)
+		public static Commenter GetCommenter(this IAsyncDocumentSession session, Guid commenterKey)
 		{
 			return session.Query<Commenter>().FirstOrDefault(x => x.Key == commenterKey);
 		}

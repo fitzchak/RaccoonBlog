@@ -1,8 +1,7 @@
-﻿using System;
+﻿/*using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
-using System.Web.Mvc;
 using HibernatingRhinos.Loci.Common.Models;
 using MarkdownDeep;
 
@@ -13,9 +12,9 @@ namespace RaccoonBlog.Web.Helpers
 		private static readonly Regex CodeBlockFinder = new Regex(@"\[code lang=(.+?)\s*\](.*?)\[/code\]", RegexOptions.Compiled | RegexOptions.Singleline);
 		private static readonly Regex FirstLineSpacesFinder = new Regex(@"^(\s|\t)+", RegexOptions.Compiled);
 
-		public static MvcHtmlString CompiledContent(this IDynamicContent contentItem, bool trustContent)
+		public static HtmlString CompiledContent(this IDynamicContent contentItem, bool trustContent)
 		{
-			if (contentItem == null) return MvcHtmlString.Empty;
+			if (contentItem == null) return HtmlString.Empty;
 
 			switch (contentItem.ContentType)
 			{
@@ -41,11 +40,11 @@ namespace RaccoonBlog.Web.Helpers
 						contents = string.Format("<pre>{0}</pre>", HttpUtility.HtmlEncode(contents));
 					}
 
-					return MvcHtmlString.Create(contents);
+					return HtmlString.Create(contents);
 				case DynamicContentType.Html:
-					return trustContent ? MvcHtmlString.Create(contentItem.Body) : MvcHtmlString.Empty;
+					return trustContent ? HtmlString.Create(contentItem.Body) : HtmlString.Empty;
 			}
-			return MvcHtmlString.Empty;
+			return HtmlString.Empty;
 		}
 
 		private static string GenerateCodeBlock(string lang, string code)
@@ -79,4 +78,4 @@ namespace RaccoonBlog.Web.Helpers
 			return string.Empty;
 		}
 	}
-}
+}*/

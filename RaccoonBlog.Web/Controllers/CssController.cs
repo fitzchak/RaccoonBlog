@@ -1,14 +1,15 @@
-using System.IO;
+/*using System.IO;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using dotless.Core.configuration;
+using Microsoft.AspNetCore.Mvc;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public partial class CssController : Controller
+	public class CssController : Controller
 	{
-		public virtual ActionResult Merge(string[] files)
+		public ActionResult Merge(string[] files)
 		{
 			var builder = new StringBuilder();
 			foreach (var file in files)
@@ -17,7 +18,7 @@ namespace RaccoonBlog.Web.Controllers
 				var normalizeFile = Server.MapPath(Url.Content(Path.Combine("~/Content/css/", file)));
 				if (normalizeFile.StartsWith(pathAllowed) == false)
 				{
-					return HttpNotFound("Path not allowed");
+					return NotFound("Path not allowed");
 				}
 				if (System.IO.File.Exists(normalizeFile))
 				{
@@ -36,4 +37,4 @@ namespace RaccoonBlog.Web.Controllers
 			return Content(css, "text/css");
 		}
 	}
-}
+}*/

@@ -1,4 +1,4 @@
-using System;
+/*using System;
 using System.Web;
 using HibernatingRhinos.Loci.Common.Tasks;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
@@ -39,19 +39,19 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 			var postAuthor = DocumentSession.Load<User>(post.AuthorId);
 			var comments = DocumentSession.Load<PostComments>(post.CommentsId);
 
-			var comment = new PostComments.Comment
-			              	{
-			              		Id = comments.GenerateNewCommentId(),
-			              		Author = commentInput.Name,
-			              		Body = commentInput.Body,
-			              		CreatedAt = DateTimeOffset.Now,
-			              		Email = commentInput.Email,
-			              		Url = commentInput.Url,
-			              		Important = requestValues.IsAuthenticated, // TODO: Don't mark as important based on that
-			              		UserAgent = requestValues.UserAgent,
-			              		UserHostAddress = requestValues.UserHostAddress,
-			              	};
-			comment.IsSpam = AkismetService.CheckForSpam(comment);
+		    var comment = new PostComments.Comment
+		    {
+		        Id = comments.GenerateNewCommentId(),
+		        Author = commentInput.Name,
+		        Body = commentInput.Body,
+		        CreatedAt = DateTimeOffset.Now,
+		        Email = commentInput.Email,
+		        Url = commentInput.Url,
+		        Important = requestValues.IsAuthenticated, // TODO: Don't mark as important based on that
+		        UserAgent = requestValues.UserAgent,
+		        UserHostAddress = requestValues.UserHostAddress,
+		    };
+			// TODO: comment.IsSpam = AkismetService.CheckForSpam(comment);
 
 			var commenter = DocumentSession.GetCommenter(commentInput.CommenterKey) ?? new Commenter { Key = commentInput.CommenterKey ?? Guid.Empty };
 			SetCommenter(commenter, comment);
@@ -104,4 +104,4 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 			TaskExecutor.ExcuteLater(new SendEmailTask(viewModel.Email, subject, "NewComment", postAuthor.Email, viewModel));
 		}
 	}
-}
+}*/

@@ -1,23 +1,20 @@
-using System;
+/*using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Mvc.Html;
-using System.Web.Optimization;
-
+using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using RaccoonBlog.Web.Models;
-using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Helpers
 {
 	public static class HtmlHelperExtensions
 	{
-		private static readonly MvcHtmlString Empty = new MvcHtmlString(string.Empty);
+		private static readonly HtmlString Empty = new HtmlString(string.Empty);
 
-	    public static MvcHtmlString Glyphicon(this HtmlHelper helper, string iconName)
+	    public static HtmlString Glyphicon(this HtmlHelper helper, string iconName)
 	    {
-	        return MvcHtmlString.Create($"<i class=\"glyphicon glyphicon-{iconName}\"></i>");
+	        return HtmlString.Create($"<i class=\"glyphicon glyphicon-{iconName}\"></i>");
 	    }
 
 		public static bool IsSectionActive(this HtmlHelper helper, string sectionTitle)
@@ -33,7 +30,7 @@ namespace RaccoonBlog.Web.Helpers
 			return true;
 		}
 
-		public static MvcHtmlString RenderSection(this HtmlHelper helper, string sectionTitle)
+		public static HtmlString RenderSection(this HtmlHelper helper, string sectionTitle)
 		{
 			var sections = helper.ViewBag.Sections as List<Section>;
 			if (sections == null)
@@ -46,7 +43,7 @@ namespace RaccoonBlog.Web.Helpers
 			if (string.IsNullOrEmpty(section.ActionName) == false && string.IsNullOrEmpty(section.ControllerName) == false)
 				return helper.Action(section.ActionName, section.ControllerName);
 
-			return new MvcHtmlString(section.Body);
+			return new HtmlString(section.Body);
 		}
 
 		public static string ConvertSectionTitleToId(this HtmlHelper helper, string sectionTitle)
@@ -60,7 +57,7 @@ namespace RaccoonBlog.Web.Helpers
 				.ToLowerInvariant();
 		}
 
-		public static MvcHtmlString Link(this HtmlHelper helper, string text, string href, object htmlAttributes)
+		public static HtmlString Link(this HtmlHelper helper, string text, string href, object htmlAttributes)
 		{
 			var tag = new TagBuilder("a");
 			tag.InnerHtml = text;
@@ -76,7 +73,7 @@ namespace RaccoonBlog.Web.Helpers
 					tag.Attributes[attribute.Key] = val;
 			}
 
-			return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
+			return new HtmlString(tag.ToString(TagRenderMode.Normal));
 		}
 
 		public static IHtmlString RenderTheme(this HtmlHelper helper, string themeName)
@@ -106,4 +103,4 @@ namespace RaccoonBlog.Web.Helpers
 			}
 		}
 	}
-}
+}*/

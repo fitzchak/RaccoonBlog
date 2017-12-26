@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Infrastructure.Common;
@@ -13,81 +14,80 @@ using Raven.Client.Documents.Linq;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public partial class PostsController : AggresivelyCachingRacconController
+	public class PostsController : AggresivelyCachingRacconController
 	{
-		public virtual ActionResult Index()
+		public async Task<ActionResult> Index()
 		{
 			ViewBag.IsHomePage = CurrentPage == DefaultPage;
 
-		    var posts = RavenSession.Query<Post>()
+		    var posts = await RavenSession.Query<Post>()
 				.Include(x => x.AuthorId)
 				.Statistics(out var stats)
 				.WhereIsPublicPost()
 				.OrderByDescending(post => post.PublishAt)
 				.Paging(CurrentPage, DefaultPage, PageSize)
-				.ToList();
+				.ToListAsync();
 
-			return ListView(stats.TotalResults, posts);
+			return await ListView(stats.TotalResults, posts);
 		}
 
-		public virtual ActionResult Tag(string slug)
+		public async Task<ActionResult> Tag(string slug)
 		{
-			var posts = RavenSession.Query<Post>()
+			var posts = await RavenSession.Query<Post>()
 				.Include(x => x.AuthorId)
 				.Statistics(out var stats)
 				.WhereIsPublicPost()
 				.Where(post => post.TagsAsSlugs.Any(postTag => postTag == slug))
 				.OrderByDescending(post => post.PublishAt)
 				.Paging(CurrentPage, DefaultPage, PageSize)
-				.ToList();
+				.ToListAsync();
 
-			return ListView(stats.TotalResults, posts);
+			return await ListView(stats.TotalResults, posts);
 		}
 
-		public virtual ActionResult Series(int seriesId, string seriesSlug)
+		public async Task<ActionResult> Series(int seriesId, string seriesSlug)
 	    {
 			var serie = RavenSession
 				.Query<Posts_Series.Result, Posts_Series>()
 				.FirstOrDefault(x => x.SerieId == seriesId);
 
 			if (serie == null)
-                return HttpNotFound();
+                return NotFound();
 
-            var posts = RavenSession.Query<Post>()
+            var posts = await RavenSession.Query<Post>()
                 .Include(x => x.AuthorId)
 				.Statistics(out var stats)
 				.WhereIsPublicPost()
 				.Where(p => p.Id.In(serie.Posts.Select(x => x.Id)))
                 .OrderByDescending(p => p.PublishAt)
                 .Paging(CurrentPage, DefaultPage, PageSize)
-                .ToList();
+                .ToListAsync();
 
-            return ListView(stats.TotalResults, posts);
+            return await ListView(stats.TotalResults, posts);
 	    }
 
-		public virtual ActionResult Archive(int year, int? month, int? day)
-		{
-			var postsQuery = RavenSession.Query<Post>()
-				.Include(x => x.AuthorId)
-				.Statistics(out var stats)
-				.WhereIsPublicPost()
-				.Where(post => post.PublishAt.Year == year);
-			
-			if (month != null)
-				postsQuery = postsQuery.Where(post => post.PublishAt.Month == month.Value);
+	    public async Task<ActionResult> Archive(int year, int? month, int? day)
+	    {
+	        var postsQuery = RavenSession.Query<Post>()
+	            .Include(x => x.AuthorId)
+	            .Statistics(out var stats)
+	            .WhereIsPublicPost()
+	            .Where(post => post.PublishAt.Year == year);
 
-			if (day != null)
-				postsQuery = postsQuery.Where(post => post.PublishAt.Day == day.Value);
+	        if (month != null)
+	            postsQuery = postsQuery.Where(post => post.PublishAt.Month == month.Value);
 
-			var posts = 
-				postsQuery.OrderByDescending(post => post.PublishAt)
-				.Paging(CurrentPage, DefaultPage, PageSize)
-				.ToList();
+	        if (day != null)
+	            postsQuery = postsQuery.Where(post => post.PublishAt.Day == day.Value);
 
-			return ListView(stats.TotalResults, posts);
-		}
+	        var posts = await postsQuery.OrderByDescending(post => post.PublishAt)
+	            .Paging(CurrentPage, DefaultPage, PageSize)
+	            .ToListAsync();
 
-		private ActionResult ListView(int count, IList<Post> posts)
+	        return await ListView(stats.TotalResults, posts);
+	    }
+
+	    private async Task<ActionResult> ListView(int count, IList<Post> posts)
 		{
 		    ViewBag.ChangeViewStyle = true;
 
@@ -99,10 +99,10 @@ namespace RaccoonBlog.Web.Controllers
 				.Distinct()
 				.ToList();
 
-			var series = RavenSession
+			var series = await RavenSession
 				.Query<Posts_Series.Result, Posts_Series>()
 				.Where(x => x.Series.In(serieTitles) && x.Count > 1)
-				.ToList();
+				.ToListAsync();
 
 			foreach (var post in posts)
 			{
@@ -112,15 +112,13 @@ namespace RaccoonBlog.Web.Controllers
 				if (string.IsNullOrWhiteSpace(post.AuthorId))
 					continue;
 
-				var author = RavenSession.Load<User>(post.AuthorId);
+				var author = await RavenSession.LoadAsync<User>(post.AuthorId);
 				if (author == null)
 					continue;
 
 				
 				postSummary.Author = author.MapTo<PostsViewModel.PostSummary.UserDetails>();
 			}
-
-			
 
 			return View("List", new PostsViewModel
 			{

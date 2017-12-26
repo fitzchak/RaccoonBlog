@@ -1,4 +1,4 @@
-using System.Web.Mvc;
+/*using System.Web.Mvc;
 
 namespace RaccoonBlog.Web.Helpers.Binders
 {
@@ -21,4 +21,4 @@ namespace RaccoonBlog.Web.Helpers.Binders
 			return base.BindModel(controllerContext, bindingContext);
 		}
 	}
-}
+}*/

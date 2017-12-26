@@ -1,8 +1,4 @@
-﻿@using RaccoonBlog.Web.Infrastructure.Common
-@model PostsViewModel
-@{
-	ViewBag.CurrentAction = @ViewContext.Controller.ValueProvider.GetValue("action").RawValue.ToString();
-}
+﻿@model PostsViewModel
 <div class="postsList">
     @foreach (var post in Model.Posts)
 	{
@@ -11,7 +7,7 @@
 				<span>@post.PublishedAt.ToString("MMM dd")</span>
 				@post.PublishedAt.ToString("yyyy")
 			</time>
-			<a href="@Url.Action("Details", "PostDetails", new { post.Id, post.Slug })">
+			<a asp-controller="PostDetails" asp-action="Details" asp-route-id="@post.Id" asp-route-slug="@post.Slug">
 				@if (post.IsSerie == false)
 				{
 					<h2>@post.Title</h2>
@@ -33,7 +29,7 @@
 			</div>
 			<hr />
 			<div class="postData">
-				<a href='@string.Format("http://twitter.com/intent/tweet?status={0}+{1} via @{2}", post.Title, Url.PostUrl(post.Id, post.Slug), post.Author.TwitterNick)'>
+				<!--<a href='@string.Format("http://twitter.com/intent/tweet?status={0}+{1} via @{2}", post.Title, Url.PostUrl(post.Id, post.Slug), post.Author.TwitterNick)'>
 					<span class="socicon twitter">a</span><span>Tweet</span>
 				</a>
 				<a style='text-decoration:none;' type="icon_link" onclick="window.open('@string.Format("http://www.facebook.com/sharer/sharer.php?u={0}&title={1}", Url.PostUrl(post.Id, post.Slug), post.Title)','sharer','toolbar=0,status=0,width=580,height=325');" href="javascript: void(0)">
@@ -41,8 +37,8 @@
 				</a>
 				<a style='text-decoration:none;' type="icon_link" onclick="popUp=window.open('@string.Format("https://plus.google.com/share?url={0}", Url.PostUrl(post.Id, post.Slug))', 'popupwindow', 'scrollbars=yes,width=600,height=400');popUp.focus();return false;" href="javascript: void(0)">
 					<span class="socicon gplus">c</span><span>share</span>
-				</a>
-				<a href="@Url.Action("Details", "PostDetails", new { post.Id, post.Slug })#comments">
+				</a>-->
+			    <a asp-controller="PostDetails" asp-action="Details" asp-route-id="@post.Id" asp-route-slug="@post.Slug" asp-fragment="comments">
 					<span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span>@post.CommentsCount comments</span>
 				</a>
 				@if (post.Tags.Count > 0)
@@ -52,7 +48,7 @@
 						<ul>
 							@foreach (var tag in post.Tags)
 							{
-								<li><a href="@Url.Action("Tag", "Posts", new {tag.Slug})">@tag.Name</a></li>
+								<li><a asp-action="Tag" asp-route-slug="@post.Slug">@tag.Name</a></li>
 							}
 						</ul>
 					</div>
@@ -62,7 +58,7 @@
 			<div class="articleContent">
 				@post.Body
 			</div>
-			<div class="read-more"><a href="@Url.Action("Details", "PostDetails", new { post.Id, post.Slug })">read more ›</a></div>
+			<div class="read-more"><a asp-controller="PostDetails" asp-action="Details" asp-route-id="@post.Id" asp-route-slug="@post.Slug" asp-fragment="comments">read more ›</a></div>
 		</article>
 	}
 </div>

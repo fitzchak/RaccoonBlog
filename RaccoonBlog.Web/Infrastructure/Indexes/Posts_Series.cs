@@ -41,7 +41,7 @@ namespace RaccoonBlog.Web.Infrastructure.Indexes
 
 		public Posts_Series()
 		{
-			Map = posts => from p in posts
+			/*Map = posts => from p in posts
 						   let parts = p.Title.Split(':')
 						   where parts.Length > 1
 						   let series = parts[0].Trim().ToLower()
@@ -54,7 +54,7 @@ namespace RaccoonBlog.Web.Infrastructure.Indexes
 							   MaxDate = (DateTimeOffset)p.PublishAt,
 							   MinDate = (DateTimeOffset)p.PublishAt,
 							   Days = 1
-						   };
+						   };*/
 
 			Reduce = results => from r in results
 								group r by r.Series into g

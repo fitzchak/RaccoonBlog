@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
-using DataAnnotationsExtensions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HibernatingRhinos.Loci.Common.Models
 {
@@ -22,7 +21,7 @@ namespace HibernatingRhinos.Loci.Common.Models
 
 		[DataType(DataType.Password)]
 		[Display(Name = "Confirm new password")]
-		[System.Web.Mvc.Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+		[Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
 		public string ConfirmPassword { get; set; }
 	}
 
@@ -30,7 +29,7 @@ namespace HibernatingRhinos.Loci.Common.Models
 	{
 
 		[Required]
-		[Email]
+		[EmailAddress]
 		[Display(Name = "Login")]
 		public string Login { get; set; }
 
@@ -57,7 +56,7 @@ namespace HibernatingRhinos.Loci.Common.Models
 
 		[Required]
 		[StringLength(50, ErrorMessage = "E-mail address longer than 50 characters isn't valid.")]
-		[Email]
+		[EmailAddress]
 		[Display(Name = "Email address (used as your login ID, too)")]
 		public string Email { get; set; }
 
@@ -69,7 +68,7 @@ namespace HibernatingRhinos.Loci.Common.Models
 
 		[DataType(DataType.Password)]
 		[Display(Name = "Confirm password")]
-		[System.Web.Mvc.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+		[Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
 		public string ConfirmPassword { get; set; }
 
 		public string SendOutKey { get; set; }

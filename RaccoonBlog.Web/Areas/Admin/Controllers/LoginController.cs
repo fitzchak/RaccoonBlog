@@ -1,7 +1,6 @@
-using System.Web;
-using System.Web.Mvc;
+/*using System.Web;
 using HibernatingRhinos.Loci.Common.Models;
-
+using Microsoft.AspNetCore.Mvc;
 using RaccoonBlog.Web.Controllers;
 using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Infrastructure.Common;
@@ -9,7 +8,7 @@ using RaccoonBlog.Web.ViewModels;
 
 namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
-	public partial class LoginController : RaccoonController
+	public class LoginController : RaccoonController
 	{
 		private readonly SignInHelper signInHelper;
 
@@ -77,4 +76,4 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			return View(new CurrentUserViewModel { FullName = user.FullName }); // TODO: we don't really need a VM here
 		}
 	}
-}
+}*/

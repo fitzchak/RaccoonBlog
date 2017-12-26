@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
-using DataAnnotationsExtensions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace RaccoonBlog.Web.ViewModels
 {
@@ -14,7 +13,7 @@ namespace RaccoonBlog.Web.ViewModels
 
 		[Required]
 		[Display(Name = "Email")]
-		[Email]
+		[EmailAddress]
 		public string Email { get; set; }
 
         [Display(Name = "Phone")]

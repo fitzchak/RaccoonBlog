@@ -1,6 +1,8 @@
-using System.Collections.Generic;
+/*using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace RaccoonBlog.Web.Helpers.Validation
 {
@@ -80,4 +82,4 @@ namespace RaccoonBlog.Web.Helpers.Validation
 			return depProp;
 		}
 	}
-}
+}*/

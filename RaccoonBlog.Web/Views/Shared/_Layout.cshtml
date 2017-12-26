@@ -1,154 +1,72 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="format-detection" content="telephone=no" />
-    <link rel="shortcut icon" href="/favicon.ico">
-    <link rel="icon" href="/favicon.ico">
-    <meta name="description" content="@ViewBag.BlogConfig.MetaDescription">
-    @{
-        ViewBag.Message = TempData["Message"] as string;
-    }
-    @if (string.IsNullOrWhiteSpace(Context.Request.QueryString["key"]) == false)
-    {
-        <meta name="robots" content="noindex" />
-    }
-    <title>
-        @if (ViewBag.Title != null)
-        { <text> @ViewBag.Title - </text> }@ViewBag.BlogConfig.Title
-    </title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - RaccoonBlog.Web</title>
 
-    @Styles.Render("~/Content/css/styles")
-    @Html.RenderTheme(ViewBag.BlogConfig.CustomCss as string)
-    @RenderSection("Style", false)
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
 </head>
-<body class="show-grid">
-    <div class="container hideSidebar">
-        <div class="row">
-            <div class="leftSide col-sm-4 col-md-3">
-                <a href="@Url.Action("Index", "Posts")" class="logo">
-                    <h1>@ViewBag.BlogConfig.Title</h1>
-                </a>
-
-                <a href="@Url.Action("Index", "Posts")" style="display: block;"><img src="~/Content/css/img/rihno.svg" class="rihno" /></a>
-
-                <a href="@Url.Action("Index", "Posts")" class="logo-vertical">
-                    <h1>@ViewBag.BlogConfig.Title</h1>
-                </a>
-                <button class="menu-button" id="open-button"><i class="glyphicon glyphicon-circle-arrow-down hide-sm" aria-hidden="true"></i></button>
-                <button class="menu-enlarge" id="enlarge-button"><i class="glyphicon glyphicon-circle-arrow-left hide-sm" aria-hidden="true"></i></button>
-                <div class="clearfix"></div>
-                <div class="collapseMobile">
-                    <div class="about @(ViewBag.IsHomePage ? "home" : string.Empty)">
-                        @Html.RenderSection("Contact Me")
-                    </div>
-                    <div class="pull-down">
-                        <p class="socicon">
-                            @if (ViewBag.BlogConfig.RssLogin != null)
-                            {
-                                <a href="@string.Format("http://feeds.feedburner.com/{0}", ViewBag.BlogConfig.RssLogin)" class="rss">,</a>
-                            }
-                            @if (ViewBag.BlogConfig.OwnerEmail != null)
-                            {
-                                <a href="@string.Format("mailto:{0}", ViewBag.BlogConfig.OwnerEmail)" class="mail">&#64;</a>
-                            }
-                            @if (ViewBag.BlogConfig.GithubLogin != null)
-                            {
-                                <a href="@string.Format("https://github.com/{0}", ViewBag.BlogConfig.GithubLogin)" class="git">Q</a>
-                            }
-                            @if (ViewBag.BlogConfig.TwitterLogin != null)
-                            {
-                                <a href="@string.Format("https://twitter.com/{0}", ViewBag.BlogConfig.TwitterLogin)" class="twitter">a</a>
-                            }
-                            @if (ViewBag.BlogConfig.FacebookLogin != null)
-                            {
-                                <a href="@string.Format("https://www.facebook.com/{0}", ViewBag.BlogConfig.FacebookLogin)" class="facebook">b</a>
-                            }
-                            @if (ViewBag.BlogConfig.GoogleLogin != null)
-                            {
-                                <a href="@string.Format("https://plus.google.com/{0}", ViewBag.BlogConfig.GoogleLogin)" class="gplus">c</a>
-                            }
-                        </p>
-                        @Html.RenderSection("Stats")
-                        <p class="copyright">@ViewBag.BlogConfig.Copyright</p>
-                    </div>
-                </div>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">RaccoonBlog.Web</a>
             </div>
-            <div id="content" class="centerCol col-sm-8 col-sm-offset-4 col-md-offset-3 col-md-6 col-lg-7">
-                <header>
-                    <div class="search">
-                        @using (Html.BeginForm("SearchResult", "Search", FormMethod.Get))
-                        {
-                            <input name="q" type="search" placeholder="search" class="form-control" value="@ViewBag.SearchTerm" />
-                            <input type="submit" />
-                        }
-                    </div>
-                    <div style="display:inline-block">
-                        @if (Html.IsSectionActive("Tags"))
-                        {
-                            <a href="#" id="tags-button">
-                                <span class="glyphicon glyphicon-tags" aria-hidden="true"></span> filter by tags
-                            </a>
-                        }
-                        @if (Html.IsSectionActive("Archive"))
-                        {
-                            <a href="#" id="archive-button">
-                                <span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> archive
-                            </a>
-                        }
-                    </div>
-                    <nav class="pull-right views @(ViewBag.ChangeViewStyle == null ? "hide" : "")">
-                        <a href="#" class="stackView" id="stackView">stack view</a>
-                        <a href="#" class="gridView active" id="gridView">grid view</a>
-                    </nav>
-
-                    <div class="clearfix"></div>
-                    @Html.RenderSection("Tags")
-                    @Html.RenderSection("Archive")
-                </header>
-                <div class="banner">
-                </div>
-                @RenderBody()
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                </ul>
+                @await Html.PartialAsync("_LoginPartial")
             </div>
-            <section class="rightSide col-sm-8 col-sm-offset-4 col-md-3 col-md-offset-0 col-lg-2">
-                @if (HttpContext.Current.Request.IsAuthenticated)
-                {
-                    @Html.Action(MVC.Section.ActionNames.AdministrationPanel, MVC.Section.Name)
-                }
-                @{Html.RenderAction(MVC.Section.ActionNames.List, MVC.Section.Name);}
-            </section>
         </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; 2017 - RaccoonBlog.Web</p>
+        </footer>
     </div>
 
-    @if (IsSectionDefined("Script"))
-    {
-        <script type="text/javascript">
-            window.RaccoonRoutes = {};
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
         </script>
-        <!--[if IE 8]>
-            <script type="text/javascript" src="~/Content/js/respond.src.js"></script>
-        <![endif]-->
-        @Scripts.Render("~/Content/js/jquery")
-        @Scripts.Render("~/Content/js/jquery-migrate")
-        @Scripts.Render("~/Content/js/bootstrap")
-        @Scripts.Render("~/Content/js/main")
-        @RenderSection("Script")
-        if (string.IsNullOrEmpty(ViewBag.BlogConfig.GoogleAnalyticsKey) == false)
-        {
-            <script type="text/javascript">
-                var _gaq = _gaq || [];
-                _gaq.push(['_setAccount', '@ViewBag.BlogConfig.GoogleAnalyticsKey']);
-                _gaq.push(['_trackPageview']);
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
 
-                (function () {
-                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-                })();
-            </script> }
-    }
+    @RenderSection("Scripts", required: false)
 </body>
-
 </html>

@@ -6,8 +6,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
 using HibernatingRhinos.Loci.Common.Models;
+using Microsoft.AspNetCore.Mvc;
 using RaccoonBlog.Web.Infrastructure.Common;
 
 namespace RaccoonBlog.Web.Models
@@ -86,7 +86,6 @@ namespace RaccoonBlog.Web.Models
 		[Display(Name = "Title")]
 		public string Title { get; set; }
 
-		[AllowHtml]
 		[Required]
 		[Display(Name = "Body")]
 		[DataType(DataType.MultilineText)]

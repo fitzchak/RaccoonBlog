@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -35,7 +35,7 @@ namespace RaccoonBlog.Web.Helpers
             };
         }
 
-        public static IList<Post> GetPostsForAutomaticRedditSubmission(IDocumentSession documentSession, DateTimeOffset currentDateTimeOffset)
+        public static IList<Post> GetPostsForAutomaticRedditSubmission(IAsyncDocumentSession documentSession, DateTimeOffset currentDateTimeOffset)
         {
             return documentSession.Query<Post>()
                 .Where(x => x.PublishAt <= currentDateTimeOffset &&
@@ -47,7 +47,7 @@ namespace RaccoonBlog.Web.Helpers
                 .ToList();
         }
 
-        public static IList<Post> GetPostsForManualRedditSubmission(IDocumentSession documentSession, DateTimeOffset currentDateTimeOffset)
+        public static IList<Post> GetPostsForManualRedditSubmission(IAsyncDocumentSession documentSession, DateTimeOffset currentDateTimeOffset)
         {
             return documentSession.Query<Post>()
                 .Where(x => x.PublishAt <= currentDateTimeOffset &&
@@ -81,4 +81,4 @@ namespace RaccoonBlog.Web.Helpers
             return "?" + string.Join("&", array);
         }
     }
-}
+}*/

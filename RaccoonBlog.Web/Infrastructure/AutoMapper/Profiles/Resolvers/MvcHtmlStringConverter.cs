@@ -1,13 +1,13 @@
-using System.Web.Mvc;
 using AutoMapper;
+using Microsoft.AspNetCore.Html;
 
 namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers
 {
-	public class MvcHtmlStringConverter : ITypeConverter<string, MvcHtmlString>
+	public class HtmlStringConverter : ITypeConverter<string, HtmlString>
 	{
-	    public MvcHtmlString Convert(string source, MvcHtmlString destination, ResolutionContext context)
+	    public HtmlString Convert(string source, HtmlString destination, ResolutionContext context)
 	    {
-	        return MvcHtmlString.Create(source);
+	        return new HtmlString(source);
 	    }
 	}
 }

@@ -1,10 +1,14 @@
-using System;
+/*using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Web;
-using System.Web.Mvc;
 using System.Web.Routing;
 using JetBrains.Annotations;
+using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Routing;
 
 namespace RaccoonBlog.Web.Helpers
 {
@@ -91,4 +95,4 @@ namespace RaccoonBlog.Web.Helpers
 			return new HtmlString(href);
 		}
 	}
-}
+}*/

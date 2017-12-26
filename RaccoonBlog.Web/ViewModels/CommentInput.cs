@@ -1,7 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
-using DataAnnotationsExtensions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace RaccoonBlog.Web.ViewModels
 {
@@ -13,13 +12,12 @@ namespace RaccoonBlog.Web.ViewModels
 
         [Required(ErrorMessage = "Email is required")]
 		[Display(Name = "Email")]
-        [Email(ErrorMessage = "Email is invalid")]
+        [EmailAddress(ErrorMessage = "Email is invalid")]
 		public string Email { get; set; }
 
 		[Display(Name = "Url")]
 		public string Url { get; set; }
 
-		[AllowHtml]
 		[Required(ErrorMessage = "Comment is required")]
 		[Display(Name = "Comments")]
 		[DataType(DataType.MultilineText)]

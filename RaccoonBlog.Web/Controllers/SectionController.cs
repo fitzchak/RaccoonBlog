@@ -1,7 +1,9 @@
+/*
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Indexes;
 using RaccoonBlog.Web.Models;
@@ -13,7 +15,7 @@ namespace RaccoonBlog.Web.Controllers
 	using System.Web.UI;
 	using DevTrends.MvcDonutCaching;
 
-	public partial class SectionController : AggresivelyCachingRacconController
+	public class SectionController : AggresivelyCachingRacconController
     {
         [ChildActionOnly]
 		public virtual ActionResult PostsSeries(string sectionTitle)
@@ -172,3 +174,4 @@ namespace RaccoonBlog.Web.Controllers
 		}
 	}
 }
+*/

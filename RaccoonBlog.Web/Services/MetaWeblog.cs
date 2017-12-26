@@ -1,3 +1,4 @@
+/*
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -282,3 +283,4 @@ namespace RaccoonBlog.Web.Services
 		#endregion
 	}
 }
+*/

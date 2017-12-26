@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
 using Raven.Client.Documents;
@@ -18,10 +19,10 @@ namespace RaccoonBlog.Web.Services
 	/// </summary>
 	public class PostSchedulingStrategy
 	{
-		private readonly IDocumentSession session;
+		private readonly IAsyncDocumentSession session;
 		private readonly DateTimeOffset now;
 
-		public PostSchedulingStrategy(IDocumentSession session, DateTimeOffset now)
+		public PostSchedulingStrategy(IAsyncDocumentSession session, DateTimeOffset now)
 		{
 			this.session = session;
 			this.now = now;
@@ -41,7 +42,7 @@ namespace RaccoonBlog.Web.Services
 				.AtNoon();
 		}
 
-		public DateTimeOffset Schedule(DateTimeOffset requestedDate)
+		public async Task<DateTimeOffset> Schedule(DateTimeOffset requestedDate)
 		{
 			var postsQuery = from p in session.Query<Post>().Include(x => x.CommentsId)
 			                 where p.PublishAt > requestedDate && p.SkipAutoReschedule == false && p.PublishAt > now
@@ -59,8 +60,11 @@ namespace RaccoonBlog.Web.Services
 
 				post.PublishAt = nextPostDate;
 
-				if (post.CommentsId != null)
-					session.Load<PostComments>(post.CommentsId).Post.PublishAt = nextPostDate;
+			    if (post.CommentsId != null)
+			    {
+			        var postComments1 = await session.LoadAsync<PostComments>(post.CommentsId);
+			        postComments1.Post.PublishAt = nextPostDate;
+			    }
 			}
 
 			return requestedDate;

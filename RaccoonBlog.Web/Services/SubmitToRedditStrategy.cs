@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -28,9 +28,9 @@ namespace RaccoonBlog.Web.Services
 
         private IList<string> _subredditNames;
 
-        private readonly IDocumentSession _session;
+        private readonly IAsyncDocumentSession _session;
 
-        public SubmitToRedditStrategy(IDocumentSession session)
+        public SubmitToRedditStrategy(IAsyncDocumentSession session)
         {
             _session = session;
             var blogConfig = _session.Load<BlogConfig>(BlogConfig.Key);
@@ -204,4 +204,4 @@ namespace RaccoonBlog.Web.Services
                 post.Integration.Reddit.PostSubmissions = new HashSet<PostSubmission>();
         }
     }
-}
+}*/

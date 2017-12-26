@@ -2,8 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using Antlr.Runtime.Misc;
-    using RaccoonBlog.Web.Helpers;
     using RaccoonBlog.Web.Infrastructure.Common;
 
     public class SeriesPostsViewModel
@@ -22,18 +20,18 @@
     {
         public SeriesInfo()
         {
-            PostsInSeries = new ListStack<PostInSeries>();
+            PostsInSeries = new List<PostInSeries>();
         }
 
         public int SeriesId { get; set; }
         public string SeriesTitle { get; set; }
         public IList<PostInSeries> PostsInSeries { get; set; }
 
-        private string seriesSlug;
+        private string _seriesSlug;
         public string SeriesSlug
         {
-            get { return seriesSlug ?? (seriesSlug = SlugConverter.TitleToSlug(SeriesTitle)); }
-            set { seriesSlug = value; }
+            get => _seriesSlug ?? (_seriesSlug = SlugConverter.TitleToSlug(SeriesTitle));
+            set => _seriesSlug = value;
         }
     }
 

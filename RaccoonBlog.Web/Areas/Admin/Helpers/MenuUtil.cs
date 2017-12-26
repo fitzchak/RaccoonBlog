@@ -1,7 +1,8 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using RaccoonBlog.Web.Areas.Admin.Models;
 
 namespace RaccoonBlog.Web.Areas.Admin.Helpers
@@ -53,4 +54,4 @@ namespace RaccoonBlog.Web.Areas.Admin.Helpers
 			}
 		}
 	}
-}
+}*/

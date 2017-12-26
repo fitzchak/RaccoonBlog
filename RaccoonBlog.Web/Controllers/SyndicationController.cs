@@ -1,9 +1,9 @@
+/*
 using System;
-using System.Web.Mvc;
 using System.Linq;
 using System.Xml.Linq;
 using HibernatingRhinos.Loci.Common.Models;
-using NLog;
+using Microsoft.AspNetCore.Mvc;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.Infrastructure.Common;
@@ -13,7 +13,7 @@ using Raven.Client.Documents.Session;
 
 namespace RaccoonBlog.Web.Controllers
 {
-    public partial class SyndicationController : RaccoonController
+    public class SyndicationController : RaccoonController
     {
         private static Logger _log = LogManager.GetCurrentClassLogger();
 
@@ -222,3 +222,4 @@ namespace RaccoonBlog.Web.Controllers
         }
     }
 }
+*/

@@ -1,5 +1,6 @@
 using System;
 using System.Web;
+using Microsoft.AspNetCore.Mvc.Routing;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
@@ -15,7 +16,12 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 	            .ForMember(x => x.Id, o => o.MapFrom(m => RavenIdResolver.Resolve(m.Id)))
 	            .ForMember(x => x.Title, o => o.MapFrom(m => HttpUtility.HtmlDecode(m.Title)))
 	            .ForMember(x => x.Start, o => o.MapFrom(m => m.PublishAt.ToString("yyyy-MM-ddTHH:mm:ssZ")))
-	            .ForMember(x => x.Url, o => o.MapFrom(m => UrlHelper.Action("Details", "Posts", new {Id = RavenIdResolver.Resolve(m.Id), Slug = SlugConverter.TitleToSlug(m.Title)})))
+	            /*.ForMember(x => x.Url, o => o.MapFrom(m => UrlHelper.Action(new UrlActionContext
+	            {
+                    Action = "Details",
+                    Controller = "Posts",
+                    Values = new {Id = RavenIdResolver.Resolve(m.Id), Slug = SlugConverter.TitleToSlug(m.Title)},
+	            })))*/
 	            .ForMember(x => x.AllDay, o => o.UseValue(false))
 	            ;
 

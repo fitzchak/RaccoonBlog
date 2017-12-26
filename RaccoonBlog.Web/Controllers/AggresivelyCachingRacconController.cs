@@ -1,29 +1,29 @@
 using System;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public abstract partial class AggresivelyCachingRacconController : RaccoonController
+	public abstract class AggresivelyCachingRacconController : RaccoonController
 	{
-		IDisposable aggressivelyCacheFor;
+		IDisposable _aggressivelyCacheFor;
 
-		protected override void OnActionExecuting(ActionExecutingContext filterContext)
+	    public override void OnActionExecuting(ActionExecutingContext filterContext)
 		{
 			base.OnActionExecuting(filterContext);
 
-			aggressivelyCacheFor = RavenSession.Advanced.DocumentStore.AggressivelyCacheFor(CacheDuration);
+			_aggressivelyCacheFor = RavenSession.Advanced.DocumentStore.AggressivelyCacheFor(CacheDuration);
 		}
 
 		protected abstract TimeSpan CacheDuration { get; }
 
-		protected override void OnActionExecuted(ActionExecutedContext filterContext)
+		public override void OnActionExecuted(ActionExecutedContext filterContext)
 		{
 			base.OnActionExecuted(filterContext);
 
-			if (aggressivelyCacheFor != null)
+			if (_aggressivelyCacheFor != null)
 			{
-				aggressivelyCacheFor.Dispose();
-				aggressivelyCacheFor = null;
+				_aggressivelyCacheFor.Dispose();
+				_aggressivelyCacheFor = null;
 			}
 		}
 	}

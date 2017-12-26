@@ -1,3 +1,4 @@
+/*
 using System;
 using System.Web.Mvc;
 
@@ -19,3 +20,4 @@ namespace RaccoonBlog.Web.Helpers.Binders
 		}
 	}
 }
+*/

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Html;
 using RaccoonBlog.Web.Controllers;
 
 namespace RaccoonBlog.Web.ViewModels
@@ -28,7 +28,7 @@ namespace RaccoonBlog.Web.ViewModels
 			public int Id { get; set; }
 			public string Title { get; set; }
 			public string Slug { get; set; }
-			public MvcHtmlString Body { get; set; }
+			public HtmlString Body { get; set; }
 			public ICollection<TagDetails> Tags { get; set; }
 			public DateTimeOffset CreatedAt { get; set; }
 			public DateTimeOffset PublishedAt { get; set; }

@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
 using RaccoonBlog.Web.Helpers.Validation;
 
 namespace RaccoonBlog.Web.Models
@@ -25,16 +24,15 @@ namespace RaccoonBlog.Web.Models
 		[Display(Name = "Position")]
 		public int Position { get; set; }
 
-		[AllowHtml]
 		[Display(Name = "Body")]
 		[DataType(DataType.MultilineText)]
 		public string Body { get; set; }
 
-		[RequiredIf("Body", "")]
+		//[RequiredIf("Body", "")]
 		[Display(Name = "Controller Name")]
 		public string ControllerName { get; set; }
 
-		[RequiredIf("Body", "")]
+		//[RequiredIf("Body", "")]
 		[Display(Name = "Action Name")]
 		public string ActionName { get; set; }
 

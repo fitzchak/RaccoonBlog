@@ -1,13 +1,13 @@
-﻿namespace RaccoonBlog.Web.Controllers
-{
-    using RaccoonBlog.Web.Infrastructure.AutoMapper;
-    using RaccoonBlog.Web.Infrastructure.Common;
-    using RaccoonBlog.Web.Infrastructure.Indexes;
-    using ViewModels;
-    using System.Linq;
-    using System.Web.Mvc;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Mvc;
+using RaccoonBlog.Web.Infrastructure.AutoMapper;
+using RaccoonBlog.Web.Infrastructure.Common;
+using RaccoonBlog.Web.Infrastructure.Indexes;
+using RaccoonBlog.Web.ViewModels;
 
-	public partial class SeriesController : RaccoonController
+namespace RaccoonBlog.Web.Controllers
+{
+	public class SeriesController : RaccoonController
     {
 		public virtual ActionResult PostsSeries()
         {

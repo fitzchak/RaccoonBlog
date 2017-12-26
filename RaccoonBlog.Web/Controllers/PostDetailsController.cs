@@ -1,52 +1,52 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
-using System.Web.Mvc;
-using HibernatingRhinos.Loci.Common.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Helpers.Validation;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Infrastructure.Indexes;
-using RaccoonBlog.Web.Infrastructure.Tasks;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.ViewModels;
+using Sparrow.Utils;
 
 namespace RaccoonBlog.Web.Controllers
 {
-    public partial class PostDetailsController : RaccoonController
+    public class PostDetailsController : RaccoonController
     {
-        public virtual ActionResult Details(int id, string slug, Guid key)
+        public async Task<ActionResult> Details(int id, string slug, Guid key)
         {
-            var post = RavenSession
+            var post = await RavenSession
                 .Include<Post>(x => x.CommentsId)
                 .Include(x => x.AuthorId)
-                .Load("posts/" + id);
+                .LoadAsync("posts/" + id);
 
             if (post == null)
-                return HttpNotFound();
+                return NotFound();
 
             if (post.IsPublicPost(key) == false)
-                return HttpNotFound();
+                return NotFound();
 
             SeriesInfo seriesInfo = GetSeriesInfo(post.Title);
 
-            var comments = RavenSession.Load<PostComments>(post.CommentsId) ?? new PostComments();
+            var comments = await RavenSession.LoadAsync<PostComments>(post.CommentsId) ?? new PostComments();
             var vm = new PostViewModel
             {
                 Post = post.MapTo<PostViewModel.PostDetails>(),
                 Comments = comments.Comments
                             .OrderBy(x => x.CreatedAt)
                             .MapTo<PostViewModel.Comment>(),
-                NextPost = RavenSession.GetNextPrevPost(post, true),
-                PreviousPost = RavenSession.GetNextPrevPost(post, false),
+                NextPost = await RavenSession.GetNextPrevPost(post, true),
+                PreviousPost = await RavenSession.GetNextPrevPost(post, false),
                 AreCommentsClosed = comments.AreCommentsClosed(post, BlogConfig.NumberOfDayToCloseComments),
                 SeriesInfo = seriesInfo
             };
 
-            vm.Post.Author = RavenSession.Load<User>(post.AuthorId).MapTo<PostViewModel.UserDetails>();
+            vm.Post.Author = (await RavenSession.LoadAsync<User>(post.AuthorId)).MapTo<PostViewModel.UserDetails>();
 
             var comment = TempData["new-comment"] as CommentInput;
 
@@ -80,22 +80,21 @@ namespace RaccoonBlog.Web.Controllers
             return View("Details", vm);
         }
 
-        [ValidateInput(false)]
         [HttpPost]
-        public virtual ActionResult Comment(CommentInput input, int id, Guid key)
+        public async Task<ActionResult> Comment(CommentInput input, int id, Guid key)
         {
             if (ModelState.IsValid)
             {
-                var post = RavenSession
+                var post = await RavenSession
                     .Include<Post>(x => x.CommentsId)
-                    .Load("posts/" + id);
+                    .LoadAsync("posts/" + id);
 
                 if (post == null || post.IsPublicPost(key) == false)
-                    return HttpNotFound();
+                    return NotFound();
 
-                var comments = RavenSession.Load<PostComments>(post.CommentsId);
+                var comments = await RavenSession.LoadAsync<PostComments>(post.CommentsId);
                 if (comments == null)
-                    return HttpNotFound();
+                    return NotFound();
 
                 var commenter = RavenSession.GetCommenter(input.CommenterKey);
                 if (commenter == null)
@@ -107,13 +106,13 @@ namespace RaccoonBlog.Web.Controllers
                 ValidateCaptcha(input, commenter);
 
                 if (ModelState.IsValid == false)
-                    return PostingCommentFailed(post, input, key);
+                    return await PostingCommentFailed(post, input, key);
 
-                TaskExecutor.ExcuteLater(new AddCommentTask(input, Request.MapTo<AddCommentTask.RequestValues>(), id));
+                /*TaskExecutor.ExcuteLater(new AddCommentTask(input, Request.MapTo<AddCommentTask.RequestValues>(), id));
 
                 CommenterUtil.SetCommenterCookie(Response, input.CommenterKey.MapTo<string>());
 
-                OutputCacheManager.RemoveItem(SectionController.NameConst, MVC.Section.ActionNames.List);
+                OutputCacheManager.RemoveItem(SectionController.NameConst, MVC.Section.ActionNames.List);*/
 
                 return PostingCommentSucceeded(post, input);
             }
@@ -123,13 +122,13 @@ namespace RaccoonBlog.Web.Controllers
 
         private bool CheckRecaptchaChallengeSupplied()
         {
-            var recaptchaChallengeField = Request.Form.GetValues("recaptcha_challenge_field");
+           /* var recaptchaChallengeField = Request.Form.GetValues("recaptcha_challenge_field");
             if (recaptchaChallengeField == null
                 || recaptchaChallengeField.Length == 0
                 || recaptchaChallengeField.GetValue(0) as string == string.Empty)
             {
                 return false;
-            }
+            }*/
 
             return true;
         }
@@ -137,8 +136,8 @@ namespace RaccoonBlog.Web.Controllers
         private ActionResult PostingCommentSucceeded(Post post, CommentInput input)
         {
             const string successMessage = "Your comment will be posted soon. Thanks!";
-            if (Request.IsAjaxRequest())
-                return Json(new { Success = true, message = successMessage });
+            //if (Request.IsAjaxRequest())
+              //  return Json(new { Success = true, message = successMessage });
 
             TempData["new-comment"] = input;
             var postReference = post.MapTo<PostReference>();
@@ -157,7 +156,7 @@ namespace RaccoonBlog.Web.Controllers
 
         private void ValidateCaptcha(CommentInput input, Commenter commenter)
         {
-            if (Request.IsAuthenticated ||
+            if (//Request.IsAuthenticated ||
                 (commenter != null && commenter.IsTrustedCommenter == true))
                 return;
 
@@ -168,20 +167,20 @@ namespace RaccoonBlog.Web.Controllers
                 return;
             }
 
-            if (RecaptchaValidatorWrapper.Validate(ControllerContext.HttpContext))
-                return;
+            //if (RecaptchaValidatorWrapper.Validate(ControllerContext.HttpContext))
+              //  return;
 
             ModelState.AddModelError("CaptchaNotValid",
                                      "You did not type the verification word correctly. Please try again.");
         }
 
-        private ActionResult PostingCommentFailed(Post post, CommentInput input, Guid key)
+        private async Task<ActionResult> PostingCommentFailed(Post post, CommentInput input, Guid key)
         {
-            if (Request.IsAjaxRequest())
+            /*if (Request.IsAjaxRequest())
                 return Json(new { Success = false, message = ModelState.FirstErrorMessage() });
-
+*/
             var postReference = post.MapTo<PostReference>();
-            var result = Details(postReference.DomainId, postReference.Slug, key);
+            var result = await Details(postReference.DomainId, postReference.Slug, key);
             var model = result as ViewResult;
             if (model != null)
             {
@@ -194,7 +193,7 @@ namespace RaccoonBlog.Web.Controllers
 
         private void SetWhateverUserIsTrustedCommenter(PostViewModel vm)
         {
-            if (Request.IsAuthenticated)
+           /* if (Request.IsAuthenticated)
             {
                 var user = RavenSession.GetCurrentUser();
                 vm.Input = user.MapTo<CommentInput>();
@@ -216,7 +215,7 @@ namespace RaccoonBlog.Web.Controllers
 
             vm.IsLoggedInCommenter = string.IsNullOrWhiteSpace(commenter.OpenId) == false;
             vm.Input = commenter.MapTo<CommentInput>();
-            vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;
+            vm.IsTrustedCommenter = commenter.IsTrustedCommenter == true;*/
         }
 
         private SeriesInfo GetSeriesInfo(string title)

@@ -1,9 +1,8 @@
-using System.Configuration;
-using System.Web.Mvc;
+/*using System.Configuration;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public partial class SearchController : RaccoonController
+	public class SearchController : RaccoonController
 	{
 	    private static string GoogleCustomSearchId => ConfigurationManager.AppSettings["Raccoon/GoogleCustomSearch/Id"];
 
@@ -14,4 +13,4 @@ namespace RaccoonBlog.Web.Controllers
 			return View((object)q);
 		}
 	}
-}
+}*/

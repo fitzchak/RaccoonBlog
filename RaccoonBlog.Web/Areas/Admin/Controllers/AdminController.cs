@@ -1,23 +1,24 @@
 using System;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Filters;
 using RaccoonBlog.Web.Controllers;
 
 namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
 	[Authorize]
-	public abstract partial class AdminController : RaccoonController
+	public abstract class AdminController : RaccoonController
 	{
-		private IDisposable disableAggressiveCaching;
+		private IDisposable _disableAggressiveCaching;
 
-		protected override void OnActionExecuting(ActionExecutingContext filterContext)
+	    public override void OnActionExecuting(ActionExecutingContext filterContext)
 		{
-			disableAggressiveCaching = DocumentStore.DisableAggressiveCaching();
+			_disableAggressiveCaching = DocumentStore.DisableAggressiveCaching();
 			base.OnActionExecuting(filterContext);
 		}
 
-		protected override void OnActionExecuted(ActionExecutedContext filterContext)
+	    public override void OnActionExecuted(ActionExecutedContext filterContext)
 		{
-			using(disableAggressiveCaching)
+			using(_disableAggressiveCaching)
 				base.OnActionExecuted(filterContext);
 		}
 	}

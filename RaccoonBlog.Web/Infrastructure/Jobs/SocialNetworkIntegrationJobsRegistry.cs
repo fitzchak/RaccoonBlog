@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using FluentScheduler;
 
 namespace RaccoonBlog.Web.Infrastructure.Jobs
@@ -14,4 +14,4 @@ namespace RaccoonBlog.Web.Infrastructure.Jobs
                 .Minutes();
         }
     }
-}
+}*/

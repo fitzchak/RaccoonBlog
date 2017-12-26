@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿/*using System.Linq;
 
 namespace RaccoonBlog.Web.Helpers
 {
@@ -55,4 +55,4 @@ namespace RaccoonBlog.Web.Helpers
 			return content.Replace("{path}", path);
 		}
 	}
-}
+}*/

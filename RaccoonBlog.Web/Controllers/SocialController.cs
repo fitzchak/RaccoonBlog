@@ -1,3 +1,4 @@
+/*
 // -----------------------------------------------------------------------
 //  <copyright file="SocialController.cs" company="Hibernating Rhinos LTD">
 //      Copyright (c) Hibernating Rhinos LTD. All rights reserved.
@@ -11,6 +12,9 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Owin.Security;
 using RaccoonBlog.Web.Helpers;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
@@ -18,7 +22,7 @@ using RaccoonBlog.Web.Models;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	public partial class SocialController : RaccoonController
+	public class SocialController : RaccoonController
 	{
 
 		public virtual ActionResult Login(string provider, string redirectUrl)
@@ -40,7 +44,7 @@ namespace RaccoonBlog.Web.Controllers
 
 		private const string XsrfKey = "XsrfId";
 
-		internal class ChallengeResult : HttpUnauthorizedResult
+		internal class ChallengeResult : UnauthorizedResult
 		{
 			public ChallengeResult(string provider, string returnUrl)
 				: this(provider, returnUrl, null)
@@ -119,3 +123,4 @@ namespace RaccoonBlog.Web.Controllers
 		}
 	}
 }
+*/

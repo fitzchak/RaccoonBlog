@@ -1,7 +1,10 @@
-using System;
+/*using System;
 using System.Web.Routing;
 using AttributeRouting.Web.Mvc;
 using AttributeRouting.Web.Mvc.Framework;
+using Microsoft.AspNetCore.Mvc.Internal;
+using Microsoft.AspNetCore.Routing;
+using Raven.Client;
 
 namespace RaccoonBlog.Web.Helpers
 {
@@ -9,27 +12,27 @@ namespace RaccoonBlog.Web.Helpers
 	{
 		public static Route MapRouteLowerCase(this RouteCollection routes, string name, string url)
 		{
-			return MapRouteLowerCase(routes, name, url, null /* defaults */, (object)null /* constraints */);
+			return MapRouteLowerCase(routes, name, url, null /* defaults #1#, (object)null /* constraints #1#);
 		}
 
 		public static Route MapRouteLowerCase(this RouteCollection routes, string name, string url, object defaults)
 		{
-			return MapRouteLowerCase(routes, name, url, defaults, (object)null /* constraints */);
+			return MapRouteLowerCase(routes, name, url, defaults, (object)null /* constraints #1#);
 		}
 
 		public static Route MapRouteLowerCase(this RouteCollection routes, string name, string url, object defaults, object constraints)
 		{
-			return MapRouteLowerCase(routes, name, url, defaults, constraints, null /* namespaces */);
+			return MapRouteLowerCase(routes, name, url, defaults, constraints, null /* namespaces #1#);
 		}
 
 		public static Route MapRouteLowerCase(this RouteCollection routes, string name, string url, string[] namespaces)
 		{
-			return MapRouteLowerCase(routes, name, url, null /* defaults */, null /* constraints */, namespaces);
+			return MapRouteLowerCase(routes, name, url, null /* defaults #1#, null /* constraints #1#, namespaces);
 		}
 
 		public static Route MapRouteLowerCase(this RouteCollection routes, string name, string url, object defaults, string[] namespaces)
 		{
-			return MapRouteLowerCase(routes, name, url, defaults, null /* constraints */, namespaces);
+			return MapRouteLowerCase(routes, name, url, defaults, null /* constraints #1#, namespaces);
 		}
 
 		public static Route MapRouteLowerCase(this RouteCollection routes, string name, string url, object defaults, object constraints, string[] namespaces)
@@ -39,7 +42,7 @@ namespace RaccoonBlog.Web.Helpers
 			if (url == null)
 				throw new ArgumentNullException("url");
 
-			Route route = new AttributeRoute(url, new RouteValueDictionary(defaults), new RouteValueDictionary(constraints), null, new Configuration
+			Route route = new AttributeRoute(url, new RouteValueDictionary(defaults), new RouteValueDictionary(constraints), null, new Constants.Configuration
 			{
 				UseLowercaseRoutes = true,
 				PreserveCaseForUrlParameters = true,
@@ -60,4 +63,4 @@ namespace RaccoonBlog.Web.Helpers
 			return route;
 		}
 	}
-}
+}*/

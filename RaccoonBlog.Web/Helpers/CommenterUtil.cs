@@ -1,3 +1,4 @@
+/*
 using System;
 using System.Web;
 
@@ -14,3 +15,4 @@ namespace RaccoonBlog.Web.Helpers
 		}
 	}
 }
+*/

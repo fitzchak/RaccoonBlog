@@ -1,3 +1,4 @@
+/*
 using System;
 using System.Configuration;
 using Joel.Net;
@@ -96,3 +97,4 @@ namespace RaccoonBlog.Web.Services
 		}
 	}
 }
+*/

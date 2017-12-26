@@ -1,4 +1,4 @@
-using System.Configuration;
+/*using System.Configuration;
 using System.Web;
 using Recaptcha;
 
@@ -24,4 +24,4 @@ namespace RaccoonBlog.Web.Helpers.Validation
 			return response.IsValid;
 		}
 	}
-}
+}*/

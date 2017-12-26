@@ -1,12 +1,10 @@
-using System;
+/*using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web.Mvc;
 using HibernatingRhinos.Loci.Common.Extensions;
 using HibernatingRhinos.Loci.Common.Models;
-using RaccoonBlog.Web.Helpers;
-using RaccoonBlog.Web.Helpers.Attributes;
+using Microsoft.AspNetCore.Mvc;
 using RaccoonBlog.Web.Infrastructure.AutoMapper;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
@@ -16,16 +14,16 @@ using Raven.Client.Documents.Operations;
 
 namespace RaccoonBlog.Web.Areas.Admin.Controllers
 {
-	public partial class PostsController : AdminController
+	public class PostsController : AdminController
 	{
-		public virtual ActionResult Index()
+		public ActionResult Index()
 		{
 			// the actual UI is handled via JavaScript
 			return View("List");
 		}
 
 		[HttpGet]
-		public virtual ActionResult Add()
+		public ActionResult Add()
 		{
 			return View("Edit", new PostInput
 			{
@@ -37,17 +35,16 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
-		public virtual ActionResult Edit(int id)
+		public ActionResult Edit(int id)
 		{
 			var post = RavenSession.Load<Post>("posts/" + id);
 			if (post == null)
-				return HttpNotFound("Post does not exist.");
+				return NotFound("Post does not exist.");
 			return View(post.MapTo<PostInput>());
 		}
 
 		[HttpPost]
-		[ValidateInput(false)]
-		public virtual ActionResult Update(PostInput input)
+		public ActionResult Update(PostInput input)
 		{
 			if (!ModelState.IsValid)
 				return View("Edit", input);
@@ -97,14 +94,14 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			return RedirectToAction("Details", new {Id = post.MapTo<PostReference>().DomainId});
 		}
 
-		public virtual ActionResult Details(int id)
+		public ActionResult Details(int id)
 		{
 			var post = RavenSession
 				.Include<Post>(x => x.CommentsId)
 				.Load("posts/" + id);
 
 			if (post == null)
-				return HttpNotFound();
+				return NotFound();
 
 			var comments = RavenSession.Load<PostComments>(post.CommentsId);
 
@@ -125,7 +122,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 			return View("Details", vm);
 		}
 
-		public virtual ActionResult ListFeed(DateTime start, DateTime end)
+		public ActionResult ListFeed(DateTime start, DateTime end)
 		{
 			var posts = RavenSession.Query<Post>()
 				.Where
@@ -142,8 +139,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 
 
 		[HttpPost]
-		[AjaxOnly]
-		public virtual ActionResult SetPostDate(int id, long date)
+		public ActionResult SetPostDate(int id, long date)
 		{
 			var post = RavenSession
 				.Include<Post>(x => x.CommentsId)
@@ -158,14 +154,14 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		public virtual ActionResult CommentsAdmin(int id, CommentCommandOptions command, int[] commentIds)
+		public ActionResult CommentsAdmin(int id, CommentCommandOptions command, int[] commentIds)
 		{
 			if (commentIds == null || commentIds.Length == 0)
 				ModelState.AddModelError("CommentIdsAreEmpty", "Not comments was selected.");
 
 			var post = RavenSession.Load<Post>("posts/" + id);
 			if (post == null)
-				return HttpNotFound();
+				return NotFound();
 
 			if (ModelState.IsValid == false)
 			{
@@ -237,7 +233,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		public virtual ActionResult Delete(int id)
+		public ActionResult Delete(int id)
 		{
             var post = RavenSession.Load<Post>("posts/" + id);
 		    if (post == null)
@@ -263,13 +259,13 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-		public virtual ActionResult DeleteAllSpamComments()
+		public ActionResult DeleteAllSpamComments()
 		{
 			return View();
 		}
 
 		[HttpPost]
-		public virtual async Task<ActionResult> DeleteAllSpamCommentsAsync(bool deleteAll)
+		public async Task<ActionResult> DeleteAllSpamCommentsAsync(bool deleteAll)
 		{
 		    await DocumentStore.Operations.SendAsync(new PatchByQueryOperation(@"
 from PostComments
@@ -288,4 +284,4 @@ update {
 		MarkHam,
 		MarkSpam
 	}
-}
+}*/

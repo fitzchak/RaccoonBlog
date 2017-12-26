@@ -1,4 +1,4 @@
-﻿using System.Security.Claims;
+﻿/*using System.Security.Claims;
 using System.Security.Principal;
 
 using HibernatingRhinos.Loci.Common.Models;
@@ -47,4 +47,4 @@ namespace RaccoonBlog.Web.Helpers
 			authenticationManager.SignOut();
 		}
 	}
-}
+}*/

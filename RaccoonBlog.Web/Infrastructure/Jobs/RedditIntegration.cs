@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Web.Hosting;
 using FluentScheduler;
 using RaccoonBlog.Web.Controllers;
@@ -55,4 +55,4 @@ namespace RaccoonBlog.Web.Infrastructure.Jobs
             HostingEnvironment.UnregisterObject(this);
         }
     }
-}
+}*/

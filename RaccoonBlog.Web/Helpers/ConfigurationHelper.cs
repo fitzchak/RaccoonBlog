@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Configuration;
 
 namespace RaccoonBlog.Web.Helpers
@@ -60,4 +60,4 @@ namespace RaccoonBlog.Web.Helpers
 			return new Tuple<string, string>(id, secret);
 		}
 	}
-}
+}*/
