@@ -92,11 +92,11 @@ namespace RaccoonBlog.Web
             JobManager.Initialize(new SocialNetworkIntegrationJobsRegistry());
         }
 
-		public static IDocumentStore DocumentStore { get; private set; }
+	    public static IDocumentStore DocumentStore { get; private set; }
 
-        static void JobExceptionHandler(JobExceptionInfo info, FluentScheduler.UnhandledExceptionEventArgs e)
+        static void JobExceptionHandler(JobExceptionInfo info)
         {
-            _log.FatalException($"Error executing background job {info.Name}.", e.ExceptionObject);
+            _log.Fatal(info.Exception, $"Error executing background job {info.Name}.");
         }
 
 	    private static void InitializeDocumentStore()

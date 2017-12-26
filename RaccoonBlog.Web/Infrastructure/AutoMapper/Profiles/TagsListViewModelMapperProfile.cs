@@ -6,10 +6,10 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 {
 	public class TagsListViewModelMapperProfile : Profile
 	{
-		protected override void Configure()
-		{
-			Mapper.CreateMap<Tags_Count.ReduceResult, TagsListViewModel>()
-				;
-		}
+	    public TagsListViewModelMapperProfile()
+	    {
+	        CreateMap<Tags_Count.ReduceResult, TagsListViewModel>()
+	            ;
+	    }
 	}
 }

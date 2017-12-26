@@ -3,25 +3,23 @@ using AutoMapper;
 
 namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers
 {
-	public class StringToGuidConverter : TypeConverter<string, Guid>
+	public class StringToGuidConverter : ITypeConverter<string, Guid>
 	{
-		protected override Guid ConvertCore(string source)
+	    public Guid Convert(string source, Guid destination, ResolutionContext context)
 		{
-			Guid guid;
-			if (Guid.TryParse(source, out guid) == false)
+		    if (Guid.TryParse(source, out var guid) == false)
 				return Guid.Empty;
 			return guid;
 		}
 	}
 
-	public class StringToNullableGuidConverter : TypeConverter<string, Guid?>
+	public class StringToNullableGuidConverter : ITypeConverter<string, Guid?>
 	{
-		protected override Guid? ConvertCore(string source)
-		{
-			Guid guid;
-			if (Guid.TryParse(source, out guid) == false)
-				return null;
-			return guid;
-		}
+	    public Guid? Convert(string source, Guid? destination, ResolutionContext context)
+	    {
+	        if (Guid.TryParse(source, out var guid) == false)
+	            return null;
+	        return guid;
+	    }
 	}
 }

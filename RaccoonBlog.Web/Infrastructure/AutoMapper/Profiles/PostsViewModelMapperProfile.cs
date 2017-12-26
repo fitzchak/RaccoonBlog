@@ -9,9 +9,9 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 {
 	public class PostsViewModelMapperProfile : Profile
 	{
-		protected override void Configure()
-		{
-			Mapper.CreateMap<Post, PostsViewModel.PostSummary>()
+	    public PostsViewModelMapperProfile()
+	    {
+			CreateMap<Post, PostsViewModel.PostSummary>()
 				.ForMember(x => x.Id, o => o.MapFrom(m => RavenIdResolver.Resolve(m.Id)))
 				.ForMember(x => x.Slug, o => o.MapFrom(m => SlugConverter.TitleToSlug(m.Title)))
 				.ForMember(x => x.Author, o => o.Ignore())
@@ -19,9 +19,9 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 				.ForMember(x=>x.Title, o => o.MapFrom(m => HttpUtility.HtmlDecode(m.Title)))
 				;
 
-			Mapper.CreateMap<User, PostsViewModel.PostSummary.UserDetails>();
+			CreateMap<User, PostsViewModel.PostSummary.UserDetails>();
 
-			Mapper.CreateMap<string, TagDetails>()
+			CreateMap<string, TagDetails>()
 				.ForMember(x => x.Name, o => o.MapFrom(m => m))
 				;
 		}

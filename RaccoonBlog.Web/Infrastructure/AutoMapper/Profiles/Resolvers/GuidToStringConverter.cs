@@ -3,11 +3,11 @@ using AutoMapper;
 
 namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers
 {
-	public class GuidToStringConverter : TypeConverter<Guid, string>
+	public class GuidToStringConverter : ITypeConverter<Guid, string>
 	{
-		protected override string ConvertCore(Guid source)
-		{
-			return source.ToString("N");
-		}
+	    public string Convert(Guid source, string destination, ResolutionContext context)
+	    {
+	        return source.ToString("N");
+	    }
 	}
 }

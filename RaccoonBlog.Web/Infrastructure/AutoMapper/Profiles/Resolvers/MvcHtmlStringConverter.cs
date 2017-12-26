@@ -3,11 +3,11 @@ using AutoMapper;
 
 namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers
 {
-	public class MvcHtmlStringConverter : TypeConverter<string, MvcHtmlString>
+	public class MvcHtmlStringConverter : ITypeConverter<string, MvcHtmlString>
 	{
-		protected override MvcHtmlString ConvertCore(string source)
-		{
-			return MvcHtmlString.Create(source);
-		}
+	    public MvcHtmlString Convert(string source, MvcHtmlString destination, ResolutionContext context)
+	    {
+	        return MvcHtmlString.Create(source);
+	    }
 	}
 }

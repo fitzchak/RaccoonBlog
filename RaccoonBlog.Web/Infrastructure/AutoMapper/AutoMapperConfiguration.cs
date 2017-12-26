@@ -10,7 +10,12 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper
 	{
 		public static void Configure()
 		{
-			Mapper.CreateMap<string, MvcHtmlString>().ConvertUsing<MvcHtmlStringConverter>();
+		    Mapper.Initialize(cfg =>
+		    {
+		        cfg.CreateMap<string, MvcHtmlString>().ConvertUsing<MvcHtmlStringConverter>();
+		        cfg.CreateMap<Guid, string>().ConvertUsing<GuidToStringConverter>();
+		    });
+
 			Mapper.CreateMap<Guid, string>().ConvertUsing<GuidToStringConverter>();
 
 			Mapper.CreateMap<DateTimeOffset, DateTime>().ConvertUsing<DateTimeTypeConverter>();

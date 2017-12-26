@@ -3,11 +3,11 @@ using AutoMapper;
 
 namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers
 {
-	public class DateTimeTypeConverter : TypeConverter<DateTimeOffset, DateTime>
+	public class DateTimeTypeConverter : ITypeConverter<DateTimeOffset, DateTime>
 	{
-		protected override DateTime ConvertCore(DateTimeOffset source)
-		{
-			return source.DateTime;
-		}
+	    public DateTime Convert(DateTimeOffset source, DateTime destination, ResolutionContext context)
+	    {
+	        return source.DateTime;
+	    }
 	}
 }
