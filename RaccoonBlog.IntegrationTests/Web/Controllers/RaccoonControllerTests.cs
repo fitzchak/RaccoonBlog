@@ -2,48 +2,43 @@ using System;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using HibernatingRhinos.Loci.Common.Utils;
 using RaccoonBlog.Web.Controllers;
-using Raven.Client;
-using Raven.Client.Embedded;
+using Raven.Client.Documents;
+using Raven.Client.Documents.Session;
+using Raven.TestDriver;
 using Rhino.Mocks;
 
 namespace RaccoonBlog.IntegrationTests.Web.Controllers
 {
-	public abstract class RaccoonControllerTests : IDisposable
+	public abstract class RaccoonControllerTests : RavenTestDriver<TestsServerLocator>
 	{
-		private readonly EmbeddableDocumentStore documentStore;
-		protected ControllerContext ControllerContext { get; set; }
+	    private readonly IDocumentStore _documentStore;
+
+	    protected ControllerContext ControllerContext { get; set; }
 
 		protected RaccoonControllerTests()
 		{
-			documentStore = new EmbeddableDocumentStore
-			                {
-			                	RunInMemory = true
-			                };
-
-			documentStore.RegisterListener(new NoStaleQueriesAllowed());
-			documentStore.Initialize();
+		    _documentStore = GetDocumentStore();
 		}
 
-		protected void SetupData(Action<IDocumentSession> action)
+	    protected override void PreInitialize(IDocumentStore documentStore)
+	    {
+	        documentStore.OnBeforeQueryExecuted += (sender, args) => { args.QueryCustomization.WaitForNonStaleResults(); };
+	    }
+
+	    protected void SetupData(Action<IDocumentSession> action)
 		{
-			using (var session = documentStore.OpenSession())
+			using (var session = _documentStore.OpenSession())
 			{
 				action(session);
 				session.SaveChanges();
 			}
 		}
 
-		public void Dispose()
-		{
-			documentStore.Dispose();
-		}
-
 		protected void ExecuteAction<TController>(Action<TController> action) 
 			where TController: RaccoonController, new()
 		{
-			var controller = new TController {RavenSession = documentStore.OpenSession()};
+			var controller = new TController {RavenSession = _documentStore.OpenSession()};
 
 			var httpContext = MockRepository.GenerateStub<HttpContextBase>();
 			httpContext.Stub(x => x.Response).Return(MockRepository.GenerateStub<HttpResponseBase>());

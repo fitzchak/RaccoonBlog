@@ -23,7 +23,8 @@ namespace RaccoonBlog.IntegrationTests.AutoMapper
 		public void CanMapFromCommentToNewCommentViewModel()
 		{
 			var comment = new PostComments.Comment();
-			Assert.DoesNotThrow(() => comment.MapTo<NewCommentEmailViewModel>());
+            var ex = Record.Exception(() => comment.MapTo<NewCommentEmailViewModel>());
+            Assert.Null(ex);
 		}
 	}
 }

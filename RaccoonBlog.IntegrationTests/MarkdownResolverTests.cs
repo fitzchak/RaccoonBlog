@@ -147,7 +147,8 @@ for (int i = 0; i < 13000; i++)
 		}
 >
 ";
-			Assert.DoesNotThrow(() => MarkdownResolve(input));
+		    var ex = Record.Exception(() => MarkdownResolve(input));
+		    Assert.Null(ex);
 		}
 	}
 }

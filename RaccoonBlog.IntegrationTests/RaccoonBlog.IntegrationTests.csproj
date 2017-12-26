@@ -65,7 +65,10 @@
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Client, Version=4.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
-      <HintPath>..\packages\RavenDB.Client.4.0.0-nightly-20171219-0501\lib\netstandard2.0\Raven.Client.dll</HintPath>
+      <HintPath>..\packages\RavenDB.Client.4.0.0-nightly-20171222-1352\lib\netstandard2.0\Raven.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.TestDriver, Version=4.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <HintPath>..\packages\RavenDB.TestDriver.4.0.0-nightly-20171222-1352\lib\netstandard2.0\Raven.TestDriver.dll</HintPath>
     </Reference>
     <Reference Include="RedditSharp, Version=1.0.22.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RedditSharp.1.0.22\lib\RedditSharp.dll</HintPath>
@@ -76,7 +79,7 @@
       <HintPath>..\packages\RhinoMocks.3.6.1\lib\net\Rhino.Mocks.dll</HintPath>
     </Reference>
     <Reference Include="Sparrow, Version=4.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
-      <HintPath>..\packages\RavenDB.Client.4.0.0-nightly-20171219-0501\lib\netstandard2.0\Sparrow.dll</HintPath>
+      <HintPath>..\packages\RavenDB.Client.4.0.0-nightly-20171222-1352\lib\netstandard2.0\Sparrow.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -138,9 +141,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Routing\RoutingTestBase.cs" />
     <Compile Include="SlugConverterTests.cs" />
-    <Compile Include="Web\Controllers\NoStaleQueriesAllowed.cs" />
     <Compile Include="Web\Controllers\RaccoonControllerTests.cs" />
     <Compile Include="Web\Controllers\BlogConfigBehavior.cs" />
+    <Compile Include="TestsServerLocator.cs" />
     <Compile Include="Web\Services\PostSchedulingStrategyTests.cs" />
   </ItemGroup>
   <ItemGroup>

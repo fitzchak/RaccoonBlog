@@ -3,13 +3,14 @@ using System.Linq;
 using RaccoonBlog.Web.Infrastructure.Common;
 using RaccoonBlog.Web.Models;
 using RaccoonBlog.Web.Services;
-using Raven.Client;
-using Raven.Client.Embedded;
+using Raven.Client.Documents;
+using Raven.Client.Documents.Session;
+using Raven.TestDriver;
 using Xunit;
 
 namespace RaccoonBlog.IntegrationTests.Web.Services
 {
-	public class PostSchedulingStrategyTests : IDisposable
+	public class PostSchedulingStrategyTests : RavenTestDriver<TestsServerLocator>
 	{
 		protected DateTimeOffset Now { get; private set; }
 		protected IDocumentStore DocumentStore { get; private set; }
@@ -18,15 +19,15 @@ namespace RaccoonBlog.IntegrationTests.Web.Services
 		public PostSchedulingStrategyTests()
 		{
 			Now = DateTimeOffset.Now;
-
-			DocumentStore = new EmbeddableDocumentStore { RunInMemory = true }.Initialize();
+		    DocumentStore = GetDocumentStore();
 			Session = DocumentStore.OpenSession();
 		}
 
-		public void Dispose()
+		public override void Dispose()
 		{
 			Session.Dispose();
 			DocumentStore.Dispose();
+            base.Dispose();
 		}
 
 		[Fact]
