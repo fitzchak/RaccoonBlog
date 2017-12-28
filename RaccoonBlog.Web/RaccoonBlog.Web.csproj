@@ -85,15 +85,6 @@
     <Reference Include="FluentScheduler, Version=5.3.0.0, Culture=neutral, PublicKeyToken=b76503528a14ebd1, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentScheduler.5.3.0\lib\net40\FluentScheduler.dll</HintPath>
     </Reference>
-    <Reference Include="Glimpse.AspNet">
-      <HintPath>..\packages\Glimpse.AspNet.1.9.2\lib\net45\Glimpse.AspNet.dll</HintPath>
-    </Reference>
-    <Reference Include="Glimpse.Core">
-      <HintPath>..\packages\Glimpse.1.8.6\lib\net45\Glimpse.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Glimpse.Mvc5">
-      <HintPath>..\packages\Glimpse.Mvc5.1.5.3\lib\net45\Glimpse.Mvc5.dll</HintPath>
-    </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.6.10.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.6.10\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
