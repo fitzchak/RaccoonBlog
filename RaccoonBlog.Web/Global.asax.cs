@@ -108,15 +108,21 @@ namespace RaccoonBlog.Web
 
             var urls = WebConfigurationManager.AppSettings["Raven/Urls"];
 	        var database = WebConfigurationManager.AppSettings["Raven/Database"];
-	        var certificatePath = WebConfigurationManager.AppSettings["Raven/CertificatePath"];
-	        var certificatePassword = WebConfigurationManager.AppSettings["Raven/CertificatePassword"];
-	        var certificate = new X509Certificate2(certificatePath, certificatePassword);
-            DocumentStore = new DocumentStore
+	        var store = new DocumentStore
 	        {
 	            Urls = urls.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries),
-                Database = database,
-                Certificate = certificate,
-            }.Initialize();
+	            Database = database,
+	        };
+	        
+	        var certificatePath = WebConfigurationManager.AppSettings["Raven/CertificatePath"];
+	        if (certificatePath != null)
+	        {
+	            var certificatePassword = WebConfigurationManager.AppSettings["Raven/CertificatePassword"];
+	            var certificate = new X509Certificate2(certificatePath, certificatePassword);
+	            store.Certificate = certificate;
+	        }
+
+	        DocumentStore = store.Initialize();
 
 	        // TryCreatingIndexesOrRedirectToErrorPage();
 	    }
