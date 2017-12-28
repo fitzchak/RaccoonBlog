@@ -106,14 +106,14 @@ namespace RaccoonBlog.Web
 	        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 	        ServicePointManager.ServerCertificateValidationCallback += OnServerCertificateCustomValidationCallback;
 
-            var urls = WebConfigurationManager.AppSettings["Raven/Urls"];
+	        var urls = WebConfigurationManager.AppSettings["Raven/Urls"];
 	        var database = WebConfigurationManager.AppSettings["Raven/Database"];
 	        var store = new DocumentStore
 	        {
 	            Urls = urls.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries),
 	            Database = database,
 	        };
-	        
+
 	        var certificatePath = WebConfigurationManager.AppSettings["Raven/CertificatePath"];
 	        if (certificatePath != null)
 	        {

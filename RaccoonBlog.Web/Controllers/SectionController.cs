@@ -10,7 +10,6 @@ using RaccoonBlog.Web.Infrastructure.Common;
 
 namespace RaccoonBlog.Web.Controllers
 {
-	using System.Web.UI;
 	using DevTrends.MvcDonutCaching;
 
 	public partial class SectionController : AggresivelyCachingRacconController
@@ -28,7 +27,7 @@ namespace RaccoonBlog.Web.Controllers
             
             var vm = series.Select(result => new RecentSeriesViewModel
             {
-                SeriesId = result.SerieId,
+                SeriesId = result.SeriesId,
                 SeriesSlug = SlugConverter.TitleToSlug(result.Series),
 				SeriesTitle = TitleConverter.ToSeriesTitle(result.Posts.First().Title),
                 PostsCount = result.Count,

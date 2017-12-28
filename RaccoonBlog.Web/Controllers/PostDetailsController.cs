@@ -238,7 +238,7 @@ namespace RaccoonBlog.Web.Controllers
 
                 seriesInfo = new SeriesInfo
                 {
-                    SeriesId = series.SerieId,
+                    SeriesId = series.SeriesId,
                     SeriesTitle = seriesTitle,
                     PostsInSeries = postsInSeries
                 };

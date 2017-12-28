@@ -48,7 +48,7 @@ namespace RaccoonBlog.Web.Controllers
 	    {
 			var serie = RavenSession
 				.Query<Posts_Series.Result, Posts_Series>()
-				.FirstOrDefault(x => x.SerieId == seriesId);
+				.FirstOrDefault(x => x.SeriesId == seriesId);
 
 			if (serie == null)
                 return HttpNotFound();
