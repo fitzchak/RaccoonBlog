@@ -136,14 +136,13 @@ namespace RaccoonBlog.Web
 			routes.MapRouteLowerCase("PostDetailsController-Comment",
 				"{id}/comment",
 				new { controller = "PostDetails", action = "Comment" },
-				new { httpMethod = new HttpMethodConstraint("POST"), id = MatchPositiveInteger },
+				new { httpMethod = new HttpMethodConstraint("POST") },
 				new[] { "RaccoonBlog.Web.Controllers" }
 				);
 
 			routes.MapRouteLowerCase("PostDetailsController-Details",
 				"{id}/{slug}",
 				new { controller = "PostDetails", action = "Details", slug = UrlParameter.Optional },
-				new { id = MatchPositiveInteger },
 				new[] { "RaccoonBlog.Web.Controllers" }
 				);
 		}

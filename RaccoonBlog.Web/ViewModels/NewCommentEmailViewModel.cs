@@ -13,7 +13,7 @@ namespace RaccoonBlog.Web.ViewModels
 		public MvcHtmlString Body { get; set; }
 		public bool IsSpam { get; set; }
 
-		public int PostId { get; set; }
+		public string PostId { get; set; }
 		public string PostTitle { get; set; }
 		public string PostSlug { get; set; }
 		public string BlogName { get; set; }

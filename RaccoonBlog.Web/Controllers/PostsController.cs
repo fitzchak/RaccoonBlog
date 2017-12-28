@@ -106,7 +106,7 @@ namespace RaccoonBlog.Web.Controllers
 
 			foreach (var post in posts)
 			{
-				var postSummary = summaries.First(x => x.Id == RavenIdResolver.Resolve(post.Id));
+				var postSummary = summaries.First(x => x.Id == post.GetIdForUrl());
 				postSummary.IsSerie = series.Any(x => string.Equals(x.Series, TitleConverter.ToSeriesTitle(postSummary.Title), StringComparison.OrdinalIgnoreCase));
 
 				if (string.IsNullOrWhiteSpace(post.AuthorId))

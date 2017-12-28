@@ -17,7 +17,7 @@ namespace RaccoonBlog.Web.Helpers
 	            new { seriesId, seriesSlug });
 	    }
 
-        public static string Post(this UrlHelper helper, int id, string slug)
+        public static string Post(this UrlHelper helper, string id, string slug)
         {
             return helper.Action(MVC.PostDetails.ActionNames.Details, MVC.PostDetails.Name, new
             {

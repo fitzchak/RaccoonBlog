@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Web;
@@ -10,12 +9,12 @@ namespace RaccoonBlog.Web.Helpers
 {
 	public static class UrlHelperExtensions
 	{
-		public static string PostUrl(this UrlHelper url, int postId, string postSlug)
+		public static string PostUrl(this UrlHelper url, string postId, string postSlug)
 		{
 			var fullUrl = HttpContext.Current.Request.Url.OriginalString;
-			fullUrl = fullUrl.TrimEnd('/') + "/";
+			fullUrl = fullUrl.TrimEnd('/');
 
-			return string.Format("{0}{1}/{2}", fullUrl, postId, postSlug);
+			return $"{fullUrl}/{postId}/{postSlug}";
 		}
 
 		public static string AbsoluteAction(this UrlHelper url, [AspMvcAction] string action, object routeValues)

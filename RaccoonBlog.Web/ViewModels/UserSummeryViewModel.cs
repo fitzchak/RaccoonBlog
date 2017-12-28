@@ -4,7 +4,7 @@ namespace RaccoonBlog.Web.ViewModels
 {
 	public class UserSummeryViewModel
 	{
-		public int Id { get; set; }
+		public string Id { get; set; }
 
 		[Display(Name = "Full Name")]
 		public string FullName { get; set; }

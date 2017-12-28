@@ -101,6 +101,13 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> DeleteAllSpamCommentsAsync()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DeleteAllSpamCommentsAsync);
+            return System.Threading.Tasks.Task.FromResult(callInfo as System.Web.Mvc.ActionResult);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public PostsController Actions { get { return MVC.Admin.Posts; } }
@@ -127,6 +134,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
             public readonly string CommentsAdmin = "CommentsAdmin";
             public readonly string Delete = "Delete";
             public readonly string DeleteAllSpamComments = "DeleteAllSpamComments";
+            public readonly string DeleteAllSpamCommentsAsync = "DeleteAllSpamCommentsAsync";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -142,6 +150,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
             public const string CommentsAdmin = "CommentsAdmin";
             public const string Delete = "Delete";
             public const string DeleteAllSpamComments = "DeleteAllSpamComments";
+            public const string DeleteAllSpamCommentsAsync = "DeleteAllSpamCommentsAsync";
         }
 
 
@@ -205,11 +214,11 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         {
             public readonly string id = "id";
         }
-        static readonly ActionParamsClass_DeleteAllSpamComments s_params_DeleteAllSpamComments = new ActionParamsClass_DeleteAllSpamComments();
+        static readonly ActionParamsClass_DeleteAllSpamCommentsAsync s_params_DeleteAllSpamCommentsAsync = new ActionParamsClass_DeleteAllSpamCommentsAsync();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_DeleteAllSpamComments DeleteAllSpamCommentsParams { get { return s_params_DeleteAllSpamComments; } }
+        public ActionParamsClass_DeleteAllSpamCommentsAsync DeleteAllSpamCommentsAsyncParams { get { return s_params_DeleteAllSpamCommentsAsync; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_DeleteAllSpamComments
+        public class ActionParamsClass_DeleteAllSpamCommentsAsync
         {
             public readonly string deleteAll = "deleteAll";
         }
@@ -263,10 +272,10 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         }
 
         [NonAction]
-        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id);
+        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Edit(int id)
+        public override System.Web.Mvc.ActionResult Edit(string id)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
@@ -287,10 +296,10 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         }
 
         [NonAction]
-        partial void DetailsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id);
+        partial void DetailsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Details(int id)
+        public override System.Web.Mvc.ActionResult Details(string id)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
@@ -312,10 +321,10 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         }
 
         [NonAction]
-        partial void SetPostDateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id, long date);
+        partial void SetPostDateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id, long date);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult SetPostDate(int id, long date)
+        public override System.Web.Mvc.ActionResult SetPostDate(string id, long date)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.SetPostDate);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
@@ -325,10 +334,10 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         }
 
         [NonAction]
-        partial void CommentsAdminOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id, RaccoonBlog.Web.Areas.Admin.Controllers.CommentCommandOptions command, int[] commentIds);
+        partial void CommentsAdminOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id, RaccoonBlog.Web.Areas.Admin.Controllers.CommentCommandOptions command, int[] commentIds);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult CommentsAdmin(int id, RaccoonBlog.Web.Areas.Admin.Controllers.CommentCommandOptions command, int[] commentIds)
+        public override System.Web.Mvc.ActionResult CommentsAdmin(string id, RaccoonBlog.Web.Areas.Admin.Controllers.CommentCommandOptions command, int[] commentIds)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.CommentsAdmin);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
@@ -339,10 +348,10 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         }
 
         [NonAction]
-        partial void DeleteOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id);
+        partial void DeleteOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Delete(int id)
+        public override System.Web.Mvc.ActionResult Delete(string id)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
@@ -362,15 +371,15 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         }
 
         [NonAction]
-        partial void DeleteAllSpamCommentsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, bool deleteAll);
+        partial void DeleteAllSpamCommentsAsyncOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, bool deleteAll);
 
         [NonAction]
-        public async override Task<ActionResult> DeleteAllSpamCommentsAsync(bool deleteAll)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> DeleteAllSpamCommentsAsync(bool deleteAll)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DeleteAllSpamComments);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DeleteAllSpamCommentsAsync);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "deleteAll", deleteAll);
-            DeleteAllSpamCommentsOverride(callInfo, deleteAll);
-            return callInfo;
+            DeleteAllSpamCommentsAsyncOverride(callInfo, deleteAll);
+            return System.Threading.Tasks.Task.FromResult(callInfo as System.Web.Mvc.ActionResult);
         }
 
     }

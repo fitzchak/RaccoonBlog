@@ -25,19 +25,19 @@ namespace RaccoonBlog.IntegrationTests.Routing
 			"~/admin/users".ShouldMapTo<UsersController>(c => c.Index());
 
 			"~/admin/users/add".ShouldMapTo<UsersController>(c => c.Add());
-			"~/admin/users/4/edit".ShouldMapTo<UsersController>(c => c.Edit(4));
+			"~/admin/users/4/edit".ShouldMapTo<UsersController>(c => c.Edit("4-B"));
 
 			"~/admin/users/4/changepass"
 				.WithMethod(HttpVerbs.Get)
-				.ShouldMapTo<UsersController>(c => c.ChangePassword(4));
+				.ShouldMapTo<UsersController>(c => c.ChangePassword("4-B"));
 
 			"~/admin/users/4/changepass"
 				.WithMethod(HttpVerbs.Post)
-				.ShouldMapTo<UsersController>(c => c.ChangePassword(null));
+				.ShouldMapTo<UsersController>(c => c.ChangePassword((string)null));
 
 			var activateRoute = "~/admin/users/4/setactivation".WithMethod(HttpVerbs.Get);
 			activateRoute.Values["isActive"] = bool.TrueString;
-			activateRoute.ShouldMapTo<UsersController>(c => c.SetActivation(4, true));
+			activateRoute.ShouldMapTo<UsersController>(c => c.SetActivation("4-B", true));
 
 			"~/admin/users/update".ShouldMapTo<UsersController>(c => c.Update(null));
 		}

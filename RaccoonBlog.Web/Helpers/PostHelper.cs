@@ -33,7 +33,7 @@ namespace RaccoonBlog.Web.Helpers
 	    public static string Url(Post post)
 	    {
             var slug = SlugConverter.TitleToSlug(post.Title);
-            var id = RavenIdResolver.Resolve(post.Id);
+            var id = post.GetIdForUrl();
             var blogUrl = ConfigurationHelper.MainBlogUrl.TrimEnd('/');
             return $"{blogUrl}/{id}/{slug}";
 	    }

@@ -10,14 +10,14 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 	    public UserAdminMapperProfile()
 	    {
 			CreateMap<User, UserSummeryViewModel>()
-				.ForMember(x => x.Id, o => o.MapFrom(m => RavenIdResolver.Resolve(m.Id)))
+				.ForMember(x => x.Id, o => o.MapFrom(m => m.GetIdForUrl()))
 				;
 
 			CreateMap<UserInput, User>()
 				.ForMember(x => x.Id, o => o.Ignore());
 
 			CreateMap<User, UserInput>()
-				.ForMember(x => x.Id, o => o.MapFrom(m => RavenIdResolver.Resolve(m.Id)))
+				.ForMember(x => x.Id, o => o.MapFrom(m => m.GetIdForUrl()))
 				;
 		}
 	}

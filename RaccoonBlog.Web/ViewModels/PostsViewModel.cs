@@ -25,7 +25,7 @@ namespace RaccoonBlog.Web.ViewModels
 
 		public class PostSummary
 		{
-			public int Id { get; set; }
+			public string Id { get; set; }
 			public string Title { get; set; }
 			public string Slug { get; set; }
 			public MvcHtmlString Body { get; set; }

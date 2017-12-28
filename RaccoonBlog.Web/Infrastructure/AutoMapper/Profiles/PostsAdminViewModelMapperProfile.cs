@@ -12,15 +12,15 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 	    public PostsAdminViewModelMapperProfile()
 	    {
 	        CreateMap<Post, PostSummaryJson>()
-	            .ForMember(x => x.Id, o => o.MapFrom(m => RavenIdResolver.Resolve(m.Id)))
+	            .ForMember(x => x.Id, o => o.MapFrom(m => m.GetIdForUrl()))
 	            .ForMember(x => x.Title, o => o.MapFrom(m => HttpUtility.HtmlDecode(m.Title)))
 	            .ForMember(x => x.Start, o => o.MapFrom(m => m.PublishAt.ToString("yyyy-MM-ddTHH:mm:ssZ")))
-	            .ForMember(x => x.Url, o => o.MapFrom(m => UrlHelper.Action("Details", "Posts", new {Id = RavenIdResolver.Resolve(m.Id), Slug = SlugConverter.TitleToSlug(m.Title)})))
+	            .ForMember(x => x.Url, o => o.MapFrom(m => UrlHelper.Action("Details", "Posts", new {Id = m.GetIdForUrl(), Slug = SlugConverter.TitleToSlug(m.Title)})))
 	            .ForMember(x => x.AllDay, o => o.UseValue(false))
 	            ;
 
 	        CreateMap<Post, PostInput>()
-	            .ForMember(x => x.Id, o => o.MapFrom(m => RavenIdResolver.Resolve(m.Id)))
+	            .ForMember(x => x.Id, o => o.MapFrom(m => m.GetIdForUrl()))
 	            .ForMember(x => x.Tags, o => o.MapFrom(m => TagsResolver.ResolveTags(m.Tags)))
 	            ;
 
@@ -39,7 +39,7 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 	            ;
 
 	        CreateMap<Post, AdminPostDetailsViewModel.PostDetails>()
-	            .ForMember(x => x.Id, o => o.MapFrom(m => RavenIdResolver.Resolve(m.Id)))
+	            .ForMember(x => x.Id, o => o.MapFrom(m => m.GetIdForUrl()))
 	            .ForMember(x => x.Slug, o => o.MapFrom(m => SlugConverter.TitleToSlug(m.Title)))
 	            .ForMember(x => x.PublishedAt, o => o.MapFrom(m => m.PublishAt))
 	            .ForMember(x => x.Key, o => o.MapFrom(m => m.ShowPostEvenIfPrivate))

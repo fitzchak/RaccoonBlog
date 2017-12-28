@@ -33,7 +33,7 @@ namespace RaccoonBlog.Web.ViewModels
 
         public class PostDetails
         {
-            public int Id { get; set; }
+            public string Id { get; set; }
             public Guid ShowPostEvenIfPrivate { get; set; }
             public string Title { get; set; }
             public string Slug { get; set; }

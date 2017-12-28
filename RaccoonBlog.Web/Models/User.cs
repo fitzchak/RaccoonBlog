@@ -51,5 +51,16 @@ namespace RaccoonBlog.Web.Models
 				return true;
 			return HashedPassword == GetHashedPassword(maybePwd);
 		}
+
+	    public string GetIdForUrl()
+	    {
+	        return GetIdForUrl(Id);
+	    }
+        
+	    public static string GetIdForUrl(string id)
+	    {
+	        var i = "users/".Length;
+	        return id.Substring(i);
+	    }
 	}
 }

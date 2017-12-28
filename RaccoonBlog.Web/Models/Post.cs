@@ -75,12 +75,23 @@ namespace RaccoonBlog.Web.Models
 
 			return key != Guid.Empty && key == ShowPostEvenIfPrivate;
 		}
+
+	    public string GetIdForUrl()
+	    {
+	        return GetIdForUrl(Id);
+	    }
+        
+	    public static string GetIdForUrl(string id)
+	    {
+	        var i = "posts/".Length;
+	        return id.Substring(i);
+	    }
 	}
 
 	public class PostInput
 	{
 		[HiddenInput]
-		public int Id { get; set; }
+		public string Id { get; set; }
 
 		[Required]
 		[Display(Name = "Title")]
@@ -112,7 +123,7 @@ namespace RaccoonBlog.Web.Models
 
 		public bool IsNewPost()
 		{
-			return Id == 0;
+			return string.IsNullOrEmpty(Id);
 		}
 	}
 }

@@ -48,11 +48,11 @@ namespace RaccoonBlog.IntegrationTests.Routing
 		[Fact]
 		public void PostDetailsControllerRoutes()
 		{
-			GetMethod("~/1024").ShouldMapTo<PostDetailsController>(c => c.Details(1024, null, TestGuid));
-			GetMethod("~/1024/blog-post-title").ShouldMapTo<PostDetailsController>(c => c.Details(1024, "blog-post-title", TestGuid));
+			GetMethod("~/1024").ShouldMapTo<PostDetailsController>(c => c.Details("1024-C", null, TestGuid));
+			GetMethod("~/1024/blog-post-title").ShouldMapTo<PostDetailsController>(c => c.Details("1024-C", "blog-post-title", TestGuid));
 
-			GetMethod("~/1024/comment").ShouldMapTo<PostDetailsController>(c => c.Details(1024, "comment", TestGuid));
-			GetMethod("~/1024/comment", HttpVerbs.Post).ShouldMapTo<PostDetailsController>(c => c.Comment(null, 1024, TestGuid));
+			GetMethod("~/1024/comment").ShouldMapTo<PostDetailsController>(c => c.Details("1024-C", "comment", TestGuid));
+			GetMethod("~/1024/comment", HttpVerbs.Post).ShouldMapTo<PostDetailsController>(c => c.Comment(null, "1024-C", TestGuid));
 		}
 
 		

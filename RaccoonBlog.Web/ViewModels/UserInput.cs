@@ -7,7 +7,7 @@ namespace RaccoonBlog.Web.ViewModels
 	public class UserInput
 	{
 		[HiddenInput]
-		public int Id { get; set; }
+		public string Id { get; set; }
 
 		[Display(Name = "Full Name")]
 		public string FullName { get; set; }
@@ -34,7 +34,7 @@ namespace RaccoonBlog.Web.ViewModels
 
 		public bool IsNewUser()
 		{
-			return Id == 0;
+			return string.IsNullOrEmpty(Id);
 		}
 	}
 }

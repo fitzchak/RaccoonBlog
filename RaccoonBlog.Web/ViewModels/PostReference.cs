@@ -1,22 +1,23 @@
 using RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles.Resolvers;
 using RaccoonBlog.Web.Infrastructure.Common;
+using RaccoonBlog.Web.Models;
 
 namespace RaccoonBlog.Web.ViewModels
 {
 	public class PostReference
 	{
-		// if Id is: posts/1024, than domainId will be: 1024
+		// if Id is: posts/1024-A, than domainId will be: 1024-A
 		public string Id { get; set; }
 		public string Title { get; set; }
 
-		private int domainId;
-		public int DomainId
+		private string _domainId;
+		public string DomainId
 		{
 			get
 			{
-				if (domainId == 0)
-					domainId = RavenIdResolver.Resolve(Id);
-				return domainId;
+				if (_domainId == null)
+					_domainId = Post.GetIdForUrl(Id);
+				return _domainId;
 			}
 		}
 

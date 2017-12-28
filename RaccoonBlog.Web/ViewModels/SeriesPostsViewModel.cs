@@ -39,7 +39,7 @@
 
     public class PostInSeries
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Slug { get; set; }
         public DateTimeOffset PublishAt { get; set; }
         public string Title { get; set; }

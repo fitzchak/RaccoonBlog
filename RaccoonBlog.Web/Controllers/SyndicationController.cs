@@ -138,7 +138,7 @@ namespace RaccoonBlog.Web.Controllers
         {
             if (post.Id == null) // invalid feed
                 return Url.AbsoluteAction("Index", "Posts");
-            return Url.AbsoluteAction("Details", "PostDetails", new { Id = RavenIdResolver.Resolve(post.Id), Slug = SlugConverter.TitleToSlug(post.Title), Key = post.ShowPostEvenIfPrivate });
+            return Url.AbsoluteAction("Details", "PostDetails", new { Id = post.GetIdForUrl(), Slug = SlugConverter.TitleToSlug(post.Title), Key = post.ShowPostEvenIfPrivate });
         }
 
 
@@ -193,7 +193,7 @@ namespace RaccoonBlog.Web.Controllers
                                       from commentsTuple in commentsTuples
                                       let comment = commentsTuple.Item1
                                       let post = commentsTuple.Item2
-                                      let link = Url.AbsoluteAction("Details", "PostDetails", new { Id = RavenIdResolver.Resolve(post.Id), Slug = SlugConverter.TitleToSlug(post.Title) }) + "#comment" + comment.Id
+                                      let link = Url.AbsoluteAction("Details", "PostDetails", new { Id = post.GetIdForUrl(), Slug = SlugConverter.TitleToSlug(post.Title) }) + "#comment" + comment.Id
                                       select new XElement("item",
                                                           new XElement("title", comment.Author + " commented on " + post.Title),
                                                           new XElement("description", comment.Body),

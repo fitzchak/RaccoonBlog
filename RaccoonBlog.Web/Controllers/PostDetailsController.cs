@@ -18,7 +18,7 @@ namespace RaccoonBlog.Web.Controllers
 {
     public partial class PostDetailsController : RaccoonController
     {
-        public virtual ActionResult Details(int id, string slug, Guid key)
+        public virtual ActionResult Details(string id, string slug, Guid key)
         {
             var post = RavenSession
                 .Include<Post>(x => x.CommentsId)
@@ -82,7 +82,7 @@ namespace RaccoonBlog.Web.Controllers
 
         [ValidateInput(false)]
         [HttpPost]
-        public virtual ActionResult Comment(CommentInput input, int id, Guid key)
+        public virtual ActionResult Comment(CommentInput input, string id, Guid key)
         {
             if (ModelState.IsValid)
             {
@@ -257,7 +257,7 @@ namespace RaccoonBlog.Web.Controllers
                     .Posts
                     .Select(s => new PostInSeries
                     {
-                        Id = RavenIdResolver.Resolve(s.Id),
+                        Id = Post.GetIdForUrl(s.Id),
                         Slug = SlugConverter.TitleToSlug(s.Title),
                         Title = HttpUtility.HtmlDecode(TitleConverter.ToPostTitle(s.Title)),
                         PublishAt = s.PublishAt

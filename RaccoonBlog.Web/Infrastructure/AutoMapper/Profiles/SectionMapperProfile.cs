@@ -23,7 +23,7 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 			   ;
 
 			CreateMap<Post, RecentCommentViewModel>()
-				.ForMember(x => x.PostId, o => o.MapFrom(m => RavenIdResolver.Resolve(m.Id)))
+				.ForMember(x => x.PostId, o => o.MapFrom(m => m.GetIdForUrl()))
 				.ForMember(x => x.PostTitle, o => o.MapFrom(m => m.Title))
 				.ForMember(x => x.PostSlug, o => o.MapFrom(m => SlugConverter.TitleToSlug(m.Title)))
 				.ForMember(x => x.Author, o => o.Ignore())

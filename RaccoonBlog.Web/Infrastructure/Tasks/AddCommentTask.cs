@@ -21,9 +21,9 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 
 		private readonly CommentInput commentInput;
 		private readonly RequestValues requestValues;
-		private readonly int postId;
+		private readonly string postId;
 
-		public AddCommentTask(CommentInput commentInput, RequestValues requestValues, int postId)
+		public AddCommentTask(CommentInput commentInput, RequestValues requestValues, string postId)
 		{
 			this.commentInput = commentInput;
 			this.requestValues = requestValues;
@@ -92,7 +92,7 @@ namespace RaccoonBlog.Web.Infrastructure.Tasks
 				return; // we don't send email for authenticated users
 
 			var viewModel = comment.MapTo<NewCommentEmailViewModel>();
-			viewModel.PostId = RavenIdResolver.Resolve(post.Id);
+			viewModel.PostId = post.GetIdForUrl();
 			viewModel.PostTitle = HttpUtility.HtmlDecode(post.Title);
 			viewModel.PostSlug = SlugConverter.TitleToSlug(post.Title);
 			viewModel.BlogName = DocumentSession.Load<BlogConfig>(BlogConfig.Key).Title;

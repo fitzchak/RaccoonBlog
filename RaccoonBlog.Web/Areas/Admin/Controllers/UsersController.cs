@@ -38,7 +38,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
-		public virtual ActionResult Edit(int id)
+		public virtual ActionResult Edit(string id)
 		{
 			var user = RavenSession.Load<User>("users/" + id);
 			if (user == null)
@@ -59,7 +59,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
-		public virtual ActionResult ChangePassword(int id)
+		public virtual ActionResult ChangePassword(string id)
 		{
 			var user = RavenSession.Load<User>("users/" + id);
 			if (user == null)
@@ -91,7 +91,7 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		public virtual ActionResult SetActivation(int id, bool isActive)
+		public virtual ActionResult SetActivation(string id, bool isActive)
 		{
 			var user = RavenSession.Load<User>("users/" + id);
 			if (user == null)

@@ -221,10 +221,10 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         }
 
         [NonAction]
-        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id);
+        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Edit(int id)
+        public override System.Web.Mvc.ActionResult Edit(string id)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
@@ -245,10 +245,10 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         }
 
         [NonAction]
-        partial void ChangePasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id);
+        partial void ChangePasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult ChangePassword(int id)
+        public override System.Web.Mvc.ActionResult ChangePassword(string id)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ChangePassword);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
@@ -269,10 +269,10 @@ namespace RaccoonBlog.Web.Areas.Admin.Controllers
         }
 
         [NonAction]
-        partial void SetActivationOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id, bool isActive);
+        partial void SetActivationOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string id, bool isActive);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult SetActivation(int id, bool isActive)
+        public override System.Web.Mvc.ActionResult SetActivation(string id, bool isActive)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.SetActivation);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);

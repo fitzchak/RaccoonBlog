@@ -12,7 +12,7 @@ namespace RaccoonBlog.Web.Infrastructure.AutoMapper.Profiles
 	    public PostViewModelMapperProfile()
 	    {
 			CreateMap<Post, PostViewModel.PostDetails>()
-				.ForMember(x => x.Id, o => o.MapFrom(m => RavenIdResolver.Resolve(m.Id)))
+				.ForMember(x => x.Id, o => o.MapFrom(m => m.GetIdForUrl()))
 				.ForMember(x => x.Slug, o => o.MapFrom(m => SlugConverter.TitleToSlug(m.Title)))
 				.ForMember(x => x.PublishedAt, o => o.MapFrom(m => m.PublishAt))
 				.ForMember(x => x.IsCommentAllowed, o => o.MapFrom(m => m.AllowComments))
