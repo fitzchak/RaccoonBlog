@@ -28,6 +28,9 @@ namespace RaccoonBlog.Web.Infrastructure.Common
 				.Where(x => x.PostPublishAt < DateTimeOffset.Now.AsMinutes())
 				.ProjectInto<PostComments_CreationDate.Result>();
 
+
+            // TODO: do not order by posts creation date, but instead order by commented date.
+
 			var commentsIdentifiers = processQuery(query)
 				.ToList();
 
