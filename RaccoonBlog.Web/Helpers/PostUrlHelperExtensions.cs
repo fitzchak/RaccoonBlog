@@ -9,7 +9,7 @@ namespace RaccoonBlog.Web.Helpers
 {
     public static class PostUrlHelperExtensions
     {
-	    public static string Series(this UrlHelper helper, int seriesId, string seriesSlug)
+	    public static string Series(this UrlHelper helper, string seriesId, string seriesSlug)
 	    {
 	        return helper.Action(
                 MVC.Posts.ActionNames.Series,

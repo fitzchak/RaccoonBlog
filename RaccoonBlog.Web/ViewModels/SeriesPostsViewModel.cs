@@ -25,7 +25,7 @@
             PostsInSeries = new ListStack<PostInSeries>();
         }
 
-        public int SeriesId { get; set; }
+        public string SeriesId { get; set; }
         public string SeriesTitle { get; set; }
         public IList<PostInSeries> PostsInSeries { get; set; }
 

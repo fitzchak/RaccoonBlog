@@ -181,10 +181,10 @@ namespace RaccoonBlog.Web.Controllers
         }
 
         [NonAction]
-        partial void SeriesOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int seriesId, string seriesSlug);
+        partial void SeriesOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string seriesId, string seriesSlug);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Series(int seriesId, string seriesSlug)
+        public override System.Web.Mvc.ActionResult Series(string seriesId, string seriesSlug)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Series);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "seriesId", seriesId);

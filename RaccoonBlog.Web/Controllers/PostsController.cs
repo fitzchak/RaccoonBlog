@@ -44,7 +44,7 @@ namespace RaccoonBlog.Web.Controllers
 			return ListView(stats.TotalResults, posts);
 		}
 
-		public virtual ActionResult Series(int seriesId, string seriesSlug)
+		public virtual ActionResult Series(string seriesId, string seriesSlug)
 	    {
 			var serie = RavenSession
 				.Query<Posts_Series.Result, Posts_Series>()

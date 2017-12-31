@@ -15,7 +15,7 @@ namespace RaccoonBlog.Web.Infrastructure.Indexes
                 Posts = new List<PostInformation>();
             }
 
-            public int SeriesId { get; set; }
+            public string SeriesId { get; set; }
 
             public string Series { get; set; }
 
@@ -48,7 +48,7 @@ namespace RaccoonBlog.Web.Infrastructure.Indexes
                            select new
                            {
                                Series = series,
-                               SeriesId = int.Parse(p.Id.Split('/')[1]),
+                               SeriesId = p.Id.Substring("posts/".Length),
                                Posts = new[] {new {p.Id, p.Title, p.PublishAt}},
                                Count = 1,
                                MaxDate = p.PublishAt,
