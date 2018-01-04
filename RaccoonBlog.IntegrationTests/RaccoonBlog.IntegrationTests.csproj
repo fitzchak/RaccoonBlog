@@ -60,10 +60,10 @@
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Client, Version=4.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
-      <HintPath>..\packages\RavenDB.Client.4.0.0-nightly-20171226-0501\lib\netstandard2.0\Raven.Client.dll</HintPath>
+      <HintPath>..\packages\RavenDB.Client.4.0.0-nightly-20180104-0501\lib\netstandard2.0\Raven.Client.dll</HintPath>
     </Reference>
     <Reference Include="Raven.TestDriver, Version=4.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
-      <HintPath>..\packages\RavenDB.TestDriver.4.0.0-nightly-20171226-0501\lib\netstandard2.0\Raven.TestDriver.dll</HintPath>
+      <HintPath>..\packages\RavenDB.TestDriver.4.0.0-nightly-20180104-0501\lib\netstandard2.0\Raven.TestDriver.dll</HintPath>
     </Reference>
     <Reference Include="RedditSharp, Version=1.1.14.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RedditSharp.1.1.14\lib\net461\RedditSharp.dll</HintPath>
@@ -73,7 +73,7 @@
       <HintPath>..\packages\RhinoMocks.3.6.1\lib\net\Rhino.Mocks.dll</HintPath>
     </Reference>
     <Reference Include="Sparrow, Version=4.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
-      <HintPath>..\packages\RavenDB.Client.4.0.0-nightly-20171226-0501\lib\netstandard2.0\Sparrow.dll</HintPath>
+      <HintPath>..\packages\RavenDB.Client.4.0.0-nightly-20180104-0501\lib\netstandard2.0\Sparrow.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
