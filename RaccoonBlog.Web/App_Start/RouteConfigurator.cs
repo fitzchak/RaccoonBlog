@@ -7,6 +7,7 @@ namespace RaccoonBlog.Web
 	public class RouteConfigurator
 	{
 		private const string MatchPositiveInteger = @"\d{1,10}";
+		private const string MatchRavenDocumentId = @"\d{1,10}(-[A-Za-z]{1,2})?";
 
 		private readonly RouteCollection routes;
 
@@ -136,13 +137,14 @@ namespace RaccoonBlog.Web
 			routes.MapRouteLowerCase("PostDetailsController-Comment",
 				"{id}/comment",
 				new { controller = "PostDetails", action = "Comment" },
-				new { httpMethod = new HttpMethodConstraint("POST") },
+				new { httpMethod = new HttpMethodConstraint("POST"), id = MatchRavenDocumentId },
 				new[] { "RaccoonBlog.Web.Controllers" }
 				);
 
 			routes.MapRouteLowerCase("PostDetailsController-Details",
 				"{id}/{slug}",
 				new { controller = "PostDetails", action = "Details", slug = UrlParameter.Optional },
+			    new { id = MatchRavenDocumentId },
 				new[] { "RaccoonBlog.Web.Controllers" }
 				);
 		}

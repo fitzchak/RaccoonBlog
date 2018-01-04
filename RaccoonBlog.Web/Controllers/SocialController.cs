@@ -20,7 +20,6 @@ namespace RaccoonBlog.Web.Controllers
 {
 	public partial class SocialController : RaccoonController
 	{
-
 		public virtual ActionResult Login(string provider, string redirectUrl)
 		{
 			Session["Dummy"] = "Dummy"; // OWIN External Login hack
