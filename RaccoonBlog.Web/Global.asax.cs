@@ -124,6 +124,9 @@ namespace RaccoonBlog.Web
 
 	        DocumentStore = store.Initialize();
 
+	        var requestsTimeout = WebConfigurationManager.AppSettings["Raven/RequestsTimeoutInSec"];
+	        store.SetRequestsTimeout(requestsTimeout != null && int.TryParse(requestsTimeout, out int seconds) ? TimeSpan.FromSeconds(seconds) : TimeSpan.FromSeconds(1));
+
 	        // TryCreatingIndexesOrRedirectToErrorPage();
 	    }
 
