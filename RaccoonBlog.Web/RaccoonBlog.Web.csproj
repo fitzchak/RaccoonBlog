@@ -95,7 +95,7 @@
       <HintPath>..\Libs\Joel.Net.Akismet\Joel.Net.Akismet.dll</HintPath>
     </Reference>
     <Reference Include="Lambda2Js.Signed.Custom, Version=3.0.2.0, Culture=neutral, PublicKeyToken=9ba16f7edfc48fe6, processorArchitecture=MSIL">
-      <HintPath>..\packages\RavenDB.Client.4.0.0-nightly-20180117-0500\lib\netstandard2.0\Lambda2Js.Signed.Custom.dll</HintPath>
+      <HintPath>..\packages\RavenDB.Client.4.0.0-nightly-20180120-0500\lib\netstandard2.0\Lambda2Js.Signed.Custom.dll</HintPath>
     </Reference>
     <Reference Include="MarkdownDeep, Version=1.5.4615.26275, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MarkdownDeep.Full.1.5\lib\.NetFramework 3.5\MarkdownDeep.dll</HintPath>
@@ -152,7 +152,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Raven.Client, Version=4.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
-      <HintPath>..\packages\RavenDB.Client.4.0.0-nightly-20180117-0500\lib\netstandard2.0\Raven.Client.dll</HintPath>
+      <HintPath>..\packages\RavenDB.Client.4.0.0-nightly-20180120-0500\lib\netstandard2.0\Raven.Client.dll</HintPath>
     </Reference>
     <Reference Include="RazorEngine, Version=3.10.0.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
       <HintPath>..\packages\RazorEngine.3.10.0\lib\net45\RazorEngine.dll</HintPath>
@@ -165,7 +165,7 @@
       <HintPath>..\packages\RedditSharp.1.1.14\lib\net461\RedditSharp.dll</HintPath>
     </Reference>
     <Reference Include="Sparrow, Version=4.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
-      <HintPath>..\packages\RavenDB.Client.4.0.0-nightly-20180117-0500\lib\netstandard2.0\Sparrow.dll</HintPath>
+      <HintPath>..\packages\RavenDB.Client.4.0.0-nightly-20180120-0500\lib\netstandard2.0\Sparrow.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System" />
