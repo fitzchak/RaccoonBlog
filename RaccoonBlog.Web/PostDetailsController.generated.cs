@@ -67,9 +67,10 @@ namespace RaccoonBlog.Web.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult Comment()
+        public virtual System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Comment()
         {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Comment);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Comment);
+            return System.Threading.Tasks.Task.FromResult(callInfo as System.Web.Mvc.ActionResult);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -162,14 +163,14 @@ namespace RaccoonBlog.Web.Controllers
         partial void CommentOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, RaccoonBlog.Web.ViewModels.CommentInput input, string id, System.Guid key);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Comment(RaccoonBlog.Web.ViewModels.CommentInput input, string id, System.Guid key)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Comment(RaccoonBlog.Web.ViewModels.CommentInput input, string id, System.Guid key)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Comment);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "input", input);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "key", key);
             CommentOverride(callInfo, input, id, key);
-            return callInfo;
+            return System.Threading.Tasks.Task.FromResult(callInfo as System.Web.Mvc.ActionResult);
         }
 
     }

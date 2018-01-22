@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using HibernatingRhinos.Loci.Common.Tasks;
@@ -82,7 +83,7 @@ namespace RaccoonBlog.Web.Controllers
 
         [ValidateInput(false)]
         [HttpPost]
-        public virtual ActionResult Comment(CommentInput input, string id, Guid key)
+        public virtual async Task<ActionResult> Comment(CommentInput input, string id, Guid key)
         {
             if (ModelState.IsValid)
             {
@@ -104,7 +105,7 @@ namespace RaccoonBlog.Web.Controllers
                 }
 
                 ValidateCommentsAllowed(post, comments);
-                ValidateCaptcha(input, commenter);
+                await ValidateCaptcha(input, commenter);
 
                 if (ModelState.IsValid == false)
                     return PostingCommentFailed(post, input, key);
@@ -119,19 +120,6 @@ namespace RaccoonBlog.Web.Controllers
             }
 
             return RedirectToAction("Details");
-        }
-
-        private bool CheckRecaptchaChallengeSupplied()
-        {
-            var recaptchaChallengeField = Request.Form.GetValues("recaptcha_challenge_field");
-            if (recaptchaChallengeField == null
-                || recaptchaChallengeField.Length == 0
-                || recaptchaChallengeField.GetValue(0) as string == string.Empty)
-            {
-                return false;
-            }
-
-            return true;
         }
 
         private ActionResult PostingCommentSucceeded(Post post, CommentInput input)
@@ -155,24 +143,13 @@ namespace RaccoonBlog.Web.Controllers
                 ModelState.AddModelError("CommentsClosed", "This post does not allow comments.");
         }
 
-        private void ValidateCaptcha(CommentInput input, Commenter commenter)
+        private async Task ValidateCaptcha(CommentInput input, Commenter commenter)
         {
             if (Request.IsAuthenticated ||
                 (commenter != null && commenter.IsTrustedCommenter == true))
                 return;
 
-            var captchaChallegeSupplied = CheckRecaptchaChallengeSupplied();
-            if (captchaChallegeSupplied == false)
-            {
-                ModelState.AddModelError("CaptchaNotValid", "ReCaptcha challenge was not supplied.");
-                return;
-            }
-
-            if (RecaptchaValidatorWrapper.Validate(ControllerContext.HttpContext))
-                return;
-
-            ModelState.AddModelError("CaptchaNotValid",
-                                     "You did not type the verification word correctly. Please try again.");
+            await Recaptcha2Helper.Validate(ModelState).ConfigureAwait(false);
         }
 
         private ActionResult PostingCommentFailed(Post post, CommentInput input, Guid key)
