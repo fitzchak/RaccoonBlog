@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Linq;
 using System.Net;
 using System.Net.Security;
 using System.Net.Sockets;
 using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-
 using DataAnnotationsExtensions.ClientValidation;
 using FluentScheduler;
 using HibernatingRhinos.Loci.Common.Tasks;
 using NLog;
-using NLog.Fluent;
 using RaccoonBlog.Web.Areas.Admin.Controllers;
 using RaccoonBlog.Web.Controllers;
 using RaccoonBlog.Web.Helpers.Binders;
@@ -76,18 +72,6 @@ namespace RaccoonBlog.Web
 			RaccoonController.DocumentStore = DocumentStore;
 			TaskExecutor.DocumentStore = DocumentStore;
 
-			// In case the versioning bundle is installed, make sure it will version
-			// only what we opt-in to version
-			using (var s = DocumentStore.OpenSession())
-			{
-				s.Store(new
-				{
-					Exclude = true,
-					Id = "Raven/Versioning/DefaultConfiguration",
-				});
-				s.SaveChanges();
-			}
-
             JobManager.JobException += JobExceptionHandler;
             JobManager.Initialize(new SocialNetworkIntegrationJobsRegistry());
         }
@@ -122,10 +106,13 @@ namespace RaccoonBlog.Web
 	            store.Certificate = certificate;
 	        }
 
-	        DocumentStore = store.Initialize();
-
-	        var requestsTimeout = WebConfigurationManager.AppSettings["Raven/RequestsTimeoutInSec"];
-	        store.SetRequestsTimeout(requestsTimeout != null && int.TryParse(requestsTimeout, out int seconds) ? TimeSpan.FromSeconds(seconds) : TimeSpan.FromSeconds(1));
+		    var requestsTimeout = WebConfigurationManager.AppSettings["Raven/RequestsTimeoutInSec"];
+		    if (requestsTimeout != null && int.TryParse(requestsTimeout, out int seconds))
+		    {
+			    store.Conventions.RequestTimeout = TimeSpan.FromSeconds(seconds);
+		    }
+	        
+		    DocumentStore = store.Initialize();
 
 	        // TryCreatingIndexesOrRedirectToErrorPage();
 	    }
