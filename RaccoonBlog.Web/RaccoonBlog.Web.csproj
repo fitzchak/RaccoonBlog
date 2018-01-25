@@ -157,10 +157,6 @@
     <Reference Include="RazorEngine, Version=3.10.0.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
       <HintPath>..\packages\RazorEngine.3.10.0\lib\net45\RazorEngine.dll</HintPath>
     </Reference>
-    <Reference Include="Recaptcha, Version=1.0.5.0, Culture=neutral, PublicKeyToken=9afc4d65b28c38c2, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\recaptcha.1.0.5.0\lib\.NetFramework 4.0\Recaptcha.dll</HintPath>
-    </Reference>
     <Reference Include="RedditSharp, Version=1.1.14.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RedditSharp.1.1.14\lib\net461\RedditSharp.dll</HintPath>
     </Reference>
@@ -277,6 +273,8 @@
     <Compile Include="Helpers\FutureRssAccessToken.cs" />
     <Compile Include="Helpers\PostHelper.cs" />
     <Compile Include="Helpers\PostUrlHelperExtensions.cs" />
+    <Compile Include="Helpers\Recaptcha2Helper.cs" />
+    <Compile Include="Helpers\Recaptcha2Verifier.cs" />
     <Compile Include="Helpers\RedditHelper.cs" />
     <Compile Include="Helpers\SignInHelper.cs" />
     <Compile Include="Helpers\ThemeLessTransform.cs" />
@@ -597,7 +595,6 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="App_Start\RouteConfigurator.cs" />
     <Compile Include="Controllers\LegacyPostController.cs" />
-    <Compile Include="Helpers\Validation\RecaptchaValidatorWrapper.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\Resolvers\MarkdownResolver.cs" />
     <Compile Include="Infrastructure\Indexes\Posts_ByMonthPublished_Count.cs" />
     <Compile Include="Infrastructure\Indexes\Tags_Count.cs" />
@@ -608,7 +605,6 @@
     <Compile Include="Infrastructure\Tasks\AddCommentTask.cs" />
     <Compile Include="Infrastructure\Tasks\SendEmailTask.cs" />
     <Compile Include="Controllers\RaccoonController.cs" />
-    <Compile Include="Helpers\RecaptchHelperExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

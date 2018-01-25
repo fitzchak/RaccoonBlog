@@ -263,10 +263,10 @@
                                 <label>
                                     <span class="form_item_name">Human?</span>
                                 </label>
-                                @Html.GenerateCaptcha()
-
+                                @Recaptcha2Helper.Widget()
+                                
                                 <span class="captcha-error">
-                                    @Html.ValidationMessage("CaptchaNotValid")
+                                    @Html.ValidationMessage(Recaptcha2Helper.ModelStateErrorKey)
                                 </span>
                             </div>
                         }
@@ -328,4 +328,6 @@
             return t;
         }(document, "script", "twitter-wjs"));
     </script>
+    
+    @Recaptcha2Helper.ScriptRef()
 }
