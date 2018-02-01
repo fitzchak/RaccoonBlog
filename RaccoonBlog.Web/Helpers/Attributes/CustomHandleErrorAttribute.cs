@@ -11,8 +11,7 @@ namespace RaccoonBlog.Web.Helpers.Attributes
 
         public override void OnException(ExceptionContext filterContext)
         {
-#if !DEBUG
-            Log.ErrorException("Unexpected error occured.", filterContext.Exception);
+            Log.Error(filterContext.Exception, "Unexpected error occured.");
 
             if (filterContext.HttpContext.Request.IsAjaxRequest())
             {
@@ -32,7 +31,6 @@ namespace RaccoonBlog.Web.Helpers.Attributes
             }));
             filterContext.ExceptionHandled = true;
 
-#endif
 
             base.OnException(filterContext);
         }
