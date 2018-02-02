@@ -23,7 +23,7 @@ namespace RaccoonBlog.IntegrationTests.Web.Controllers
 
 	    protected override void PreInitialize(IDocumentStore documentStore)
 	    {
-	        documentStore.OnBeforeQueryExecuted += (sender, args) => { args.QueryCustomization.WaitForNonStaleResults(); };
+	        documentStore.OnBeforeQuery += (sender, args) => { args.QueryCustomization.WaitForNonStaleResults(); };
 	    }
 
 	    protected void SetupData(Action<IDocumentSession> action)
