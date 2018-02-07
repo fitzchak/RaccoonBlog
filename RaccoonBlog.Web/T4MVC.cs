@@ -2310,14 +2310,14 @@ namespace Links
                 }
                 public static class Assets
                 {
-                    public const string anytime_css = "~/Content/css/anytime.css";
-                    public const string anytime_min_css = "~/Content/css/anytime.min.css";
-                    public const string fullcalendar_css = "~/Content/css/fullcalendar.css";
-                    public const string fullcalendar_min_css = "~/Content/css/fullcalendar.min.css";
-                    public const string fullcalendar_print_css = "~/Content/css/fullcalendar.print.css";
-                    public const string mdd_styles_css = "~/Content/css/mdd_styles.css";
-                    public const string prism_css = "~/Content/css/prism.css";
-                    public const string socicon_css = "~/Content/css/socicon.css";
+                    public static readonly string anytime_css = T4MVCHelpers.ProcessAssetPath("~/Content/css/anytime.css");
+                    public static readonly string anytime_min_css = T4MVCHelpers.ProcessAssetPath("~/Content/css/anytime.min.css");
+                    public static readonly string fullcalendar_css = T4MVCHelpers.ProcessAssetPath("~/Content/css/fullcalendar.css");
+                    public static readonly string fullcalendar_min_css = T4MVCHelpers.ProcessAssetPath("~/Content/css/fullcalendar.min.css");
+                    public static readonly string fullcalendar_print_css = T4MVCHelpers.ProcessAssetPath("~/Content/css/fullcalendar.print.css");
+                    public static readonly string mdd_styles_css = T4MVCHelpers.ProcessAssetPath("~/Content/css/mdd_styles.css");
+                    public static readonly string prism_css = T4MVCHelpers.ProcessAssetPath("~/Content/css/prism.css");
+                    public static readonly string socicon_css = T4MVCHelpers.ProcessAssetPath("~/Content/css/socicon.css");
                 }
             }
             public static partial class fonts 
@@ -2340,7 +2340,7 @@ namespace Links
                     {
                         public static class Assets
                         {
-                            public const string jquery_js = "~/Content/js/ckeditor/adapters/jquery.js"; 
+                            public static readonly string jquery_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/adapters/jquery.js"); 
                         }
                     }
                     public static partial class images 
@@ -2353,66 +2353,66 @@ namespace Links
                     {
                         public static class Assets
                         {
-                            public const string _languages_js = "~/Content/js/ckeditor/lang/_languages.js"; 
-                            public const string af_js = "~/Content/js/ckeditor/lang/af.js"; 
-                            public const string ar_js = "~/Content/js/ckeditor/lang/ar.js"; 
-                            public const string bg_js = "~/Content/js/ckeditor/lang/bg.js"; 
-                            public const string bn_js = "~/Content/js/ckeditor/lang/bn.js"; 
-                            public const string bs_js = "~/Content/js/ckeditor/lang/bs.js"; 
-                            public const string ca_js = "~/Content/js/ckeditor/lang/ca.js"; 
-                            public const string cs_js = "~/Content/js/ckeditor/lang/cs.js"; 
-                            public const string cy_js = "~/Content/js/ckeditor/lang/cy.js"; 
-                            public const string da_js = "~/Content/js/ckeditor/lang/da.js"; 
-                            public const string de_js = "~/Content/js/ckeditor/lang/de.js"; 
-                            public const string el_js = "~/Content/js/ckeditor/lang/el.js"; 
-                            public const string en_au_js = "~/Content/js/ckeditor/lang/en-au.js"; 
-                            public const string en_ca_js = "~/Content/js/ckeditor/lang/en-ca.js"; 
-                            public const string en_gb_js = "~/Content/js/ckeditor/lang/en-gb.js"; 
-                            public const string en_js = "~/Content/js/ckeditor/lang/en.js"; 
-                            public const string eo_js = "~/Content/js/ckeditor/lang/eo.js"; 
-                            public const string es_js = "~/Content/js/ckeditor/lang/es.js"; 
-                            public const string et_js = "~/Content/js/ckeditor/lang/et.js"; 
-                            public const string eu_js = "~/Content/js/ckeditor/lang/eu.js"; 
-                            public const string fa_js = "~/Content/js/ckeditor/lang/fa.js"; 
-                            public const string fi_js = "~/Content/js/ckeditor/lang/fi.js"; 
-                            public const string fo_js = "~/Content/js/ckeditor/lang/fo.js"; 
-                            public const string fr_ca_js = "~/Content/js/ckeditor/lang/fr-ca.js"; 
-                            public const string fr_js = "~/Content/js/ckeditor/lang/fr.js"; 
-                            public const string gl_js = "~/Content/js/ckeditor/lang/gl.js"; 
-                            public const string gu_js = "~/Content/js/ckeditor/lang/gu.js"; 
-                            public const string he_js = "~/Content/js/ckeditor/lang/he.js"; 
-                            public const string hi_js = "~/Content/js/ckeditor/lang/hi.js"; 
-                            public const string hr_js = "~/Content/js/ckeditor/lang/hr.js"; 
-                            public const string hu_js = "~/Content/js/ckeditor/lang/hu.js"; 
-                            public const string is_js = "~/Content/js/ckeditor/lang/is.js"; 
-                            public const string it_js = "~/Content/js/ckeditor/lang/it.js"; 
-                            public const string ja_js = "~/Content/js/ckeditor/lang/ja.js"; 
-                            public const string ka_js = "~/Content/js/ckeditor/lang/ka.js"; 
-                            public const string km_js = "~/Content/js/ckeditor/lang/km.js"; 
-                            public const string ko_js = "~/Content/js/ckeditor/lang/ko.js"; 
-                            public const string lt_js = "~/Content/js/ckeditor/lang/lt.js"; 
-                            public const string lv_js = "~/Content/js/ckeditor/lang/lv.js"; 
-                            public const string mn_js = "~/Content/js/ckeditor/lang/mn.js"; 
-                            public const string ms_js = "~/Content/js/ckeditor/lang/ms.js"; 
-                            public const string nb_js = "~/Content/js/ckeditor/lang/nb.js"; 
-                            public const string nl_js = "~/Content/js/ckeditor/lang/nl.js"; 
-                            public const string no_js = "~/Content/js/ckeditor/lang/no.js"; 
-                            public const string pl_js = "~/Content/js/ckeditor/lang/pl.js"; 
-                            public const string pt_br_js = "~/Content/js/ckeditor/lang/pt-br.js"; 
-                            public const string pt_js = "~/Content/js/ckeditor/lang/pt.js"; 
-                            public const string ro_js = "~/Content/js/ckeditor/lang/ro.js"; 
-                            public const string ru_js = "~/Content/js/ckeditor/lang/ru.js"; 
-                            public const string sk_js = "~/Content/js/ckeditor/lang/sk.js"; 
-                            public const string sl_js = "~/Content/js/ckeditor/lang/sl.js"; 
-                            public const string sr_latn_js = "~/Content/js/ckeditor/lang/sr-latn.js"; 
-                            public const string sr_js = "~/Content/js/ckeditor/lang/sr.js"; 
-                            public const string sv_js = "~/Content/js/ckeditor/lang/sv.js"; 
-                            public const string th_js = "~/Content/js/ckeditor/lang/th.js"; 
-                            public const string tr_js = "~/Content/js/ckeditor/lang/tr.js"; 
-                            public const string uk_js = "~/Content/js/ckeditor/lang/uk.js"; 
-                            public const string vi_js = "~/Content/js/ckeditor/lang/vi.js"; 
-                            public const string zh_cn_js = "~/Content/js/ckeditor/lang/zh-cn.js"; 
-                            public const string zh_js = "~/Content/js/ckeditor/lang/zh.js"; 
+                            public static readonly string _languages_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/_languages.js"); 
+                            public static readonly string af_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/af.js"); 
+                            public static readonly string ar_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/ar.js"); 
+                            public static readonly string bg_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/bg.js"); 
+                            public static readonly string bn_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/bn.js"); 
+                            public static readonly string bs_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/bs.js"); 
+                            public static readonly string ca_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/ca.js"); 
+                            public static readonly string cs_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/cs.js"); 
+                            public static readonly string cy_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/cy.js"); 
+                            public static readonly string da_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/da.js"); 
+                            public static readonly string de_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/de.js"); 
+                            public static readonly string el_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/el.js"); 
+                            public static readonly string en_au_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/en-au.js"); 
+                            public static readonly string en_ca_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/en-ca.js"); 
+                            public static readonly string en_gb_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/en-gb.js"); 
+                            public static readonly string en_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/en.js"); 
+                            public static readonly string eo_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/eo.js"); 
+                            public static readonly string es_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/es.js"); 
+                            public static readonly string et_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/et.js"); 
+                            public static readonly string eu_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/eu.js"); 
+                            public static readonly string fa_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/fa.js"); 
+                            public static readonly string fi_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/fi.js"); 
+                            public static readonly string fo_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/fo.js"); 
+                            public static readonly string fr_ca_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/fr-ca.js"); 
+                            public static readonly string fr_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/fr.js"); 
+                            public static readonly string gl_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/gl.js"); 
+                            public static readonly string gu_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/gu.js"); 
+                            public static readonly string he_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/he.js"); 
+                            public static readonly string hi_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/hi.js"); 
+                            public static readonly string hr_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/hr.js"); 
+                            public static readonly string hu_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/hu.js"); 
+                            public static readonly string is_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/is.js"); 
+                            public static readonly string it_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/it.js"); 
+                            public static readonly string ja_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/ja.js"); 
+                            public static readonly string ka_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/ka.js"); 
+                            public static readonly string km_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/km.js"); 
+                            public static readonly string ko_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/ko.js"); 
+                            public static readonly string lt_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/lt.js"); 
+                            public static readonly string lv_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/lv.js"); 
+                            public static readonly string mn_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/mn.js"); 
+                            public static readonly string ms_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/ms.js"); 
+                            public static readonly string nb_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/nb.js"); 
+                            public static readonly string nl_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/nl.js"); 
+                            public static readonly string no_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/no.js"); 
+                            public static readonly string pl_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/pl.js"); 
+                            public static readonly string pt_br_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/pt-br.js"); 
+                            public static readonly string pt_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/pt.js"); 
+                            public static readonly string ro_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/ro.js"); 
+                            public static readonly string ru_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/ru.js"); 
+                            public static readonly string sk_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/sk.js"); 
+                            public static readonly string sl_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/sl.js"); 
+                            public static readonly string sr_latn_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/sr-latn.js"); 
+                            public static readonly string sr_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/sr.js"); 
+                            public static readonly string sv_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/sv.js"); 
+                            public static readonly string th_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/th.js"); 
+                            public static readonly string tr_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/tr.js"); 
+                            public static readonly string uk_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/uk.js"); 
+                            public static readonly string vi_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/vi.js"); 
+                            public static readonly string zh_cn_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/zh-cn.js"); 
+                            public static readonly string zh_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/lang/zh.js"); 
                         }
                     }
                     public static partial class plugins 
@@ -2423,15 +2423,15 @@ namespace Links
                             {
                                 public static class Assets
                                 {
-                                    public const string a11yhelp_js = "~/Content/js/ckeditor/plugins/a11yhelp/dialogs/a11yhelp.js"; 
+                                    public static readonly string a11yhelp_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/a11yhelp/dialogs/a11yhelp.js"); 
                                 }
                             }
                             public static partial class lang 
                             {
                                 public static class Assets
                                 {
-                                    public const string en_js = "~/Content/js/ckeditor/plugins/a11yhelp/lang/en.js"; 
-                                    public const string he_js = "~/Content/js/ckeditor/plugins/a11yhelp/lang/he.js"; 
+                                    public static readonly string en_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/a11yhelp/lang/en.js"); 
+                                    public static readonly string he_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/a11yhelp/lang/he.js"); 
                                 }
                             }
                             public static class Assets
@@ -2444,7 +2444,7 @@ namespace Links
                             {
                                 public static class Assets
                                 {
-                                    public const string about_js = "~/Content/js/ckeditor/plugins/about/dialogs/about.js"; 
+                                    public static readonly string about_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/about/dialogs/about.js"); 
                                 }
                             }
                             public static class Assets
@@ -2455,28 +2455,28 @@ namespace Links
                         {
                             public static class Assets
                             {
-                                public const string plugin_js = "~/Content/js/ckeditor/plugins/adobeair/plugin.js"; 
+                                public static readonly string plugin_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/adobeair/plugin.js"); 
                             }
                         }
                         public static partial class ajax 
                         {
                             public static class Assets
                             {
-                                public const string plugin_js = "~/Content/js/ckeditor/plugins/ajax/plugin.js"; 
+                                public static readonly string plugin_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/ajax/plugin.js"); 
                             }
                         }
                         public static partial class autogrow 
                         {
                             public static class Assets
                             {
-                                public const string plugin_js = "~/Content/js/ckeditor/plugins/autogrow/plugin.js"; 
+                                public static readonly string plugin_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/autogrow/plugin.js"); 
                             }
                         }
                         public static partial class bbcode 
                         {
                             public static class Assets
                             {
-                                public const string plugin_js = "~/Content/js/ckeditor/plugins/bbcode/plugin.js"; 
+                                public static readonly string plugin_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/bbcode/plugin.js"); 
                             }
                         }
                         public static partial class clipboard 
@@ -2485,7 +2485,7 @@ namespace Links
                             {
                                 public static class Assets
                                 {
-                                    public const string paste_js = "~/Content/js/ckeditor/plugins/clipboard/dialogs/paste.js"; 
+                                    public static readonly string paste_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/clipboard/dialogs/paste.js"); 
                                 }
                             }
                             public static class Assets
@@ -2498,7 +2498,7 @@ namespace Links
                             {
                                 public static class Assets
                                 {
-                                    public const string colordialog_js = "~/Content/js/ckeditor/plugins/colordialog/dialogs/colordialog.js"; 
+                                    public static readonly string colordialog_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/colordialog/dialogs/colordialog.js"); 
                                 }
                             }
                             public static class Assets
@@ -2511,19 +2511,19 @@ namespace Links
                             {
                                 public static class Assets
                                 {
-                                    public const string en_js = "~/Content/js/ckeditor/plugins/devtools/lang/en.js"; 
+                                    public static readonly string en_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/devtools/lang/en.js"); 
                                 }
                             }
                             public static class Assets
                             {
-                                public const string plugin_js = "~/Content/js/ckeditor/plugins/devtools/plugin.js"; 
+                                public static readonly string plugin_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/devtools/plugin.js"); 
                             }
                         }
                         public static partial class dialog 
                         {
                             public static class Assets
                             {
-                                public const string dialogDefinition_js = "~/Content/js/ckeditor/plugins/dialog/dialogDefinition.js"; 
+                                public static readonly string dialogDefinition_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/dialog/dialogDefinition.js"); 
                             }
                         }
                         public static partial class div 
@@ -2532,7 +2532,7 @@ namespace Links
                             {
                                 public static class Assets
                                 {
-                                    public const string div_js = "~/Content/js/ckeditor/plugins/div/dialogs/div.js"; 
+                                    public static readonly string div_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/div/dialogs/div.js"); 
                                 }
                             }
                             public static class Assets
@@ -2545,12 +2545,12 @@ namespace Links
                             {
                                 public static class Assets
                                 {
-                                    public const string docprops_js = "~/Content/js/ckeditor/plugins/docprops/dialogs/docprops.js"; 
+                                    public static readonly string docprops_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/docprops/dialogs/docprops.js"); 
                                 }
                             }
                             public static class Assets
                             {
-                                public const string plugin_js = "~/Content/js/ckeditor/plugins/docprops/plugin.js"; 
+                                public static readonly string plugin_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/docprops/plugin.js"); 
                             }
                         }
                         public static partial class find 
@@ -2559,7 +2559,7 @@ namespace Links
                             {
                                 public static class Assets
                                 {
-                                    public const string find_js = "~/Content/js/ckeditor/plugins/find/dialogs/find.js"; 
+                                    public static readonly string find_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/find/dialogs/find.js"); 
                                 }
                             }
                             public static class Assets
@@ -2572,7 +2572,7 @@ namespace Links
                             {
                                 public static class Assets
                                 {
-                                    public const string flash_js = "~/Content/js/ckeditor/plugins/flash/dialogs/flash.js"; 
+                                    public static readonly string flash_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/flash/dialogs/flash.js"); 
                                 }
                             }
                             public static partial class images 
@@ -2591,14 +2591,14 @@ namespace Links
                             {
                                 public static class Assets
                                 {
-                                    public const string button_js = "~/Content/js/ckeditor/plugins/forms/dialogs/button.js"; 
-                                    public const string checkbox_js = "~/Content/js/ckeditor/plugins/forms/dialogs/checkbox.js"; 
-                                    public const string form_js = "~/Content/js/ckeditor/plugins/forms/dialogs/form.js"; 
-                                    public const string hiddenfield_js = "~/Content/js/ckeditor/plugins/forms/dialogs/hiddenfield.js"; 
-                                    public const string radio_js = "~/Content/js/ckeditor/plugins/forms/dialogs/radio.js"; 
-                                    public const string select_js = "~/Content/js/ckeditor/plugins/forms/dialogs/select.js"; 
-                                    public const string textarea_js = "~/Content/js/ckeditor/plugins/forms/dialogs/textarea.js"; 
-                                    public const string textfield_js = "~/Content/js/ckeditor/plugins/forms/dialogs/textfield.js"; 
+                                    public static readonly string button_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/forms/dialogs/button.js"); 
+                                    public static readonly string checkbox_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/forms/dialogs/checkbox.js"); 
+                                    public static readonly string form_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/forms/dialogs/form.js"); 
+                                    public static readonly string hiddenfield_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/forms/dialogs/hiddenfield.js"); 
+                                    public static readonly string radio_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/forms/dialogs/radio.js"); 
+                                    public static readonly string select_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/forms/dialogs/select.js"); 
+                                    public static readonly string textarea_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/forms/dialogs/textarea.js"); 
+                                    public static readonly string textfield_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/forms/dialogs/textfield.js"); 
                                 }
                             }
                             public static partial class images 
@@ -2617,7 +2617,7 @@ namespace Links
                             {
                                 public static class Assets
                                 {
-                                    public const string iframe_js = "~/Content/js/ckeditor/plugins/iframe/dialogs/iframe.js"; 
+                                    public static readonly string iframe_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/iframe/dialogs/iframe.js"); 
                                 }
                             }
                             public static partial class images 
@@ -2634,7 +2634,7 @@ namespace Links
                         {
                             public static class Assets
                             {
-                                public const string plugin_js = "~/Content/js/ckeditor/plugins/iframedialog/plugin.js"; 
+                                public static readonly string plugin_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/iframedialog/plugin.js"); 
                             }
                         }
                         public static partial class image 
@@ -2643,7 +2643,7 @@ namespace Links
                             {
                                 public static class Assets
                                 {
-                                    public const string image_js = "~/Content/js/ckeditor/plugins/image/dialogs/image.js"; 
+                                    public static readonly string image_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/image/dialogs/image.js"); 
                                 }
                             }
                             public static class Assets
@@ -2656,8 +2656,8 @@ namespace Links
                             {
                                 public static class Assets
                                 {
-                                    public const string anchor_js = "~/Content/js/ckeditor/plugins/link/dialogs/anchor.js"; 
-                                    public const string link_js = "~/Content/js/ckeditor/plugins/link/dialogs/link.js"; 
+                                    public static readonly string anchor_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/link/dialogs/anchor.js"); 
+                                    public static readonly string link_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/link/dialogs/link.js"); 
                                 }
                             }
                             public static partial class images 
@@ -2676,7 +2676,7 @@ namespace Links
                             {
                                 public static class Assets
                                 {
-                                    public const string liststyle_js = "~/Content/js/ckeditor/plugins/liststyle/dialogs/liststyle.js"; 
+                                    public static readonly string liststyle_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/liststyle/dialogs/liststyle.js"); 
                                 }
                             }
                             public static class Assets
@@ -2701,7 +2701,7 @@ namespace Links
                             {
                                 public static class Assets
                                 {
-                                    public const string default_js = "~/Content/js/ckeditor/plugins/pastefromword/filter/default.js"; 
+                                    public static readonly string default_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/pastefromword/filter/default.js"); 
                                 }
                             }
                             public static class Assets
@@ -2714,7 +2714,7 @@ namespace Links
                             {
                                 public static class Assets
                                 {
-                                    public const string pastetext_js = "~/Content/js/ckeditor/plugins/pastetext/dialogs/pastetext.js"; 
+                                    public static readonly string pastetext_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/pastetext/dialogs/pastetext.js"); 
                                 }
                             }
                             public static class Assets
@@ -2727,20 +2727,20 @@ namespace Links
                             {
                                 public static class Assets
                                 {
-                                    public const string placeholder_js = "~/Content/js/ckeditor/plugins/placeholder/dialogs/placeholder.js"; 
+                                    public static readonly string placeholder_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/placeholder/dialogs/placeholder.js"); 
                                 }
                             }
                             public static partial class lang 
                             {
                                 public static class Assets
                                 {
-                                    public const string en_js = "~/Content/js/ckeditor/plugins/placeholder/lang/en.js"; 
-                                    public const string he_js = "~/Content/js/ckeditor/plugins/placeholder/lang/he.js"; 
+                                    public static readonly string en_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/placeholder/lang/en.js"); 
+                                    public static readonly string he_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/placeholder/lang/he.js"); 
                                 }
                             }
                             public static class Assets
                             {
-                                public const string plugin_js = "~/Content/js/ckeditor/plugins/placeholder/plugin.js"; 
+                                public static readonly string plugin_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/placeholder/plugin.js"); 
                             }
                         }
                         public static partial class scayt 
@@ -2749,8 +2749,8 @@ namespace Links
                             {
                                 public static class Assets
                                 {
-                                    public const string options_js = "~/Content/js/ckeditor/plugins/scayt/dialogs/options.js"; 
-                                    public const string toolbar_css = "~/Content/js/ckeditor/plugins/scayt/dialogs/toolbar.css";
+                                    public static readonly string options_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/scayt/dialogs/options.js"); 
+                                    public static readonly string toolbar_css = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/scayt/dialogs/toolbar.css");
                                 }
                             }
                             public static class Assets
@@ -2775,7 +2775,7 @@ namespace Links
                             {
                                 public static class Assets
                                 {
-                                    public const string smiley_js = "~/Content/js/ckeditor/plugins/smiley/dialogs/smiley.js"; 
+                                    public static readonly string smiley_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/smiley/dialogs/smiley.js"); 
                                 }
                             }
                             public static partial class images 
@@ -2794,14 +2794,14 @@ namespace Links
                             {
                                 public static class Assets
                                 {
-                                    public const string specialchar_js = "~/Content/js/ckeditor/plugins/specialchar/dialogs/specialchar.js"; 
+                                    public static readonly string specialchar_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/specialchar/dialogs/specialchar.js"); 
                                 }
                             }
                             public static partial class lang 
                             {
                                 public static class Assets
                                 {
-                                    public const string en_js = "~/Content/js/ckeditor/plugins/specialchar/lang/en.js"; 
+                                    public static readonly string en_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/specialchar/lang/en.js"); 
                                 }
                             }
                             public static class Assets
@@ -2814,7 +2814,7 @@ namespace Links
                             {
                                 public static class Assets
                                 {
-                                    public const string default_js = "~/Content/js/ckeditor/plugins/styles/styles/default.js"; 
+                                    public static readonly string default_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/styles/styles/default.js"); 
                                 }
                             }
                             public static class Assets
@@ -2825,7 +2825,7 @@ namespace Links
                         {
                             public static class Assets
                             {
-                                public const string plugin_js = "~/Content/js/ckeditor/plugins/stylesheetparser/plugin.js"; 
+                                public static readonly string plugin_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/stylesheetparser/plugin.js"); 
                             }
                         }
                         public static partial class table 
@@ -2834,7 +2834,7 @@ namespace Links
                             {
                                 public static class Assets
                                 {
-                                    public const string table_js = "~/Content/js/ckeditor/plugins/table/dialogs/table.js"; 
+                                    public static readonly string table_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/table/dialogs/table.js"); 
                                 }
                             }
                             public static class Assets
@@ -2845,7 +2845,7 @@ namespace Links
                         {
                             public static class Assets
                             {
-                                public const string plugin_js = "~/Content/js/ckeditor/plugins/tableresize/plugin.js"; 
+                                public static readonly string plugin_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/tableresize/plugin.js"); 
                             }
                         }
                         public static partial class tabletools 
@@ -2854,7 +2854,7 @@ namespace Links
                             {
                                 public static class Assets
                                 {
-                                    public const string tableCell_js = "~/Content/js/ckeditor/plugins/tabletools/dialogs/tableCell.js"; 
+                                    public static readonly string tableCell_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/tabletools/dialogs/tableCell.js"); 
                                 }
                             }
                             public static class Assets
@@ -2867,7 +2867,7 @@ namespace Links
                             {
                                 public static class Assets
                                 {
-                                    public const string templates_js = "~/Content/js/ckeditor/plugins/templates/dialogs/templates.js"; 
+                                    public static readonly string templates_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/templates/dialogs/templates.js"); 
                                 }
                             }
                             public static partial class templates_ 
@@ -2880,7 +2880,7 @@ namespace Links
                                 }
                                 public static class Assets
                                 {
-                                    public const string default_js = "~/Content/js/ckeditor/plugins/templates/templates/default.js"; 
+                                    public static readonly string default_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/templates/templates/default.js"); 
                                 }
                             }
                             public static class Assets
@@ -2893,15 +2893,15 @@ namespace Links
                             {
                                 public static class Assets
                                 {
-                                    public const string uicolor_js = "~/Content/js/ckeditor/plugins/uicolor/dialogs/uicolor.js"; 
+                                    public static readonly string uicolor_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/uicolor/dialogs/uicolor.js"); 
                                 }
                             }
                             public static partial class lang 
                             {
                                 public static class Assets
                                 {
-                                    public const string en_js = "~/Content/js/ckeditor/plugins/uicolor/lang/en.js"; 
-                                    public const string he_js = "~/Content/js/ckeditor/plugins/uicolor/lang/he.js"; 
+                                    public static readonly string en_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/uicolor/lang/en.js"); 
+                                    public static readonly string he_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/uicolor/lang/he.js"); 
                                 }
                             }
                             public static partial class yui 
@@ -2910,17 +2910,17 @@ namespace Links
                                 {
                                     public static class Assets
                                     {
-                                        public const string yui_css = "~/Content/js/ckeditor/plugins/uicolor/yui/assets/yui.css";
+                                        public static readonly string yui_css = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/uicolor/yui/assets/yui.css");
                                     }
                                 }
                                 public static class Assets
                                 {
-                                    public const string yui_js = "~/Content/js/ckeditor/plugins/uicolor/yui/yui.js"; 
+                                    public static readonly string yui_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/uicolor/yui/yui.js"); 
                                 }
                             }
                             public static class Assets
                             {
-                                public const string plugin_js = "~/Content/js/ckeditor/plugins/uicolor/plugin.js"; 
+                                public static readonly string plugin_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/uicolor/plugin.js"); 
                             }
                         }
                         public static partial class wsc 
@@ -2929,8 +2929,8 @@ namespace Links
                             {
                                 public static class Assets
                                 {
-                                    public const string wsc_css = "~/Content/js/ckeditor/plugins/wsc/dialogs/wsc.css";
-                                    public const string wsc_js = "~/Content/js/ckeditor/plugins/wsc/dialogs/wsc.js"; 
+                                    public static readonly string wsc_css = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/wsc/dialogs/wsc.css");
+                                    public static readonly string wsc_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/wsc/dialogs/wsc.js"); 
                                 }
                             }
                             public static class Assets
@@ -2941,7 +2941,7 @@ namespace Links
                         {
                             public static class Assets
                             {
-                                public const string plugin_js = "~/Content/js/ckeditor/plugins/xml/plugin.js"; 
+                                public static readonly string plugin_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/plugins/xml/plugin.js"); 
                             }
                         }
                         public static class Assets
@@ -2960,10 +2960,10 @@ namespace Links
                             }
                             public static class Assets
                             {
-                                public const string dialog_css = "~/Content/js/ckeditor/skins/kama/dialog.css";
-                                public const string editor_css = "~/Content/js/ckeditor/skins/kama/editor.css";
-                                public const string skin_js = "~/Content/js/ckeditor/skins/kama/skin.js"; 
-                                public const string templates_css = "~/Content/js/ckeditor/skins/kama/templates.css";
+                                public static readonly string dialog_css = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/skins/kama/dialog.css");
+                                public static readonly string editor_css = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/skins/kama/editor.css");
+                                public static readonly string skin_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/skins/kama/skin.js"); 
+                                public static readonly string templates_css = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/skins/kama/templates.css");
                             }
                         }
                         public static partial class office2003 
@@ -2976,10 +2976,10 @@ namespace Links
                             }
                             public static class Assets
                             {
-                                public const string dialog_css = "~/Content/js/ckeditor/skins/office2003/dialog.css";
-                                public const string editor_css = "~/Content/js/ckeditor/skins/office2003/editor.css";
-                                public const string skin_js = "~/Content/js/ckeditor/skins/office2003/skin.js"; 
-                                public const string templates_css = "~/Content/js/ckeditor/skins/office2003/templates.css";
+                                public static readonly string dialog_css = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/skins/office2003/dialog.css");
+                                public static readonly string editor_css = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/skins/office2003/editor.css");
+                                public static readonly string skin_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/skins/office2003/skin.js"); 
+                                public static readonly string templates_css = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/skins/office2003/templates.css");
                             }
                         }
                         public static partial class v2 
@@ -2992,10 +2992,10 @@ namespace Links
                             }
                             public static class Assets
                             {
-                                public const string dialog_css = "~/Content/js/ckeditor/skins/v2/dialog.css";
-                                public const string editor_css = "~/Content/js/ckeditor/skins/v2/editor.css";
-                                public const string skin_js = "~/Content/js/ckeditor/skins/v2/skin.js"; 
-                                public const string templates_css = "~/Content/js/ckeditor/skins/v2/templates.css";
+                                public static readonly string dialog_css = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/skins/v2/dialog.css");
+                                public static readonly string editor_css = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/skins/v2/editor.css");
+                                public static readonly string skin_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/skins/v2/skin.js"); 
+                                public static readonly string templates_css = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/skins/v2/templates.css");
                             }
                         }
                         public static class Assets
@@ -3008,7 +3008,7 @@ namespace Links
                         {
                             public static class Assets
                             {
-                                public const string theme_js = "~/Content/js/ckeditor/themes/default/theme.js"; 
+                                public static readonly string theme_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/themes/default/theme.js"); 
                             }
                         }
                         public static class Assets
@@ -3017,61 +3017,61 @@ namespace Links
                     }
                     public static class Assets
                     {
-                        public const string ckeditor_js = "~/Content/js/ckeditor/ckeditor.js"; 
-                        public const string ckeditor_basic_js = "~/Content/js/ckeditor/ckeditor_basic.js"; 
-                        public const string ckeditor_basic_source_js = "~/Content/js/ckeditor/ckeditor_basic_source.js"; 
-                        public const string ckeditor_source_js = "~/Content/js/ckeditor/ckeditor_source.js"; 
-                        public const string config_js = "~/Content/js/ckeditor/config.js"; 
-                        public const string contents_css = "~/Content/js/ckeditor/contents.css";
+                        public static readonly string ckeditor_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/ckeditor.js"); 
+                        public static readonly string ckeditor_basic_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/ckeditor_basic.js"); 
+                        public static readonly string ckeditor_basic_source_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/ckeditor_basic_source.js"); 
+                        public static readonly string ckeditor_source_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/ckeditor_source.js"); 
+                        public static readonly string config_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/config.js"); 
+                        public static readonly string contents_css = T4MVCHelpers.ProcessAssetPath("~/Content/js/ckeditor/contents.css");
                     }
                 }
                 public static partial class lib 
                 {
                     public static class Assets
                     {
-                        public const string MarkdownDeepLib_min_js = "~/Content/js/lib/MarkdownDeepLib.min.js"; 
+                        public static readonly string MarkdownDeepLib_min_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/lib/MarkdownDeepLib.min.js"); 
                     }
                 }
                 public static class Assets
                 {
-                    public const string anytime_js = "~/Content/js/anytime.js"; 
-                    public const string anytime_min_js = "~/Content/js/anytime.min.js"; 
-                    public const string bootstrap_js = "~/Content/js/bootstrap.js"; 
-                    public const string bootstrap_min_js = "~/Content/js/bootstrap.min.js"; 
-                    public const string date_f_0_5_0_js = "~/Content/js/date.f-0.5.0.js"; 
-                    public const string date_f_0_5_0_min_js = "~/Content/js/date.f-0.5.0.min.js"; 
-                    public const string fullcalendar_js = "~/Content/js/fullcalendar.js"; 
-                    public const string fullcalendar_min_js = "~/Content/js/fullcalendar.min.js"; 
-                    public const string jquery_1_11_2_intellisense_js = "~/Content/js/jquery-1.11.2.intellisense.js"; 
-                    public const string jquery_1_11_2_js = "~/Content/js/jquery-1.11.2.js"; 
-                    public const string jquery_1_11_2_min_js = "~/Content/js/jquery-1.11.2.min.js"; 
-                    public const string jquery_migrate_1_2_1_js = "~/Content/js/jquery-migrate-1.2.1.js"; 
-                    public const string jquery_migrate_1_2_1_min_js = "~/Content/js/jquery-migrate-1.2.1.min.js"; 
-                    public const string jquery_ui_1_11_2_js = "~/Content/js/jquery-ui-1.11.2.js"; 
-                    public const string jquery_ui_1_11_2_min_js = "~/Content/js/jquery-ui-1.11.2.min.js"; 
-                    public const string jquery_md5_js = "~/Content/js/jquery.md5.js"; 
-                    public const string jquery_tmpl_js = "~/Content/js/jquery.tmpl.js"; 
-                    public const string jquery_tmpl_min_js = "~/Content/js/jquery.tmpl.min.js"; 
-                    public const string jquery_twbsPagination_js = "~/Content/js/jquery.twbsPagination.js"; 
-                    public const string jquery_twbsPagination_min_js = "~/Content/js/jquery.twbsPagination.min.js"; 
-                    public const string jquery_ui_core_js = "~/Content/js/jquery.ui.core.js"; 
-                    public const string jquery_ui_core_min_js = "~/Content/js/jquery.ui.core.min.js"; 
-                    public const string jquery_unobtrusive_ajax_js = "~/Content/js/jquery.unobtrusive-ajax.js"; 
-                    public const string jquery_unobtrusive_ajax_min_js = "~/Content/js/jquery.unobtrusive-ajax.min.js"; 
-                    public const string jquery_validate_js = "~/Content/js/jquery.validate.js"; 
-                    public const string jquery_validate_min_js = "~/Content/js/jquery.validate.min.js"; 
-                    public const string jquery_validate_unobtrusive_js = "~/Content/js/jquery.validate.unobtrusive.js"; 
-                    public const string jquery_validate_unobtrusive_min_js = "~/Content/js/jquery.validate.unobtrusive.min.js"; 
-                    public const string moment_with_locales_js = "~/Content/js/moment-with-locales.js"; 
-                    public const string moment_with_locales_min_js = "~/Content/js/moment-with-locales.min.js"; 
-                    public const string moment_js = "~/Content/js/moment.js"; 
-                    public const string moment_min_js = "~/Content/js/moment.min.js"; 
-                    public const string raccoon_blog_js = "~/Content/js/raccoon-blog.js"; 
-                    public const string RequiredIfValidation_js = "~/Content/js/RequiredIfValidation.js"; 
-                    public const string respond_src_js = "~/Content/js/respond.src.js"; 
-                    public const string setup_js = "~/Content/js/setup.js"; 
-                    public const string showdown_js = "~/Content/js/showdown.js"; 
-                    public const string utils_js = "~/Content/js/utils.js"; 
+                    public static readonly string anytime_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/anytime.js"); 
+                    public static readonly string anytime_min_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/anytime.min.js"); 
+                    public static readonly string bootstrap_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/bootstrap.js"); 
+                    public static readonly string bootstrap_min_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/bootstrap.min.js"); 
+                    public static readonly string date_f_0_5_0_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/date.f-0.5.0.js"); 
+                    public static readonly string date_f_0_5_0_min_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/date.f-0.5.0.min.js"); 
+                    public static readonly string fullcalendar_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/fullcalendar.js"); 
+                    public static readonly string fullcalendar_min_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/fullcalendar.min.js"); 
+                    public static readonly string jquery_1_11_2_intellisense_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/jquery-1.11.2.intellisense.js"); 
+                    public static readonly string jquery_1_11_2_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/jquery-1.11.2.js"); 
+                    public static readonly string jquery_1_11_2_min_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/jquery-1.11.2.min.js"); 
+                    public static readonly string jquery_migrate_1_2_1_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/jquery-migrate-1.2.1.js"); 
+                    public static readonly string jquery_migrate_1_2_1_min_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/jquery-migrate-1.2.1.min.js"); 
+                    public static readonly string jquery_ui_1_11_2_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/jquery-ui-1.11.2.js"); 
+                    public static readonly string jquery_ui_1_11_2_min_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/jquery-ui-1.11.2.min.js"); 
+                    public static readonly string jquery_md5_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/jquery.md5.js"); 
+                    public static readonly string jquery_tmpl_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/jquery.tmpl.js"); 
+                    public static readonly string jquery_tmpl_min_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/jquery.tmpl.min.js"); 
+                    public static readonly string jquery_twbsPagination_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/jquery.twbsPagination.js"); 
+                    public static readonly string jquery_twbsPagination_min_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/jquery.twbsPagination.min.js"); 
+                    public static readonly string jquery_ui_core_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/jquery.ui.core.js"); 
+                    public static readonly string jquery_ui_core_min_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/jquery.ui.core.min.js"); 
+                    public static readonly string jquery_unobtrusive_ajax_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/jquery.unobtrusive-ajax.js"); 
+                    public static readonly string jquery_unobtrusive_ajax_min_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/jquery.unobtrusive-ajax.min.js"); 
+                    public static readonly string jquery_validate_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/jquery.validate.js"); 
+                    public static readonly string jquery_validate_min_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/jquery.validate.min.js"); 
+                    public static readonly string jquery_validate_unobtrusive_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/jquery.validate.unobtrusive.js"); 
+                    public static readonly string jquery_validate_unobtrusive_min_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/jquery.validate.unobtrusive.min.js"); 
+                    public static readonly string moment_with_locales_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/moment-with-locales.js"); 
+                    public static readonly string moment_with_locales_min_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/moment-with-locales.min.js"); 
+                    public static readonly string moment_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/moment.js"); 
+                    public static readonly string moment_min_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/moment.min.js"); 
+                    public static readonly string raccoon_blog_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/raccoon-blog.js"); 
+                    public static readonly string RequiredIfValidation_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/RequiredIfValidation.js"); 
+                    public static readonly string respond_src_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/respond.src.js"); 
+                    public static readonly string setup_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/setup.js"); 
+                    public static readonly string showdown_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/showdown.js"); 
+                    public static readonly string utils_js = T4MVCHelpers.ProcessAssetPath("~/Content/js/utils.js"); 
                 }
             }
             public static partial class license 
@@ -3092,26 +3092,26 @@ namespace Links
                     }
                     public static class Assets
                     {
-                        public const string accordion_css = "~/Content/themes/base/accordion.css";
-                        public const string all_css = "~/Content/themes/base/all.css";
-                        public const string autocomplete_css = "~/Content/themes/base/autocomplete.css";
-                        public const string base_css = "~/Content/themes/base/base.css";
-                        public const string button_css = "~/Content/themes/base/button.css";
-                        public const string core_css = "~/Content/themes/base/core.css";
-                        public const string datepicker_css = "~/Content/themes/base/datepicker.css";
-                        public const string dialog_css = "~/Content/themes/base/dialog.css";
-                        public const string draggable_css = "~/Content/themes/base/draggable.css";
-                        public const string menu_css = "~/Content/themes/base/menu.css";
-                        public const string progressbar_css = "~/Content/themes/base/progressbar.css";
-                        public const string resizable_css = "~/Content/themes/base/resizable.css";
-                        public const string selectable_css = "~/Content/themes/base/selectable.css";
-                        public const string selectmenu_css = "~/Content/themes/base/selectmenu.css";
-                        public const string slider_css = "~/Content/themes/base/slider.css";
-                        public const string sortable_css = "~/Content/themes/base/sortable.css";
-                        public const string spinner_css = "~/Content/themes/base/spinner.css";
-                        public const string tabs_css = "~/Content/themes/base/tabs.css";
-                        public const string theme_css = "~/Content/themes/base/theme.css";
-                        public const string tooltip_css = "~/Content/themes/base/tooltip.css";
+                        public static readonly string accordion_css = T4MVCHelpers.ProcessAssetPath("~/Content/themes/base/accordion.css");
+                        public static readonly string all_css = T4MVCHelpers.ProcessAssetPath("~/Content/themes/base/all.css");
+                        public static readonly string autocomplete_css = T4MVCHelpers.ProcessAssetPath("~/Content/themes/base/autocomplete.css");
+                        public static readonly string base_css = T4MVCHelpers.ProcessAssetPath("~/Content/themes/base/base.css");
+                        public static readonly string button_css = T4MVCHelpers.ProcessAssetPath("~/Content/themes/base/button.css");
+                        public static readonly string core_css = T4MVCHelpers.ProcessAssetPath("~/Content/themes/base/core.css");
+                        public static readonly string datepicker_css = T4MVCHelpers.ProcessAssetPath("~/Content/themes/base/datepicker.css");
+                        public static readonly string dialog_css = T4MVCHelpers.ProcessAssetPath("~/Content/themes/base/dialog.css");
+                        public static readonly string draggable_css = T4MVCHelpers.ProcessAssetPath("~/Content/themes/base/draggable.css");
+                        public static readonly string menu_css = T4MVCHelpers.ProcessAssetPath("~/Content/themes/base/menu.css");
+                        public static readonly string progressbar_css = T4MVCHelpers.ProcessAssetPath("~/Content/themes/base/progressbar.css");
+                        public static readonly string resizable_css = T4MVCHelpers.ProcessAssetPath("~/Content/themes/base/resizable.css");
+                        public static readonly string selectable_css = T4MVCHelpers.ProcessAssetPath("~/Content/themes/base/selectable.css");
+                        public static readonly string selectmenu_css = T4MVCHelpers.ProcessAssetPath("~/Content/themes/base/selectmenu.css");
+                        public static readonly string slider_css = T4MVCHelpers.ProcessAssetPath("~/Content/themes/base/slider.css");
+                        public static readonly string sortable_css = T4MVCHelpers.ProcessAssetPath("~/Content/themes/base/sortable.css");
+                        public static readonly string spinner_css = T4MVCHelpers.ProcessAssetPath("~/Content/themes/base/spinner.css");
+                        public static readonly string tabs_css = T4MVCHelpers.ProcessAssetPath("~/Content/themes/base/tabs.css");
+                        public static readonly string theme_css = T4MVCHelpers.ProcessAssetPath("~/Content/themes/base/theme.css");
+                        public static readonly string tooltip_css = T4MVCHelpers.ProcessAssetPath("~/Content/themes/base/tooltip.css");
                     }
                 }
                 public static class Assets
@@ -3144,7 +3144,7 @@ namespace Links
                         }
                         public static class Assets
                         {
-                            public const string fullcalendar_css = "~/Areas/Admin/Content/css/fullcalendar.css";
+                            public static readonly string fullcalendar_css = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/css/fullcalendar.css");
                         }
                     }
                     public static partial class datepicker 
@@ -3153,15 +3153,15 @@ namespace Links
                         {
                             public static class Assets
                             {
-                                public const string bootstrap_datetimepicker_css = "~/Areas/Admin/Content/datepicker/css/bootstrap-datetimepicker.css";
-                                public const string bootstrap_datetimepicker_min_css = "~/Areas/Admin/Content/datepicker/css/bootstrap-datetimepicker.min.css";
+                                public static readonly string bootstrap_datetimepicker_css = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/datepicker/css/bootstrap-datetimepicker.css");
+                                public static readonly string bootstrap_datetimepicker_min_css = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/datepicker/css/bootstrap-datetimepicker.min.css");
                             }
                         }
                         public static partial class js 
                         {
                             public static class Assets
                             {
-                                public const string bootstrap_datetimepicker_min_js = "~/Areas/Admin/Content/datepicker/js/bootstrap-datetimepicker.min.js"; 
+                                public static readonly string bootstrap_datetimepicker_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/datepicker/js/bootstrap-datetimepicker.min.js"); 
                             }
                         }
                         public static class Assets
@@ -3186,14 +3186,14 @@ namespace Links
                         {
                             public static class Assets
                             {
-                                public const string rssFutureAccess_js = "~/Areas/Admin/Content/js/app/rssFutureAccess.js"; 
+                                public static readonly string rssFutureAccess_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/app/rssFutureAccess.js"); 
                             }
                         }
                         public static partial class lib 
                         {
                             public static class Assets
                             {
-                                public const string clipboard_min_js = "~/Areas/Admin/Content/js/lib/clipboard.min.js"; 
+                                public static readonly string clipboard_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/lib/clipboard.min.js"); 
                             }
                         }
                         public static partial class tinymce 
@@ -3228,7 +3228,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/advlist/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/advlist/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class anchor 
@@ -3241,7 +3241,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/anchor/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/anchor/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class autolink 
@@ -3254,7 +3254,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/autolink/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/autolink/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class autoresize 
@@ -3267,7 +3267,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/autoresize/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/autoresize/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class autosave 
@@ -3280,7 +3280,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/autosave/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/autosave/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class bbcode 
@@ -3293,7 +3293,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/bbcode/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/bbcode/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class charmap 
@@ -3306,7 +3306,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/charmap/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/charmap/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class code 
@@ -3319,7 +3319,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/code/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/code/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class colorpicker 
@@ -3332,7 +3332,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/colorpicker/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/colorpicker/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class contextmenu 
@@ -3345,7 +3345,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/contextmenu/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/contextmenu/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class directionality 
@@ -3358,7 +3358,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/directionality/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/directionality/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class emoticons 
@@ -3383,7 +3383,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/emoticons/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/emoticons/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class example 
@@ -3396,7 +3396,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/example/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/example/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class example_dependency 
@@ -3409,7 +3409,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/example_dependency/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/example_dependency/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class fullpage 
@@ -3422,7 +3422,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/fullpage/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/fullpage/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class fullscreen 
@@ -3435,7 +3435,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/fullscreen/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/fullscreen/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class hr 
@@ -3448,7 +3448,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/hr/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/hr/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class image 
@@ -3461,7 +3461,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/image/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/image/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class importcss 
@@ -3474,7 +3474,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/importcss/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/importcss/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class insertdatetime 
@@ -3487,7 +3487,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/insertdatetime/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/insertdatetime/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class layer 
@@ -3500,7 +3500,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/layer/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/layer/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class legacyoutput 
@@ -3513,7 +3513,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/legacyoutput/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/legacyoutput/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class link 
@@ -3526,7 +3526,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/link/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/link/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class lists 
@@ -3539,7 +3539,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/lists/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/lists/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class media 
@@ -3552,7 +3552,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/media/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/media/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class nonbreaking 
@@ -3565,7 +3565,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/nonbreaking/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/nonbreaking/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class noneditable 
@@ -3578,7 +3578,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/noneditable/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/noneditable/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class pagebreak 
@@ -3591,7 +3591,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/pagebreak/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/pagebreak/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class paste 
@@ -3604,7 +3604,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/paste/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/paste/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class preview 
@@ -3617,7 +3617,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/preview/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/preview/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class print 
@@ -3630,7 +3630,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/print/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/print/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class save 
@@ -3643,7 +3643,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/save/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/save/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class searchreplace 
@@ -3656,7 +3656,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/searchreplace/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/searchreplace/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class spellchecker 
@@ -3669,7 +3669,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/spellchecker/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/spellchecker/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class tabfocus 
@@ -3682,7 +3682,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/tabfocus/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/tabfocus/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class table 
@@ -3695,7 +3695,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/table/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/table/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class template 
@@ -3708,7 +3708,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/template/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/template/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class textcolor 
@@ -3721,7 +3721,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/textcolor/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/textcolor/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class textpattern 
@@ -3734,7 +3734,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/textpattern/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/textpattern/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class visualblocks 
@@ -3755,12 +3755,12 @@ namespace Links
                                         }
                                         public static class Assets
                                         {
-                                            public const string visualblocks_css = "~/Areas/Admin/Content/js/tinymce/plugins/visualblocks/css/visualblocks.css";
+                                            public static readonly string visualblocks_css = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/visualblocks/css/visualblocks.css");
                                         }
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/visualblocks/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/visualblocks/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class visualchars 
@@ -3773,7 +3773,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/visualchars/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/visualchars/plugin.min.js"); 
                                     }
                                 }
                                 public static partial class wordcount 
@@ -3786,7 +3786,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string plugin_min_js = "~/Areas/Admin/Content/js/tinymce/plugins/wordcount/plugin.min.js"; 
+                                        public static readonly string plugin_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/plugins/wordcount/plugin.min.js"); 
                                     }
                                 }
                                 public static class Assets
@@ -3829,10 +3829,10 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string content_inline_min_css = "~/Areas/Admin/Content/js/tinymce/skins/lightgray/content.inline.min.css";
-                                        public const string content_min_css = "~/Areas/Admin/Content/js/tinymce/skins/lightgray/content.min.css";
-                                        public const string skin_ie7_min_css = "~/Areas/Admin/Content/js/tinymce/skins/lightgray/skin.ie7.min.css";
-                                        public const string skin_min_css = "~/Areas/Admin/Content/js/tinymce/skins/lightgray/skin.min.css";
+                                        public static readonly string content_inline_min_css = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/skins/lightgray/content.inline.min.css");
+                                        public static readonly string content_min_css = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/skins/lightgray/content.min.css");
+                                        public static readonly string skin_ie7_min_css = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/skins/lightgray/skin.ie7.min.css");
+                                        public static readonly string skin_min_css = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/skins/lightgray/skin.min.css");
                                     }
                                 }
                                 public static class Assets
@@ -3851,7 +3851,7 @@ namespace Links
                                     }
                                     public static class Assets
                                     {
-                                        public const string theme_min_js = "~/Areas/Admin/Content/js/tinymce/themes/modern/theme.min.js"; 
+                                        public static readonly string theme_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/themes/modern/theme.min.js"); 
                                     }
                                 }
                                 public static class Assets
@@ -3860,13 +3860,13 @@ namespace Links
                             }
                             public static class Assets
                             {
-                                public const string tinymce_min_js = "~/Areas/Admin/Content/js/tinymce/tinymce.min.js"; 
+                                public static readonly string tinymce_min_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/tinymce/tinymce.min.js"); 
                             }
                         }
                         public static class Assets
                         {
-                            public const string bootstrap_js = "~/Areas/Admin/Content/js/bootstrap.js"; 
-                            public const string fullcalendar_js = "~/Areas/Admin/Content/js/fullcalendar.js"; 
+                            public static readonly string bootstrap_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/bootstrap.js"); 
+                            public static readonly string fullcalendar_js = T4MVCHelpers.ProcessAssetPath("~/Areas/Admin/Content/js/fullcalendar.js"); 
                         }
                     }
                     public static class Assets
@@ -3891,8 +3891,14 @@ internal static class T4MVCHelpers {
         return path;
     }
 
+    private static string ProcessAssetPathDefault(string virtualPath) {
+        // The path that comes in starts with ~/ and should retain this prefix
+        return virtualPath;
+    }
+
     // Calling ProcessVirtualPath through delegate to allow it to be replaced for unit testing
     public static Func<string, string> ProcessVirtualPath = ProcessVirtualPathDefault;
+    public static Func<string, string> ProcessAssetPath = ProcessAssetPathDefault;
 
     // Calling T4Extension.TimestampString through delegate to allow it to be replaced for unit testing and other purposes
     public static Func<string, string> TimestampString = System.Web.Mvc.T4Extensions.TimestampString;
