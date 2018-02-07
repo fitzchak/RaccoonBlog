@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RaccoonBlog.Models;
+using RaccoonBlog.Models.Account;
 using RaccoonBlog.Models.ManageViewModels;
 using RaccoonBlog.Services;
 
