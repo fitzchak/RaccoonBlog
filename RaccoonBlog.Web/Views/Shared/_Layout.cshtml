@@ -66,9 +66,9 @@
                             {
                                 <a href="@string.Format("https://www.facebook.com/{0}", ViewBag.BlogConfig.FacebookLogin)" class="facebook">b</a>
                             }
-                            @if (ViewBag.BlogConfig.GoogleLogin != null)
+                            @if (ViewBag.BlogConfig.LinkedInLogin != null)
                             {
-                                <a href="@string.Format("https://plus.google.com/{0}", ViewBag.BlogConfig.GoogleLogin)" class="gplus">c</a>
+                                <a href="@string.Format("https://www.linkedin.com/in/{0}", ViewBag.BlogConfig.LinkedInLogin)" class="linkedin">j</a>
                             }
                         </p>
                         @Html.RenderSection("Stats")
