@@ -48,8 +48,8 @@
         <a style='text-decoration:none;' type="icon_link" onclick="window.open('@string.Format("http://www.facebook.com/sharer/sharer.php?u={0}&title={1}", Request.Url.OriginalString, Model.Post.Title)','sharer','toolbar=0,status=0,width=580,height=325');" href="javascript: void(0)">
             <span class="socicon facebook">b</span><span>share</span>
         </a>
-        <a style='text-decoration:none;' type="icon_link" onclick="popUp=window.open('@string.Format("https://plus.google.com/share?url={0}", Request.Url.OriginalString)', 'popupwindow', 'scrollbars=yes,width=600,height=400');popUp.focus();return false" href="javascript: void(0)">
-            <span class="socicon gplus">c</span><span>share</span>
+        <a style='text-decoration:none;' type="icon_link" onclick="popUp=window.open('@string.Format("https://www.linkedin.com/shareArticle?mini=true&url={0}&title={1}", Request.Url.OriginalString, Model.Post.Title)', 'popupwindow', 'scrollbars=yes,width=600,height=400');popUp.focus();return false" href="javascript: void(0)">
+            <span class="socicon linkedin">j</span><span>share</span>
         </a>
         <a href="#comments">
             <span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span>@Model.Comments.Count comments</span>

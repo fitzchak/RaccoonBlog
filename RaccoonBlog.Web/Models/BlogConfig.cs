@@ -26,14 +26,14 @@ namespace RaccoonBlog.Web.Models
         [Display(Name = "Facebook Login")]
         public string FacebookLogin { get; set; }
 
-        [Display(Name = "Google Login")]
-        public string GoogleLogin { get; set; }
-
-        [Display(Name = "Github Login")]
+        [Display(Name = "GitHub Login")]
         public string GithubLogin { get; set; }
 
-        [Display(Name = "Rss Login")]
+        [Display(Name = "RSS Login")]
         public string RssLogin { get; set; }
+
+        [Display(Name = "LinkedIn Login")]
+        public string LinkedInLogin { get; set; }
 
         [Display(Name = "Slogan")]
         public string Subtitle { get; set; }
