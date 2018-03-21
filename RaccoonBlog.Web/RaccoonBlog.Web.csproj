@@ -532,7 +532,7 @@
     <Content Include="Content\css\fullcalendar.min.css" />
     <Content Include="Content\css\fullcalendar.print.css" />
     <Content Include="Content\css\img\banners\win-raspberry.png" />
-    <Content Include="Content\css\img\banners\workshops18-banner.jpg" />
+    <Content Include="Content\css\img\banners\workshops-summer2018.png" />
     <Content Include="Content\css\img\commentPreviewDate.png" />
     <Content Include="Content\css\img\error.png" />
     <Content Include="Content\css\img\ico_grid_active.svg" />
