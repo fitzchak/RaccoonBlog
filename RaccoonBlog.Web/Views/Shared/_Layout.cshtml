@@ -17,7 +17,7 @@
     }
     <title>
         @if (ViewBag.Title != null)
-        { <text> @ViewBag.Title - </text> }@ViewBag.BlogConfig.Title
+        {<text> @ViewBag.Title - </text>}@ViewBag.BlogConfig.Title
     </title>
 
     @Styles.Render("~/Content/css/styles")
@@ -109,6 +109,10 @@
                     @Html.RenderSection("Archive")
                 </header>
                 <div class="banner">
+                        <a href="http://workshops.ravendb.net">
+                            <img src="~/Content/css/img/banners/workshops-summer2018.png" 
+                                class="img-responsive img-center" />
+                        </a>
                 </div>
                 @RenderBody()
             </div>
@@ -147,7 +151,7 @@
                     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
                     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
                 })();
-            </script> }
+            </script>}
     }
 </body>
 

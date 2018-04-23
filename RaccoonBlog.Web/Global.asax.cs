@@ -127,6 +127,7 @@ namespace RaccoonBlog.Web
 			try
 			{
 				IndexCreation.CreateIndexes(typeof(Tags_Count).Assembly, DocumentStore);
+                IndexCreation.CreateIndexes(typeof(Posts_Series).Assembly, DocumentStore);
 			}
 			catch (WebException e)
 			{
