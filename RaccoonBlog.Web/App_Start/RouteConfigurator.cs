@@ -24,6 +24,7 @@ namespace RaccoonBlog.Web
 			Syndication();
 		    Series();
 
+			Api();
 			Posts();
 			LegacyPost();
 			PostDetails();
@@ -45,7 +46,16 @@ namespace RaccoonBlog.Web
 			   );
 		}
 
-        private void Error()
+		private void Api()
+		{
+			routes.MapRouteLowerCase("Api-PostsByTags",
+				"api/posts-by-tags",
+				new { controller = "PostsApi", action = "GetPostsByTags" },
+				new[] { "RaccoonBlog.Web.Controllers" }
+			);
+		}
+
+		private void Error()
         {
             routes.MapRouteLowerCase("Error",
                 "error",

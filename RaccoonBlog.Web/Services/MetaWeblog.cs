@@ -124,14 +124,14 @@ namespace RaccoonBlog.Web.Services
 				}
 
 				return new Post
-						{
-							wp_slug = SlugConverter.TitleToSlug(thePost.Title),
-							description = thePost.CompiledContent(true).ToString(),
-							dateCreated = thePost.PublishAt.DateTime,
-							categories = thePost.Tags.ToArray(),
-							title = thePost.Title,
-							postid = thePost.Id,
-						};
+				{
+					wp_slug = SlugConverter.TitleToSlug(thePost.Title),
+					description = thePost.CompiledContent(true).ToString(),
+					dateCreated = thePost.PublishAt.DateTime,
+					categories = thePost.Tags.ToArray(),
+					title = thePost.Title,
+					postid = thePost.Id,
+				};
 			}
 		}
 
@@ -167,19 +167,19 @@ namespace RaccoonBlog.Web.Services
 			using (var session = MvcApplication.DocumentStore.OpenSession())
 			{
 				var list = session.Query<Models.Post>()
-					.OrderByDescending(x => x.PublishAt)
-					.Take(numberOfPosts)
-					.ToList();
+				                  .OrderByDescending(x => x.PublishAt)
+				                  .Take(numberOfPosts)
+				                  .ToList();
 
 				return list.Select(thePost => new Post
-												{
-													wp_slug = SlugConverter.TitleToSlug(thePost.Title),
-													description = thePost.CompiledContent(true).ToString(),
-													dateCreated = thePost.PublishAt.DateTime,
-													categories = thePost.Tags.ToArray(),
-													title = thePost.Title,
-													postid = thePost.Id,
-												}).ToArray();
+				{
+					wp_slug = SlugConverter.TitleToSlug(thePost.Title),
+					description = thePost.CompiledContent(true).ToString(),
+					dateCreated = thePost.PublishAt.DateTime,
+					categories = thePost.Tags.ToArray(),
+					title = thePost.Title,
+					postid = thePost.Id,
+				}).ToArray();
 			}
 		}
 

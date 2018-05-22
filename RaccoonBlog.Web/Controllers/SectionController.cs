@@ -14,6 +14,8 @@ namespace RaccoonBlog.Web.Controllers
 
 	public partial class SectionController : AggresivelyCachingRacconController
     {
+	    protected override TimeSpan CacheDuration => TimeSpan.FromMinutes(6);
+
         [ChildActionOnly]
 		public virtual ActionResult PostsSeries(string sectionTitle)
         {
@@ -164,10 +166,5 @@ namespace RaccoonBlog.Web.Controllers
 			}
 			return View(vm);
 		}
-
-		protected override TimeSpan CacheDuration
-		{
-			get { return TimeSpan.FromMinutes(6); }
-		}
-	}
+    }
 }
